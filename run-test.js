@@ -223,7 +223,7 @@ ok('移动时恢复更慢', moveRec > stillRec,
 // 命中测试：把敌人放到正前方（先清场，避免子弹打到路过的其他敌人）
 Game.startRun();
 const P3 = Game.player;
-P3.x = M.cx(8); P3.y = M.cy(8);
+P3.x = M.cx(23); P3.y = M.cy(13);
 Game.enemies.forEach((e, i) => { if (i > 0) e.dead = true; });
 const dummy = Game.enemies[0];
 dummy.x = P3.x + 120; dummy.y = P3.y;
@@ -446,7 +446,7 @@ console.log('\n=== 敌人 AI ===');
 Game.startRun();
 // 放一个拾荒者在玩家附近，看它是否会发现并靠近
 const P7 = Game.player;
-P7.x = M.cx(25); P7.y = M.cy(17); // 扩建后的堤顶横街，玩家与敌人之间没有墙体。
+P7.x = M.cx(23); P7.y = M.cy(13); // 北桥接街，合法站位与连续直线通路。
 const scav = Game.enemies.find(e => e.key === 'scav');
 scav.x = P7.x + 300; scav.y = P7.y;   // 在视野内、射程外
 scav.angle = Math.PI;      // 面朝玩家方向
@@ -497,7 +497,7 @@ const doorTile = (() => {
 ok('地图有门', !!doorTile);
 if (doorTile) {
   const open0 = doorTile.t.door.open;
-  Game.player.x = M.cx(doorTile.x); Game.player.y = M.cy(doorTile.y) + 10;
+  Game.player.x = M.cx(doorTile.x); Game.player.y = M.cy(doorTile.y) - CFG.TILE;
   Game.input.interactPressed = true;
   Game.update(1 / 60);
   ok('门状态可切换', doorTile.t.door.open !== open0,
@@ -519,11 +519,11 @@ const lv1 = Game.tideLevel;
 Game.time = 600;
 Game.updateTide();
 const lv2 = Game.tideLevel;
-ok('水位随时间上升', lv0 < lv1 && lv1 < lv2,
+ok('静态图水位保持稳定', lv0 === 0 && lv1 === 0 && lv2 === 0,
    lv0.toFixed(2) + ' → ' + lv1.toFixed(2) + ' → ' + lv2.toFixed(2));
-ok('平潮时核心低洼区不可进', (() => {
+ok('运河全程不可涉水', (() => {
   M.tideLevel = lv2;
-  return M.grid.flat().filter(tile => tile.ch === '~').every(tile => lv2 - tile.h > 1.05);
+  return M.grid.flat().filter(tile => tile.ch === '~').every(tile => tile.permanentWater && tile.obstacle);
 })());
 
 console.log('\n=== 击杀与安静区 ===');
@@ -1015,7 +1015,7 @@ Game.debug = false;
 
 console.log('\n=== 玩家动画状态 ===');
 Game.startRun();
-const animator = new ctx.Player(M.cx(10), M.cy(10));
+const animator = new ctx.Player(M.cx(7), M.cy(4));
 animator.tickAnimation(0.55, false);
 ok('待机有呼吸计时', animator.anim.state === 'idle' && animator.anim.time > 0.5);
 animator.update(1 / 60, inpWalk); animator.tickAnimation(1 / 60, false);

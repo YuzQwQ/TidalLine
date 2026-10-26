@@ -1,0 +1,849 @@
+{
+  "generator": "Built-in image_gen",
+  "batch": 1,
+  "label": "基础路面、庭院与运河",
+  "scope": "首批 18 张已保存并接入临海路 72×56 地图；开发版和离线包共用生成快照，动态潮汐暂不启用。",
+  "preparation": {
+    "size": 32,
+    "alpha": "per-asset: opaque ground or transparent edge overlay",
+    "resampling": "nearest",
+    "paletteColours": 16
+  },
+  "assets": [
+    {
+      "id": "street_stone",
+      "batch": 1,
+      "source": "art-sources/batch-01/street_stone.png",
+      "output": "assets/tiles/street_stone.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE seamless pixel-art ground texture tile for the top-down post-flood survival game 潮汐线 / Tideline. Deliver a SQUARE image consisting of ONLY the texture, covering the ENTIRE canvas, fully opaque all the way to all four edges. It is a flat material sample viewed directly from above; no perspective plane, no isometric slab, no raised tile, no side faces, no shadow, no frame, no margin, no text, no logo, no background outside the texture. Design it as exactly 32 x 32 LOGICAL PIXELS enlarged by nearest-neighbour for viewing, with chunky clean square pixel clusters, crisp hard edges and a restrained 12-16 colour palette. It must remain legible when downsampled to the actual 32x32 game tile. The four edges must TILE SEAMLESSLY when repeated horizontally and vertically: maintain equal brightness and material density at every edge, continue the pattern across opposite edges; no vignette, no dark perimeter, no directional lighting gradient, no central focal object. Quiet weathered desaturated materials that support small characters and loot sprites. Subject: OLD STREET STONE PAVEMENT. Cool grey-green worn rectangular stone pavers, about four courses of masonry in one 32px tile, broad readable stone blocks and thin low-contrast mortar, a restrained staggered repeating layout compatible across opposite edges. Subtle chips and two or three tiny sparse wear pixels only; dry flat stones, not cobblestones, no grass clumps. Palette centred on muted #65736a, #7e8a7d and soft #47584e; do not use pure black or bright highlights. Quiet uniform illumination, flat flush road surface. This is a repeatable patch from the middle of a road, NOT a standalone square paving slab.",
+      "status": "verified",
+      "outputSha256": "9520d11134eb2da798707bc7dc3b06fbe9b4a185f265e217675d2470e76328fa",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 16,
+        "opaquePixels": 1024,
+        "partialAlphaPixels": 0,
+        "wrapDifference": {
+          "horizontal": 6.56,
+          "vertical": 20.43
+        },
+        "interiorDifference": {
+          "horizontal": 10.47,
+          "vertical": 14.34
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeat3x3": true,
+        "canal6x8": false,
+        "note": "复查32px辨识度与不加网格的连续铺设；河水采用v3粗像素短波纹。"
+      }
+    },
+    {
+      "id": "courtyard_paving",
+      "batch": 1,
+      "source": "art-sources/batch-01/courtyard_paving.png",
+      "output": "assets/tiles/courtyard_paving.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE seamless pixel-art ground texture tile for the top-down post-flood survival game 潮汐线 / Tideline. Deliver a SQUARE image consisting of ONLY the texture, covering the ENTIRE canvas, fully opaque all the way to all four edges. It is a flat material sample viewed directly from above; no perspective plane, no isometric slab, no raised tile, no side faces, no shadow, no frame, no margin, no text, no logo, no background outside the texture. Design it as exactly 32 x 32 LOGICAL PIXELS enlarged by nearest-neighbour for viewing, with chunky clean square pixel clusters, crisp hard edges and a restrained 12-16 colour palette. It must remain legible when downsampled to the actual 32x32 game tile. The four edges must TILE SEAMLESSLY when repeated horizontally and vertically: maintain equal brightness and material density at every edge, continue the pattern across opposite edges; no vignette, no dark perimeter, no directional lighting gradient, no central focal object. Quiet weathered desaturated materials that support small characters and loot sprites. Subject: OLD COURTYARD PAVING, also used on the small bank forecourt. Slightly warmer grey-beige stone slabs than the cool grey-green street. A quiet repeating grid of broad, modestly irregular roughly square pavers, around 3-4 slabs across the logical 32px tile, fine subdued joints and just a few sparse muted olive moss pixels in joints. Palette centred on #86816d, #a09a83, #686e5c, with restrained grey-green moss. Large calm surfaces and low contrast. No plants, trees, furniture, cracks with black holes, objects, labels or independent raised stone blocks. No decorative mosaic, central medallion or pattern border. Seamless repeat in BOTH axes.",
+      "status": "verified",
+      "outputSha256": "8ed3a2c991b3ba3381c7b95c3145a80a5fefb882a976f5dab8fa23bd191fc2f5",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 16,
+        "opaquePixels": 1024,
+        "partialAlphaPixels": 0,
+        "wrapDifference": {
+          "horizontal": 10.49,
+          "vertical": 10.48
+        },
+        "interiorDifference": {
+          "horizontal": 11.35,
+          "vertical": 11.82
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeat3x3": true,
+        "canal6x8": false,
+        "note": "复查32px辨识度与不加网格的连续铺设；河水采用v3粗像素短波纹。"
+      }
+    },
+    {
+      "id": "canal_water",
+      "batch": 1,
+      "source": "art-sources/batch-01/canal_water-v3.png",
+      "output": "assets/tiles/canal_water.png",
+      "prompt": "Edit this single square water texture. Preserve the flat dark desaturated blue-teal water and six sparse ripple positions. Make the SIX ripple strokes MUCH CHUNKIER so they survive reduction to 32x32 pixels. On this approximately 1254-pixel square canvas each logical game pixel must be a BIG SOLID SQUARE roughly 40 pixels wide. Each of the six ripples must therefore be a clear HORIZONTAL bar 160-200 actual canvas pixels wide and 40-50 actual canvas pixels thick, with one small square step at its end. These correspond to 4-5 game pixels long by 1 game pixel thick. Do NOT make thin little 10-pixel lines; those vanish at game resolution. Use only a uniform #214e59 background and two subtly lighter solid ripple colours #326570 and #3b7075, NO gradients or noise. The final appearance must be blunt chunky 32x32-pixel retro game water enlarged with nearest-neighbour, with exactly SIX short HORIZONTAL wave marks, not diagonal lines, not dots, not many repeated speckles. Fully opaque square, texture to all edges, seamless repeat with calm matching background at every edge. No border, shadow, margin, shore, bubbles, foam, text, lighting glow or extra objects. Only increase the stroke thickness and chunky pixel readability.",
+      "status": "verified",
+      "outputSha256": "0775eb8461b91523e73522e8d8ef2243c68a3d6441d87ace9515fff8f18bfbb2",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 16,
+        "opaquePixels": 1024,
+        "partialAlphaPixels": 0,
+        "wrapDifference": {
+          "horizontal": 0.73,
+          "vertical": 0.51
+        },
+        "interiorDifference": {
+          "horizontal": 1.3,
+          "vertical": 2.58
+        }
+      },
+      "history": [
+        {
+          "source": "art-sources/batch-01/canal_water.png",
+          "prompt": "Use case: stylized-concept. Asset type: ONE seamless pixel-art ground texture tile for the top-down post-flood survival game 潮汐线 / Tideline. Deliver a SQUARE image consisting of ONLY the texture, covering the ENTIRE canvas, fully opaque all the way to all four edges. It is a flat material sample viewed directly from above; no perspective plane, no isometric slab, no raised tile, no side faces, no shadow, no frame, no margin, no text, no logo, no background outside the texture. Design it as exactly 32 x 32 LOGICAL PIXELS enlarged by nearest-neighbour for viewing, with chunky clean square pixel clusters, crisp hard edges and a restrained 12-16 colour palette. It must remain legible when downsampled to the actual 32x32 game tile. The four edges must TILE SEAMLESSLY when repeated horizontally and vertically: maintain equal brightness and material density at every edge, continue the pattern across opposite edges; no vignette, no dark perimeter, no directional lighting gradient, no central focal object. Quiet weathered desaturated materials that support small characters and loot sprites. Subject: DEEP BLUE-TEAL URBAN CANAL WATER. One calm flat water texture, opaque, not transparent. Predominantly dark desaturated blue-teal #214e59 with only a few short low-contrast #326570 / #3b7075 pixel ripple dashes. Several small broken HORIZONTAL ripple strokes, distributed evenly without a centre, forming a quiet repeating water pattern. The water must visibly differ from green muddy land. No shoreline, bank, foam, bright white reflections, sky or sun reflection, diagonal glossy streak, depth vignette, gradient, glowing effect, floating objects or scenery. Hard square pixels, broad quiet blue-teal areas; at 32px it should read as continuous calm canal water, not grass, moss, marbling or a pool surrounded by a border.",
+          "reason": "32px 下波纹过密，改为六道稀疏短波纹。"
+        },
+        {
+          "source": "art-sources/batch-01/canal_water-v2.png",
+          "prompt": "Edit this canal-water TILE to improve its readability at native 32x32 pixels. Preserve its dark muted blue-teal palette and opaque all-over water material. CRITICAL CHANGE: remove at least 85 percent of the numerous tiny speckles/ripples. The ENTIRE tile must have EXACTLY SIX small separated broken HORIZONTAL ripple strokes, each about 3-5 LOGICAL pixels long and 1 logical pixel thick, with large quiet uninterrupted areas of dark blue-teal between them. No isolated bright dots at all. Background must be a single even dark blue-teal #214e59 with NO gradient, vignette, clouds, noise, or highlights. Ripple colour subdued #326570, optional one darker neighbouring pixel #285964; maximum 4 colours. Use crisp hard-edged pixel-art at 32x32 LOGICAL resolution enlarged by nearest neighbour for viewing. Full-bleed opaque square texture, flat directly overhead, no slab, no perspective, no margin, no frame, no shore, no foam, no sky reflection, no objects, no text. Opposite edges continue seamlessly on repeat; no bright or dark boundary lines. Output only this quiet sparse pixel-art water texture, not a tiled preview or sheet.",
+          "reason": "增加波纹像素块厚度，以便最近邻缩到 32px 后仍能辨认。"
+        }
+      ],
+      "reference": "art-sources/batch-01/canal_water-v2.png",
+      "visualReview": {
+        "native32": true,
+        "repeat3x3": true,
+        "canal6x8": true,
+        "note": "复查32px辨识度与不加网格的连续铺设；河水采用v3粗像素短波纹。"
+      }
+    },
+    {
+      "id": "quay_top",
+      "batch": 2,
+      "kind": "ground",
+      "source": "art-sources/batch-02/quay_top.png",
+      "output": "assets/tiles/quay_top.png",
+      "prompt": "Use case: stylized-concept. Create ONE repeatable ground-material tile for the muted post-flood pixel-art game 潮汐线. Square, flat directly overhead, full-bleed texture covering every edge, completely OPAQUE. It is NOT an object on a background: no frame, transparent margin, border, standalone slab, perspective, side faces, isometric view, cast shadow, vignette, text, logo, railings, shoreline, or scenery. True chunky pixel-art designed at 32x32 LOGICAL game pixels enlarged for display: clean square clusters, simple 12-16-colour palette, roughly four large readable material courses instead of noisy micro-detail. If displayed on a 1254px canvas, one game pixel is approximately a 40px square. Repeat seamlessly in both axes, especially avoid obvious brightness seams at tile boundaries. Calm, low-contrast weathered surfaces with fixed soft upper-left illumination and no overall light gradient. Subject: TOP SURFACE OF AN OLD STONE CANAL QUAY. Muted grey-green stone cap blocks, fairly broad long stones with narrow subtle joints, a few worn edges and sparse sea-salt specks. Palette #768171, #929783, #56685c. This is just the walk-level horizontal stone material used under separately rendered bank lips. No water, no embankment edge or border, no rubble piles, no fence. All four canvas edges stay the same material and texture scale; can be repeated along a one-tile-wide north-south quay.",
+      "status": "verified",
+      "outputSha256": "ec40b639e630bf4e392e0091f4921684aed5d1e68a55d68f2df21db5d0c2cc83",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 16,
+        "opaquePixels": 1024,
+        "transparentPixels": 0,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "right": 31,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 7.85,
+          "vertical": 14.2
+        },
+        "interiorDifference": {
+          "horizontal": 11.72,
+          "vertical": 14.16
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeat": true,
+        "bankAndBridgeAssembly": true,
+        "note": "32px材质辨识与连续铺设已复查；木桥使用粗像素板缝版本。"
+      }
+    },
+    {
+      "id": "bridge_stone_deck",
+      "batch": 2,
+      "kind": "ground",
+      "source": "art-sources/batch-02/bridge_stone_deck.png",
+      "output": "assets/tiles/bridge_stone_deck.png",
+      "prompt": "Use case: stylized-concept. Create ONE repeatable ground-material tile for the muted post-flood pixel-art game 潮汐线. Square, flat directly overhead, full-bleed texture covering every edge, completely OPAQUE. It is NOT an object on a background: no frame, transparent margin, border, standalone slab, perspective, side faces, isometric view, cast shadow, vignette, text, logo, railings, shoreline, or scenery. True chunky pixel-art designed at 32x32 LOGICAL game pixels enlarged for display: clean square clusters, simple 12-16-colour palette, roughly four large readable material courses instead of noisy micro-detail. If displayed on a 1254px canvas, one game pixel is approximately a 40px square. Repeat seamlessly in both axes, especially avoid obvious brightness seams at tile boundaries. Calm, low-contrast weathered surfaces with fixed soft upper-left illumination and no overall light gradient. Subject: OLD NORTHERN STONE BRIDGE DECK MATERIAL. Broad solid slightly warm grey rectangular stone paving, 3-4 restrained staggered courses across the logical tile, thin muted joints and minimal wear. Palette #7e8276, #a0a18d, #5f6b61. Quieter, larger and more solid-looking than street bricks. This texture will tile into an east-west bridge 8 tiles long and 4 tiles wide. Draw only paving to every edge, absolutely no railing, side wall, arches, water, bridge silhouette or outer frame. It must read as a flush flat connected deck, never an elevated standalone square tile.",
+      "status": "verified",
+      "outputSha256": "9186da81b06f0177e3dfb0ca31d7e5a3904c1e107e329b1cbb2020a7d0b2afa5",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 16,
+        "opaquePixels": 1024,
+        "transparentPixels": 0,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "right": 31,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 7.07,
+          "vertical": 16.78
+        },
+        "interiorDifference": {
+          "horizontal": 6.99,
+          "vertical": 10.45
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeat": true,
+        "bankAndBridgeAssembly": true,
+        "note": "32px材质辨识与连续铺设已复查；木桥使用粗像素板缝版本。"
+      }
+    },
+    {
+      "id": "bridge_wood_deck",
+      "batch": 2,
+      "kind": "ground",
+      "source": "art-sources/batch-02/bridge_wood_deck-v2.png",
+      "output": "assets/tiles/bridge_wood_deck.png",
+      "prompt": "Edit this game texture for legibility at native 32x32 pixels. Keep the muted warm brown-grey wood palette but REMOVE 80% of the noisy speckled grain. Make it unmistakably FOUR broad LEFT-TO-RIGHT WOODEN PLANKS with clear horizontal seams. Design the entire square at EXACTLY 32x32 LOGICAL pixels enlarged by nearest-neighbour: each logical pixel is a large roughly40x40 block on a1254px canvas. Each board course is8 logical pixels high, comprising a1-pixel-thick dark muted joint and7 pixels of calm wood. Horizontal seam rows are logical y=0,8,16,24, spanning left edge to right edge. They must be thick enough to survive reduction: approximately40 ACTUAL canvas pixels thick, NOT thin little lines. Four continuous horizontal planks, minimal coarse horizontal wood-grain dashes and only two chunky bolt dots, not fine noise or dirt. Limit palette to8-12 colours based on #827057,#a28a67,#5f5849; no near-black cracks, no raised bevels. Flat directly-overhead opaque repeatable ground texture, whole square is wood. Left and right edges continue seamlessly; top seam is part of repeating plank cadence, not an outside framing border. No side faces, rails, water, bridge silhouette, cast shadow, vignette, scenery, text, margins, outer frame or transparent background. Output a single quiet coarse-pixel wood-deck texture, not a 3x3 preview.",
+      "status": "verified",
+      "outputSha256": "cb7ba0312c9d09ee8d2b63e2887c7195538989ed379d160f3ddf66dc1e6cba3d",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 16,
+        "opaquePixels": 1024,
+        "transparentPixels": 0,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "right": 31,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 5.17,
+          "vertical": 8.46
+        },
+        "interiorDifference": {
+          "horizontal": 3.48,
+          "vertical": 14.73
+        }
+      },
+      "history": [
+        {
+          "source": "art-sources/batch-02/bridge_wood_deck.png",
+          "prompt": "Use case: stylized-concept. Create ONE repeatable ground-material tile for the muted post-flood pixel-art game 潮汐线. Square, flat directly overhead, full-bleed texture covering every edge, completely OPAQUE. It is NOT an object on a background: no frame, transparent margin, border, standalone slab, perspective, side faces, isometric view, cast shadow, vignette, text, logo, railings, shoreline, or scenery. True chunky pixel-art designed at 32x32 LOGICAL game pixels enlarged for display: clean square clusters, simple 12-16-colour palette, roughly four large readable material courses instead of noisy micro-detail. If displayed on a 1254px canvas, one game pixel is approximately a 40px square. Repeat seamlessly in both axes, especially avoid obvious brightness seams at tile boundaries. Calm, low-contrast weathered surfaces with fixed soft upper-left illumination and no overall light gradient. Subject: OLD SOUTHERN WOODEN FOOTBRIDGE DECK MATERIAL. Exactly four broad horizontal weathered wooden planks, roughly eight logical pixels high each, long wood grain running LEFT TO RIGHT. Very subtle narrow joints, muted brown-grey palette #827057, #a28a67, #5f5849, two or three small bolt/wear pixels only. No black gaps or broken holes; this bridge remains intact and traversable. Designed to tile into an east-west 8-tile-long and 3-tile-wide walkway. Entire canvas is wood, no separate framing perimeter, rails, support beams, posts, water, shadows or bridge illustration.",
+          "reason": "缩小后木纹细节过密，改为四块清晰横向木板。"
+        }
+      ],
+      "reference": "art-sources/batch-02/bridge_wood_deck-reference-32.png",
+      "visualReview": {
+        "native32": true,
+        "repeat": true,
+        "bankAndBridgeAssembly": true,
+        "note": "32px材质辨识与连续铺设已复查；木桥使用粗像素板缝版本。"
+      }
+    },
+    {
+      "id": "canal_bank_w",
+      "batch": 2,
+      "kind": "overlay",
+      "source": "art-sources/batch-02/canal_bank_w.png",
+      "output": "assets/props/canal_bank_w.png",
+      "prompt": "Use case: stylized-concept. Create ONE transparent-background seamless vertical BANK-EDGE OVERLAY sprite, not a full canal picture, for a 32x32-pixel tile in 潮汐线. Camera is orthographic 75 degrees above horizontal, screen north up, with dominant top lip and a SHORT vertical stone face. Fixed upper-left lighting. Extremely important alignment: ALL visible stone occupies ONLY the RIGHTMOST SIX logical pixel columns (x=26..31) of the full square canvas. The LEFT 26 columns (about 81% of the canvas) must be genuinely EMPTY TRANSPARENT. Do NOT centre the object. Stone strip MUST touch the canvas TOP and BOTTOM, with no padding at either end, so it repeats vertically. This is the WEST bank, the canal water is OUTSIDE THE RIGHT edge of the canvas: draw NO WATER. A slender weathered grey-green stone lip, muted #768171/#929783 top highlight, darker #40574e short east-facing side, a few subdued salt/moss pixels and one or two horizontal masonry joints. Keep the outer right silhouette straight and the strip consistent in width; no random rocks sticking out. Hard chunky 32x32 LOGICAL pixels enlarged for display (one logical pixel roughly 40px on a 1254px canvas), 10-12 colours, no anti-aliasing, no black outline. NO ground plane, backdrop, square border, cast shadow, glow, trees, rails, steps, text or other objects. Preserve transparency. It will overlay an opaque quay-top tile; do not bake that full ground tile into this image.",
+      "status": "verified",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 6,
+        "anchor": "right",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "a33290baa26c2bdd27d9a1b4c2c06387de67cca57998868152a8f0fdc5111b96",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 192,
+        "transparentPixels": 832,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 26,
+          "top": 0,
+          "right": 31,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 29.2,
+          "vertical": 0.81
+        },
+        "interiorDifference": {
+          "horizontal": 6.48,
+          "vertical": 4.04
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeat": true,
+        "bankAndBridgeAssembly": true,
+        "note": "两岸分开绘制；透明条段对齐格边、纵向连铺和叠加效果已复查。"
+      }
+    },
+    {
+      "id": "canal_bank_e",
+      "batch": 2,
+      "kind": "overlay",
+      "source": "art-sources/batch-02/canal_bank_e.png",
+      "output": "assets/props/canal_bank_e.png",
+      "prompt": "Use case: stylized-concept. Create ONE transparent-background seamless vertical BANK-EDGE OVERLAY sprite, not a full canal picture, for a 32x32-pixel tile in 潮汐线. Camera is orthographic 75 degrees above horizontal, screen north up, with dominant top lip and a SHORT vertical stone face. Fixed upper-left lighting. Extremely important alignment: ALL visible stone occupies ONLY the LEFTMOST SIX logical pixel columns (x=0..5) of the full square canvas. The RIGHT 26 columns (about 81% of the canvas) must be genuinely EMPTY TRANSPARENT. Do NOT centre the object. Stone strip MUST touch the canvas TOP and BOTTOM, with no padding at either end, so it repeats vertically. This is the EAST bank, the canal water is OUTSIDE THE LEFT edge of the canvas: draw NO WATER. A slender weathered grey-green stone lip with a muted #929783 top ridge, #768171 body, slightly lighter #63786a west-facing short side under the same fixed upper-left illumination, a few subdued salt/moss pixels and one or two horizontal masonry joints. Keep the outer left silhouette straight and consistent in width, with no protruding random rocks. Hard chunky 32x32 LOGICAL pixels enlarged for display (one logical pixel roughly 40px on a 1254px canvas), 10-12 colours, no anti-aliasing, no black outline. NO ground plane, backdrop, square border, cast shadow, glow, trees, rails, steps, text or other objects. Preserve transparency. It overlays an opaque quay-top tile; do not bake that full ground tile into the image. Draw this left-edge geometry and its lighting independently rather than mirror a right-edge image.",
+      "status": "verified",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 6,
+        "anchor": "left",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "1d369a4ff317cf462518c83a1b8af87a5f382cb867eba2f82758a6e88f717bda",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 192,
+        "transparentPixels": 832,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "right": 5,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 17.46,
+          "vertical": 5.14
+        },
+        "interiorDifference": {
+          "horizontal": 7.28,
+          "vertical": 4.3
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeat": true,
+        "bankAndBridgeAssembly": true,
+        "note": "两岸分开绘制；透明条段对齐格边、纵向连铺和叠加效果已复查。"
+      }
+    },
+    {
+      "id": "bridge_stone_rail_n",
+      "batch": 3,
+      "kind": "overlay",
+      "source": "art-sources/batch-03/bridge_stone_rail_n-v2.png",
+      "output": "assets/props/bridge_stone_rail_n.png",
+      "prompt": "Edit this 32x32 logical-pixel transparent NORTH STONE BRIDGE PARAPET sprite. Preserve the grey-green material and upper-left light. Fix its silhouette: remove ALL isolated dark spikes, stray pixels and little protrusions ABOVE the stone cap. The entire stone lip must have a perfectly STRAIGHT horizontal upper contour and lower contour, and continue through both left/right edges. It is one clean 32x6 logical-pixel solid low wall strip, anchored flush to the BOTTOM edge of the transparent32x32 canvas. Logical rows0..25 remain entirely TRANSPARENT, rows26..31 are the stone strip. Upper4 rows are the broad muted #929783/#768171 cap/top plane; bottom2 rows are a short darker #52655b face. Add only two quiet vertical masonry joints and a few low-contrast wear pixels INSIDE the strip, never outside its contour. Keep a restrained chunky 10-15-colour palette, no fine noise, no antialiasing, no pure black outline, no glow or cast shadow. Do not fill the empty transparent area, draw a railing with balusters, water, deck, ground plane, perspective slab, frame or text. A single crisp pixel-art edge strip, enlarged with nearest-neighbour so the32px game silhouette is explicit.",
+      "status": "verified",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 32,
+        "stripHeight": 6,
+        "anchor": "bottom",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "cca095681b32ae48455b686954780c53691f7be43e8660f3feb8b53eaf3610f5",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 185,
+        "transparentPixels": 839,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 26,
+          "right": 31,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 1.44,
+          "vertical": 15.74
+        },
+        "interiorDifference": {
+          "horizontal": 1.54,
+          "vertical": 5.14
+        }
+      },
+      "history": [
+        {
+          "source": "art-sources/batch-03/bridge_stone_rail_n.png",
+          "prompt": "Use case: stylized-concept. Create ONE game-ready PIXEL-ART horizontal bridge railing segment for 潮汐线, on a GENUINELY TRANSPARENT square background. This is only a thin railing strip, not a bridge scene or a whole building. Camera: fixed orthographic high-angle view 75 degrees above the ground, north at screen top, east at screen right. Show a dominant top surface and SHORT south-facing vertical surface, not a front-elevation fence. Fixed upper-left light for every orientation. Muted weathered materials, crisp chunky square pixels, 12-15 colours, no anti-aliasing, pure black outline, cast shadow, glow, text, ground plane, water, deck, rocks, arch or other object. Think of 32 LOGICAL horizontal pixels, visibly chunky when enlarged, not fine decorative lines. The isolated strip is centred vertically in the transparent square and runs HORIZONTALLY all the way to BOTH LEFT AND RIGHT canvas edges, with no end caps or large end pillars. It must repeat seamlessly left-to-right at a constant height; top/bottom of canvas remain transparent. Do not add surrounding margin on the left or right, do not rotate the strip diagonally, do not draw an isometric diamond. Subject: NORTHERN STONE BRIDGE, NORTH-SIDE LOW PARAPET. A continuous very low weathered grey-green stone railing/lip, with a narrow highlighted cap and short darker side face. Target a 32x6 logical-pixel strip (length about5.3times its height), positioned in the middle of the square for later alignment to the far bridge edge. Cap/top plane occupies about60% of the strip height, short south-facing face about40%. Grey-green #768171/#929783, subdued shadow #52655b, tiny moss/salt marks only. Broad legible masonry blocks with restrained joints. Rear/far bridge edge: low unobtrusive silhouette, no baluster holes, no chunky pillars, no water or pavement baked in.",
+          "reason": "清理缩小后上轮廓的突出暗点，保持低石缘连续。"
+        }
+      ],
+      "reference": "art-sources/batch-03/bridge_stone_rail_n-reference-32.png",
+      "visualReview": {
+        "native32": true,
+        "repeat": true,
+        "bridgeAssembly": true,
+        "note": "已检查 32×32 原尺寸、连续拼接及双桥组合；固定左上光源，南北栏独立绘制。栏杆落在桥面外侧相邻格，保留石桥四格、木桥三格通行面；木栏透明孔洞可见河水。"
+      }
+    },
+    {
+      "id": "bridge_stone_rail_s",
+      "batch": 3,
+      "kind": "overlay",
+      "source": "art-sources/batch-03/bridge_stone_rail_s.png",
+      "output": "assets/props/bridge_stone_rail_s.png",
+      "prompt": "Use case: stylized-concept. Create ONE game-ready PIXEL-ART horizontal bridge railing segment for 潮汐线, on a GENUINELY TRANSPARENT square background. This is only a thin railing strip, not a bridge scene or a whole building. Camera: fixed orthographic high-angle view 75 degrees above the ground, north at screen top, east at screen right. Show a dominant top surface and SHORT south-facing vertical surface, not a front-elevation fence. Fixed upper-left light for every orientation. Muted weathered materials, crisp chunky square pixels, 12-15 colours, no anti-aliasing, pure black outline, cast shadow, glow, text, ground plane, water, deck, rocks, arch or other object. Think of 32 LOGICAL horizontal pixels, visibly chunky when enlarged, not fine decorative lines. The isolated strip is centred vertically in the transparent square and runs HORIZONTALLY all the way to BOTH LEFT AND RIGHT canvas edges, with no end caps or large end pillars. It must repeat seamlessly left-to-right at a constant height; top/bottom of canvas remain transparent. Do not add surrounding margin on the left or right, do not rotate the strip diagonally, do not draw an isometric diamond. Subject: NORTHERN STONE BRIDGE, SOUTH-SIDE LOW PARAPET. A continuous very low weathered grey-green stone railing/lip, physically matching the northern parapet's material, height and thickness. Target a32x6 logical-pixel strip (length about5.3times height), centred vertically. This is the NEAR/SOUTH edge: the top cap occupies aboutone-third of strip height and the short south-facing front wall abouttwo-thirds, with slightly darker front masonry #52655b under muted #929783 cap. Same fixed upper-left lighting, not a flipped or rotated image. Broad readable stone blocks, two or three subtle joints, minimal salt/moss; no big end pillars, arches, baluster holes, pavement, deck or scene.",
+      "status": "verified",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 32,
+        "stripHeight": 6,
+        "anchor": "top",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "ef19633a00ac3f60cc6831d4045806f55e5af65499345a7d3d9e5b16cf7cd1c3",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 190,
+        "transparentPixels": 834,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "right": 31,
+          "bottom": 5
+        },
+        "wrapDifference": {
+          "horizontal": 11.68,
+          "vertical": 80.31
+        },
+        "interiorDifference": {
+          "horizontal": 2.62,
+          "vertical": 10.56
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeat": true,
+        "bridgeAssembly": true,
+        "note": "已检查 32×32 原尺寸、连续拼接及双桥组合；固定左上光源，南北栏独立绘制。栏杆落在桥面外侧相邻格，保留石桥四格、木桥三格通行面；木栏透明孔洞可见河水。"
+      }
+    },
+    {
+      "id": "bridge_wood_rail_n",
+      "batch": 3,
+      "kind": "overlay",
+      "source": "art-sources/batch-03/bridge_wood_rail_n.png",
+      "output": "assets/props/bridge_wood_rail_n.png",
+      "prompt": "Use case: stylized-concept. Create ONE game-ready PIXEL-ART horizontal bridge railing segment for 潮汐线, on a GENUINELY TRANSPARENT square background. This is only a thin railing strip, not a bridge scene or a whole building. Camera: fixed orthographic high-angle view 75 degrees above the ground, north at screen top, east at screen right. Show a dominant top surface and SHORT south-facing vertical surface, not a front-elevation fence. Fixed upper-left light for every orientation. Muted weathered materials, crisp chunky square pixels, 12-15 colours, no anti-aliasing, pure black outline, cast shadow, glow, text, ground plane, water, deck, rocks, arch or other object. Think of 32 LOGICAL horizontal pixels, visibly chunky when enlarged, not fine decorative lines. The isolated strip is centred vertically in the transparent square and runs HORIZONTALLY all the way to BOTH LEFT AND RIGHT canvas edges, with no end caps or large end pillars. It must repeat seamlessly left-to-right at a constant height; top/bottom of canvas remain transparent. Do not add surrounding margin on the left or right, do not rotate the strip diagonally, do not draw an isometric diamond. Subject: SOUTHERN WOODEN FOOTBRIDGE, NORTH-SIDE RAIL. One intact thin old wooden railing, target32x8 logical pixels (length4times height), centred vertically. Two slender upright posts about2 logical pixels wide, one at the LEFT edge and one at the midpoint, a continuous horizontal top handrail about2 logical pixels thick, and one thin lower rail. Leave genuinely TRANSPARENT OPEN GAPS between posts and rails. Far/north edge: top surfaces of the handrail and post heads are clearly visible; short vertical sides stay restrained. Weathered grey-brown #827057, cap #a28a67, shadow #5f5849, matching an old horizontal-plank bridge. Crisp coarse pixels so posts remain visible at32px. No broken rails, rope tangles, diagonal braces, spikes or big terminal posts. The rails continue through left/right canvas edges for repeat.",
+      "status": "verified",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 32,
+        "stripHeight": 8,
+        "anchor": "bottom",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "6f080a49891ebf045ee1043f5399baa166fe125ac83c97ed670006cc7e19e1db",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 139,
+        "transparentPixels": 885,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 24,
+          "right": 31,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 19.17,
+          "vertical": 93.63
+        },
+        "interiorDifference": {
+          "horizontal": 1.99,
+          "vertical": 8.06
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeat": true,
+        "bridgeAssembly": true,
+        "note": "已检查 32×32 原尺寸、连续拼接及双桥组合；固定左上光源，南北栏独立绘制。栏杆落在桥面外侧相邻格，保留石桥四格、木桥三格通行面；木栏透明孔洞可见河水。"
+      }
+    },
+    {
+      "id": "bridge_wood_rail_s",
+      "batch": 3,
+      "kind": "overlay",
+      "source": "art-sources/batch-03/bridge_wood_rail_s.png",
+      "output": "assets/props/bridge_wood_rail_s.png",
+      "prompt": "Use case: stylized-concept. Create ONE game-ready PIXEL-ART horizontal bridge railing segment for 潮汐线, on a GENUINELY TRANSPARENT square background. This is only a thin railing strip, not a bridge scene or a whole building. Camera: fixed orthographic high-angle view 75 degrees above the ground, north at screen top, east at screen right. Show a dominant top surface and SHORT south-facing vertical surface, not a front-elevation fence. Fixed upper-left light for every orientation. Muted weathered materials, crisp chunky square pixels, 12-15 colours, no anti-aliasing, pure black outline, cast shadow, glow, text, ground plane, water, deck, rocks, arch or other object. Think of 32 LOGICAL horizontal pixels, visibly chunky when enlarged, not fine decorative lines. The isolated strip is centred vertically in the transparent square and runs HORIZONTALLY all the way to BOTH LEFT AND RIGHT canvas edges, with no end caps or large end pillars. It must repeat seamlessly left-to-right at a constant height; top/bottom of canvas remain transparent. Do not add surrounding margin on the left or right, do not rotate the strip diagonally, do not draw an isometric diamond. Subject: SOUTHERN WOODEN FOOTBRIDGE, SOUTH-SIDE RAIL. Same intact thin weathered grey-brown wooden construction as the north rail, target32x8 logical pixels (length4times height), centred vertically. Two slim2-logical-pixel-wide posts, one at LEFT edge and one at midpoint, continuous horizontal2-pixel-thick top handrail and thin lower rail; genuinely TRANSPARENT OPEN GAPS must remain. NEAR/SOUTH edge: show slightly more of the short front faces under the handrail, with muted #5f5849 shading, top cap #a28a67, body #827057. Fixed upper-left light, independently drawn south-side geometry, not a mirrored north rail. Coarse clear pixels, no fine grain noise. No solid wood panel filling the gaps, no broken planks, rope tangles, diagonal braces, terminal pillars, bridge deck or background. Left/right rail ends continue seamlessly.",
+      "status": "verified",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 32,
+        "stripHeight": 8,
+        "anchor": "top",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "8e6bcb28de848965d00e3e4364693ffc9d4120d47449f2ccf55aed252edb9ec2",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 166,
+        "transparentPixels": 858,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "right": 31,
+          "bottom": 7
+        },
+        "wrapDifference": {
+          "horizontal": 0.49,
+          "vertical": 5.77
+        },
+        "interiorDifference": {
+          "horizontal": 1.46,
+          "vertical": 7.47
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeat": true,
+        "bridgeAssembly": true,
+        "note": "已检查 32×32 原尺寸、连续拼接及双桥组合；固定左上光源，南北栏独立绘制。栏杆落在桥面外侧相邻格，保留石桥四格、木桥三格通行面；木栏透明孔洞可见河水。"
+      }
+    },
+    {
+      "id": "shop_window_ns",
+      "batch": 4,
+      "kind": "overlay",
+      "source": "art-sources/batch-04/shop_window_ns.png",
+      "output": "assets/props/shop_window_ns.png",
+      "prompt": "Use case: stylized-concept. Asset type: one pixel-art modular transparent game wall overlay, shop_window_ns, for a muted abandoned seaside neighborhood. Draw only one continuous vertical shop window strip on an otherwise truly transparent square canvas. Orthographic overhead with a slight 75-degree top-down angle, north at top, fixed upper-left light. Window belongs to the WEST-facing facade of a wall running north-south; long axis EXACTLY vertical, not a front-facing horizontal window, no diagonal isometric edges. Full vertical strip touches top and bottom of canvas so two copies connect north-south without terminal horizontal frames. Strip width about 12 of 32 logical pixels, centered horizontally. Two thin aged dark olive-gray metal/wood vertical frames, desaturated dark blue-gray glass, a few restrained cyan reflection pixels, one subtle continuous sill. Glass is quiet and low contrast; no clocks, products, interior or whole building baked in. Strict coarse 32x32 pixel design, enlarged nearest-neighbor presentation, hard pixel edges, at most 16 muted colors, broad readable clusters, no antialiasing. Canvas outside the central strip is real alpha transparency, not checkerboard. No ground, cast shadow, labels, grid, text, border, perspective scene or glow. Maintain a straight vertically repeatable edge and upper-left lighting.",
+      "reference": "../../../assets/tiles/wall.png",
+      "status": "verified",
+      "placement": "替换两组橱窗格的视觉层，透明处显示室内；阻行、可透视由格子规则控制",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 12,
+        "stripHeight": 32,
+        "anchor": "center",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "79e2c85ff76681477fa880d9a331460b87d160d8b0038a7798a7fe63a9c4ebbd",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 384,
+        "transparentPixels": 640,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 10,
+          "top": 0,
+          "right": 21,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 0,
+          "vertical": 4.93
+        },
+        "interiorDifference": {
+          "horizontal": 12.59,
+          "vertical": 3.06
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "context": true,
+        "alpha": true,
+        "materialAndLight": true,
+        "note": "检查南北两格连续橱窗、低亮青灰玻璃及透明外围。"
+      }
+    },
+    {
+      "id": "wall_breach_n",
+      "batch": 4,
+      "kind": "overlay",
+      "source": "art-sources/batch-04/wall_breach_n.png",
+      "output": "assets/props/wall_breach_n.png",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent 32x32 pixel-art damaged wall terminal for an overhead seaside survival game, wall_breach_n. Draw the NORTHERN solid wall segment ending at its SOUTH edge above an existing doorway-sized breach. The wall runs north-south; long side faces east/west. An aged muted gray-green stone and plaster wall block, same coarse dark olive gray masonry as reference, with a visible top plane and short south-facing broken vertical face, fixed light upper-left, 75-degree steep top-down orthographic camera. The material occupies full logical width 32px and the upper approximately 24px, flush with left, right and top canvas boundaries; lower 8px empty alpha. SOUTH end at y20-24 is a small irregular chipped edge with 3-5 chunky exposed stones; no tall spikes, large debris, fallen wall across passage or freestanding floating block. A few pale stone interior chips on the terminal face, dark short underside, no black outline border. 32x32 coarse pixel grid enlarged nearest-neighbor, hard edges, <=16 gray-green stone colors, simple large pixel clusters. Truly transparent background below/around broken terminal, no checkerboard, ground tile, text, glow, large shadow or surrounding room. Not a whole broken arch or two-sided doorway. Only ONE north terminal, no other object.",
+      "reference": "../../../assets/tiles/wall.png",
+      "status": "verified",
+      "placement": "诊所实体墙格 (14,38)，破口北侧，不能叠入 (14,39)",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 32,
+        "stripHeight": 24,
+        "anchor": "top",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "425e5350af01c95b60e0047763e0d183cfc8a6058a1a9ac383f35686b6d79a9d",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 721,
+        "transparentPixels": 303,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "right": 31,
+          "bottom": 23
+        },
+        "wrapDifference": {
+          "horizontal": 13.41,
+          "vertical": 23.03
+        },
+        "interiorDifference": {
+          "horizontal": 14.2,
+          "vertical": 15.06
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "context": true,
+        "alpha": true,
+        "materialAndLight": true,
+        "note": "检查高俯视顶面与短断面，南北材质及左上光源一致；端头放在相邻实体墙格，完整保留两格破口。"
+      }
+    },
+    {
+      "id": "wall_breach_s",
+      "batch": 4,
+      "kind": "overlay",
+      "source": "art-sources/batch-04/wall_breach_s-v2.png",
+      "output": "assets/props/wall_breach_s.png",
+      "prompt": "Use case: precise-object-edit. Edit target Image 1 is the current SOUTH wall breach terminal. Reference Image 2 is its NORTH terminal partner, and Image3 is the existing wall material. Repaint only the SOUTH terminal to match Image2's dark desaturated gray-green masonry and steep 75-degree overhead view. Important: Image1 currently looks like a tall bright tan craggy vertical ruin; make it a low short wall CAP viewed mainly from above, with broad dark gray-green TOP PLANE making up at least 80 percent of the visible block. Keep north-facing chipped edge at TOP of the block, only a very short 1-2 logical pixel broken end face; no tall brick stacks, no gold/tan stone. Fixed upper-left light, independently drawn south-facing geometry, not mirror/rotate Image2. Preserve one full-width wall segment connected to bottom canvas edge and transparent background above. Irregular chipped upper rim only3-5 shallow steps, no isolated fragments. Logical32x32 sprite with solid material in bottom24 rows (y8..31), top8rows empty alpha; fullwidth32, coarse crisp hard pixel clusters, max16 muted dark olive-gray colors matchingImage2. No texture noise, text, ground, backdrop, shadow patch or doorway. Material and camera consistency with Image2 is the central change; south edge must connect into existing wall below.",
+      "reference": "../../../assets/tiles/wall.png",
+      "status": "verified",
+      "placement": "诊所实体墙格 (14,41)，破口南侧，不能叠入 (14,40)",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 32,
+        "stripHeight": 24,
+        "anchor": "bottom",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "0eb5e626be6b86b5073e0e0014decc1e07c7dc0123cb2085179c40667caf3cdd",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 648,
+        "transparentPixels": 376,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 8,
+          "right": 31,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 24.73,
+          "vertical": 47.98
+        },
+        "interiorDifference": {
+          "horizontal": 16.67,
+          "vertical": 19.06
+        }
+      },
+      "history": [
+        {
+          "source": "art-sources/batch-04/wall_breach_s.png",
+          "prompt": "Use case: stylized-concept. Asset type: one transparent 32x32 pixel-art damaged wall terminal for an overhead seaside survival game, wall_breach_s. Draw the SOUTHERN solid wall segment beginning at its NORTH edge below an existing two-tile passage. Wall runs north-south. Aged low-saturation gray-green stone and plaster matching the reference masonry. Occupy the lower approximately 24 logical pixel rows, flush with left, right and bottom canvas boundaries; upper 8px alpha empty. Its NORTH-facing broken end begins at y8-12 with a few chunky exposed stone chips. Steep 75-degree top-down orthographic camera, visible wall top and a very short east/south side plane, fixed UPPER-LEFT light. Northern chipped rim gets restrained highlight, retain dark short right face; do not mirror or rotate a north terminal's shading. Modest irregular rim with 3-5 broad blocks, no spikes, no wall chunk or debris extending into the passage above. Strict coarse 32x32 pixel art enlarged nearest-neighbor, hard edges, max16 muted olive-gray masonry colors, readable large clusters. True transparent background above/around terminal, not checkerboard. No ground, room, arch, full doorway, text, glow or large shadow. One south terminal only.",
+          "reason": "统一南端色调与高俯视顶面比例，避免像亮色高墙。"
+        }
+      ],
+      "references": [
+        "art-sources/batch-04/wall_breach_s-reference-32.png",
+        "../../../assets/props/wall_breach_n.png",
+        "../../../assets/tiles/wall.png"
+      ],
+      "visualReview": {
+        "native32": true,
+        "context": true,
+        "alpha": true,
+        "materialAndLight": true,
+        "note": "检查高俯视顶面与短断面，南北材质及左上光源一致；端头放在相邻实体墙格，完整保留两格破口。"
+      }
+    },
+    {
+      "id": "rubble_decal",
+      "batch": 4,
+      "kind": "overlay",
+      "source": "art-sources/batch-04/rubble_decal.png",
+      "output": "assets/props/rubble_decal.png",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent 32x32 pixel-art flat ground decal for an abandoned coastal street game, rubble_decal. A sparse scattering of small flat gray-green masonry fragments and a few muted brown brick chips, 7 to 10 separate low chips in an irregular loose cluster with extensive transparent space between. Designed for a walkable damaged clinic entrance: all chips very low, no large pile, no obstacle, no wall or vertical boulder, no mound. Strict top-down ground with subtle 75-degree overhead visible chip top and just one-pixel short dark edge. Fixed upper-left illumination, muted gray olive stone matching reference wall and restrained dusty brick tones. Cluster contained in central24x20 logical pixels of32x32 square canvas, leave transparent perimeter. Each chip readable 2-5 coarse pixels across, minimal fine speckles. Crisp coarse pixel art, nearest-neighbor enlarged, <=16 colors, binary hard alpha, true transparent background not checkerboard. No complete ground surface, shadow patch, border, labels, text, scene, glow or props.",
+      "reference": "../../../assets/tiles/wall.png",
+      "status": "verified",
+      "placement": "贴地装饰，不增加阻挡",
+      "preparation": {
+        "mode": "alpha-trim, nearest-neighbour fit, binary alpha, fixed edge alignment",
+        "stripWidth": 24,
+        "stripHeight": 20,
+        "anchor": "center",
+        "canvas": 32,
+        "paletteColours": 16
+      },
+      "outputSha256": "3802d60f3f978d24d4bfd3b45f7e42d6a9f4f078ba680ebff217422cb5e584cd",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 15,
+        "opaquePixels": 119,
+        "transparentPixels": 905,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 4,
+          "top": 6,
+          "right": 27,
+          "bottom": 25
+        },
+        "wrapDifference": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "interiorDifference": {
+          "horizontal": 6.63,
+          "vertical": 6.92
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "context": true,
+        "alpha": true,
+        "materialAndLight": true,
+        "note": "检查稀疏低矮碎石及透明边缘，保持贴地装饰语义。"
+      }
+    },
+    {
+      "id": "canal_steps_w",
+      "batch": 5,
+      "kind": "ground",
+      "source": "art-sources/batch-05/canal_steps_w.png",
+      "output": "assets/tiles/canal_steps_w.png",
+      "reference": "../../../assets/tiles/quay_top.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE 32x32 logical-pixel opaque modular STONE STAIR GROUND TILE for the coastal top-down survival game Tideline. Reference image is existing quay paving, MATERIAL AND PALETTE reference only. Full square canvas MUST be covered with material; NO transparent margins, no isolated object, no slab bottom, no floating platform, no drawn ground border. Coarse crisp pixel art, enlarged nearest-neighbor, broad clusters, max16 muted gray-green stone colors, no antialiasing, painterly blur or fine noise. Orthographic steep 75-degree top-down game camera, north UP. Fixed illumination from UPPER LEFT for every orientation. Quiet worn salt-weathered stone with only a few sparse chips. A lateral stair flight crosses the width of the tile; its FOUR broad straight tread bands are vertical, running north-south parallel to the image sides, and the short risers are narrow VERTICAL strips. All tread bands extend seamlessly from TOP to BOTTOM, so THREE copies stacked north-south create ONE continuous three-tile-wide access stair, not three separate staircases. Keep the top and bottom edge brightness/pattern matched. NO end caps, balustrades, side borders, handrails, gates, props, grass, land, water, foam, shadows outside tile, text, grid, numbers or arrows. Show readable steps from above with broad top treads and subtle short riser faces, not black stripes. This is NOT stairs ascending toward top of image: the descent is lateral across X. WEST BANK version. Land is off-canvas LEFT, river off-canvas RIGHT. Exactly four old stone treads descend from LEFT (higher, pale muted #858a77) toward RIGHT (lower, damp muted #4b625b). Each tread occupies about7px of a32px logical tile, separated by1px short riser/nosing strip. Slightly brighter upper-left tread edges and subdued dark short EAST-facing riser faces; broad top planes dominate. Height loss encoded by short right-facing risers and gradual quiet material darkening toward right. Stone steps fill entire canvas; do not paint water or shoreline in this tile.",
+      "status": "verified",
+      "placement": "(29,27)–(29,29)，由左向右下到水边；同一踏步沿南北连续三格",
+      "collision": "仅使用设计稿六个 s 格；水道仍不可涉水，不新增跨河路线或潮汐规则。",
+      "outputSha256": "f6414ce3505f9646463f845fac87e416649e72f9ce2b03411d169d2b18fce31d",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 16,
+        "opaquePixels": 1024,
+        "transparentPixels": 0,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "right": 31,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 61.81,
+          "vertical": 9.44
+        },
+        "interiorDifference": {
+          "horizontal": 17.92,
+          "vertical": 9.7
+        }
+      },
+      "visualReview": {
+        "native32": true,
+        "repeatNorthSouth3": true,
+        "shoreAssembly": true,
+        "fixedUpperLeftLight": true,
+        "note": "分别绘制东西朝向，四级踏步沿横向下降；三格沿岸连续拼接、满幅不透明，保留六格不可涉水运河。本轮仅静态图像。"
+      }
+    },
+    {
+      "id": "canal_steps_e",
+      "batch": 5,
+      "kind": "ground",
+      "source": "art-sources/batch-05/canal_steps_e-v2.png",
+      "output": "assets/tiles/canal_steps_e.png",
+      "reference": "../../../assets/tiles/quay_top.png",
+      "prompt": "Use case: precise-object-edit. Edit target Image1 is the EAST bank stair tile. Image2 is the finished WEST bank partner used ONLY to match pixel scale and readability. Improve ONLY the eastern tile's step edge clarity at actual32x32 size; preserve its opposite descent and the fixed upper-left light. Current eastern image loses its riser edges when viewed at32px. Deliver an EXACT32x32 LOGICAL PIXEL design enlarged by integer nearest-neighbor blocks: three straight continuous VERTICAL nosing/riser bands at logical x7-8,15-16,23-24, each TWO logical pixels wide and extending uninterrupted from y0to31. The remaining broad tread top planes are each6pixels wide. On each band a muted pale gray-green1px WEST-facing riser edge and a dark olive1px recessed crease, enough contrast to read four steps clearly; do not use black or white. The stair flight DESCENDS FROM RIGHT TO LEFT toward water off-canvas left; right tread is highest and dry, left tread lowest and slightly darker/damp. Same muted gray-green old stone asImage2. Keep each tread mostly clean, just2-3 isolated wear pixels on the entire tile, NO mottled high-frequency noise or speckling that masks the step edges. Seamlessly tile TOP TO BOTTOM only, no horizontal cross joints or end caps. Full square opaque canvas entirely stone; NO water, land, transparency, handrail, shadows, scene, texture border or text. Steep75degree top-down orthographic camera and upper-left lighting maintained. Do NOT mirror Image2; redraw east-facing tread and WEST-facing riser surfaces correctly. This is modular terrain, not a detached block.",
+      "status": "verified",
+      "placement": "(36,23)–(36,25)，由右向左下到水边；左上光源保持不变",
+      "collision": "仅使用设计稿六个 s 格；水道仍不可涉水，不新增跨河路线或潮汐规则。",
+      "outputSha256": "c72066a075ea3b906edad8adbf1c404dedc7c98c195d08bfc9c0cdb4474c9bf9",
+      "quality": {
+        "width": 32,
+        "height": 32,
+        "colors": 16,
+        "opaquePixels": 1024,
+        "transparentPixels": 0,
+        "partialAlphaPixels": 0,
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "right": 31,
+          "bottom": 31
+        },
+        "wrapDifference": {
+          "horizontal": 51.81,
+          "vertical": 8.69
+        },
+        "interiorDifference": {
+          "horizontal": 31.28,
+          "vertical": 8.54
+        }
+      },
+      "history": [
+        {
+          "source": "art-sources/batch-05/canal_steps_e.png",
+          "prompt": "Use case: stylized-concept. Asset type: ONE 32x32 logical-pixel opaque modular STONE STAIR GROUND TILE for the coastal top-down survival game Tideline. Reference image is existing quay paving, MATERIAL AND PALETTE reference only. Full square canvas MUST be covered with material; NO transparent margins, no isolated object, no slab bottom, no floating platform, no drawn ground border. Coarse crisp pixel art, enlarged nearest-neighbor, broad clusters, max16 muted gray-green stone colors, no antialiasing, painterly blur or fine noise. Orthographic steep 75-degree top-down game camera, north UP. Fixed illumination from UPPER LEFT for every orientation. Quiet worn salt-weathered stone with only a few sparse chips. A lateral stair flight crosses the width of the tile; its FOUR broad straight tread bands are vertical, running north-south parallel to the image sides, and the short risers are narrow VERTICAL strips. All tread bands extend seamlessly from TOP to BOTTOM, so THREE copies stacked north-south create ONE continuous three-tile-wide access stair, not three separate staircases. Keep the top and bottom edge brightness/pattern matched. NO end caps, balustrades, side borders, handrails, gates, props, grass, land, water, foam, shadows outside tile, text, grid, numbers or arrows. Show readable steps from above with broad top treads and subtle short riser faces, not black stripes. This is NOT stairs ascending toward top of image: the descent is lateral across X. EAST BANK version. River is off-canvas LEFT, land off-canvas RIGHT. Exactly four old stone treads descend from RIGHT (higher, dry muted #858a77) toward LEFT (lower, damp muted #50675f). Upper-left light remains FIXED: the short WEST-facing riser faces get a restrained cool highlight, tops remain broad and low contrast; dark tiny creases directly under nosings, no heavy black rails. Do not mirror or rotate the western artwork or put highlights on the right. Each tread occupies about7px of a32px tile, short riser strips1px. Waterward lower treads slightly darker/damp. Fill full canvas with only stair stone, no actual water or shore. Keep north-south seamless edges.",
+          "reason": "东岸版本缩到32px后踏步边缘较弱，强化台阶可辨识度。"
+        }
+      ],
+      "references": [
+        "art-sources/batch-05/canal_steps_e-reference-32.png",
+        "../../../assets/tiles/canal_steps_w.png"
+      ],
+      "visualReview": {
+        "native32": true,
+        "repeatNorthSouth3": true,
+        "shoreAssembly": true,
+        "fixedUpperLeftLight": true,
+        "note": "分别绘制东西朝向，四级踏步沿横向下降；三格沿岸连续拼接、满幅不透明，保留六格不可涉水运河。本轮仅静态图像。"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "id": 1,
+      "label": "基础路面、庭院与运河"
+    },
+    {
+      "id": 2,
+      "label": "驳岸、岸线与桥面"
+    },
+    {
+      "id": 3,
+      "label": "石桥与木桥的南北侧栏杆"
+    },
+    {
+      "id": 4,
+      "label": "侧向橱窗、断墙端头与碎石地贴",
+      "count": 4
+    },
+    {
+      "id": 5,
+      "label": "东西两岸静态下河阶梯",
+      "count": 2
+    }
+  ],
+  "lastBatch": 5
+}

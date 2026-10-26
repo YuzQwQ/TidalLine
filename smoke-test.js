@@ -42,9 +42,9 @@ function ok(name, cond, extra) {
 console.log('\n=== 地图 ===');
 const M = ctx.M;
 M.load(ctx.MAP_ROWS);
-ok('扩建后宽高', M.W === 64 && M.H === 44, M.W + 'x' + M.H);
+ok('扩建后宽高', M.W === 72 && M.H === 56, M.W + 'x' + M.H);
 ok('每行等长', ctx.MAP_ROWS.every(r => r.length === M.W));
-ok('撤离点数量', M.extracts.length === 3, M.extracts.length + ' 个');
+ok('撤离点数量', M.extracts.length === 2, M.extracts.length + ' 个');
 ok('出生点存在', !!(M.playerSpawn.x || M.playerSpawn.y), JSON.stringify(M.playerSpawn));
 
 // 统计
@@ -173,7 +173,7 @@ ok('退潮时无淹没', flooded0 === 0, flooded0 + ' 格');
 M.tideLevel = 3.0;
 let floodedMax = 0;
 for (let y = 0; y < M.H; y++) for (let x = 0; x < M.W; x++) if (M.flooded(x, y)) floodedMax++;
-ok('涨满时大面积淹没', floodedMax > 600, floodedMax + ' 格');
+ok('静态地图不启用淹水', floodedMax === 0, floodedMax + ' 格');
 
 // 撤离点是否在高地（不会被淹）
 let exFlood = 0;
@@ -209,7 +209,7 @@ for (const e of M.extracts) {
   else reachableEx.push(e.x + ',' + e.y);
 }
 console.log('    涨满时可通行格数:', dryReach.size, '| 可达撤离点:', reachableEx.join(' '));
-ok('涨满时仍有撤离点可达', exDry < 3, (3 - exDry) + ' 个可达');
+ok('稳定水位下两岸都能撤离', exDry === 0, (M.extracts.length - exDry) + ' 个可达');
 
 // 核心区（低洼）在涨潮时应该进不去
 let coreReach = 0;

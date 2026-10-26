@@ -1,0 +1,126 @@
+{
+  "batch": 2,
+  "preparation": "nearest-neighbour, <=16 colours; opaque grounds, binary-alpha edge overlays",
+  "assets": [
+    {
+      "id": "quay_top",
+      "output": "assets/tiles/quay_top.png",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "opaquePixels": 1024,
+      "transparentPixels": 0,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 31,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 7.85,
+        "vertical": 14.2
+      },
+      "interiorDifference": {
+        "horizontal": 11.72,
+        "vertical": 14.16
+      }
+    },
+    {
+      "id": "bridge_stone_deck",
+      "output": "assets/tiles/bridge_stone_deck.png",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "opaquePixels": 1024,
+      "transparentPixels": 0,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 31,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 7.07,
+        "vertical": 16.78
+      },
+      "interiorDifference": {
+        "horizontal": 6.99,
+        "vertical": 10.45
+      }
+    },
+    {
+      "id": "bridge_wood_deck",
+      "output": "assets/tiles/bridge_wood_deck.png",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "opaquePixels": 1024,
+      "transparentPixels": 0,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 31,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 5.17,
+        "vertical": 8.46
+      },
+      "interiorDifference": {
+        "horizontal": 3.48,
+        "vertical": 14.73
+      }
+    },
+    {
+      "id": "canal_bank_w",
+      "output": "assets/props/canal_bank_w.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 192,
+      "transparentPixels": 832,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 26,
+        "top": 0,
+        "right": 31,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 29.2,
+        "vertical": 0.81
+      },
+      "interiorDifference": {
+        "horizontal": 6.48,
+        "vertical": 4.04
+      }
+    },
+    {
+      "id": "canal_bank_e",
+      "output": "assets/props/canal_bank_e.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 192,
+      "transparentPixels": 832,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 5,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 17.46,
+        "vertical": 5.14
+      },
+      "interiorDifference": {
+        "horizontal": 7.28,
+        "vertical": 4.3
+      }
+    }
+  ]
+}

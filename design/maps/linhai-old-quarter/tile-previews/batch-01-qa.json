@@ -1,0 +1,57 @@
+{
+  "batch": 1,
+  "preparation": "nearest-neighbour resize, opaque PNG, <=16 colours",
+  "assets": [
+    {
+      "id": "street_stone",
+      "output": "assets/tiles/street_stone.png",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "opaquePixels": 1024,
+      "partialAlphaPixels": 0,
+      "wrapDifference": {
+        "horizontal": 6.56,
+        "vertical": 20.43
+      },
+      "interiorDifference": {
+        "horizontal": 10.47,
+        "vertical": 14.34
+      }
+    },
+    {
+      "id": "courtyard_paving",
+      "output": "assets/tiles/courtyard_paving.png",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "opaquePixels": 1024,
+      "partialAlphaPixels": 0,
+      "wrapDifference": {
+        "horizontal": 10.49,
+        "vertical": 10.48
+      },
+      "interiorDifference": {
+        "horizontal": 11.35,
+        "vertical": 11.82
+      }
+    },
+    {
+      "id": "canal_water",
+      "output": "assets/tiles/canal_water.png",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "opaquePixels": 1024,
+      "partialAlphaPixels": 0,
+      "wrapDifference": {
+        "horizontal": 0.73,
+        "vertical": 0.51
+      },
+      "interiorDifference": {
+        "horizontal": 1.3,
+        "vertical": 2.58
+      }
+    }
+  ]
+}

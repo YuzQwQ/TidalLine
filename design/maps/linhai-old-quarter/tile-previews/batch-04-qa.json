@@ -1,0 +1,102 @@
+{
+  "batch": 4,
+  "preparation": "nearest-neighbour, <=16 colours; opaque grounds, binary-alpha edge overlays",
+  "assets": [
+    {
+      "id": "shop_window_ns",
+      "output": "assets/props/shop_window_ns.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 384,
+      "transparentPixels": 640,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 10,
+        "top": 0,
+        "right": 21,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 0,
+        "vertical": 4.93
+      },
+      "interiorDifference": {
+        "horizontal": 12.59,
+        "vertical": 3.06
+      }
+    },
+    {
+      "id": "wall_breach_n",
+      "output": "assets/props/wall_breach_n.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 721,
+      "transparentPixels": 303,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 31,
+        "bottom": 23
+      },
+      "wrapDifference": {
+        "horizontal": 13.41,
+        "vertical": 23.03
+      },
+      "interiorDifference": {
+        "horizontal": 14.2,
+        "vertical": 15.06
+      }
+    },
+    {
+      "id": "wall_breach_s",
+      "output": "assets/props/wall_breach_s.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 648,
+      "transparentPixels": 376,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 8,
+        "right": 31,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 24.73,
+        "vertical": 47.98
+      },
+      "interiorDifference": {
+        "horizontal": 16.67,
+        "vertical": 19.06
+      }
+    },
+    {
+      "id": "rubble_decal",
+      "output": "assets/props/rubble_decal.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 119,
+      "transparentPixels": 905,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 6,
+        "right": 27,
+        "bottom": 25
+      },
+      "wrapDifference": {
+        "horizontal": 0,
+        "vertical": 0
+      },
+      "interiorDifference": {
+        "horizontal": 6.63,
+        "vertical": 6.92
+      }
+    }
+  ]
+}

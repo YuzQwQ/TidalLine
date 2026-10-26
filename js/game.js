@@ -122,7 +122,7 @@ const Art = {
 
   // 方向沿墙体走向命名，不能旋转正面位图，否则立面和光源都会跟着转。
   door(door) {
-    const base = door.safe ? 'sdoor' : 'door';
+    const base = door.safe || door.reinforced ? 'sdoor' : 'door';
     const state = door.open ? '_open' : '';
     const key = base + (door.axis === 'vertical' ? '_side' : '') + state;
     return this.get('props', key) || this.get('props', base + state);
@@ -203,6 +203,201 @@ const Art = {
     else if (ch === '~') id = 'marsh';
     else if (ch === ',') id = 'low';
     return this.map['tiles/' + id] || null;
+  }
+};
+
+/* ---------------- 悬浮窗：物品详情 / 交易确认 ----------------
+   右键任何物品都能看详情，买东西前先把金额摆出来。
+   定位沿用装备选择窗那套：贴着触发元素右侧、顶边对齐，放不下就翻到左边。 */
+const Tips = {
+  W: 378,              // 详情窗宽，和 #itemTip 的 CSS 宽度保持一致
+
+  _box(id) {
+    if (typeof document === 'undefined' || !document.getElementById) return null;
+    return document.getElementById(id);
+  },
+
+  place(box, r, w) {
+    if (!box || !box.style || !r) return;
+    const vw = (typeof window !== 'undefined' && window.innerWidth) || 1280;
+    const vh = (typeof window !== 'undefined' && window.innerHeight) || 800;
+    const right = (r.right != null) ? r.right : (r.left || 0) + (r.width || 0);
+    let left = right + 8;
+    if (left + w > vw - 8) left = Math.max(8, (r.left || 0) - w - 8);
+    const top = U.clamp((r.top != null) ? r.top : 0, 8, Math.max(8, vh - 180));
+    box.style.left = left + 'px';
+    box.style.top = top + 'px';
+    box.style.width = w + 'px';
+    box.style.maxHeight = Math.max(210, vh - top - 12) + 'px';
+  },
+
+  /* 点别处 / 滚动 / 改窗口大小就收起，和装备选择窗一个脾气 */
+  bindClose() {
+    if (this._bound) return;
+    this._bound = true;
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('mousedown', ev => {
+      const t = ev.target;
+      if (t && t.closest && (t.closest('#itemTip') || t.closest('#dealBox'))) return;
+      this.hide();
+      Deal.hide();
+    });
+    document.addEventListener('scroll', () => { this.hide(); Deal.hide(); }, true);
+    if (typeof window !== 'undefined' && window.addEventListener) {
+      window.addEventListener('resize', () => { this.hide(); Deal.hide(); });
+    }
+  },
+
+  /* 物品详情。it 可以是普通物品，也可以是装备伪物品 */
+  show(it, rect, hint) {
+    const box = this._box('itemTip');
+    if (!box || !it) return;
+
+    const r = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)];
+    const cat = CATS[it.cat] || CATS.ind;
+    const price = unitPrice(it);
+    const rows = [];
+
+    if (it.equip && it.equip.kind === 'armor') {
+      const g = it.equip.gear;
+      const st = GEAR.state(g);
+      rows.push(['部位', GEAR[g.type].label + ' · Lv' + g.lv]);
+      rows.push(['减伤', Math.round(GEAR.reduction(g) * 100) + '%' +
+        (st === 'worn' ? '（破损，减半生效）' : st === 'broken' ? '（已失效）' : '')]);
+      rows.push(['耐久', Math.ceil(g.dur) + ' / ' + g.max]);
+    } else if (it.equip && it.equip.kind === 'gun') {
+      const w = WEAPONS[it.equip.gun];
+      if (w) {
+        rows.push(['伤害', w.dmgMin + '–' + w.dmgMax + ' · 弹匣 ' + w.mag + ' 发']);
+        rows.push(['射速', w.rpm + ' 发/分']);
+        rows.push(['余弹', (it.equip.mag || 0) + ' 发']);
+      }
+    }
+
+    rows.push(['重量', it.w.toFixed(2) + ' kg']);
+    if (it.equip && it.equip.kind === 'armor') {
+      const g = it.equip.gear;
+      /* move 是移速倍率：1 = 没有惩罚，0.88 = 慢 12% */
+      if (g.move != null && g.move < 1) {
+        rows.push(['移速', '−' + Math.round((1 - g.move) * 100) + '%']);
+      }
+    }
+    rows.push(['单价', '¥' + price]);
+    if (it.sell != null && it.sell !== price) rows.push(['回收价', '¥' + it.sell]);
+
+    /* 图鉴：只登记真正的收藏品，消耗品和装备不算 */
+    let foot = '';
+    if (!it.equip && !it.noCodex && Save.codex && Save.codex[it.id]) {
+      foot = '已收录 ' + Save.codex[it.id].count + ' 次';
+    } else if (it.equip) {
+      foot = '装备不占格堆叠，一件一格';
+    }
+
+    const desc = it.desc || (it.equip ? equipDesc(it) : '');
+
+    box.innerHTML =
+      '<div class="tip-hd">' +
+        '<span class="tip-ic' + (it.icon ? '' : ' gl') + '">' +
+          (it.icon && Icons.gear[it.icon]
+            ? '<img src="' + Icons.gear[it.icon].src + '" alt="">'
+            : (Icons.get(it.id)
+                ? '<img src="' + Icons.get(it.id).src + '" alt="">'
+                : esc((it.short || it.name || '?').charAt(0)))) +
+        '</span>' +
+        '<span class="tip-ttl"><span class="tip-nm">' + esc(it.name) + '</span>' +
+          '<span class="tip-sub">' +
+            '<i style="color:' + cat.color + '">' + cat.name + '</i> · ' +
+            '<i style="color:' + r.color + '">' + r.name + '</i>' +
+          '</span>' +
+        '</span>' +
+      '</div>' +
+      '<div class="tip-rows">' + rows.map(([k, v]) =>
+        '<div class="tip-row"><span>' + esc(k) + '</span><b' +
+          (k === '单价' || k === '回收价' ? ' class="gold"' : '') + '>' + esc(v) + '</b></div>'
+      ).join('') + '</div>' +
+      (desc ? '<div class="tip-desc">' + esc(desc) + '</div>' : '') +
+      ((foot || hint) ? '<div class="tip-foot">' + esc(foot) +
+        (foot && hint ? ' · ' : '') + esc(hint || '') + '</div>' : '');
+
+    box.style.display = '';
+    this.place(box, rect, this.W);
+    this.bindClose();
+  },
+
+  hide() {
+    const box = this._box('itemTip');
+    if (box) box.style.display = 'none';
+  }
+};
+
+/* 装备没有写死的文案，按数值拼一句人话 */
+function equipDesc(it) {
+  if (!it.equip) return '';
+  if (it.equip.kind === 'armor') {
+    const g = it.equip.gear;
+    const full = Math.round(g.dr * 100);
+    return 'Lv' + g.lv + ' 的' + GEAR[g.type].label + '。完好时能挡下 ' + full +
+      '% 的伤害；耐久掉到一半以下防护减半，磨穿了就只剩自重。';
+  }
+  const w = WEAPONS[it.equip.gun];
+  if (!w) return '';
+  return w.slot === 'primary' ? '主武器。打空弹匣要换弹，换枪也有硬直。'
+                              : '副武器。轻，掏出来快，但压不住连发。';
+}
+
+/* 买东西之前的确认框 */
+const Deal = {
+  W: 250,
+
+  show(o, rect) {
+    const box = (typeof document !== 'undefined' && document.getElementById)
+      ? document.getElementById('dealBox') : null;
+    if (!box || !o) return;
+
+    const sell = o.kind === 'sell';
+    const price = Math.abs(o.price || 0);
+    const left = sell ? Save.credits + price : Save.credits - price;
+    const can = o.can !== false && (sell || left >= 0);
+    const ico = (o.icon && Icons.gear[o.icon])
+      ? '<img src="' + Icons.gear[o.icon].src + '" alt="">'
+      : (o.id && Icons.get(o.id)
+          ? '<img src="' + Icons.get(o.id).src + '" alt="">'
+          : esc((o.short || o.name || '?').charAt(0)));
+
+    box.innerHTML =
+      '<div class="deal-hd">' + esc(o.title || '交易') + '</div>' +
+      '<div class="deal-bd">' +
+        '<span class="tip-ic' + (o.icon ? '' : ' gl') + '">' + ico + '</span>' +
+        '<span class="deal-nm">' + esc(o.name) + '<i>' + esc(o.sub || '') + '</i></span>' +
+      '</div>' +
+      '<div class="deal-sum">' +
+        '<span>' + (sell ? '回收价' : '售价') + '<b class="gold">¥' + price + '</b></span>' +
+        '<span>当前信用点<b>¥' + Save.credits + '</b></span>' +
+        '<span>' + (sell ? '成交后' : '成交后') +
+          '<b class="' + (left >= 0 ? '' : 'warn') + '">¥' + left + '</b></span>' +
+      '</div>' +
+      '<div class="deal-acts">' +
+        '<button class="go' + (can ? '' : ' no') + '" data-a="go">' +
+          (left < 0 ? '钱不够' : (sell ? '卖出' : '买下')) + '</button>' +
+        '<button data-a="no">取消</button>' +
+      '</div>';
+
+    box.querySelectorAll('button').forEach(b => {
+      b.onclick = () => {
+        if (b.dataset.a === 'go' && can && o.onGo) o.onGo();
+        this.hide();
+      };
+    });
+
+    box.style.display = '';
+    Tips.place(box, rect, this.W);
+    Tips.bindClose();
+  },
+
+  hide() {
+    const box = (typeof document !== 'undefined' && document.getElementById)
+      ? document.getElementById('dealBox') : null;
+    if (box) box.style.display = 'none';
   }
 };
 
@@ -348,6 +543,7 @@ const Game = {
   extractDone: false,
   stats: { kills: 0, found: 0, newItems: [] },
   debug: false,
+  mapId: RAID_MAP.id,
 
   input: {
     keys: {}, mx: 0, my: 0, wx: 0, wy: 0,
@@ -361,6 +557,9 @@ const Game = {
     this.canvas = document.getElementById('game');
     this.ctx = this.canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
+    /* 接管文字绘制：之后所有 fillText 都会走点阵字体（画面里的 HUD、飘字、
+       敌人状态、EXIT 标记）。静态资源不受影响，贴图照旧走 drawImage。 */
+    if (typeof Pix !== 'undefined') Pix.attach(this.ctx);
 
     M.load(MAP_ROWS, DOOR_AXES);
     this.buildBoxes();
@@ -370,7 +569,14 @@ const Game = {
     // 鼠标默认放在屏幕中心偏上，否则初始朝向会指向左上角
     this.input.mx = CFG.VIEW_W / 2;
     this.input.my = CFG.VIEW_H / 2 - 60;
-    window.addEventListener('resize', () => this.resize());
+    window.addEventListener('resize', () => {
+      this.resize();
+      /* 藏身处开着的时候，格子行列也要跟着窗口重算 */
+      const bv = document.getElementById('baseVeil');
+      if (bv && !bv.classList.contains('hidden') && typeof Base !== 'undefined') {
+        try { Base.renderStash(); } catch (e) { /* 还没建好就忽略 */ }
+      }
+    });
     // 关页面前把还没落盘的存档补上（节流最多积压 400ms）
     window.addEventListener('pagehide', () => Save.flush());
     if (document.addEventListener) {
@@ -400,12 +606,14 @@ const Game = {
         const kind = BOX_KIND[t.ch];
         if (kind) {
           const type = CONTAINER_TYPES[t.ch];
+          const spot = M.map && M.map.containers.find(b=>b.x===x&&b.y===y);
           const box = {
+            id: spot ? spot.id : null, region: spot ? spot.region : null,
             x: M.cx(x), y: M.cy(y),
             tx: x, ty: y,
             kind,
             art: type.art, name: type.name,
-            items: Loot.fill(kind, type.cats),
+            items: Loot.fill(kind, type.cats || (spot && spot.preference)),
             opened: false
           };
           t.box = box;
@@ -425,10 +633,45 @@ const Game = {
     // CFG.INTEGER_SCALE 改成 true（代价是黑边变多）。
     let s = Math.min(iw / CFG.VIEW_W, ih / CFG.VIEW_H);
     if (CFG.INTEGER_SCALE) s = Math.floor(s);
+
+    /* 像素吸附：把倍率拉回整数。
+       1920×1080 算出 2.25 倍 —— 每个逻辑像素占 2.25 个物理像素，
+       像素块的宽窄在 2 和 3 之间来回跳，HUD 文字也被拉到半像素上，所以看着糊。
+       吸到 2 倍以后每个逻辑像素严格是 2×2 物理像素，图和字都对齐。
+       只有整数倍不至于把画面缩得太小（面积 ≥ 窗口的 55%）才吸。 */
+    if (CFG.PIXEL_SNAP) {
+      const n = Math.floor(s);
+      if (n >= 2 && (n * n * CFG.VIEW_W * CFG.VIEW_H) / (iw * ih) >= 0.55) s = n;
+    }
+
+    /* 锁定倍率：第一次算出来的就是最终大小，窗口变化只在装不下时缩一点 */
+    if (CFG.LOCK_SCALE) {
+      if (!this._lockS) this._lockS = s;
+      s = Math.min(this._lockS, s);
+    }
+
     s = Math.max(0.5, Math.min(CFG.MAX_SCALE, s));
 
     const w = Math.round(CFG.VIEW_W * s);
     const h = Math.round(CFG.VIEW_H * s);
+
+    /* ---- 内部分辨率（这是"字糊"的根因）----
+       以前画布缓冲恒定 720×480，再被拉到 1620×1080：等于把一张小图放大，
+       画布里的 HUD 文字、准星、描边全被插值糊掉。
+       现在让缓冲跟上显示尺寸（乘 devicePixelRatio），世界坐标仍然是 720×480，
+       只是每单位多画几个像素 —— 文字按屏幕像素栅格化，边缘就干净了。
+       上限 1920 宽（1080p 级）：再大的屏也只轻微放大，不至于把填充率浪费掉。 */
+    const dpr = window.devicePixelRatio || 1;
+    const cap = CFG.RENDER_CAP_W / CFG.VIEW_W;
+    /* 缓冲像素要正好等于屏幕物理像素（s × dpr）：这样 1 个画布像素 = 1 个屏幕像素，
+       文字按物理像素栅格化。s 已经被吸附成整数，逻辑像素才落在整齐的方块里。 */
+    const rs = U.clamp(s * dpr, 1, cap);
+    this._rs = rs;
+    this.canvas.width = Math.round(CFG.VIEW_W * rs);
+    this.canvas.height = Math.round(CFG.VIEW_H * rs);
+    // 改画布尺寸会重置整个上下文状态，这两个必须重设
+    this.ctx.imageSmoothingEnabled = false;
+    this.ctx.lineJoin = 'miter';
 
     // 画面容器和画布一起定尺寸；面板都挂在 #frame 里，所以跟着画面走
     this.canvas.style.width = w + 'px';
@@ -445,7 +688,10 @@ const Game = {
     if (hp) {
       hp.style.width = CFG.VIEW_W + 'px';
       hp.style.height = CFG.VIEW_H + 'px';
-      hp.style.transform = 'scale(' + this._scale + ')';
+      /* zoom 而不是 transform：transform 是让浏览器把已经排好版的位图拉伸，
+         放大后文字必然发虚；zoom 会让布局和字体按放大后的尺寸重新算一遍。 */
+      hp.style.transform = '';
+      hp.style.zoom = String(this._scale);
     }
   },
 
@@ -453,6 +699,7 @@ const Game = {
   bindInput() {
     const K = this.input;
     window.addEventListener('keydown', e => {
+      if (this.state === 'map-select') return; // 地图页使用原生 Tab / 空格 / Enter 操作
       const k = e.key.toLowerCase();
       if (['tab', ' ', 'w', 'a', 's', 'd'].includes(k)) e.preventDefault();
       if (K.keys[k]) return;   // 忽略自动重复
@@ -509,12 +756,18 @@ const Game = {
       SFX.init();
       Base.open();
     };
-    document.getElementById('btnDeploy').onclick = () => Base.deploy();
+    document.getElementById('btnDeploy').onclick = () => MapSelect.open();
+    document.getElementById('btnMapBack').onclick = () => MapSelect.back();
+    document.getElementById('btnMapStart').onclick = () => MapSelect.confirm();
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&this.state==='map-select'){e.preventDefault();MapSelect.back();}});
     document.getElementById('btnSellJunk').onclick = () => Base.sellJunk();
   },
 
   /* ---------------- 开局 ---------------- */
-  startRun(loadout) {
+  startRun(loadout, mapId) {
+    const map=MAP_CATALOG.find(m=>m.id===(mapId||RAID_MAP.id));
+    if(!map)throw new Error('未知地图：'+mapId);
+    this.mapId=map.id;
     this.state = 'playing';
     this.deathElapsed = 0;
     this._deathSoundPlayed = false;
@@ -533,7 +786,7 @@ const Game = {
     this.stats = { kills: 0, found: 0, newItems: [] };
 
     // 重置地图状态
-    M.load(MAP_ROWS, DOOR_AXES);
+    M.load(map.rows, map.doorAxes, map.props, map);
     for (let y = 0; y < M.H; y++) {
       for (let x = 0; x < M.W; x++) { M.seen[y * M.W + x] = 0; }
     }
@@ -555,8 +808,8 @@ const Game = {
     this.player.body = Save.gear.body ? Object.assign({}, Save.gear.body) : null;
 
     // 敌人
-    for (const s of SPAWNS) {
-      this.enemies.push(new Enemy(s.t, M.cx(s.x), M.cy(s.y), s.patrolRadius));
+    for (const s of map.enemies) {
+      this.enemies.push(new Enemy(s.type||s.t, M.cx(s.x), M.cy(s.y), s.patrolRadius));
     }
 
     Noise.clear();
@@ -567,7 +820,7 @@ const Game = {
     if (this.bagOpen) this.toggleBag();
 
     this.updateCamera(true);
-    this.toast('进入围栏区');
+    this.toast('进入' + map.title);
 
     // 预热一帧：即使浏览器还没来得及跑 requestAnimationFrame，画面也不是黑的
     this.update(1 / 60);
@@ -757,6 +1010,15 @@ const Game = {
   updateTide() {
     const T = CFG.TIDE;
     const t = this.time;
+    if (!M.tideEnabled) {
+      this.tideLevel = M.tideLevel = 0;
+      this.tidePhase = 0;
+      if (t >= T.ROUND && !this.player.dead) {
+        this.state = 'ended';
+        this.showEnd(false, '行动时间已结束');
+      }
+      return;
+    }
     if (t < T.PHASE) {
       this.tidePhase = 0;
       this.tideLevel = U.lerp(0, T.LEVEL[0], t / T.PHASE);
@@ -859,6 +1121,14 @@ const Game = {
 
     if (it.type === 'door') {
       const d = it.obj.t.door;
+      if (d.open) {
+        const cells = d.cells || [[it.obj.x,it.obj.y]];
+        const occupied = [this.player,...this.enemies].some(e=>!e.dead&&cells.some(([x,y])=>{
+          const cx=U.clamp(e.x,x*CFG.TILE,(x+1)*CFG.TILE),cy=U.clamp(e.y,y*CFG.TILE,(y+1)*CFG.TILE);
+          return (e.x-cx)**2+(e.y-cy)**2 < e.r**2;
+        }));
+        if(occupied){this.toast('门口有人，暂时无法关门');return;}
+      }
       d.open = !d.open;
       Noise.emit(M.cx(it.obj.x), M.cy(it.obj.y), CFG.NOISE.door, 'door');
       SFX.play('door');
@@ -1061,6 +1331,7 @@ const Game = {
         }
         /* 点一件 = 我要先搜这个：中断自动顺序搜索，改搜指定目标 */
         row.onclick = () => { if (!this.search || this.search.idx !== i) this.startItemSearch(i, true); };
+        row.oncontextmenu = (ev) => { ev.preventDefault(); this.toast('还没搜出来，看不了'); };
         el.appendChild(row);
         if (searching) this._searchBar = row.querySelector('.prog i');
         return;
@@ -1091,6 +1362,13 @@ const Game = {
         this.renderLootList();
         this.stepAutoSearch();      // 拿东西不打断自动搜索，拿完接着搜
         if (this.bagOpen) this.renderBag();
+      };
+      /* 右键看详情：拿之前先确认这东西值不值得占一格 */
+      row.oncontextmenu = (ev) => {
+        ev.preventDefault();
+        const cur2 = this.lootOpen && this.lootOpen.items[i];
+        if (!cur2) return;
+        Tips.show(it, row.getBoundingClientRect(), '左键装进背包');
       };
       el.appendChild(row);
     });
@@ -1133,7 +1411,8 @@ const Game = {
         label: g ? g.short : '头盔',
         tag: g ? Math.ceil(g.dur) + '/' + g.max : '',
         tagCls: g ? (GEAR.state(g) === 'ok' ? '' : GEAR.state(g)) : '',
-        own: !!(P && P.helmet)
+        own: !!(P && P.helmet),
+        item: g ? EQUIP.armor(g) : null
       });
     }
 
@@ -1148,7 +1427,8 @@ const Game = {
         label: g ? g.short : '护甲',
         tag: g ? Math.ceil(g.dur) + '/' + g.max : '',
         tagCls: g ? (GEAR.state(g) === 'ok' ? '' : GEAR.state(g)) : '',
-        own: !!(P && P.body)
+        own: !!(P && P.body),
+        item: g ? EQUIP.armor(g) : null
       });
     }
 
@@ -1163,27 +1443,36 @@ const Game = {
         fb: w ? w.short.charAt(0) : '—',
         label: w ? w.short : '武器',
         tag: w ? w.mag + '发' : '',
-        own: !!(P && w && (w.slot === 'primary' ? (P.weapons[0] && P.weapons[1]) : P.weapons[2]))
+        own: !!(P && w && (w.slot === 'primary' ? (P.weapons[0] && P.weapons[1]) : P.weapons[2])),
+        item: w ? EQUIP.gun(id, 0) : null
       });
     }
 
     /* 身上已经有同类装备时，这一格点下去是"放进背包"，用角标提示 */
     bar.innerHTML = cells.map(c =>
       '<div class="eqs' + (c.icon ? '' : ' empty') + '" title="' +
-        esc(c.label) + (c.icon ? (c.own ? ' · 已有同类，点击放进背包' : ' · 点击穿上') : '') + '">' +
+        esc(c.label) +
+        (c.icon ? (c.own ? ' · 已有同类，点击放进背包' : ' · 点击穿上') + ' · 右键看详情' : '') + '">' +
         (c.icon && c.own ? '<span class="carry">包</span>' : '') +
         '<span class="lbl">' + esc(c.label) + '</span>' +
         '<span class="ic">' + Icons.gearIcon(c.icon, c.fb) + '</span>' +
         (c.tag ? '<span class="tag ' + (c.tagCls || '') + '">' + esc(c.tag) + '</span>' : '') +
       '</div>').join('');
 
-    // 每格绑定点：左键拾取（无对应装备就穿，有就放包）
+    // 每格绑定点：左键拾取（没有同类装备就穿，有就放包）；右键看详情
     const nodes = bar.children || [];
     for (let n = 0; n < nodes.length; n++) {
       const c = cells[n];
       const node = nodes[n];
       if (!c || c.idx < 0) { node.classList.add('empty'); continue; }
       node.onclick = () => this.takeGear(this.lootOpen.items[c.idx], c.idx);
+      if (c.item && node.addEventListener) {
+        node.oncontextmenu = (ev) => {
+          ev.preventDefault();
+          Tips.show(c.item, node.getBoundingClientRect(),
+            c.own ? '已有同类，左键放进背包' : '左键直接穿上');
+        };
+      }
     }
   },
 
@@ -1376,16 +1665,18 @@ const Game = {
           : (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '');
         const label = it.short || it.name;
         cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty;
-        cell.title = it.name + ' · ' + it.w + 'kg' +
-          (it.equip ? ' · 左键穿上 · 右键移入安全箱' : ' · 点击移入安全箱');
+        cell.title = it.name + ' · ' + it.w + 'kg · 右键看详情' +
+          (it.equip ? ' · 左键替换身上那件' : ' · 左键移入安全箱');
         cell.onclick = () => {
           if (it.equip) this.equipFromBag(i);
           else this.moveToSafe(i);
         };
-        /* 装备左键是穿上，所以另外给一个"放进安全箱"的入口 */
-        if (it.equip) {
-          cell.oncontextmenu = (ev) => { ev.preventDefault(); this.moveToSafe(i); };
-        }
+        /* 右键统一是看详情。装备不能塞进安全箱 —— 穿着的东西才算数 */
+        cell.oncontextmenu = (ev) => {
+          ev.preventDefault();
+          Tips.show(it, cell.getBoundingClientRect(),
+            it.equip ? '左键替换身上那件' : '左键移入安全箱');
+        };
       } else {
         cell.className = 'cell empty';
         cell.textContent = '·';
@@ -1404,11 +1695,15 @@ const Game = {
         const ico2 = Icons.bagTag(s.item, 'ico-safe');
         cell.innerHTML = ico2 + '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
           (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '');
-        cell.title = s.item.name + ' · ' + s.item.w + 'kg · 点击移回背包';
+        cell.title = s.item.name + ' · ' + s.item.w + 'kg · 左键移回背包 · 右键看详情';
         cell.onclick = () => {
           if (P.bag.slots.length >= CFG.BAG.SLOTS) { this.toast('背包满了'); return; }
           P.bag.slots.push(P.bag.safe.splice(i, 1)[0]);
           this.renderBag();
+        };
+        cell.oncontextmenu = (ev) => {
+          ev.preventDefault();
+          Tips.show(s.item, cell.getBoundingClientRect(), '左键移回背包');
         };
       } else {
         cell.className = 'cell empty safe';
@@ -1508,8 +1803,8 @@ const Game = {
     html += '<div class="kicker">' + (success ? 'EXTRACTED' : 'LOST IN THE TIDE') + '</div>';
     html += '<h1 style="font-size:26px">' + (success ? '撤离成功' : '没能出来') + '</h1>';
     html += '<div class="sub">' +
-      (success ? '用时 ' + this.fmtTime(this.time) + ' · 潮汐第 ' + (this.tidePhase + 1) + ' 阶段'
-        : (reason || '你倒在了围栏区里')) + '</div>';
+      (success ? '用时 ' + this.fmtTime(this.time) + (M.tideEnabled ? ' · 潮汐第 ' + (this.tidePhase + 1) + ' 阶段' : ' · ' + (M.map||RAID_MAP).title)
+        : (reason || '你倒在了' + (M.map ? M.map.title : '围栏区') + '里')) + '</div>';
 
     html += '<h2>这一趟</h2>';
     html += '<div class="settle-row"><span>击杀</span><b>' + this.stats.kills + '</b></div>';
@@ -1620,11 +1915,13 @@ const Game = {
   render() {
     const c = this.ctx;
     const W = CFG.VIEW_W, H = CFG.VIEW_H;
-    c.setTransform(1, 0, 0, 1, 0, 0);
+    /* 所有绘制仍然用 720×480 的逻辑坐标，这里按渲染倍率整体缩放 */
+    const rs = this._rs || 1;
+    c.setTransform(rs, 0, 0, rs, 0, 0);
     c.fillStyle = '#070b09';
     c.fillRect(0, 0, W, H);
 
-    if (this.state === 'base') return;      // 藏身处是全屏面板，底下不用画
+    if (this.state === 'base' || this.state === 'map-select') return; // 全屏页面下不绘制场景
     if (this.state === 'menu' && !this.player) return;
 
     // 摄像机偏移可能让坐标变成负的（震屏时），必须再夹一次
@@ -1745,7 +2042,7 @@ const Game = {
           col = wd > 0.6 ? '#17343a' : '#1a3a37';
         }
 
-        const tImg = Art.tile(t.ch);
+        const tImg = (t.art && Art.get('tiles',t.art)) || Art.tile(t.ch);
         if (tImg) {
           c.drawImage(tImg, sx, sy, TS, TS);
           // 水淹用一层水色覆盖，不破坏贴图
@@ -1776,7 +2073,7 @@ const Game = {
         }
 
         // 只在墙体暴露的边缘补短立面，顶面纹理保持连续，避免每格都像独立方块。
-        if (t.ch === '#') {
+        if (t.solid && !t.wallCap) {
           const south = M.at(x, y + 1), east = M.at(x + 1, y);
           if (south && !south.solid) {
             c.fillStyle = '#1c2a26';
@@ -1788,6 +2085,12 @@ const Game = {
             c.fillStyle = '#17231f';
             c.fillRect(sx + TS - 2, sy, 2, TS);
           }
+        }
+
+        // 岸线、桥栏、玻璃和断墙端头随所在格一起进入视野/记忆层。
+        for (const id of t.overlays) {
+          const image=Art.get('props',id);
+          if(image)c.drawImage(image,sx,sy,TS,TS);
         }
 
         // 暗化
@@ -1821,19 +2124,19 @@ const Game = {
     const TS = CFG.TILE;
 
     // 摆设按实体/地贴配置占格；这里只负责绘制并遵循视野层亮度。
-    for (const prop of DECOR) {
+    for (const prop of (M.map ? M.map.props : DECOR)) {
       const tile = M.grid[prop.y] && M.grid[prop.y][prop.x];
       if (!tile || tile.ch === '#') continue;
       const i = prop.y * M.W + prop.x;
       if (!M.seen[i]) continue;
-      const image = Art.get('props', prop.id);
+      const image = Art.get('props', prop.art || prop.id);
       if (!image) continue;
       c.save();
       c.globalAlpha = M.visible[i] ? 0.9 : 0.3;
       if (M.waterDepth(prop.x, prop.y) > 1.05) c.globalAlpha *= 0.4;
       c.translate((prop.x + 0.5) * TS - camX, (prop.y + 0.5) * TS - camY);
       c.rotate(prop.angle || 0);
-      const size = prop.id === 'chair' ? TS * 0.8 : TS;
+      const size = (prop.art || prop.id) === 'chair' ? TS * 0.8 : TS;
       c.drawImage(image, -size / 2, -size / 2, size, size);
       c.restore();
     }
@@ -1859,7 +2162,7 @@ const Game = {
       c.fillRect(sx + 4, sy + 4, TS - 8, TS - 8);
       if (M.visible[i]) {
         c.fillStyle = 'rgba(140,240,215,0.9)';
-        c.font = '9px monospace';
+        c.font = '10px monospace';
         c.textAlign = 'center';
         c.fillText('EXIT', sx + TS / 2, sy + TS / 2 + 3);
       }
@@ -1963,9 +2266,14 @@ const Game = {
 
         const dImg = Art.door(t.door);
         if (dImg) {
+          // 共用完整门框，每格单独裁切和暗化，避免另一半门泄漏到未探索区域。
+          c.save();
+          c.beginPath();c.rect(sx,sy,TS,TS);c.clip();
           c.globalAlpha = bright;
-          c.drawImage(dImg, sx, sy, TS, TS);
-          c.globalAlpha = 1;
+          const span=t.door.cells ? t.door.cells.length : 1;
+          const dx=t.door.cells?t.door.x*TS-camX:sx,dy=t.door.cells?t.door.y*TS-camY:sy;
+          c.drawImage(dImg, dx, dy, t.door.axis==='horizontal'?TS*span:TS, t.door.axis==='vertical'?TS*span:TS);
+          c.restore();
           continue;
         }
 
@@ -2057,7 +2365,7 @@ const Game = {
       // 状态标记
       if (this.debug) {
         c.fillStyle = '#9fb';
-        c.font = '8px monospace';
+        c.font = '10px monospace';
         c.textAlign = 'center';
         c.fillText(e.state, sx, sy - 19);
       }
@@ -2175,7 +2483,7 @@ const Game = {
 
     if (!gear) {
       c.fillStyle = '#3d534c';
-      c.fillText(label + '  —', x, y + 7);
+      c.fillText(label + '  —', x, y + 8);
       return;
     }
     const st = GEAR.state(gear);
@@ -2184,18 +2492,18 @@ const Game = {
     const col = st === 'broken' ? '#6b3a3a' : st === 'worn' ? '#b5883a' : '#3f8b78';
 
     c.fillStyle = '#6f8a82';
-    c.fillText(label, x, y + 7);
+    c.fillText(label, x, y + 8);
     c.fillStyle = '#dbe5e1';
-    c.fillText(Math.ceil(gear.dur) + '', x + 26, y + 7);
+    c.fillText(Math.ceil(gear.dur) + '', x + 30, y + 8);
 
-    const bx = x + 52, bw = w - 52 - 52;
+    const bx = x + 58, bw = w - 58 - 48;
     c.fillStyle = '#1b2b26';
     c.fillRect(bx, y, bw, 5);
     c.fillStyle = col;
     c.fillRect(bx, y, bw * U.clamp(ratio, 0, 1), 5);
 
     c.fillStyle = col;
-    c.fillText(Math.round(dr * 100) + '%', bx + bw + 6, y + 7);
+    c.fillText(Math.round(dr * 100) + '%', bx + bw + 5, y + 8);
   },
 
   /* ---------------- HUD ---------------- */
@@ -2265,7 +2573,7 @@ const Game = {
     c.fillRect(tx0, 14, TW, TH);
 
     const left = Math.max(0, CFG.TIDE.ROUND - this.time);
-    const phaseName = ['退潮', '平潮', '涨潮', '已满'][this.tidePhase];
+    const phaseName = M.tideEnabled ? ['退潮', '平潮', '涨潮', '已满'][this.tidePhase] : '临海路 · 稳定水位';
     c.fillStyle = this.tidePhase === 2 ? '#c98a5e' : '#9fb5ae';
     c.font = 'bold 17px monospace';
     c.textAlign = 'right';
@@ -2301,9 +2609,9 @@ const Game = {
     c.fillRect(CFG.VIEW_W - 148, CFG.VIEW_H - 52, 134, 38);
     c.fillStyle = P.bag.slots.length >= CFG.BAG.SLOTS ? '#c98a5e' : '#9fb5ae';
     c.font = '11px monospace';
-    c.fillText('背包 ' + P.bag.slots.length + ' / ' + CFG.BAG.SLOTS, CFG.VIEW_W - 26, CFG.VIEW_H - 34);
+    c.fillText('背包 ' + P.bag.slots.length + ' / ' + CFG.BAG.SLOTS, CFG.VIEW_W - 26, CFG.VIEW_H - 33);
     c.fillStyle = '#4f665f';
-    c.fillText('Tab 打开', CFG.VIEW_W - 26, CFG.VIEW_H - 20);
+    c.fillText('Tab 打开', CFG.VIEW_W - 26, CFG.VIEW_H - 18);
 
     /* --- 交互提示 --- */
     c.textAlign = 'center';
@@ -2340,7 +2648,7 @@ const Game = {
 
     /* --- Toast --- */
     c.textAlign = 'center';
-    c.font = '11.5px monospace';
+    c.font = '12px monospace';
     this.toasts.forEach((t, i) => {
       c.globalAlpha = U.clamp(t.t, 0, 1);
       c.fillStyle = '#9fb5ae';
@@ -2494,6 +2802,7 @@ const Base = {
     document.getElementById('startVeil').classList.add('hidden');
     document.getElementById('endVeil').classList.add('hidden');
     document.getElementById('baseVeil').classList.remove('hidden');
+    document.getElementById('mapVeil').classList.add('hidden');
     Game.state = 'base';
     Save.normalizeStash();
     this.render();
@@ -2661,7 +2970,7 @@ const Base = {
     box.style.left = left + 'px';
     box.style.top = top + 'px';
     box.style.width = w + 'px';
-    box.style.maxHeight = Math.max(140, vh - top - 12) + 'px';
+    box.style.maxHeight = Math.max(210, vh - top - 12) + 'px';
   },
 
   renderPicker() {
@@ -2780,7 +3089,7 @@ const Base = {
     if (!el.dataset.built) {
       const opts = [['stash', '仓库'], ['shop', '护甲商人']];
       el.innerHTML = opts.map(([k, name]) =>
-        '<button class="pill' + (k === (this.tab || 'stash') ? ' on' : '') +
+        '<button class="' + (k === (this.tab || 'stash') ? 'on' : '') +
         '" data-t="' + k + '">' + name + '</button>'
       ).join('');
       el.dataset.built = '1';
@@ -2793,53 +3102,67 @@ const Base = {
       });
     }
 
-    document.getElementById('tabStash').style.display = shop ? 'none' : '';
-    document.getElementById('tabShop').style.display = shop ? '' : 'none';
-    document.getElementById('btnSellJunk').style.display = shop ? 'none' : '';
-    document.getElementById('stashCount').style.display = shop ? 'none' : '';
-    const title = document.getElementById('storeTitle');
-    if (title) title.textContent = shop ? '护甲商人' : '仓库';
+    /* 商人页展开在左边那一块，右边的仓库始终可见 —— 买完能直接看见东西进库 */
+    const pg = document.getElementById('paneGear');
+    const ps = document.getElementById('paneShop');
+    if (pg) pg.style.display = shop ? 'none' : '';
+    if (ps) ps.style.display = shop ? '' : 'none';
+    const tip = document.getElementById('navTip');
+    if (tip) {
+      tip.textContent = shop
+        ? '只进崭新的一~三级 · 买下的东西直接进右边仓库'
+        : '左边配装带补给，右边是仓库';
+    }
     if (shop) this.renderShop();
   },
 
+  /* 商品也用格子摆，点一下弹交易框确认金额 */
   renderShop() {
-    const el = document.getElementById('shopList');
+    const el = document.getElementById('shopGrid');
     if (!el) return;
     el.innerHTML = '';
     const wallet = document.getElementById('shopWallet');
     if (wallet) wallet.textContent = '¥' + Save.credits;
 
     for (const type of ['helmet', 'body']) {
-      const cat = document.createElement('div');
-      cat.className = 'shop-cat';
-      cat.textContent = GEAR[type].label;
-      el.appendChild(cat);
-
       for (let lv = 1; lv <= this.SHOP_MAX_LV; lv++) {
         const d = GEAR.def(type, lv);
         if (!d) continue;
-        const can = Save.credits >= d.price && Save.stash.length < STASH_SLOTS;
+        const cell = document.createElement('div');
+        cell.className = 'scell r' + gearRarity(lv);
         const ico = Icons.gear[type + lv]
-          ? '<img class="ic" src="' + Icons.gear[type + lv].src + '" alt="">'
-          : '<span class="ic gl">' + GEAR[type].short + '</span>';
-
-        const row = document.createElement('div');
-        row.className = 'srow';
-        row.style.borderLeftColor = RARITY[gearRarity(lv) - 1].color;
-        row.innerHTML =
-          ico +
-          '<span class="nm"><b>' + d.name + '</b>' +
-            '<span style="color:#5f7a72">Lv' + lv + '</span> · ' +
-            Math.round(d.dr * 100) + '% 减伤 · 耐久 ' + d.dur + ' · ' + d.w + 'kg</span>' +
-          '<span class="pr">¥' + d.price + '</span>' +
-          '<button class="buy' + (can ? '' : ' no') + '">' +
-            (Save.credits < d.price ? '钱不够' : '买下') + '</button>';
-        const btn = row.querySelector('button');
-        if (can) btn.onclick = () => this.buyArmor(type, lv);
-        else btn.disabled = true;
-        el.appendChild(row);
+          ? '<img src="' + Icons.gear[type + lv].src + '" alt="">'
+          : '<span class="gl">' + esc(GEAR[type].short) + '</span>';
+        cell.innerHTML = ico +
+          '<span class="cn">' + esc(d.short || d.name) + '</span>' +
+          '<span class="pr">¥' + d.price + '</span>';
+        cell.title = d.name + ' · Lv' + lv + ' · ' + Math.round(d.dr * 100) +
+          '% 减伤 · 耐久 ' + d.dur + ' · ' + d.w + 'kg · 右键看详情';
+        cell.onclick = () => this.askBuy(type, lv, cell);
+        cell.oncontextmenu = (ev) => {
+          ev.preventDefault();
+          Tips.show(EQUIP.armor(GEAR.make(type, lv)), cell.getBoundingClientRect(), '左键买下');
+        };
+        el.appendChild(cell);
       }
     }
+  },
+
+  /* 买之前先把金额摆出来 */
+  askBuy(type, lv, cell) {
+    const d = GEAR.def(type, lv);
+    if (!d) return;
+    Deal.show({
+      kind: 'buy',
+      title: '买入',
+      name: d.name,
+      sub: 'Lv' + lv + ' · ' + Math.round(d.dr * 100) + '% 减伤 · 耐久 ' + d.dur,
+      icon: type + lv,
+      short: d.short,
+      price: d.price,
+      can: Save.credits >= d.price && Save.stash.length < STASH_SLOTS,
+      onGo: () => this.buyArmor(type, lv)
+    }, cell.getBoundingClientRect());
   },
 
   buyArmor(type, lv) {
@@ -2935,8 +3258,45 @@ const Base = {
     });
   },
 
+  /* 仓库格子按容器尺寸实时算：正方形、边长 46~78，列数铺满宽度，行数铺满高度。
+     窗口一变就重算，所以什么分辨率下都是满屏的方格，不会一边空一大条。 */
+  gridMetrics() {
+    const grid = document.getElementById('stashGrid');
+    const gap = 9;                 // 缝隙跟着格子一起放大，比例感不变
+    const w = (grid && grid.clientWidth) || 900;
+    const h = (grid && grid.clientHeight) || 560;
+
+    /* 边长目标 93（原来 62，整体放大 1.5 倍），夹在 69~118 */
+    const TARGET = 93, MIN = 69, MAX = 118;
+
+    /* 格子必须是正方形，宽高又都有限，所以不能只按一边算：
+       在目标行数附近逐个试，行数定了边长就定了，再看这一边长能摆几列，
+       挑「宽高都用得最满」的那组。 */
+    const r0 = Math.max(3, Math.round((h + gap) / (TARGET + gap)));
+    let best = null;
+    for (let rows = Math.max(3, r0 - 2); rows <= r0 + 2; rows++) {
+      const cell = (h - gap * (rows - 1)) / rows;
+      if (cell < MIN || cell > MAX) continue;
+      const cols = Math.floor((w + gap) / (cell + gap));
+      if (cols < 4) continue;
+      const fill = (cols * cell + gap * (cols - 1)) / w +
+                   (rows * cell + gap * (rows - 1)) / h;
+      if (!best || fill > best.fill + 1e-6) best = { rows: rows, cols: cols, cell: cell, fill: fill };
+    }
+
+    if (!best) {                   // 容器异常小的时候兜底，别算不出格子
+      const cols = Math.max(3, Math.floor((w + gap) / (MIN + gap)));
+      return { cols: cols, rows: 3, cell: MIN };
+    }
+    return { cols: best.cols, rows: best.rows, cell: Math.floor(best.cell) };
+  },
+
+  page: 0,
+
   renderStash() {
-    const el = document.getElementById('stashList');
+    const grid = document.getElementById('stashGrid');
+    if (!grid) return;
+
     const list = Save.stash.filter(e => {
       const it = stashItem(e);
       if (!it) return false;
@@ -2952,47 +3312,92 @@ const Base = {
       return (ib.price || 0) - (ia.price || 0);
     });
 
-    document.getElementById('stashCount').textContent = Save.stash.length + ' 种 / ' + STASH_SLOTS + ' 格';
+    document.getElementById('stashCount').textContent =
+      Save.stash.length + ' / ' + STASH_SLOTS + ' 格';
     const total = Save.stash.reduce((a, e) => {
       const it = stashItem(e);
       return a + (it ? unitPrice(it) * (e.n || 1) : 0);
     }, 0);
     document.getElementById('stashValue').textContent = '¥' + total;
 
-    if (!list.length) {
-      el.innerHTML = '<div class="empty-note">仓库是空的。<br>下去一趟，总能带点东西回来。</div>';
-      return;
+    /* 分页：一页就是当前屏幕能摆下的格数 */
+    const m = this.gridMetrics();
+    if (grid.style && grid.style.setProperty) {
+      grid.style.setProperty('--cols', m.cols);
+      grid.style.setProperty('--gap', '9px');
+    }
+    const per = m.cols * m.rows;
+    this._per = per;
+    const pages = Math.max(1, Math.ceil(list.length / per));
+    this.page = U.clamp(this.page, 0, pages - 1);
+    const slice = list.slice(this.page * per, this.page * per + per);
+
+    grid.innerHTML = '';
+    for (let i = 0; i < per; i++) {
+      const cell = document.createElement('div');
+      const e = slice[i];
+      if (!e) {                       // 空位也画出来，网格始终填满可视区域
+        cell.className = 'scell empty';
+        grid.appendChild(cell);
+        continue;
+      }
+      const it = stashItem(e);
+      const n = e.n || 1;
+      cell.className = 'scell r' + (it.r || 1) + (it.equip ? ' eq' : '');
+      cell.innerHTML =
+        Icons.bagTag(it, '') +
+        '<span class="cn">' + esc(it.short || it.name) + '</span>' +
+        (n > 1 ? '<span class="qty">' + n + '</span>' : '');
+      cell.title = it.name + ' · ' + it.w.toFixed(2) + 'kg · ¥' +
+        (unitPrice(it) * n) + ' · 左键卖出 · 右键看详情';
+      cell.onclick = () => this.askSell(e, n, cell);
+      cell.oncontextmenu = (ev) => {
+        ev.preventDefault();
+        Tips.show(it, cell.getBoundingClientRect(), '左键卖出这一格');
+      };
+      grid.appendChild(cell);
     }
 
-    el.innerHTML = '';
-    for (const e of list) {
-      const it = stashItem(e);
-      const r = RARITY[it.r - 1];
-      const c = CATS[it.cat] || CATS.ind;
-      const unit = unitPrice(it);
-      const n = e.n || 1;
-      /* 装备多一行耐久，因为同一个名字的东西价钱可能差一倍 */
-      let extra = '';
-      if (it.equip) {
-        extra = it.equip.kind === 'armor'
-          ? '耐久 ' + Math.ceil(it.equip.gear.dur) + '/' + it.equip.gear.max
-          : '弹匣 ' + (it.equip.mag || 0) + ' 发';
-      }
-      const row = document.createElement('div');
-      row.className = 'srow';
-      row.style.borderLeftColor = r.color;
-      row.innerHTML =
-        Icons.bagTag(it, 'ic') +
-        '<span class="nm"><b>' + it.name + '</b>' +
-          '<span style="color:' + c.color + '">' + c.name + '</span> · ' +
-          '<span style="color:' + r.color + '">' + r.name + '</span>' +
-          (extra ? ' · ' + extra : '') + '</span>' +
-        '<span class="qty">×' + n + '</span>' +
-        '<span class="pr">¥' + (unit * n) + '</span>' +
-        '<button class="sell">卖出 ×' + n + '</button>';
-      row.querySelector('button').onclick = () => this.sell(e, n);
-      el.appendChild(row);
+    this.renderPager(pages, list.length);
+  },
+
+  renderPager(pages, total) {
+    const el = document.getElementById('stashPager');
+    if (!el) return;
+    if (pages <= 1) {
+      el.innerHTML = '<span>共 ' + total + ' 种</span>';
+      return;
     }
+    el.innerHTML =
+      '<button data-p="-1">上一页</button>' +
+      '<span>' + (this.page + 1) + ' / ' + pages + '</span>' +
+      '<button data-p="1">下一页</button>';
+    el.querySelectorAll('button').forEach(b => {
+      const d = parseInt(b.dataset.p, 10);
+      b.disabled = (d < 0 && this.page === 0) || (d > 0 && this.page >= pages - 1);
+      b.onclick = () => {
+        this.page = U.clamp(this.page + d, 0, pages - 1);
+        this.renderStash();
+      };
+    });
+  },
+
+  /* 卖出也要先确认：一格点下去就是一整堆，误点太亏 */
+  askSell(e, n, cell) {
+    const it = stashItem(e);
+    if (!it) return;
+    const gain = unitPrice(it) * n;
+    Deal.show({
+      kind: 'sell',
+      title: '卖出',
+      name: it.name + (n > 1 ? ' ×' + n : ''),
+      sub: it.equip ? '装备按剩余耐久折价' : (CATS[it.cat] || CATS.ind).name,
+      icon: it.icon,
+      id: it.id,
+      short: it.short,
+      price: gain,
+      onGo: () => this.sell(e, n)
+    }, cell.getBoundingClientRect());
   },
 
   /* 按仓库条目卖。装备按剩余耐久折价，永远不超过买价 */
@@ -3030,7 +3435,9 @@ const Base = {
   },
 
   /* ---- 出发 ---- */
-  deploy() {
+  deploy(mapId) {
+    const map=MAP_CATALOG.find(m=>m.id===(mapId||RAID_MAP.id));
+    if(!map)return;
     const cost = this.computeCost();
     if (cost > Save.credits) {
       this.note('信用点不够，还差 ¥' + (cost - Save.credits), true);
@@ -3054,7 +3461,51 @@ const Base = {
     Save.save();
 
     this.close();
-    Game.startRun(Save.loadout);
+    document.getElementById('mapVeil').classList.add('hidden');
+    Game.startRun(Save.loadout,map.id);
+  }
+};
+
+/* 地图选择：浏览/返回不消耗补给，确认出发才结算。 */
+const MapSelect = {
+  selectedId: RAID_MAP.id,
+  open() {
+    if(Game.state!=='base')return;
+    Base.close();Tips.hide();Deal.hide();
+    document.getElementById('gearPicker').style.display='none';
+    Game.state='map-select';
+    document.getElementById('mapVeil').classList.remove('hidden');
+    this.render();
+    document.querySelector('#mapChoices [aria-pressed="true"]')?.focus({preventScroll:true});
+  },
+  back() {
+    if(Game.state!=='map-select')return;
+    Base.open();document.getElementById('btnDeploy').focus();
+  },
+  render() {
+    const choices=document.getElementById('mapChoices');
+    choices.innerHTML=MAP_CATALOG.map(map=>`<button type="button" class="map-choice" data-map="${map.id}" aria-pressed="${map.id===this.selectedId}"><span class="map-choice-head"><b>${esc(map.title)}</b><span class="map-choice-state">${map.id===this.selectedId?'已选择':'选择地图'}</span></span><canvas width="${map.width*4}" height="${map.height*4}" data-preview="${map.id}" role="img" aria-label="${esc(map.title)}地形示意"></canvas><span class="map-choice-tags">${map.width}×${map.height} 格 · ${map.districts.length} 栋建筑 · ${map.exits.length} 个撤离点</span><span class="map-choice-desc">${map.tideEnabled?'修理铺、旧集市与低洼船坞。水位逐渐上涨，留意退路。':'两岸旧街、中央运河与双桥。水位稳定，银行集中高价值物资。'}</span><span class="map-choice-detail">${map.containers.length} 个容器 · ${map.enemies.length} 个敌人 · 12 分钟</span></button>`).join('');
+    choices.querySelectorAll('[data-map]').forEach(button=>button.onclick=()=>{
+      this.selectedId=button.dataset.map;this.render();
+      document.querySelector('#mapChoices [aria-pressed="true"]')?.focus({preventScroll:true});
+    });
+    for(const map of MAP_CATALOG){
+      const canvas=choices.querySelector('[data-preview="'+map.id+'"]'),c=canvas.getContext('2d');
+      const colors={wall:'#273b34',floor:'#8b9583',low:'#46584c',marsh:'#285960',canal_water:'#285960',street_stone:'#667c6b',courtyard_paving:'#a39a77',quay_top:'#91a18b',bridge_stone_deck:'#baac89',bridge_wood_deck:'#a98351'};
+      for(let y=0;y<map.height;y++)for(let x=0;x<map.width;x++){c.fillStyle=colors[map.terrain[map.terrainRows[y][x]].art]||'#7d927d';c.fillRect(x*4,y*4,4,4);}
+      c.fillStyle='#e8f4ee';c.fillRect(map.spawn.x*4-1,map.spawn.y*4-1,6,6);
+      c.fillStyle='#52e8b3';for(const ex of map.exits)c.fillRect(ex.x*4-1,ex.y*4-1,6,6);
+    }
+    const map=MAP_CATALOG.find(m=>m.id===this.selectedId),cost=Base.computeCost();
+    document.getElementById('mapSelectedName').textContent=map.title;
+    document.getElementById('mapSupplyCost').textContent=cost===0?'补给免费':'补给 ¥'+cost;
+    document.getElementById('mapSelectionHint').textContent='出发时结算补给，返回藏身处可调整携带。';
+    document.getElementById('btnMapStart').disabled=cost>Save.credits;
+    if(cost>Save.credits)document.getElementById('mapSelectionHint').textContent='信用点不足，请返回藏身处调整补给。';
+  },
+  confirm() {
+    if(Game.state!=='map-select')return;
+    Base.deploy(this.selectedId);
   }
 };
 

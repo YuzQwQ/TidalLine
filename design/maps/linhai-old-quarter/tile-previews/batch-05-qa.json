@@ -1,0 +1,54 @@
+{
+  "batch": 5,
+  "preparation": "nearest-neighbour, <=16 colours; opaque grounds, binary-alpha edge overlays",
+  "assets": [
+    {
+      "id": "canal_steps_w",
+      "output": "assets/tiles/canal_steps_w.png",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "opaquePixels": 1024,
+      "transparentPixels": 0,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 31,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 61.81,
+        "vertical": 9.44
+      },
+      "interiorDifference": {
+        "horizontal": 17.92,
+        "vertical": 9.7
+      }
+    },
+    {
+      "id": "canal_steps_e",
+      "output": "assets/tiles/canal_steps_e.png",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "opaquePixels": 1024,
+      "transparentPixels": 0,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 31,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 51.81,
+        "vertical": 8.69
+      },
+      "interiorDifference": {
+        "horizontal": 31.28,
+        "vertical": 8.54
+      }
+    }
+  ]
+}

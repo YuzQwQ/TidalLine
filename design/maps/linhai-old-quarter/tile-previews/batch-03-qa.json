@@ -1,0 +1,102 @@
+{
+  "batch": 3,
+  "preparation": "nearest-neighbour, <=16 colours; opaque grounds, binary-alpha edge overlays",
+  "assets": [
+    {
+      "id": "bridge_stone_rail_n",
+      "output": "assets/props/bridge_stone_rail_n.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 185,
+      "transparentPixels": 839,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 26,
+        "right": 31,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 1.44,
+        "vertical": 15.74
+      },
+      "interiorDifference": {
+        "horizontal": 1.54,
+        "vertical": 5.14
+      }
+    },
+    {
+      "id": "bridge_stone_rail_s",
+      "output": "assets/props/bridge_stone_rail_s.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 190,
+      "transparentPixels": 834,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 31,
+        "bottom": 5
+      },
+      "wrapDifference": {
+        "horizontal": 11.68,
+        "vertical": 80.31
+      },
+      "interiorDifference": {
+        "horizontal": 2.62,
+        "vertical": 10.56
+      }
+    },
+    {
+      "id": "bridge_wood_rail_n",
+      "output": "assets/props/bridge_wood_rail_n.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 139,
+      "transparentPixels": 885,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 24,
+        "right": 31,
+        "bottom": 31
+      },
+      "wrapDifference": {
+        "horizontal": 19.17,
+        "vertical": 93.63
+      },
+      "interiorDifference": {
+        "horizontal": 1.99,
+        "vertical": 8.06
+      }
+    },
+    {
+      "id": "bridge_wood_rail_s",
+      "output": "assets/props/bridge_wood_rail_s.png",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "opaquePixels": 166,
+      "transparentPixels": 858,
+      "partialAlphaPixels": 0,
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 31,
+        "bottom": 7
+      },
+      "wrapDifference": {
+        "horizontal": 0.49,
+        "vertical": 5.77
+      },
+      "interiorDifference": {
+        "horizontal": 1.46,
+        "vertical": 7.47
+      }
+    }
+  ]
+}

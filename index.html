@@ -144,8 +144,15 @@ window.addEventListener('error', function (e) {
   #lootBox::-webkit-scrollbar { width: 6px; }
   #lootBox::-webkit-scrollbar-thumb { background: #1e312b; }
   #lootBox .ttl {
-    font-size: 12px; letter-spacing: 2px; color: #6fa093; margin-bottom: 10px;
-    display: flex; justify-content: space-between;
+    font-size: 12px; letter-spacing: 1px; color: #6fa093; margin-bottom: 10px;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+  }
+  #lootBox .ttl > span { white-space: nowrap; }
+  #lootBox .ttl > span:first-child {
+    flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  }
+  #lootBox .ttl > span:last-child {
+    flex: 0 0 auto; font-size: 10.5px; letter-spacing: 0; color: #55736a;
   }
   .row {
     display: flex; align-items: center; gap: 8px;
@@ -351,18 +358,17 @@ window.addEventListener('error', function (e) {
   .hide { display: none !important; }
 
 /* ===== 藏身处 ===== */
+/* 藏身处铺满整个视口：它不是画面，没有 3:2 的约束，
+   窗口越大格子越宽松，右侧仓库跟着长高 */
 .base {
-  width: min(1180px, 94vw);
-  height: min(780px, 90vh);
+  width: 100%; height: 100%;
   background: #0d1411;
-  border: 1px solid #1e312b;
   display: flex; flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.7);
 }
 .base-hd {
   flex: 0 0 auto;
-  padding: 16px 24px 14px;
+  padding: 18px 28px 16px;
   border-bottom: 1px solid #1a2a25;
   display: flex; align-items: flex-end; justify-content: space-between;
 }
@@ -376,9 +382,9 @@ window.addEventListener('error', function (e) {
 
 /* 左：装备与携带 */
 .base-left {
-  flex: 0 0 302px;
+  flex: 0 0 clamp(300px, 22vw, 400px);
   border-right: 1px solid #1a2a25;
-  padding: 16px 20px 18px;
+  padding: 18px 22px 20px;
   display: flex; flex-direction: column;
   overflow-y: auto;
 }
@@ -386,8 +392,31 @@ window.addEventListener('error', function (e) {
 .base-left::-webkit-scrollbar-thumb { background: #1e312b; }
 .base-left h3 {
   font-size: 11px; letter-spacing: 2px; color: #6fa093;
-  margin: 0 0 10px; font-weight: 600;
+  margin: 18px 0 10px; font-weight: 600;
 }
+.base-left h3:first-child { margin-top: 0; }
+
+/* 顶部导航：仓库 / 护甲商人 */
+.base-nav {
+  flex: 0 0 auto;
+  padding: 0 28px;
+  background: #0b1210;
+  border-bottom: 1px solid #1a2a25;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-tabs { display: flex; }
+.nav-tabs button {
+  margin: 0; padding: 11px 18px;
+  background: transparent; border: none; border-bottom: 2px solid transparent;
+  color: #5f7a72; font-size: 12px; letter-spacing: 2px; cursor: pointer;
+  border-radius: 0;
+}
+.nav-tabs button:hover { background: transparent; color: #a8c4ba; }
+.nav-tabs button.on { color: #dbe5e1; border-bottom-color: #14685C; }
+.nav-tip { font-size: 10.5px; color: #3f5a52; letter-spacing: 1px; }
+
+/* 左栏两页：装备页 / 商人页 */
+.pane { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .slot {
   display: flex; gap: 11px; align-items: center;
   padding: 8px 10px; margin-bottom: 6px;
@@ -447,6 +476,34 @@ window.addEventListener('error', function (e) {
   margin-top: 8px; text-align: center; min-height: 18px;
 }
 .deploy-hint.bad { color: #b5551f; }
+
+/* 地图选择为独立页面，保留返回配装的路径。 */
+#mapVeil { position:fixed;align-items:flex-start;background:#0d1512;overflow-y:auto;z-index:21; }
+.map-page { width:min(1040px,100%);min-height:100%;box-sizing:border-box;padding:32px;display:flex;flex-direction:column;gap:24px; }
+.map-heading { display:flex;align-items:center;justify-content:space-between;gap:16px; }
+.map-heading h1 { font-size:25px;color:#dbe9e2;letter-spacing:3px;margin:4px 0; }
+.map-heading p { margin:8px 0 0;color:#7c988d;font-size:13px;line-height:1.7; }
+#btnMapBack { background:transparent;border:1px solid #365247;color:#a1b7ad;white-space:nowrap;font-size:12px;padding:10px 14px;letter-spacing:0; }
+.map-choices { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px; }
+.map-choice { width:100%;min-width:0;text-align:left;display:flex;flex-direction:column;gap:14px;padding:20px;box-sizing:border-box;border:1px solid #2a4037;background:#111f18;color:#d9e7df;letter-spacing:0;font:inherit;cursor:pointer; }
+.map-choice:hover { background:#16281f;border-color:#607d6a; }
+.map-choice[aria-pressed="true"] { border-color:#69c7a4;box-shadow:inset 0 0 0 1px #69c7a4;background:#142a20; }
+.map-choice:focus-visible,#btnMapBack:focus-visible,#btnMapStart:focus-visible { outline:2px solid #b3ebd0;outline-offset:4px; }
+.map-choice-head { display:flex;justify-content:space-between;align-items:center;gap:10px; }
+.map-choice-head b { font-size:19px;font-weight:500; }
+.map-choice-state { font-size:11px;color:#83ae98; }
+.map-choice canvas { width:100%;height:208px;object-fit:contain;image-rendering:pixelated;background:#0a130f;border:1px solid #2a4037;box-sizing:border-box; }
+.map-choice-tags { color:#d0bf90;font-size:12px;line-height:1.7; }
+.map-choice-desc { color:#9fb2a5;font-size:13px;line-height:1.8;flex:1; }
+.map-choice-detail { color:#769889;font-size:12px; }
+.map-footer { margin-top:auto;position:sticky;bottom:0;background:#0d1512;border-top:1px solid #2a4037;padding:20px 0 0;display:flex;align-items:center;justify-content:space-between;gap:20px; }
+.map-footer b { color:#d4e7db;font-size:16px; }
+.map-footer small { display:block;color:#7d9e8c;font-size:12px;line-height:1.8;margin-top:6px; }
+#mapSelectionHint { color:#779181;font-size:11px;line-height:1.7;margin:6px 0 0; }
+#btnMapStart { min-width:150px;background:#14685c;color:#eaf4f0;letter-spacing:3px;padding:14px 24px;font-size:14px; }
+#btnMapStart:hover { background:#1a8577; }
+#btnMapStart:disabled { color:#627c6c;background:#213329;cursor:not-allowed; }
+@media(max-width:640px) { .map-page{padding:20px 16px;gap:20px}.map-heading{align-items:flex-start}.map-heading h1{font-size:21px}.map-heading p{font-size:12px}.map-choices{grid-template-columns:1fr;gap:16px}.map-choice{padding:16px;gap:12px}.map-choice canvas{height:175px}.map-footer{gap:12px;padding-top:14px}.map-footer b{font-size:14px}#btnMapStart{min-width:100px;padding:13px 18px}#btnMapBack{padding:9px;font-size:11px} }
 
 /* 右：仓库 */
 .base-right { flex: 1; display: flex; flex-direction: column; min-width: 0; }
@@ -519,19 +576,122 @@ window.addEventListener('error', function (e) {
 }
 .store-ft b { color: #b09a62; font-family: Consolas, monospace; font-weight: 500; }
 
-/* 仓库 / 商人 两个页签共用一块地方 */
-.tabpane { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.tabs { display: flex; margin-right: 10px; }
+/* 仓库格子：9 列 × 10 行，一页 90 格 */
+.stash-grid {
+  flex: 1; min-height: 0; overflow-y: auto;
+  display: grid;
+  /* 列数不写死：JS 按容器宽高算出 --cols，格子是正方形，一行铺满 */
+  grid-template-columns: repeat(var(--cols, 14), minmax(0, 1fr));
+  grid-auto-rows: auto;
+  gap: var(--gap, 9px);
+  padding: 0 20px 10px;
+  align-content: start;
+}
+.stash-grid::-webkit-scrollbar { width: 7px; }
+.stash-grid::-webkit-scrollbar-thumb { background: #1e312b; }
+
+.scell {
+  position: relative; box-sizing: border-box; overflow: hidden;
+  border: 1px solid #1a2a25; background: #101a17;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1px;
+  cursor: pointer;
+}
+.scell:hover { border-color: #2f5a4f; background: #14201c; }
+.scell img { width: 34px; height: 34px; object-fit: contain; image-rendering: pixelated; }
+.scell .gl {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: #7f9c93;
+  background: #0b1411; border: 1px dashed #27423a;
+}
+.scell .cn {
+  font-size: 12px; line-height: 1.2; color: #a8bdb5;
+  max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.scell .qty {
+  position: absolute; right: 3px; top: 1px;
+  font-size: 10px; color: #cfe0d9; font-family: Consolas, monospace;
+  text-shadow: 0 1px 2px #000; letter-spacing: 0;
+}
+.scell.empty { border-style: dashed; border-color: #29453d; background: #0c1613; opacity: 1; cursor: default; }
+.scell.empty:hover { border-color: #29453d; background: #0c1613; }
+
+/* 仓库格子：正方形，贴图占 74%，名字压在右下角。
+   只作用于 .stash-grid，商店那三列还是原来的竖排布局。 */
+.stash-grid .scell {
+  aspect-ratio: 1 / 1;
+  display: block;
+  padding: 0;
+}
+.stash-grid .scell img,
+.stash-grid .scell .gl {
+  position: absolute; left: 50%; top: 41%;
+  transform: translate(-50%, -50%);
+  width: 76%; height: 76%;
+  /* 48×48 的贴图放大到 72px 正好是 1.5 倍整数放大，像素块才均匀；
+     再大就只是糊，所以封顶 */
+  max-width: 72px; max-height: 72px;
+  object-fit: contain; image-rendering: pixelated;
+}
+.stash-grid .scell .gl {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: #6d8a81;
+  background: transparent; border: 0;
+}
+.stash-grid .scell .cn {
+  position: absolute; right: 3px; bottom: 1px;
+  max-width: calc(100% - 6px);
+  font-size: 13px; line-height: 1.1;
+  text-align: right;
+  color: #c6d6d0;
+  text-shadow: 0 1px 2px #000, 0 0 3px #000;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.stash-grid .scell.empty .cn { display: none; }
+/* 装备左上角点一个角，和消耗品区分开 */
+.scell.eq::before {
+  content: ''; position: absolute; left: 3px; top: 3px;
+  width: 4px; height: 4px; background: #5f9bc0;
+}
+.scell.r1 { background-image: linear-gradient(160deg, rgba(85,96,92,0.28), rgba(85,96,92,0.04)); }
+.scell.r2 { background-image: linear-gradient(160deg, rgba(63,139,120,0.28), rgba(63,139,120,0.04)); }
+.scell.r3 { background-image: linear-gradient(160deg, rgba(63,109,155,0.30), rgba(63,109,155,0.04)); }
+.scell.r4 { background-image: linear-gradient(160deg, rgba(168,134,42,0.32), rgba(168,134,42,0.05)); }
+.scell.r5 { background-image: linear-gradient(160deg, rgba(141,58,58,0.36), rgba(141,58,58,0.06)); }
+
+.pager { display: flex; align-items: center; gap: 6px; }
+.pager button {
+  margin: 0; padding: 2px 9px; font-size: 10.5px; letter-spacing: 0;
+  background: transparent; color: #6fa093; border: 1px solid #1e312b; border-radius: 2px;
+}
+.pager button:hover { background: #16241f; color: #a8c4ba; border-color: #2f5a4f; }
+.pager button:disabled { color: #35504a; border-color: #16241f; cursor: default; }
+.pager button:disabled:hover { background: transparent; border-color: #16241f; }
+.pager span { font-size: 10.5px; color: #5f7a72; letter-spacing: 0; }
+
+/* 商人：商品也是格子，摆在左栏 */
 .shop-note {
-  flex: 0 0 auto; margin: 10px 20px 0; padding: 7px 10px;
+  flex: 0 0 auto; margin: 0 0 12px; padding: 7px 10px;
   font-size: 11px; line-height: 1.6; color: #6d8780;
   background: #101a17; border-left: 2px solid #2f5a4f;
 }
 .shop-note b { color: #b09a62; font-weight: 500; }
-.shop-cat {
-  padding: 8px 0 3px; font-size: 10.5px; letter-spacing: 2px; color: #6fa093;
+.shop-grid {
+  flex: 0 0 auto;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
 }
-.shop-cat:first-child { padding-top: 0; }
+.shop-grid .scell { aspect-ratio: auto; height: 76px; cursor: pointer; }
+.shop-grid .scell img { width: 34px; height: 34px; }
+.shop-grid .scell .pr { font-size: 10.5px; color: #b09a62; font-family: Consolas, monospace; letter-spacing: 0; }
+.shop-ft {
+  flex: 0 0 auto; margin: auto 0 0; padding: 10px 0 0;
+  border-top: 1px solid #1a2a25;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: #6d8780;
+}
+.shop-ft b { color: #b09a62; font-family: Consolas, monospace; font-weight: 500; }
 .srow .buy {
   flex: 0 0 auto; margin: 0; padding: 4px 12px; font-size: 10.5px; letter-spacing: 1px;
   background: transparent; color: #7fb0a3; border: 1px solid #26403a; border-radius: 2px;
@@ -580,6 +740,75 @@ window.addEventListener('error', function (e) {
   padding: 9px 10px; font-size: 11px; line-height: 1.7; color: #5f7a72;
 }
 .picker-empty b { color: #7fb0a3; font-weight: 500; }
+
+/* 物品详情悬浮窗（尺寸整体 1.5 倍：宽 252→378，字号 13/10.5/10 → 19.5/16/15） */
+#itemTip {
+  position: fixed; z-index: 62; box-sizing: border-box; width: 378px;
+  border: 1px solid #2f5a4f; background: #0d1714;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.72);
+  padding: 15px 18px 17px;
+}
+.tip-hd { display: flex; gap: 15px; align-items: flex-start; }
+.tip-ic {
+  flex: 0 0 63px; width: 63px; height: 63px;
+  display: flex; align-items: center; justify-content: center;
+  background: #0b1411; border: 1px solid #223a33; border-radius: 2px;
+  image-rendering: pixelated;
+}
+.tip-ic img { width: 57px; height: 57px; object-fit: contain; image-rendering: pixelated; }
+.tip-ic.gl { font-size: 18px; color: #7f9c93; border-style: dashed; }
+.tip-ttl { min-width: 0; flex: 1; }
+/* 名字和下面那行类别必须各占一行，否则大字号下会黏成一句 */
+.tip-nm { display: block; font-size: 19.5px; color: #dbe5e1; font-weight: 500; line-height: 1.35; }
+.tip-sub { display: block; font-size: 15px; color: #5f7a72; margin-top: 5px; letter-spacing: 0.5px; }
+.tip-sub i { font-style: normal; }
+.tip-rows { margin-top: 14px; }
+.tip-row {
+  display: flex; justify-content: space-between; gap: 15px;
+  font-size: 16px; line-height: 1.75; color: #6d8780;
+}
+.tip-row b { color: #a8c4ba; font-weight: 500; font-family: Consolas, monospace; letter-spacing: 0; }
+.tip-row b.gold { color: #b09a62; }
+.tip-desc {
+  margin-top: 12px; padding-top: 12px; border-top: 1px dashed #1e312b;
+  font-size: 16px; line-height: 1.75; color: #7d948c;
+}
+.tip-foot {
+  margin-top: 12px; font-size: 15px; color: #47645c; line-height: 1.6;
+}
+
+/* 交易确认悬浮窗 */
+.deal {
+  position: fixed; z-index: 62; box-sizing: border-box; width: 250px;
+  border: 1px solid #3d5a52; background: #0d1714;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.72);
+  padding: 11px 12px 12px;
+}
+.deal-hd {
+  font-size: 10.5px; letter-spacing: 1px; color: #6fa093;
+  padding-bottom: 7px; border-bottom: 1px solid #1a2a25;
+}
+.deal-bd { display: flex; gap: 10px; align-items: center; padding: 9px 0; }
+.deal-bd .tip-ic { flex: 0 0 38px; width: 38px; height: 38px; }
+.deal-bd .tip-ic img { width: 34px; height: 34px; }
+.deal-nm { font-size: 12px; color: #dbe5e1; line-height: 1.5; }
+.deal-nm i { display: block; font-style: normal; font-size: 10px; color: #5f7a72; margin-top: 2px; }
+.deal-sum { font-size: 11px; color: #6d8780; line-height: 1.9; }
+.deal-sum span { display: flex; justify-content: space-between; }
+.deal-sum b { font-family: Consolas, monospace; font-weight: 500; color: #a8c4ba; letter-spacing: 0; }
+.deal-sum b.gold { color: #b09a62; }
+.deal-sum b.warn { color: #b5551f; }
+.deal-acts { display: flex; gap: 8px; margin-top: 10px; }
+.deal-acts button {
+  flex: 1; margin: 0; padding: 6px 0; font-size: 11px; letter-spacing: 1px;
+  border-radius: 2px; cursor: pointer;
+  background: transparent; color: #6fa093; border: 1px solid #26403a;
+}
+.deal-acts button:hover { background: #16241f; color: #a8c4ba; border-color: #2f5a4f; }
+.deal-acts button.go { background: #14685C; color: #eaf4f0; border-color: #14685C; }
+.deal-acts button.go:hover { background: #1a8577; }
+.deal-acts button.go.no { background: #23302b; color: #6b4a3a; border-color: #3a2626; cursor: default; }
+.deal-acts button.go.no:hover { background: #23302b; }
 </style>
 </head>
 <body>
@@ -638,11 +867,11 @@ window.addEventListener('error', function (e) {
 
     <h2>这一版要试什么</h2>
     <div class="keys" style="grid-template-columns:1fr">
-      <div><span style="color:#8ba39b;line-height:1.95">地图分三层：左上是外围（开阔、敌人少）、中部是公寓楼（房间多、有回响体）、右下低洼区是核心（只在退潮时可进、有守卫）。<br>
+      <div><span style="color:#8ba39b;line-height:1.95">临海路旧街区：西岸住宅与诊所、中央运河、东岸钟表店与银行。通过北石桥或南栈桥过河，两岸南侧各有一个撤离点。<br>
       容器分三档：小抽屉开了就走、柜子要一秒、保险箱要五秒且完全不能动。<br>
-      门可以关，关上之后敌人进不来——那是你的避难间。<br>
+      门可以开关；关门能挡住通路和视线，利用房间与后巷绕行。<br>
       声音不只是暴露你：按 Q 扔石子能把敌人引到别处，也能把回响体引到拾荒者身上。<br>
-      潮汐在十二分钟里走完退潮、平潮、涨潮，水面会淹没低洼区。</span></div>
+      本图先采用稳定水位：运河不可涉水，南桥与低地可正常通行。十二分钟内搜刮并撤离。</span></div>
     </div>
 
     <div class="tip">
@@ -670,50 +899,72 @@ window.addEventListener('error', function (e) {
       </div>
     </div>
 
+    <div class="base-nav">
+      <div class="nav-tabs" id="baseTabs"></div>
+      <div class="nav-tip" id="navTip">左边配装带补给，右边是仓库</div>
+    </div>
+
     <div class="base-main">
       <div class="base-left">
-        <h3>装备</h3>
-        <div id="baseGear"></div>
+        <!-- 页签一：装备 / 携带 / 出发 -->
+        <div class="pane" id="paneGear">
+          <h3>装备</h3>
+          <div id="baseGear"></div>
 
-        <h3 style="margin-top:20px">携带</h3>
-        <div id="carryList"></div>
-        <div class="carry-sum"><span>补给花费</span><b id="carryCost">¥0</b></div>
+          <h3>携带</h3>
+          <div id="carryList"></div>
+          <div class="carry-sum"><span>补给花费</span><b id="carryCost">¥0</b></div>
 
-        <button id="btnDeploy">进 入 围 栏 区</button>
-        <div class="deploy-hint" id="deployHint"></div>
+          <button id="btnDeploy">进入游戏</button>
+          <div class="deploy-hint" id="deployHint"></div>
+        </div>
+
+        <!-- 页签二：护甲商人，展开在左边这一块 -->
+        <div class="pane" id="paneShop" style="display:none">
+          <div class="shop-note">
+            只进<b>崭新</b>的一~三级货。更高级的东西他也弄不到，那得你自己下去找。
+          </div>
+          <div class="shop-grid" id="shopGrid"></div>
+          <div class="shop-ft">
+            <span>买下的东西直接进右边的仓库</span>
+            <span>余额 <b id="shopWallet">¥0</b></span>
+          </div>
+        </div>
       </div>
 
       <div class="base-right">
         <div class="store-hd">
-          <h3><span id="storeTitle">仓库</span><em id="stashCount">0 种</em></h3>
+          <h3>仓库<em id="stashCount">0 / 90</em></h3>
           <div class="store-acts">
-            <div class="tabs" id="baseTabs"></div>
             <button class="mini" id="btnSellJunk">卖掉所有寻常物</button>
           </div>
         </div>
 
-        <div class="tabpane" id="tabStash">
-          <div class="store-filter" id="stashFilter"></div>
-          <div class="stash-list" id="stashList"></div>
-          <div class="store-ft">
-            <span>库存总价值 <b id="stashValue">¥0</b></span>
-            <span>卖出不影响图鉴记录</span>
-          </div>
-        </div>
-
-        <div class="tabpane" id="tabShop" style="display:none">
-          <div class="shop-note">
-            护甲商人只进<b>崭新</b>的一~三级货 —— 更高级的东西他也弄不到，那得你自己下去找。
-          </div>
-          <div class="stash-list" id="shopList"></div>
-          <div class="store-ft">
-            <span>买下的东西直接进仓库，回到左边装备槽里换上</span>
-            <span>信用点 <b id="shopWallet">¥0</b></span>
-          </div>
+        <div class="store-filter" id="stashFilter"></div>
+        <div class="stash-grid" id="stashGrid"></div>
+        <div class="store-ft">
+          <span>库存总价值 <b id="stashValue">¥0</b></span>
+          <span class="pager" id="stashPager"></span>
+          <span>卖出不影响图鉴记录</span>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- 地图选择：确认出发后才结算补给 -->
+<div class="veil hidden" id="mapVeil">
+  <main class="map-page" aria-labelledby="mapSelectionTitle">
+    <header class="map-heading">
+      <div><div class="kicker">DEPLOYMENT</div><h1 id="mapSelectionTitle">选择地图</h1><p>选好目的地，带上补给出发。</p></div>
+      <button type="button" id="btnMapBack">返回藏身处</button>
+    </header>
+    <div class="map-choices" id="mapChoices" role="group" aria-label="可选地图"></div>
+    <footer class="map-footer">
+      <div aria-live="polite"><b id="mapSelectedName"></b><small id="mapSupplyCost"></small><p id="mapSelectionHint"></p></div>
+      <button type="button" id="btnMapStart">出发</button>
+    </footer>
+  </main>
 </div>
 
 <!-- 结算界面 -->
@@ -724,7 +975,14 @@ window.addEventListener('error', function (e) {
 <!-- 装备选择悬浮窗：贴着被点的那个槽位右侧展开，不占页面空间 -->
 <div class="picker" id="gearPicker" style="display:none"></div>
 
+<!-- 物品详情悬浮窗：任何地方右键都能看，内容包括名字/类别/稀有度/重量/价格/描述 -->
+<div class="tip" id="itemTip" style="display:none"></div>
+
+<!-- 交易确认悬浮窗：买东西之前把金额和余额摆出来 -->
+<div class="deal" id="dealBox" style="display:none"></div>
+
 <script src="js/config.js"></script>
+<script src="js/pixfont.js"></script>
 <script src="js/data.js"></script>
 <script src="js/core.js"></script>
 <script src="js/entities.js"></script>

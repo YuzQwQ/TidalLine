@@ -844,7 +844,7 @@ class Bullet {
     for (let i = 1; i <= probes; i++) {
       const t = i / probes;
       const px = ax + (bx - ax) * t, py = ay + (by - ay) * t;
-      if (!M.walkable(M.tx(px), M.ty(py))) { wallT = t; break; }
+      if (M.blocksShot(M.tx(px), M.ty(py))) { wallT = t; break; }
     }
 
     // 2) 角色：线段到圆心最短距离 ≤ 有效半径就算碰到

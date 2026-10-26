@@ -1,73 +1,32 @@
-/* 扩建地图的可玩性与布防回归，无第三方依赖。 */
-const fs = require('fs');
-const vm = require('vm');
-const assert = require('assert/strict');
-const path = require('path');
-const root = path.resolve(__dirname, '..');
-const ctx = vm.createContext({ console, performance });
-for (const file of ['config.js', 'data.js', 'core.js']) vm.runInContext(fs.readFileSync(path.join(root, 'js', file), 'utf8'), ctx);
-const { M, rows, districts, spawns, props, types } = vm.runInContext('({M,rows:MAP_ROWS,districts:MAP_DISTRICTS,spawns:SPAWNS,props:DECOR,types:CONTAINER_TYPES})', ctx);
-M.load(rows);
-assert.equal(M.W, 64); assert.equal(M.H, 44);
-assert(rows.every(row => row.length === M.W));
-assert(rows[0].split('').every(ch => ch === '#') && rows.at(-1).split('').every(ch => ch === '#'));
-assert(rows.every(row => row[0] === '#' && row.at(-1) === '#'));
-assert.equal(rows.join('').split('P').length - 1, 1);
-assert.equal(M.extracts.length, 3);
-
-function inside(x, y, polygon) {
-  let result = false;
-  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-    const [a,b] = polygon[i], [u,v] = polygon[j];
-    if ((b > y) !== (v > y) && x < (u-a)*(y-b)/(v-b)+a) result = !result;
-  }
-  return result;
+/* 临海路设计稿与实际游戏碰撞/寻路一致性。 */
+const fs=require('fs'),vm=require('vm'),path=require('path'),assert=require('assert/strict');
+const root=path.resolve(__dirname,'..'),draft=require('../design/maps/linhai-old-quarter/layout.json');
+require('../design/maps/linhai-old-quarter/validate.cjs').validate(draft);
+const ctx=vm.createContext({console,performance});
+for(const f of ['config.js','data.js','core.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),ctx);
+const {M,map,rows,spawns,props}=vm.runInContext('({M,map:RAID_MAP,rows:MAP_ROWS,spawns:SPAWNS,props:DECOR})',ctx);
+assert.deepEqual(JSON.parse(JSON.stringify(map)),require('./build-linhai-map.js').compile(),'地图快照落后于设计稿');
+M.load(rows);assert.equal(M.W,72);assert.equal(M.H,56);assert.equal(M.extracts.length,2);
+const key=(x,y)=>x+','+y,dirs=[[1,0],[-1,0],[0,1],[0,-1]];
+function flood(blocked=new Set()) {const q=[M.playerSpawn],seen=new Set([key(q[0].x,q[0].y)]);for(let i=0;i<q.length;i++)for(const [dx,dy]of dirs){const x=q[i].x+dx,y=q[i].y+dy,k=key(x,y);if(M.walkable(x,y)&&!blocked.has(k)&&!seen.has(k)){seen.add(k);q.push({x,y});}}return seen;}
+const reached=flood();
+for(let y=0;y<M.H;y++)for(let x=0;x<M.W;x++){
+ const occupied=draft.props.some(p=>p.x===x&&p.y===y)||draft.containers.some(p=>p.x===x&&p.y===y);
+ assert.equal(M.walkable(x,y),draft.legend[draft.rows[y][x]].walkable&&!occupied,'碰撞不一致 '+key(x,y));
+ if(M.walkable(x,y))assert(reached.has(key(x,y)),'孤立可行格 '+key(x,y));
+ if(x===0||y===0||x===M.W-1||y===M.H-1)assert(!M.walkable(x,y),'地图边缘可绕河');
 }
-function flood(level) {
-  M.tideLevel = level;
-  const start = M.playerSpawn, queue = [start], reached = new Set([start.x + ',' + start.y]);
-  for (let i = 0; i < queue.length; i++) {
-    const {x,y} = queue[i];
-    for (const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
-      const nx=x+dx, ny=y+dy, key=nx+','+ny;
-      if (M.walkable(nx,ny) && !reached.has(key)) { reached.add(key); queue.push({x:nx,y:ny}); }
-    }
-  }
-  return reached;
-}
-const reached = flood(0), boxes = [];
-for (let y=0; y<M.H; y++) for (let x=0; x<M.W; x++) {
-  if (M.walkable(x,y)) assert(reached.has(x+','+y), `孤立空地 ${x},${y}`);
-  if (!types[rows[y][x]]) continue;
-  boxes.push({x,y});
-  assert(!M.walkable(x,y));
-  assert([[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy]) => reached.has((x+dx)+','+(y+dy)) && M.findPath(M.playerSpawn.x,M.playerSpawn.y,x+dx,y+dy)), `箱柜缺少可寻路操作面 ${x},${y}`);
-}
-assert.equal(boxes.length, 41);
-assert.equal(spawns.length, 24);
-assert.equal(new Set(props.map(p => p.x+','+p.y)).size, props.length);
-for (const spawn of spawns) {
-  assert(M.walkable(spawn.x,spawn.y), '敌人不能出生在实体内');
-  assert(reached.has(spawn.x+','+spawn.y));
-  assert(Math.hypot(spawn.x-M.playerSpawn.x,spawn.y-M.playerSpawn.y)>=12, '出生缓冲不足');
-  assert([2,3].includes(spawn.patrolRadius));
-  for (const other of spawns) if (other !== spawn) assert(Math.hypot(spawn.x-other.x,spawn.y-other.y)>=3, '出生过密');
-}
-const groups = districts.map(d => ({ ...d, enemies: spawns.filter(s => inside(s.x+.5,s.y+.5,d.polygon)).length, heavy: boxes.filter(b => inside(b.x+.5,b.y+.5,d.polygon) && ['B','K'].includes(rows[b.y][b.x])).length }));
-assert(groups.every(d => d.polygon.length >= 6), '建筑不能退回统一方框');
-assert(groups.filter(d => d.loot === 'high').every(d => d.enemies >= 3 && d.heavy >= 2), '高物资区须有守备与至少两处重型物资');
-assert(groups.filter(d => d.loot === 'normal').every(d => d.enemies >= 2 && d.enemies <= 3));
-assert(groups.filter(d => d.loot === 'safe').every(d => d.enemies === 0));
-assert(M.walkable(32,11), 'U形集市应保留开放庭院');
-for (const level of [1.55,3]) {
-  const safe = flood(level);
-  for (const ex of M.extracts) {
-    assert(safe.has(ex.x+','+ex.y), '涨潮封死撤离路线');
-    assert.equal(M.waterDepth(ex.x,ex.y), 0);
-    assert(M.findPath(M.playerSpawn.x,M.playerSpawn.y,ex.x,ex.y), '涨潮寻路失败');
-  }
-  for (let y=0;y<M.H;y++) for (let x=0;x<M.W;x++) if (rows[y][x] === '~') assert(!safe.has(x+','+y), '深水港池仍可通行');
-  assert(safe.has('21,17') && safe.has('42,32'), '堤顶主路不能被潮水切断');
-}
-console.log('OK: 64×44 / 41 容器 / 24 敌人 / 全空地连通 / 全箱柜操作面与寻路 / 分区布防与间距 / 出生缓冲 / 各潮位三个撤离点 / 深水封路');
-console.table(groups.map(d => ({街区:d.name,建筑:d.shape,敌人:d.enemies,重型容器:d.heavy})));
+for(const box of draft.containers){assert(!M.walkable(box.x,box.y));assert(!M.opaque(box.x,box.y));assert(dirs.some(([dx,dy])=>reached.has(key(box.x+dx,box.y+dy))&&M.findPath(M.playerSpawn.x,M.playerSpawn.y,box.x+dx,box.y+dy)));}
+assert.equal(draft.containers.length,41);assert.equal(spawns.length,24);assert.equal(props.length,40);
+for(const s of spawns){assert(M.walkable(s.x,s.y));assert(Math.hypot(s.x-map.spawn.x,s.y-map.spawn.y)>=12);for(const ex of map.exits)assert(Math.hypot(s.x-ex.x,s.y-ex.y)>=6);for(const other of spawns)if(other!==s)assert(Math.hypot(s.x-other.x,s.y-other.y)>=3);}
+const bridgeCells=b=>{const out=[];for(let y=b.rect[1];y<=b.rect[3];y++)for(let x=b.rect[0];x<=b.rect[2];x++)out.push(key(x,y));return out;};
+for(const b of map.bridges)assert(flood(new Set(bridgeCells(b))).has('67,51'),'单桥仍须能撤离');
+assert(!flood(new Set(map.bridges.flatMap(bridgeCells))).has('67,51'),'封闭两桥后不可绕河');
+for(const ex of map.exits)assert(M.findPath(map.spawn.x,map.spawn.y,ex.x,ex.y));
+for(const w of draft.windows)for(const [x,y]of w.cells){assert(!M.walkable(x,y));assert(!M.opaque(x,y));assert(M.blocksShot(x,y));}
+assert(M.lineOfSight(43,18,45,18),'橱窗允许视线穿过');assert(M.lineOfSight(28,28,37,28),'运河不挡视线');
+assert(!M.blocksShot(31,28));assert(!M.blocksShot(29,28));
+for(const d of M.doors){for(const [x,y]of d.cells)assert.equal(M.at(x,y).door,d);d.open=false;for(const [x,y]of d.cells){assert(!M.walkable(x,y));assert(M.opaque(x,y));}d.open=true;}
+assert(M.walkable(14,39)&&M.walkable(14,40),'破口净宽');
+const dry=[0,1.55,3].map(level=>{M.tideLevel=level;for(const ex of map.exits)assert.equal(M.waterDepth(ex.x,ex.y),0);return flood().size;});assert(dry.every(n=>n===dry[0]),'潮汐预留不可提前封路');
+console.log('OK: 72×56 同源地图 / 41 容器 / 24 敌人 / 40 家具 / 双桥唯一跨河 / 两处撤离 / 门组 / 透视窗 / 全潮位稳定');

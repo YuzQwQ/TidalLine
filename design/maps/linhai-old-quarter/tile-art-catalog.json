@@ -1,0 +1,531 @@
+{
+  "title": "临海路旧街区 · 地块绘制清单",
+  "scope": "临海路新地图的素材与状态清单。首批 18 张已接入 72×56 游戏地图，开发版与离线版共用同源数据；潮汐本轮采用稳定水位。",
+  "tileSize": 32,
+  "wallPolicy": "首版五栋建筑、室内隔墙、边界与封闭背景铺面统一复用 assets/tiles/wall.png。墙体的短立面与暗边沿用渲染器，不为每栋建筑重画一套墙。",
+  "groundPolicy": "地面满幅 32×32 不透明，无透明边，纹理可连续铺设；平面地面不画立体底座、浮起边框、固定投影或外发光。",
+  "structurePolicy": "岸线、栏杆、橱窗、破墙端头和地面贴花使用透明叠加层。与地块连续连接的结构不能机械套用独立物件四周 2px 留白，接缝边应贴合格界。物件保持约 75° 倾斜俯视、左上固定光源，方向变化分别绘制，避免镜像导致明暗反转。",
+  "bridgePolicy": "北桥 4 格、南桥 3 格均为净通行宽。栏杆放在桥面可通行范围外或作为边缘叠加，不能占掉桥面通路。桥头首版由桥面、驳岸顶面及岸线组合，不额外要求整桥大图。",
+  "phaseOrder": [
+    "先画街道、庭院、运河基础面",
+    "再画驳岸顶面、两侧岸线、石桥与木桥桥面",
+    "补齐两桥栏杆、橱窗、破墙和碎石贴花",
+    "最后画两岸阶梯的静态地块"
+  ],
+  "reuse": [
+    {
+      "id": "shared-wall",
+      "name": "统一墙体",
+      "files": [
+        "assets/tiles/wall.png"
+      ],
+      "chars": [
+        "#",
+        "X"
+      ],
+      "note": "覆盖五栋建筑及背景铺面，首版不增加建筑专属墙皮。"
+    },
+    {
+      "id": "shared-floor",
+      "name": "通用室内地板",
+      "files": [
+        "assets/tiles/floor.png"
+      ],
+      "chars": [
+        "i"
+      ],
+      "note": "公寓、诊所、钟表店、银行与仓库先共用；专用木地板、瓷砖后补。"
+    },
+    {
+      "id": "shared-soil",
+      "name": "室外泥土与空地",
+      "files": [
+        "assets/tiles/low.png"
+      ],
+      "chars": [
+        "."
+      ],
+      "note": "用于边缘空地、杂物区和小院泥土留白，和新铺装形成材质区分。"
+    },
+    {
+      "id": "shared-wet",
+      "name": "旧泥湿地材质",
+      "files": [
+        "assets/tiles/marsh.png"
+      ],
+      "chars": [],
+      "note": "可作局部潮湿角落的占位；不替代清晰可辨的运河水面，不因使用此图自动触发潮汐。"
+    },
+    {
+      "id": "shared-doors",
+      "name": "普通门四种方向/状态",
+      "files": [
+        "assets/props/door.png",
+        "assets/props/door_open.png",
+        "assets/props/door_side.png",
+        "assets/props/door_side_open.png"
+      ],
+      "chars": [
+        "+"
+      ],
+      "note": "现有正向/侧向 × 开/关继续使用。两格门洞接入时须处理共用门框，不能直接排成两扇互不相干的一格门。"
+    },
+    {
+      "id": "shared-strong-doors",
+      "name": "强化门四种方向/状态",
+      "files": [
+        "assets/props/sdoor.png",
+        "assets/props/sdoor_open.png",
+        "assets/props/sdoor_side.png",
+        "assets/props/sdoor_side_open.png"
+      ],
+      "chars": [],
+      "note": "可复用为银行安保/金库门视觉。是否沿用避难门逻辑须在接入阶段单独决定，贴图本身不附加门禁或钥匙。"
+    },
+    {
+      "id": "shared-containers",
+      "name": "七类箱柜",
+      "files": [
+        "assets/props/crate_fast.png",
+        "assets/props/crate_std.png",
+        "assets/props/crate_heavy.png",
+        "assets/props/crate_tool.png",
+        "assets/props/crate_med.png",
+        "assets/props/crate_elec.png",
+        "assets/props/crate_supply.png"
+      ],
+      "chars": [],
+      "note": "现有 41 个容器点位沿用七种场景贴图，本次不重绘容器。"
+    },
+    {
+      "id": "shared-props",
+      "name": "通用桌、椅、货架、桶",
+      "files": [
+        "assets/props/desk.png",
+        "assets/props/chair.png",
+        "assets/props/shelf.png",
+        "assets/props/barrel.png"
+      ],
+      "chars": [],
+      "note": "复用已存在的四类摆设；其余设计稿物件另列，不能假定已经有图。"
+    },
+    {
+      "id": "shared-exit",
+      "name": "撤离标记",
+      "files": [
+        "assets/props/exit.png"
+      ],
+      "chars": [],
+      "note": "两处撤离点共用现有贴地标记。"
+    }
+  ],
+  "core": [
+    {
+      "id": "street_stone",
+      "name": "旧街石砖路面",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/street_stone.png"
+      ],
+      "chars": [
+        "r"
+      ],
+      "usage": "两岸主街、北桥接街与各支巷。",
+      "drawing": "低饱和灰绿旧石砖，块面稍大，细缝和少量磨损；四边可连续重复，不能每格画独立边框。",
+      "tiling": "四向连续铺设",
+      "collision": "可通行；由地图决定通路，不因砖缝产生碰撞。"
+    },
+    {
+      "id": "courtyard_paving",
+      "name": "庭院与前场铺装",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/courtyard_paving.png"
+      ],
+      "chars": [
+        "q"
+      ],
+      "usage": "住宅小院、银行前场与服务小院。",
+      "drawing": "偏暖灰的旧铺地石，少量稀疏苔色；比主街稍暖、更安静，中心留足空白，不把树、长椅画进地面。",
+      "tiling": "四向连续铺设",
+      "collision": "可通行；家具与树木独立占格。"
+    },
+    {
+      "id": "canal_water",
+      "name": "运河水面",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/canal_water.png"
+      ],
+      "chars": [
+        "~"
+      ],
+      "usage": "x30–35 的六格宽纵向运河，桥面覆盖其上。",
+      "drawing": "深蓝青绿色、克制的小波纹，能连续拼成整条河；不画完整岸线、桥、漂浮物或大面积高光。首版一张静态纹理。",
+      "tiling": "四向连续，尤其避免纵向水纹断节",
+      "collision": "常态不可涉水，但不阻挡视线；与未来低地潮水分开。"
+    },
+    {
+      "id": "quay_top",
+      "name": "石质驳岸顶面",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/quay_top.png"
+      ],
+      "chars": [
+        "k"
+      ],
+      "usage": "x29 / x36 河岸与仓库封闭临河背面。",
+      "drawing": "灰绿旧石条、少量盐蚀，顶部平面完整铺满；岸线短立面由独立叠加件表达，不在顶面画两侧固定水边。",
+      "tiling": "沿岸连续，可与两岸边缘件共用",
+      "collision": "按设计稿 k 的不可通行边界；不是额外可走的一格河边便道。"
+    },
+    {
+      "id": "canal_bank_w",
+      "name": "西岸朝水边缘",
+      "kind": "overlay",
+      "files": [
+        "assets/props/canal_bank_w.png"
+      ],
+      "chars": [
+        "k"
+      ],
+      "usage": "西岸 x29，水在画面右侧。",
+      "drawing": "透明底的旧石岸唇与短立面、水线和少量苔痕；顶面较亮、朝水侧较暗，与通用驳岸顶面对齐，沿纵向可重复。",
+      "tiling": "南北连续；水在右",
+      "collision": "复用岸格边界，不新增行走空间或额外占格。"
+    },
+    {
+      "id": "canal_bank_e",
+      "name": "东岸朝水边缘",
+      "kind": "overlay",
+      "files": [
+        "assets/props/canal_bank_e.png"
+      ],
+      "chars": [
+        "k"
+      ],
+      "usage": "东岸 x36，水在画面左侧。",
+      "drawing": "和西岸同材质的透明岸唇与水线，水在左；保持左上光源，分别画朝向与明暗，不能简单镜像西岸成品。",
+      "tiling": "南北连续；水在左",
+      "collision": "复用岸格边界，不新增可涉水入口。"
+    },
+    {
+      "id": "bridge_stone_deck",
+      "name": "北石桥桥面",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/bridge_stone_deck.png"
+      ],
+      "chars": [
+        "="
+      ],
+      "usage": "x29–36、y12–15，8×4 格桥面。",
+      "drawing": "结实的灰褐石桥铺面，块面与主街有区别但同属旧街材料；表面平坦，不把侧栏、投影或整座桥画进单格。",
+      "tiling": "横向跨河与四格宽度可重复拼接",
+      "collision": "保持四格净通行宽，常态稳定。"
+    },
+    {
+      "id": "bridge_wood_deck",
+      "name": "南栈桥桥面",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/bridge_wood_deck.png"
+      ],
+      "chars": [
+        "-"
+      ],
+      "usage": "x29–36、y40–42，8×3 格桥面。",
+      "drawing": "旧褐色木板、粗接缝与少量磨损，木纹横向；略旧但不画可坠落大洞，首版整桥可通行。",
+      "tiling": "横向连续，三格宽可重复拼接",
+      "collision": "保持三格净通行宽；本轮没有桥面失效逻辑。"
+    },
+    {
+      "id": "bridge_stone_rail_n",
+      "name": "石桥北侧栏边",
+      "kind": "overlay",
+      "files": [
+        "assets/props/bridge_stone_rail_n.png"
+      ],
+      "chars": [
+        "="
+      ],
+      "usage": "北石桥北侧外缘，沿跨河方向连续。",
+      "drawing": "低矮石栏/石缘的透明连续段，表现顶部和短立面；留出真实水面透明区域，固定左上光照。",
+      "tiling": "东西向连续；北侧专用",
+      "collision": "在四格桥面净宽之外布置，不把桥面挤成两格。"
+    },
+    {
+      "id": "bridge_stone_rail_s",
+      "name": "石桥南侧栏边",
+      "kind": "overlay",
+      "files": [
+        "assets/props/bridge_stone_rail_s.png"
+      ],
+      "chars": [
+        "="
+      ],
+      "usage": "北石桥南侧外缘，沿跨河方向连续。",
+      "drawing": "与北侧同材质，南向短立面更清楚；透明背景，和桥面下缘对齐，不能旋转北侧贴图改变光源。",
+      "tiling": "东西向连续；南侧专用",
+      "collision": "位于净通行范围外，碰撞与桥边界一致。"
+    },
+    {
+      "id": "bridge_wood_rail_n",
+      "name": "栈桥北侧栏杆",
+      "kind": "overlay",
+      "files": [
+        "assets/props/bridge_wood_rail_n.png"
+      ],
+      "chars": [
+        "-"
+      ],
+      "usage": "南栈桥北侧外缘。",
+      "drawing": "旧木栏杆与细立柱，透明间隙保留水面；结构完整、低饱和，不画断桥或封路杂物。",
+      "tiling": "东西向连续；北侧专用",
+      "collision": "放在三格净通行范围外。"
+    },
+    {
+      "id": "bridge_wood_rail_s",
+      "name": "栈桥南侧栏杆",
+      "kind": "overlay",
+      "files": [
+        "assets/props/bridge_wood_rail_s.png"
+      ],
+      "chars": [
+        "-"
+      ],
+      "usage": "南栈桥南侧外缘。",
+      "drawing": "和北侧相同木材与间距，按南侧视角重新处理前立面和高光，透明背景。",
+      "tiling": "东西向连续；南侧专用",
+      "collision": "放在三格净通行范围外，不因栏杆额外封路。"
+    },
+    {
+      "id": "canal_steps_w",
+      "name": "西岸下河阶梯",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/canal_steps_w.png"
+      ],
+      "chars": [
+        "s"
+      ],
+      "usage": "(29,27)–(29,29)，西岸通向右侧水面。",
+      "drawing": "旧石阶的顶面、短踏步立面和盐蚀，方向朝右下到河边；沿三格位置组合时高度关系连续，画布满幅。",
+      "tiling": "南北排列的连续阶梯条段",
+      "collision": "复用 s 的阶梯落脚区；水面仍不可走，本轮不制作涨水动画。"
+    },
+    {
+      "id": "canal_steps_e",
+      "name": "东岸下河阶梯",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/canal_steps_e.png"
+      ],
+      "chars": [
+        "s"
+      ],
+      "usage": "(36,23)–(36,25)，东岸通向左侧水面。",
+      "drawing": "与西岸同材质，踏步朝左下降；维持固定左上光源、上帝视角及短立面，不能仅镜像西岸明暗。",
+      "tiling": "南北排列的连续阶梯条段",
+      "collision": "只覆盖既有阶梯落脚区，不连接成第三条过河路线。"
+    },
+    {
+      "id": "shop_window_ns",
+      "name": "钟表店侧向橱窗段",
+      "kind": "overlay",
+      "files": [
+        "assets/props/shop_window_ns.png"
+      ],
+      "chars": [
+        "w"
+      ],
+      "usage": "x44 的南北向墙，y18–19 与 y23–24，两组两格展示橱窗。",
+      "drawing": "旧金属/木窗框、低亮度青灰玻璃与少量反光；作为可连续拼接的竖向窗段，背景透明，展柜保持独立物件，不把店内画死。",
+      "tiling": "沿南北向墙连续拼两格",
+      "collision": "不可通行但可透视；不能按不透明墙或普通门处理。"
+    },
+    {
+      "id": "wall_breach_n",
+      "name": "诊所破口北端",
+      "kind": "overlay",
+      "files": [
+        "assets/props/wall_breach_n.png"
+      ],
+      "chars": [
+        "/"
+      ],
+      "usage": "诊所东墙两格破口 (14,39)–(14,40) 的北侧端头。",
+      "drawing": "通用墙材的上端断口，露出少量碎砖和短立面；透明底，碎砖只在墙体端头，不侵入门洞通路。",
+      "tiling": "专用端头，不重复铺满破口",
+      "collision": "沿用剩余墙体占格，不缩小两格破口的净宽。"
+    },
+    {
+      "id": "wall_breach_s",
+      "name": "诊所破口南端",
+      "kind": "overlay",
+      "files": [
+        "assets/props/wall_breach_s.png"
+      ],
+      "chars": [
+        "/"
+      ],
+      "usage": "同一两格破口的南侧端头。",
+      "drawing": "同材质南侧断墙端头，保留顶面和短立面，左上照明一致；透明底，不靠旋转另一端凑图。",
+      "tiling": "专用端头，不重复铺满破口",
+      "collision": "破口为已有通路，无破墙交互，不增加阻挡。"
+    },
+    {
+      "id": "rubble_decal",
+      "name": "破口碎石地贴",
+      "kind": "overlay",
+      "files": [
+        "assets/props/rubble_decal.png"
+      ],
+      "chars": [
+        "/"
+      ],
+      "usage": "诊所破口附近少量贴地碎石，亦可少量复用于旧街角落。",
+      "drawing": "稀疏、扁平的碎砖与石屑，透明背景、硬边像素，不画大块高障碍，不把整块地面画进贴花。",
+      "tiling": "离散贴花，可少量重复",
+      "collision": "ground:true 语义的贴地装饰，不阻挡行走和视线。"
+    }
+  ],
+  "optional": [
+    {
+      "id": "street_stone_alt_01",
+      "name": "旧街路面磨损变体 A",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/street_stone_alt_01.png"
+      ],
+      "note": "保持基础路面边缘一致，只变化中心磨损，减少大街重复感。"
+    },
+    {
+      "id": "street_stone_alt_02",
+      "name": "旧街路面磨损变体 B",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/street_stone_alt_02.png"
+      ],
+      "note": "少量细裂缝和补丁，不做独立凸起砖块或可穿洞。"
+    },
+    {
+      "id": "courtyard_paving_alt",
+      "name": "庭院铺装变体",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/courtyard_paving_alt.png"
+      ],
+      "note": "轻微苔色、少量土斑，四边与基础铺装相容。"
+    },
+    {
+      "id": "floor_wood",
+      "name": "住宅 / 钟表店木地板",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/floor_wood.png"
+      ],
+      "note": "后补室内材质区分；首版通用 floor.png 足够。"
+    },
+    {
+      "id": "floor_ceramic",
+      "name": "诊所瓷砖地面",
+      "kind": "ground",
+      "files": [
+        "assets/tiles/floor_ceramic.png"
+      ],
+      "note": "细瓷砖、低亮度旧化，不把病床或药柜烘焙进地面。"
+    },
+    {
+      "id": "quay_cap_n",
+      "name": "岸线北向收口",
+      "kind": "overlay",
+      "files": [
+        "assets/props/quay_cap_n.png"
+      ],
+      "note": "用于桥头、阶梯处岸线的局部端头；首版先用基础岸线组合。"
+    },
+    {
+      "id": "quay_cap_s",
+      "name": "岸线南向收口",
+      "kind": "overlay",
+      "files": [
+        "assets/props/quay_cap_s.png"
+      ],
+      "note": "与北向收口配套，保持照明和石材尺度。"
+    },
+    {
+      "id": "shop_window_ew",
+      "name": "正向橱窗段",
+      "kind": "overlay",
+      "files": [
+        "assets/props/shop_window_ew.png"
+      ],
+      "note": "当前设计没有东西向展示窗，留给后续调整，不计入必画。"
+    },
+    {
+      "id": "wall_damage_decal",
+      "name": "墙面旧化贴片",
+      "kind": "overlay",
+      "files": [
+        "assets/props/wall_damage_decal.png"
+      ],
+      "note": "裂纹、盐斑等稀疏表面装饰，不为每栋楼增加独立墙体。"
+    },
+    {
+      "id": "damp_stain_decal",
+      "name": "潮湿水渍地贴",
+      "kind": "overlay",
+      "files": [
+        "assets/props/damp_stain_decal.png"
+      ],
+      "note": "只做环境痕迹，不附带潮汐、减速或碰撞规则。"
+    }
+  ],
+  "futureBuildings": [
+    {
+      "id": "apartment",
+      "name": "老公寓整体室外贴图",
+      "note": "保持凹入后院、南侧正门与东侧后巷门。"
+    },
+    {
+      "id": "clinic",
+      "name": "诊所整体室外贴图",
+      "note": "保留北门和东侧两格破口，避免装饰遮住备用路线。"
+    },
+    {
+      "id": "clockshop",
+      "name": "钟表店整体室外贴图",
+      "note": "突出临街橱窗与招牌轮廓，前店后仓仍可切换观察。"
+    },
+    {
+      "id": "bank",
+      "name": "银行整体室外贴图",
+      "note": "突出厚重入口与立面，保留西侧正门、南侧后门和建筑切角。"
+    },
+    {
+      "id": "warehouse",
+      "name": "仓库整体室外贴图",
+      "note": "保留北侧装卸口、东侧侧门和封闭临河背面。"
+    }
+  ],
+  "futureBuildingPolicy": "整体室外图属于后期可选外观层，按既定建筑包围盒使用每格 32px 的整数尺寸和统一落点。屋顶应与立面分层，进入建筑后可隐藏或淡化；门窗/破口/通路保留透明区域。碰撞继续使用格子数据，不能从大图透明像素自动推导，也不能把人物、容器、家具或固定阴影烘焙进整楼图。",
+  "missingPropNames": {
+    "bed": "床 / 诊疗床",
+    "stove": "灶台",
+    "sofa": "沙发",
+    "bench": "长椅",
+    "display": "展示柜",
+    "counter": "柜台",
+    "tree": "树木"
+  },
+  "integration": {
+    "enabled": true,
+    "mapId": "linhai-old-quarter",
+    "entry": "../../../index.html",
+    "offline": "../../../潮汐线.html",
+    "source": "../../../tools/build-linhai-map.js",
+    "provisionalProps": "七类家具暂复用现有桌椅、货架和桶；实体占格保留。"
+  }
+}

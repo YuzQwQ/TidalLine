@@ -5,9 +5,11 @@ const fs = require('fs');
 const path = require('path');
 
 const dir = __dirname;
+// 地图由设计稿编译，避免多文件版与离线版使用不同点位。
+require('./tools/build-linhai-map.js').build();
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
-const JS_FILES = ['config.js', 'data.js', 'core.js', 'entities.js', 'game.js'];
+const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js', 'game.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */

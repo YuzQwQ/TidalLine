@@ -32,8 +32,16 @@ const M = {
   playerSpawn: { x: 0, y: 0 },
   extracts: [],      // [{x,y}]
   tideLevel: 0,
+  tideEnabled: true,
+  doors: [],
 
-  load(rows, doorAxes, props) {
+  load(rows, doorAxes, props, mapSpec) {
+    const map = mapSpec || MAP_CATALOG.find(map=>map.rows===rows) || null;
+    this.map = map;
+    this.tideEnabled = map ? map.tideEnabled : true;
+    this.tideLevel = 0;
+    this.doors = [];
+    this.playerSpawn = {x:0,y:0};
     this.H = rows.length;
     this.W = rows[0].length;
     this.grid = [];
@@ -48,14 +56,20 @@ const M = {
       const row = [];
       for (let x = 0; x < this.W; x++) {
         const ch = line[x] || '#';
+        const terrainCh = map ? map.terrainRows[y][x] : ch;
+        const rule = map ? map.terrain[terrainCh] : null;
         const t = {
           ch,
-          solid: ch === '#',
-          obstacle: !!BOX_KIND[ch],
+          terrainCh,
+          art: rule ? (terrainCh === 's' ? 'canal_steps_' + (x < this.W/2 ? 'w':'e') : rule.art) : null,
+          solid: rule ? rule.solid : ch === '#',
+          obstacle: !!BOX_KIND[ch] || !!(rule && rule.blocked),
+          permanentWater: !!(rule && rule.permanentWater),
+          overlays: [],
           container: !!BOX_KIND[ch],   // 容器只挡行动，不挡视线
           prop: null,
-          opaque: ch === '#',
-          h: TILE_H[ch] !== undefined ? TILE_H[ch] : 2,
+          opaque: rule ? rule.opaque : ch === '#',
+          h: (map && map.tileHeights ? map.tileHeights[ch] : TILE_H[ch]) ?? 2,
           box: null,
           door: null
         };
@@ -65,7 +79,8 @@ const M = {
           const wall = (cx, cy) => !!(rows[cy] && rows[cy][cx] === '#');
           const vertical = Number(wall(x, y - 1)) + Number(wall(x, y + 1));
           const horizontal = Number(wall(x - 1, y)) + Number(wall(x + 1, y));
-          const override = doorAxes && doorAxes[x + ',' + y];
+          const axes=doorAxes || (map&&map.doorAxes);
+          const override = axes && axes[x + ',' + y];
           const axis = override === 'vertical' || override === 'horizontal'
             ? override : (vertical > horizontal ? 'vertical' : 'horizontal');
           t.door = { open: true, safe: ch === 'S', axis };
@@ -74,8 +89,22 @@ const M = {
       }
       this.grid.push(row);
     }
+    // 同一两格门洞共用一个门状态和门框；按显式墙轴线绘制。
+    if (map) {
+      for (const spec of map.doors) {
+        const door = {...spec,open:true,safe:false,x:spec.cells[0][0],y:spec.cells[0][1]};
+        this.doors.push(door);
+        for (const [x,y] of spec.cells) this.at(x,y).door = door;
+      }
+      for (const overlay of map.overlays) {
+        const tile = this.at(overlay.x,overlay.y);
+        tile.overlays.push(overlay.art);
+        if (overlay.replaceWall) {tile.art='floor';tile.wallCap=true;}
+      }
+      this.extracts = map.exits.map(ex=>({...ex}));
+    }
     // 自定义测试/扩展地图可显式传摆设；主地图默认使用 DECOR。
-    const furnishings = props || (rows === MAP_ROWS ? DECOR : []);
+    const furnishings = props || (map ? map.props : []);
     for (const prop of furnishings) {
       const tile = this.at(prop.x, prop.y);
       if (!tile || tile.solid || tile.door || BOX_KIND[tile.ch] || tile.ch === 'P' || tile.ch === 'E') {
@@ -109,16 +138,24 @@ const M = {
   opaque(x, y) {
     const t = this.at(x, y);
     if (!t) return true;
-    if (t.solid) return true;
+    if (t.opaque) return true;
     if (t.door && !t.door.open) return true;
-    if (t.obstacle && !t.container) return true;
+    if (t.prop && !t.prop.ground && t.prop.opaque !== false) return true;
     return false;
+  },
+
+  // 不可走的水面、驳岸允许子弹越过；玻璃、实体家具与门仍阻挡弹道。
+  blocksShot(x,y) {
+    const t=this.at(x,y);
+    return !t || t.solid || t.container || !!(t.prop&&!t.prop.ground)
+      || t.terrainCh==='w' || !!(t.door&&!t.door.open);
   },
 
   /* 该格的积水深度（0 = 干燥） */
   waterDepth(x, y) {
     const t = this.at(x, y);
     if (!t) return 0;
+    if (!this.tideEnabled) return 0;
     return Math.max(0, this.tideLevel - t.h);
   },
 
@@ -130,7 +167,8 @@ const M = {
 
   /* 深水：过不去。这是"涨潮把路收走"的具体实现 */
   deepWater(x, y) {
-    return this.waterDepth(x, y) > 1.05;
+    const t = this.at(x,y);
+    return !!(t && t.permanentWater) || this.waterDepth(x, y) > 1.05;
   },
 
   /* 世界坐标 → 格 */
