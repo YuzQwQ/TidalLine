@@ -1,0 +1,107 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "72×56 方格、完整图例与不可越界边缘",
+      "passed": true
+    },
+    {
+      "name": "实体家具与 41 个箱柜无重叠、无地形冲突",
+      "passed": true
+    },
+    {
+      "name": "全部空地、室内、门洞、阶梯与两处撤离点连通",
+      "passed": true
+    },
+    {
+      "name": "每个箱柜都有可达、可交互的操作面",
+      "passed": true
+    },
+    {
+      "name": "主街 6 格、支巷至少 3 格、主要室内走廊 2 格净宽",
+      "passed": true
+    },
+    {
+      "name": "两座桥为仅有的跨岸路线，任一桥均可独立连接两岸",
+      "passed": true
+    },
+    {
+      "name": "五栋建筑均有两处独立室外入口，诊所有两格破口",
+      "passed": true
+    },
+    {
+      "name": "公寓、诊所与钟表店有实际室内绕行，药储不直连破口",
+      "passed": true
+    },
+    {
+      "name": "银行必须通过安保过渡门和金库门，金库不连接室外",
+      "passed": true
+    },
+    {
+      "name": "分区物资 / 布防配额、敌人间距和出生 / 撤离缓冲",
+      "passed": true
+    },
+    {
+      "name": "室内物资与敌人确实位于所属建筑，室外点不混入室内",
+      "passed": true
+    },
+    {
+      "name": "潮汐只做预留：低地仍可通行，稳定路线不受模拟封路影响",
+      "passed": true
+    },
+    {
+      "name": "三条推荐路线均按实体占格寻路生成",
+      "passed": true
+    }
+  ],
+  "stats": {
+    "width": 72,
+    "height": 56,
+    "buildings": 5,
+    "rooms": 24,
+    "containers": 41,
+    "enemies": 24,
+    "props": 40,
+    "walkableCells": 2951,
+    "containersByType": {
+      "C": 9,
+      "L": 10,
+      "B": 8,
+      "T": 4,
+      "M": 5,
+      "R": 3,
+      "K": 2
+    },
+    "enemiesByType": {
+      "scav": 12,
+      "echo": 7,
+      "guard": 5
+    },
+    "regions": {
+      "apartment": {
+        "containers": 7,
+        "enemies": 3
+      },
+      "clinic": {
+        "containers": 5,
+        "enemies": 2
+      },
+      "clockshop": {
+        "containers": 6,
+        "enemies": 3
+      },
+      "bank": {
+        "containers": 10,
+        "enemies": 5
+      },
+      "warehouse": {
+        "containers": 5,
+        "enemies": 2
+      },
+      "outdoors": {
+        "containers": 8,
+        "enemies": 9
+      }
+    }
+  }
+}

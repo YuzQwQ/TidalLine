@@ -1,0 +1,224 @@
+{
+  "generator": "Built-in image_gen, one call per image; transparent background for chars/props and opaque full-bleed for tiles.",
+  "sourceDirectory": "Codex generated_images/01a17734-d41d-7462-a06b-323c12c53633",
+  "assets": [
+    {
+      "id": "player_s",
+      "group": "chars",
+      "dir": "s",
+      "source": "exec-70ceaf58-7095-4910-961f-eb81bc2ab50d.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 面朝画面下方站立的玩家：深灰蓝色防水外套，肩线略宽，帽兜前沿压到额头，帽檐阴影里能看见上半张脸和一只护目镜；双手在身体下方握着枪。头的圆形轮廓在中间偏上，肩膀在下半部。"
+    },
+    {
+      "id": "scav_s",
+      "group": "chars",
+      "dir": "s",
+      "source": "exec-d32d36b9-0041-4ce0-b8fb-2dfa3589e2fe.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 面朝画面下方的拾荒者敌人：土黄棕色的旧外套，戴着压低的破帽和护目镜（能看见两片反光镜片），胸前斜挎一条背带，手里的枪朝画面下方。"
+    },
+    {
+      "id": "echo_s",
+      "group": "chars",
+      "dir": "s",
+      "source": "exec-37fee221-65e2-4cbb-9aae-5f1e47e10ff7.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 面朝画面下方的回响体：不规则的半透明紫红色人形，中心有一团稍亮的、像被抹开的脸的痕迹，边缘向四周发散模糊，像凝住的声音。"
+    },
+    {
+      "id": "crate_heavy",
+      "group": "props",
+      "dir": null,
+      "source": "exec-4c93fc83-31e3-49a3-9510-33f6c449a422.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的保险箱：深金属灰，厚重方正的顶面，中央有一个圆形转盘锁，四角有铆钉，边缘有一圈更暗的包边。"
+    },
+    {
+      "id": "guard_s",
+      "group": "chars",
+      "dir": "s",
+      "source": "exec-031e3eb2-e320-401c-8126-e7c9b8646dbd.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 面朝画面下方的潮汐守卫：方正厚重的机械体，灰蓝色装甲分块，正中央偏下有一个明显的圆形传感器（像一只眼）朝向前方，四角有小的轮式支脚，前方装甲上有两道排气缝。"
+    },
+    {
+      "id": "door",
+      "group": "props",
+      "dir": null,
+      "source": "exec-983ce7ab-c7d9-4338-a7ec-6c2c93caf8e7.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的一扇关闭的门：厚木门板嵌在门框里，门板上有一道横向门闩，边缘能看到框的厚度。"
+    },
+    {
+      "id": "crate_fast",
+      "group": "props",
+      "dir": null,
+      "source": "exec-9411815b-1bda-4750-834b-d61af2085acc.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的矮木柜：木色，顶面有一道横向开缝和一个小铜把手，能看出很矮很扁。"
+    },
+    {
+      "id": "door_open",
+      "group": "props",
+      "dir": null,
+      "source": "exec-ed42bd5d-6aeb-4aa8-a848-80ea1f9b0eaa.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的打开的门：只有门框和贴墙打开的门扇，中间是空的，不要画门板挡住通道。"
+    },
+    {
+      "id": "sdoor_open",
+      "group": "props",
+      "dir": null,
+      "source": "exec-f5243469-3a88-4698-9543-54ae6c966bd6.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的打开的金属避难门：门框 + 贴墙的门扇，绿色指示灯仍然亮着。"
+    },
+    {
+      "id": "crate_std",
+      "group": "props",
+      "dir": null,
+      "source": "exec-fe12ce2a-3d67-4e62-a038-66e6bd89aabe.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的储物柜：灰褐色，顶面有把手和两片合页，比矮柜更大更方正，边缘有轻微磨损。"
+    },
+    {
+      "id": "corpse",
+      "group": "props",
+      "dir": null,
+      "source": "exec-56f172cc-8486-47b8-b3ae-2eed3833958e.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的倒地的人：摊在地面的人形轮廓，四肢放松张开，衣服颜色偏暗，身体旁边有一小片深色痕迹。"
+    },
+    {
+      "id": "exit",
+      "group": "props",
+      "dir": null,
+      "source": "exec-29b06279-7c2f-4623-935e-dd647c1d9113.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的撤离点标记：地面上喷的青色圆环加一个箭头，圆环有磨损缺角，颜色偏亮的青绿。"
+    },
+    {
+      "id": "floor",
+      "group": "tiles",
+      "dir": null,
+      "source": "exec-c910b5e1-2b39-401f-b7f6-49f40b36aa62.png",
+      "prompt": "Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 从正上方看的一块室内水泥地砖：浅灰绿，有细裂纹和一点污渍，纹理要均匀、不要有明显方向性，重复拼起来不能看出图案。"
+    },
+    {
+      "id": "low",
+      "group": "tiles",
+      "dir": null,
+      "source": "exec-b9d93411-7dc1-4da9-8240-0f2258e2da89.png",
+      "prompt": "Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 从正上方看的一块潮湿低地：比地板更暗的泥地，有几处浅积水反光，颜色偏冷。"
+    },
+    {
+      "id": "marsh",
+      "group": "tiles",
+      "dir": null,
+      "source": "exec-ac9c8943-4b67-42b1-914e-d8cb956fc8a4.png",
+      "prompt": "Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 从正上方看的一块洼地：大部分是浅浅的水，能透过水看到下面的泥，边缘有细小的泡沫和泥沙。"
+    },
+    {
+      "id": "sdoor",
+      "group": "props",
+      "dir": null,
+      "source": "exec-95377f89-d3c8-48d4-80e1-b2bb2e82b581.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的关闭的金属避难门：比普通门更厚更方，正中有一个小而亮的绿色指示灯，四周有密封条。"
+    },
+    {
+      "id": "shelf",
+      "group": "props",
+      "dir": null,
+      "source": "exec-22fc7895-3cc2-470b-b3dc-b65583a4a0b2.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的金属货架：能看到几层隔板的边缘，格子状，灰蓝色。"
+    },
+    {
+      "id": "wall",
+      "group": "tiles",
+      "dir": null,
+      "source": "exec-4e459dfe-4b8b-4151-b18f-bb0c764951e6.png",
+      "prompt": "Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 从正上方看的一段墙体：深色粗糙混凝土的顶面，比地板暗两个档，表面有颗粒感，边缘略亮一条。"
+    },
+    {
+      "id": "barrel",
+      "group": "props",
+      "dir": null,
+      "source": "exec-a150ec7f-9e82-4953-8c09-32f0ca83c760.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的铁皮油桶：圆形顶盖，有一圈加强筋和一个小盖口，锈红色。"
+    },
+    {
+      "id": "echo_e",
+      "group": "chars",
+      "dir": "e",
+      "source": "exec-3b3a8a20-90e2-432d-b6bc-080e2e3fbef1.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个回响体的侧面，朝画面右方：整体被拉长成一条朝右的流线，前端稍亮，尾部散成几缕雾。 Use the supplied image only as the identity and palette reference for this SAME character. Draw the requested new facing from the same overhead camera angle; keep outfit, body proportions and equipment consistent.",
+      "reference": "exec-37fee221-65e2-4cbb-9aae-5f1e47e10ff7.png"
+    },
+    {
+      "id": "desk",
+      "group": "props",
+      "dir": null,
+      "source": "exec-8297cf0d-1899-450c-abd6-b0660d004add.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的旧办公桌：深木色桌面，上面有划痕和一小块干掉的污渍。"
+    },
+    {
+      "id": "chair",
+      "group": "props",
+      "dir": null,
+      "source": "exec-e722b61d-2222-4f69-80bf-d215abb8b209.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的翻倒的椅子：四条腿朝一侧，椅面斜着，深色木头。"
+    },
+    {
+      "id": "guard_n",
+      "group": "chars",
+      "dir": "n",
+      "source": "exec-fbf3eda2-e231-48a6-8562-03ed0c0e1d76.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个潮汐守卫的背面：中央没有传感器，只有一块带散热格栅的方形背板和一束粗线缆，四个轮式支角仍在四角。 Use the supplied image only as the identity and palette reference for this SAME character. Draw the requested new facing from the same overhead camera angle; keep outfit, body proportions and equipment consistent.",
+      "reference": "exec-031e3eb2-e320-401c-8126-e7c9b8646dbd.png"
+    },
+    {
+      "id": "player_e",
+      "group": "chars",
+      "dir": "e",
+      "source": "exec-f7add8d3-dd13-433a-b919-02d80a5a3c79.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个玩家的右侧面，身体朝画面右方：肩部收窄成一条侧线，持枪的手臂向前（画面右侧）伸出，能看到侧脸轮廓、帽兜侧面和护目镜带子。头在右、后背在左。 Use the supplied image only as the identity and palette reference for this SAME character. Draw the requested new facing from the same overhead camera angle; keep outfit, body proportions and equipment consistent.",
+      "reference": "exec-70ceaf58-7095-4910-961f-eb81bc2ab50d.png"
+    },
+    {
+      "id": "guard_e",
+      "group": "chars",
+      "dir": "e",
+      "source": "exec-d7d4f054-0e5c-4e50-a6f5-6d0109010b20.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个潮汐守卫的右侧面，朝画面右方：圆形传感器移到最右侧，主体压成一条窄长的装甲盒，前方（画面右侧）伸出一截短炮管。 Use the supplied image only as the identity and palette reference for this SAME character. Draw the requested new facing from the same overhead camera angle; keep outfit, body proportions and equipment consistent.",
+      "reference": "exec-031e3eb2-e320-401c-8126-e7c9b8646dbd.png"
+    },
+    {
+      "id": "blood",
+      "group": "props",
+      "dir": null,
+      "source": "exec-a58fbfa9-dfcc-462b-94cf-7c0af9bd07fb.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone top-down game sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from directly above (bird's-eye view, looking straight down), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The object occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 从正上方看的一小片干涸血迹：不规则的深红褐色斑块，边缘已经发暗干裂。"
+    },
+    {
+      "id": "scav_n",
+      "group": "chars",
+      "dir": "n",
+      "source": "exec-6d5c2573-9288-4f93-9409-84039a6c9629.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个拾荒者的背面：一只鼓起来的大帆布背包几乎占满上半部，背包上有捆带和挂着的破布条；只能看到帽子和后颈，看不到脸。 Use the supplied image only as the identity and palette reference for this SAME character. Draw the requested new facing from the same overhead camera angle; keep outfit, body proportions and equipment consistent.",
+      "reference": "exec-d32d36b9-0041-4ce0-b8fb-2dfa3589e2fe.png"
+    },
+    {
+      "id": "scav_e",
+      "group": "chars",
+      "dir": "e",
+      "source": "exec-12b446dc-d000-45cb-b22c-cc87e0eb5107.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个拾荒者的右侧面，朝画面右方：帽子的侧面和一片护目镜镜片，背包在后背（画面左侧）鼓出，枪伸向前方。 Use the supplied image only as the identity and palette reference for this SAME character. Draw the requested new facing from the same overhead camera angle; keep outfit, body proportions and equipment consistent.",
+      "reference": "exec-d32d36b9-0041-4ce0-b8fb-2dfa3589e2fe.png"
+    },
+    {
+      "id": "player_n",
+      "group": "chars",
+      "dir": "n",
+      "source": "exec-c1304098-9c90-49d2-b480-04d1c779e78d.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个玩家的背面，背对画面下方、头顶朝上：只见帽兜的圆顶和后颈，外套背部有一块深色补丁和交叉背带，腰后侧挂一只小水壶。完全看不到脸和枪。 Use the supplied image only as the identity and palette reference for this SAME character. Draw the requested new facing from the same overhead camera angle; keep outfit, body proportions and equipment consistent.",
+      "reference": "exec-70ceaf58-7095-4910-961f-eb81bc2ab50d.png"
+    },
+    {
+      "id": "echo_n",
+      "group": "chars",
+      "dir": "n",
+      "source": "exec-023e84e0-abfd-4135-82ce-7dbc7b751172.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个回响体的背面：中心没有脸的痕迹，紫红色更沉，边缘的拖尾朝画面下方拉长，像残留的余音。 Use the supplied image only as the identity and palette reference for this SAME character. Draw the requested new facing from the same overhead camera angle; keep outfit, body proportions and equipment consistent.",
+      "reference": "exec-37fee221-65e2-4cbb-9aae-5f1e47e10ff7.png"
+    }
+  ]
+}

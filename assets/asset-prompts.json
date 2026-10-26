@@ -1,0 +1,377 @@
+{
+  "generator": "Built-in image_gen; one image per asset, transparent_background=true",
+  "note": "统一 75° 高角度倾斜俯视正交投影，角色与立体场景物件采用同一相机；地面材质/贴花留在水平地面，详见 ART_STYLE.md。门按墙体走向分正向/侧向及开关状态。",
+  "stylePrompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: ",
+  "delivery": {
+    "size": [
+      32,
+      32
+    ],
+    "objectBox": 28,
+    "margin": 2,
+    "outDir": {
+      "chars": "assets/chars",
+      "props": "assets/props",
+      "tiles": "assets/tiles"
+    },
+    "prep": "node tools/prepare-scene-icons.js <原稿目录>",
+    "tiles": {
+      "size": [
+        32,
+        32
+      ],
+      "margin": 0,
+      "opaque": true,
+      "note": "地形铺满格子，避免透明边造成黑缝；角色和物件仍保留 2px 留白。"
+    }
+  },
+  "assets": [
+    {
+      "group": "chars",
+      "id": "player",
+      "name": "玩家",
+      "priority": 1,
+      "facing": true,
+      "dirs": [
+        "s",
+        "n",
+        "e"
+      ],
+      "subjects": {
+        "s": "面朝画面下方站立的玩家：深灰蓝色防水外套，肩线略宽，帽兜前沿压到额头，帽檐阴影里能看见上半张脸和一只护目镜；双手在身体下方握着枪。头的圆形轮廓在中间偏上，肩膀在下半部。",
+        "n": "同一个玩家的背面，背对画面下方、头顶朝上：只见帽兜的圆顶和后颈，外套背部有一块深色补丁和交叉背带，腰后侧挂一只小水壶。完全看不到脸和枪。",
+        "e": "同一个玩家的右侧面，身体朝画面右方：肩部收窄成一条侧线，持枪的手臂向前（画面右侧）伸出，能看到侧脸轮廓、帽兜侧面和护目镜带子。头在右、后背在左。"
+      },
+      "usedFor": "你自己。三张里 _s 最常看到（往下走、往上打），_e 出现频率次之。",
+      "sources": {
+        "s": "exec-70ceaf58-7095-4910-961f-eb81bc2ab50d.png",
+        "n": "exec-c1304098-9c90-49d2-b480-04d1c779e78d.png",
+        "e": "exec-f7add8d3-dd13-433a-b919-02d80a5a3c79.png"
+      }
+    },
+    {
+      "group": "chars",
+      "id": "scav",
+      "name": "拾荒者",
+      "priority": 1,
+      "facing": true,
+      "dirs": [
+        "s",
+        "n",
+        "e"
+      ],
+      "subjects": {
+        "s": "面朝画面下方的拾荒者敌人：土黄棕色的旧外套，戴着压低的破帽和护目镜（能看见两片反光镜片），胸前斜挎一条背带，手里的枪朝画面下方。",
+        "n": "同一个拾荒者的背面：一只鼓起来的大帆布背包几乎占满上半部，背包上有捆带和挂着的破布条；只能看到帽子和后颈，看不到脸。",
+        "e": "同一个拾荒者的右侧面，朝画面右方：帽子的侧面和一片护目镜镜片，背包在后背（画面左侧）鼓出，枪伸向前方。"
+      },
+      "usedFor": "会开枪、会喊人、会跟你抢箱子的敌人。背面那张最重要——你追他的时候看到的就是背包。",
+      "sources": {
+        "s": "exec-d32d36b9-0041-4ce0-b8fb-2dfa3589e2fe.png",
+        "n": "exec-6d5c2573-9288-4f93-9409-84039a6c9629.png",
+        "e": "exec-12b446dc-d000-45cb-b22c-cc87e0eb5107.png"
+      }
+    },
+    {
+      "group": "chars",
+      "id": "echo",
+      "name": "回响体",
+      "priority": 1,
+      "facing": true,
+      "dirs": [
+        "s",
+        "n",
+        "e"
+      ],
+      "subjects": {
+        "s": "面朝画面下方的回响体：不规则的半透明紫红色人形，中心有一团稍亮的、像被抹开的脸的痕迹，边缘向四周发散模糊，像凝住的声音。",
+        "n": "同一个回响体的背面：中心没有脸的痕迹，紫红色更沉，边缘的拖尾朝画面下方拉长，像残留的余音。",
+        "e": "同一个回响体的侧面，朝画面右方：整体被拉长成一条朝右的流线，前端稍亮，尾部散成几缕雾。"
+      },
+      "usedFor": "全盲、靠听觉的群居敌人。三张差别可以很小，靠亮斑位置区分就够——它本来就不该长得像人。",
+      "sources": {
+        "s": "exec-37fee221-65e2-4cbb-9aae-5f1e47e10ff7.png",
+        "n": "exec-023e84e0-abfd-4135-82ce-7dbc7b751172.png",
+        "e": "exec-3b3a8a20-90e2-432d-b6bc-080e2e3fbef1.png"
+      }
+    },
+    {
+      "group": "chars",
+      "id": "guard",
+      "name": "潮汐守卫",
+      "priority": 1,
+      "facing": true,
+      "dirs": [
+        "s",
+        "n",
+        "e"
+      ],
+      "subjects": {
+        "s": "面朝画面下方的潮汐守卫：方正厚重的机械体，灰蓝色装甲分块，正中央偏下有一个明显的圆形传感器（像一只眼）朝向前方，四角有小的轮式支脚，前方装甲上有两道排气缝。",
+        "n": "同一个潮汐守卫的背面：中央没有传感器，只有一块带散热格栅的方形背板和一束粗线缆，四个轮式支角仍在四角。",
+        "e": "同一个潮汐守卫的右侧面，朝画面右方：圆形传感器移到最右侧，主体压成一条窄长的装甲盒，前方（画面右侧）伸出一截短炮管。"
+      },
+      "usedFor": "固定巡逻、高血量、守着核心区的敌人。它的传感器就是朝向，所以三张一定要让那只眼的位置明显不同。",
+      "sources": {
+        "s": "exec-031e3eb2-e320-401c-8126-e7c9b8646dbd.png",
+        "n": "exec-fbf3eda2-e231-48a6-8562-03ed0c0e1d76.png",
+        "e": "exec-d7d4f054-0e5c-4e50-a6f5-6d0109010b20.png"
+      }
+    },
+    {
+      "group": "props",
+      "id": "crate_fast",
+      "name": "抽屉 / 矮柜",
+      "priority": 1,
+      "subject": "一只低矮的旧木抽屉柜，长横向顶面占大部分，能看到南侧短而清晰的立面和铜色抽屉把手。顶面木纹横向，前面明显比顶面暗，左侧比右侧亮。保持矮柜低于储物柜。",
+      "usedFor": "快取容器。点了就开，不打断行动。",
+      "source": "exec-1aefa1e7-1658-4900-8ddd-c8e0f756fcfe.png"
+    },
+    {
+      "group": "props",
+      "id": "crate_std",
+      "name": "储物柜",
+      "priority": 1,
+      "subject": "一只灰褐色储物柜：顶部平面与下方短立面同时可见，两道金属合页与一个把手，边角掉漆。高于矮木柜但不夸张拉长；有明确的柜门面、顶部和侧面。",
+      "usedFor": "标准容器。1 秒读条，可以中断。",
+      "source": "exec-57e54458-e901-4bdf-ac95-3725289ac6cc.png"
+    },
+    {
+      "group": "props",
+      "id": "crate_heavy",
+      "name": "保险箱",
+      "priority": 1,
+      "subject": "一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。",
+      "usedFor": "重型容器。5 秒完全不能动，出声最响。",
+      "source": "exec-2e645290-c446-47e2-86c8-ce9e112651c8.png"
+    },
+    {
+      "group": "props",
+      "id": "door",
+      "name": "门 · 正向（关闭）",
+      "priority": 1,
+      "subject": "普通木门，门洞横跨画面左右（墙体沿东西向，通行沿上下）：左右两个厚门框立柱之间是一扇关闭的木门，门扇在屏幕水平轴上伸展。俯视75度，顶端门框横梁和门扇厚度清楚，门前南向短立面带门闩。完整缩在一格内。",
+      "usedFor": "普通门。关上门可以挡住视线和子弹。",
+      "source": "exec-565fde49-4193-4768-a5b1-c3d9b979fde2.png"
+    },
+    {
+      "group": "props",
+      "id": "door_open",
+      "name": "门 · 正向（打开）",
+      "priority": 2,
+      "subject": "与关闭普通木门成套：墙体沿东西向，门洞横跨画面左右，通行沿上下。木门左右门框原位不变，门扇从左边铰链打开约90度后沿左侧边向上收拢，中央上下方向通道真实透明，不画平板堵路。保留俯视75度的厚门框顶面与短立面，不能只画二维U线条。",
+      "usedFor": "门打开时的状态。",
+      "source": "exec-bae7e7d0-7d6c-4c38-98b0-44702d159e39.png"
+    },
+    {
+      "group": "props",
+      "id": "sdoor",
+      "name": "避难间门 · 正向（关闭）",
+      "priority": 2,
+      "subject": "厚重金属避难门，墙体沿东西向，门洞横跨画面左右，通行沿上下。左右厚门柱之间关闭的钢门，门楣顶部、封条和朝南短立面同时可见，立面中央偏上一个绿色小指示灯，灰绿色金属顶亮侧暗。",
+      "usedFor": "避难间的门。关上之后敌人不会进来。",
+      "source": "exec-118e86e4-e509-4ef3-9f89-bfeaa2870c84.png"
+    },
+    {
+      "group": "props",
+      "id": "sdoor_open",
+      "name": "避难间门 · 正向（打开）",
+      "priority": 3,
+      "subject": "与关闭避难门成套：墙体沿东西向，门洞横跨左右，通行沿上下。左右金属门柱原位，钢门扇从左铰链打开后沿左边向上收拢，中央通路透明。绿色指示灯仍在门框上，门框有体积和厚封条，75度俯视。",
+      "usedFor": "避难间门打开时的状态。",
+      "source": "exec-669e542c-1597-4528-adfb-5745fb32cee1.png"
+    },
+    {
+      "group": "props",
+      "id": "exit",
+      "name": "撤离点",
+      "priority": 1,
+      "subject": "从正上方看的撤离点标记：地面上喷的青色圆环加一个箭头，圆环有磨损缺角，颜色偏亮的青绿。",
+      "usedFor": "站在上面读条 6 秒就能撤离。",
+      "source": "exec-29b06279-7c2f-4623-935e-dd647c1d9113.png",
+      "ground": true
+    },
+    {
+      "group": "props",
+      "id": "corpse_scav",
+      "name": "尸体 · 拾荒者（人类）",
+      "priority": 2,
+      "subject": "一名穿土黄棕旧外套的拾荒者倒在地上，四肢放松散开，帽子歪向一侧，帆布背包被压住，旁边一把枪与少数弹壳，少许暗红干血；同场景角色一致的75度俯视，衣服与背包略有体积，非站立姿势。",
+      "usedFor": "拾荒者死后留下的尸体。这是最常见的一种，玩家见到最多的就是它。",
+      "source": "exec-025e089a-7440-4323-b256-cff6be6d1b2a.png"
+    },
+    {
+      "group": "props",
+      "id": "corpse_echo",
+      "name": "尸体 · 回响体（异常）",
+      "priority": 2,
+      "subject": "回响体消散后的紫红人形水光痕迹，中心浓、边缘碎散，几粒细晶体，没有骨骼或清晰四肢，没有人类血液，残留贴地，只有结晶略凸起，颜色同紫红回响体。",
+      "usedFor": "回响体死后留下的残留。它本来就不是实体，所以不该画成人形尸体。",
+      "source": "exec-c2245c89-5e26-4703-8bb0-e912e885d87f.png",
+      "ground": true
+    },
+    {
+      "group": "props",
+      "id": "corpse_guard",
+      "name": "尸体 · 潮汐守卫（机械）",
+      "priority": 2,
+      "subject": "潮汐守卫机械残骸：裂开的灰蓝装甲主体、裸露粗线缆、两个脱落轮式支脚，圆形青色传感器面板掉在旁边，螺栓与焦黑细痕，无血。与参考守卫同材料、相同75度俯视，散落零件有厚度。",
+      "usedFor": "潮汐守卫被打散后的残骸。机械不该有血迹，靠散落的零件表达「被拆了」。",
+      "source": "exec-d077707a-950c-47a1-bcbf-5f29e3b4c6c8.png"
+    },
+    {
+      "group": "tiles",
+      "id": "floor",
+      "name": "室内地板",
+      "priority": 1,
+      "subject": "从正上方看的一块室内水泥地砖：浅灰绿，有细裂纹和一点污渍，纹理要均匀、不要有明显方向性，重复拼起来不能看出图案。",
+      "usedFor": "地图上最大面积的地形。每格独立绘制，不需要无缝拼接。",
+      "source": "exec-c910b5e1-2b39-401f-b7f6-49f40b36aa62.png"
+    },
+    {
+      "group": "tiles",
+      "id": "low",
+      "name": "低地",
+      "priority": 2,
+      "subject": "从正上方看的一块潮湿低地：比地板更暗的泥地，有几处浅积水反光，颜色偏冷。",
+      "usedFor": "高度 1 的地形，涨潮时先被淹。",
+      "source": "exec-b9d93411-7dc1-4da9-8240-0f2258e2da89.png"
+    },
+    {
+      "group": "tiles",
+      "id": "marsh",
+      "name": "洼地",
+      "priority": 2,
+      "subject": "从正上方看的一块洼地：大部分是浅浅的水，能透过水看到下面的泥，边缘有细小的泡沫和泥沙。",
+      "usedFor": "高度 0 的地形，退潮时才露出来。",
+      "source": "exec-ac9c8943-4b67-42b1-914e-d8cb956fc8a4.png"
+    },
+    {
+      "group": "tiles",
+      "id": "wall",
+      "name": "墙体",
+      "priority": 1,
+      "subject": "从正上方看的一段墙体：深色粗糙混凝土的顶面，比地板暗两个档，表面有颗粒感，边缘略亮一条。",
+      "usedFor": "所有墙。挡住视线和子弹。",
+      "source": "exec-4e459dfe-4b8b-4151-b18f-bb0c764951e6.png"
+    },
+    {
+      "group": "props",
+      "id": "door_side",
+      "name": "普通门 · 侧向（关闭）",
+      "priority": 1,
+      "subject": "普通木门，墙体沿画面上下即南北向，门洞在图中纵向延伸，玩家沿左右穿过。门扇与两个门柱沿画面竖轴排列：北端一柱、南端一柱，中间关闭的木门形成一条竖直的厚板。75度俯视，能看到木门上沿与短的侧立面，最宽不超过画布一半。严禁再画成横跨左右的正面门，严禁直接旋转图像造成光源错误。",
+      "usedFor": "南北向墙体上的门洞，供东西方向通行；由门洞轴线自动选图。",
+      "source": "exec-89b61e0c-530b-4017-926e-ef680a295ba5.png"
+    },
+    {
+      "group": "props",
+      "id": "door_side_open",
+      "name": "普通门 · 侧向（打开）",
+      "priority": 1,
+      "subject": "与侧向关闭木门同一结构，墙体沿画面上下南北向，玩家沿左右通行。北南两个门柱原位不变，门扇从北端铰链打开90度，沿顶部向左收拢，中央左右方向通路透明。75度俯视，保留门柱和门扇的厚度，保持左上光源。",
+      "usedFor": "南北向墙体上的门洞，供东西方向通行；由门洞轴线自动选图。",
+      "source": "exec-a5b4a12c-9653-4c45-ad8e-38cab42bd2a7.png"
+    },
+    {
+      "group": "props",
+      "id": "sdoor_side",
+      "name": "避难门 · 侧向（关闭）",
+      "priority": 1,
+      "subject": "厚金属避难门，墙体沿画面上下南北向，门洞竖向，通行沿左右。北南两个厚金属门柱夹住一扇竖向关闭的钢门，上沿亮、短侧面暗、封条清晰，绿色小灯在南端门柱，窄而纵向的外轮廓。75度俯视。",
+      "usedFor": "南北向墙体上的门洞，供东西方向通行；由门洞轴线自动选图。",
+      "source": "exec-b2ee99c3-00c6-4357-add7-c1b9e601513d.png"
+    },
+    {
+      "group": "props",
+      "id": "sdoor_side_open",
+      "name": "避难门 · 侧向（打开）",
+      "priority": 1,
+      "subject": "与侧向关闭避难门同结构，墙体沿画面上下南北向，玩家左右通行。北南门柱原位，钢门扇从北端打开90度后沿顶部向左收拢，中央左右通路完全透明。厚钢板上沿和短立面可见，绿色小灯仍在南端门柱，固定左上光源。",
+      "usedFor": "南北向墙体上的门洞，供东西方向通行；由门洞轴线自动选图。",
+      "source": "exec-2f1f589b-880a-4007-80e2-6c997f60c64c.png"
+    },
+    {
+      "group": "props",
+      "id": "crate_tool",
+      "name": "工具箱",
+      "priority": 1,
+      "subject": "低矮的锈红金属工具抽屉箱，横向宽顶面占主要部分，下面短立面上两层抽屉和银色拉手，角落黄铜扣与少许磨损，顶面和短侧壁都清晰可见。一格体积，比例同参考矮柜，绝对不要画正面立式大图。",
+      "source": "exec-7c488b73-3eb5-4834-abcc-15d96bec21aa.png",
+      "usedFor": "快取工具箱，偏工业器材；实体占一格，地图字符 T。"
+    },
+    {
+      "group": "props",
+      "id": "crate_med",
+      "name": "医疗柜",
+      "priority": 1,
+      "subject": "一格体积的灰白与暗绿色金属医疗物资柜，顶面占大半，短而可见的前门上一个简单绿色加号、黑色短拉手和密封边，左上光、短侧壁，顶面亮门面暗，比例同参考储物柜，75度高角度俯视。",
+      "source": "exec-7ff2943a-d951-4358-b07a-7724beb05144.png",
+      "usedFor": "标准医疗柜，偏医疗物资；实体占一格，地图字符 M。"
+    },
+    {
+      "group": "props",
+      "id": "crate_elec",
+      "name": "电子设备柜",
+      "priority": 1,
+      "subject": "一格体积的蓝灰色电子设备储物机柜，较大顶面有两条散热缝，短前面板有微小暗青指示灯、插口与锁扣，少许外露线束盘绕在侧面，厚度清晰。顶面为主，不画整面正面服务器照片。",
+      "source": "exec-b5d27d80-c2c7-4c6d-810f-c903b08c0625.png",
+      "usedFor": "标准电子设备柜，偏电子/工业；实体占一格，地图字符 R。"
+    },
+    {
+      "group": "props",
+      "id": "crate_supply",
+      "name": "防水补给箱",
+      "priority": 1,
+      "subject": "一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。",
+      "source": "exec-16cbe253-8949-4381-a0d6-6a652f784086.png",
+      "usedFor": "重型防水补给箱，偏生活/医疗/工业；实体占一格，地图字符 K。"
+    }
+  ],
+  "optional": [
+    {
+      "group": "props",
+      "id": "desk",
+      "name": "办公桌",
+      "subject": "旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。",
+      "source": "exec-17bf12b7-f671-47dc-946c-e7cf7e6eefa1.png"
+    },
+    {
+      "group": "props",
+      "id": "shelf",
+      "name": "货架",
+      "subject": "旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。",
+      "source": "exec-25e491d6-e950-4c8a-848a-78e23d694e16.png"
+    },
+    {
+      "group": "props",
+      "id": "barrel",
+      "name": "油桶",
+      "subject": "旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。",
+      "source": "exec-e621e198-9dab-4f69-94d0-e9a4e3bdaa74.png"
+    },
+    {
+      "group": "props",
+      "id": "chair",
+      "name": "翻倒的椅子",
+      "subject": "一把翻倒的深木椅子，从75度俯视看见斜着的椅座平面、椅背厚度和向一侧伸出的四条椅腿，简洁有体积的木件，不要画成平面线稿。",
+      "source": "exec-1014d468-e8f0-4b53-beb6-7e8c3c06102c.png"
+    },
+    {
+      "group": "props",
+      "id": "blood",
+      "name": "地面血迹",
+      "subject": "从正上方看的一小片干涸血迹：不规则的深红褐色斑块，边缘已经发暗干裂。",
+      "source": "exec-a58fbfa9-dfcc-462b-94cf-7c0af9bd07fb.png",
+      "ground": true
+    }
+  ],
+  "stylePromptChars": "Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: ",
+  "facingNote": "三向图的规则：只画朝右的侧面（_e），朝左由代码水平镜像。所以侧面图上不要放文字、编号、徽章这类会翻转后变错的不对称细节；左右不对称的装备（单肩包、单侧枪套）可以放心画，镜像后看起来是「换到另一只手」，在俯视视角下是正常观感。",
+  "stylePromptTiles": "Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: ",
+  "corpseNote": "尸体按敌人种类分三张：corpse_scav / corpse_echo / corpse_guard。画布上程序还会按 90° 随机旋转，所以同一张图不会整片朝同一个方向。缺图会退回通用的 corpse.png，再缺就用代码画的深色人形块。",
+  "stylePromptGround": "Use case: stylized-concept. Create ONE 32x32 pixel-art ground decal for 潮汐线, in the ground plane of a 75-degree top-down orthographic game. The decal lies flat on the ground, no upright extrusion, no invented height. Muted weathered palette and upper-left light, coarse crisp pixel clusters, no antialiasing. Fit complete decal within central 28x28, 2px transparent margin, transparent PNG. No surrounding ground, label, border or shadow. Subject: ",
+  "styleVersion": "2.1",
+  "specification": "ART_STYLE.md",
+  "collisionNote": "容器及实体家具完整占一格，只有地面贴花 ground:true 可通行；见 ART_STYLE.md。"
+}

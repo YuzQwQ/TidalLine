@@ -1,0 +1,181 @@
+{
+  "generator": "Built-in image_gen, one transparent image per equipment icon",
+  "sourceDirectory": "Codex generated_images/01a17734-d41d-7462-a06b-323c12c53633",
+  "specification": "ART_STYLE.md",
+  "stylePrompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: ",
+  "delivery": {
+    "size": 48,
+    "margin": 4,
+    "colours": 32,
+    "alpha": "binary; no antialiasing",
+    "outDir": "assets/gear",
+    "note": "Use each icon.box for intended relative scale; pistol and low-tier armour deliberately smaller."
+  },
+  "icons": [
+    {
+      "id": "rifle",
+      "name": "制式步枪",
+      "type": "weapon",
+      "subject": "侧视 3/4，枪口朝右上。深灰聚合物护木 + 短枪管 + 30 发弯弹匣 + 简易机械瞄具，折叠枪托收到枪身侧。全长约占画布 40px 的横向 90%。",
+      "box": 40,
+      "source": "exec-17872441-0f6a-41f0-8e81-fcf4581cc862.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Use a consistent side / subtle three-quarter view, muzzle toward screen UPPER RIGHT, with the long axis angled about 15 degrees above horizontal. 侧视 3/4，枪口朝右上。深灰聚合物护木 + 短枪管 + 30 发弯弹匣 + 简易机械瞄具，折叠枪托收到枪身侧。全长约占画布 40px 的横向 90%。"
+    },
+    {
+      "id": "shotgun",
+      "name": "短管霰弹枪",
+      "type": "weapon",
+      "subject": "侧视，枪口朝右上。短粗枪管，下方一根管状弹仓，中间是泵动护木，木质枪托发暗、有磕碰。整枪比步枪短一截、粗一圈。",
+      "box": 40,
+      "source": "exec-4785bed5-cddb-489a-bfd8-d0d5a797d9cf.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Use a consistent side / subtle three-quarter view, muzzle toward screen UPPER RIGHT, with the long axis angled about 15 degrees above horizontal. 侧视，枪口朝右上。短粗枪管，下方一根管状弹仓，中间是泵动护木，木质枪托发暗、有磕碰。整枪比步枪短一截、粗一圈。"
+    },
+    {
+      "id": "smg",
+      "name": "冲锋枪",
+      "type": "weapon",
+      "subject": "侧视，明显比步枪小一圈。方正的机匣、细长的直弹匣、金属折叠托收在侧面，上机匣一颗拉机柄。剪影要\"短、窄、密\"。",
+      "box": 34,
+      "source": "exec-cdbeb5b6-030d-4153-bf0d-77117183b938.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Use a consistent side / subtle three-quarter view, muzzle toward screen UPPER RIGHT, with the long axis angled about 15 degrees above horizontal. 侧视，明显比步枪小一圈。方正的机匣、细长的直弹匣、金属折叠托收在侧面，上机匣一颗拉机柄。剪影要\"短、窄、密\"。"
+    },
+    {
+      "id": "pistol",
+      "name": "手枪",
+      "type": "weapon",
+      "subject": "侧视，只占画布一半（约 28px 长）。套筒 + 握把 + 露出一小截枪管，套筒后端有防滑纹，扳机护圈完整。",
+      "box": 28,
+      "source": "exec-94135a33-0e38-47a5-a00a-abf3248a7ad0.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Use a consistent side / subtle three-quarter view, muzzle toward screen UPPER RIGHT, with the long axis angled about 15 degrees above horizontal. 侧视，只占画布一半（约 28px 长）。套筒 + 握把 + 露出一小截枪管，套筒后端有防滑纹，扳机护圈完整。"
+    },
+    {
+      "id": "helmet1",
+      "name": "布面工帽",
+      "type": "helmet",
+      "lv": 1,
+      "subject": "软塌的深绿布帽，帽顶有压痕，短软檐，侧面缝过徽章的痕迹。完全没有硬壳的亮面——这是 Lv1 的辨识点。",
+      "box": 32,
+      "source": "exec-9f00eab6-56af-4f96-b13b-13281ab52c4c.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front three-quarter view of the empty helmet or cap, facing slightly to screen left, show a small top plane and the front/side material thickness. 软塌的深绿布帽，帽顶有压痕，短软檐，侧面缝过徽章的痕迹。完全没有硬壳的亮面——这是 Lv1 的辨识点。 This is level 1 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "helmet2",
+      "name": "工程安全帽",
+      "type": "helmet",
+      "lv": 2,
+      "subject": "亮黄硬塑安全帽，顶部两道加强筋，小前檐，两侧透气孔，表面有划痕和褪色。",
+      "box": 34,
+      "source": "exec-9b559bf3-bf11-429d-b2ea-1000193fb7d0.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front three-quarter view of the empty helmet or cap, facing slightly to screen left, show a small top plane and the front/side material thickness. 亮黄硬塑安全帽，顶部两道加强筋，小前檐，两侧透气孔，表面有划痕和褪色。 This is level 2 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "helmet3",
+      "name": "防撞头盔",
+      "type": "helmet",
+      "lv": 3,
+      "subject": "深灰军绿硬壳，比安全帽厚，带侧护耳片和下颚带，没有面罩。轮廓开始往\"圆壳\"走。",
+      "box": 36,
+      "source": "exec-c18d5764-6af4-4934-9d6d-32ac77cffd16.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front three-quarter view of the empty helmet or cap, facing slightly to screen left, show a small top plane and the front/side material thickness. 深灰军绿硬壳，比安全帽厚，带侧护耳片和下颚带，没有面罩。轮廓开始往\"圆壳\"走。 This is level 3 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "helmet4",
+      "name": "防弹头盔",
+      "type": "helmet",
+      "lv": 4,
+      "subject": "圆润厚壳防弹盔，哑光涂层，侧导轨 + 前挂点，边缘包胶。壳厚明显大于 Lv3。",
+      "box": 38,
+      "source": "exec-f2b0645f-8cb0-41ed-a8c2-e591e0842cf8.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front three-quarter view of the empty helmet or cap, facing slightly to screen left, show a small top plane and the front/side material thickness. 圆润厚壳防弹盔，哑光涂层，侧导轨 + 前挂点，边缘包胶。壳厚明显大于 Lv3。 This is level 4 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "helmet5",
+      "name": "重型防弹盔",
+      "type": "helmet",
+      "lv": 5,
+      "subject": "在 Lv4 基础上加厚：后颈护片、侧面配重/耳麦座、加宽前檐。整体轮廓变宽变沉。",
+      "box": 40,
+      "source": "exec-2a5e0978-6363-4236-bbba-a06932cecb5e.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front three-quarter view of the empty helmet or cap, facing slightly to screen left, show a small top plane and the front/side material thickness. 在 Lv4 基础上加厚：后颈护片、侧面配重/耳麦座、加宽前檐。整体轮廓变宽变沉。 This is level 5 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "helmet6",
+      "name": "攻坚头盔",
+      "type": "helmet",
+      "lv": 6,
+      "subject": "全罩式：正面一整块略带反光的防弹面罩，两侧螺栓和配重块，下颌包住。剪影最高最重。",
+      "box": 40,
+      "source": "exec-ced58788-fc18-4b5f-b3d8-53bd0de8a1aa.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front three-quarter view of the empty helmet or cap, facing slightly to screen left, show a small top plane and the front/side material thickness. 全罩式：正面一整块略带反光的防弹面罩，两侧螺栓和配重块，下颌包住。剪影最高最重。 This is level 6 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "body1",
+      "name": "帆布护胸",
+      "type": "body",
+      "lv": 1,
+      "subject": "厚帆布护胸，土黄色，前面两块方块补丁、粗缝线，肩是布带。软材质，没有插板轮廓。",
+      "box": 32,
+      "source": "exec-fad251e3-2799-42c0-a198-29eef1315933.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front / subtle three-quarter view of an EMPTY wearable torso armour item. No head, no human arms, no legs. Clearly show shoulder straps, chest and side thickness. 厚帆布护胸，土黄色，前面两块方块补丁、粗缝线，肩是布带。软材质，没有插板轮廓。 This is level 1 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "body2",
+      "name": "防刺背心",
+      "type": "body",
+      "lv": 2,
+      "subject": "黑色多层纤维防刺背心，表面能看出层压纹路和缝线，肩部与侧面有绑带。比帆布硬，但仍软塌。",
+      "box": 34,
+      "source": "exec-a3501c0a-27a8-436f-b2ba-7c78652b1127.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front / subtle three-quarter view of an EMPTY wearable torso armour item. No head, no human arms, no legs. Clearly show shoulder straps, chest and side thickness. 黑色多层纤维防刺背心，表面能看出层压纹路和缝线，肩部与侧面有绑带。比帆布硬，但仍软塌。 This is level 2 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "body3",
+      "name": "轻型战术背心",
+      "type": "body",
+      "lv": 3,
+      "subject": "军绿战术背心，织带系统 + 竖排三个弹匣袋 + 一块魔术贴，里面是空的。整体贴身、窄。",
+      "box": 36,
+      "source": "exec-89e76589-97c3-4589-bb8e-0ce151d1341b.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front / subtle three-quarter view of an EMPTY wearable torso armour item. No head, no human arms, no legs. Clearly show shoulder straps, chest and side thickness. 军绿战术背心，织带系统 + 竖排三个弹匣袋 + 一块魔术贴，里面是空的。整体贴身、窄。 This is level 3 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "body4",
+      "name": "战术防弹衣",
+      "type": "body",
+      "lv": 4,
+      "subject": "战术防弹衣，能看出前后插板的硬边轮廓，侧腰收紧带，肩部有软垫。比上一级厚一格，肩线变方。",
+      "box": 38,
+      "source": "exec-ccf9c95a-fe84-4f23-b919-38e923096cb2.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front / subtle three-quarter view of an EMPTY wearable torso armour item. No head, no human arms, no legs. Clearly show shoulder straps, chest and side thickness. 战术防弹衣，能看出前后插板的硬边轮廓，侧腰收紧带，肩部有软垫。比上一级厚一格，肩线变方。 This is level 4 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "body5",
+      "name": "重型防弹衣",
+      "type": "body",
+      "lv": 5,
+      "subject": "重型防弹衣，加厚插板 + 立领护颈 + 护裆片 + 一圈口袋。整件变宽、变方、有明显的厚度立面。",
+      "box": 40,
+      "source": "exec-b051dd44-25f2-4d9a-9394-0b2363f2d88c.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front / subtle three-quarter view of an EMPTY wearable torso armour item. No head, no human arms, no legs. Clearly show shoulder straps, chest and side thickness. 重型防弹衣，加厚插板 + 立领护颈 + 护裆片 + 一圈口袋。整件变宽、变方、有明显的厚度立面。 This is level 5 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "body6",
+      "name": "攻坚装甲",
+      "type": "body",
+      "lv": 6,
+      "subject": "攻坚装甲，硬质外骨骼式：分块装甲片、硬领、肩甲、螺栓和液压管。剪影最宽最厚，一眼就是\"重装\"。",
+      "box": 40,
+      "source": "exec-1233cd3f-c07a-40db-83ae-336481588054.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front / subtle three-quarter view of an EMPTY wearable torso armour item. No head, no human arms, no legs. Clearly show shoulder straps, chest and side thickness. 攻坚装甲，硬质外骨骼式：分块装甲片、硬领、肩甲、螺栓和液压管。剪影最宽最厚，一眼就是\"重装\"。 This is level 6 of six: silhouette and coverage must match this level, not just a palette swap. "
+    },
+    {
+      "id": "bag",
+      "name": "单格背包",
+      "type": "bag",
+      "subject": "单格帆布/尼龙背包，正面一个翻盖 + 两条压缩带。（暂未开放，可最后再画）",
+      "box": 40,
+      "source": "exec-c5b1955a-a750-4854-805f-29b0d9a4814d.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front three-quarter view of an empty olive canvas/nylon backpack, top flap and two compression straps. 单格帆布/尼龙背包，正面一个翻盖 + 两条压缩带。（暂未开放，可最后再画）"
+    }
+  ]
+}

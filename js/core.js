@@ -1,0 +1,475 @@
+/* ============================================================
+   潮汐线 · 核心层
+   工具 / 地图 / 视野 / 寻路 / 噪声
+   ============================================================ */
+
+/* ---------------- 工具 ---------------- */
+const U = {
+  clamp: (v, a, b) => v < a ? a : (v > b ? b : v),
+  lerp: (a, b, t) => a + (b - a) * t,
+  dist: (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1),
+  dist2: (x1, y1, x2, y2) => (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1),
+  rand: (a, b) => a + Math.random() * (b - a),
+  randInt: (a, b) => Math.floor(a + Math.random() * (b - a + 1)),
+  pick: arr => arr[Math.floor(Math.random() * arr.length)],
+  // 角度差，归一化到 [-PI, PI]
+  angDiff: (a, b) => {
+    let d = a - b;
+    while (d > Math.PI) d -= Math.PI * 2;
+    while (d < -Math.PI) d += Math.PI * 2;
+    return d;
+  },
+  now: () => performance.now() / 1000
+};
+
+/* ---------------- 地图 ---------------- */
+const M = {
+  W: 0, H: 0,
+  grid: [],          // 每格 { ch, solid, opaque, h, box, door }
+  visible: null,     // Uint8Array 视锥内可见
+  seen: null,        // Uint8Array 曾经可见
+  raw: null,         // Uint8Array 360° 实测可见（未过滤视锥）
+  playerSpawn: { x: 0, y: 0 },
+  extracts: [],      // [{x,y}]
+  tideLevel: 0,
+
+  load(rows, doorAxes, props) {
+    this.H = rows.length;
+    this.W = rows[0].length;
+    this.grid = [];
+    this.extracts = [];
+    const n = this.W * this.H;
+    this.visible = new Uint8Array(n);
+    this.seen = new Uint8Array(n);
+    this.raw = new Uint8Array(n);
+
+    for (let y = 0; y < this.H; y++) {
+      const line = rows[y];
+      const row = [];
+      for (let x = 0; x < this.W; x++) {
+        const ch = line[x] || '#';
+        const t = {
+          ch,
+          solid: ch === '#',
+          obstacle: !!BOX_KIND[ch],
+          container: !!BOX_KIND[ch],   // 容器只挡行动，不挡视线
+          prop: null,
+          opaque: ch === '#',
+          h: TILE_H[ch] !== undefined ? TILE_H[ch] : 2,
+          box: null,
+          door: null
+        };
+        if (ch === 'P') this.playerSpawn = { x, y };
+        if (ch === 'E') this.extracts.push({ x, y });
+        if (ch === '+' || ch === 'S') {
+          const wall = (cx, cy) => !!(rows[cy] && rows[cy][cx] === '#');
+          const vertical = Number(wall(x, y - 1)) + Number(wall(x, y + 1));
+          const horizontal = Number(wall(x - 1, y)) + Number(wall(x + 1, y));
+          const override = doorAxes && doorAxes[x + ',' + y];
+          const axis = override === 'vertical' || override === 'horizontal'
+            ? override : (vertical > horizontal ? 'vertical' : 'horizontal');
+          t.door = { open: true, safe: ch === 'S', axis };
+        }
+        row.push(t);
+      }
+      this.grid.push(row);
+    }
+    // 自定义测试/扩展地图可显式传摆设；主地图默认使用 DECOR。
+    const furnishings = props || (rows === MAP_ROWS ? DECOR : []);
+    for (const prop of furnishings) {
+      const tile = this.at(prop.x, prop.y);
+      if (!tile || tile.solid || tile.door || BOX_KIND[tile.ch] || tile.ch === 'P' || tile.ch === 'E') {
+        throw new Error('场景摆设位置冲突: ' + prop.id + ' @ ' + prop.x + ',' + prop.y);
+      }
+      tile.prop = prop;
+      if (!prop.ground) tile.obstacle = true;
+    }
+  },
+
+  at(x, y) {
+    if (x < 0 || y < 0 || x >= this.W || y >= this.H) return null;
+    return this.grid[y][x];
+  },
+
+  idx(x, y) { return y * this.W + x; },
+
+  /* 人物与寻路统一使用同一占用表：墙、实体物件、关门、深水不可进入。 */
+  walkable(x, y) {
+    const t = this.at(x, y);
+    if (!t) return false;
+    if (t.solid || t.obstacle) return false;
+    if (t.door && !t.door.open) return false;
+    if (this.deepWater(x, y)) return false;
+    return true;
+  },
+
+  /* 是否挡视线。
+     容器（抽屉 / 柜子 / 保险箱）不算：它挡住走路，但看得见后面，
+     不然整个房间的视野会被一堆箱子切得七零八落。 */
+  opaque(x, y) {
+    const t = this.at(x, y);
+    if (!t) return true;
+    if (t.solid) return true;
+    if (t.door && !t.door.open) return true;
+    if (t.obstacle && !t.container) return true;
+    return false;
+  },
+
+  /* 该格的积水深度（0 = 干燥） */
+  waterDepth(x, y) {
+    const t = this.at(x, y);
+    if (!t) return 0;
+    return Math.max(0, this.tideLevel - t.h);
+  },
+
+  /* 浅水：可以走，但慢、吵 */
+  flooded(x, y) {
+    const d = this.waterDepth(x, y);
+    return d > 0.02 && d <= 1.05;
+  },
+
+  /* 深水：过不去。这是"涨潮把路收走"的具体实现 */
+  deepWater(x, y) {
+    return this.waterDepth(x, y) > 1.05;
+  },
+
+  /* 世界坐标 → 格 */
+  tx(wx) { return Math.floor(wx / CFG.TILE); },
+  ty(wy) { return Math.floor(wy / CFG.TILE); },
+  /* 格 → 世界坐标（格中心） */
+  cx(tx) { return tx * CFG.TILE + CFG.TILE / 2; },
+  cy(ty) { return ty * CFG.TILE + CFG.TILE / 2; },
+
+  /* ---- 视野：递归阴影投射（八分区法） ---- */
+  _oct: [
+    [1, 0, 0, -1, -1, 0, 0, 1],
+    [0, 1, -1, 0, 0, -1, 1, 0],
+    [0, 1, 1, 0, 0, -1, -1, 0],
+    [1, 0, 0, 1, -1, 0, 0, -1]
+  ],
+
+  computeFOV(cx, cy, radius) {
+    this.raw.fill(0);
+    const r2 = radius * radius;
+    const mark = (x, y) => {
+      if (x < 0 || y < 0 || x >= this.W || y >= this.H) return;
+      this.raw[y * this.W + x] = 1;
+    };
+    mark(cx, cy);
+    for (let o = 0; o < 8; o++) {
+      this._cast(cx, cy, 1, 1.0, 0.0, radius, r2,
+        this._oct[0][o], this._oct[1][o],
+        this._oct[2][o], this._oct[3][o], mark);
+    }
+  },
+
+  /* 把 360° 的 raw 可见，按视锥 + 近身 过滤成 visible，并累积 seen */
+  applyCone(px, py, angle, halfAngle, nearR) {
+    this.visible.fill(0);
+    const W = this.W, H = this.H;
+    const ptx = Math.floor(px / CFG.TILE), pty = Math.floor(py / CFG.TILE);
+    const near2 = (nearR + 0.5) * (nearR + 0.5);
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const i = y * W + x;
+        if (!this.raw[i]) continue;
+        const dx = x - ptx, dy = y - pty;
+        const d2 = dx * dx + dy * dy;
+        let inCone = false;
+        if (d2 <= near2) {
+          inCone = true;
+        } else {
+          const a = Math.atan2(dy, dx);
+          if (Math.abs(U.angDiff(a, angle)) <= halfAngle) inCone = true;
+        }
+        if (inCone) {
+          this.visible[i] = 1;
+          this.seen[i] = 1;
+        }
+      }
+    }
+  },
+
+  _cast(cx, cy, row, start, end, radius, r2, xx, xy, yx, yy, mark) {
+    if (start < end) return;
+    let newStart = 0;
+    let blocked = false;
+
+    for (let j = row; j <= radius && !blocked; j++) {
+      let dx = -j - 1;
+      const dy = -j;
+      while (dx <= 0) {
+        dx += 1;
+        const X = cx + dx * xx + dy * xy;
+        const Y = cy + dx * yx + dy * yy;
+        const lSlope = (dx - 0.5) / (dy + 0.5);
+        const rSlope = (dx + 0.5) / (dy - 0.5);
+
+        if (start < rSlope) continue;
+        if (end > lSlope) break;
+
+        if (X >= 0 && Y >= 0 && X < this.W && Y < this.H) {
+          if (dx * dx + dy * dy <= r2) mark(X, Y);
+        }
+
+        if (blocked) {
+          if (this.opaque(X, Y)) {
+            newStart = rSlope;
+            continue;
+          } else {
+            blocked = false;
+            start = newStart;
+          }
+        } else if (this.opaque(X, Y) && j < radius) {
+          blocked = true;
+          this._cast(cx, cy, j + 1, start, lSlope, radius, r2, xx, xy, yx, yy, mark);
+          newStart = rSlope;
+        }
+      }
+      if (blocked) break;
+    }
+  },
+
+  /* 两点之间是否通视（敌人用，简化的直线检查） */
+  lineOfSight(x0, y0, x1, y1) {
+    let dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
+    let sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+    let err = dx - dy;
+    let x = x0, y = y0;
+    let guard = 0;
+    while (guard++ < 200) {
+      if (x === x1 && y === y1) return true;
+      if (!(x === x0 && y === y0) && this.opaque(x, y)) return false;
+      const e2 = err * 2;
+      if (e2 > -dy) { err -= dy; x += sx; }
+      if (e2 < dx) { err += dx; y += sy; }
+    }
+    return false;
+  },
+
+  /* ---- A* 寻路 ----
+     二十几个敌人每 0.4~0.6 秒各重算一次，一秒就是几十次调用。
+     原来每次都 new 四个「全图大小」的 typed array，还用 open.includes()
+     做线性查找 —— 既制造垃圾又让单次调用是 O(n²)，攒久了就是周期性掉帧。
+     现在缓冲区复用 + 二叉堆，稳态下每次调用零分配。 */
+  _pf: null,
+
+  _pfBuf(n) {
+    if (!this._pf || this._pf.n !== n) {
+      this._pf = {
+        n,
+        g: new Float32Array(n),
+        f: new Float32Array(n),
+        from: new Int32Array(n),
+        closed: new Uint8Array(n),
+        // 堆按「每个节点最多被相邻的四条边各更新一次」给容量，不会溢出
+        hi: new Int32Array(n * 4 + 16),
+        hf: new Float32Array(n * 4 + 16)
+      };
+    }
+    return this._pf;
+  },
+
+  findPath(sx, sy, tx, ty, maxNode) {
+    if (!this.walkable(tx, ty)) return null;
+    if (sx === tx && sy === ty) return [];
+    // 扩建地图的跨区路线可能超过旧的 900 节点上限；默认最多访问全图一次。
+    maxNode = maxNode || this.W * this.H;
+
+    const W = this.W, H = this.H, n = W * H;
+    const b = this._pfBuf(n);
+    const g = b.g, f = b.f, from = b.from, closed = b.closed, hi = b.hi, hf = b.hf;
+    g.fill(Infinity); f.fill(Infinity); from.fill(-1); closed.fill(0);
+
+    const cap = hi.length - 1;
+    let hn = 0;
+    const push = (i, fv) => {
+      if (hn >= cap) return;
+      let k = ++hn;
+      hi[k] = i; hf[k] = fv;
+      while (k > 1) {
+        const p = k >> 1;
+        if (hf[p] <= hf[k]) break;
+        const ti = hi[p], tf = hf[p];
+        hi[p] = hi[k]; hf[p] = hf[k]; hi[k] = ti; hf[k] = tf;
+        k = p;
+      }
+    };
+    const pop = () => {
+      const top = hi[1];
+      hi[1] = hi[hn]; hf[1] = hf[hn]; hn--;
+      let k = 1;
+      for (;;) {
+        const l = k << 1, r = l + 1;
+        let m = k;
+        if (l <= hn && hf[l] < hf[m]) m = l;
+        if (r <= hn && hf[r] < hf[m]) m = r;
+        if (m === k) break;
+        const ti = hi[m], tf = hf[m];
+        hi[m] = hi[k]; hf[m] = hf[k]; hi[k] = ti; hf[k] = tf;
+        k = m;
+      }
+      return top;
+    };
+
+    const startI = sy * W + sx;
+    const goalI = ty * W + tx;
+    const h = (x, y) => Math.abs(x - tx) + Math.abs(y - ty);
+    g[startI] = 0;
+    f[startI] = h(sx, sy);
+    push(startI, f[startI]);
+
+    let nodes = 0;
+    while (hn > 0 && nodes++ < maxNode) {
+      const cur = pop();
+      if (closed[cur]) continue;          // 堆里可能有同一格的旧副本
+      if (cur === goalI) {
+        const path = [];
+        let c = cur;
+        while (c !== startI && c !== -1) {
+          path.push({ x: c % W, y: Math.floor(c / W) });
+          c = from[c];
+        }
+        path.reverse();
+        return path;
+      }
+      closed[cur] = 1;
+      const cx = cur % W, cy = Math.floor(cur / W);
+
+      for (let d = 0; d < 4; d++) {
+        const nx = cx + (d === 0 ? 1 : d === 1 ? -1 : 0);
+        const ny = cy + (d === 2 ? 1 : d === 3 ? -1 : 0);
+        if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+        if (!this.walkable(nx, ny)) continue;
+        const ni = ny * W + nx;
+        if (closed[ni]) continue;
+        const ng = g[cur] + 1;
+        if (ng >= g[ni]) continue;
+        g[ni] = ng;
+        f[ni] = ng + h(nx, ny);
+        from[ni] = cur;
+        push(ni, f[ni]);                  // 已在堆里就多留一份，靠 closed 跳过
+      }
+    }
+    return null;
+  }
+};
+
+/* ---------------- 噪声 ---------------- */
+const Noise = {
+  events: [],       // {x, y, r, life, kind}
+  visuals: [],      // 玩家能看到的噪声环 {x, y, r, age, max}
+
+  emit(wx, wy, radiusTiles, kind) {
+    this.events.push({
+      x: wx, y: wy,
+      r: radiusTiles * CFG.TILE,
+      life: 0.45,
+      kind: kind || 'step'
+    });
+    if (this.events.length > 200) this.events.shift();
+  },
+
+  /* 玩家能"听见"的噪声（来自敌人），用于屏幕边缘提示 */
+  visual(wx, wy, radiusTiles) {
+    this.visuals.push({
+      x: wx, y: wy,
+      r: radiusTiles * CFG.TILE,
+      age: 0, max: 0.9
+    });
+    if (this.visuals.length > 30) this.visuals.shift();
+  },
+
+  tick(dt) {
+    for (let i = this.events.length - 1; i >= 0; i--) {
+      this.events[i].life -= dt;
+      if (this.events[i].life <= 0) {
+        this.events.splice(i, 1);
+      }
+    }
+    for (let i = this.visuals.length - 1; i >= 0; i--) {
+      this.visuals[i].age += dt;
+      if (this.visuals[i].age >= this.visuals[i].max) this.visuals.splice(i, 1);
+    }
+  },
+
+  clear() { this.events.length = 0; this.visuals.length = 0; }
+};
+
+/* ---------------- 安静区（v0.4 的战后间歇） ---------------- */
+const Quiet = {
+  zones: [],   // {x, y, r, ttl}
+
+  add(wx, wy, radiusTiles, time) {
+    this.zones.push({ x: wx, y: wy, r: radiusTiles * CFG.TILE, ttl: time });
+  },
+
+  /* 某点是否在安静区里，返回剩余时间比例 */
+  factor(wx, wy) {
+    let best = 0;
+    for (const z of this.zones) {
+      if (U.dist(wx, wy, z.x, z.y) < z.r) {
+        best = Math.max(best, z.ttl / CFG.QUIET_TIME);
+      }
+    }
+    return best;
+  },
+
+  tick(dt) {
+    for (let i = this.zones.length - 1; i >= 0; i--) {
+      this.zones[i].ttl -= dt;
+      if (this.zones[i].ttl <= 0) this.zones.splice(i, 1);
+    }
+  },
+
+  clear() { this.zones.length = 0; }
+};
+
+/* ---------------- 掉落表 ---------------- */
+const Loot = {
+  /* 按容器档位抽一件 */
+  roll(kind, preferredCats) {
+    // 档位决定稀有度倾向
+    const rBias = {
+      fast:  { 1: 100, 2: 46, 3: 10, 4: 1.5, 5: 0 },
+      std:   { 1: 74, 2: 62, 3: 28, 4: 6,   5: 0.6 },
+      heavy: { 1: 20, 2: 44, 3: 58, 4: 26,  5: 4 }
+    }[kind] || RARITY_WEIGHT;
+
+    const pool = ITEMS.filter(it => rBias[it.r] > 0 && !it.noLoot);
+    let total = 0;
+    const w = pool.map(it => {
+      let v = rBias[it.r];
+      if (preferredCats && preferredCats.includes(it.cat)) v *= 4;
+      // 重型和标准容器略微偏向"收藏感强"的类别
+      if (kind !== 'fast') {
+        if (it.cat === 'lux' || it.cat === 'antiq' || it.cat === 'art') v *= 1.35;
+      } else {
+        if (it.cat === 'ind' || it.cat === 'life') v *= 1.25;
+      }
+      total += v;
+      return v;
+    });
+    let r = Math.random() * total;
+    for (let i = 0; i < pool.length; i++) {
+      r -= w[i];
+      if (r <= 0) return { item: pool[i], n: 1 };
+    }
+    return { item: pool[0], n: 1 };
+  },
+
+  fill(kind, preferredCats) {
+    const [a, b] = BOX_COUNT[kind] || [1, 2];
+    const n = U.randInt(a, b);
+    const out = [];
+    const seen = new Set();
+    for (let i = 0; i < n; i++) {
+      const r = this.roll(kind, preferredCats);
+      // 同一个容器不出重复条目
+      if (seen.has(r.item.id)) continue;
+      seen.add(r.item.id);
+      out.push(r);
+    }
+    return out;
+  }
+};

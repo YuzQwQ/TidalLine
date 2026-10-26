@@ -1,0 +1,179 @@
+{
+  "generator": "Built-in image_gen; one image per item, transparent_background=true",
+  "stylePrompt": "Use case: stylized-concept. Create ONE standalone game inventory sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 48x48 pixel art, very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light upper left, readable medium-light edges against dark green UI, no pure black outline. The object occupies the central 40x40 logical pixels with transparent 4 pixel margins. Output a square PNG with genuinely transparent background. No label, text, border, ground, cast shadow, scenery, or extra objects. Subject: ",
+  "delivery": "Alpha crop; nearest-neighbor fit within 40×40; binary alpha; 4px transparent padding; 32-color 48×48 PNG. Prepared using tools/prepare-item-icons.js and sharp.",
+  "items": [
+    {
+      "id": "life01",
+      "subject": "白底蓝边的旧搪瓷缸，右侧把手，口沿磕掉一块瓷露出铁胎。",
+      "source": "exec-eee2a4e6-232e-4f83-9350-e50ee1c98e69.png"
+    },
+    {
+      "id": "life02",
+      "subject": "发黄的旧报纸，折角，分栏印刷的深色短线、粗标题色块和棕色水渍。",
+      "source": "exec-4e5e962b-57d1-4f8a-ad2f-c0809aed98ed.png"
+    },
+    {
+      "id": "life03",
+      "subject": "绿色玻璃灯罩的老式银行台灯，细黄铜灯杆，深色胶木底座，灯罩下缘熏黑。",
+      "source": "exec-13b6abfc-6c39-4430-8020-a19b00d46ca8.png"
+    },
+    {
+      "id": "life04",
+      "subject": "圆角的旧铁皮饼干盒，褪色的红绿色花纹，盖子有凹痕。",
+      "source": "exec-46f14955-692a-4dfe-9908-7fb22796adf3.png"
+    },
+    {
+      "id": "life05",
+      "subject": "一条叠好的浅米色毛巾，装在透明塑料包装中，褪色绿色商标，塑料边缘高光。",
+      "source": "exec-c2e3382f-43e2-4899-a16c-5dd24977d916.png"
+    },
+    {
+      "id": "elec01",
+      "subject": "米黄色塑料便携收音机，拉出半截天线，发黄的刻度盘、圆形喇叭格栅。",
+      "source": "exec-8e854350-21a2-4e39-875f-4914c8c95f37.png"
+    },
+    {
+      "id": "elec02",
+      "subject": "深蓝色方形随身听，银色按键，透明观察窗能看到一盒磁带和两个带轴。",
+      "source": "exec-e40b0fe8-9739-483d-9f35-f43ec0029549.png"
+    },
+    {
+      "id": "elec03",
+      "subject": "黑灰色旧计算器，顶部暗棕太阳能条，浅绿色液晶屏显示0，清晰的浅灰小按键。",
+      "source": "exec-670949b6-f342-4fc3-ad5e-ccadd70fa2e9.png"
+    },
+    {
+      "id": "elec04",
+      "subject": "绿色电路板，铜走线、黑色芯片、两颗电容和插槽，边缘有小缺口。",
+      "source": "exec-30223b91-c0fb-4a05-b701-ea2414fcfbad.png"
+    },
+    {
+      "id": "ind01",
+      "subject": "一段斜放的截断黄铜管，两端能看到空心切面，切口发亮，管身有暗绿氧化斑。",
+      "source": "exec-0533d6b1-94a4-4d2a-83b7-d72c500a43ac.png"
+    },
+    {
+      "id": "ind02",
+      "subject": "厚重金属滚珠轴承，外圈锈斑，内圈银色亮面，中间圆孔，能看到环形滚珠。",
+      "source": "exec-8a8e7838-f451-49f5-a594-c94025a3d711.png"
+    },
+    {
+      "id": "ind03",
+      "subject": "圆形旧压力表，灰银金属外壳，白色表盘，黑色刻度，红色指针顶在右端最大刻度，下方有短黄铜接头。",
+      "source": "exec-2097c237-fdd8-471a-8b3a-30cf240ae092.png"
+    },
+    {
+      "id": "ammo",
+      "subject": "三发并排散装步枪子弹，黄铜弹壳、铜色尖弹头，三发高度略微错开。",
+      "source": "exec-89d46a36-f761-40d2-bbde-62064f765ce4.png"
+    },
+    {
+      "id": "med01",
+      "subject": "卷起的米白色医用绷带卷，能看到螺旋层次，尾端展开少许，外层有一小块暗红污渍。",
+      "source": "exec-44b5a265-edcc-41b4-aa4f-3d83f2ceb81f.png"
+    },
+    {
+      "id": "med02",
+      "subject": "透明玻璃注射器，金属推杆，细针尖朝上，旁边一支很小的蓝绿色药瓶。",
+      "source": "exec-e805e655-115d-4ea7-9991-bd2038995a3e.png"
+    },
+    {
+      "id": "med03",
+      "subject": "竖放的深蓝黑色X光片，片内淡青白色脊柱和左右肋骨轮廓，右下角小日期标记。",
+      "source": "exec-9fa25a65-26ec-45d5-b830-15c92c95deb1.png"
+    },
+    {
+      "id": "antiq01",
+      "subject": "木质外壳的复古座钟，弧形顶部，圆形白色表盘、小罗马数字刻度，下方玻璃窗内黄铜钟摆停在中间。",
+      "source": "exec-4ef9511b-5560-437f-a3ed-2907b239a972.png"
+    },
+    {
+      "id": "antiq02",
+      "subject": "旧黄铜怀表，暖金表壳，表盖向左半开，米白色表盘，盖内刻着磨损字母，顶部小表冠与吊环。",
+      "source": "exec-24cf02ea-17db-4c23-87bb-39383f55eee9.png"
+    },
+    {
+      "id": "antiq03",
+      "subject": "一枚很小的发黑旧硬币，磨损圆边、深棕铜色，正面极模糊的浮雕图案，局部暗绿铜锈。",
+      "source": "exec-0232db6b-0fbe-4991-988e-7b4583521304.png"
+    },
+    {
+      "id": "antiq04",
+      "subject": "一枚亮铜色错版硬币，浮雕图案明显向右压偏，左侧宽空白月牙，边齿不齐，有亮金色边缘。",
+      "source": "exec-9ec7b176-bda3-4f73-9a58-4a72ed74364f.png"
+    },
+    {
+      "id": "antiq05",
+      "subject": "一块横向长方形的绿锈铜门牌，两端螺丝孔，铜色边缘，表面刻着临海路和大数字7，旧化划痕。",
+      "source": "exec-e611786c-ce28-4bfe-88b2-de42ae90ea2a.png"
+    },
+    {
+      "id": "art01",
+      "subject": "一张黑色黑胶唱片，露出半张发黄纸质封套，深灰同心纹，中心褪色红标签，封套有手写编号。",
+      "source": "exec-1ca73fea-8789-4628-b22b-916f9d339cac.png"
+    },
+    {
+      "id": "art02",
+      "subject": "小幅横向海景油画，掉漆的棕金木画框，灰蓝色大海和灰色天空、细小海浪，右下角一笔白色签名。",
+      "source": "exec-6b679461-3971-41f1-8664-fdfa511f559a.png"
+    },
+    {
+      "id": "art03",
+      "subject": "一条35mm摄影底片，四格画面，棕褐色胶片、上下打孔，四格里有模糊的人形轮廓。",
+      "source": "exec-6f26faad-e619-422a-a3c2-10a464f7e881.png"
+    },
+    {
+      "id": "lux01",
+      "subject": "精致机械腕表，银色金属表链、圆形银壳、深蓝黑表盘、明亮银色刻度和表针，竖向完整表链。",
+      "source": "exec-1b332fe4-8218-4429-86cc-0c36524ff9d7.png"
+    },
+    {
+      "id": "lux02",
+      "subject": "一小块斜放的长方形金条，厚度清晰、顶面亮金侧面暗金，表面铸造纹理与很小的钢印编号。",
+      "source": "exec-40a54b6f-930f-41dd-9053-58c6817ea023.png"
+    },
+    {
+      "id": "lux03",
+      "subject": "一支斜放的黑色树脂钢笔，笔帽扣好，细长轮廓，金色笔夹和金属环，笔夹有划痕。",
+      "source": "exec-ae395968-92dc-4573-bcae-3b734dc27232.png"
+    },
+    {
+      "id": "spec01",
+      "subject": "一枚米白色和浅珊瑚棕色的螺旋海贝壳，螺纹清晰，螺口深棕色，边缘有一点破损。",
+      "source": "exec-518f35d4-6e05-462b-8a7b-3b404f28189c.png"
+    },
+    {
+      "id": "spec02",
+      "subject": "不规则深灰岩石标本，岩体上长出一簇蓝绿色有棱角结晶，小晶面淡青高光。",
+      "source": "exec-fcb5c652-7a9e-4465-8489-380148c55522.png"
+    },
+    {
+      "id": "spec03",
+      "subject": "一片压平的干燥橄榄绿叶子，清晰细叶脉和短叶柄，斜放在一小片发黄纸张中。",
+      "source": "exec-5dd0461d-89df-4798-a9e2-7e2d997223bd.png"
+    },
+    {
+      "id": "odd01",
+      "subject": "半透明青色不规则结晶，内部有三道像声波一样的弧形淡青纹路，清晰角面，少许内发光，不要外部光晕。",
+      "source": "exec-088786f4-354f-45e4-8683-060dd625ef75.png"
+    },
+    {
+      "id": "odd02",
+      "subject": "精致的复古黄铜天文仪，三重交错圆形金属环，外环带刻度、齿轮与机械装饰，金属略锈蚀并附海盐结晶。中央悬浮深海蓝透明水球，内部微缩海洋有弯曲银白浪线与极小白色灯塔剪影。精巧三足机械底座。古铜金、深海蓝、银白色，少量冷青反光。完整物体、三环清晰、中央水球为焦点；透明背景，无文字、场景、大面积发光。",
+      "source": "exec-02518597-3ed8-4697-bdf7-4f34ff7583de.png",
+      "name": "潮汐仪",
+      "previousSource": "exec-7ec7f65a-a424-41dd-a1a1-13eeae170bee.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory icon for the unique anomalous relic '潮汐仪' (Tidal Instrument) in the muted post-flood pixel-art game 潮汐线. A complete exquisite antique BRASS ARMILLARY INSTRUMENT: exactly THREE clearly separated interlocking circular metal rings at different crossing angles, outer ring with restrained bold engraved tick marks, tiny gear and mechanical fittings, lightly corroded bronze-gold edges with a few sea-salt crystals. At the visual centre floats a prominent transparent DEEP OCEAN BLUE WATER SPHERE. Its interior contains a clearly legible miniature ocean with a level horizontal sea surface, a single curved SILVER WHITE wave crest, and a very tiny WHITE LIGHTHOUSE SILHOUETTE standing on the water horizon inside the sphere. The miniature ocean is the focal point and the blue sphere should occupy at least a third of the instrument's overall width. Three delicate brass mechanical feet form a sturdy tripod base. Palette: antique bronze gold, deep sea blue, silver white, a few restrained cool cyan reflections. Mood: precise ancient scientific mechanism and impossible supernatural relic. Readable stylised PIXEL ART designed to retain its silhouette at 64x64: bold ring contours, large clear pixel clusters and restrained details, no hairline clutter or antialiasing. Inventory three-quarter display view, fixed upper-left light; no pure black outline. Centre the COMPLETE OBJECT with all rings and all three feet visible, about 80% of a square canvas with generous transparent margins. GENUINELY TRANSPARENT BACKGROUND. NO text, letters, numbers, frame, scenery, ground plane, cast shadow, large glow, particles, lens flare, extra objects, or human. This is a single icon, not a diagram or collage. The white lighthouse and curved wave must remain INSIDE the blue water sphere; no external lighthouse scenery.",
+      "previewSizes": [
+        64,
+        256
+      ]
+    },
+    {
+      "id": "odd03",
+      "subject": "银色怀表，表盖向右敞开，顶部吊环，苍白表盘，两个表针重叠停在同一位置，表盘有青灰水痕。",
+      "source": "exec-6a094122-0e30-4db2-8c1f-f8b7063b3263.png"
+    }
+  ]
+}

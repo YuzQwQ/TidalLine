@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>潮汐线 · 物品清单（贴图用）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<nav class="wiki-nav" aria-label="清单导航">
+  <a class="wiki-brand" href="wiki.html">潮汐线 <span>WIKI</span></a>
+  <div class="wiki-links"><a data-wiki-link="items" href="wiki.html#items" aria-current="page">物品清单</a><a data-wiki-link="gear" href="wiki.html#gear">装备清单</a><a data-wiki-link="containers" href="wiki.html#containers">容器清单</a></div>
+  <a class="wiki-game" href="index.html">进入游戏 ↗</a>
+</nav>
+<main class="wiki-sheet">
+
+<header>
+  <div class="kicker">TIDELINE · ITEM SHEET</div>
+  <h1>物品清单</h1>
+  <div class="lede">
+    共 33 件（含 1 件消耗品），其中 32 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
+    和游戏里的数据完全一致；改完物品表重跑 <code>node gen-item-sheet.js</code> 就会更新。<br>
+    已配置图标 <b>33 / 33</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。
+  </div>
+</header>
+
+<div class="spec">
+  <div class="panel">
+    <h3>贴图规格</h3>
+    <p><b>尺寸</b>　48 × 48 像素，PNG，透明背景。物品本体建议占满画布的 40×40，四周留 4px 空隙。</p>
+    <p><b>风格</b>　像素画，关闭抗锯齿（游戏里用 <code>image-rendering: pixelated</code> 渲染）。深色背景下要看得清，尽量别用纯黑描边。</p>
+    <p><b>命名</b>　文件名就是物品 id：<code>antiq03.png</code>、<code>lux01.png</code>。</p>
+    <p><b>位置</b>　<code>tide/assets/items/</code> 目录下。</p>
+    <p><b>游戏接入</b>　搜刮、背包、安全箱和仓库共用这套图标。执行 <code>node build.js</code> 后，单文件游戏也会内嵌所有贴图。</p>
+  </div>
+  <div class="panel">
+    <h3>稀有度色（用于边框 / 角标）</h3>
+    <div class="sws"><div class="sw"><span style="background:#55605c"></span>寻常<em>1</em></div><div class="sw"><span style="background:#3f8b78"></span>完好<em>2</em></div><div class="sw"><span style="background:#3f6d9b"></span>稀见<em>3</em></div><div class="sw"><span style="background:#a8862a"></span>珍稀<em>4</em></div><div class="sw"><span style="background:#8d3a3a"></span>孤品<em>5</em></div></div>
+    <h3 style="margin-top:18px">类别色（用于图鉴分册 / 容器提示）</h3>
+    <div class="sws"><div class="sw"><span style="background:#6b7f78"></span>生活用品<em>life</em></div><div class="sw"><span style="background:#4a7fa0"></span>电子产品<em>elec</em></div><div class="sw"><span style="background:#8a7d5a"></span>工业器材<em>ind</em></div><div class="sw"><span style="background:#7a9b85"></span>医疗物资<em>med</em></div><div class="sw"><span style="background:#9b8355"></span>古董文物<em>antiq</em></div><div class="sw"><span style="background:#8f6a8a"></span>艺术藏品<em>art</em></div><div class="sw"><span style="background:#b89440"></span>奢侈珍品<em>lux</em></div><div class="sw"><span style="background:#6f8f6a"></span>自然标本<em>spec</em></div><div class="sw"><span style="background:#a05050"></span>异常遗物<em>odd</em></div><div class="sw"><span style="background:#5f7f9b"></span>装备<em>gear</em></div></div>
+  </div>
+</div>
+
+
+  <section class="cat">
+    <h2><span class="dot" style="background:#6b7f78"></span>生活用品<em>life</em><i>5 件</i></h2>
+    <div class="grid">
+    <div class="item" style="--rc:#55605c">
+      <div class="thumb">
+        <img src="assets/items/life01.png" width="48" height="48" alt="搪瓷缸">
+      </div>
+      <div class="meta">
+        <div class="name">搪瓷缸</div>
+        <div class="sub"><code>life01</code> · <span style="color:#6b7f78">生活用品</span> · <span style="color:#55605c">寻常</span> · 0.4kg · ¥18</div>
+        <div class="desc">磕掉了一块瓷，露出底下的铁。里面的水早就干了。</div>
+        <div class="vis"><b>画什么</b>白底蓝边的搪瓷缸，口沿磕掉一块瓷，露出深色铁胎</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#55605c">
+      <div class="thumb">
+        <img src="assets/items/life02.png" width="48" height="48" alt="旧报纸">
+      </div>
+      <div class="meta">
+        <div class="name">旧报纸</div>
+        <div class="sub"><code>life02</code> · <span style="color:#6b7f78">生活用品</span> · <span style="color:#55605c">寻常</span> · 0.2kg · ¥9</div>
+        <div class="desc">日期停在事故前三天。头版是一场没人关心的听证会。</div>
+        <div class="vis"><b>画什么</b>发黄的旧报纸折了一角，头版有大字标题，纸面有水渍</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/life03.png" width="48" height="48" alt="老式台灯">
+      </div>
+      <div class="meta">
+        <div class="name">老式台灯</div>
+        <div class="sub"><code>life03</code> · <span style="color:#6b7f78">生活用品</span> · <span style="color:#3f8b78">完好</span> · 1.6kg · ¥65</div>
+        <div class="desc">灯罩烧黑了。插头还在墙上，墙已经不在了。</div>
+        <div class="vis"><b>画什么</b>绿色玻璃灯罩的台灯，灯罩内侧熏黑，底座是深色胶木</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/life04.png" width="48" height="48" alt="铁皮饼干盒">
+      </div>
+      <div class="meta">
+        <div class="name">铁皮饼干盒</div>
+        <div class="sub"><code>life04</code> · <span style="color:#6b7f78">生活用品</span> · <span style="color:#3f8b78">完好</span> · 0.7kg · ¥88 · 背包简称 <b style="color:#a8c4ba">铁皮盒</b></div>
+        <div class="desc">里面是针线，不是饼干。主人显然更常用针线。</div>
+        <div class="vis"><b>画什么</b>圆角铁皮饼干盒，红绿花纹褪色，盖子上有个凹痕</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#55605c">
+      <div class="thumb">
+        <img src="assets/items/life05.png" width="48" height="48" alt="未拆封的毛巾">
+      </div>
+      <div class="meta">
+        <div class="name">未拆封的毛巾</div>
+        <div class="sub"><code>life05</code> · <span style="color:#6b7f78">生活用品</span> · <span style="color:#55605c">寻常</span> · 0.3kg · ¥22 · 背包简称 <b style="color:#a8c4ba">新毛巾</b></div>
+        <div class="desc">二十年前的赠品，包装上还印着商场开业广告。</div>
+        <div class="vis"><b>画什么</b>带透明塑料包装的叠好的毛巾，包装印褪色的商标</div>
+      </div>
+    </div></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#4a7fa0"></span>电子产品<em>elec</em><i>4 件</i></h2>
+    <div class="grid">
+    <div class="item" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/elec01.png" width="48" height="48" alt="收音机">
+      </div>
+      <div class="meta">
+        <div class="name">收音机</div>
+        <div class="sub"><code>elec01</code> · <span style="color:#4a7fa0">电子产品</span> · <span style="color:#3f6d9b">稀见</span> · 0.9kg · ¥240</div>
+        <div class="desc">调到中波能听见东西。不是电台，是回响。</div>
+        <div class="vis"><b>画什么</b>米黄色塑料外壳的便携收音机，拉出半截天线，刻度盘发黄</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/elec02.png" width="48" height="48" alt="随身听">
+      </div>
+      <div class="meta">
+        <div class="name">随身听</div>
+        <div class="sub"><code>elec02</code> · <span style="color:#4a7fa0">电子产品</span> · <span style="color:#a8862a">珍稀</span> · 0.35kg · ¥520</div>
+        <div class="desc">磁带还在里面。按播放键能出声，所以它很值钱——也很有用。</div>
+        <div class="vis"><b>画什么</b>深蓝或银色的方形随身听，透明观察窗里能看见一盒磁带</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/elec03.png" width="48" height="48" alt="计算器">
+      </div>
+      <div class="meta">
+        <div class="name">计算器</div>
+        <div class="sub"><code>elec03</code> · <span style="color:#4a7fa0">电子产品</span> · <span style="color:#3f8b78">完好</span> · 0.2kg · ¥72</div>
+        <div class="desc">屏幕上留着最后一次运算的结果：0。</div>
+        <div class="vis"><b>画什么</b>黑灰塑料计算器，太阳能条发暗，屏幕显示一个「0」</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/elec04.png" width="48" height="48" alt="电路板">
+      </div>
+      <div class="meta">
+        <div class="name">电路板</div>
+        <div class="sub"><code>elec04</code> · <span style="color:#4a7fa0">电子产品</span> · <span style="color:#3f8b78">完好</span> · 0.5kg · ¥130</div>
+        <div class="desc">实验所的标准件，外面已经没人生产了。</div>
+        <div class="vis"><b>画什么</b>绿色电路板，上面有几颗电容和插槽，边缘有小缺口</div>
+      </div>
+    </div></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#8a7d5a"></span>工业器材<em>ind</em><i>4 件</i></h2>
+    <div class="grid">
+    <div class="item" style="--rc:#55605c">
+      <div class="thumb">
+        <img src="assets/items/ind01.png" width="48" height="48" alt="铜管">
+      </div>
+      <div class="meta">
+        <div class="name">铜管</div>
+        <div class="sub"><code>ind01</code> · <span style="color:#8a7d5a">工业器材</span> · <span style="color:#55605c">寻常</span> · 3.4kg · ¥55</div>
+        <div class="desc">很沉，很值钱，很占地方。典型的让人犹豫的东西。</div>
+        <div class="vis"><b>画什么</b>一段截断的黄铜管，切面发亮，管身氧化发暗绿</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/ind02.png" width="48" height="48" alt="轴承">
+      </div>
+      <div class="meta">
+        <div class="name">轴承</div>
+        <div class="sub"><code>ind02</code> · <span style="color:#8a7d5a">工业器材</span> · <span style="color:#3f8b78">完好</span> · 2.2kg · ¥110</div>
+        <div class="desc">转起来还是顺的。手指一推能转很久。</div>
+        <div class="vis"><b>画什么</b>金属轴承，外圈锈斑，内圈还能看见打磨的亮面</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/ind03.png" width="48" height="48" alt="压力表">
+      </div>
+      <div class="meta">
+        <div class="name">压力表</div>
+        <div class="sub"><code>ind03</code> · <span style="color:#8a7d5a">工业器材</span> · <span style="color:#3f6d9b">稀见</span> · 1.1kg · ¥280</div>
+        <div class="desc">指针卡在最右端，说明它最后读到的东西很大。</div>
+        <div class="vis"><b>画什么</b>圆形压力表，白色表盘，红色指针顶在最大刻度</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#55605c">
+      <div class="thumb">
+        <img src="assets/items/ammo.png" width="48" height="48" alt="弹药">
+      </div>
+      <div class="meta">
+        <div class="name">弹药<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo</code> · <span style="color:#8a7d5a">工业器材</span> · <span style="color:#55605c">寻常</span> · 0.012kg · ¥1</div>
+        <div class="desc">口径通用，散装。</div>
+        <div class="vis"><b>画什么</b>散装步枪弹，黄铜弹壳配铜色弹头，三发并排</div>
+      </div>
+    </div></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#7a9b85"></span>医疗物资<em>med</em><i>3 件</i></h2>
+    <div class="grid">
+    <div class="item" style="--rc:#55605c">
+      <div class="thumb">
+        <img src="assets/items/med01.png" width="48" height="48" alt="绷带">
+      </div>
+      <div class="meta">
+        <div class="name">绷带<i class="tag">可堆叠 5</i></div>
+        <div class="sub"><code>med01</code> · <span style="color:#7a9b85">医疗物资</span> · <span style="color:#55605c">寻常</span> · 0.2kg · ¥30</div>
+        <div class="desc">还能用。在这种地方，这就够了。</div>
+        <div class="vis"><b>画什么</b>卷起的白色绷带，外层有一小块暗红污渍</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/med02.png" width="48" height="48" alt="注射器">
+      </div>
+      <div class="meta">
+        <div class="name">注射器</div>
+        <div class="sub"><code>med02</code> · <span style="color:#7a9b85">医疗物资</span> · <span style="color:#3f8b78">完好</span> · 0.15kg · ¥140</div>
+        <div class="desc">未拆封。标签上的字被水泡糊了。</div>
+        <div class="vis"><b>画什么</b>透明玻璃注射器配金属推杆，针尖朝上，旁边一支小药瓶</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/med03.png" width="48" height="48" alt="X 光片">
+      </div>
+      <div class="meta">
+        <div class="name">X 光片</div>
+        <div class="sub"><code>med03</code> · <span style="color:#7a9b85">医疗物资</span> · <span style="color:#3f6d9b">稀见</span> · 0.1kg · ¥190</div>
+        <div class="desc">对着光能看见一副肋骨。右下角有个马克笔写的日期。</div>
+        <div class="vis"><b>画什么</b>深色半透明的 X 光片，对着光能看见一副肋骨的轮廓</div>
+      </div>
+    </div></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#9b8355"></span>古董文物<em>antiq</em><i>5 件</i></h2>
+    <div class="grid">
+    <div class="item" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/antiq01.png" width="48" height="48" alt="座钟">
+      </div>
+      <div class="meta">
+        <div class="name">座钟</div>
+        <div class="sub"><code>antiq01</code> · <span style="color:#9b8355">古董文物</span> · <span style="color:#a8862a">珍稀</span> · 4.5kg · ¥960</div>
+        <div class="desc">停了。指针停在潮水涨满的那一刻，纯属巧合。</div>
+        <div class="vis"><b>画什么</b>木质外壳的座钟，圆形白表盘 + 罗马数字，钟摆停在中间</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/antiq02.png" width="48" height="48" alt="黄铜怀表">
+      </div>
+      <div class="meta">
+        <div class="name">黄铜怀表</div>
+        <div class="sub"><code>antiq02</code> · <span style="color:#9b8355">古董文物</span> · <span style="color:#3f6d9b">稀见</span> · 0.2kg · ¥410</div>
+        <div class="desc">表盖内侧刻着两个字母，磨得只剩下一个。</div>
+        <div class="vis"><b>画什么</b>黄铜怀表，表盖半开，内盖刻着两个磨掉一个的字母</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#55605c">
+      <div class="thumb">
+        <img src="assets/items/antiq03.png" width="48" height="48" alt="磨损的硬币">
+      </div>
+      <div class="meta">
+        <div class="name">磨损的硬币</div>
+        <div class="sub"><code>antiq03</code> · <span style="color:#9b8355">古董文物</span> · <span style="color:#55605c">寻常</span> · 0.02kg · ¥12 · 背包简称 <b style="color:#a8c4ba">旧硬币</b></div>
+        <div class="desc">通缩时代的零钱。到处都有。</div>
+        <div class="vis"><b>画什么</b>一枚发黑的小硬币，边缘磨损，图案已经看不清</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/antiq04.png" width="48" height="48" alt="错版硬币">
+      </div>
+      <div class="meta">
+        <div class="name">错版硬币</div>
+        <div class="sub"><code>antiq04</code> · <span style="color:#9b8355">古董文物</span> · <span style="color:#a8862a">珍稀</span> · 0.02kg · ¥1240</div>
+        <div class="desc">当年压错了模具。据说存世不到百枚，但谁也没数过。</div>
+        <div class="vis"><b>画什么</b>同上的硬币但图案明显压偏，边齿不齐，表面反而更亮</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/antiq05.png" width="48" height="48" alt="门牌铜片">
+      </div>
+      <div class="meta">
+        <div class="name">门牌铜片</div>
+        <div class="sub"><code>antiq05</code> · <span style="color:#9b8355">古董文物</span> · <span style="color:#3f8b78">完好</span> · 0.3kg · ¥96</div>
+        <div class="desc">“临海路 7 号”。门牌还在，路早就没了。</div>
+        <div class="vis"><b>画什么</b>一块长方形的绿锈铜门牌，上面刻着「临海路 7 号」</div>
+      </div>
+    </div></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#8f6a8a"></span>艺术藏品<em>art</em><i>3 件</i></h2>
+    <div class="grid">
+    <div class="item" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/art01.png" width="48" height="48" alt="黑胶唱片">
+      </div>
+      <div class="meta">
+        <div class="name">黑胶唱片</div>
+        <div class="sub"><code>art01</code> · <span style="color:#8f6a8a">艺术藏品</span> · <span style="color:#3f6d9b">稀见</span> · 0.3kg · ¥330</div>
+        <div class="desc">B 面第三首有明显的划痕，说明有人很爱听这一首。</div>
+        <div class="vis"><b>画什么</b>黑色黑胶唱片，露出半张纸质封套，封套上有手写编号</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/art02.png" width="48" height="48" alt="小幅油画">
+      </div>
+      <div class="meta">
+        <div class="name">小幅油画</div>
+        <div class="sub"><code>art02</code> · <span style="color:#8f6a8a">艺术藏品</span> · <span style="color:#a8862a">珍稀</span> · 1.2kg · ¥1420</div>
+        <div class="desc">画的是一片没有海鸥的海。右下角有签名，认不出。</div>
+        <div class="vis"><b>画什么</b>小幅油画，画的是灰蓝色的海面，画框掉漆，右下角有签名</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/art03.png" width="48" height="48" alt="摄影底片">
+      </div>
+      <div class="meta">
+        <div class="name">摄影底片</div>
+        <div class="sub"><code>art03</code> · <span style="color:#8f6a8a">艺术藏品</span> · <span style="color:#3f6d9b">稀见</span> · 0.05kg · ¥260</div>
+        <div class="desc">对着光看不出什么。需要显影，但你可能舍不得用掉它。</div>
+        <div class="vis"><b>画什么</b>一条 35mm 摄影底片，四格画面，对着光能看到模糊的人影</div>
+      </div>
+    </div></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#b89440"></span>奢侈珍品<em>lux</em><i>3 件</i></h2>
+    <div class="grid">
+    <div class="item" style="--rc:#8d3a3a">
+      <div class="thumb">
+        <img src="assets/items/lux01.png" width="48" height="48" alt="机械腕表">
+      </div>
+      <div class="meta">
+        <div class="name">机械腕表</div>
+        <div class="sub"><code>lux01</code> · <span style="color:#b89440">奢侈珍品</span> · <span style="color:#8d3a3a">孤品</span> · 0.1kg · ¥2100</div>
+        <div class="desc">还在走。这是这栋楼里唯一还在正常运转的东西。</div>
+        <div class="vis"><b>画什么</b>机械腕表，银色表壳 + 深色表盘，秒针还在走</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/lux02.png" width="48" height="48" alt="金条">
+      </div>
+      <div class="meta">
+        <div class="name">金条</div>
+        <div class="sub"><code>lux02</code> · <span style="color:#b89440">奢侈珍品</span> · <span style="color:#a8862a">珍稀</span> · 5kg · ¥1680</div>
+        <div class="desc">一公斤。拿一块就够走一趟了，但你就走不动了。</div>
+        <div class="vis"><b>画什么</b>一小块金条，表面有铸造纹理和一串钢印编号</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/lux03.png" width="48" height="48" alt="钢笔">
+      </div>
+      <div class="meta">
+        <div class="name">钢笔</div>
+        <div class="sub"><code>lux03</code> · <span style="color:#b89440">奢侈珍品</span> · <span style="color:#3f6d9b">稀见</span> · 0.05kg · ¥450</div>
+        <div class="desc">笔尖还是好的，墨囊空了。</div>
+        <div class="vis"><b>画什么</b>黑色树脂笔身的钢笔，笔帽扣着，笔夹有一道划痕</div>
+      </div>
+    </div></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#6f8f6a"></span>自然标本<em>spec</em><i>3 件</i></h2>
+    <div class="grid">
+    <div class="item" style="--rc:#55605c">
+      <div class="thumb">
+        <img src="assets/items/spec01.png" width="48" height="48" alt="贝壳">
+      </div>
+      <div class="meta">
+        <div class="name">贝壳</div>
+        <div class="sub"><code>spec01</code> · <span style="color:#6f8f6a">自然标本</span> · <span style="color:#55605c">寻常</span> · 0.1kg · ¥16</div>
+        <div class="desc">从海里来的，出现在三楼。水真的上来过。</div>
+        <div class="vis"><b>画什么</b>一枚巴掌大的螺旋贝壳，螺纹清晰，边缘有一点破损</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/spec02.png" width="48" height="48" alt="矿石标本">
+      </div>
+      <div class="meta">
+        <div class="name">矿石标本</div>
+        <div class="sub"><code>spec02</code> · <span style="color:#6f8f6a">自然标本</span> · <span style="color:#3f8b78">完好</span> · 0.6kg · ¥120</div>
+        <div class="desc">标签写着产地和编号。编号被人划掉了。</div>
+        <div class="vis"><b>画什么</b>不规则矿石标本，深色岩体上有一层蓝绿色结晶</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#55605c">
+      <div class="thumb">
+        <img src="assets/items/spec03.png" width="48" height="48" alt="干燥的植物">
+      </div>
+      <div class="meta">
+        <div class="name">干燥的植物</div>
+        <div class="sub"><code>spec03</code> · <span style="color:#6f8f6a">自然标本</span> · <span style="color:#55605c">寻常</span> · 0.05kg · ¥24 · 背包简称 <b style="color:#a8c4ba">干植物</b></div>
+        <div class="desc">夹在一本书里，压得很平。叶子还是绿的。</div>
+        <div class="vis"><b>画什么</b>压平的干燥叶片，夹在一小片发黄的纸里，叶脉清晰</div>
+      </div>
+    </div></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#a05050"></span>异常遗物<em>odd</em><i>3 件</i></h2>
+    <div class="grid">
+    <div class="item" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/odd01.png" width="48" height="48" alt="回响结晶">
+      </div>
+      <div class="meta">
+        <div class="name">回响结晶</div>
+        <div class="sub"><code>odd01</code> · <span style="color:#a05050">异常遗物</span> · <span style="color:#a8862a">珍稀</span> · 0.6kg · 不定价</div>
+        <div class="desc">放在包里会自己出声。很轻，很吵。</div>
+        <div class="vis"><b>画什么</b>半透明的青色不规则结晶，内部有像声波一样的纹路</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#8d3a3a">
+      <div class="thumb">
+        <img src="assets/items/odd02.png" width="48" height="48" alt="潮汐仪">
+      </div>
+      <div class="meta">
+        <div class="name">潮汐仪</div>
+        <div class="sub"><code>odd02</code> · <span style="color:#a05050">异常遗物</span> · <span style="color:#8d3a3a">孤品</span> · 0.8kg · 不定价 · 背包简称 <b style="color:#a8c4ba">潮汐仪</b></div>
+        <div class="desc">一台精巧的黄铜仪器，三重刻度环围绕着一颗悬浮的微型海洋缓缓旋转。
+无论将它倒置、摇晃还是拆下底座，那颗海洋始终维持着自己的水平面。
+偶尔，海面上会出现一座灯塔。
+至今没人知道那座灯塔在哪里。</div>
+        <div class="vis"><b>画什么</b>精致的复古黄铜天文仪，三重交错金属圆环，外环有刻度、齿轮和机械装饰，略带锈蚀与海盐结晶。中央悬浮深海蓝透明水球，内部可见微缩海洋、弯曲银白浪线和极小的白色灯塔剪影，下方为三足机械底座。古铜金、深海蓝、银白色为主，少量冷青反光；完整呈现、透明背景，不加文字、场景或大面积发光。</div>
+      </div>
+    </div>
+    <div class="item" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/odd03.png" width="48" height="48" alt="停摆的怀表">
+      </div>
+      <div class="meta">
+        <div class="name">停摆的怀表</div>
+        <div class="sub"><code>odd03</code> · <span style="color:#a05050">异常遗物</span> · <span style="color:#3f6d9b">稀见</span> · 0.2kg · 不定价 · 背包简称 <b style="color:#a8c4ba">停摆表</b></div>
+        <div class="desc">停在涨潮那一秒。每天都停在那一秒。</div>
+        <div class="vis"><b>画什么</b>银色怀表，表盖敞开，指针停在同一个位置，表面有水痕</div>
+      </div>
+    </div></div>
+  </section>
+
+<footer>
+  清单由 <code>gen-item-sheet.js</code> 生成。物品的重量、价格、稀有度都是首版基准值，可以随便改——
+  改完重跑脚本，这份页面会跟着变。
+</footer>
+
+</main>
+</body>
+</html>

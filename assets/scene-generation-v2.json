@@ -1,0 +1,219 @@
+{
+  "version": "2.1",
+  "generator": "Built-in image_gen; 18 individual generated/redrawn assets",
+  "specification": "ART_STYLE.md",
+  "assets": [
+    {
+      "id": "crate_fast",
+      "group": "props",
+      "source": "exec-1aefa1e7-1658-4900-8ddd-c8e0f756fcfe.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一只低矮的旧木抽屉柜，长横向顶面占大部分，能看到南侧短而清晰的立面和铜色抽屉把手。顶面木纹横向，前面明显比顶面暗，左侧比右侧亮。保持矮柜低于储物柜。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/crate_fast.png"
+      ]
+    },
+    {
+      "id": "crate_std",
+      "group": "props",
+      "source": "exec-57e54458-e901-4bdf-ac95-3725289ac6cc.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一只灰褐色储物柜：顶部平面与下方短立面同时可见，两道金属合页与一个把手，边角掉漆。高于矮木柜但不夸张拉长；有明确的柜门面、顶部和侧面。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/crate_std.png"
+      ]
+    },
+    {
+      "id": "crate_heavy",
+      "group": "props",
+      "source": "exec-2e645290-c446-47e2-86c8-ce9e112651c8.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/crate_heavy.png"
+      ]
+    },
+    {
+      "id": "corpse_scav",
+      "group": "props",
+      "source": "exec-025e089a-7440-4323-b256-cff6be6d1b2a.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一名穿土黄棕旧外套的拾荒者倒在地上，四肢放松散开，帽子歪向一侧，帆布背包被压住，旁边一把枪与少数弹壳，少许暗红干血；同场景角色一致的75度俯视，衣服与背包略有体积，非站立姿势。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/chars/scav_s.png"
+      ]
+    },
+    {
+      "id": "door",
+      "group": "props",
+      "source": "exec-565fde49-4193-4768-a5b1-c3d9b979fde2.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 普通木门，门洞横跨画面左右（墙体沿东西向，通行沿上下）：左右两个厚门框立柱之间是一扇关闭的木门，门扇在屏幕水平轴上伸展。俯视75度，顶端门框横梁和门扇厚度清楚，门前南向短立面带门闩。完整缩在一格内。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/door.png"
+      ]
+    },
+    {
+      "id": "door_open",
+      "group": "props",
+      "source": "exec-bae7e7d0-7d6c-4c38-98b0-44702d159e39.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 与关闭普通木门成套：墙体沿东西向，门洞横跨画面左右，通行沿上下。木门左右门框原位不变，门扇从左边铰链打开约90度后沿左侧边向上收拢，中央上下方向通道真实透明，不画平板堵路。保留俯视75度的厚门框顶面与短立面，不能只画二维U线条。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/door_open.png"
+      ]
+    },
+    {
+      "id": "corpse_echo",
+      "group": "props",
+      "source": "exec-c2245c89-5e26-4703-8bb0-e912e885d87f.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 回响体消散后的紫红人形水光痕迹，中心浓、边缘碎散，几粒细晶体，没有骨骼或清晰四肢，没有人类血液，残留贴地，只有结晶略凸起，颜色同紫红回响体。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/chars/echo_s.png"
+      ]
+    },
+    {
+      "id": "sdoor",
+      "group": "props",
+      "source": "exec-118e86e4-e509-4ef3-9f89-bfeaa2870c84.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 厚重金属避难门，墙体沿东西向，门洞横跨画面左右，通行沿上下。左右厚门柱之间关闭的钢门，门楣顶部、封条和朝南短立面同时可见，立面中央偏上一个绿色小指示灯，灰绿色金属顶亮侧暗。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/sdoor.png"
+      ]
+    },
+    {
+      "id": "desk",
+      "group": "props",
+      "source": "exec-17bf12b7-f671-47dc-946c-e7cf7e6eefa1.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/desk.png"
+      ]
+    },
+    {
+      "id": "corpse_guard",
+      "group": "props",
+      "source": "exec-d077707a-950c-47a1-bcbf-5f29e3b4c6c8.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 潮汐守卫机械残骸：裂开的灰蓝装甲主体、裸露粗线缆、两个脱落轮式支脚，圆形青色传感器面板掉在旁边，螺栓与焦黑细痕，无血。与参考守卫同材料、相同75度俯视，散落零件有厚度。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/chars/guard_s.png"
+      ]
+    },
+    {
+      "id": "sdoor_open",
+      "group": "props",
+      "source": "exec-669e542c-1597-4528-adfb-5745fb32cee1.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 与关闭避难门成套：墙体沿东西向，门洞横跨左右，通行沿上下。左右金属门柱原位，钢门扇从左铰链打开后沿左边向上收拢，中央通路透明。绿色指示灯仍在门框上，门框有体积和厚封条，75度俯视。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/sdoor_open.png"
+      ]
+    },
+    {
+      "id": "shelf",
+      "group": "props",
+      "source": "exec-25e491d6-e950-4c8a-848a-78e23d694e16.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/shelf.png"
+      ]
+    },
+    {
+      "id": "barrel",
+      "group": "props",
+      "source": "exec-e621e198-9dab-4f69-94d0-e9a4e3bdaa74.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/barrel.png"
+      ]
+    },
+    {
+      "id": "chair",
+      "group": "props",
+      "source": "exec-1014d468-e8f0-4b53-beb6-7e8c3c06102c.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一把翻倒的深木椅子，从75度俯视看见斜着的椅座平面、椅背厚度和向一侧伸出的四条椅腿，简洁有体积的木件，不要画成平面线稿。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/chair.png"
+      ]
+    },
+    {
+      "id": "door_side",
+      "group": "props",
+      "source": "exec-89b61e0c-530b-4017-926e-ef680a295ba5.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 普通木门，墙体沿画面上下即南北向，门洞在图中纵向延伸，玩家沿左右穿过。门扇与两个门柱沿画面竖轴排列：北端一柱、南端一柱，中间关闭的木门形成一条竖直的厚板。75度俯视，能看到木门上沿与短的侧立面，最宽不超过画布一半。严禁再画成横跨左右的正面门，严禁直接旋转图像造成光源错误。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-565fde49-4193-4768-a5b1-c3d9b979fde2.png"
+      ]
+    },
+    {
+      "id": "door_side_open",
+      "group": "props",
+      "source": "exec-a5b4a12c-9653-4c45-ad8e-38cab42bd2a7.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: OPEN WOODEN SIDE DOOR, wall runs NORTH-SOUTH vertically. Exact logical 32x32 layout: NORTH jamb is ONE small block centered at (17,6), SOUTH jamb is ONE small block centered at (17,26). These two jambs MUST be arranged ABOVE AND BELOW EACH OTHER, with a large clear vertical separation. The opened wooden leaf hinges at the NORTH jamb and runs horizontally LEFT along y=7, from x=4 to x=16. The entire central horizontal passage y=13..22 is TRANSPARENT across the full width. This is an L-shaped upper cluster plus a detached small lower post. The silhouette should be taller than wide. No side-by-side left and right tall posts, no horizontal lintel spanning left-right, no arch. Keep top/side facets and upper-left light. Image 1 is the edit target: keep ONLY material, not its incorrect arrangement. Image 2 is the correct CLOSED VERTICAL side-door orientation reference. This is a precise geometry correction. Render only the final requested sprite, no text, no coordinate guides, no labels.",
+      "references": [
+        "D:/develop/project/tide/assets/props/door_side_open.png",
+        "D:/develop/project/tide/assets/props/door_side.png"
+      ]
+    },
+    {
+      "id": "sdoor_side",
+      "group": "props",
+      "source": "exec-b2ee99c3-00c6-4357-add7-c1b9e601513d.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: CLOSED STEEL SIDE DOOR, wall runs NORTH-SOUTH vertically. Exact logical 32x32 layout: NORTH jamb is ONE small metal block centered at (16,5), SOUTH jamb is ONE small metal block centered at (16,27). BETWEEN them a NARROW vertical steel door slab runs from y=8 to y=24, centered on x=16. TOTAL silhouette is a THIN VERTICAL STRIP about 8 pixels WIDE and 28 pixels TALL, showing a little top/side thickness at 75 degrees. One green indicator on the SOUTH jamb. All pixels outside the narrow strip transparent. NO two parallel full-height side columns, NO wide door front, NO square door. Preserve worn grey-green steel and seals, but replace the old incorrect geometry. Image 1 is the edit target: keep ONLY material, not its incorrect arrangement. Image 2 is the correct CLOSED VERTICAL side-door orientation reference. This is a precise geometry correction. Render only the final requested sprite, no text, no coordinate guides, no labels.",
+      "references": [
+        "D:/develop/project/tide/assets/props/sdoor_side.png",
+        "D:/develop/project/tide/assets/props/door_side.png"
+      ]
+    },
+    {
+      "id": "sdoor_side_open",
+      "group": "props",
+      "source": "exec-2f1f589b-880a-4007-80e2-6c997f60c64c.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: OPEN STEEL SIDE DOOR, wall runs NORTH-SOUTH vertically. Exact logical 32x32 layout: NORTH jamb is ONE small steel block centered at (17,6), SOUTH jamb is ONE small steel block centered at (17,26), green indicator on SOUTH jamb. The opened steel leaf hinges at NORTH jamb and runs horizontally LEFT along y=7, from x=4 to x=16. NORTH and SOUTH jambs are ABOVE AND BELOW EACH OTHER, NEVER side by side. Full central horizontal passage y=13..22 is genuinely TRANSPARENT across full width. L-shaped upper cluster plus a detached small lower post. Keep metal thickness and fixed upper-left lighting, 75-degree top-down facets. NO horizontal overhead arch between left-right posts, NO two parallel long side columns. Image 1 is the edit target: keep ONLY material, not its incorrect arrangement. Image 2 is the correct CLOSED VERTICAL side-door orientation reference. This is a precise geometry correction. Render only the final requested sprite, no text, no coordinate guides, no labels.",
+      "references": [
+        "D:/develop/project/tide/assets/props/sdoor_side_open.png",
+        "D:/develop/project/tide/assets/props/door_side.png"
+      ]
+    }
+  ],
+  "revisions": [
+    {
+      "id": "door_side_open",
+      "group": "props",
+      "source": "exec-0c5d2b1c-895c-444a-83f9-847ec2c77cbd.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 与侧向关闭木门同一结构，墙体沿画面上下南北向，玩家沿左右通行。北南两个门柱原位不变，门扇从北端铰链打开90度，沿顶部向左收拢，中央左右方向通路透明。75度俯视，保留门柱和门扇的厚度，保持左上光源。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-565fde49-4193-4768-a5b1-c3d9b979fde2.png"
+      ]
+    },
+    {
+      "id": "sdoor_side",
+      "group": "props",
+      "source": "exec-976c7a7d-9146-40af-b2c3-4e97f6d335af.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 厚金属避难门，墙体沿画面上下南北向，门洞竖向，通行沿左右。北南两个厚金属门柱夹住一扇竖向关闭的钢门，上沿亮、短侧面暗、封条清晰，绿色小灯在南端门柱，窄而纵向的外轮廓。75度俯视。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-118e86e4-e509-4ef3-9f89-bfeaa2870c84.png"
+      ]
+    },
+    {
+      "id": "sdoor_side_open",
+      "group": "props",
+      "source": "exec-97a5c884-3c00-4cd8-803a-df16a52af264.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 与侧向关闭避难门同结构，墙体沿画面上下南北向，玩家左右通行。北南门柱原位，钢门扇从北端打开90度后沿顶部向左收拢，中央左右通路完全透明。厚钢板上沿和短立面可见，绿色小灯仍在南端门柱，固定左上光源。 Image 1 is the shared CAMERA, pixel-style and lighting reference. Image 2 is the object/character identity reference: preserve material and identity but draw the requested elevated top-down view with physical volume. Output only the requested object, do not insert the robot reference into the result.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-118e86e4-e509-4ef3-9f89-bfeaa2870c84.png"
+      ]
+    }
+  ]
+}

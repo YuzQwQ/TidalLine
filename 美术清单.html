@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>潮汐线 · 美术资源清单</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 30px 34px 90px;
+    background: #0b1210; color: #c6d2cd;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  .kicker { font-size: 11px; letter-spacing: 3px; color: #4d7d70; margin-bottom: 6px; }
+  h1 { font-size: 26px; margin: 0 0 8px; letter-spacing: 4px; color: #e2ece8; font-weight: 600; }
+  .lede { font-size: 12.5px; color: #6d8780; line-height: 1.9; max-width: 880px; }
+  .lede b { color: #a8c4ba; font-weight: 500; }
+
+  .bar-wrap { display: flex; align-items: center; gap: 14px; margin: 20px 0 4px; }
+  .pbar { flex: 1; height: 8px; background: #14201c; border-radius: 4px; overflow: hidden; }
+  .pbar > i { display: block; height: 100%; background: linear-gradient(90deg, #14685C, #3fbf9b); }
+  .pnum { font-size: 12px; color: #8fa79f; font-family: Consolas, monospace; white-space: nowrap; }
+
+  .spec { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+  .panel { background: #101a17; border: 1px solid #1c2e28; padding: 15px 18px; }
+  .panel h3 { font-size: 11.5px; letter-spacing: 2px; color: #6fa093; margin: 0 0 10px; font-weight: 600; }
+  .panel p { margin: 0 0 7px; font-size: 12px; line-height: 1.85; color: #8fa79f; }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel b { color: #b9cac4; font-weight: 500; }
+  code {
+    background: #17241f; border: 1px solid #223a32; border-radius: 3px;
+    padding: 1px 5px; font-size: 11px; color: #a8c4ba;
+    font-family: Consolas, Menlo, monospace;
+  }
+  .warn { border-left: 3px solid #B5551F; background: #1a1310; }
+  .warn h3 { color: #c98a5e; }
+
+  section { margin-top: 34px; }
+  h2 {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; letter-spacing: 1px; color: #cfdcd7; font-weight: 600;
+    margin: 0 0 14px; padding-bottom: 9px; border-bottom: 1px solid #1a2a25;
+  }
+  h2 em { font-style: normal; font-size: 10.5px; color: #47645c; letter-spacing: 1px; }
+  h2 i { margin-left: auto; font-style: normal; font-size: 11px; color: #4d7d70; }
+  .tip { font-size: 11.5px; color: #7d9188; line-height: 1.8; margin: -4px 0 14px; }
+  .tip b { color: #a8c4ba; font-weight: 500; }
+
+  .asset {
+    display: flex; gap: 13px; padding: 11px 13px; margin-bottom: 8px;
+    background: #0f1916; border: 1px solid #1a2a25;
+  }
+  .asset.done { border-color: #24463d; }
+  .thumb {
+    flex: 0 0 64px; width: 64px; height: 64px;
+    border: 1px dashed #2d4a41; border-radius: 2px; background: #0b1411;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; overflow: hidden;
+  }
+  .thumb.empty { border-color: #24352f; }
+  .asset.done .thumb { border-style: solid; border-color: #24463d; }
+  .thumb img { width: 64px; height: 64px; image-rendering: pixelated; display: block; }
+  .thumb span { font-size: 9px; color: #33544b; }
+  .thumb em { font-style: normal; font-size: 9px; color: #33544b; }
+
+  /* 三向图那一排 */
+  .thumbs { flex: 0 0 auto; display: flex; gap: 9px; align-items: flex-start; }
+  .dslot { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 60px; }
+  .thumb.sm { flex: 0 0 56px; width: 56px; height: 56px; }
+  .thumb.sm img { width: 56px; height: 56px; }
+  .dslot code { font-size: 9.5px; padding: 0 4px; }
+  .dslot .mnote { font-size: 8.5px; color: #3d5b53; text-align: center; line-height: 1.2; }
+  .dslot.mirror .thumb { border-color: #223a32; background: #0a1410; }
+  .dslot.mirror img.flip { transform: scaleX(-1); opacity: 0.92; }
+
+  .info { flex: 1; min-width: 0; }
+  .row1 { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+  .row1 b { font-size: 13.5px; color: #dce7e3; font-weight: 500; }
+  .row1 code { font-size: 10px; }
+  .prog { font-size: 10px; color: #3fbf9b; font-family: Consolas, monospace; }
+  .row2 { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: wrap; }
+  .pill {
+    font-size: 9px; padding: 1px 6px; border-radius: 2px; letter-spacing: 0.5px;
+    background: #1d3a31; color: #7fae9f;
+  }
+  .pill.p1 { background: #3a2a1c; color: #c98a5e; }
+  .pill.p2 { background: #1d3a31; color: #7fae9f; }
+  .pill.p3 { background: #1b2b26; color: #5f7a72; }
+  .pill.opt { background: #232323; color: #6d6d6d; }
+  .used { font-size: 11px; color: #5f7a72; }
+  .subj { font-size: 11.5px; line-height: 1.85; color: #7d948c; }
+  .subj b.dl { color: #8fb3a8; font-weight: 500; }
+  .copy {
+    margin-top: 7px; padding: 3px 10px; font-size: 10.5px;
+    background: transparent; color: #6fa093; border: 1px solid #26403a;
+    border-radius: 2px; cursor: pointer; letter-spacing: 0.5px;
+  }
+  .copy:hover { background: #16241f; color: #a8c4ba; }
+  .copy.ok { color: #3fbf9b; border-color: #2f5a4f; }
+  .copy.mini { margin-top: 0; padding: 1px 7px; font-size: 9.5px; }
+
+  footer {
+    margin-top: 40px; padding-top: 18px; border-top: 1px solid #1a2a25;
+    font-size: 11.5px; color: #4d6b62; line-height: 1.9;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">TIDELINE · ART SHEET</div>
+  <h1>美术资源清单</h1>
+  <div class="lede">
+    物品图标 <b>33 / 33 已完成</b>。下面展示场景资源与制作进度。<b>它们和物品图标最大的区别是视角</b>：
+    物品是正面展示；角色与立体场景物件统一使用<b>约 75° 倾斜俯视</b>，地面贴花保持平坦。
+    角色是<b>三向图</b>（正 / 背 / 侧），朝左直接用侧面图<b>水平镜像</b>，不用画第四张。
+    每张卡右下角可以复制拼好的 prompt。
+    玩家动作另见 <a href="玩家动画.html" style="color:#a8c4ba">玩家动画预览</a>（7 种动作、三向图、60 帧）。
+  </div>
+  <div class="bar-wrap">
+    <div class="pbar"><i style="width:100%"></i></div>
+    <div class="pnum">场景资源 35 / 35 个文件</div>
+  </div>
+</header>
+
+<div class="spec">
+  <div class="panel">
+    <h3>规格</h3>
+    <p><b>尺寸</b>　32 × 32 像素。角色、物件占中间 28 × 28，四周留 2px 透明边；地形铺满 32 × 32，不留透明接缝。</p>
+    <p><b>视角</b>　角色与有高度的物件统一为相对地面约 75° 的倾斜俯视正交投影，顶面为主，带短立面；地板和贴花保持贴地。</p>
+    <p><b>规范</b>　完整要求见 <a href="ART_STYLE.md" style="color:#a8c4ba">ART_STYLE.md · 美术规范 v2</a>。门含正向/侧向、打开/关闭，按门洞墙体轴线自动选图。</p>
+    <p><b>命名</b>　角色 <code>chars/player_s.png</code>、<code>_n</code>、<code>_e</code>；<br>物件 <code>props/crate_std.png</code>；地形 <code>tiles/wall.png</code>。</p>
+    <p><b>处理</b>　原稿命名与成品相同，放进一个目录后跑 <code>node tools/prepare-scene-icons.js &lt;原稿目录&gt;</code>。</p>
+  </div>
+  <div class="panel warn">
+    <h3>四条容易踩的</h3>
+    <p><b>1. 侧面只画朝右的。</b>朝左由代码水平翻转。所以侧面图上不要写文字、编号、徽章——翻过来会是错的。单肩包、单侧枪套这类可以放心画。</p>
+    <p><b>2. 三张要能一眼分出朝向。</b>靠帽檐位置、背带、背包、传感器这些线索区分，不要只换一下亮度。</p>
+    <p><b>3. 地形不要求和邻居无缝。</b>地图是格子化的，每格独立画，格子之间有边界反而像地砖。</p>
+    <p><b>4. 不要画投影和地面。</b>阴影由代码按视野亮度叠加，画进去会二次叠加变脏。</p>
+  </div>
+</div>
+
+
+  <section>
+    <h2><span>角色</span><em>chars/</em><i>12 / 12</i></h2>
+    <p class="tip">角色是<b>三向图</b>：正 _s / 背 _n / 侧 _e。游戏里朝左直接把 _e 水平翻转，所以<b>不需要画 _w</b>。下面每个方向都有独立的复制按钮，prompt 已按方向写好。</p>
+    
+  <div class="asset facing done">
+    <div class="thumbs">
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/player_s.png" alt="">
+        </div>
+        <code>_s</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 面朝画面下方站立的玩家：深灰蓝色防水外套，肩线略宽，帽兜前沿压到额头，帽檐阴影里能看见上半张脸和一只护目镜；双手在身体下方握着枪。头的圆形轮廓在中间偏上，肩膀在下半部。">复制</button>
+      </div>
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/player_n.png" alt="">
+        </div>
+        <code>_n</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个玩家的背面，背对画面下方、头顶朝上：只见帽兜的圆顶和后颈，外套背部有一块深色补丁和交叉背带，腰后侧挂一只小水壶。完全看不到脸和枪。">复制</button>
+      </div>
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/player_e.png" alt="">
+        </div>
+        <code>_e</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个玩家的右侧面，身体朝画面右方：肩部收窄成一条侧线，持枪的手臂向前（画面右侧）伸出，能看到侧脸轮廓、帽兜侧面和护目镜带子。头在右、后背在左。">复制</button>
+      </div><div class="dslot mirror">
+         <div class="thumb sm"><img class="flip" src="assets/chars/player_e.png" alt=""></div>
+         <code>镜像</code><span class="mnote">朝左自动生成</span>
+       </div></div>
+    <div class="info">
+      <div class="row1">
+        <b>玩家</b>
+        <code>chars/player_{s,n,e}.png</code>
+        <span class="prog">3 / 3</span>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">你自己。三张里 _s 最常看到（往下走、往上打），_e 出现频率次之。</span>
+      </div>
+      <div class="subj"><b class="dl">正 _s</b>朝画面下方：面朝画面下方站立的玩家：深灰蓝色防水外套，肩线略宽，帽兜前沿压到额头，帽檐阴影里能看见上半张脸和一只护目镜；双手在身体下方握着枪。头的圆形轮廓在中间偏上，肩膀在下半部。<br><b class="dl">背 _n</b>朝画面上方：同一个玩家的背面，背对画面下方、头顶朝上：只见帽兜的圆顶和后颈，外套背部有一块深色补丁和交叉背带，腰后侧挂一只小水壶。完全看不到脸和枪。<br><b class="dl">侧 _e</b>朝画面右方（朝左自动镜像）：同一个玩家的右侧面，身体朝画面右方：肩部收窄成一条侧线，持枪的手臂向前（画面右侧）伸出，能看到侧脸轮廓、帽兜侧面和护目镜带子。头在右、后背在左。</div>
+    </div>
+  </div>
+  <div class="asset facing done">
+    <div class="thumbs">
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/scav_s.png" alt="">
+        </div>
+        <code>_s</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 面朝画面下方的拾荒者敌人：土黄棕色的旧外套，戴着压低的破帽和护目镜（能看见两片反光镜片），胸前斜挎一条背带，手里的枪朝画面下方。">复制</button>
+      </div>
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/scav_n.png" alt="">
+        </div>
+        <code>_n</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个拾荒者的背面：一只鼓起来的大帆布背包几乎占满上半部，背包上有捆带和挂着的破布条；只能看到帽子和后颈，看不到脸。">复制</button>
+      </div>
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/scav_e.png" alt="">
+        </div>
+        <code>_e</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个拾荒者的右侧面，朝画面右方：帽子的侧面和一片护目镜镜片，背包在后背（画面左侧）鼓出，枪伸向前方。">复制</button>
+      </div><div class="dslot mirror">
+         <div class="thumb sm"><img class="flip" src="assets/chars/scav_e.png" alt=""></div>
+         <code>镜像</code><span class="mnote">朝左自动生成</span>
+       </div></div>
+    <div class="info">
+      <div class="row1">
+        <b>拾荒者</b>
+        <code>chars/scav_{s,n,e}.png</code>
+        <span class="prog">3 / 3</span>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">会开枪、会喊人、会跟你抢箱子的敌人。背面那张最重要——你追他的时候看到的就是背包。</span>
+      </div>
+      <div class="subj"><b class="dl">正 _s</b>朝画面下方：面朝画面下方的拾荒者敌人：土黄棕色的旧外套，戴着压低的破帽和护目镜（能看见两片反光镜片），胸前斜挎一条背带，手里的枪朝画面下方。<br><b class="dl">背 _n</b>朝画面上方：同一个拾荒者的背面：一只鼓起来的大帆布背包几乎占满上半部，背包上有捆带和挂着的破布条；只能看到帽子和后颈，看不到脸。<br><b class="dl">侧 _e</b>朝画面右方（朝左自动镜像）：同一个拾荒者的右侧面，朝画面右方：帽子的侧面和一片护目镜镜片，背包在后背（画面左侧）鼓出，枪伸向前方。</div>
+    </div>
+  </div>
+  <div class="asset facing done">
+    <div class="thumbs">
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/echo_s.png" alt="">
+        </div>
+        <code>_s</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 面朝画面下方的回响体：不规则的半透明紫红色人形，中心有一团稍亮的、像被抹开的脸的痕迹，边缘向四周发散模糊，像凝住的声音。">复制</button>
+      </div>
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/echo_n.png" alt="">
+        </div>
+        <code>_n</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个回响体的背面：中心没有脸的痕迹，紫红色更沉，边缘的拖尾朝画面下方拉长，像残留的余音。">复制</button>
+      </div>
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/echo_e.png" alt="">
+        </div>
+        <code>_e</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个回响体的侧面，朝画面右方：整体被拉长成一条朝右的流线，前端稍亮，尾部散成几缕雾。">复制</button>
+      </div><div class="dslot mirror">
+         <div class="thumb sm"><img class="flip" src="assets/chars/echo_e.png" alt=""></div>
+         <code>镜像</code><span class="mnote">朝左自动生成</span>
+       </div></div>
+    <div class="info">
+      <div class="row1">
+        <b>回响体</b>
+        <code>chars/echo_{s,n,e}.png</code>
+        <span class="prog">3 / 3</span>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">全盲、靠听觉的群居敌人。三张差别可以很小，靠亮斑位置区分就够——它本来就不该长得像人。</span>
+      </div>
+      <div class="subj"><b class="dl">正 _s</b>朝画面下方：面朝画面下方的回响体：不规则的半透明紫红色人形，中心有一团稍亮的、像被抹开的脸的痕迹，边缘向四周发散模糊，像凝住的声音。<br><b class="dl">背 _n</b>朝画面上方：同一个回响体的背面：中心没有脸的痕迹，紫红色更沉，边缘的拖尾朝画面下方拉长，像残留的余音。<br><b class="dl">侧 _e</b>朝画面右方（朝左自动镜像）：同一个回响体的侧面，朝画面右方：整体被拉长成一条朝右的流线，前端稍亮，尾部散成几缕雾。</div>
+    </div>
+  </div>
+  <div class="asset facing done">
+    <div class="thumbs">
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/guard_s.png" alt="">
+        </div>
+        <code>_s</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 面朝画面下方的潮汐守卫：方正厚重的机械体，灰蓝色装甲分块，正中央偏下有一个明显的圆形传感器（像一只眼）朝向前方，四角有小的轮式支脚，前方装甲上有两道排气缝。">复制</button>
+      </div>
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/guard_n.png" alt="">
+        </div>
+        <code>_n</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个潮汐守卫的背面：中央没有传感器，只有一块带散热格栅的方形背板和一束粗线缆，四个轮式支角仍在四角。">复制</button>
+      </div>
+      <div class="dslot">
+        <div class="thumb sm">
+          <img src="assets/chars/guard_e.png" alt="">
+        </div>
+        <code>_e</code>
+        <button class="copy mini" data-p="Use case: stylized-concept. Create ONE standalone game character sprite for 潮汐线, a muted post-flood salvage survival game. Authentic hand-placed 32x32 pixel art seen from almost directly above (top-down, camera tilted about 75 degrees so a sliver of the body side is visible — a pure 90 degree view makes facing unreadable), very chunky crisp square pixels, no antialiasing, limited 12-color palette with weathered desaturated tones, light from the upper left, readable against a dark green ground, no pure black outline. The character occupies the central 28x28 logical pixels with a transparent 2 pixel margin. Output a square PNG with genuinely transparent background. No label, text, border, ground patch, cast shadow, scenery, or extra objects. Subject: 同一个潮汐守卫的右侧面，朝画面右方：圆形传感器移到最右侧，主体压成一条窄长的装甲盒，前方（画面右侧）伸出一截短炮管。">复制</button>
+      </div><div class="dslot mirror">
+         <div class="thumb sm"><img class="flip" src="assets/chars/guard_e.png" alt=""></div>
+         <code>镜像</code><span class="mnote">朝左自动生成</span>
+       </div></div>
+    <div class="info">
+      <div class="row1">
+        <b>潮汐守卫</b>
+        <code>chars/guard_{s,n,e}.png</code>
+        <span class="prog">3 / 3</span>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">固定巡逻、高血量、守着核心区的敌人。它的传感器就是朝向，所以三张一定要让那只眼的位置明显不同。</span>
+      </div>
+      <div class="subj"><b class="dl">正 _s</b>朝画面下方：面朝画面下方的潮汐守卫：方正厚重的机械体，灰蓝色装甲分块，正中央偏下有一个明显的圆形传感器（像一只眼）朝向前方，四角有小的轮式支脚，前方装甲上有两道排气缝。<br><b class="dl">背 _n</b>朝画面上方：同一个潮汐守卫的背面：中央没有传感器，只有一块带散热格栅的方形背板和一束粗线缆，四个轮式支角仍在四角。<br><b class="dl">侧 _e</b>朝画面右方（朝左自动镜像）：同一个潮汐守卫的右侧面，朝画面右方：圆形传感器移到最右侧，主体压成一条窄长的装甲盒，前方（画面右侧）伸出一截短炮管。</div>
+    </div>
+  </div>
+  </section>
+  <section>
+    <h2><span>场景物件</span><em>props/</em><i>19 / 19</i></h2>
+    
+    
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/crate_fast.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>抽屉 / 矮柜</b>
+        <code>props/crate_fast.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">快取容器。点了就开，不打断行动。</span>
+      </div>
+      <div class="subj">一只低矮的旧木抽屉柜，长横向顶面占大部分，能看到南侧短而清晰的立面和铜色抽屉把手。顶面木纹横向，前面明显比顶面暗，左侧比右侧亮。保持矮柜低于储物柜。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一只低矮的旧木抽屉柜，长横向顶面占大部分，能看到南侧短而清晰的立面和铜色抽屉把手。顶面木纹横向，前面明显比顶面暗，左侧比右侧亮。保持矮柜低于储物柜。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/crate_std.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>储物柜</b>
+        <code>props/crate_std.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">标准容器。1 秒读条，可以中断。</span>
+      </div>
+      <div class="subj">一只灰褐色储物柜：顶部平面与下方短立面同时可见，两道金属合页与一个把手，边角掉漆。高于矮木柜但不夸张拉长；有明确的柜门面、顶部和侧面。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一只灰褐色储物柜：顶部平面与下方短立面同时可见，两道金属合页与一个把手，边角掉漆。高于矮木柜但不夸张拉长；有明确的柜门面、顶部和侧面。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/crate_heavy.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>保险箱</b>
+        <code>props/crate_heavy.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">重型容器。5 秒完全不能动，出声最响。</span>
+      </div>
+      <div class="subj">一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/door.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>门 · 正向（关闭）</b>
+        <code>props/door.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">普通门。关上门可以挡住视线和子弹。</span>
+      </div>
+      <div class="subj">普通木门，门洞横跨画面左右（墙体沿东西向，通行沿上下）：左右两个厚门框立柱之间是一扇关闭的木门，门扇在屏幕水平轴上伸展。俯视75度，顶端门框横梁和门扇厚度清楚，门前南向短立面带门闩。完整缩在一格内。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 普通木门，门洞横跨画面左右（墙体沿东西向，通行沿上下）：左右两个厚门框立柱之间是一扇关闭的木门，门扇在屏幕水平轴上伸展。俯视75度，顶端门框横梁和门扇厚度清楚，门前南向短立面带门闩。完整缩在一格内。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/door_open.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>门 · 正向（打开）</b>
+        <code>props/door_open.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p2">建议</span>
+        <span class="used">门打开时的状态。</span>
+      </div>
+      <div class="subj">与关闭普通木门成套：墙体沿东西向，门洞横跨画面左右，通行沿上下。木门左右门框原位不变，门扇从左边铰链打开约90度后沿左侧边向上收拢，中央上下方向通道真实透明，不画平板堵路。保留俯视75度的厚门框顶面与短立面，不能只画二维U线条。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 与关闭普通木门成套：墙体沿东西向，门洞横跨画面左右，通行沿上下。木门左右门框原位不变，门扇从左边铰链打开约90度后沿左侧边向上收拢，中央上下方向通道真实透明，不画平板堵路。保留俯视75度的厚门框顶面与短立面，不能只画二维U线条。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/sdoor.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>避难间门 · 正向（关闭）</b>
+        <code>props/sdoor.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p2">建议</span>
+        <span class="used">避难间的门。关上之后敌人不会进来。</span>
+      </div>
+      <div class="subj">厚重金属避难门，墙体沿东西向，门洞横跨画面左右，通行沿上下。左右厚门柱之间关闭的钢门，门楣顶部、封条和朝南短立面同时可见，立面中央偏上一个绿色小指示灯，灰绿色金属顶亮侧暗。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 厚重金属避难门，墙体沿东西向，门洞横跨画面左右，通行沿上下。左右厚门柱之间关闭的钢门，门楣顶部、封条和朝南短立面同时可见，立面中央偏上一个绿色小指示灯，灰绿色金属顶亮侧暗。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/sdoor_open.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>避难间门 · 正向（打开）</b>
+        <code>props/sdoor_open.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p3">可选</span>
+        <span class="used">避难间门打开时的状态。</span>
+      </div>
+      <div class="subj">与关闭避难门成套：墙体沿东西向，门洞横跨左右，通行沿上下。左右金属门柱原位，钢门扇从左铰链打开后沿左边向上收拢，中央通路透明。绿色指示灯仍在门框上，门框有体积和厚封条，75度俯视。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 与关闭避难门成套：墙体沿东西向，门洞横跨左右，通行沿上下。左右金属门柱原位，钢门扇从左铰链打开后沿左边向上收拢，中央通路透明。绿色指示灯仍在门框上，门框有体积和厚封条，75度俯视。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/exit.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>撤离点</b>
+        <code>props/exit.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">站在上面读条 6 秒就能撤离。</span>
+      </div>
+      <div class="subj">从正上方看的撤离点标记：地面上喷的青色圆环加一个箭头，圆环有磨损缺角，颜色偏亮的青绿。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE 32x32 pixel-art ground decal for 潮汐线, in the ground plane of a 75-degree top-down orthographic game. The decal lies flat on the ground, no upright extrusion, no invented height. Muted weathered palette and upper-left light, coarse crisp pixel clusters, no antialiasing. Fit complete decal within central 28x28, 2px transparent margin, transparent PNG. No surrounding ground, label, border or shadow. Subject: 从正上方看的撤离点标记：地面上喷的青色圆环加一个箭头，圆环有磨损缺角，颜色偏亮的青绿。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/corpse_scav.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>尸体 · 拾荒者（人类）</b>
+        <code>props/corpse_scav.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p2">建议</span>
+        <span class="used">拾荒者死后留下的尸体。这是最常见的一种，玩家见到最多的就是它。</span>
+      </div>
+      <div class="subj">一名穿土黄棕旧外套的拾荒者倒在地上，四肢放松散开，帽子歪向一侧，帆布背包被压住，旁边一把枪与少数弹壳，少许暗红干血；同场景角色一致的75度俯视，衣服与背包略有体积，非站立姿势。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一名穿土黄棕旧外套的拾荒者倒在地上，四肢放松散开，帽子歪向一侧，帆布背包被压住，旁边一把枪与少数弹壳，少许暗红干血；同场景角色一致的75度俯视，衣服与背包略有体积，非站立姿势。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/corpse_echo.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>尸体 · 回响体（异常）</b>
+        <code>props/corpse_echo.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p2">建议</span>
+        <span class="used">回响体死后留下的残留。它本来就不是实体，所以不该画成人形尸体。</span>
+      </div>
+      <div class="subj">回响体消散后的紫红人形水光痕迹，中心浓、边缘碎散，几粒细晶体，没有骨骼或清晰四肢，没有人类血液，残留贴地，只有结晶略凸起，颜色同紫红回响体。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE 32x32 pixel-art ground decal for 潮汐线, in the ground plane of a 75-degree top-down orthographic game. The decal lies flat on the ground, no upright extrusion, no invented height. Muted weathered palette and upper-left light, coarse crisp pixel clusters, no antialiasing. Fit complete decal within central 28x28, 2px transparent margin, transparent PNG. No surrounding ground, label, border or shadow. Subject: 回响体消散后的紫红人形水光痕迹，中心浓、边缘碎散，几粒细晶体，没有骨骼或清晰四肢，没有人类血液，残留贴地，只有结晶略凸起，颜色同紫红回响体。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/corpse_guard.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>尸体 · 潮汐守卫（机械）</b>
+        <code>props/corpse_guard.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p2">建议</span>
+        <span class="used">潮汐守卫被打散后的残骸。机械不该有血迹，靠散落的零件表达「被拆了」。</span>
+      </div>
+      <div class="subj">潮汐守卫机械残骸：裂开的灰蓝装甲主体、裸露粗线缆、两个脱落轮式支脚，圆形青色传感器面板掉在旁边，螺栓与焦黑细痕，无血。与参考守卫同材料、相同75度俯视，散落零件有厚度。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 潮汐守卫机械残骸：裂开的灰蓝装甲主体、裸露粗线缆、两个脱落轮式支脚，圆形青色传感器面板掉在旁边，螺栓与焦黑细痕，无血。与参考守卫同材料、相同75度俯视，散落零件有厚度。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/door_side.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>普通门 · 侧向（关闭）</b>
+        <code>props/door_side.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">南北向墙体上的门洞，供东西方向通行；由门洞轴线自动选图。</span>
+      </div>
+      <div class="subj">普通木门，墙体沿画面上下即南北向，门洞在图中纵向延伸，玩家沿左右穿过。门扇与两个门柱沿画面竖轴排列：北端一柱、南端一柱，中间关闭的木门形成一条竖直的厚板。75度俯视，能看到木门上沿与短的侧立面，最宽不超过画布一半。严禁再画成横跨左右的正面门，严禁直接旋转图像造成光源错误。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 普通木门，墙体沿画面上下即南北向，门洞在图中纵向延伸，玩家沿左右穿过。门扇与两个门柱沿画面竖轴排列：北端一柱、南端一柱，中间关闭的木门形成一条竖直的厚板。75度俯视，能看到木门上沿与短的侧立面，最宽不超过画布一半。严禁再画成横跨左右的正面门，严禁直接旋转图像造成光源错误。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/door_side_open.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>普通门 · 侧向（打开）</b>
+        <code>props/door_side_open.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">南北向墙体上的门洞，供东西方向通行；由门洞轴线自动选图。</span>
+      </div>
+      <div class="subj">与侧向关闭木门同一结构，墙体沿画面上下南北向，玩家沿左右通行。北南两个门柱原位不变，门扇从北端铰链打开90度，沿顶部向左收拢，中央左右方向通路透明。75度俯视，保留门柱和门扇的厚度，保持左上光源。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 与侧向关闭木门同一结构，墙体沿画面上下南北向，玩家沿左右通行。北南两个门柱原位不变，门扇从北端铰链打开90度，沿顶部向左收拢，中央左右方向通路透明。75度俯视，保留门柱和门扇的厚度，保持左上光源。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/sdoor_side.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>避难门 · 侧向（关闭）</b>
+        <code>props/sdoor_side.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">南北向墙体上的门洞，供东西方向通行；由门洞轴线自动选图。</span>
+      </div>
+      <div class="subj">厚金属避难门，墙体沿画面上下南北向，门洞竖向，通行沿左右。北南两个厚金属门柱夹住一扇竖向关闭的钢门，上沿亮、短侧面暗、封条清晰，绿色小灯在南端门柱，窄而纵向的外轮廓。75度俯视。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 厚金属避难门，墙体沿画面上下南北向，门洞竖向，通行沿左右。北南两个厚金属门柱夹住一扇竖向关闭的钢门，上沿亮、短侧面暗、封条清晰，绿色小灯在南端门柱，窄而纵向的外轮廓。75度俯视。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/sdoor_side_open.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>避难门 · 侧向（打开）</b>
+        <code>props/sdoor_side_open.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">南北向墙体上的门洞，供东西方向通行；由门洞轴线自动选图。</span>
+      </div>
+      <div class="subj">与侧向关闭避难门同结构，墙体沿画面上下南北向，玩家左右通行。北南门柱原位，钢门扇从北端打开90度后沿顶部向左收拢，中央左右通路完全透明。厚钢板上沿和短立面可见，绿色小灯仍在南端门柱，固定左上光源。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 与侧向关闭避难门同结构，墙体沿画面上下南北向，玩家左右通行。北南门柱原位，钢门扇从北端打开90度后沿顶部向左收拢，中央左右通路完全透明。厚钢板上沿和短立面可见，绿色小灯仍在南端门柱，固定左上光源。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/crate_tool.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>工具箱</b>
+        <code>props/crate_tool.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">快取工具箱，偏工业器材；实体占一格，地图字符 T。</span>
+      </div>
+      <div class="subj">低矮的锈红金属工具抽屉箱，横向宽顶面占主要部分，下面短立面上两层抽屉和银色拉手，角落黄铜扣与少许磨损，顶面和短侧壁都清晰可见。一格体积，比例同参考矮柜，绝对不要画正面立式大图。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 低矮的锈红金属工具抽屉箱，横向宽顶面占主要部分，下面短立面上两层抽屉和银色拉手，角落黄铜扣与少许磨损，顶面和短侧壁都清晰可见。一格体积，比例同参考矮柜，绝对不要画正面立式大图。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/crate_med.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>医疗柜</b>
+        <code>props/crate_med.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">标准医疗柜，偏医疗物资；实体占一格，地图字符 M。</span>
+      </div>
+      <div class="subj">一格体积的灰白与暗绿色金属医疗物资柜，顶面占大半，短而可见的前门上一个简单绿色加号、黑色短拉手和密封边，左上光、短侧壁，顶面亮门面暗，比例同参考储物柜，75度高角度俯视。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一格体积的灰白与暗绿色金属医疗物资柜，顶面占大半，短而可见的前门上一个简单绿色加号、黑色短拉手和密封边，左上光、短侧壁，顶面亮门面暗，比例同参考储物柜，75度高角度俯视。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/crate_elec.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>电子设备柜</b>
+        <code>props/crate_elec.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">标准电子设备柜，偏电子/工业；实体占一格，地图字符 R。</span>
+      </div>
+      <div class="subj">一格体积的蓝灰色电子设备储物机柜，较大顶面有两条散热缝，短前面板有微小暗青指示灯、插口与锁扣，少许外露线束盘绕在侧面，厚度清晰。顶面为主，不画整面正面服务器照片。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一格体积的蓝灰色电子设备储物机柜，较大顶面有两条散热缝，短前面板有微小暗青指示灯、插口与锁扣，少许外露线束盘绕在侧面，厚度清晰。顶面为主，不画整面正面服务器照片。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/crate_supply.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>防水补给箱</b>
+        <code>props/crate_supply.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">重型防水补给箱，偏生活/医疗/工业；实体占一格，地图字符 K。</span>
+      </div>
+      <div class="subj">一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。">复制完整 prompt</button>
+    </div>
+  </div>
+  </section>
+  <section>
+    <h2><span>地形</span><em>tiles/</em><i>4 / 4</i></h2>
+    
+    
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/tiles/floor.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>室内地板</b>
+        <code>tiles/floor.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">地图上最大面积的地形。每格独立绘制，不需要无缝拼接。</span>
+      </div>
+      <div class="subj">从正上方看的一块室内水泥地砖：浅灰绿，有细裂纹和一点污渍，纹理要均匀、不要有明显方向性，重复拼起来不能看出图案。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 从正上方看的一块室内水泥地砖：浅灰绿，有细裂纹和一点污渍，纹理要均匀、不要有明显方向性，重复拼起来不能看出图案。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/tiles/low.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>低地</b>
+        <code>tiles/low.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p2">建议</span>
+        <span class="used">高度 1 的地形，涨潮时先被淹。</span>
+      </div>
+      <div class="subj">从正上方看的一块潮湿低地：比地板更暗的泥地，有几处浅积水反光，颜色偏冷。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 从正上方看的一块潮湿低地：比地板更暗的泥地，有几处浅积水反光，颜色偏冷。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/tiles/marsh.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>洼地</b>
+        <code>tiles/marsh.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p2">建议</span>
+        <span class="used">高度 0 的地形，退潮时才露出来。</span>
+      </div>
+      <div class="subj">从正上方看的一块洼地：大部分是浅浅的水，能透过水看到下面的泥，边缘有细小的泡沫和泥沙。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 从正上方看的一块洼地：大部分是浅浅的水，能透过水看到下面的泥，边缘有细小的泡沫和泥沙。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/tiles/wall.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>墙体</b>
+        <code>tiles/wall.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">所有墙。挡住视线和子弹。</span>
+      </div>
+      <div class="subj">从正上方看的一段墙体：深色粗糙混凝土的顶面，比地板暗两个档，表面有颗粒感，边缘略亮一条。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 从正上方看的一段墙体：深色粗糙混凝土的顶面，比地板暗两个档，表面有颗粒感，边缘略亮一条。">复制完整 prompt</button>
+    </div>
+  </div>
+  </section>
+  <section class="optsec">
+    <h2><span>可选（锦上添花）</span><em>props/</em><i>5 / 5</i></h2>
+    <p class="tip">摆设通过 <code>js/data.js</code> 的 <code>DECOR</code> 层装入地图；家具默认实体占一格，只有 <code>ground:true</code> 的血迹等地贴可通行。F1 可查看占格轮廓。</p>
+    
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/desk.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>办公桌</b>
+        <code>props/desk.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill opt">可选</span>
+        <span class="used"></span>
+      </div>
+      <div class="subj">旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/shelf.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>货架</b>
+        <code>props/shelf.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill opt">可选</span>
+        <span class="used"></span>
+      </div>
+      <div class="subj">旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/barrel.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>油桶</b>
+        <code>props/barrel.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill opt">可选</span>
+        <span class="used"></span>
+      </div>
+      <div class="subj">旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/chair.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>翻倒的椅子</b>
+        <code>props/chair.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill opt">可选</span>
+        <span class="used"></span>
+      </div>
+      <div class="subj">一把翻倒的深木椅子，从75度俯视看见斜着的椅座平面、椅背厚度和向一侧伸出的四条椅腿，简洁有体积的木件，不要画成平面线稿。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一把翻倒的深木椅子，从75度俯视看见斜着的椅座平面、椅背厚度和向一侧伸出的四条椅腿，简洁有体积的木件，不要画成平面线稿。">复制完整 prompt</button>
+    </div>
+  </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/blood.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>地面血迹</b>
+        <code>props/blood.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill opt">可选</span>
+        <span class="used"></span>
+      </div>
+      <div class="subj">从正上方看的一小片干涸血迹：不规则的深红褐色斑块，边缘已经发暗干裂。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE 32x32 pixel-art ground decal for 潮汐线, in the ground plane of a 75-degree top-down orthographic game. The decal lies flat on the ground, no upright extrusion, no invented height. Muted weathered palette and upper-left light, coarse crisp pixel clusters, no antialiasing. Fit complete decal within central 28x28, 2px transparent margin, transparent PNG. No surrounding ground, label, border or shadow. Subject: 从正上方看的一小片干涸血迹：不规则的深红褐色斑块，边缘已经发暗干裂。">复制完整 prompt</button>
+    </div>
+  </div>
+  </section>
+
+<footer>
+  清单由 <code>gen-art-sheet.js</code> 从 <code>assets/asset-prompts.json</code> 生成。
+  更新图片后重跑 <code>node gen-art-sheet.js</code> 刷新预览与进度，再运行 <code>node build.js</code> 打包游戏。缺某个方向时会自动借其它方向，全缺才退回代码绘制的临时图形。
+</footer>
+
+</div>
+<script>
+document.querySelectorAll('.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var txt = btn.getAttribute('data-p');
+    var done = function () {
+      var old = btn.textContent;
+      btn.textContent = '已复制';
+      btn.classList.add('ok');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('ok'); }, 1400);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, fallback);
+    } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = txt;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) { alert('复制失败，请手动选择文本'); }
+      document.body.removeChild(ta);
+    }
+  });
+});
+</script>
+</body>
+</html>

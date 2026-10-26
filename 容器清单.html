@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>潮汐线 · 容器清单</title><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<nav class="wiki-nav" aria-label="清单导航">
+  <a class="wiki-brand" href="wiki.html">潮汐线 <span>WIKI</span></a>
+  <div class="wiki-links"><a data-wiki-link="items" href="wiki.html#items">物品清单</a><a data-wiki-link="gear" href="wiki.html#gear">装备清单</a><a data-wiki-link="containers" href="wiki.html#containers" aria-current="page">容器清单</a></div>
+  <a class="wiki-game" href="index.html">进入游戏 ↗</a>
+</nav>
+<main class="wiki-sheet">
+<header>
+  <div class="kicker">TIDELINE · CONTAINER SHEET</div>
+  <h1>容器清单</h1>
+  <div class="lede">所有可搜刮箱柜与遗留物，一处查看。箱柜的类型、数量、位置、搜刮时间与掉落偏好均取自当前游戏数据，预览共用游戏中的场景贴图。</div>
+  <div class="wiki-stats"><span><b>7</b> 种场景容器</span><span><b>41</b> 个地图实例</span><span><b>3</b> 类可搜刮遗留物</span></div>
+</header>
+<div class="spec">
+  <div class="panel"><h3>搜刮与掉落</h3>
+    <p>靠近后按 <code>E</code> 搜刮。开箱后，物品仍需逐件搜索：按稀有度耗时 0.45 / 0.85 / 1.4 / 2.1 / 3 秒。</p>
+    <p>抽取次数是随机抽取的轮数，同一箱内重复物品会被跳过，因此最终件数可能少于抽取次数。类别偏好提高权重，不保证掉落。</p>
+    <p>箱柜打开、拿空后仍占一个完整格子。尸体与残骸可通行；桌椅、货架、油桶属于场景摆设，不能搜刮。</p>
+  </div>
+  <div class="panel"><h3>贴图与透视</h3>
+    <p><b>规格</b>　32×32 透明 PNG，主体位于中央 28×28，四周留 2px。下方按整数倍最近邻放大预览。</p>
+    <p><b>视角</b>　75° 倾斜俯视，顶面为主、南侧短立面可见，统一左上光源。与角色和其他场景物件保持一致。</p>
+    <p><b>位置</b>　贴图来自 <code>assets/props/</code>。地图位置使用从 0 开始的格坐标 <code>(x, y)</code>，x 向右，y 向下。</p>
+  </div>
+</div>
+<section class="cat"><h2><span class="dot" style="background:#7fae9f"></span>快取容器<em>fast</em><i>2 种 · 12 个</i></h2><div class="grid container-grid"><article class="item container-card" data-container="C" style="--rc:#7fae9f">
+    <div class="thumb container-thumb"><img src="assets/props/crate_fast.png" width="96" height="96" alt="抽屉"></div>
+    <div class="meta">
+      <div class="name">抽屉<i class="tag">快取容器</i></div>
+      <div class="sub"><code>crate_fast.png</code> · 地图标记 <code>C</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>即时打开</dd></div>
+        <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>通用物品池</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">即开即取，适合快速搜刮。</div>
+      <details class="container-positions"><summary>当前地图 8 个 · 查看位置</summary><p><code>(12, 5)</code> <code>(26, 5)</code> <code>(38, 5)</code> <code>(5, 12)</code> <code>(26, 12)</code> <code>(50, 13)</code> <code>(11, 23)</code> <code>(5, 36)</code></p></details>
+      <div class="vis"><b>画什么</b>一只低矮的旧木抽屉柜，长横向顶面占大部分，能看到南侧短而清晰的立面和铜色抽屉把手。顶面木纹横向，前面明显比顶面暗，左侧比右侧亮。保持矮柜低于储物柜。</div>
+    </div>
+  </article>
+<article class="item container-card" data-container="T" style="--rc:#7fae9f">
+    <div class="thumb container-thumb"><img src="assets/props/crate_tool.png" width="96" height="96" alt="工具箱"></div>
+    <div class="meta">
+      <div class="name">工具箱<i class="tag">快取容器</i></div>
+      <div class="sub"><code>crate_tool.png</code> · 地图标记 <code>T</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>即时打开</dd></div>
+        <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>工业器材</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">即开即取，适合快速搜刮。偏好类别的抽取权重 ×4，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 4 个 · 查看位置</summary><p><code>(5, 5)</code> <code>(16, 5)</code> <code>(26, 24)</code> <code>(55, 37)</code></p></details>
+      <div class="vis"><b>画什么</b>低矮的锈红金属工具抽屉箱，横向宽顶面占主要部分，下面短立面上两层抽屉和银色拉手，角落黄铜扣与少许磨损，顶面和短侧壁都清晰可见。一格体积，比例同参考矮柜，绝对不要画正面立式大图。</div>
+    </div>
+  </article></div></section>
+<section class="cat"><h2><span class="dot" style="background:#7e9fb3"></span>标准容器<em>std</em><i>3 种 · 17 个</i></h2><div class="grid container-grid"><article class="item container-card" data-container="L" style="--rc:#7e9fb3">
+    <div class="thumb container-thumb"><img src="assets/props/crate_std.png" width="96" height="96" alt="储物柜"></div>
+    <div class="meta">
+      <div class="name">储物柜<i class="tag">标准容器</i></div>
+      <div class="sub"><code>crate_std.png</code> · 地图标记 <code>L</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>1 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>通用物品池</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">需要短暂读条，走出交互范围会中断。</div>
+      <details class="container-positions"><summary>当前地图 7 个 · 查看位置</summary><p><code>(33, 5)</code> <code>(11, 11)</code> <code>(47, 11)</code> <code>(38, 12)</code> <code>(33, 25)</code> <code>(11, 28)</code> <code>(16, 39)</code></p></details>
+      <div class="vis"><b>画什么</b>一只灰褐色储物柜：顶部平面与下方短立面同时可见，两道金属合页与一个把手，边角掉漆。高于矮木柜但不夸张拉长；有明确的柜门面、顶部和侧面。</div>
+    </div>
+  </article>
+<article class="item container-card" data-container="M" style="--rc:#7e9fb3">
+    <div class="thumb container-thumb"><img src="assets/props/crate_med.png" width="96" height="96" alt="医疗柜"></div>
+    <div class="meta">
+      <div class="name">医疗柜<i class="tag">标准容器</i></div>
+      <div class="sub"><code>crate_med.png</code> · 地图标记 <code>M</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>1 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>医疗物资</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">需要短暂读条，走出交互范围会中断。偏好类别的抽取权重 ×4，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 5 个 · 查看位置</summary><p><code>(5, 21)</code> <code>(17, 21)</code> <code>(10, 26)</code> <code>(48, 26)</code> <code>(9, 40)</code></p></details>
+      <div class="vis"><b>画什么</b>一格体积的灰白与暗绿色金属医疗物资柜，顶面占大半，短而可见的前门上一个简单绿色加号、黑色短拉手和密封边，左上光、短侧壁，顶面亮门面暗，比例同参考储物柜，75度高角度俯视。</div>
+    </div>
+  </article>
+<article class="item container-card" data-container="R" style="--rc:#7e9fb3">
+    <div class="thumb container-thumb"><img src="assets/props/crate_elec.png" width="96" height="96" alt="电子设备柜"></div>
+    <div class="meta">
+      <div class="name">电子设备柜<i class="tag">标准容器</i></div>
+      <div class="sub"><code>crate_elec.png</code> · 地图标记 <code>R</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>1 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>电子产品 / 工业器材</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">需要短暂读条，走出交互范围会中断。偏好类别的抽取权重 ×4，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 5 个 · 查看位置</summary><p><code>(58, 9)</code> <code>(48, 20)</code> <code>(38, 24)</code> <code>(57, 24)</code> <code>(47, 37)</code></p></details>
+      <div class="vis"><b>画什么</b>一格体积的蓝灰色电子设备储物机柜，较大顶面有两条散热缝，短前面板有微小暗青指示灯、插口与锁扣，少许外露线束盘绕在侧面，厚度清晰。顶面为主，不画整面正面服务器照片。</div>
+    </div>
+  </article></div></section>
+<section class="cat"><h2><span class="dot" style="background:#c8b47a"></span>重型容器<em>heavy</em><i>2 种 · 12 个</i></h2><div class="grid container-grid"><article class="item container-card" data-container="B" style="--rc:#c8b47a">
+    <div class="thumb container-thumb"><img src="assets/props/crate_heavy.png" width="96" height="96" alt="保险箱"></div>
+    <div class="meta">
+      <div class="name">保险箱<i class="tag">重型容器</i></div>
+      <div class="sub"><code>crate_heavy.png</code> · 地图标记 <code>B</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>3.5 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–4 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>通用物品池</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">读条期间必须站定，移动会中断；开箱会发出较大噪声。</div>
+      <details class="container-positions"><summary>当前地图 7 个 · 查看位置</summary><p><code>(49, 5)</code> <code>(56, 5)</code> <code>(54, 13)</code> <code>(50, 25)</code> <code>(33, 29)</code> <code>(55, 29)</code> <code>(51, 35)</code></p></details>
+      <div class="vis"><b>画什么</b>一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。</div>
+    </div>
+  </article>
+<article class="item container-card" data-container="K" style="--rc:#c8b47a">
+    <div class="thumb container-thumb"><img src="assets/props/crate_supply.png" width="96" height="96" alt="防水补给箱"></div>
+    <div class="meta">
+      <div class="name">防水补给箱<i class="tag">重型容器</i></div>
+      <div class="sub"><code>crate_supply.png</code> · 地图标记 <code>K</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>3.5 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–4 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 医疗物资 / 工业器材</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">读条期间必须站定，移动会中断；开箱会发出较大噪声。偏好类别的抽取权重 ×4，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 5 个 · 查看位置</summary><p><code>(30, 20)</code> <code>(58, 29)</code> <code>(46, 35)</code> <code>(57, 35)</code> <code>(58, 40)</code></p></details>
+      <div class="vis"><b>画什么</b>一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。</div>
+    </div>
+  </article></div></section>
+<section class="cat"><h2>可搜刮遗留物<em>remains</em><i>3 类 · 击败敌人后生成</i></h2>
+  <p class="section-note">遗留物不计入上述 41 个固定容器。当前搜刮读条为 0.35 秒；物品仍按逐件搜索规则揭示。</p>
+  <div class="grid container-grid"><article class="item container-card" data-remains="scav">
+    <div class="thumb container-thumb"><img src="assets/props/corpse_scav.png" width="96" height="96" alt="拾荒者尸体"></div>
+    <div class="meta"><div class="name">拾荒者尸体<i class="tag dim">可通行</i></div>
+      <div class="sub"><code>corpse_scav.png</code> · 来源：拾荒者</div>
+      <div class="desc">1 件随机低稀有度物品（r1–r2）；65% 概率额外携带 6–14 发弹药。可搜出其实际穿戴的头盔、护甲和武器。</div>
+    </div></article>
+<article class="item container-card" data-remains="echo">
+    <div class="thumb container-thumb"><img src="assets/props/corpse_echo.png" width="96" height="96" alt="回响体残留"></div>
+    <div class="meta"><div class="name">回响体残留<i class="tag dim">可通行</i></div>
+      <div class="sub"><code>corpse_echo.png</code> · 来源：回响体</div>
+      <div class="desc">1 件随机异常遗物；50% 概率额外获得绷带。</div>
+    </div></article>
+<article class="item container-card" data-remains="guard">
+    <div class="thumb container-thumb"><img src="assets/props/corpse_guard.png" width="96" height="96" alt="潮汐守卫残骸"></div>
+    <div class="meta"><div class="name">潮汐守卫残骸<i class="tag dim">可通行</i></div>
+      <div class="sub"><code>corpse_guard.png</code> · 来源：潮汐守卫</div>
+      <div class="desc">1 件随机工业器材或电子产品，另有 12 发弹药。</div>
+    </div></article></div>
+</section>
+<footer>由 <code>gen-container-sheet.js</code> 生成。箱柜数据来自 <code>js/data.js</code>，搜刮时间来自 <code>js/config.js</code>，遗留物规则对应 <code>js/entities.js</code>。<br>运行 <code>node gen-wiki.js</code> 可统一更新三份清单与 Wiki；单独重新生成任一清单也会同步更新 Wiki。</footer>
+</main>
+</body></html>

@@ -1,0 +1,273 @@
+{
+  "generator": "Built-in image_gen; one 2×2 transparent source sheet per action and direction",
+  "sourceDirectory": "Codex generated_images/01a17734-d41d-7462-a06b-323c12c53633",
+  "specification": "ART_STYLE.md",
+  "delivery": {
+    "sourceColumns": 2,
+    "sourceRows": 2,
+    "frameSize": 32,
+    "contentBox": 28,
+    "margin": 2,
+    "layout": "horizontal strips; body-referenced scale where weapons extend beyond the silhouette; shared foot anchor at actor y+12; 48px death and 64px shoot canvases retain physical body scale",
+    "outDir": "assets/anim",
+    "directions": [
+      "s",
+      "n",
+      "e"
+    ],
+    "west": "Mirror east; do not rotate canvas",
+    "deathFrameSize": 48,
+    "shootingFrameSize": 64
+  },
+  "actions": {
+    "idle": {
+      "name": "待机",
+      "frames": 2,
+      "fps": 2,
+      "loop": true,
+      "poses": "Frame 1 relaxed standing with rifle ready and feet planted. Frame 2 a very small breathing lift of shoulders, one logical pixel only; same feet and head position. This is a calm seamless loop."
+    },
+    "walk": {
+      "name": "行走",
+      "frames": 4,
+      "fps": 8,
+      "loop": true,
+      "poses": "Frame 1 left foot leading, right arm slightly back while holding rifle. Frame 2 feet pass under body. Frame 3 right foot leading, opposite leg swing. Frame 4 passing stance opposite frame 2. Clear alternating legs, tiny body bob, stable rifle aim. Seamless 4-frame walking loop."
+    },
+    "shoot": {
+      "name": "射击",
+      "frames": 2,
+      "fps": 16,
+      "loop": false,
+      "poses": "Frame 1 rifle fired and kicked back into shoulder, torso braced, arms visibly recoiling. Frame 2 rifle and shoulders recover toward the aiming pose. No baked muzzle flash; the game already draws that effect. Feet stay planted.",
+      "size": 64
+    },
+    "hurt": {
+      "name": "受击",
+      "frames": 2,
+      "fps": 10,
+      "loop": false,
+      "poses": "Frame 1 torso flinches away from impact with shoulder jerk and rifle lowered a little. Frame 2 regains balance and raises rifle. Same outfit colours, NO red/white palette swap or blood spray, readable changed body pose."
+    },
+    "death": {
+      "name": "死亡",
+      "frames": 4,
+      "fps": 6,
+      "loop": false,
+      "hold": 0.2,
+      "poses": "Frame 1 standing hit reaction, knees beginning to buckle. Frame 2 dropping onto one knee, rifle lowered. Frame 3 body collapsing to the ground. Frame 4 lying fully down, motionless, rifle at side. Clear loss of height and final horizontal fallen silhouette; not four standing characters. No gore.",
+      "size": 48
+    },
+    "loot": {
+      "name": "搜刮",
+      "frames": 3,
+      "fps": 6,
+      "loop": true,
+      "poses": "Frame 1 crouches/kneels and reaches forward with free hand. Frame 2 leans forward rummaging with both hands, rifle slung close. Frame 3 draws one hand back then returns toward reach. Same feet/ground contact point. Do NOT draw the container or any environment. Seamless search loop."
+    },
+    "dodge": {
+      "name": "闪避",
+      "frames": 3,
+      "fps": 18,
+      "loop": false,
+      "poses": "Frame 1 low forward lean ready to dodge. Frame 2 tucked compact sideways shoulder roll with rifle held close. Frame 3 low landing crouch and starting to stand. Same camera and facing, clear compressed rolling silhouette in frame 2. No motion blur or afterimages."
+    }
+  },
+  "clips": [
+    {
+      "id": "player_idle_s",
+      "state": "idle",
+      "dir": "s",
+      "frames": 2,
+      "source": "exec-213a1a23-9866-4bfd-b535-28c217cda7f5.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 2 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing SOUTH, toward the bottom of the screen, hood front and goggles visible, gun toward screen bottom. Action idle: Frame 1 relaxed standing with rifle ready and feet planted. Frame 2 a very small breathing lift of shoulders, one logical pixel only; same feet and head position. This is a calm seamless loop.",
+      "reference": "D:/develop/project/tide/assets/chars/player_s.png"
+    },
+    {
+      "id": "player_idle_n",
+      "state": "idle",
+      "dir": "n",
+      "frames": 2,
+      "source": "exec-4b956d14-1f12-494d-aea4-cd5c2e27c518.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 2 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing NORTH, toward screen top, back of hood and crossed straps visible, face hidden, same back view as the reference. Action idle: Frame 1 relaxed standing with rifle ready and feet planted. Frame 2 a very small breathing lift of shoulders, one logical pixel only; same feet and head position. This is a calm seamless loop.",
+      "reference": "D:/develop/project/tide/assets/chars/player_n.png"
+    },
+    {
+      "id": "player_idle_e",
+      "state": "idle",
+      "dir": "e",
+      "frames": 2,
+      "source": "exec-44dcdc99-d7d1-4a9b-a83e-7f8cdaeadc9a.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 2 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing EAST, screen RIGHT, gun and leading shoulder toward the right, back toward the left. NEVER face left; game mirrors this strip for west. Action idle: Frame 1 relaxed standing with rifle ready and feet planted. Frame 2 a very small breathing lift of shoulders, one logical pixel only; same feet and head position. This is a calm seamless loop.",
+      "reference": "D:/develop/project/tide/assets/chars/player_e.png"
+    },
+    {
+      "id": "player_shoot_e",
+      "state": "shoot",
+      "dir": "e",
+      "frames": 2,
+      "source": "exec-df8659f2-7cd6-499d-aff5-53252fe72c0e.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 2 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing EAST, screen RIGHT, gun and leading shoulder toward the right, back toward the left. NEVER face left; game mirrors this strip for west. Action shoot: Frame 1 rifle fired and kicked back into shoulder, torso braced, arms visibly recoiling. Frame 2 rifle and shoulders recover toward the aiming pose. No baked muzzle flash; the game already draws that effect. Feet stay planted.",
+      "reference": "D:/develop/project/tide/assets/chars/player_e.png"
+    },
+    {
+      "id": "player_walk_s",
+      "state": "walk",
+      "dir": "s",
+      "frames": 4,
+      "source": "exec-edd00b2e-7494-4b61-be9c-d99796f85228.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 4 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing SOUTH, toward the bottom of the screen, hood front and goggles visible, gun toward screen bottom. Action walk: Frame 1 left foot leading, right arm slightly back while holding rifle. Frame 2 feet pass under body. Frame 3 right foot leading, opposite leg swing. Frame 4 passing stance opposite frame 2. Clear alternating legs, tiny body bob, stable rifle aim. Seamless 4-frame walking loop.",
+      "reference": "D:/develop/project/tide/assets/chars/player_s.png"
+    },
+    {
+      "id": "player_hurt_s",
+      "state": "hurt",
+      "dir": "s",
+      "frames": 2,
+      "source": "exec-d02ad3fd-d322-41f0-a3c7-e192a0510e86.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 2 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing SOUTH, toward the bottom of the screen, hood front and goggles visible, gun toward screen bottom. Action hurt: Frame 1 torso flinches away from impact with shoulder jerk and rifle lowered a little. Frame 2 regains balance and raises rifle. Same outfit colours, NO red/white palette swap or blood spray, readable changed body pose.",
+      "reference": "D:/develop/project/tide/assets/chars/player_s.png"
+    },
+    {
+      "id": "player_walk_n",
+      "state": "walk",
+      "dir": "n",
+      "frames": 4,
+      "source": "exec-891d0148-757d-4a26-a916-bd16ea643751.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 4 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing NORTH, toward screen top, back of hood and crossed straps visible, face hidden, same back view as the reference. Action walk: Frame 1 left foot leading, right arm slightly back while holding rifle. Frame 2 feet pass under body. Frame 3 right foot leading, opposite leg swing. Frame 4 passing stance opposite frame 2. Clear alternating legs, tiny body bob, stable rifle aim. Seamless 4-frame walking loop.",
+      "reference": "D:/develop/project/tide/assets/chars/player_n.png"
+    },
+    {
+      "id": "player_hurt_n",
+      "state": "hurt",
+      "dir": "n",
+      "frames": 2,
+      "source": "exec-638b3009-87ba-4a1b-9c11-b3e318764a6d.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 2 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing NORTH, toward screen top, back of hood and crossed straps visible, face hidden, same back view as the reference. Action hurt: Frame 1 torso flinches away from impact with shoulder jerk and rifle lowered a little. Frame 2 regains balance and raises rifle. Same outfit colours, NO red/white palette swap or blood spray, readable changed body pose.",
+      "reference": "D:/develop/project/tide/assets/chars/player_n.png"
+    },
+    {
+      "id": "player_walk_e",
+      "state": "walk",
+      "dir": "e",
+      "frames": 4,
+      "source": "exec-e2108059-71c7-4937-ad15-476b714ce991.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 4 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing EAST, screen RIGHT, gun and leading shoulder toward the right, back toward the left. NEVER face left; game mirrors this strip for west. Action walk: Frame 1 left foot leading, right arm slightly back while holding rifle. Frame 2 feet pass under body. Frame 3 right foot leading, opposite leg swing. Frame 4 passing stance opposite frame 2. Clear alternating legs, tiny body bob, stable rifle aim. Seamless 4-frame walking loop.",
+      "reference": "D:/develop/project/tide/assets/chars/player_e.png"
+    },
+    {
+      "id": "player_hurt_e",
+      "state": "hurt",
+      "dir": "e",
+      "frames": 2,
+      "source": "exec-3fbf51c0-41b6-41a4-9117-16d471abd368.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 2 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing EAST, screen RIGHT, gun and leading shoulder toward the right, back toward the left. NEVER face left; game mirrors this strip for west. Action hurt: Frame 1 torso flinches away from impact with shoulder jerk and rifle lowered a little. Frame 2 regains balance and raises rifle. Same outfit colours, NO red/white palette swap or blood spray, readable changed body pose.",
+      "reference": "D:/develop/project/tide/assets/chars/player_e.png"
+    },
+    {
+      "id": "player_death_n",
+      "state": "death",
+      "dir": "n",
+      "frames": 4,
+      "source": "exec-26dc62ff-9d73-4628-a3dd-fa4ad96693b7.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 4 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing NORTH, toward screen top, back of hood and crossed straps visible, face hidden, same back view as the reference. Action death: Frame 1 standing hit reaction, knees beginning to buckle. Frame 2 dropping onto one knee, rifle lowered. Frame 3 body collapsing to the ground. Frame 4 lying fully down, motionless, rifle at side. Clear loss of height and final horizontal fallen silhouette; not four standing characters. No gore.",
+      "reference": "D:/develop/project/tide/assets/chars/player_n.png"
+    },
+    {
+      "id": "player_shoot_s",
+      "state": "shoot",
+      "dir": "s",
+      "frames": 2,
+      "source": "exec-417cf39c-0c2b-487a-b258-265356a1c757.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 2 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing SOUTH, toward the bottom of the screen, hood front and goggles visible, gun toward screen bottom. Action shoot: Frame 1 rifle fired and kicked back into shoulder, torso braced, arms visibly recoiling. Frame 2 rifle and shoulders recover toward the aiming pose. No baked muzzle flash; the game already draws that effect. Feet stay planted.",
+      "reference": "D:/develop/project/tide/assets/chars/player_s.png"
+    },
+    {
+      "id": "player_death_s",
+      "state": "death",
+      "dir": "s",
+      "frames": 4,
+      "source": "exec-d7c33337-fd89-4d44-907e-3c8a06e1702d.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 4 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing SOUTH, toward the bottom of the screen, hood front and goggles visible, gun toward screen bottom. Action death: Frame 1 standing hit reaction, knees beginning to buckle. Frame 2 dropping onto one knee, rifle lowered. Frame 3 body collapsing to the ground. Frame 4 lying fully down, motionless, rifle at side. Clear loss of height and final horizontal fallen silhouette; not four standing characters. No gore.",
+      "reference": "D:/develop/project/tide/assets/chars/player_s.png"
+    },
+    {
+      "id": "player_death_e",
+      "state": "death",
+      "dir": "e",
+      "frames": 4,
+      "source": "exec-630b2c66-5476-4071-a632-a1b8a1f608a2.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 4 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing EAST, screen RIGHT, gun and leading shoulder toward the right, back toward the left. NEVER face left; game mirrors this strip for west. Action death: Frame 1 standing hit reaction, knees beginning to buckle. Frame 2 dropping onto one knee, rifle lowered. Frame 3 body collapsing to the ground. Frame 4 lying fully down, motionless, rifle at side. Clear loss of height and final horizontal fallen silhouette; not four standing characters. No gore.",
+      "reference": "D:/develop/project/tide/assets/chars/player_e.png"
+    },
+    {
+      "id": "player_dodge_s",
+      "state": "dodge",
+      "dir": "s",
+      "frames": 3,
+      "source": "exec-4245c484-d69d-4a5f-9493-6e38f2061026.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 3 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing SOUTH, toward the bottom of the screen, hood front and goggles visible, gun toward screen bottom. Action dodge: Frame 1 low forward lean ready to dodge. Frame 2 tucked compact sideways shoulder roll with rifle held close. Frame 3 low landing crouch and starting to stand. Same camera and facing, clear compressed rolling silhouette in frame 2. No motion blur or afterimages.",
+      "reference": "D:/develop/project/tide/assets/chars/player_s.png"
+    },
+    {
+      "id": "player_shoot_n",
+      "state": "shoot",
+      "dir": "n",
+      "frames": 2,
+      "source": "exec-5828a55b-becc-4ee6-9a1a-7d4ad94cb76d.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 2 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing NORTH, toward screen top, back of hood and crossed straps visible, face hidden, same back view as the reference. Action shoot: Frame 1 rifle fired and kicked back into shoulder, torso braced, arms visibly recoiling. Frame 2 rifle and shoulders recover toward the aiming pose. No baked muzzle flash; the game already draws that effect. Feet stay planted.",
+      "reference": "D:/develop/project/tide/assets/chars/player_n.png",
+      "bodyReference": {
+        "top": 0.34,
+        "bottom": 0.943,
+        "targetHeight": 26,
+        "note": "按帽兜顶部到脚底校准人物，排除伸出头顶的枪管。"
+      }
+    },
+    {
+      "id": "player_loot_s",
+      "state": "loot",
+      "dir": "s",
+      "frames": 3,
+      "source": "exec-5eb906de-88b2-4310-8699-b955b3596805.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 3 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing SOUTH, toward the bottom of the screen, hood front and goggles visible, gun toward screen bottom. Action loot: Frame 1 crouches/kneels and reaches forward with free hand. Frame 2 leans forward rummaging with both hands, rifle slung close. Frame 3 draws one hand back then returns toward reach. Same feet/ground contact point. Do NOT draw the container or any environment. Seamless search loop.",
+      "reference": "D:/develop/project/tide/assets/chars/player_s.png"
+    },
+    {
+      "id": "player_dodge_n",
+      "state": "dodge",
+      "dir": "n",
+      "frames": 3,
+      "source": "exec-bd0f6da0-fd23-43b1-8564-262649e28a31.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 3 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing NORTH, toward screen top, back of hood and crossed straps visible, face hidden, same back view as the reference. Action dodge: Frame 1 low forward lean ready to dodge. Frame 2 tucked compact sideways shoulder roll with rifle held close. Frame 3 low landing crouch and starting to stand. Same camera and facing, clear compressed rolling silhouette in frame 2. No motion blur or afterimages.",
+      "reference": "D:/develop/project/tide/assets/chars/player_n.png"
+    },
+    {
+      "id": "player_loot_n",
+      "state": "loot",
+      "dir": "n",
+      "frames": 3,
+      "source": "exec-747183d7-3a6d-4eeb-83dd-dd31610e5f00.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 3 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing NORTH, toward screen top, back of hood and crossed straps visible, face hidden, same back view as the reference. Action loot: Frame 1 crouches/kneels and reaches forward with free hand. Frame 2 leans forward rummaging with both hands, rifle slung close. Frame 3 draws one hand back then returns toward reach. Same feet/ground contact point. Do NOT draw the container or any environment. Seamless search loop.",
+      "reference": "D:/develop/project/tide/assets/chars/player_n.png"
+    },
+    {
+      "id": "player_dodge_e",
+      "state": "dodge",
+      "dir": "e",
+      "frames": 3,
+      "source": "exec-902924f0-41f1-47e8-adda-f106312ebc55.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 3 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing EAST, screen RIGHT, gun and leading shoulder toward the right, back toward the left. NEVER face left; game mirrors this strip for west. Action dodge: Frame 1 low forward lean ready to dodge. Frame 2 tucked compact sideways shoulder roll with rifle held close. Frame 3 low landing crouch and starting to stand. Same camera and facing, clear compressed rolling silhouette in frame 2. No motion blur or afterimages.",
+      "reference": "D:/develop/project/tide/assets/chars/player_e.png"
+    },
+    {
+      "id": "player_loot_e",
+      "state": "loot",
+      "dir": "e",
+      "frames": 3,
+      "source": "exec-d71be8bb-1d5b-4466-9489-a4174267e1a7.png",
+      "prompt": "Use case: stylized-concept. ONE square transparent game ANIMATION SPRITE SHEET, exact 2 columns by 2 rows of equally sized square cells, no visible grid. Read cells in row-major order: top-left frame 1, top-right frame 2, bottom-left frame 3, bottom-right frame 4. Exactly 3 consecutive animation frames of the SAME player character; leave unused cells completely transparent. Character identity reference is supplied: preserve dark slate BLUE waterproof hooded coat, olive straps, single goggle, black rifle, body proportions and muted palette. Match reference 75-degree high-angle TOP-DOWN orthographic camera, NOT frontal portrait or side-on platform game. Every cell represents a logical 32x32 frame: complete pose fits inside central 28x28, two logical pixels transparent around all edges. All cells have IDENTICAL scale and pivot (ground contact at logical x=16, y=28). Same fixed upper-left light, chunky crisp square pixel-art clusters, limited 16 colours, no anti-aliasing. No titles, labels, numbers, grid lines, background, ground patch, shadow, particles or extra characters. Do not let any pose cross its cell boundary. Facing EAST, screen RIGHT, gun and leading shoulder toward the right, back toward the left. NEVER face left; game mirrors this strip for west. Action loot: Frame 1 crouches/kneels and reaches forward with free hand. Frame 2 leans forward rummaging with both hands, rifle slung close. Frame 3 draws one hand back then returns toward reach. Same feet/ground contact point. Do NOT draw the container or any environment. Seamless search loop.",
+      "reference": "D:/develop/project/tide/assets/chars/player_e.png"
+    }
+  ]
+}

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>潮汐线 · 阶段一原型</title>
+<script>
+/* 早期错误捕获：任何脚本错误都直接显示在页面上，方便排查 */
+window.addEventListener('error', function (e) {
+  var d = document.createElement('div');
+  d.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#8d2020;color:#fff;' +
+    'padding:16px;font:13px monospace;z-index:99999;white-space:pre-wrap;line-height:1.6';
+  d.textContent = '脚本错误: ' + e.message + '\n' +
+    (e.filename || '').split('/').pop() + ':' + e.lineno + ':' + e.colno + '\n' +
+    (e.error && e.error.stack ? e.error.stack.split('\n').slice(0, 6).join('\n') : '(无堆栈)');
+  if (document.body) document.body.appendChild(d);
+  else document.addEventListener('DOMContentLoaded', function () { document.body.appendChild(d); });
+}, true);
+</script>
+<style>
+  html, body {
+    margin: 0; height: 100%; overflow: hidden;
+    background: #070b09;
+    color: #cfd8d4;
+    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    -webkit-user-select: none; user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+  #stage {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* #frame 的尺寸由 resize() 按窗口算出来，画布和局内面板都装在里面，
+     这样面板贴的是"画面边缘"，而不是浏览器窗口边缘。 */
+  #frame {
+    position: relative;
+    width: 720px; height: 480px;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.95);
+    background: #070b09;
+  }
+  canvas {
+    display: block;
+    width: 100%; height: 100%;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    background: #070b09;
+    cursor: crosshair;
+  }
+
+  /* ---- 通用遮罩层 ---- */
+  .veil {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(5, 9, 8, 0.86);
+    backdrop-filter: blur(3px);
+    z-index: 20;
+  }
+  .veil.hidden { display: none; }
+
+  .card {
+    width: min(760px, 90vw);
+    max-height: 86vh;
+    overflow-y: auto;
+    background: #0e1512;
+    border: 1px solid #1e312b;
+    padding: 28px 34px 26px;
+    box-sizing: border-box;
+  }
+  .card::-webkit-scrollbar { width: 8px; }
+  .card::-webkit-scrollbar-thumb { background: #1e312b; }
+
+  .kicker {
+    font-size: 11px; letter-spacing: 3px; color: #4d7d70;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  h1 {
+    font-size: 30px; margin: 0 0 4px; letter-spacing: 6px;
+    color: #dbe5e1; font-weight: 600;
+  }
+  .sub { color: #5f7770; font-size: 12.5px; letter-spacing: 1px; margin-bottom: 20px; }
+  h2 {
+    font-size: 13px; letter-spacing: 2px; color: #6fa093;
+    margin: 22px 0 10px; font-weight: 600;
+    border-bottom: 1px solid #1a2a25; padding-bottom: 7px;
+  }
+  h2:first-of-type { margin-top: 4px; }
+
+  .keys { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 26px; }
+  .keys div { display: flex; gap: 10px; font-size: 12.5px; line-height: 1.9; }
+  kbd {
+    display: inline-block; min-width: 15px; text-align: center;
+    background: #16241f; border: 1px solid #26403a;
+    border-bottom-width: 2px; border-radius: 3px;
+    padding: 0 6px; font-size: 11px; color: #a9c4bc;
+    font-family: inherit; line-height: 19px; height: 19px;
+  }
+  .keys span:last-child { color: #8ba39b; }
+
+  .tip {
+    font-size: 12px; line-height: 1.85; color: #7a918a;
+    background: #0b1210; border-left: 3px solid #B5551F;
+    padding: 11px 14px; margin-top: 18px;
+  }
+  .tip b { color: #c98a5e; font-weight: 600; }
+
+  button {
+    font-family: inherit; font-size: 14px; letter-spacing: 3px;
+    background: #14685C; color: #eaf4f0; border: none;
+    padding: 12px 46px; cursor: pointer; margin-top: 22px;
+    transition: background 0.15s;
+  }
+  button:hover { background: #1a8577; }
+  button.ghost {
+    background: transparent; color: #6fa093;
+    border: 1px solid #26403a; margin-left: 10px;
+  }
+  button.ghost:hover { background: #14201c; }
+
+  /* ---- 局内面板 ---- */
+  /* 面板层按"逻辑分辨率"布局（720×480），再整体缩放，尺寸和画布 HUD 保持一致。
+     否则在 2 倍以上画面里，画布里的血条变大了、DOM 面板还是原来的字号。 */
+  #hudPanel {
+    position: absolute; left: 0; top: 0;
+    width: 720px; height: 480px;
+    transform-origin: 0 0;
+    pointer-events: none; z-index: 10;
+  }
+  .box {
+    position: absolute;
+    background: rgba(9, 15, 13, 0.97);
+    border: 1px solid #1e312b;
+    padding: 14px 16px;
+    pointer-events: auto;
+  }
+  .box.drag { cursor: default; }
+
+  #lootBox {
+    right: 14px; top: 50%; transform: translateY(-50%);
+    width: 275px;
+    max-height: calc(100% - 36px);
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  #lootBox::-webkit-scrollbar { width: 6px; }
+  #lootBox::-webkit-scrollbar-thumb { background: #1e312b; }
+  #lootBox .ttl {
+    font-size: 12px; letter-spacing: 2px; color: #6fa093; margin-bottom: 10px;
+    display: flex; justify-content: space-between;
+  }
+  .row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 7px; margin-bottom: 3px;
+    background: #101a17; border: 1px solid #1a2a25;
+    cursor: pointer; font-size: 12px; line-height: 1.4;
+  }
+  .row:hover { background: #16241f; border-color: #2a443d; }
+  .row.taken { opacity: 0.34; cursor: default; }
+  .row.taken:hover { background: #101a17; border-color: #1a2a25; }
+  .row .ico {
+    flex: 0 0 34px; width: 34px; height: 34px;
+    image-rendering: pixelated;
+    border: 1px solid transparent; border-radius: 2px;
+  }
+  .row .ico.ph { display: inline-block; }
+  .row .nm { flex: 1; color: #c2cfca; }
+  .row .vv { color: #6f8a82; font-size: 11px; }
+  .row .ico.gear {
+    display: flex; align-items: center; justify-content: center;
+    background: #101c18; border: 1px solid #27423a;
+    color: #8fb3a8; font-size: 11px;
+  }
+  .row.gear { background-image: linear-gradient(90deg, rgba(47,111,97,0.22), rgba(47,111,97,0.04)); }
+  .row .dur { font-style: normal; font-size: 9.5px; color: #6f8a82; margin-left: 5px; }
+
+  .row .badge {
+    font-size: 9px; padding: 1px 4px; letter-spacing: 1px;
+    background: #B5551F; color: #fff; border-radius: 2px;
+  }
+  .row .badge.ser { background: #7A5C10; }
+
+  /* 未搜索：压暗剪影，不透露稀有度与价值 */
+  .row.unknown { border-left: 3px solid #26382f; background: #0c1512; }
+  .row .ico.phq {
+    display: flex; align-items: center; justify-content: center;
+    background: #0a1310; border: 1px dashed #2a443b;
+    color: #5b8074; font-size: 14px; font-family: Consolas, monospace;
+    filter: none; opacity: 1;
+  }
+  .row.unknown .ico { filter: grayscale(1) brightness(0.5); opacity: 0.7; }
+  .row.unknown .nm { color: #62786f; letter-spacing: 1px; }
+  .row.unknown .vv { color: #3b544c; }
+  .row.unknown:hover { background: #12201b; border-color: #24463d; }
+
+  /* 搜索进度条 */
+  .row .prog {
+    flex: 1; height: 4px; border-radius: 2px;
+    background: #1b2b26; overflow: hidden;
+  }
+  .row .prog i {
+    display: block; height: 100%; width: 0%;
+    background: linear-gradient(90deg, #1c6f60, #3fbf9b);
+  }
+
+  /* 装备槽：和物品格同一种方格，名字在格子上面。
+     一行 6 格（主1 主2 副手 头盔 护甲 背包），整条 38px 高，
+     比原来的两行文字槽省 39px，背包就不爆了。 */
+  .eqbar { display: grid; gap: 3px; margin-bottom: 4px; }
+  .eqbar.w6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .eqbar.w3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .eqs {
+    position: relative; min-width: 0; box-sizing: border-box;
+    background: #0c1512; border: 1px solid #1a2a25;
+    padding: 0 1px 1px; cursor: pointer;
+  }
+  .eqs.on { border-color: #2f6f61; background-color: #10211c; }
+  .eqs.empty { opacity: 0.42; cursor: default; }
+  .eqs:hover { border-color: #2a443d; }
+  /* Chrome 中文最小 12px：字号写 9px 也按 12px 渲染，所以行高给足 12px 不被裁 */
+  .eqs .lbl {
+    display: block; height: 12px; line-height: 12px; font-size: 9px;
+    color: #6f8a82; text-align: center;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .eqs .ic {
+    height: 24px; display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: #33544b; letter-spacing: 0.5px;
+  }
+  .eqs .ic img { width: 24px; height: 24px; display: block; image-rendering: pixelated; }
+  .eqs .tag {
+    position: absolute; right: 1px; bottom: 0;
+    font-size: 8px; line-height: 11px; padding: 0 1px;
+    color: #7f9c93; background: rgba(6, 12, 10, 0.78);
+    font-family: Consolas, monospace;
+  }
+  .eqs .tag.worn { color: #b5883a; }
+  .eqs .tag.broken { color: #8d3a3a; }
+  /* 身上已有同类：点这一格是放进背包 */
+  .eqs .carry {
+    position: absolute; right: 1px; top: 0;
+    font-size: 8px; line-height: 11px; padding: 0 1px;
+    color: #7fae9f; background: rgba(6, 12, 10, 0.78);
+  }
+
+  /* 尸体身上的装备区：和背包同款方格，一行 3 格 */
+  #lootGear { margin-bottom: 8px; }
+  #lootGear .eqs { background: #101a17; border-color: #27423a; }
+  #lootGear .eqs:hover { border-color: #2f6f61; }
+  #lootGear .eqs.empty { border-style: dashed; opacity: 0.3; }
+  .loot-tip {
+    font-size: 9px; color: #47645c; margin: -4px 0 8px; letter-spacing: 0.5px;
+  }
+
+  /* 稀有度颜色：左边框 + 底色。底色用 background-image 叠在背景色上，
+     这样 :hover 改 background-color 时不会把底色覆盖掉。 */
+  .r1 { border-left: 3px solid #55605c; }
+  .r2 { border-left: 3px solid #3f8b78; }
+  .r3 { border-left: 3px solid #3f6d9b; }
+  .r4 { border-left: 3px solid #a8862a; }
+  .r5 { border-left: 3px solid #8d3a3a; }
+
+  .row.r1 { background-image: linear-gradient(90deg, rgba(85,96,92,0.34), rgba(85,96,92,0.05)); }
+  .row.r2 { background-image: linear-gradient(90deg, rgba(63,139,120,0.34), rgba(63,139,120,0.05)); }
+  .row.r3 { background-image: linear-gradient(90deg, rgba(63,109,155,0.38), rgba(63,109,155,0.06)); }
+  .row.r4 { background-image: linear-gradient(90deg, rgba(168,134,42,0.40), rgba(168,134,42,0.07)); }
+  .row.r5 { background-image: linear-gradient(90deg, rgba(141,58,58,0.44), rgba(141,58,58,0.08)); }
+
+  .cell.r1 { background-image: linear-gradient(160deg, rgba(85,96,92,0.30), rgba(85,96,92,0.05)); }
+  .cell.r2 { background-image: linear-gradient(160deg, rgba(63,139,120,0.30), rgba(63,139,120,0.05)); }
+  .cell.r3 { background-image: linear-gradient(160deg, rgba(63,109,155,0.32), rgba(63,109,155,0.05)); }
+  .cell.r4 { background-image: linear-gradient(160deg, rgba(168,134,42,0.34), rgba(168,134,42,0.06)); }
+  .cell.r5 { background-image: linear-gradient(160deg, rgba(141,58,58,0.38), rgba(141,58,58,0.07)); }
+
+  /* 搜刮时：背包在左、容器在右，两边同时开着。
+     720 的逻辑宽度装不下两个大面板，所以背包压到 300，中间和上下还看得见场内。 */
+  #bagBox {
+    left: 14px; top: 70px;            /* 让开左上角的血量/负重 HUD */
+    width: 388px; display: none;
+    padding: 8px 14px;
+    max-height: calc(100% - 78px);    /* 背包够高，会盖住左下弹药 HUD —— 但装备栏里已经显示了弹药 */
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  #bagBox::-webkit-scrollbar { width: 6px; }
+  #bagBox::-webkit-scrollbar-thumb { background: #1e312b; }
+  #bagBox.open { display: block; }
+  .grid24 {
+    display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px;
+    margin-bottom: 10px;
+  }
+  .cell {
+    position: relative; box-sizing: border-box;
+    height: 42px; background: #0d1512; border: 1px solid #1a2a25;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; font-size: 9.5px; color: #647a73;
+    text-align: center; padding: 2px; overflow: hidden; cursor: pointer;
+    line-height: 1.2;
+  }
+  .cell:hover { border-color: #2a443d; }
+  .cell .ico-bag {
+    width: 22px; height: 22px; display: block;
+    image-rendering: pixelated; margin-bottom: 1px;
+    border: 1px solid transparent; border-radius: 2px;
+  }
+  /* 装备图标还没画出来时，用首字当占位 */
+  .cell .ico-bag.gl {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: #7f9c93; background: #101c18;
+    border-color: #27423a; line-height: 1;
+  }
+  /* 背包里的装备：左上角一个小角，说明点一下是穿上 */
+  .cell.eq { box-shadow: inset 0 0 0 1px rgba(95,127,155,0.45); }
+  /* Chrome 对中文有 12px 的最小字号，写 7px 也会按 12px 渲染，
+     所以这里给的是一整行 12px 的高度，让它不被格子裁掉。 */
+  .cell .cn {
+    width: 100%; height: 12px; font-size: 9px; line-height: 12px;
+    color: #8ba39b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  /* 堆叠数量放右下角，避免和名称挤在一行 */
+  .cell .qty {
+    position: absolute; right: 1px; top: 1px;
+    font-size: 9px; line-height: 12px; padding: 0 2px;
+    color: #d8bf86; background: rgba(6,12,10,0.72);
+    font-family: Consolas, monospace;
+  }
+  .cell .ico-safe {
+    width: 26px; height: 26px; image-rendering: pixelated;
+    border: 1px solid transparent; border-radius: 2px;
+  }
+  #safeGrid .cell { height: 38px; }
+  .cell.empty { color: #233a34; }
+  .cell.safe { border-color: #2f5a4f; background: #0b1714; }
+  .bar {
+    height: 5px; background: #14201c; margin: 3px 0 10px;
+  }
+  .bar > i { display: block; height: 100%; background: #14685C; }
+  .bar.warn > i { background: #B5551F; }
+
+  .stat { display: flex; justify-content: space-between; font-size: 11.5px; color: #7a918a; margin-bottom: 5px; }
+  .stat b { color: #b9cac4; font-weight: 500; }
+
+  /* ---- 结算 ---- */
+  .settle-row {
+    display: flex; justify-content: space-between;
+    font-size: 12.5px; padding: 5px 0; color: #93aaa3;
+    border-bottom: 1px solid #14201c;
+  }
+  .settle-row b { color: #cfd8d4; font-weight: 500; }
+  .newtag { color: #B5551F; font-size: 10px; letter-spacing: 1px; margin-left: 6px; }
+  .big { font-size: 22px; color: #dbe5e1; letter-spacing: 2px; margin: 0 0 6px; }
+  .dim { color: #5f7770; }
+  .hide { display: none !important; }
+
+/* ===== 藏身处 ===== */
+.base {
+  width: min(1180px, 94vw);
+  height: min(780px, 90vh);
+  background: #0d1411;
+  border: 1px solid #1e312b;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.7);
+}
+.base-hd {
+  flex: 0 0 auto;
+  padding: 16px 24px 14px;
+  border-bottom: 1px solid #1a2a25;
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.base-hd h1 { font-size: 21px; letter-spacing: 6px; margin: 0; color: #dbe5e1; font-weight: 600; }
+.hd-vals { display: flex; }
+.wal { text-align: right; margin-left: 30px; }
+.wal span { display: block; font-size: 10px; color: #4d6b62; letter-spacing: 1px; margin-bottom: 2px; }
+.wal b { font-size: 16px; color: #cfe0d9; font-weight: 600; font-family: Consolas, monospace; letter-spacing: 0; }
+
+.base-main { flex: 1; display: flex; min-height: 0; }
+
+/* 左：装备与携带 */
+.base-left {
+  flex: 0 0 302px;
+  border-right: 1px solid #1a2a25;
+  padding: 16px 20px 18px;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.base-left::-webkit-scrollbar { width: 7px; }
+.base-left::-webkit-scrollbar-thumb { background: #1e312b; }
+.base-left h3 {
+  font-size: 11px; letter-spacing: 2px; color: #6fa093;
+  margin: 0 0 10px; font-weight: 600;
+}
+.slot {
+  display: flex; gap: 11px; align-items: center;
+  padding: 8px 10px; margin-bottom: 6px;
+  background: #101a17; border: 1px solid #1a2a25;
+  border-left: 2px solid #2f5a4f;
+}
+.slot.empty { border-left-color: #26382f; opacity: 0.55; }
+.slot { cursor: pointer; }
+.slot:hover { border-color: #2f5a4f; background: #14201c; }
+.slot.open { border-color: #2f5a4f; background: #14201c; opacity: 1; }
+.slot .price { color: #b09a62; }
+.slot-ico {
+  flex: 0 0 36px; width: 36px; height: 36px;
+  background: #0b1411; border: 1px dashed #2d4a41; border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: #3f6259;
+}
+.slot-txt { min-width: 0; }
+.slot-ico img { width: 34px; height: 34px; object-fit: contain; image-rendering: pixelated; display: block; }
+.slot-txt b { display: block; font-size: 12.5px; color: #cfdcd7; font-weight: 500; margin-bottom: 2px; }
+.slot-txt span { font-size: 10.5px; color: #5f7a72; }
+
+.carry-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 0; border-bottom: 1px solid #13201c;
+}
+.carry-row .cn { flex: 1; font-size: 12px; color: #a8bdb5; }
+.carry-row .cn i { font-style: normal; color: #47645c; font-size: 10.5px; margin-left: 5px; }
+.stepper { display: flex; align-items: center; }
+.stepper button {
+  width: 22px; height: 22px; margin: 0; padding: 0;
+  background: #16241f; border: 1px solid #26403a; color: #8ba39b;
+  font-size: 13px; line-height: 1; letter-spacing: 0;
+  cursor: pointer; border-radius: 2px;
+}
+.stepper button:hover { background: #20342c; color: #cfdcd7; }
+.stepper b {
+  width: 40px; text-align: center; font-size: 12.5px;
+  color: #cfdcd7; font-family: Consolas, monospace; font-weight: 500;
+  letter-spacing: 0;
+}
+.carry-sum {
+  display: flex; justify-content: space-between;
+  font-size: 11.5px; color: #6d8780; padding: 10px 0 0;
+}
+.carry-sum b { color: #b09a62; font-family: Consolas, monospace; font-weight: 500; }
+
+#btnDeploy {
+  margin: auto 0 0; padding: 12px 0; width: 100%;
+  font-size: 13px; letter-spacing: 4px;
+  background: #14685C; color: #eaf4f0;
+}
+#btnDeploy:hover { background: #1a8577; }
+#btnDeploy:disabled { background: #1c2b26; color: #42625a; cursor: not-allowed; }
+.deploy-hint {
+  font-size: 10.5px; line-height: 1.7; color: #47645c;
+  margin-top: 8px; text-align: center; min-height: 18px;
+}
+.deploy-hint.bad { color: #b5551f; }
+
+/* 右：仓库 */
+.base-right { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.store-hd {
+  flex: 0 0 auto;
+  padding: 14px 20px 0;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.store-hd h3 {
+  font-size: 11px; letter-spacing: 2px; color: #6fa093;
+  margin: 0; font-weight: 600;
+}
+.store-hd h3 em {
+  font-style: normal; color: #47645c; font-size: 10.5px;
+  letter-spacing: 0; margin-left: 8px;
+}
+.store-acts button.mini {
+  margin: 0; padding: 4px 11px; font-size: 10.5px; letter-spacing: 1px;
+  background: transparent; color: #6fa093; border: 1px solid #26403a;
+  border-radius: 2px;
+}
+.store-acts button.mini:hover { background: #16241f; color: #a8c4ba; }
+
+.store-filter { flex: 0 0 auto; padding: 10px 20px 8px; display: flex; }
+.pill {
+  margin: 0 6px 0 0; padding: 4px 12px; font-size: 10.5px; letter-spacing: 1px;
+  background: transparent; color: #5f7a72; border: 1px solid #1e312b;
+  border-radius: 11px; cursor: pointer;
+}
+.pill:hover { border-color: #2a443d; color: #8ba39b; }
+.pill.on { background: #14685C; color: #eaf4f0; border-color: #14685C; }
+
+.stash-list { flex: 1; overflow-y: auto; padding: 0 20px 10px; }
+.stash-list::-webkit-scrollbar { width: 7px; }
+.stash-list::-webkit-scrollbar-thumb { background: #1e312b; }
+
+.srow {
+  display: flex; align-items: center; gap: 10px;
+  padding: 5px 10px; margin-bottom: 3px;
+  background: #101a17; border: 1px solid #1a2a25;
+  border-left: 3px solid #55605c;
+}
+.srow .ic { flex: 0 0 40px; width: 40px; height: 40px; display: block; border: 1px solid transparent; border-radius: 2px; image-rendering: pixelated; }
+.srow .ic.gl {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: #7f9c93; background: #101c18; border-color: #27423a; line-height: 1;
+}
+.srow .nm { flex: 1; min-width: 0; }
+.srow .nm b { display: block; font-size: 12.5px; color: #cfdcd7; font-weight: 500; }
+.srow .nm span { font-size: 10.5px; color: #5f7a72; }
+.srow .qty { width: 44px; text-align: right; font-size: 11.5px; color: #7d948c; font-family: Consolas, monospace; }
+.srow .pr { width: 72px; text-align: right; font-size: 12px; color: #b09a62; font-family: Consolas, monospace; }
+.srow .sell {
+  margin: 0; padding: 4px 12px; font-size: 10.5px; letter-spacing: 1px;
+  background: transparent; color: #6fa093; border: 1px solid #26403a;
+  border-radius: 2px;
+}
+.srow .sell:hover { background: #16241f; color: #a8c4ba; border-color: #2f5a4f; }
+
+.empty-note {
+  text-align: center; color: #3f5a52; font-size: 12px;
+  padding: 60px 20px; line-height: 2;
+}
+.store-ft {
+  flex: 0 0 auto;
+  padding: 10px 20px;
+  border-top: 1px solid #1a2a25;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: #6d8780;
+}
+.store-ft b { color: #b09a62; font-family: Consolas, monospace; font-weight: 500; }
+
+/* 仓库 / 商人 两个页签共用一块地方 */
+.tabpane { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.tabs { display: flex; margin-right: 10px; }
+.shop-note {
+  flex: 0 0 auto; margin: 10px 20px 0; padding: 7px 10px;
+  font-size: 11px; line-height: 1.6; color: #6d8780;
+  background: #101a17; border-left: 2px solid #2f5a4f;
+}
+.shop-note b { color: #b09a62; font-weight: 500; }
+.shop-cat {
+  padding: 8px 0 3px; font-size: 10.5px; letter-spacing: 2px; color: #6fa093;
+}
+.shop-cat:first-child { padding-top: 0; }
+.srow .buy {
+  flex: 0 0 auto; margin: 0; padding: 4px 12px; font-size: 10.5px; letter-spacing: 1px;
+  background: transparent; color: #7fb0a3; border: 1px solid #26403a; border-radius: 2px;
+  cursor: pointer;
+}
+.srow .buy:hover { background: #16241f; border-color: #2f5a4f; }
+.srow .buy.no { color: #5a4343; border-color: #3a2626; cursor: default; }
+.srow .buy.no:hover { background: transparent; border-color: #3a2626; }
+
+/* 装备槽点开后的悬浮窗：定位在槽位右侧，顶边对齐槽位，向下展开 */
+.picker {
+  position: fixed; z-index: 60; box-sizing: border-box;
+  border: 1px solid #2f5a4f; background: #0d1714;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.72);
+  overflow-y: auto;
+}
+.picker::-webkit-scrollbar { width: 7px; }
+.picker::-webkit-scrollbar-thumb { background: #1e312b; }
+.picker-hd {
+  position: sticky; top: 0; z-index: 1;
+  padding: 6px 9px; background: #121e1a; border-bottom: 1px solid #1a2a25;
+  display: flex; justify-content: space-between;
+  font-size: 10.5px; letter-spacing: 1px; color: #6fa093;
+}
+.picker-hd span:last-child { color: #47645c; letter-spacing: 0; }
+.prow {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 9px; border-bottom: 1px solid #13201c; cursor: pointer;
+}
+.prow:hover { background: #14201c; }
+.prow .ic {
+  flex: 0 0 30px; width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  background: #0b1411; border: 1px dashed #2d4a41; border-radius: 2px;
+}
+.prow .ic img { width: 28px; height: 28px; object-fit: contain; image-rendering: pixelated; }
+.prow .ic.gl { font-size: 10px; color: #7f9c93; }
+.prow .nm { flex: 1; min-width: 0; font-size: 11.5px; color: #cfdcd7; }
+.prow .nm i { display: block; font-style: normal; font-size: 10px; color: #5f7a72; margin-top: 1px; }
+.prow .nm i .worn { color: #b5883a; }
+.prow .nm i .broken { color: #8d3a3a; }
+.prow.off .nm { color: #8ba39b; }
+.prow.cancel { justify-content: center; color: #5f7a72; font-size: 10.5px; letter-spacing: 1px; }
+.prow.cancel:hover { color: #8ba39b; }
+.picker-empty {
+  padding: 9px 10px; font-size: 11px; line-height: 1.7; color: #5f7a72;
+}
+.picker-empty b { color: #7fb0a3; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="frame">
+    <canvas id="game" width="720" height="480"></canvas>
+
+    <!-- 局内面板（不暂停游戏） -->
+    <div id="hudPanel">
+  <div class="box" id="lootBox" style="display:none">
+    <div class="ttl"><span id="lootTitle">容器</span><span id="lootHint">E 关闭</span></div>
+    <div class="eqbar w3" id="lootGear" style="display:none"></div>
+    <div class="loot-tip" id="lootGearTip" style="display:none">左键拾取 · 没有同类装备就直接穿上</div>
+    <div id="lootList"></div>
+  </div>
+
+  <div class="box" id="bagBox">
+    <div class="ttl" style="font-size:12px;letter-spacing:2px;color:#6fa093;margin-bottom:6px;display:flex;justify-content:space-between">
+      <span>背包</span><span style="color:#4d7d70">Tab 关闭 · 世界不会暂停</span>
+    </div>
+    <div class="eqbar w6" id="eqStrip"></div>
+    <div class="stat"><span>负重 <b id="bagWeight">0.0 / 45 kg</b></span><span>价值 <b id="bagValue">0</b></span></div>
+    <div class="bar" id="bagBar"><i style="width:0%"></i></div>
+    <div class="grid24" id="bagGrid"></div>
+    <div class="stat"><span style="color:#3f6d5f">安全箱（死亡不掉落 · 点击物品可移入）</span></div>
+    <div class="grid24" id="safeGrid" style="grid-template-columns:repeat(4,minmax(0,1fr));max-width:48%"></div>
+  </div>
+</div>
+  </div>
+</div>
+
+<!-- 局内面板（不暂停游戏） -->
+
+
+<!-- 开始界面 -->
+<div class="veil" id="startVeil">
+  <div class="card">
+    <div class="kicker">TIDELINE · PROTOTYPE</div>
+    <h1>潮汐线</h1>
+    <div class="sub">阶段一原型 · 2D 俯视 · 单人 PvE · 搜索 / 战斗 / 撤离 / 收藏</div>
+
+    <h2>操作</h2>
+    <div class="keys">
+      <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>移动</span></div>
+      <div><kbd>鼠标</kbd><span>瞄准</span></div>
+      <div><kbd>左键</kbd><span>射击</span></div>
+      <div><kbd>右键</kbd><span>闪避（有冷却）</span></div>
+      <div><kbd>Shift</kbd><span>潜行（噪声最小）</span></div>
+      <div><kbd>空格</kbd><span>冲刺（噪声最大）</span></div>
+      <div><kbd>E</kbd><span>搜刮 / 开门 / 撤离 / 搜尸体</span></div>
+      <div><kbd>Q</kbd><span>投掷石子诱敌</span></div>
+      <div><kbd>R</kbd><span>换弹</span></div>
+      <div><kbd>Tab</kbd><span>背包</span></div>
+    </div>
+
+    <h2>这一版要试什么</h2>
+    <div class="keys" style="grid-template-columns:1fr">
+      <div><span style="color:#8ba39b;line-height:1.95">地图分三层：左上是外围（开阔、敌人少）、中部是公寓楼（房间多、有回响体）、右下低洼区是核心（只在退潮时可进、有守卫）。<br>
+      容器分三档：小抽屉开了就走、柜子要一秒、保险箱要五秒且完全不能动。<br>
+      门可以关，关上之后敌人进不来——那是你的避难间。<br>
+      声音不只是暴露你：按 Q 扔石子能把敌人引到别处，也能把回响体引到拾荒者身上。<br>
+      潮汐在十二分钟里走完退潮、平潮、涨潮，水面会淹没低洼区。</span></div>
+    </div>
+
+    <div class="tip">
+      <b>先试这一件事：</b>找一间有敌人的屋子，先试着用石子把敌人引开而不是开枪。如果这样玩得通，这一版的战斗设计就成立了。
+    </div>
+
+    <button id="btnStart">进 入 藏 身 处</button>
+    <span class="dim" style="font-size:11.5px;margin-left:16px">进度自动存在浏览器本地</span>
+  </div>
+</div>
+
+
+<!-- 藏身处 -->
+<div class="veil hidden" id="baseVeil">
+  <div class="base">
+    <div class="base-hd">
+      <div>
+        <div class="kicker">SAFEHOUSE</div>
+        <h1>藏身处</h1>
+      </div>
+      <div class="hd-vals">
+        <div class="wal"><span>信用点</span><b id="bCredits">0</b></div>
+        <div class="wal"><span>下水次数</span><b id="bRuns">0</b></div>
+        <div class="wal"><span>图鉴</span><b id="bCodex">0 / 32</b></div>
+      </div>
+    </div>
+
+    <div class="base-main">
+      <div class="base-left">
+        <h3>装备</h3>
+        <div id="baseGear"></div>
+
+        <h3 style="margin-top:20px">携带</h3>
+        <div id="carryList"></div>
+        <div class="carry-sum"><span>补给花费</span><b id="carryCost">¥0</b></div>
+
+        <button id="btnDeploy">进 入 围 栏 区</button>
+        <div class="deploy-hint" id="deployHint"></div>
+      </div>
+
+      <div class="base-right">
+        <div class="store-hd">
+          <h3><span id="storeTitle">仓库</span><em id="stashCount">0 种</em></h3>
+          <div class="store-acts">
+            <div class="tabs" id="baseTabs"></div>
+            <button class="mini" id="btnSellJunk">卖掉所有寻常物</button>
+          </div>
+        </div>
+
+        <div class="tabpane" id="tabStash">
+          <div class="store-filter" id="stashFilter"></div>
+          <div class="stash-list" id="stashList"></div>
+          <div class="store-ft">
+            <span>库存总价值 <b id="stashValue">¥0</b></span>
+            <span>卖出不影响图鉴记录</span>
+          </div>
+        </div>
+
+        <div class="tabpane" id="tabShop" style="display:none">
+          <div class="shop-note">
+            护甲商人只进<b>崭新</b>的一~三级货 —— 更高级的东西他也弄不到，那得你自己下去找。
+          </div>
+          <div class="stash-list" id="shopList"></div>
+          <div class="store-ft">
+            <span>买下的东西直接进仓库，回到左边装备槽里换上</span>
+            <span>信用点 <b id="shopWallet">¥0</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 结算界面 -->
+<div class="veil hidden" id="endVeil">
+  <div class="card" id="endCard"></div>
+</div>
+
+<!-- 装备选择悬浮窗：贴着被点的那个槽位右侧展开，不占页面空间 -->
+<div class="picker" id="gearPicker" style="display:none"></div>
+
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

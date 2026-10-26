@@ -1,0 +1,50 @@
+{
+  "generator": "Built-in image_gen, one image per container",
+  "specification": "ART_STYLE.md",
+  "assets": [
+    {
+      "id": "crate_tool",
+      "name": "工具箱",
+      "subject": "低矮的锈红金属工具抽屉箱，横向宽顶面占主要部分，下面短立面上两层抽屉和银色拉手，角落黄铜扣与少许磨损，顶面和短侧壁都清晰可见。一格体积，比例同参考矮柜，绝对不要画正面立式大图。",
+      "source": "exec-7c488b73-3eb5-4834-abcc-15d96bec21aa.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 低矮的锈红金属工具抽屉箱，横向宽顶面占主要部分，下面短立面上两层抽屉和银色拉手，角落黄铜扣与少许磨损，顶面和短侧壁都清晰可见。一格体积，比例同参考矮柜，绝对不要画正面立式大图。 Reference image 1 defines the shared camera and lighting; reference image 2 defines the maximum footprint and consistent physical scale. Keep camera overhead, top plane dominant, only a short visible front face. Output ONE isolated sprite.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/crate_std.png"
+      ]
+    },
+    {
+      "id": "crate_med",
+      "name": "医疗柜",
+      "subject": "一格体积的灰白与暗绿色金属医疗物资柜，顶面占大半，短而可见的前门上一个简单绿色加号、黑色短拉手和密封边，左上光、短侧壁，顶面亮门面暗，比例同参考储物柜，75度高角度俯视。",
+      "source": "exec-7ff2943a-d951-4358-b07a-7724beb05144.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一格体积的灰白与暗绿色金属医疗物资柜，顶面占大半，短而可见的前门上一个简单绿色加号、黑色短拉手和密封边，左上光、短侧壁，顶面亮门面暗，比例同参考储物柜，75度高角度俯视。 Reference image 1 defines the shared camera and lighting; reference image 2 defines the maximum footprint and consistent physical scale. Keep camera overhead, top plane dominant, only a short visible front face. Output ONE isolated sprite.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/crate_std.png"
+      ]
+    },
+    {
+      "id": "crate_elec",
+      "name": "电子设备柜",
+      "subject": "一格体积的蓝灰色电子设备储物机柜，较大顶面有两条散热缝，短前面板有微小暗青指示灯、插口与锁扣，少许外露线束盘绕在侧面，厚度清晰。顶面为主，不画整面正面服务器照片。",
+      "source": "exec-b5d27d80-c2c7-4c6d-810f-c903b08c0625.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一格体积的蓝灰色电子设备储物机柜，较大顶面有两条散热缝，短前面板有微小暗青指示灯、插口与锁扣，少许外露线束盘绕在侧面，厚度清晰。顶面为主，不画整面正面服务器照片。 Reference image 1 defines the shared camera and lighting; reference image 2 defines the maximum footprint and consistent physical scale. Keep camera overhead, top plane dominant, only a short visible front face. Output ONE isolated sprite.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/crate_std.png"
+      ]
+    },
+    {
+      "id": "crate_supply",
+      "name": "防水补给箱",
+      "subject": "一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。",
+      "source": "exec-16cbe253-8949-4381-a0d6-6a652f784086.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。 Reference image 1 defines the shared camera and lighting; reference image 2 defines the maximum footprint and consistent physical scale. Keep camera overhead, top plane dominant, only a short visible front face. Output ONE isolated sprite.",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/crate_std.png"
+      ]
+    }
+  ]
+}
