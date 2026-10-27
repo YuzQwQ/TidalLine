@@ -1,5 +1,9 @@
 # 物品贴图
 
+新增医疗收集品10件（med06–med15）：原稿在 `assets/item-art/medical-collectibles/sources/`，完整提示词见 `assets/medical-collectibles-generation.json`，审核页为 [医疗收集品图标总览](../item-art/medical-collectibles/index.html)。运行 `node tools/prepare-medical-collectibles-art.js` 整理为48×48透明像素图，再生成Wiki并重新构建离线版。这批图标用于科室器材与科研标本，与heal01–heal18治疗用品分别存档。
+
+新增电子产品9件（elec07–elec15）：原稿在 `assets/item-art/electronics/sources/`，完整实际提示词与生成来源见 `assets/electronics-generation.json`，审核页为 [电子产品图标总览](../item-art/electronics/index.html)。运行 `node tools/prepare-electronics-art.js` 通过现有素材整理流程生成48×48、16色以内、4px透明边的图标；随后生成Wiki并重新构建离线版。
+
 医疗品18件图标已全部完成，统一48×48透明像素图，文件为heal01.png至heal18.png；绷带已按新描述重绘。旧med01.png保留作为历史素材，运行时已使用heal01.png。其他物品贴图状态以Wiki清单为准。
 
 - 规格：48 × 48 像素，PNG，透明背景

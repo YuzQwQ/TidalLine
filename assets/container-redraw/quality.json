@@ -1,0 +1,257 @@
+[
+  {
+    "id": "crate_wastepaper",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      21,
+      27
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_cardboard",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      28,
+      23
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_bedside",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      20,
+      26
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_staff",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      25,
+      19
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_luggage",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      27,
+      19
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_filing",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      24,
+      25
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_emergency",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      28,
+      16
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_comms",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      26,
+      21
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_jewelry",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      22,
+      19
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_sealed",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      28,
+      20
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_satchel",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      26,
+      21
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_workwear",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      28,
+      22
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_schoolbag",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      24,
+      21
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_rescuevest",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      26,
+      24
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_leatherbag",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      28,
+      15
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_diplomatic",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      27,
+      20
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "crate_trash",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      23,
+      27
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  }
+]

@@ -5,7 +5,7 @@ const c=new Function('require','__dirname',harness+'\nreturn ctx;')(require,root
 const {Game,Save,Base,ITEMS,GEAR,EQUIP,WEAPONS,SUPPLY}=c;
 const {Medical,formatMoney}=vm.runInContext('({Medical,formatMoney})',c);Game.init();
 const medical=[2000,5000,12000,35000,95000,2500,6000,18000,3000,6000,40000,110000,25000,65000,180000,7000,55000,150000];
-assert.equal(ITEMS.length,77);
+assert.equal(ITEMS.length,108);
 for(const item of ITEMS){
  const row=spec.items.find(i=>i.id===item.id);assert(row);assert.equal(item.price,row.price);
  const {price,...rest}=JSON.parse(JSON.stringify(item));assert.deepEqual(rest,row.nonPrice,item.id+'价格之外字段变化');
@@ -42,4 +42,4 @@ Save.credits=19999;assert.equal(Base.computeCost(),0);Save.credits=20000;assert.
 Save.credits=100000;Base.buyArmor('helmet',2);assert.equal(Save.credits,94000);assert.equal(Save.stash[0].gear.price,6000);
 Base.sell(Save.stash[0],1);assert.equal(Save.credits,97000);
 Base.buyMedical('heal01');assert.equal(Save.credits,95000);assert.equal(Save.stashCount('heal01'),1);
-console.log('OK: 58件收集品价格带 / 18件指定医疗价 / 12件防具与4枪 / 属性与稀有度不变 / 医生报价 / 新档6万与救济2万 / 补给倍率 / 旧余额保留 / 旧装备按新价估值且耐久余弹保留 / 实际买卖');
+console.log('OK: 89件收集品价格带 / 18件指定医疗价 / 12件防具与4枪 / 属性与稀有度不变 / 医生报价 / 新档6万与救济2万 / 补给倍率 / 旧余额保留 / 旧装备按新价估值且耐久余弹保留 / 实际买卖');

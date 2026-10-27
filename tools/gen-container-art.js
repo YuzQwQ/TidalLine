@@ -1,7 +1,8 @@
 /* 容器贴图生成器
    32×32 像素风，与既有 crate_* 一致：亮顶面 + 暗南立面 + 深色描边 + 斑驳噪点。
    纯 node 手写 PNG（项目里没有 sharp / PIL）。
-   用法：node tools/gen-container-art.js [名字...]   不传名字则全部重画。 */
+   旧版程序化画法仅作存档。已有 image_gen 新图默认跳过，--legacy 可明确覆盖。
+   用法：node tools/gen-container-art.js [名字...] [--legacy] */
 const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
@@ -555,9 +556,13 @@ const DRAW = {
 };
 
 const outDir = path.join(__dirname, '..', 'assets', 'props');
-const wanted = process.argv.slice(2);
+const forceLegacy = process.argv.includes('--legacy');
+const redrawManifest = path.join(__dirname, '../assets/container-redraw/manifest.json');
+const protectedArt = new Set(fs.existsSync(redrawManifest) ? JSON.parse(fs.readFileSync(redrawManifest, 'utf8')).assets.filter(a => a.status === 'ready').map(a => a.id) : []);
+const wanted = process.argv.slice(2).filter(a => a !== '--legacy');
 const names = wanted.length ? wanted : Object.keys(DRAW);
 for (const name of names) {
+  if (!forceLegacy && protectedArt.has(name)) { console.log('保留新版 image_gen 贴图', name); continue; }
   const fn = DRAW[name];
   if (!fn) { console.error('未知容器贴图：' + name); process.exitCode = 1; continue; }
   const cv = fn();

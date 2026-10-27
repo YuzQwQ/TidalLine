@@ -1,0 +1,241 @@
+{
+  "generator": "Built-in image_gen; one transparent image per collectible",
+  "delivery": "48x48 transparent PNG; <=16 palette entries; 4px clear margins; upper-left light and 3/4 inventory display view",
+  "stylePrompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet. ",
+  "references": [
+    "D:/develop/project/tide/assets/items/heal05.png",
+    "D:/develop/project/tide/assets/items/elec13.png"
+  ],
+  "items": [
+    {
+      "id": "med06",
+      "name": "组织切片标本盒",
+      "cat": "med",
+      "r": 4,
+      "visual": "深棕木质标本盒半开，内部排列透明玻璃载片，部分带紫色染色区与白色编号标签，盒盖内侧有小型分类表",
+      "original": {
+        "id": "med06",
+        "name": "组织切片标本盒",
+        "short": "切片盒",
+        "cat": "med",
+        "r": 4,
+        "w": 0.6,
+        "price": 42000,
+        "desc": "十二张玻璃载片，一张不少。盒盖内侧贴着病理研究项目的原始分类表，切片顺序与实验室留存的图谱完全一致。\n\n右下角那格空着，旁边写了个很小的「借出」，又被划掉了。"
+      },
+      "status": "generated",
+      "source": "med06.png",
+      "paletteColours": 16,
+      "output": "assets/items/med06.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: An OPEN shallow DARK BROWN WOODEN HISTOLOGY SLIDE SPECIMEN BOX, hinged lid raised just enough to show a small pale classification chart pasted inside. Twelve CLEAR GLASS microscope slides arranged neatly in individual slots, each with tiny WHITE NUMBER LABEL and a SMALL PURPLE STAINED TISSUE patch. Wood and glass are the visual focus; distinguish from metal electronics. No microscope, organs, blood or loose scattered slides. Source visual brief: 深棕木质标本盒半开，内部排列透明玻璃载片，部分带紫色染色区与白色编号标签，盒盖内侧有小型分类表",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-c2fc312f-a585-4ced-87be-10c33d6b25e6.png"
+    },
+    {
+      "id": "med07",
+      "name": "多参数生命监护仪",
+      "cat": "med",
+      "r": 4,
+      "visual": "米白医疗监护仪，正面黑色显示屏上显示绿色心电波形与数字读数，右侧一列灰蓝色按键，侧边垂下导联线",
+      "original": {
+        "id": "med07",
+        "name": "多参数生命监护仪",
+        "short": "监护仪",
+        "cat": "med",
+        "r": 4,
+        "w": 3.4,
+        "price": 76000,
+        "desc": "赫尔维恩的床旁监护设备，能够同时显示心电、血氧、脉搏和血压。\n\n外壳已经发黄，导联线却是后换的，颜色新得扎眼。设备科在保养记录里写过一句：\n\n「报警太频繁，不一定是机器的问题。」"
+      },
+      "status": "generated",
+      "source": "med07.png",
+      "paletteColours": 16,
+      "output": "assets/items/med07.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: A YELLOWED IVORY bedside MULTIPARAMETER PATIENT MONITOR, dominant LARGE BLACK rectangular DISPLAY containing a clearly readable GREEN ECG ZIGZAG LINE and sparse small numerical readings, one vertical column of GREY-BLUE buttons on the RIGHT, a short bundle of newer colored ECG lead cables draping close to the LEFT SIDE. Broad screen silhouette, modest upper handle, restrained plastic scuffs. 1980s-1990s medical technology, not touchscreen, no patient or hospital scene. Source visual brief: 米白医疗监护仪，正面黑色显示屏上显示绿色心电波形与数字读数，右侧一列灰蓝色按键，侧边垂下导联线",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-eb1cca17-421e-471e-a5d3-a2bf1c781702.png"
+    },
+    {
+      "id": "med08",
+      "name": "精密显微镜物镜组",
+      "cat": "med",
+      "r": 4,
+      "visual": "黑色硬质收纳盒内排列四枚银黑双色金属物镜，镜筒长度不同，带彩色倍率环与细密刻字",
+      "original": {
+        "id": "med08",
+        "name": "精密显微镜物镜组",
+        "short": "物镜组",
+        "cat": "med",
+        "r": 4,
+        "w": 0.8,
+        "price": 88000,
+        "desc": "四枚由专业光学工坊制造的高倍显微镜物镜，分别采用不同的光学结构和校正方式。\n\n最高倍率的一枚为油浸物镜，前端镜片经过特殊镀膜处理。四枚物镜均保留原厂编号，金属镜筒上的倍率刻字清晰可辨。\n\n防潮盒内衬已经发黄，镜片倒是干净得很。"
+      },
+      "status": "generated",
+      "source": "med08.png",
+      "paletteColours": 16,
+      "output": "assets/items/med08.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: An OPEN BLACK HARD optical storage case with aged PALE CREAM protective lining, holding EXACTLY FOUR SILVER-AND-BLACK MICROSCOPE OBJECTIVE LENSES upright in a row. Four short metal cylinders of distinctly different lengths, knurled focus barrels, tiny colored magnification bands (red, yellow, blue, white), dark clean glass apertures. Lenses, not a complete microscope. No extra tools, loose lens cloths or duplicates. Source visual brief: 黑色硬质收纳盒内排列四枚银黑双色金属物镜，镜筒长度不同，带彩色倍率环与细密刻字",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-d8961ea8-fb4e-449f-8fb5-0858d92b4278.png"
+    },
+    {
+      "id": "med09",
+      "name": "人工心脏瓣膜",
+      "cat": "med",
+      "r": 5,
+      "visual": "深蓝无菌器械盒，内放银黑环形机械瓣膜，中央两片深色瓣叶，外围缝合环，白色保护泡棉",
+      "original": {
+        "id": "med09",
+        "name": "人工心脏瓣膜",
+        "short": "瓣膜",
+        "cat": "med",
+        "r": 5,
+        "w": 0.15,
+        "price": 175000,
+        "desc": "独立无菌包装，批号、规格、植入方向标识都还清楚。\n\n医用热解碳制成的两片瓣叶在透明保护壳中闭合，薄得像两片削过的黑色指甲。外周缝合环完整，尚未留下使用痕迹。\n\n赫尔维恩将这类植入器械的质检记录单独归档，不与普通耗材混放。"
+      },
+      "status": "generated",
+      "source": "med09.png",
+      "paletteColours": 16,
+      "output": "assets/items/med09.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: A SINGLE unused BILEAFLET MECHANICAL HEART VALVE displayed in an OPEN DEEP NAVY sterile instrument box with WHITE PROTECTIVE FOAM. Compact SILVER circular ring around TWO thin DARK CHARCOAL semicircular CARBON LEAFLETS, a clean grey outer SEWING CUFF. Thin transparent protective shell over the valve, restrained sterile label marks. Orient so the two leaflets and ring are immediately recognizable. No anatomical heart, blood or tubing. Source visual brief: 深蓝无菌器械盒，内放银黑环形机械瓣膜，中央两片深色瓣叶，外围缝合环，白色保护泡棉",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e2c43f2b-ebab-4259-be6a-052563bffcd5.png"
+    },
+    {
+      "id": "med10",
+      "name": "精密注射泵",
+      "cat": "med",
+      "r": 3,
+      "visual": "浅灰长条形注射泵，侧面固定一支透明注射器，前面板绿色数字窗与蓝色功能键，机械推进滑轨清晰",
+      "original": {
+        "id": "med10",
+        "name": "精密注射泵",
+        "short": "注射泵",
+        "cat": "med",
+        "r": 3,
+        "w": 1.8,
+        "price": 28000,
+        "desc": "北辰医械生产的精密注射泵，利用步进电机和机械推进机构控制药液输注速度。机身采用耐消毒剂的工程塑料，推进滑轨经过长期使用，仍没有明显松动。\n\n夹臂内侧留着两道不同规格注射器的压痕，调速按键上的数字却已经磨得不太清楚。"
+      },
+      "status": "generated",
+      "source": "med10.png",
+      "paletteColours": 16,
+      "output": "assets/items/med10.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: One SLIM ELONGATED LIGHT GREY medical SYRINGE INFUSION PUMP, viewed three-quarter from above: a CLEAR syringe mounted horizontally along its side, plunger connected to a clearly visible METAL PUSHER RAIL and clamp arm. Small GREEN numeric window on front end, BLUE function buttons, subtle wear on speed keys. Emphasize narrow horizontal silhouette, long syringe and mechanical sliding guide. No IV stand, dangling bag, needles outside the device or unrelated objects. Source visual brief: 浅灰长条形注射泵，侧面固定一支透明注射器，前面板绿色数字窗与蓝色功能键，机械推进滑轨清晰",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b422aef0-28b0-4f44-b7de-b08d66d6ecba.png"
+    },
+    {
+      "id": "med11",
+      "name": "机械循环辅助泵",
+      "cat": "med",
+      "r": 5,
+      "visual": "银灰紧凑圆形机械泵，中央透明观察窗，外围精密金属环、两根短接管与蓝色固定支架",
+      "original": {
+        "id": "med11",
+        "name": "机械循环辅助泵",
+        "short": "循环泵",
+        "cat": "med",
+        "r": 5,
+        "w": 3.2,
+        "price": 360000,
+        "desc": "赫尔维恩医疗集团实验部门研发的离心式血液循环辅助泵原型总成，采用精密驱动组件与特殊表面处理工艺，旨在降低血液流经泵体时受到的机械损伤。\n\n早期测试采用五档控制模式，后来逐步简化为两档，以减少临床人员在紧急情况下的操作负担。\n\n该型号未进入大规模生产，但相关测试成果被用于后续生命支持设备的研发。"
+      },
+      "status": "generated",
+      "source": "med11.png",
+      "paletteColours": 16,
+      "output": "assets/items/med11.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: One COMPACT ROUND SILVER-GREY centrifugal MEDICAL CIRCULATORY ASSIST PUMP assembly, central CLEAR circular observation window exposing restrained grey internal rotor detail, concentric precision metal housing, EXACTLY TWO SHORT smooth tubular connector stubs, and a BLUE mounting BRACKET underneath. Rounded low-profile pump silhouette, not a box or motor with long wires. No blood, liquid hoses, anatomical heart, display screen or supernatural glow. Source visual brief: 银灰紧凑圆形机械泵，中央透明观察窗，外围精密金属环、两根短接管与蓝色固定支架",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-dff01eed-1868-4be5-aced-ed909811df0f.png"
+    },
+    {
+      "id": "med12",
+      "name": "「初生」零号培养样本",
+      "cat": "med",
+      "r": 6,
+      "visual": "透明厚壁六棱柱树脂标本，内部淡粉色分枝状人工组织，深灰金属展示座，正面金色 00 铭牌",
+      "original": {
+        "id": "med12",
+        "name": "「初生」零号培养样本",
+        "short": "初生样本",
+        "cat": "med",
+        "r": 6,
+        "w": 1.1,
+        "price": 1200000,
+        "desc": "一件早期组织工程研究计划遗留下来的原始实验标本，由透明树脂包埋块、固定保存的人工培养组织及完整的编号铭牌组成。\n\n它是该研究机构首次证明特定三维组织培养方法具备实际可行性的原始实物。后续研究论文、技术改进与专利资料均可追溯到这次实验，随标本保存的还有完整的培养记录与检验数据。\n\n透明树脂里封着一小块浅粉色组织，编号是「00」。\n\n它不是最成熟的样本，也不是最好看的那一个。后来制造出的成品比它更稳定、更规整，也更接近研究目标。\n\n它被保留下来，只因为它是第一次。\n\n研究记录里，项目负责人最初写的是：\n\n「结构不理想。」\n\n后面又改成：\n\n「已形成稳定三维形态。」\n\n再后来，那两句都被划掉，只剩下一行字：\n\n「可以继续了。」"
+      },
+      "status": "generated",
+      "source": "med12.png",
+      "paletteColours": 16,
+      "output": "assets/items/med12.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: One CLEAR THICK HEXAGONAL-PRISM RESIN specimen block standing upright on a DARK GREY METAL presentation BASE. A SMALL PALE PINK BRANCHING artificial tissue sample is visibly suspended and preserved INSIDE the clear resin. Precise bevelled hexagonal silhouette, broad cool transparent facets, small GOLD PLATE on the FRONT OF BASE with exactly \"00\". Quiet early tissue-engineering historical specimen. Benign non-gory lab sample: no blood, organs, floating magic, liquid jar, glowing aura or sci-fi energy. Source visual brief: 透明厚壁六棱柱树脂标本，内部淡粉色分枝状人工组织，深灰金属展示座，正面金色 00 铭牌",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7a4d32bf-0b6e-45c2-a695-418e28bd1b94.png"
+    },
+    {
+      "id": "med13",
+      "name": "便携式心脏除颤仪",
+      "cat": "med",
+      "r": 4,
+      "visual": "米白便携式除颤仪，顶部提手，正面小屏与能量调节旋钮，两只黑色电极板用卷线连接，带橙色按钮",
+      "original": {
+        "id": "med13",
+        "name": "便携式心脏除颤仪",
+        "short": "除颤仪",
+        "cat": "med",
+        "r": 4,
+        "w": 5.5,
+        "price": 98000,
+        "desc": "北辰医械为院前急救开发的轻量化除颤监护仪，采用紧凑式储能组件与可更换电池组。\n\n箱体四角都有磕痕，两只电极板的手柄磨得发白。它曾固定在急救车左侧柜的第二层，连同固定支架一起被拆了下来。"
+      },
+      "status": "generated",
+      "source": "med13.png",
+      "paletteColours": 16,
+      "output": "assets/items/med13.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: One THICK IVORY portable 1980s-1990s MANUAL CARDIAC DEFIBRILLATOR, broad TOP CARRY HANDLE, a SMALL GREEN monitoring screen and LARGE ROUND ENERGY SELECTOR knob on front, restrained ORANGE activation buttons. TWO BLACK electrode PADDLES with scuffed pale grips sitting in side holders, attached by SHORT COILED cables that remain close to the chassis; include a low mounting bracket. Paddles must be clearly visible in silhouette. No patient, hands, lightning bolts, medical bags or modern flat AED styling. Source visual brief: 米白便携式除颤仪，顶部提手，正面小屏与能量调节旋钮，两只黑色电极板用卷线连接，带橙色按钮",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b8ccb475-274f-47f7-b20c-257d6fafde7a.png"
+    },
+    {
+      "id": "med14",
+      "name": "重症呼吸机控制主机",
+      "cat": "med",
+      "r": 5,
+      "visual": "米白厚重金属控制主机，面板多个黑色旋钮、拨杆与绿色数字窗，底部排列气路与电路接口",
+      "original": {
+        "id": "med14",
+        "name": "重症呼吸机控制主机",
+        "short": "呼吸机",
+        "cat": "med",
+        "r": 5,
+        "w": 4.5,
+        "price": 230000,
+        "desc": "北辰医械后期生产的重症呼吸机控制主机，能够调节通气参数并监测气道压力，原本安装于医院重症监护病房。\n\n这一代产品以电子控制模块替代了部分传统气动调节机构，操作面板因此比旧型号简洁许多。\n\n机身侧面仍保留着一次升级改造的检修标签。标签上的设备编号已经褪色，型号栏却被重新描过。"
+      },
+      "status": "generated",
+      "source": "med14.png",
+      "paletteColours": 16,
+      "output": "assets/items/med14.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: One HEAVY IVORY METAL ICU VENTILATOR CONTROL MAIN UNIT, boxy bench-sized chassis, FRONT PANEL with MANY BLACK ROTARY KNOBS, a ROW OF TOGGLE SWITCHES, two small GREEN NUMERIC windows, bottom row of GAS CONNECTORS AND ELECTRICAL PORTS. Subtle faded service label on side. Emphasize thick chassis and numerous controls, not a large monitor screen. 1990s professional hospital engineering; standalone main unit only, no cart, breathing mask, patient, hose bundle or oxygen bottle. Source visual brief: 米白厚重金属控制主机，面板多个黑色旋钮、拨杆与绿色数字窗，底部排列气路与电路接口",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-aa1d2fd1-50da-4c56-aafc-de0d720eb847.png"
+    },
+    {
+      "id": "med15",
+      "name": "便携式心电图机",
+      "cat": "med",
+      "r": 3,
+      "visual": "米白紧凑型心电图机，顶部小屏，前端伸出一截印有黑色心电波形的白色热敏纸，侧面接彩色电极导线",
+      "original": {
+        "id": "med15",
+        "name": "便携式心电图机",
+        "short": "心电图机",
+        "cat": "med",
+        "r": 3,
+        "w": 2.4,
+        "price": 32000,
+        "desc": "前端还卡着半截热敏纸，纸上印着一串突然中断的波形。\n\n机身背面贴着资产标签和清洁规程，提手位置磨得最厉害。看来它经常被拎着跑。"
+      },
+      "status": "generated",
+      "source": "med15.png",
+      "paletteColours": 16,
+      "output": "assets/items/med15.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: One compact IVORY portable ECG ELECTROCARDIOGRAPH MACHINE, small screen on TOP, broad compact old-fashioned case and low carry handle. A SHORT WHITE THERMAL PAPER STRIP protrudes prominently FROM THE FRONT, printed with a single clearly contrasting BLACK ECG waveform that stops abruptly. Small colored electrode leads gathered CLOSE ALONG ONE SIDE. The paper strip is the main identifying feature. No patient, scene, ink pen, huge display or defibrillator paddles. Source visual brief: 米白紧凑型心电图机，顶部小屏，前端伸出一截印有黑色心电波形的白色热敏纸，侧面接彩色电极导线",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e6fb6b84-0360-409b-a9f4-8022f3bd695a.png"
+    }
+  ]
+}

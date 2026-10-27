@@ -109,7 +109,8 @@
   开箱 0 / 0.6 / 1.2 / 1.8 / 2.6 / 3.6 秒，后两档必须站定且全程发声；每箱抽 1–2 或 2–3 件，秘藏固定 3 件。
   25 种容器（每档 3–5 种）用 `cats` 声明类别偏好，强度由 CFG.LOOT.catPref 统一控制（当前 ×9）；
   同品质的稀有度曲线完全一致，偏好只改"出哪一类"。六条曲线见 design/items/CONTAINER_QUALITY.md
-- 77 件物品分为 58 件收集品和 19 件物资；收集品九类，物资下分弹药类和医疗物品；六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 29 件，见 design/items/LIFE_COLLECTIBLES.md
+- 108 件物品分为 89 件收集品和 19 件物资；收集品九类，物资下分弹药类和医疗物品；六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 29 件，见 design/items/LIFE_COLLECTIBLES.md；电子产品 15 件，见 design/items/ELECTRONICS.md；工业器材 15 件，见 design/items/INDUSTRIAL.md；医疗收集品 12 件，见 design/items/MEDICAL_COLLECTIBLES.md；
+  逐条数值（编号 / 类别 / 名称 / 稀有度 / 重量 / 价值 / 简称 / 描述 / 画什么）见 design/items/ITEM_INDEX.md，由 `node tools/gen-item-index.js` 从 ITEMS 生成
 - 统一单格背包 24 格 + 安全箱 4 格 + 45kg 负重上限，负重四档影响移速和噪声
 - 未录入的物品在搜刮面板里有橙色「新」角标
 

@@ -1,0 +1,218 @@
+{
+  "generator": "Built-in image_gen; one transparent image per item",
+  "delivery": "48x48 transparent PNG; <=16 palette entries; 4px clear margins; upper-left light and 3/4 inventory display view",
+  "stylePrompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet. ",
+  "references": [
+    "D:/develop/project/tide/assets/items/elec05.png",
+    "D:/develop/project/tide/assets/items/elec06.png"
+  ],
+  "items": [
+    {
+      "id": "elec07",
+      "name": "电子宠物机",
+      "cat": "elec",
+      "r": 3,
+      "visual": "半透明湖蓝色蛋形电子宠物机，墨绿色点阵屏，三颗黄色按钮，顶部银色钥匙链",
+      "original": {
+        "id": "elec07",
+        "name": "电子宠物机",
+        "short": "宠物机",
+        "cat": "elec",
+        "r": 3,
+        "w": 0.08,
+        "price": 18000,
+        "desc": "一款已经停产的初代电子宠物机，拥有单色点阵屏幕和三枚功能按钮。\n\n产品最初以「培养孩子的责任心」为宣传卖点。\n\n某所小学后来禁止学生携带这种玩具进入课堂，因为期末考试期间，考场里连续响起了十七次电子宠物的求救提示音。校方要求制造商提供静音功能。制造商回复：\n\n「我们认为，责任不应该被静音。」"
+      },
+      "status": "generated",
+      "source": "elec07.png",
+      "paletteColours": 16,
+      "output": "assets/items/elec07.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: An egg-shaped translucent lake-blue electronic PET KEYCHAIN TOY, a dark moss-green monochrome square dot-matrix screen, THREE YELLOW ROUND BUTTONS in a row below, small SILVER KEYCHAIN emerging at top. A chunky 1990s toy, not a modern smart device. Screen contains only a tiny simple pixel pet shape, no glow. Source visual brief: 半透明湖蓝色蛋形电子宠物机，墨绿色点阵屏，三颗黄色按钮，顶部银色钥匙链",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-05ff1b16-13a9-403f-ac1f-5352e1a69b82.png"
+    },
+    {
+      "id": "elec08",
+      "name": "微型录像机",
+      "cat": "elec",
+      "r": 3,
+      "visual": "银灰色扁平录像机，透明磁带舱、黑色功能键与侧面接口，旁边一小盘录像带",
+      "original": {
+        "id": "elec08",
+        "name": "微型录像机",
+        "short": "录像机",
+        "cat": "elec",
+        "r": 3,
+        "w": 1.3,
+        "price": 24000,
+        "desc": "一台使用小型录像带的便携式录像设备，能够连接摄像机或电视进行录制与播放。\n\n机身贴着一张租赁公司的标签，背面印有使用须知：\n\n「退还设备前，请确认已取出私人录像带。」\n\n下方有人用圆珠笔添了一句：\n\n「尤其是婚礼录像。」"
+      },
+      "status": "generated",
+      "source": "elec08.png",
+      "paletteColours": 16,
+      "output": "assets/items/elec08.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: A compact FLAT silver-grey portable MINI VIDEOCASSETTE RECORDER/PLAYER, transparent top cassette hatch with two tape spools visible, black mechanical control buttons at front edge, side AV sockets and a small worn rental sticker. One tiny black mini videocassette laid immediately beside the device. NOT a camcorder, no camera lens, no monitor, no modern recorder. Source visual brief: 银灰色扁平录像机，透明磁带舱、黑色功能键与侧面接口，旁边一小盘录像带",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b0060efe-2772-4862-8c8b-a0ad666de2b1.png"
+    },
+    {
+      "id": "elec09",
+      "name": "加密寻呼机",
+      "cat": "elec",
+      "r": 4,
+      "visual": "深黑色小型寻呼机，绿色长条液晶屏，金色功能按钮，侧面凸起的安全模块",
+      "original": {
+        "id": "elec09",
+        "name": "加密寻呼机",
+        "short": "寻呼机",
+        "cat": "elec",
+        "r": 4,
+        "w": 0.18,
+        "price": 48000,
+        "desc": "一款面向企业和公共机构的特殊寻呼终端，能够接收经过编码处理的短消息。与普通寻呼机不同，设备需要配套的解码模块才能完整显示消息内容。\n\n生产商曾将其宣传为「让重要信息只被重要的人看见」。\n\n某家企业采购了四百台，随后发现所有管理人员都忘记了自己的识别密码。技术支持部门建议统一重置密码。企业最终决定恢复使用纸质通知。"
+      },
+      "status": "generated",
+      "source": "elec09.png",
+      "paletteColours": 16,
+      "output": "assets/items/elec09.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: A SMALL BLACK rectangular ENCRYPTED PAGER with narrow GREEN monochrome LCD, two tiny gold function buttons and a DISTINCT rectangular SECURITY DECODER MODULE protruding from one side. The asymmetric protruding module must be readable at small size. No phone keypad, touchscreen or antenna. Source visual brief: 深黑色小型寻呼机，绿色长条液晶屏，金色功能按钮，侧面凸起的安全模块",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-12eb4dc5-fc59-44e3-8b0b-85aa318b9fc9.png"
+    },
+    {
+      "id": "elec10",
+      "name": "便携式计算机",
+      "cat": "elec",
+      "r": 4,
+      "visual": "米灰色厚重笔记本电脑，展开的墨绿色显示屏，密集实体键盘，侧面软盘驱动器",
+      "original": {
+        "id": "elec10",
+        "name": "便携式计算机",
+        "short": "便携电脑",
+        "cat": "elec",
+        "r": 4,
+        "w": 3.2,
+        "price": 86000,
+        "desc": "一种早期便携式个人计算机，配备单色液晶显示屏、内置软盘驱动器和可更换电池组。\n\n制造商在产品发布会上宣称：\n\n「从今天起，办公室将不再受墙壁限制。」\n\n一位科技记者在评测中指出，这台电脑虽然确实能够带出办公室，但电池只能支持约两个小时，而充电器比机器附赠的公文包还重。"
+      },
+      "status": "generated",
+      "source": "elec10.png",
+      "paletteColours": 16,
+      "output": "assets/items/elec10.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: An OPEN early-1990s BEIGE-GREY portable laptop computer, thick clamshell and chunky screen bezel, dull DARK GREEN monochrome LCD, physical compact keyboard, visible SIDE FLOPPY DISK DRIVE. Open about 110 degrees, show top of keys and screen front. Clearly heavy and old, not modern thin laptop. No separate charger or bag. Source visual brief: 米灰色厚重笔记本电脑，展开的墨绿色显示屏，密集实体键盘，侧面软盘驱动器",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2e4cd4ef-98c5-408b-9b15-716241317e1f.png"
+    },
+    {
+      "id": "elec11",
+      "name": "短波通信电台",
+      "cat": "elec",
+      "r": 4,
+      "visual": "军绿色金属短波电台，伸缩天线、数个大型调节旋钮和一只黑色手持话筒",
+      "original": {
+        "id": "elec11",
+        "name": "短波通信电台",
+        "short": "短波电台",
+        "cat": "elec",
+        "r": 4,
+        "w": 2.6,
+        "price": 72000,
+        "desc": "一种用于远距离无线电通信的便携式短波电台，常见于远洋船舶、野外调查队和专业无线电爱好者。\n\n频率调节旋钮旁贴着一张旧纸条：\n\n「听到第三次呼叫，再回答。」\n\n纸条没有署名。设备的维修记录则表明，它曾被送修过两次，故障原因均为发射功率不足。"
+      },
+      "status": "generated",
+      "source": "elec11.png",
+      "paletteColours": 16,
+      "output": "assets/items/elec11.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: An OLIVE-GREEN METAL portable SHORTWAVE RADIO TRANSCEIVER, partly extended TELESCOPING ANTENNA, several LARGE TUNING KNOBS on front, narrow frequency dial and BLACK HAND MICROPHONE resting close beside the box attached by a short coiled cord. No military markings, no handset phone, no modern screen. Source visual brief: 军绿色金属短波电台，伸缩天线、数个大型调节旋钮和一只黑色手持话筒",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-f28bd886-efe0-4628-a89a-87f0f67f5dca.png"
+    },
+    {
+      "id": "elec12",
+      "name": "航海电子定位仪",
+      "cat": "elec",
+      "r": 5,
+      "visual": "深蓝灰色导航终端，绿色单色显示屏、右侧大旋钮、底部金属安装支架",
+      "original": {
+        "id": "elec12",
+        "name": "航海电子定位仪",
+        "short": "定位仪",
+        "cat": "elec",
+        "r": 5,
+        "w": 1.6,
+        "price": 165000,
+        "desc": "一种用于远洋船舶的专业电子导航设备，能够保存航点坐标、航行路线与历史定位数据。\n\n设备曾安装于一艘退役的海洋调查船，内部存储着十二条航行路线。十一条以港口名称命名，最后一条只有一个数字编号。\n\n维修人员曾尝试恢复该路线的目的地信息，但储存区已经被覆盖。"
+      },
+      "status": "generated",
+      "source": "elec12.png",
+      "paletteColours": 16,
+      "output": "assets/items/elec12.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: A DARK NAVY-BLUE GREY ship navigation terminal with recessed GREEN MONOCHROME DISPLAY, ONE LARGE CONTROL DIAL TO RIGHT of screen, a few compact buttons, visible U-shaped metal MOUNTING BRACKET below. Heavy weatherproof late-20th-century marine instrument. Screen sparse coordinate line marks only; no colorful modern maps. Source visual brief: 深蓝灰色导航终端，绿色单色显示屏、右侧大旋钮、底部金属安装支架",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-c2be2318-6ea8-4386-8c78-0c6260752052.png"
+    },
+    {
+      "id": "elec13",
+      "name": "多通道数据记录器",
+      "cat": "elec",
+      "r": 5,
+      "visual": "银灰色仪器箱，正面八个整齐的信号接口，窄绿色显示屏，顶部折叠提手",
+      "original": {
+        "id": "elec13",
+        "name": "多通道数据记录器",
+        "short": "记录器",
+        "cat": "elec",
+        "r": 5,
+        "w": 2.8,
+        "price": 260000,
+        "desc": "一种用于科研机构的多通道实验数据采集设备，能够同时读取多个传感器的测量结果，并将其保存于磁性存储介质。\n\n设备的校准单记录着最近一次检测结果：\n\n「输入通道正常，存储单元正常，内部时钟误差在允许范围内。」\n\n检测员在签名栏下方另加了一行：\n\n「下次请把传感器也一起送来。我们只能保证机器正常，不能保证你测量的东西正常。」"
+      },
+      "status": "generated",
+      "source": "elec13.png",
+      "paletteColours": 16,
+      "output": "assets/items/elec13.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: A SILVER-GREY scientific DATA RECORDER instrument case. FRONT PANEL has EXACTLY EIGHT round SIGNAL INPUT SOCKETS arranged in TWO ROWS OF FOUR, a narrow green display above them, one folding carry HANDLE on top. The two rows of ports must be large and distinct at 48px. No loose cables or attached sensors. Source visual brief: 银灰色仪器箱，正面八个整齐的信号接口，窄绿色显示屏，顶部折叠提手",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2a38b674-3124-4986-9450-327dea0a89e7.png"
+    },
+    {
+      "id": "elec14",
+      "name": "原型信号分析终端",
+      "cat": "elec",
+      "r": 6,
+      "visual": "黑银双色实验终端，厚重金属机壳，正面小型绿色 CRT 屏，左右不对称模块插槽，红色机械电源开关",
+      "original": {
+        "id": "elec14",
+        "name": "原型信号分析终端",
+        "short": "分析终端",
+        "cat": "elec",
+        "r": 6,
+        "w": 4.6,
+        "price": 880000,
+        "desc": "一台采用模块化结构的实验性信号处理终端，配备高精度时钟、独立数据采集系统与可替换的模拟滤波组件。\n\n设备没有正式产品型号，金属铭牌上仅刻着：\n\n「工程验证机 · 01」\n\n随附的技术交接文件表明，该设备原本用于测试一种尚未投入量产的宽频信号采集方案。项目最后一次审查中，研发组认为设备已经验证了技术可行性，应该继续投入资金完善。财务部门则指出，相同预算足以采购六台性能更好的现成设备。\n\n审查结论只有两行：\n\n「终止量产计划。」\n「保留原型机及全部测试数据。」"
+      },
+      "status": "generated",
+      "source": "elec14.png",
+      "paletteColours": 16,
+      "output": "assets/items/elec14.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: A ONE-OFF black-and-silver laboratory SIGNAL ANALYSIS TERMINAL, heavy metal chassis, SMALL GREEN CRT display on front, LEFT AND RIGHT ASYMMETRIC plug-in analog FILTER MODULE SLOTS, red chunky MECHANICAL POWER SWITCH. Exposed module seams and a small engineering plate. 1990s precision prototype, not futuristic computer, no holograms or glow. Source visual brief: 黑银双色实验终端，厚重金属机壳，正面小型绿色 CRT 屏，左右不对称模块插槽，红色机械电源开关",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-4ce95798-16ae-4ac3-840d-e5aaf0689705.png"
+    },
+    {
+      "id": "elec15",
+      "name": "「远望者」深海探测核心",
+      "cat": "elec",
+      "r": 6,
+      "visual": "短圆柱钛合金深海探测核心，三道深灰耐压固定环，中段狭长观察窗露出墨绿电路板与铜色线圈，正面深蓝珐琅铭牌刻着 VII，底部三角合金支架",
+      "original": {
+        "id": "elec15",
+        "name": "「远望者」深海探测核心",
+        "short": "远望者",
+        "cat": "elec",
+        "r": 6,
+        "w": 3.8,
+        "price": 2650000,
+        "desc": "「远望者」是某项深海探测工程中唯一完成全部海试的原型信号处理核心。\n\n其主体采用钛合金耐压壳体，内部装有多层陶瓷电路板、精密石英时钟和专为深海弱信号采集设计的模拟放大组件。制造过程中，工程师必须将每个信号通道单独校准，再以人工焊接的方式完成最终连接。\n\n整套设备原计划用于海底地质勘测，以解决深水环境下微弱电磁信号难以稳定记录的问题。\n\n项目历时十一年，经历四次设计推翻、七次原型试制。最初的六台原型机分别因为耐压壳体失效、信号干扰和制造误差而被淘汰。第七台，也就是「远望者」，最终完成了全部预定测试。\n\n在工程验收仪式上，项目负责人没有发表演讲，只播放了一段来自海底的原始探测数据。整整四分钟，显示屏上只有极其微弱的波形。\n\n有人问他：\n\n「花了十一年，就为了得到这些？」\n\n他回答：\n\n「十一年前，我们连这些都看不见。」\n\n后来，项目因经费与设备维护成本问题被迫终止。「远望者」作为唯一完成验收的原型机，被保存在工程档案库中。随设备保存的最后一份文件，是项目组的解散通知。通知末尾附有一段没有署名的手写文字：\n\n「我们并没有找到想找的东西。」\n「但至少，现在我们知道该往哪里看了。」"
+      },
+      "status": "generated",
+      "source": "elec15.png",
+      "paletteColours": 16,
+      "output": "assets/items/elec15.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: ONE SHORT TITANIUM CYLINDRICAL deep-sea sensing core on a small TRIANGULAR three-foot alloy base. THREE dark grey PRESSURE CLAMP RINGS around the short cylinder. Narrow viewing window in middle reveals DARK GREEN ceramic circuit boards and a few COPPER COILS. A DARK BLUE ENAMEL plate on front marked only \"VII\". Restrained silver-grey engineering prototype, not fantasy relic, no energy core glow, no floating parts, no cables sticking far out. Source visual brief: 短圆柱钛合金深海探测核心，三道深灰耐压固定环，中段狭长观察窗露出墨绿电路板与铜色线圈，正面深蓝珐琅铭牌刻着 VII，底部三角合金支架",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b810f4e1-5853-4ced-a603-2b3ce4fdf69a.png"
+    }
+  ]
+}

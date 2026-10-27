@@ -1,0 +1,255 @@
+{
+  "version": 2,
+  "generator": "Built-in image_gen, separate call per asset",
+  "specification": "ART_STYLE.md",
+  "created": "2026-10-27",
+  "references": [
+    "D:/develop/project/tide/assets/chars/guard_s.png",
+    "D:/develop/project/tide/assets/props/crate_std.png"
+  ],
+  "assets": [
+    {
+      "id": "crate_wastepaper",
+      "name": "废纸篓",
+      "subject": "灰色金属网格废纸篓，宽椭圆开口露出三张揉皱的米白纸；桶身略呈倒锥形，局部网格清晰，顶部亮、内侧暗。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 灰色金属网格废纸篓，宽椭圆开口露出三张揉皱的米白纸；桶身略呈倒锥形，局部网格清晰，顶部亮、内侧暗。",
+      "status": "ready",
+      "source": "sources/crate_wastepaper.png",
+      "target": "assets/props/crate_wastepaper.png",
+      "fit": [
+        22,
+        27
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b4c37bea-3bcf-4591-8f98-747dbe1825ef.png"
+    },
+    {
+      "id": "crate_cardboard",
+      "name": "遗弃纸箱",
+      "subject": "黄褐色瓦楞纸箱，压扁一处箱角，顶面两片纸盖向左右外翻，箱内暗褐，透明胶带残留，短南侧面模糊运输印章，整体轮廓方正。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 黄褐色瓦楞纸箱，压扁一处箱角，顶面两片纸盖向左右外翻，箱内暗褐，透明胶带残留，短南侧面模糊运输印章，整体轮廓方正。",
+      "status": "ready",
+      "source": "sources/crate_cardboard.png",
+      "target": "assets/props/crate_cardboard.png",
+      "fit": [
+        28,
+        25
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-8a76e6ad-f3ac-42ba-8b39-1302872b0607.png"
+    },
+    {
+      "id": "crate_bedside",
+      "name": "床头柜",
+      "subject": "矮小深棕木质床头柜，大面积浅亮木顶面，南侧短立面一只小抽屉和圆形黄铜把手，侧面磨损，外形窄于普通抽屉柜。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 矮小深棕木质床头柜，大面积浅亮木顶面，南侧短立面一只小抽屉和圆形黄铜把手，侧面磨损，外形窄于普通抽屉柜。",
+      "status": "ready",
+      "source": "sources/crate_bedside.png",
+      "target": "assets/props/crate_bedside.png",
+      "fit": [
+        20,
+        26
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3f02c55f-82a4-4520-a3ad-348b860caf42.png"
+    },
+    {
+      "id": "crate_staff",
+      "name": "员工储物盒",
+      "subject": "扁平蓝灰色金属储物盒，矩形顶面占主要面积，南侧小锁扣，盖一角小白数字标签，两道浅散热孔，轻微锈边。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 扁平蓝灰色金属储物盒，矩形顶面占主要面积，南侧小锁扣，盖一角小白数字标签，两道浅散热孔，轻微锈边。",
+      "status": "ready",
+      "source": "sources/crate_staff.png",
+      "target": "assets/props/crate_staff.png",
+      "fit": [
+        25,
+        19
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-48d3927b-b4c2-4f82-8a9a-b520938a556e.png"
+    },
+    {
+      "id": "crate_luggage",
+      "name": "旅行箱",
+      "subject": "深酒红硬壳旅行箱，横向平放，宽阔顶面带两条纵向压纹，南侧短立面金属锁扣与提手，旧皮革护角、褪色小行李标签。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 深酒红硬壳旅行箱，横向平放，宽阔顶面带两条纵向压纹，南侧短立面金属锁扣与提手，旧皮革护角、褪色小行李标签。",
+      "status": "ready",
+      "source": "sources/crate_luggage.png",
+      "target": "assets/props/crate_luggage.png",
+      "fit": [
+        27,
+        21
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-6e8b4fae-446a-4d87-815a-5ffd0c01a89c.png"
+    },
+    {
+      "id": "crate_filing",
+      "name": "办公文件柜",
+      "subject": "灰绿色低矮金属文件柜，平整顶面占70%，南侧短立面两层宽抽屉、各有小矩形标签框和银把手，局部掉漆，不画高立柜。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 灰绿色低矮金属文件柜，平整顶面占70%，南侧短立面两层宽抽屉、各有小矩形标签框和银把手，局部掉漆，不画高立柜。",
+      "status": "ready",
+      "source": "sources/crate_filing.png",
+      "target": "assets/props/crate_filing.png",
+      "fit": [
+        25,
+        25
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-ca726506-82ed-428d-a1bf-a5a893fa3869.png"
+    },
+    {
+      "id": "crate_emergency",
+      "name": "急救器材箱",
+      "subject": "扁长灰绿色金属急救箱，大面积矩形顶盖中央醒目白医疗十字，厚密封胶条，南侧两个搭扣和折叠把手，明显划痕。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 扁长灰绿色金属急救箱，大面积矩形顶盖中央醒目白医疗十字，厚密封胶条，南侧两个搭扣和折叠把手，明显划痕。",
+      "status": "ready",
+      "source": "sources/crate_emergency.png",
+      "target": "assets/props/crate_emergency.png",
+      "fit": [
+        28,
+        19
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-bfcda938-4b39-41d4-adbf-679de7a80c7e.png"
+    },
+    {
+      "id": "crate_comms",
+      "name": "通讯设备箱",
+      "subject": "深蓝灰厚壁通讯仪器箱，宽顶面浅色通信波纹图标，银护角，南侧两个金属搭扣，右侧一截盘绕黑线缆。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 深蓝灰厚壁通讯仪器箱，宽顶面浅色通信波纹图标，银护角，南侧两个金属搭扣，右侧一截盘绕黑线缆。",
+      "status": "ready",
+      "source": "sources/crate_comms.png",
+      "target": "assets/props/crate_comms.png",
+      "fit": [
+        26,
+        22
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-d168a3fe-58eb-4d4e-a78b-bb0ac573be62.png"
+    },
+    {
+      "id": "crate_jewelry",
+      "name": "珠宝匣",
+      "subject": "深红棕硬木小珠宝匣，矩形顶盖带黄铜包角及一条简洁金色镶线，南侧小黄铜钥匙孔和锁扣。现实复古物品，不画奇幻宝箱，不露珠宝。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 深红棕硬木小珠宝匣，矩形顶盖带黄铜包角及一条简洁金色镶线，南侧小黄铜钥匙孔和锁扣。现实复古物品，不画奇幻宝箱，不露珠宝。",
+      "status": "ready",
+      "source": "sources/crate_jewelry.png",
+      "target": "assets/props/crate_jewelry.png",
+      "fit": [
+        23,
+        19
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-f40f0613-927f-454f-8b94-a09378f078e4.png"
+    },
+    {
+      "id": "crate_sealed",
+      "name": "机密封存箱",
+      "subject": "厚重深灰钢制低矮封存箱，宽矩形顶盖有两条加固筋、白编号牌，南侧三个锁扣，箱角红防拆封条，不画立式保险柜。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 厚重深灰钢制低矮封存箱，宽矩形顶盖有两条加固筋、白编号牌，南侧三个锁扣，箱角红防拆封条，不画立式保险柜。",
+      "status": "ready",
+      "source": "sources/crate_sealed.png",
+      "target": "assets/props/crate_sealed.png",
+      "fit": [
+        28,
+        23
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-32731be5-66a6-4531-a6fd-61d3130a38b1.png"
+    },
+    {
+      "id": "crate_satchel",
+      "name": "帆布挎包",
+      "subject": "褪色卡其帆布斜挎包平放，翻盖微张开、暗内衬，深棕皮背带向一侧柔软弯曲，锈金属搭扣，清晰布褶。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 褪色卡其帆布斜挎包平放，翻盖微张开、暗内衬，深棕皮背带向一侧柔软弯曲，锈金属搭扣，清晰布褶。",
+      "status": "ready",
+      "source": "sources/crate_satchel.png",
+      "target": "assets/props/crate_satchel.png",
+      "fit": [
+        26,
+        24
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0db8ec7a-bf4f-46ef-942a-7eea243c6f73.png"
+    },
+    {
+      "id": "crate_workwear",
+      "name": "遗落的工作服",
+      "subject": "深蓝厚帆布工作夹克松散平摊，一只袖子向内折叠，另一袖向侧下方舒展，胸前两方口袋、一袋微鼓，衣领和中央拉链清楚，无人无身体。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 深蓝厚帆布工作夹克松散平摊，一只袖子向内折叠，另一袖向侧下方舒展，胸前两方口袋、一袋微鼓，衣领和中央拉链清楚，无人无身体。",
+      "status": "ready",
+      "source": "sources/crate_workwear.png",
+      "target": "assets/props/crate_workwear.png",
+      "fit": [
+        28,
+        26
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-8c7d4608-4697-493b-84bf-82bbfc68fb21.png"
+    },
+    {
+      "id": "crate_schoolbag",
+      "name": "运动包",
+      "subject": "蓝灰旧尼龙双肩背包平放，正面一个大拉链袋，肩带松垂两侧，主拉链半开露出几张纸边角，不画旅行手提袋。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 蓝灰旧尼龙双肩背包平放，正面一个大拉链袋，肩带松垂两侧，主拉链半开露出几张纸边角，不画旅行手提袋。",
+      "status": "ready",
+      "source": "sources/crate_schoolbag.png",
+      "target": "assets/props/crate_schoolbag.png",
+      "fit": [
+        24,
+        27
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-24649ea1-e0cd-4aa1-95ed-5381073f565a.png"
+    },
+    {
+      "id": "crate_rescuevest",
+      "name": "救援人员背心",
+      "subject": "暗橙与深灰拼接救援背心平摊，正面多个矩形工具口袋，其中数袋有小白反光条，胸口一个小白急救十字，无人无身体。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 暗橙与深灰拼接救援背心平摊，正面多个矩形工具口袋，其中数袋有小白反光条，胸口一个小白急救十字，无人无身体。",
+      "status": "ready",
+      "source": "sources/crate_rescuevest.png",
+      "target": "assets/props/crate_rescuevest.png",
+      "fit": [
+        26,
+        26
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0b13a564-e055-4d13-896e-9d1f05089182.png"
+    },
+    {
+      "id": "crate_leatherbag",
+      "name": "皮质旅行包",
+      "subject": "深棕真皮圆筒旅行包横向放，宽皮革双提手自然放低，黄铜拉链和金属包角，自然磨损，包口微开，保持软质圆筒轮廓。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 深棕真皮圆筒旅行包横向放，宽皮革双提手自然放低，黄铜拉链和金属包角，自然磨损，包口微开，保持软质圆筒轮廓。",
+      "status": "ready",
+      "source": "sources/crate_leatherbag.png",
+      "target": "assets/props/crate_leatherbag.png",
+      "fit": [
+        28,
+        22
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-27e0ac64-5131-4ce6-a046-b68314f73e2a.png"
+    },
+    {
+      "id": "crate_diplomatic",
+      "name": "密封公文包",
+      "subject": "黑色硬质低矮公文包平放，宽阔顶面、厚银灰金属边框，南侧两个独立锁扣、皮革提手和小黄铜铭牌，顶面一条红色编号防拆封条。",
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 黑色硬质低矮公文包平放，宽阔顶面、厚银灰金属边框，南侧两个独立锁扣、皮革提手和小黄铜铭牌，顶面一条红色编号防拆封条。",
+      "status": "ready",
+      "source": "sources/crate_diplomatic.png",
+      "target": "assets/props/crate_diplomatic.png",
+      "fit": [
+        27,
+        21
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-5d812246-9f6c-4fcd-a757-c5c4750a2de6.png"
+    },
+    {
+      "id": "crate_trash",
+      "name": "垃圾桶",
+      "subject": "老式户外镀锌铁皮垃圾桶，灰绿色金属，宽圆形椭圆桶口占画面大半，圆盖向北侧半掀开而非完全盖住，露出桶内深灰垃圾袋和两三片旧纸，圆盖中央一个小把手，桶身短立面有稀疏竖向压筋及两侧小提耳，少量锈斑。必须一眼读出带盖生活垃圾桶，不能是油桶、化工桶、网格废纸篓。无油桶加油孔，无回收标志，无文字，不画地面散落垃圾。",
+      "source": "sources/crate_trash.png",
+      "target": "assets/props/crate_trash.png",
+      "previousTarget": "assets/props/barrel.png",
+      "fit": [
+        24,
+        27
+      ],
+      "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 老式户外镀锌铁皮垃圾桶，灰绿色金属，宽圆形椭圆桶口占画面大半，圆盖向北侧半掀开而非完全盖住，露出桶内深灰垃圾袋和两三片旧纸，圆盖中央一个小把手，桶身短立面有稀疏竖向压筋及两侧小提耳，少量锈斑。必须一眼读出带盖生活垃圾桶，不能是油桶、化工桶、网格废纸篓。无油桶加油孔，无回收标志，无文字，不画地面散落垃圾。",
+      "references": [
+        "D:/develop/project/tide/assets/chars/guard_s.png",
+        "D:/develop/project/tide/assets/props/crate_wastepaper.png"
+      ],
+      "generatedPath": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-dc076b5a-04c2-4051-a07a-14c453bcd415.png",
+      "status": "ready"
+    }
+  ]
+}

@@ -89,15 +89,18 @@
 
 ### 贴图
 
-16 个新容器都有专用 32×32 贴图，由 `tools/gen-container-art.js` 程序化绘制
-（项目里没有 sharp / PIL，PNG 编码是手写的）。统一规格：32×32 RGBA、主体居中 28×28 内、
-75° 俯视、顶面亮 / 南立面暗、四周深色描边、噪点斑驳。
+16 个新容器已使用内置 image_gen 分别重绘。统一规格：32×32 RGBA、主体位于 28×28 内、
+75°俯视、左上光源、顶面亮 / 南立面暗、透明边缘、少量旧化像素，不附带地面和投影。
+原稿、完整提示词与旧图对比保存在 [容器重绘目录](../../assets/container-redraw/index.html)，
+运行 `node tools/prepare-container-redraw.js` 可从透明原稿重新整理交付尺寸（需要 sharp）。
+旧 `tools/gen-container-art.js` 默认保留新版素材；仅显式添加 `--legacy` 时覆盖为旧程序化画法。
 `node tools/preview-container-art.js 5` 会拼一张放大图，方便肉眼检查缩到一格后是否还认得出。
 
-还有两处临时状态：
+垃圾桶使用独立的 `crate_trash.png`：灰绿镀锌铁皮桶、半掀圆盖、垃圾袋与废纸。
+装饰油桶继续使用锈红色 `barrel.png`，两者不再共用贴图；地图点位、品质和掉落规则不变。
 
-- **垃圾桶仍复用 `barrel.png`**，与场景里四只装饰用的杂物桶同图。玩家靠近看有没有交互提示才能分辨，
-  建议下一轮给垃圾桶换专用贴图（或给装饰桶改样式）。
+还有一处临时状态：
+
 - **大型保险箱与小型保险箱共用 `crate_heavy.png`**，只靠开箱时长、件数与掉落曲线区分。
 
 ## 平衡提醒
@@ -172,7 +175,7 @@
 - 改开箱手感：同处的 `time` / `noise` / `still`
 - 改容器绑定：`js/data.js` → `CONTAINER_TYPES`（`q` 品质、`cats` 偏好、`art` 贴图）
 - 改偏好强度：`js/config.js` → `CFG.LOOT.catPref`
-- 新增容器：① `tools/gen-container-art.js` 里加一个绘制函数并生成 32×32 贴图；
+- 新增容器：① 按 `ART_STYLE.md` 用 image_gen 绘制并整理成 32×32 透明贴图；
   ② `CONTAINER_TYPES` 给字模（避开 P/E/S/X）；③ 地图源稿 `containerTypes` 与 `stash` 布点；
   ④ `node "temp files/rebuild-layout.js"` 重建 `layout.json`，再 `node tools/build-linhai-map.js`
 - 验证：`node tools/sample-drop.js 40000`（实测 vs 目标）· `node tools/test-item-rarity.js`（断言实测偏差 < 0.15pt）

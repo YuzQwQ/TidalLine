@@ -13,9 +13,9 @@ function raid(hp=5,id='heal01',where='bag'){
  Game.player.hp=hp;const entry={item:byId[id],n:2};Game.player.bag[where==='safe'?'safe':'slots']=[entry];
  return entry;
 }
-test('77件唯一物品、18医疗品、58图鉴与准确参数',()=>{
- assert.equal(ITEMS.length,77);assert.equal(new Set(ITEMS.map(i=>i.id)).size,77);assert(!byId.med01);
- assert.equal(ITEMS.filter(i=>!i.noCodex).length,58);
+test('108件唯一物品、18医疗品、89图鉴与准确参数',()=>{
+ assert.equal(ITEMS.length,108);assert.equal(new Set(ITEMS.map(i=>i.id)).size,108);assert(!byId.med01);
+ assert.equal(ITEMS.filter(i=>!i.noCodex).length,89);
  const spec=require('../design/items/medical.json');assert.equal(spec.items.length,18);
  for(const item of spec.items){const actual=byId[item.id];for(const key of ['name','r','w','price','stack','desc','visual'])assert.equal(actual[key],item[key]);assert(actual.noCodex);assert.equal(actual.cat,'medical');assert.equal(!!actual.noLoot,!actual.heal);}
  assert.equal(c.SUPPLY.bandage.itemId,'heal01');assert.equal(c.SUPPLY.bandage.price,2000);
