@@ -35,8 +35,8 @@ function validate(data) {
       assert(!occupied.has(k),'实体重叠 '+k);assert(!['+','/','=','-','s'].includes(terrain(prop.x,prop.y)),'实体堵住门洞/桥/阶梯 '+prop.id);
       occupied.set(k,prop.id);
     }
-    assert.equal(data.containers.length,41);assert.equal(data.enemies.length,24);
-    assert.equal(new Set(data.containers.map(c=>c.type)).size,7);
+    assert.equal(data.containers.length,48);assert.equal(data.enemies.length,24);
+    assert.equal(new Set(data.containers.map(c=>c.type)).size,24);
     assert.equal(data.buildings.length,5);
   });
   const reached=search(spawn);

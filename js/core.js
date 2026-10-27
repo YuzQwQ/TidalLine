@@ -37,6 +37,9 @@ const M = {
 
   load(rows, doorAxes, props, mapSpec) {
     const map = mapSpec || MAP_CATALOG.find(map=>map.rows===rows) || null;
+    // 地形与容器可以共用字符（旧图H为高地）；正式地图按显式点位判定。
+    const containerCells = map && Array.isArray(map.containers)
+      ? new Set(map.containers.map(c => c.x + ',' + c.y)) : null;
     this.map = map;
     this.tideEnabled = map ? map.tideEnabled : true;
     this.tideLevel = 0;
@@ -63,10 +66,10 @@ const M = {
           terrainCh,
           art: rule ? (terrainCh === 's' ? 'canal_steps_' + (x < this.W/2 ? 'w':'e') : rule.art) : null,
           solid: rule ? rule.solid : ch === '#',
-          obstacle: !!BOX_KIND[ch] || !!(rule && rule.blocked),
+          obstacle: (containerCells ? containerCells.has(x + ',' + y) : !!BOX_KIND[ch]) || !!(rule && rule.blocked),
           permanentWater: !!(rule && rule.permanentWater),
           overlays: [],
-          container: !!BOX_KIND[ch],   // 容器只挡行动，不挡视线
+          container: containerCells ? containerCells.has(x + ',' + y) : !!BOX_KIND[ch],
           prop: null,
           opaque: rule ? rule.opaque : ch === '#',
           h: (map && map.tileHeights ? map.tileHeights[ch] : TILE_H[ch]) ?? 2,
@@ -107,7 +110,7 @@ const M = {
     const furnishings = props || (map ? map.props : []);
     for (const prop of furnishings) {
       const tile = this.at(prop.x, prop.y);
-      if (!tile || tile.solid || tile.door || BOX_KIND[tile.ch] || tile.ch === 'P' || tile.ch === 'E') {
+      if (!tile || tile.solid || tile.door || tile.container || tile.ch === 'P' || tile.ch === 'E') {
         throw new Error('场景摆设位置冲突: ' + prop.id + ' @ ' + prop.x + ',' + prop.y);
       }
       tile.prop = prop;
@@ -463,31 +466,75 @@ const Quiet = {
   clear() { this.zones.length = 0; }
 };
 
+/* 每个稀有度在池子里有几件 —— 掉落权重按档位归一要用 */
+function rarityCounts(list) {
+  const c = {};
+  for (const it of list) c[it.r] = (c[it.r] || 0) + 1;
+  return c;
+}
+
 /* ---------------- 掉落表 ---------------- */
 const Loot = {
-  /* 按容器档位抽一件 */
-  roll(kind, preferredCats) {
-    // 档位决定稀有度倾向
-    const rBias = {
-      fast:  { 1: 100, 2: 46, 3: 10, 4: 1.5, 5: 0 },
-      std:   { 1: 74, 2: 62, 3: 28, 4: 6,   5: 0.6 },
-      heavy: { 1: 20, 2: 44, 3: 58, 4: 26,  5: 4 }
-    }[kind] || RARITY_WEIGHT;
+  /* 指定物品池也按稀有度加权，尸体不能绕过新等级规则等概率产出孤品。 */
+  pickFromPool(pool) {
+    const available=pool.filter(item=>!item.noLoot&&RARITY_WEIGHT[item.r]>0);
+    if(!available.length)return null;
+    /* 同一档里再多几件，只是多几种长相，不该把这一档的总概率抬上去 */
+    const cnt=rarityCounts(available);
+    const w=available.map(item=>RARITY_WEIGHT[item.r]/cnt[item.r]);
+    let roll=Math.random()*w.reduce((sum,v)=>sum+v,0);
+    for(let i=0;i<available.length;i++){roll-=w[i];if(roll<=0)return available[i];}
+    return available[0];
+  },
+  /* 按容器品质抽一件。
+     品质直接给出六档目标概率（CONTAINER_QUALITY[q].pct），档内再按「类别」平分、
+     同一类别里按件数平分。因为档内权重会被 cellW 归一，最终 P(稀有度) 恰好等于
+     pct/Σpct —— 与类别偏好、物品数量都无关。所以这里绝不能再乘一层 RARITY_WEIGHT，
+     否则曲线会被拉回白绿。
+     某一档在池子里没有物品时，那一档的份额会按比例让给其余档（通用回退），
+     缺档不会让容器抽不出东西，只会把曲线整体抬向仍在池子里的档位。 */
+  roll(quality, preferredCats) {
+    const Q = CONTAINER_QUALITY[quality] || null;
+    const pct = Q ? Q.pct : null;
+    const bias = r => pct ? (pct[r - 1] || 0) : RARITY_WEIGHT[r];
 
-    const pool = ITEMS.filter(it => rBias[it.r] > 0 && !it.noLoot);
-    let total = 0;
-    const w = pool.map(it => {
-      let v = rBias[it.r];
-      if (preferredCats && preferredCats.includes(it.cat)) v *= 4;
-      // 重型和标准容器略微偏向"收藏感强"的类别
-      if (kind !== 'fast') {
-        if (it.cat === 'lux' || it.cat === 'antiq' || it.cat === 'art') v *= 1.35;
-      } else {
+    const pool = ITEMS.filter(it => !it.noLoot && bias(it.r) > 0);
+
+    /* 类别偏好倍率：容器只声明"偏爱哪几类"，具体强度在这里统一控制。
+       取值越大，同品质容器之间的内容差异越明显；受该类别在各档的件数限制，
+       空缺的档会自动把份额让给其它类别（不会抽空）。 */
+    const CAT_PREF = (CFG.LOOT && CFG.LOOT.catPref) || 9;
+    const catW = it => {
+      let v = (preferredCats && preferredCats.includes(it.cat)) ? CAT_PREF : 1;
+      // 高级容器偏向"收藏感强"的类别，低级容器偏向顺手能拿的工具与日用品。
+      // 这个系数只改档内类别占比，不改稀有度曲线。
+      if (Q && Q.lv >= 5) {
+        if (it.cat === 'collect') v *= 1.35;
+      } else if (Q && Q.lv <= 2) {
         if (it.cat === 'ind' || it.cat === 'life') v *= 1.25;
       }
+      return v;
+    };
+
+    /* 每个 (稀有度, 类别) 格子里的件数，以及每个档的类别权重和 */
+    const cell = {};          // r -> { cat: 件数 }
+    const cellW = {};         // r -> 该档类别权重之和
+    for (const it of pool) {
+      if (!cell[it.r]) { cell[it.r] = {}; cellW[it.r] = 0; }
+      if (cell[it.r][it.cat] == null) {
+        cell[it.r][it.cat] = 0;
+        cellW[it.r] += catW(it);
+      }
+      cell[it.r][it.cat]++;
+    }
+
+    let total = 0;
+    const w = pool.map(it => {
+      const v = bias(it.r) * catW(it) / cellW[it.r] / cell[it.r][it.cat];
       total += v;
       return v;
     });
+
     let r = Math.random() * total;
     for (let i = 0; i < pool.length; i++) {
       r -= w[i];
@@ -496,15 +543,16 @@ const Loot = {
     return { item: pool[0], n: 1 };
   },
 
-  fill(kind, preferredCats) {
-    const [a, b] = BOX_COUNT[kind] || [1, 2];
+  fill(quality, preferredCats) {
+    const [a, b] = BOX_COUNT[quality] || [1, 2];
     const n = U.randInt(a, b);
     const out = [];
     const seen = new Set();
     for (let i = 0; i < n; i++) {
-      const r = this.roll(kind, preferredCats);
-      // 同一个容器不出重复条目
-      if (seen.has(r.item.id)) continue;
+      /* 同一个容器尽量不出重复条目；重抽几次仍撞上就照收，
+         否则"抽 2–3 件"会被悄悄打折成 1 件。 */
+      let r = this.roll(quality, preferredCats);
+      for (let k = 0; k < 8 && seen.has(r.item.id); k++) r = this.roll(quality, preferredCats);
       seen.add(r.item.id);
       out.push(r);
     }

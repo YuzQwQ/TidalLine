@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const dir = __dirname;
+require('./tools/build-economy.js').build();
 // 地图由设计稿编译，避免多文件版与离线版使用不同点位。
 require('./tools/build-linhai-map.js').build();
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');

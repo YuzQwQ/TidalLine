@@ -259,23 +259,27 @@ window.addEventListener('error', function (e) {
 
   /* 稀有度颜色：左边框 + 底色。底色用 background-image 叠在背景色上，
      这样 :hover 改 background-color 时不会把底色覆盖掉。 */
-  .r1 { border-left: 3px solid #55605c; }
-  .r2 { border-left: 3px solid #3f8b78; }
-  .r3 { border-left: 3px solid #3f6d9b; }
-  .r4 { border-left: 3px solid #a8862a; }
-  .r5 { border-left: 3px solid #8d3a3a; }
+  .r1, :is(.row,.cell,.scell).r1:not(.empty) { border-left: 3px solid #c6ceca; }
+  .r2, :is(.row,.cell,.scell).r2:not(.empty) { border-left: 3px solid #3f8b78; }
+  .r3, :is(.row,.cell,.scell).r3:not(.empty) { border-left: 3px solid #3f6d9b; }
+  .r4, :is(.row,.cell,.scell).r4:not(.empty) { border-left: 3px solid #9165b3; }
+  .row.r4 { background-image:linear-gradient(90deg,rgba(145,101,179,0.40),rgba(145,101,179,0.07)); }
+  .cell.r4 { background-image:linear-gradient(160deg,rgba(145,101,179,0.34),rgba(145,101,179,0.06)); }
+  .scell.r4 { background-image:linear-gradient(160deg,rgba(145,101,179,0.32),rgba(145,101,179,0.05)); }
+  .r5, :is(.row,.cell,.scell).r5:not(.empty) { border-left: 3px solid #a8862a; }
+  .r6, :is(.row,.cell,.scell).r6:not(.empty) { border-left: 3px solid #8d3a3a; }
 
-  .row.r1 { background-image: linear-gradient(90deg, rgba(85,96,92,0.34), rgba(85,96,92,0.05)); }
+  .row.r1 { background-image: linear-gradient(90deg, rgba(198,206,202,0.34), rgba(198,206,202,0.05)); }
   .row.r2 { background-image: linear-gradient(90deg, rgba(63,139,120,0.34), rgba(63,139,120,0.05)); }
   .row.r3 { background-image: linear-gradient(90deg, rgba(63,109,155,0.38), rgba(63,109,155,0.06)); }
-  .row.r4 { background-image: linear-gradient(90deg, rgba(168,134,42,0.40), rgba(168,134,42,0.07)); }
-  .row.r5 { background-image: linear-gradient(90deg, rgba(141,58,58,0.44), rgba(141,58,58,0.08)); }
+  .row.r5 { background-image: linear-gradient(90deg, rgba(168,134,42,0.40), rgba(168,134,42,0.07)); }
+  .row.r6 { background-image: linear-gradient(90deg, rgba(141,58,58,0.44), rgba(141,58,58,0.08)); }
 
-  .cell.r1 { background-image: linear-gradient(160deg, rgba(85,96,92,0.30), rgba(85,96,92,0.05)); }
+  .cell.r1 { background-image: linear-gradient(160deg, rgba(198,206,202,0.30), rgba(198,206,202,0.05)); }
   .cell.r2 { background-image: linear-gradient(160deg, rgba(63,139,120,0.30), rgba(63,139,120,0.05)); }
   .cell.r3 { background-image: linear-gradient(160deg, rgba(63,109,155,0.32), rgba(63,109,155,0.05)); }
-  .cell.r4 { background-image: linear-gradient(160deg, rgba(168,134,42,0.34), rgba(168,134,42,0.06)); }
-  .cell.r5 { background-image: linear-gradient(160deg, rgba(141,58,58,0.38), rgba(141,58,58,0.07)); }
+  .cell.r5 { background-image: linear-gradient(160deg, rgba(168,134,42,0.34), rgba(168,134,42,0.06)); }
+  .cell.r6 { background-image: linear-gradient(160deg, rgba(141,58,58,0.38), rgba(141,58,58,0.07)); }
 
   /* 搜刮时：背包在左、容器在右，两边同时开着。
      720 的逻辑宽度装不下两个大面板，所以背包压到 300，中间和上下还看得见场内。 */
@@ -654,11 +658,11 @@ window.addEventListener('error', function (e) {
   content: ''; position: absolute; left: 3px; top: 3px;
   width: 4px; height: 4px; background: #5f9bc0;
 }
-.scell.r1 { background-image: linear-gradient(160deg, rgba(85,96,92,0.28), rgba(85,96,92,0.04)); }
+.scell.r1 { background-image: linear-gradient(160deg, rgba(198,206,202,0.28), rgba(198,206,202,0.04)); }
 .scell.r2 { background-image: linear-gradient(160deg, rgba(63,139,120,0.28), rgba(63,139,120,0.04)); }
 .scell.r3 { background-image: linear-gradient(160deg, rgba(63,109,155,0.30), rgba(63,109,155,0.04)); }
-.scell.r4 { background-image: linear-gradient(160deg, rgba(168,134,42,0.32), rgba(168,134,42,0.05)); }
-.scell.r5 { background-image: linear-gradient(160deg, rgba(141,58,58,0.36), rgba(141,58,58,0.06)); }
+.scell.r5 { background-image: linear-gradient(160deg, rgba(168,134,42,0.32), rgba(168,134,42,0.05)); }
+.scell.r6 { background-image: linear-gradient(160deg, rgba(141,58,58,0.36), rgba(141,58,58,0.06)); }
 
 .pager { display: flex; align-items: center; gap: 6px; }
 .pager button {
@@ -685,6 +689,12 @@ window.addEventListener('error', function (e) {
 .shop-grid .scell { aspect-ratio: auto; height: 76px; cursor: pointer; }
 .shop-grid .scell img { width: 34px; height: 34px; }
 .shop-grid .scell .pr { font-size: 10.5px; color: #b09a62; font-family: Consolas, monospace; letter-spacing: 0; }
+/* 军火商的分组标题（主武器 / 副武器），横跨整行 */
+.shop-cat {
+  grid-column: 1 / -1;
+  padding: 4px 0 1px; font-size: 10.5px; letter-spacing: 2px; color: #6fa093;
+}
+.shop-cat:first-child { padding-top: 0; }
 .shop-ft {
   flex: 0 0 auto; margin: auto 0 0; padding: 10px 0 0;
   border-top: 1px solid #1a2a25;
@@ -809,6 +819,38 @@ window.addEventListener('error', function (e) {
 .deal-acts button.go:hover { background: #1a8577; }
 .deal-acts button.go.no { background: #23302b; color: #6b4a3a; border-color: #3a2626; cursor: default; }
 .deal-acts button.go.no:hover { background: #23302b; }
+.medical-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.medical-actions button { flex:1; min-width:105px; margin:0; padding:10px 8px; font-size:12px; letter-spacing:0; }
+.medical-actions button:disabled, #doctorService button:disabled { opacity:.45; cursor:not-allowed; }
+.medical-muted { color:#7d978b; font-size:11px; line-height:1.7; }
+.medical-carry { margin:12px 0; border-top:1px solid #294037; padding-top:9px; }
+.medical-carry summary { cursor:pointer; color:#a8c4ba; font-size:12px; }
+#medicalCarry .cn { min-width:0; overflow-wrap:anywhere; }
+#doctorService { padding:12px; margin-bottom:12px; border:1px solid #315348; background:#12231c; font-size:12px; line-height:1.7; }
+#doctorService[hidden] { display:none; }
+#doctorService p { margin:6px 0; }
+#doctorService button { width:100%; padding:10px 5px; margin:8px 0 0; font-size:12px; letter-spacing:0; }
+.pending-mark { color:#d2a56b; font-size:9px; line-height:1.2; }
+.ico-bag.ph, .ico-safe.ph, .shop-grid .ph { display:flex; align-items:center; justify-content:center; font-size:9px; line-height:1.2; overflow-wrap:anywhere; padding:2px; }
+.shop-grid .ph { width:34px; height:34px; }
+.tip-desc { white-space:pre-line; }
+#itemTip { overflow-y:auto; overscroll-behavior:contain; }
+.medical-actions { position:sticky; top:-15px; padding:8px 0; background:#0d1714; z-index:1; }
+.base-left { overflow-y:auto; }
+@media(max-width:720px) {
+  .base-hd { padding:10px 12px; flex-wrap:wrap; gap:10px; }
+  .hd-vals { flex-wrap:wrap; gap:8px; }
+  .hd-vals .wal { padding:0 8px; margin-left:0; }
+  .base-nav { padding:0 8px; flex-wrap:wrap; }
+  .nav-tabs { width:100%; }
+  .nav-tabs button { flex:1; padding:10px 3px; font-size:11px; letter-spacing:0; }
+  .nav-tip { padding:6px 0; }
+  .base-main { flex-direction:column; overflow-y:auto; }
+  .base-left, .base-right { flex:none; width:100%; min-width:0; box-sizing:border-box; }
+  .base-left { padding:12px; max-height:none; overflow:visible; }
+  .base-right { padding:12px; min-height:420px; }
+  .shop-ft, .store-ft { flex-wrap:wrap; gap:8px; }
+}
 </style>
 </head>
 <body>
@@ -868,7 +910,9 @@ window.addEventListener('error', function (e) {
     <h2>这一版要试什么</h2>
     <div class="keys" style="grid-template-columns:1fr">
       <div><span style="color:#8ba39b;line-height:1.95">临海路旧街区：西岸住宅与诊所、中央运河、东岸钟表店与银行。通过北石桥或南栈桥过河，两岸南侧各有一个撤离点。<br>
-      容器分三档：小抽屉开了就走、柜子要一秒、保险箱要五秒且完全不能动。<br>
+      容器分六档品质：废弃即开即取，普通 0.6 秒、充实 1.2 秒、优质 1.8 秒，<br>
+      贵重 2.6 秒、秘藏 3.6 秒——后两档必须站定，而且读条全程都在响。<br>
+      同一品质的箱子掉率一样，但会偏向不同类别：办公区翻文件，诊所翻药，珠宝匣里翻首饰。<br>
       门可以开关；关门能挡住通路和视线，利用房间与后巷绕行。<br>
       声音不只是暴露你：按 Q 扔石子能把敌人引到别处，也能把回响体引到拾荒者身上。<br>
       本图先采用稳定水位：运河不可涉水，南桥与低地可正常通行。十二分钟内搜刮并撤离。</span></div>
@@ -894,6 +938,7 @@ window.addEventListener('error', function (e) {
       </div>
       <div class="hd-vals">
         <div class="wal"><span>信用点</span><b id="bCredits">0</b></div>
+        <div class="wal"><span>生命值</span><b id="bHealth">100 / 100</b></div>
         <div class="wal"><span>下水次数</span><b id="bRuns">0</b></div>
         <div class="wal"><span>图鉴</span><b id="bCodex">0 / 32</b></div>
       </div>
@@ -914,6 +959,7 @@ window.addEventListener('error', function (e) {
           <h3>携带</h3>
           <div id="carryList"></div>
           <div class="carry-sum"><span>补给花费</span><b id="carryCost">¥0</b></div>
+          <details class="medical-carry"><summary>库存医疗品携带</summary><div id="medicalCarry"></div></details>
 
           <button id="btnDeploy">进入游戏</button>
           <div class="deploy-hint" id="deployHint"></div>
@@ -921,12 +967,11 @@ window.addEventListener('error', function (e) {
 
         <!-- 页签二：护甲商人，展开在左边这一块 -->
         <div class="pane" id="paneShop" style="display:none">
-          <div class="shop-note">
-            只进<b>崭新</b>的一~三级货。更高级的东西他也弄不到，那得你自己下去找。
-          </div>
+          <div class="shop-note" id="shopNote"></div>
+          <div id="doctorService" hidden></div>
           <div class="shop-grid" id="shopGrid"></div>
           <div class="shop-ft">
-            <span>买下的东西直接进右边的仓库</span>
+            <span id="shopHint">买下的东西直接进右边的仓库</span>
             <span>余额 <b id="shopWallet">¥0</b></span>
           </div>
         </div>
@@ -936,7 +981,7 @@ window.addEventListener('error', function (e) {
         <div class="store-hd">
           <h3>仓库<em id="stashCount">0 / 90</em></h3>
           <div class="store-acts">
-            <button class="mini" id="btnSellJunk">卖掉所有寻常物</button>
+            <button class="mini" id="btnSellJunk">出售寻常收集品</button>
           </div>
         </div>
 

@@ -17,7 +17,7 @@ for(let y=0;y<M.H;y++)for(let x=0;x<M.W;x++){
  if(x===0||y===0||x===M.W-1||y===M.H-1)assert(!M.walkable(x,y),'地图边缘可绕河');
 }
 for(const box of draft.containers){assert(!M.walkable(box.x,box.y));assert(!M.opaque(box.x,box.y));assert(dirs.some(([dx,dy])=>reached.has(key(box.x+dx,box.y+dy))&&M.findPath(M.playerSpawn.x,M.playerSpawn.y,box.x+dx,box.y+dy)));}
-assert.equal(draft.containers.length,41);assert.equal(spawns.length,24);assert.equal(props.length,40);
+assert.equal(map.containers.length,draft.containers.length);assert.equal(spawns.length,24);assert.equal(props.length,40);
 for(const s of spawns){assert(M.walkable(s.x,s.y));assert(Math.hypot(s.x-map.spawn.x,s.y-map.spawn.y)>=12);for(const ex of map.exits)assert(Math.hypot(s.x-ex.x,s.y-ex.y)>=6);for(const other of spawns)if(other!==s)assert(Math.hypot(s.x-other.x,s.y-other.y)>=3);}
 const bridgeCells=b=>{const out=[];for(let y=b.rect[1];y<=b.rect[3];y++)for(let x=b.rect[0];x<=b.rect[2];x++)out.push(key(x,y));return out;};
 for(const b of map.bridges)assert(flood(new Set(bridgeCells(b))).has('67,51'),'单桥仍须能撤离');
@@ -29,4 +29,4 @@ assert(!M.blocksShot(31,28));assert(!M.blocksShot(29,28));
 for(const d of M.doors){for(const [x,y]of d.cells)assert.equal(M.at(x,y).door,d);d.open=false;for(const [x,y]of d.cells){assert(!M.walkable(x,y));assert(M.opaque(x,y));}d.open=true;}
 assert(M.walkable(14,39)&&M.walkable(14,40),'破口净宽');
 const dry=[0,1.55,3].map(level=>{M.tideLevel=level;for(const ex of map.exits)assert.equal(M.waterDepth(ex.x,ex.y),0);return flood().size;});assert(dry.every(n=>n===dry[0]),'潮汐预留不可提前封路');
-console.log('OK: 72×56 同源地图 / 41 容器 / 24 敌人 / 40 家具 / 双桥唯一跨河 / 两处撤离 / 门组 / 透视窗 / 全潮位稳定');
+console.log(`OK: 72×56 同源地图 / ${draft.containers.length} 容器 / 24 敌人 / 40 家具 / 双桥唯一跨河 / 两处撤离 / 门组 / 透视窗 / 全潮位稳定`);

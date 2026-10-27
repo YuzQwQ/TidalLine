@@ -54,7 +54,7 @@ function build() {
   const catalog=catalogStart+'\nconst FENCED_MAP = '+JSON.stringify(legacy)+';\nconst MAP_CATALOG = [RAID_MAP, FENCED_MAP];\n'+catalogEnd;
   next=next.slice(0,ca)+catalog+next.slice(cb+catalogEnd.length);
   fs.writeFileSync(file,next);
-  console.log('已同步临海路地图：72×56 / 41 容器 / 24 敌人 / 2 撤离点');
+  console.log(`已同步临海路地图：${compiled.width}×${compiled.height} / ${compiled.containers.length} 容器 / ${compiled.enemies.length} 敌人 / ${compiled.exits.length} 撤离点`);
   return compiled;
 }
 module.exports = {compile,build};

@@ -8,16 +8,22 @@ const ctx = vm.createContext({});
 for (const file of ['config.js', 'data.js']) {
   vm.runInContext(fs.readFileSync(path.join(root, 'js', file), 'utf8'), ctx);
 }
-const { types, rows, counts, search, itemSearch, cats, enemies } = vm.runInContext(
-  '({types:CONTAINER_TYPES,rows:MAP_ROWS,counts:BOX_COUNT,search:CFG.SEARCH,itemSearch:CFG.ITEM_SEARCH,cats:CATS,enemies:ENEMY_TYPES})', ctx);
+const { types, rows, counts, quality, order, itemSearch, catPref, cats, enemies } = vm.runInContext(
+  '({types:CONTAINER_TYPES,rows:MAP_ROWS,counts:BOX_COUNT,quality:CONTAINER_QUALITY,order:QUALITY_ORDER,itemSearch:CFG.ITEM_SEARCH,catPref:CFG.LOOT.catPref,cats:CATS,enemies:ENEMY_TYPES})', ctx);
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'assets/asset-prompts.json'), 'utf8'));
 const artwork = [...manifest.assets, ...(manifest.optional || [])];
 const esc = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-const tiers = {
-  fast: { name: '快取容器', rule: '即开即取，适合快速搜刮。', color: '#7fae9f' },
-  std: { name: '标准容器', rule: '需要短暂读条，走出交互范围会中断。', color: '#7e9fb3' },
-  heavy: { name: '重型容器', rule: '读条期间必须站定，移动会中断；开箱会发出较大噪声。', color: '#c8b47a' }
+const RULES = {
+  junk:   '即开即取。九成是白绿，但有 0.3% 的机会翻出金红——真正意义上的垃圾堆里淘黄金。',
+  plain:  '0.6 秒读条，走开就断。白绿占七成半，用来填满背包空位。',
+  ample:  '1.2 秒读条。蓝色达到峰值，白绿仍过半，开始有稳定的中档收益。',
+  fine:   '1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。',
+  rich:   '2.6 秒，必须站定，读条全程发声。紫金占六成三，值得为它改路线。',
+  secret: '3.6 秒，必须站定，读条全程发声。金占一半、红 8%，一局里通常只有两三个。'
 };
+const tiers = Object.fromEntries(order.map((q, i) => [q, {
+  name: quality[q].name, lv: quality[q].lv, color: quality[q].color, rule: RULES[q], pct: quality[q].pct
+}]));
 const entries = Object.entries(types).map(([ch, type]) => {
   const positions = [];
   rows.forEach((row, y) => [...row].forEach((cell, x) => { if (cell === ch) positions.push([x, y]); }));
@@ -32,22 +38,22 @@ function thumb(id, name) {
 }
 
 function card(type) {
-  const tier = tiers[type.kind];
-  const time = search[type.kind].time;
+  const tier = tiers[type.q];
+  const time = quality[type.q].time;
   const preference = type.cats ? type.cats.map(cat => cats[cat].name).join(' / ') : '通用物品池';
   const visual = artwork.find(a => a.id === type.art);
   return `<article class="item container-card" data-container="${esc(type.ch)}" style="--rc:${tier.color}">
     <div class="thumb container-thumb">${thumb(type.art, type.name)}</div>
     <div class="meta">
-      <div class="name">${esc(type.name)}<i class="tag">${tier.name}</i></div>
+      <div class="name">${esc(type.name)}<i class="tag" style="color:${tier.color}">${tier.lv} · ${tier.name}</i></div>
       <div class="sub"><code>${esc(type.art)}.png</code> · 地图标记 <code>${esc(type.ch)}</code></div>
       <dl class="container-facts">
         <div><dt>开箱</dt><dd>${time === 0 ? '即时打开' : time + ' 秒'}</dd></div>
-        <div><dt>抽取次数</dt><dd>${counts[type.kind].join('–')} 次</dd></div>
+        <div><dt>抽取次数</dt><dd>${counts[type.q].join('–')} 次</dd></div>
         <div><dt>掉落偏好</dt><dd>${esc(preference)}</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
-      <div class="desc">${tier.rule}${type.cats ? '偏好类别的抽取权重 ×4，也可能获得其他类别物品。' : ''}</div>
+      <div class="desc">${tier.rule}${type.cats ? '偏好类别的抽取权重 ×' + catPref + '，也可能获得其他类别物品。' : ''}</div>
       <details class="container-positions"><summary>当前地图 ${type.positions.length} 个 · 查看位置</summary><p>${type.positions.map(([x, y]) => `<code>(${x}, ${y})</code>`).join(' ') || '当前地图尚未放置'}</p></details>
       ${visual ? `<div class="vis"><b>画什么</b>${esc(visual.subject)}</div>` : ''}
     </div>
@@ -59,9 +65,10 @@ const remains = [
   { key: 'echo', title: '回响体残留', drop: '1 件随机异常遗物；50% 概率额外获得绷带。' },
   { key: 'guard', title: '潮汐守卫残骸', drop: '1 件随机工业器材或电子产品，另有 12 发弹药。' }
 ];
-const body = Object.entries(tiers).map(([kind, tier]) => {
-  const list = entries.filter(entry => entry.kind === kind);
-  return `<section class="cat"><h2><span class="dot" style="background:${tier.color}"></span>${tier.name}<em>${kind}</em><i>${list.length} 种 · ${list.reduce((n, entry) => n + entry.positions.length, 0)} 个</i></h2><div class="grid container-grid">${list.map(card).join('\n')}</div></section>`;
+const body = Object.entries(tiers).map(([q, tier]) => {
+  const list = entries.filter(entry => entry.q === q);
+  const pct = tier.pct.map((v, i) => ['白','绿','蓝','紫','金','红'][i] + ' ' + v + '%').join(' · ');
+  return `<section class="cat"><h2><span class="dot" style="background:${tier.color}"></span>${tier.lv} 级 ${tier.name}<em>${q}</em><i>${list.length} 种 · ${list.reduce((n, entry) => n + entry.positions.length, 0)} 个</i></h2><p class="category-description"><b>${pct}</b> · ${tier.rule}</p><div class="grid container-grid">${list.map(card).join('\n')}</div></section>`;
 }).join('\n');
 
 const html = `<!DOCTYPE html>
@@ -77,7 +84,7 @@ const html = `<!DOCTYPE html>
 <div class="spec">
   <div class="panel"><h3>搜刮与掉落</h3>
     <p>靠近后按 <code>E</code> 搜刮。开箱后，物品仍需逐件搜索：按稀有度耗时 ${itemSearch.timeByRarity.join(' / ')} 秒。</p>
-    <p>抽取次数是随机抽取的轮数，同一箱内重复物品会被跳过，因此最终件数可能少于抽取次数。类别偏好提高权重，不保证掉落。</p>
+    <p>抽取次数是随机抽取的轮数；同一箱内重抽几次仍撞上同一件时才会重复，所以件数稳定落在区间内。每档稀有度概率见各分区标题下那一行，合计 100%。类别偏好只在该档内重新分配类别，不改变稀有度曲线。</p>
     <p>箱柜打开、拿空后仍占一个完整格子。尸体与残骸可通行；桌椅、货架、油桶属于场景摆设，不能搜刮。</p>
   </div>
   <div class="panel"><h3>贴图与透视</h3>

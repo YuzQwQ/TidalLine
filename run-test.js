@@ -94,7 +94,7 @@ vm.runInContext(`
   globalThis.Quiet = Quiet; globalThis.SFX = SFX;
   globalThis.Base = Base; globalThis.SUPPLY = SUPPLY; globalThis.Art = Art; globalThis.ART = ART;
   globalThis.Corpse = Corpse; globalThis.Bullet = Bullet;
-  globalThis.GEAR = GEAR; globalThis.WEAPONS = WEAPONS; globalThis.EQUIP = EQUIP; globalThis.HELMETS = HELMETS; globalThis.BODIES = BODIES;
+  globalThis.GEAR = GEAR; globalThis.WEAPONS = WEAPONS; globalThis.EQUIP = EQUIP; globalThis.HELMETS = HELMETS; globalThis.BODIES = BODIES; globalThis.SIDEARM_SLOT = SIDEARM_SLOT;
   globalThis.START_CREDITS = START_CREDITS;
 `, ctx, { filename: 'export' });
 
@@ -108,7 +108,7 @@ function noThrow(name, fn) {
   catch (e) { fail++; console.log('  FAIL ' + name + '  →  ' + e.message + '\n       ' + (e.stack || '').split('\n')[1]); }
 }
 
-const { Game, M, CFG, U, Save, ITEMS, Noise, Quiet, Base, SUPPLY, Art, ART, GEAR, WEAPONS, HELMETS, BODIES, EQUIP } = ctx;
+const { Game, M, CFG, U, Save, ITEMS, Noise, Quiet, Base, SUPPLY, Art, ART, GEAR, WEAPONS, HELMETS, BODIES, EQUIP, SIDEARM_SLOT } = ctx;
 
 console.log('\n=== 启动 ===');
 noThrow('Save.load()', () => Save.load());
@@ -254,7 +254,7 @@ console.log('\n=== 搜刮 ===');
 Game.startRun();
 const P5 = Game.player;
 // 找一个快取容器，把玩家挪到旁边
-const fastBox = Game.boxes.find(b => b.kind === 'fast');
+const fastBox = Game.boxes.find(b => b.kind === 'junk');
 P5.x = fastBox.x; P5.y = fastBox.y + CFG.TILE / 2 + P5.r + 1;
 Game.input.interactPressed = true;
 Game.update(1 / 60);
@@ -306,7 +306,8 @@ Game.takeGear(corpseA.items[2], 2);
 ok('枪进空的主武器位', PG.weapons[1] && PG.weapons[1].id === 'smg');
 ok('尸体上的枪已拿走', corpseA.items[2] === null);
 ok('尸体枪只给三成弹匣', PG.weapons[1].magCur === 8, PG.weapons[1].magCur + ' / 25 发');
-ok('武器槽写回存档', Save.gear.weapons[1] === 'smg');
+ok('武器槽写回存档', Save.gear.weapons[1] && Save.gear.weapons[1].equip.gun === 'smg',
+  Save.gear.weapons[1] ? Save.gear.weapons[1].name : '空');
 ok('头盔写回存档', !!Save.gear.helmet && Save.gear.helmet.lv === 1);
 
 // 已经有头盔了 → 这一件放进背包
@@ -354,7 +355,7 @@ PG.bag.slots = full;
 console.log('\n=== 装备回收价 ===');
 const h4 = EQUIP.armor(GEAR.make('helmet', 4));
 ok('头盔回收价不超过买价', h4.sell <= h4.price, h4.sell + ' ≤ ' + h4.price);
-ok('满耐久按半价回收', h4.sell === Math.floor(600 * 0.5), '¥' + h4.sell);
+ok('满耐久按半价回收', h4.sell === Math.floor(GEAR.def('helmet',4).price * 0.5), '¥' + h4.sell);
 
 const body5 = EQUIP.armor(GEAR.make('body', 5));              // 150 耐久
 const body5w = EQUIP.armor(GEAR.make('body', 5, 75));         // 一半耐久
@@ -365,12 +366,12 @@ const broken = EQUIP.armor(GEAR.make('body', 6, 0));
 ok('耐久归零只剩保底价', broken.sell === 1, '¥' + broken.sell);
 
 const g1 = EQUIP.gun('rifle', 0);
-ok('枪按半价回收', g1.sell === Math.floor(WEAPONS.rifle.value * 0.5), '¥' + g1.sell);
+ok('枪按半价回收', g1.sell === Math.floor(WEAPONS.rifle.price * 0.5), '¥' + g1.sell);
 ok('枪的回收价也不超过买价', g1.sell <= g1.price);
 
 console.log('\n=== 装备进仓库 ===');
 Save.stash = [];
-Save.credits = 1000;
+Save.credits = 100000;
 Save.addGearStash(h4);
 Save.addGearStash(EQUIP.armor(GEAR.make('helmet', 4, 30)));
 ok('同型号不同耐久是两条', Save.stash.length === 2);
@@ -422,7 +423,7 @@ ok('真实尸体上的枪能装上', Game.player.weapons.filter(Boolean).length 
 
 // 容器（非尸体）不该出现装备区
 Game.closeLoot();
-const crate = Game.boxes.find(b => b.kind === 'fast');
+const crate = Game.boxes.find(b => b.kind === 'junk');
 Game.openLoot(crate, false);
 noThrow('容器面板渲染不报错', () => Game.renderLootList());
 ok('容器没有装备区', !(crate.items || []).some(e => e && (e.gear || e.gun)));
@@ -636,8 +637,8 @@ ok('容器内容初始都是未搜索',
    sbox.items.filter(Boolean).map(e => e.known).join(','));
 
 ok('稀有度越高搜得越久',
-   Game.searchTime({ r: 1 }) === 0.45 && Game.searchTime({ r: 5 }) === 3.0,
-   'r1=' + Game.searchTime({ r: 1 }) + 's r5=' + Game.searchTime({ r: 5 }) + 's');
+   Game.searchTime({ r: 1 }) === 0.45 && Game.searchTime({ r: 6 }) === 3.0,
+   'r1=' + Game.searchTime({ r: 1 }) + 's r6=' + Game.searchTime({ r: 6 }) + 's');
 
 // 打开就自己往下搜，不用点
 ok('打开容器自动开始搜', Game.autoSearch === true && !!Game.search && Game.search.idx === 0);
@@ -818,7 +819,7 @@ Art.map['props/corpse_scav'] = null;
 
 console.log('\n=== 藏身处 ===');
 // 干净存档
-Save.codex = {}; Save.stash = []; Save.credits = 1000;
+Save.codex = {}; Save.stash = []; Save.credits = 100000;
 Save.loadout = { ammo: 60, bandage: 3, stone: 3 };
 Save.runs = 0;
 Game.player = null;
@@ -850,7 +851,7 @@ ok('清寻常物只清 r1', Save.stashCount('antiq03') === 0 && Save.stashCount(
 ok('清仓加钱', Save.credits > c0);
 
 // 补给花费：仓库有 10 发弹药时只买 50 发
-Save.stash = []; Save.credits = 1000;
+Save.stash = []; Save.credits = 100000;
 Save.addStash('ammo', 10);
 Save.loadout = { ammo: 60, bandage: 3, stone: 3 };
 const cost = Base.computeCost();
@@ -904,7 +905,7 @@ noThrow('点「回藏身处」', () => btn.onclick());
 ok('回到藏身处', Game.state === 'base');
 
 console.log('\n=== 藏身处配装 ===');
-Save.stash = []; Save.credits = 1000;
+Save.stash = []; Save.credits = 100000;
 Save.gear.helmet = null; Save.gear.body = null;
 Base.tab = 'stash'; Base.picker = null;
 noThrow('藏身处渲染', () => Base.open());
@@ -935,7 +936,7 @@ ok('商人卖不到三级以上', Save.stash.length === nShop, '仓库 ' + Save.
 Save.credits = 10;
 Base.buyArmor('body', 3);
 ok('钱不够买不了', Save.stash.length === nShop && Save.credits === 10);
-Save.credits = 1000;
+Save.credits = 100000;
 
 // 从列表里穿上一件
 Base.togglePicker('helmet');
@@ -973,6 +974,95 @@ ok('取消不会动装备', Save.gear.body === null && Save.stash.filter(e => e.
 Save.addGearStash(EQUIP.armor(GEAR.make('body', 3)));
 ok('头盔位里不会列出护甲', Base.stashArmor('helmet').every(e => e.gear.equip.gear.type === 'helmet'));
 ok('护甲位里能列出护甲', Base.stashArmor('body').length === 1);
+
+console.log('\n=== 武器位与军火商 ===');
+
+// 武器位和护甲一样走"仓库挑选"，而且是真物品（带余弹）
+Save.stash = []; Save.credits = 200000;
+Save.gear.weapons = [EQUIP.gun('rifle', 18), null, EQUIP.gun('pistol', 7)];
+ok('武器位存的是物品而不是 id',
+  typeof Save.gear.weapons[0] === 'object' && Save.gear.weapons[0].equip.gun === 'rifle');
+ok('余弹跟着枪存下来', Save.gear.weapons[0].equip.mag === 18);
+ok('副武器默认有枪', !!Save.gear.weapons[SIDEARM_SLOT]);
+
+Base.open();
+Base.togglePicker('w0', null);
+ok('点主武器槽能开列表', Base.picker === 'w0');
+ok('空仓库时列表是空的', Base.stashEquip('w0').length === 0);
+
+// 军火商：全新的枪，满弹匣
+Base.tab = 'gun';
+noThrow('军火商页渲染', () => Base.render());
+const cGun = Save.credits;
+Base.buyGun('smg');
+ok('军火商能买到枪', Save.stash.filter(e => e.gear).length === 1);
+const smgEntry = Save.stash.find(e => e.gear);
+ok('买来的枪是满弹匣', smgEntry.gear.equip.mag === WEAPONS.smg.mag,
+  smgEntry.gear.equip.mag + ' / ' + WEAPONS.smg.mag);
+ok('买枪扣钱', Save.credits === cGun - WEAPONS.smg.price, cGun + ' → ' + Save.credits);
+ok('枪的买价和回收价对得上',
+  smgEntry.gear.sell === Math.floor(WEAPONS.smg.price * 0.5), '¥' + smgEntry.gear.sell);
+
+// 类型要匹配：副武器位不列主武器
+Save.addGearStash(EQUIP.gun('pistol', 9));
+ok('主武器位只列主武器',
+  Base.stashEquip('w0').every(e => WEAPONS[e.gear.equip.gun].slot === 'primary'));
+ok('副武器位只列副武器',
+  Base.stashEquip('w2').every(e => WEAPONS[e.gear.equip.gun].slot === 'secondary'));
+
+// 换上主武器：仓库那件拿出来，身上那件回仓库
+Base.togglePicker('w0', null);
+const rifleBefore = Save.gear.weapons[0];
+Base.equipFromStash(smgEntry, 'w0');
+ok('换上仓库里的冲锋枪', Save.gear.weapons[0].equip.gun === 'smg');
+ok('换下来的步枪回仓库（余弹也在）',
+  Save.stash.some(e => e.gear && e.gear.equip.gun === 'rifle' && e.gear.equip.mag === 18));
+ok('原先那把不在身上了', Save.gear.weapons[0] !== rifleBefore);
+
+// 卸下主武器：回仓库，不再是"只能换不能卸"
+Save.addGearStash(EQUIP.gun('shotgun', 6));
+const shotgunEntry = Save.stash.find(e => e.gear && e.gear.equip.gun === 'shotgun');
+Base.togglePicker('w1', null);
+Base.equipFromStash(shotgunEntry, 'w1');
+ok('第二个主武器位也能装', Save.gear.weapons[1].equip.gun === 'shotgun',
+  Save.gear.weapons[1] ? Save.gear.weapons[1].equip.gun : '空');
+Base.unequip('w1');
+ok('主武器能卸下', Save.gear.weapons[1] === null);
+ok('卸下的枪回仓库', Save.stash.some(e => e.gear && e.gear.equip.gun === 'shotgun'));
+
+// 副武器不能卸
+const sideBefore = Save.gear.weapons[SIDEARM_SLOT];
+Base.unequip('w2');
+ok('副武器卸不掉', Save.gear.weapons[SIDEARM_SLOT] === sideBefore);
+ok('副武器不给"卸下"入口', Base.canUnequip('w2') === false);
+ok('主武器/护甲可以卸', Base.canUnequip('w0') && Base.canUnequip('helmet'));
+
+Save.gear.weapons[SIDEARM_SLOT] = null;
+Base.ensureSidearm();
+ok('副武器空着会自动补一把', !!Save.gear.weapons[SIDEARM_SLOT] &&
+  Save.gear.weapons[SIDEARM_SLOT].equip.gun === 'pistol');
+
+// 余弹一路带进带出
+Save.gear.weapons = [EQUIP.gun('rifle', 18), null, EQUIP.gun('pistol', 3)];
+Game.startRun({ ammo: 0, bandage: 0, stone: 0 });
+const PW = Game.player;
+ok('进局按存档的余弹装弹',
+  PW.weapons[0].magCur === 18 && PW.weapons[2].magCur === 3,
+  PW.weapons.map(w => (w ? w.magCur : '空')).join('/'));
+ok('进局默认拿主武器', PW.slot === 0);
+PW.mag = 5;
+PW.switchWeapon(2);
+ok('切枪读那把自己记着的余弹', PW.mag === 3);
+Game.syncGear();
+ok('未打空的枪余弹写回存档',
+  Save.gear.weapons[0].equip.mag === 5 && Save.gear.weapons[2].equip.mag === 3,
+  Save.gear.weapons.map(w => (w ? w.equip.mag : '空')).join('/'));
+
+// 老存档：['rifle','shotgun','pistol'] 这种只有 id 的格式要能迁移
+const migrated = Save.migrateWeapons(['smg', null, 'pistol']);
+ok('老存档的 id 能迁成物品', migrated[0] && migrated[0].equip.gun === 'smg');
+ok('老存档迁移后弹匣是满的', migrated[0].equip.mag === WEAPONS.smg.mag);
+ok('迁移时副武器空着会补手枪', migrated[2].equip.gun === 'pistol');
 
 console.log('\n=== 撤离 ===');
 Game.startRun();

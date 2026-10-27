@@ -1,0 +1,294 @@
+{
+  "total": 18,
+  "passed": 18,
+  "assets": [
+    {
+      "id": "heal01",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 682,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 6,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "140cffb15a56a4f73a66a941e04e96aa7ab52d3729520b130d00f54e55a7367c"
+    },
+    {
+      "id": "heal02",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 698,
+      "colors": 14,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 5,
+        "top": 7,
+        "right": 43,
+        "bottom": 39
+      },
+      "sha256": "ed196a4745116668db09c4d86c1a391a840538835b4a48ee8d41dca829f38b92"
+    },
+    {
+      "id": "heal03",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1130,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 5,
+        "right": 43,
+        "bottom": 42
+      },
+      "sha256": "f540a4b1a8ba272795aeee62e86a5614f663df4be83aa6077fcd48300b6c2bde"
+    },
+    {
+      "id": "heal04",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1051,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 7,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "68bbf9d218d8e2f55e4d3f6d425c843cff082e3bbf0e8eb1f0a8b92f13a1ca5f"
+    },
+    {
+      "id": "heal05",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 972,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 8,
+        "right": 43,
+        "bottom": 39
+      },
+      "sha256": "c092689f5c4e03442f7a6452b1dab71c956fcb1bd210f68d35ba0236e73687eb"
+    },
+    {
+      "id": "heal06",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 754,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 5,
+        "right": 43,
+        "bottom": 41
+      },
+      "sha256": "ed37cd74776d8a95154ed5b4a4982cfe91cda5645ff94b3d47e1fd16f8e53983"
+    },
+    {
+      "id": "heal07",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 859,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 11,
+        "top": 4,
+        "right": 35,
+        "bottom": 43
+      },
+      "sha256": "a3d85ec3d9a40ac6dbe8b7637e6626814616b865fa031253f8b8493c1524e03c"
+    },
+    {
+      "id": "heal08",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1074,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 7,
+        "top": 4,
+        "right": 39,
+        "bottom": 43
+      },
+      "sha256": "ea2c39ef66bf5393bce8cab3b03f6f43009d3e748b6d510110d2f913bbf38944"
+    },
+    {
+      "id": "heal09",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 760,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 8,
+        "right": 43,
+        "bottom": 38
+      },
+      "sha256": "4f91067a2ca37c24e1102a7dc857e7dbae7d6afda4dd2d9e640b74e6a0531f1a"
+    },
+    {
+      "id": "heal10",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 542,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 5,
+        "right": 43,
+        "bottom": 41
+      },
+      "sha256": "489f7ac7f6bee47585e312e915d81deaaf8b63fae55cac0b8135ec818a2f52d3"
+    },
+    {
+      "id": "heal11",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 890,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 8,
+        "right": 43,
+        "bottom": 38
+      },
+      "sha256": "e306aab7e2e3384dab75d61a6122f4a18b20ac699e8889268bebc8aead09dfbe"
+    },
+    {
+      "id": "heal12",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1076,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 4,
+        "right": 42,
+        "bottom": 43
+      },
+      "sha256": "6c2facb0845e67f6bcfdb729a412161ea24b49ee962d6cdbeb290db68380c2d0"
+    },
+    {
+      "id": "heal13",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 508,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 5,
+        "right": 43,
+        "bottom": 42
+      },
+      "sha256": "04f6b24e26966e6c4b675a2352fa28171db0e7530c2cd2fe20c80abb2943f528"
+    },
+    {
+      "id": "heal14",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 249,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 18,
+        "top": 4,
+        "right": 29,
+        "bottom": 43
+      },
+      "sha256": "e8cdd3c707cd5cd9d8760643a1b82731c25614be2df4cfa3ae26cfdc3540fe16"
+    },
+    {
+      "id": "heal15",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 612,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 14,
+        "top": 4,
+        "right": 32,
+        "bottom": 43
+      },
+      "sha256": "2684a42233ba20adee748cc0e502202f691f0c15c55082deb8356185d1ded8fb"
+    },
+    {
+      "id": "heal16",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1159,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 7,
+        "top": 4,
+        "right": 39,
+        "bottom": 43
+      },
+      "sha256": "3c929f7fb7dfc09e4f65e6e114f848530db3ce20bb56917e45943d345645f5b9"
+    },
+    {
+      "id": "heal17",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 764,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 13,
+        "top": 4,
+        "right": 34,
+        "bottom": 43
+      },
+      "sha256": "46681b7405ecd5e90cbec15bbea7a083fa5b0d4f279690f7eb0b32ec898d3205"
+    },
+    {
+      "id": "heal18",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 402,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 16,
+        "top": 4,
+        "right": 30,
+        "bottom": 43
+      },
+      "sha256": "4f5d5964f84121a246ca29b92ae54bf4baba8a0b343f684fd60f99b127212614"
+    }
+  ]
+}

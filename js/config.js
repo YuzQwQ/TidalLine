@@ -4,6 +4,29 @@
    标注【基准值】的都是拍出来的，只保证能让第一版跑起来。
    ============================================================ */
 
+/* ------------------------------------------------------------
+   容器品质（六档）
+   pct 是"每次抽出一件物品时，六个稀有度各自的目标概率"，单位 %，合计 100。
+   Loot.roll 直接把它当作该档的稀有度权重，因此最终概率就等于这张表——
+   不要再乘一层基准权重，否则曲线会整体偏向白绿。
+   count 抽出几件；time/noise 开箱耗时与噪声；still 是否需要站定不动。
+   ------------------------------------------------------------ */
+const CONTAINER_QUALITY = {
+  junk:   { lv:1, name:'废弃', color:'#c6ceca', count:[1,2], time:0.0, noise:1.2, still:false,
+            pct:[65,   25,   8,    1.7,  0.28, 0.02] },
+  plain:  { lv:2, name:'普通', color:'#3f8b78', count:[1,2], time:0.6, noise:2.5, still:false,
+            pct:[43,   32,   18,   6,    0.9,  0.1 ] },
+  ample:  { lv:3, name:'充实', color:'#3f6d9b', count:[2,3], time:1.2, noise:4,   still:false,
+            pct:[23,   29,   31,   14,   2.8,  0.2 ] },
+  fine:   { lv:4, name:'优质', color:'#9165b3', count:[2,3], time:1.8, noise:5,   still:false,
+            pct:[10,   18,   32,   30,   9.5,  0.5 ] },
+  rich:   { lv:5, name:'贵重', color:'#a8862a', count:[2,3], time:2.6, noise:7,   still:true,
+            pct:[4,    9,    22,   36,   27,   2   ] },
+  secret: { lv:6, name:'秘藏', color:'#8d3a3a', count:[3,3], time:3.6, noise:9,   still:true,
+            pct:[1,    3,    10,   28,   50,   8   ] }
+};
+const QUALITY_ORDER = ['junk','plain','ample','fine','rich','secret'];
+
 const CFG = {
 
   /* ---------- 显示 ---------- */
@@ -155,11 +178,17 @@ const CFG = {
     RADIUS: 2.4
   },
 
-  /* ---------- 搜刮 ---------- */
-  SEARCH: {
-    fast:    { time: 0.0, noise: 1.5 },  // 抽屉/尸体：即开
-    std:     { time: 1.0, noise: 4 },    // 柜子：1 秒，可中断
-    heavy:   { time: 3.5, noise: 8 }     // 保险箱：完全静止
+  /* ---------- 搜刮 ----------
+     开箱时间与噪声由容器品质决定（见文件顶部的 CONTAINER_QUALITY）。
+     这里保留一份派生表，方便旧代码与调试脚本按品质名取值。 */
+  SEARCH: Object.fromEntries(Object.entries(CONTAINER_QUALITY).map(([k, q]) => [k, { time: q.time, noise: q.noise }])),
+
+  /* ---------- 掉落 ----------
+     catPref：容器"类别偏好"的权重倍数。容器只声明偏爱哪几类，
+     倍率决定同品质容器之间的内容差异有多明显；
+     某档没有该类物品时，这一档的份额自动让给其它类别，不会抽空。 */
+  LOOT: {
+    catPref: 9
   },
 
   /* ---------- 逐件搜索 ----------
@@ -168,7 +197,7 @@ const CFG = {
      所以"搜到哪一件就走"本身就是个决定。
      -------------------------------------------------- */
   ITEM_SEARCH: {
-    timeByRarity: [0.45, 0.85, 1.4, 2.1, 3.0],  // 对应 r1 ~ r5
+    timeByRarity: [0.45, 0.85, 1.4, 1.8, 2.1, 3.0],  // 对应 r1 ~ r6
     noise: 2.5,        // 搜一件发出的噪声（格）
     noiseEvery: 0.55   // 每隔多久再发一次，持续暴露位置
   },
@@ -190,23 +219,39 @@ const CFG = {
 
 /* 稀有度：名字 / 颜色 / 边框类名 */
 const RARITY = [
-  { k: 1, name: '寻常', color: '#55605c', cls: 'r1' },
-  { k: 2, name: '完好', color: '#3f8b78', cls: 'r2' },
-  { k: 3, name: '稀见', color: '#3f6d9b', cls: 'r3' },
-  { k: 4, name: '珍稀', color: '#a8862a', cls: 'r4' },
-  { k: 5, name: '孤品', color: '#8d3a3a', cls: 'r5' }
+  { k: 1, name: '寻常', color: '#c6ceca', cls: 'r1' },
+  { k: 2, name: '良品', color: '#3f8b78', cls: 'r2' },
+  { k: 3, name: '上乘', color: '#3f6d9b', cls: 'r3' },
+  { k: 4, name: '稀见', color: '#9165b3', cls: 'r4' },
+  { k: 5, name: '珍罕', color: '#a8862a', cls: 'r5' },
+  { k: 6, name: '孤品', color: '#8d3a3a', cls: 'r6' }
 ];
 
-/* 物品类别 */
+/* 九类收集品；gear 是装备的功能类别，不计入收集品九类。 */
 const CATS = {
-  life:   { name: '生活用品', color: '#6b7f78' },
-  elec:   { name: '电子产品', color: '#4a7fa0' },
-  ind:    { name: '工业器材', color: '#8a7d5a' },
-  med:    { name: '医疗物资', color: '#7a9b85' },
-  antiq:  { name: '古董文物', color: '#9b8355' },
-  art:    { name: '艺术藏品', color: '#8f6a8a' },
-  lux:    { name: '奢侈珍品', color: '#b89440' },
-  spec:   { name: '自然标本', color: '#6f8f6a' },
-  odd:    { name: '异常遗物', color: '#a05050' },
+  life:   { name: '生活用品', color: '#6b7f78', theme:'灾前社会的日常生活', desc:'三层结构：工业时代的通用器物打底，不同社会传统的交汇做层次，环礁湾自己的机构、商业与工艺史收口。不用于代表某一种现实文化。' },
+  elec:   { name: '电子产品', color: '#4a7fa0', theme:'近现代技术文明', desc:'以接近现实1990年代的技术为基础，包括随身听、收音机、录像机和通信器件；超自然研究设备也可能采用普通电子技术。' },
+  ind:    { name: '工业器材', color: '#8a7d5a', theme:'城市工业基础与工程活动', desc:'金属材料、工具、机械组件和工程仪器，体现城市工业史及人为干涉灾害的潜在技术背景。' },
+  med:    { name: '医疗物资', color: '#7a9b85', theme:'医疗救治与生命研究', desc:'医疗耗材、病理切片和特殊检验用品，不预设它们一定来自异常研究。' },
+  collect:{ name: '文物藏品', color: '#b39a63', theme:'历史、文化与财富', desc:'古董、文物、艺术品、奢侈品和自然标本；价值可来自稀缺性、工艺、学术意义或历史背景。' },
+  mil:    { name: '军事物资', color: '#7d9163', theme:'封锁、疏散与军事行动', desc:'军用通信器材、制式工具、识别设备、武器零件与军用补给，可关联首次潮汐的撤离行动及后续封锁。' },
+  intel:  { name: '情报资料', color: '#a89776', theme:'信息、调查与历史记录', desc:'官方档案、实验报告、地图、信函、秘密文件及其他记录载体；部分物品还可能具有探索信息价值。' },
+  occult: { name: '神秘学物品', color: '#907ba8', theme:'隐藏于历史中的超自然传统', desc:'古代仪式用品、神秘学文物、祭器、符号器具和现代神秘学实践制作的物品；能否生效不决定分类。' },
+  odd:    { name: '异常遗物', color: '#a05050', theme:'无法通过常规规律解释的事物', desc:'受潮汐或其他超自然现象影响的器物、特殊物质和不明产物；可以稳定存在、周期性变化或尚未被充分理解。' },
+  ammo:   { name:'弹药类', color:'#a58e61', theme:'武器弹药', desc:'用于武器装填的物资。当前为通用弹药，后续可按枪械与口径扩充分型。' },
+  medical:{ name:'医疗物品', color:'#7a9b85', theme:'治疗与应急救护', desc:'恢复治疗、止痛、损伤处理、针剂和异常处理；仅恢复类已开放使用，与收集品中的医疗物资分开。' },
   gear:   { name: '装备', color: '#5f7f9b' }
 };
+const COLLECTION_CATS = ['life','elec','ind','med','collect','mil','intel','occult','odd'];
+const SUPPLY_CATS = ['ammo','medical'];
+const ITEM_GROUPS = {
+  collectible:{name:'收集品',cats:COLLECTION_CATS},
+  supply:{name:'物资',cats:SUPPLY_CATS}
+};
+const ITEM_GROUP_BY_CAT = Object.fromEntries(Object.entries(ITEM_GROUPS).flatMap(([group,meta])=>meta.cats.map(cat=>[cat,group])));
+function itemGroup(item) { return item ? ITEM_GROUP_BY_CAT[item.cat] || null : null; }
+function formatMoney(value) { return '¥' + Math.round(Number(value) || 0).toLocaleString('en-US'); }
+function itemCategoryLabel(item) {
+  const group=ITEM_GROUPS[itemGroup(item)],cat=CATS[item.cat];
+  return (group?group.name+' / ':'')+(cat?cat.name:'装备');
+}

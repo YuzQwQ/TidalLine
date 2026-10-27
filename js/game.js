@@ -17,6 +17,100 @@ function esc(s) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+/* 恢复类已开放；其他医疗品只保存预留说明，不伪造状态效果。 */
+const Medical = {
+  canonicalId(id) { return id === 'med01' ? 'heal01' : id; },
+  is(item) { return !!item && item.cat === 'medical'; },
+  ready(item) { return this.is(item) && item.use === true && item.heal > 0; },
+  summary(item) {
+    return this.ready(item) ? '恢复 ' + item.heal + ' HP · 局内 ' + item.useTime + ' 秒 / 局外立即'
+      : '效果待开放' + (item.reservedEffect ? ' · 预留：' + item.reservedEffect : '');
+  },
+  quote(hp = Save.hp) {
+    const missing = Math.max(0, CFG.P.HP - hp);
+    const bandage = ITEM_BY_ID.heal01;
+    const medicine = Math.ceil(missing / bandage.heal) * bandage.price;
+    const service = missing > 0 ? Math.max(Math.ceil(bandage.price * ECONOMY.doctor.minimumBandageFraction), Math.ceil(medicine * ECONOMY.doctor.serviceRate)) : 0;
+    return { missing, medicine, service, total: medicine + service };
+  },
+  entries(where) {
+    if (where === 'stash') return Game.state === 'base' ? Save.stash : [];
+    return Game.state === 'playing' && Game.player && !Game.player.dead
+      ? (where === 'safe' ? Game.player.bag.safe : Game.player.bag.slots) : [];
+  },
+  valid(entry, where) { return !!entry && entry.n > 0 && this.entries(where).includes(entry); },
+  consume(entry, where) {
+    const list = this.entries(where);
+    if (!this.valid(entry, where)) return false;
+    if (--entry.n <= 0) list.splice(list.indexOf(entry), 1);
+    return true;
+  },
+  use(entry, where) {
+    const item = where === 'stash' ? stashItem(entry) : entry && entry.item;
+    if (!this.valid(entry, where) || !this.ready(item)) return false;
+    const hp = where === 'stash' ? Save.hp : Game.player.hp;
+    if (hp >= CFG.P.HP) return false;
+    if (where === 'stash') {
+      if (!this.consume(entry, where)) return false;
+      const restored = Math.min(item.heal, CFG.P.HP - hp);
+      Save.setHP(hp + restored); Base.render();
+      Base.note(item.name + '：恢复 ' + Math.round(restored * 10) / 10 + ' HP');
+      return true;
+    }
+    if (Game.action || Game.lootOpen || Game.player.dodgeT > 0 || Game.player.reloadT > 0) {
+      Game.toast('请先结束当前动作，再开始治疗'); return false;
+    }
+    const P = Game.player;
+    if (Math.hypot(P.vx, P.vy) > 1 || ['w','a','s','d'].some(k => Game.input.keys[k])) {
+      Game.toast('请站定后使用医疗品'); return false;
+    }
+    Game.input.mouseDown = false;
+    Game.action = { type:'heal', t:0, total:item.useTime, item, entry, where };
+    Game.toast('使用' + item.name + '，保持站定；E / Esc 取消');
+    return true;
+  },
+  cancel(message) {
+    if (Game.action && Game.action.type === 'heal') {
+      Game.action = null; Game.toast(message || '治疗已中断，未消耗医疗品'); return true;
+    }
+    return false;
+  },
+  finish(action) {
+    if (!this.ready(action.item) || !this.valid(action.entry, action.where) || Game.player.dead) return;
+    const P = Game.player;
+    if (P.hp >= P.maxHp || !this.consume(action.entry, action.where)) return;
+    const restored = Math.min(action.item.heal, P.maxHp - P.hp);
+    P.hp += restored; Save.setHP(P.hp);
+    Game.sfx('pickup'); Game.toast('恢复 ' + Math.round(restored * 10) / 10 + ' HP');
+    if (Game.bagOpen) Game.renderBag();
+  },
+  open(entry, where, node) {
+    if (!this.valid(entry, where)) return;
+    const item = where === 'stash' ? stashItem(entry) : entry.item;
+    Tips.show(item, node.getBoundingClientRect(), '医疗物品操作');
+    const box = document.getElementById('itemTip');
+    const hp = where === 'stash' ? Save.hp : Game.player.hp;
+    const overflow = Math.max(0, (item.heal || 0) - (CFG.P.HP - hp));
+    const useLabel = !this.ready(item) ? '效果待开放' : hp >= CFG.P.HP ? '生命值已满'
+      : '使用一件' + (overflow ? '（溢出 ' + Math.round(overflow * 10) / 10 + ' HP）' : '');
+    box.querySelector('.tip-hd').insertAdjacentHTML('afterend', '<div class="medical-actions"><button data-med="use"' +
+      (!this.ready(item) || hp >= CFG.P.HP ? ' disabled' : '') + '>' + esc(useLabel) + '</button>' +
+      '<button data-med="move">' + (where === 'stash' ? '出售这一堆' : where === 'safe' ? '移回背包' : '移入安全箱') + '</button></div>');
+    box.querySelectorAll('[data-med]').forEach(button => button.onclick = () => {
+      if (!this.valid(entry, where)) { Tips.hide(); return; }
+      Tips.hide();
+      if (button.dataset.med === 'use') this.use(entry, where);
+      else if (where === 'stash') Base.askSell(entry, entry.n, node);
+      else if (where === 'bag') Game.moveToSafe(Game.player.bag.slots.indexOf(entry));
+      else {
+        const bag = Game.player.bag;
+        if (bag.slots.length >= CFG.BAG.SLOTS) { Game.toast('背包满了'); return; }
+        this.cancel(); bag.safe.splice(bag.safe.indexOf(entry), 1); bag.slots.push(entry); Game.renderBag();
+      }
+    });
+  }
+};
+
 const Icons = {
   map: {},          // id -> HTMLImageElement | null
   gear: {},         // 装备图标 id -> HTMLImageElement | null（rifle / helmet3 / body5 …）
@@ -27,7 +121,8 @@ const Icons = {
     this.map = {};
     this.gear = {};
     const jobs = ITEMS.map(it => new Promise(resolve => {
-      const key = 'items/' + it.id;
+      if (Medical.is(it) && !it.iconId) { this.map[it.id] = null; resolve(); return; }
+      const key = 'items/' + (it.iconId || it.id);
       const hit = inlineMap && (inlineMap[key] || inlineMap[it.id]);
       const src = hit || ('assets/' + key + '.png');
       const img = new Image();
@@ -61,7 +156,7 @@ const Icons = {
     const it = ITEM_BY_ID[id];
     const c = it ? RARITY[it.r - 1].color : '#3a4a44';
     return '<span class="' + cls + ' ph" style="background:' + c +
-      '1f;border-color:' + c + '4d"></span>';
+      '1f;border-color:' + c + '4d;color:' + c + '">' + (Medical.is(it) ? esc(it.short || it.name) : '') + '</span>';
   },
 
   /* 装备图标：有图用图，没画就退回一个汉字（步 / 盔 / 甲 …） */
@@ -224,11 +319,11 @@ const Tips = {
     const right = (r.right != null) ? r.right : (r.left || 0) + (r.width || 0);
     let left = right + 8;
     if (left + w > vw - 8) left = Math.max(8, (r.left || 0) - w - 8);
-    const top = U.clamp((r.top != null) ? r.top : 0, 8, Math.max(8, vh - 180));
+    const top = U.clamp((r.top != null) ? r.top : 0, 8, Math.max(8, vh - 320));
     box.style.left = left + 'px';
     box.style.top = top + 'px';
     box.style.width = w + 'px';
-    box.style.maxHeight = Math.max(210, vh - top - 12) + 'px';
+    box.style.maxHeight = Math.max(100, vh - top - 12) + 'px';
   },
 
   /* 点别处 / 滚动 / 改窗口大小就收起，和装备选择窗一个脾气 */
@@ -242,7 +337,10 @@ const Tips = {
       this.hide();
       Deal.hide();
     });
-    document.addEventListener('scroll', () => { this.hide(); Deal.hide(); }, true);
+    document.addEventListener('scroll', ev => {
+      if (ev.target?.closest?.('#itemTip, #dealBox')) return;
+      this.hide(); Deal.hide();
+    }, true);
     if (typeof window !== 'undefined' && window.addEventListener) {
       window.addEventListener('resize', () => { this.hide(); Deal.hide(); });
     }
@@ -254,9 +352,15 @@ const Tips = {
     if (!box || !it) return;
 
     const r = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)];
-    const cat = CATS[it.cat] || CATS.ind;
-    const price = unitPrice(it);
+    const cat = {...(CATS[it.cat] || CATS.ind),name:itemCategoryLabel(it)};
+    const price = it.price || 0;
     const rows = [];
+
+    if (Medical.is(it)) {
+      rows.push(['医疗分组', MEDICAL_GROUPS[it.medicalGroup]]);
+      rows.push(['来源', it.source]);
+      rows.push(['效果', Medical.summary(it)]);
+    }
 
     if (it.equip && it.equip.kind === 'armor') {
       const g = it.equip.gear;
@@ -282,8 +386,8 @@ const Tips = {
         rows.push(['移速', '−' + Math.round((1 - g.move) * 100) + '%']);
       }
     }
-    rows.push(['单价', '¥' + price]);
-    if (it.sell != null && it.sell !== price) rows.push(['回收价', '¥' + it.sell]);
+    rows.push(['单价', formatMoney(price)]);
+    if (it.sell != null) rows.push(['回收价', formatMoney(it.sell)]);
 
     /* 图鉴：只登记真正的收藏品，消耗品和装备不算 */
     let foot = '';
@@ -320,7 +424,7 @@ const Tips = {
         (foot && hint ? ' · ' : '') + esc(hint || '') + '</div>' : '');
 
     box.style.display = '';
-    this.place(box, rect, this.W);
+    this.place(box, rect, Math.min(this.W, window.innerWidth - 16));
     this.bindClose();
   },
 
@@ -371,10 +475,10 @@ const Deal = {
         '<span class="deal-nm">' + esc(o.name) + '<i>' + esc(o.sub || '') + '</i></span>' +
       '</div>' +
       '<div class="deal-sum">' +
-        '<span>' + (sell ? '回收价' : '售价') + '<b class="gold">¥' + price + '</b></span>' +
-        '<span>当前信用点<b>¥' + Save.credits + '</b></span>' +
+        '<span>' + (sell ? '回收价' : '售价') + '<b class="gold">' + formatMoney(price) + '</b></span>' +
+        '<span>当前信用点<b>' + formatMoney(Save.credits) + '</b></span>' +
         '<span>' + (sell ? '成交后' : '成交后') +
-          '<b class="' + (left >= 0 ? '' : 'warn') + '">¥' + left + '</b></span>' +
+          '<b class="' + (left >= 0 ? '' : 'warn') + '">' + formatMoney(left) + '</b></span>' +
       '</div>' +
       '<div class="deal-acts">' +
         '<button class="go' + (can ? '' : ' no') + '" data-a="go">' +
@@ -382,8 +486,11 @@ const Deal = {
         '<button data-a="no">取消</button>' +
       '</div>';
 
+    let used = false;
     box.querySelectorAll('button').forEach(b => {
       b.onclick = () => {
+        if (used) return;
+        used = true;
         if (b.dataset.a === 'go' && can && o.onGo) o.onGo();
         this.hide();
       };
@@ -603,7 +710,7 @@ const Game = {
     for (let y = 0; y < M.H; y++) {
       for (let x = 0; x < M.W; x++) {
         const t = M.at(x, y);
-        const kind = BOX_KIND[t.ch];
+        const kind = t.container && BOX_KIND[t.ch];
         if (kind) {
           const type = CONTAINER_TYPES[t.ch];
           const spot = M.map && M.map.containers.find(b=>b.x===x&&b.y===y);
@@ -611,7 +718,8 @@ const Game = {
             id: spot ? spot.id : null, region: spot ? spot.region : null,
             x: M.cx(x), y: M.cy(y),
             tx: x, ty: y,
-            kind,
+            kind,                       // 品质名（junk…secret）
+            q: CONTAINER_QUALITY[kind],
             art: type.art, name: type.name,
             items: Loot.fill(kind, type.cats || (spot && spot.preference)),
             opened: false
@@ -718,6 +826,7 @@ const Game = {
       }
       if (k === 'tab') { this.toggleBag(); }
       if (k === 'escape') {
+        if (Medical.cancel()) { Tips.hide(); return; }
         if (this.lootOpen) this.closeLoot();
         else if (this.bagOpen) this.toggleBag();
       }
@@ -795,15 +904,23 @@ const Game = {
     // 玩家
     const sp = M.playerSpawn;
     this.player = new Player(M.cx(sp.x), M.cy(sp.y));
+    this.player.hp = Save.hp;
     const L = loadout || Save.loadout || { ammo: 60, bandage: 3, stone: 3 };
     const ammo = ITEMS.find(i => i.id === 'ammo');
-    const band = ITEMS.find(i => i.id === 'med01');
+    const band = ITEM_BY_ID.heal01;
     if (L.ammo > 0) this.player.bag.add(ammo, L.ammo);
     if (L.bandage > 0) this.player.bag.add(band, L.bandage);
+    for (const [id, n] of Object.entries(L.medical || {})) {
+      if (id !== 'heal01' && Medical.is(ITEM_BY_ID[id]) && n > 0) this.player.bag.add(ITEM_BY_ID[id], n);
+    }
     this.player.stones = L.stone || 0;
 
     // 武器与护甲：护甲拷一份实例出来，耐久变化写回 Save.gear
     this.player.fillWeapons(Save.gear.weapons);
+    /* 兜底：万一配装是全空的，至少给一把手枪，绝不空手进图 */
+    if (!this.player.weapons.some(Boolean)) {
+      this.player.fillWeapons([null, null, EQUIP.gun('pistol', WEAPONS.pistol.mag)]);
+    }
     this.player.helmet = Save.gear.helmet ? Object.assign({}, Save.gear.helmet) : null;
     this.player.body = Save.gear.body ? Object.assign({}, Save.gear.body) : null;
 
@@ -883,6 +1000,7 @@ const Game = {
     K.wx = K.mx + this.cam.x;
     K.wy = K.my + this.cam.y;
     K.aimAngle = Math.atan2(K.wy - P.y, K.wx - P.x);
+    if (K.dodgePressed) Medical.cancel();
 
     /* 面板打开时忽略移动与射击 */
     if (!this.lootOpen) {
@@ -1143,14 +1261,14 @@ const Game = {
     }
 
     if (it.type === 'box') {
-      const cfg = CFG.SEARCH[it.obj.kind];
+      const q = CONTAINER_QUALITY[it.obj.kind] || CONTAINER_QUALITY.plain;
       this.action = {
-        type: 'search', t: 0, total: Math.max(0.01, cfg.time),
-        target: it.obj, kind: it.obj.kind
+        type: 'search', t: 0, total: Math.max(0.01, q.time),
+        target: it.obj, kind: it.obj.kind, still: q.still
       };
-      // 重型容器读条全程发声
-      if (it.obj.kind === 'heavy') {
-        Noise.emit(it.obj.x, it.obj.y, cfg.noise, 'search');
+      // 贵重 / 秘藏容器读条全程发声
+      if (q.still) {
+        Noise.emit(it.obj.x, it.obj.y, q.noise, 'search');
       }
       SFX.play('search');
       return;
@@ -1165,10 +1283,16 @@ const Game = {
   updateAction(dt) {
     const a = this.action;
     const P = this.player;
+    if (a.type === 'heal') {
+      const K = this.input;
+      if (['w','a','s','d'].some(k => K.keys[k]) || Math.hypot(P.vx, P.vy) > 1 || P.dead) {
+        Medical.cancel(); return;
+      }
+    }
     a.t += dt;
 
-    // 移动会打断（撤离和重型容器要求站定）
-    if (a.type === 'extract' || (a.type === 'search' && a.kind === 'heavy')) {
+    // 移动会打断（撤离和需要站定的容器）
+    if (a.type === 'extract' || (a.type === 'search' && a.still)) {
       const moving = Math.hypot(P.vx, P.vy) > 12;
       if (moving) {
         this.action = null;
@@ -1178,8 +1302,8 @@ const Game = {
     }
 
     if (a.type === 'search') {
-      // 标准容器：走开就断
-      if (a.kind === 'std') {
+      // 需要读条的容器：走开就断（要求站定的那两档已经在上面的移动判定里处理）
+      if (a.total > 0.05 && !a.still) {
         if (U.dist(P.x, P.y, a.target.x, a.target.y) > CFG.INTERACT_RANGE + 8) {
           this.action = null;
           return;
@@ -1195,6 +1319,8 @@ const Game = {
       } else if (a.type === 'corpse') {
         a.target.opened = true;
         this.openLoot(a.target, true);
+      } else if (a.type === 'heal') {
+        Medical.finish(a);
       } else if (a.type === 'extract') {
         this.action = null;
         this.doExtract();
@@ -1205,6 +1331,7 @@ const Game = {
 
   /* ---------------- 搜刮面板 ---------------- */
   openLoot(obj, isCorpse) {
+    Medical.cancel();
     this.lootOpen = obj;
     this.lootIsCorpse = !!isCorpse;
     if (isCorpse && !obj.items) obj.items = obj.loot;
@@ -1218,7 +1345,7 @@ const Game = {
     box.style.display = 'block';
     document.getElementById('lootTitle').textContent = isCorpse
       ? (obj.enemy ? obj.enemy.t.name + '的尸体' : '尸体')
-      : (obj.name || { fast: '抽屉', std: '柜子', heavy: '保险箱' }[obj.kind]);
+      : (obj.name || '容器');
 
     this.search = null;
     this._searchBar = null;
@@ -1348,7 +1475,7 @@ const Game = {
         Icons.tag(it.id) +
         '<span class="nm">' + it.name + badges + '</span>' +
         '<span class="vv">' + it.w.toFixed(2) + 'kg · ' +
-        (it.price > 0 ? '¥' + it.price : '—') + '</span>';
+        (it.price > 0 ? formatMoney(it.price) : '—') + '</span>';
 
       row.onclick = () => {
         const cur = this.lootOpen && this.lootOpen.items[i];
@@ -1566,6 +1693,7 @@ const Game = {
   },
 
   registerCodex(it) {
+    if(it.noCodex || it.equip || itemGroup(it)!=='collectible')return;
     if (!Save.codex[it.id]) {
       Save.codex[it.id] = { first: Date.now(), count: 0 };
       this.stats.newItems.push(it);
@@ -1601,7 +1729,8 @@ const Game = {
         fb: w ? w.short.charAt(0) : '',
         label: w ? w.short : (i < 2 ? '主武器' + (i + 1) : '副武器'),
         on: i === P.slot,
-        tag: w ? (i === P.slot ? P.mag + '/' + w.mag : w.mag) : '',
+        /* 手上那把读 P.mag（实时），其它槽读各自记着的余弹 */
+        tag: w ? ((i === P.slot ? P.mag : w.magCur) + '/' + w.mag) : '',
         click: w ? () => { P.switchWeapon(i); this.renderGearPanel(); } : null
       });
     }
@@ -1666,9 +1795,10 @@ const Game = {
         const label = it.short || it.name;
         cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty;
         cell.title = it.name + ' · ' + it.w + 'kg · 右键看详情' +
-          (it.equip ? ' · 左键替换身上那件' : ' · 左键移入安全箱');
+          (Medical.is(it) ? ' · 左键打开医疗操作' : it.equip ? ' · 左键替换身上那件' : ' · 左键移入安全箱');
         cell.onclick = () => {
-          if (it.equip) this.equipFromBag(i);
+          if (Medical.is(it)) Medical.open(s, 'bag', cell);
+          else if (it.equip) this.equipFromBag(i);
           else this.moveToSafe(i);
         };
         /* 右键统一是看详情。装备不能塞进安全箱 —— 穿着的东西才算数 */
@@ -1697,6 +1827,7 @@ const Game = {
           (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '');
         cell.title = s.item.name + ' · ' + s.item.w + 'kg · 左键移回背包 · 右键看详情';
         cell.onclick = () => {
+          if (Medical.is(s.item)) { Medical.open(s, 'safe', cell); return; }
           if (P.bag.slots.length >= CFG.BAG.SLOTS) { this.toast('背包满了'); return; }
           P.bag.slots.push(P.bag.safe.splice(i, 1)[0]);
           this.renderBag();
@@ -1714,7 +1845,7 @@ const Game = {
 
     const w = P.bag.weight(), t = P.bag.tier();
     document.getElementById('bagWeight').textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
-    document.getElementById('bagValue').textContent = '¥' + P.bag.value();
+    document.getElementById('bagValue').textContent = formatMoney(P.bag.value());
     const bar = document.getElementById('bagBar');
     bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';
     bar.classList.toggle('warn', t.i >= 2);
@@ -1724,6 +1855,7 @@ const Game = {
   moveToSafe(i) {
     const P = this.player;
     if (P.bag.safe.length >= CFG.BAG.SAFE) { this.toast('安全箱满了'); return; }
+    Medical.cancel();
     P.bag.safe.push(P.bag.slots.splice(i, 1)[0]);
     this.renderBag();
   },
@@ -1751,6 +1883,7 @@ const Game = {
   beginDying() {
     if (this.state !== 'playing') return;
     this.state = 'dying';
+    Save.setHP(1);
     this.deathElapsed = 0;
     this._deathSoundPlayed = true;
     this.action = null;
@@ -1768,11 +1901,13 @@ const Game = {
 
   /* ---------------- 结算 ---------------- */
   showEnd(success, reason) {
+    this.action = null;
     this.closeLoot();
     if (this.bagOpen) this.toggleBag();
     if (success || !this._deathSoundPlayed) SFX.play(success ? 'extract' : 'death');
 
     const P = this.player;
+    Save.setHP(success ? P.hp : 1);
     const carried = P.bag.slots.slice();
     const safe = P.bag.safe.slice();
     const kept = success ? carried.concat(safe) : safe;
@@ -1794,6 +1929,7 @@ const Game = {
     }
 
     Save.runs = (Save.runs || 0) + 1;
+    Save.save();
     Save.flush();          // 一局结束，立刻落盘，不等节流
 
     const total = lines.reduce((a, b) => a + b.price, 0);
@@ -1809,19 +1945,19 @@ const Game = {
     html += '<h2>这一趟</h2>';
     html += '<div class="settle-row"><span>击杀</span><b>' + this.stats.kills + '</b></div>';
     html += '<div class="settle-row"><span>开过的容器</span><b>' + this.stats.found + '</b></div>';
-    html += '<div class="settle-row"><span>带出物品</span><b>' + kept.length + ' 件 / ¥' + total + '</b></div>';
+    html += '<div class="settle-row"><span>带出物品</span><b>' + kept.length + ' 件 / ' + formatMoney(total) + '</b></div>';
     html += '<div class="settle-row"><span>新收录</span><b>' + newOnes.length + '</b></div>';
     const gearCount = kept.filter(s => s.item.equip).length;
     if (gearCount) {
       html += '<div class="settle-row"><span>带出装备</span><b>' + gearCount + ' 件 · 已进仓库</b></div>';
     }
-    html += '<div class="settle-row"><span>信用点余额</span><b>¥' + Save.credits + '</b></div>';
+    html += '<div class="settle-row"><span>信用点余额</span><b>' + formatMoney(Save.credits) + '</b></div>';
 
     if (!success && carried.length) {
       html += '<h2>丢在里面的东西</h2>';
       for (const s of carried) {
-        html += '<div class="settle-row"><span>' + s.item.name + '</span><b class="dim">¥' +
-          (s.item.price * s.n) + '</b></div>';
+        html += '<div class="settle-row"><span>' + s.item.name + '</span><b class="dim">' +
+          formatMoney(s.item.price * s.n) + '</b></div>';
       }
       html += '<div class="tip">安全箱里的 ' + safe.length + ' 件保住了。这就是它存在的理由。</div>';
     }
@@ -1832,11 +1968,11 @@ const Game = {
         const isNew = newOnes.some(x => x.name === l.name.replace(/ ×\d+$/, ''));
         html += '<div class="settle-row"><span>' + l.name +
           (isNew ? '<span class="newtag">NEW</span>' : '') +
-          '</span><b>¥' + l.price + '</b></div>';
+          '</span><b>' + formatMoney(l.price) + '</b></div>';
       }
     }
 
-    const known = Object.keys(Save.codex).length;
+    const known = Save.codexCount();
     const totalItems = ITEMS.filter(i => !i.noCodex).length;
     html += '<h2>图鉴</h2>';
     html += '<div class="settle-row"><span>已收录</span><b>' + known + ' / ' + totalItems + '</b></div>';
@@ -1862,11 +1998,12 @@ const Game = {
   },
 
   /* ---------------- 反馈 ---------------- */
-  /* 护甲耐久变化后写回存档，死了也不回滚——装备是消耗品 */
+  /* 护甲耐久 / 武器余弹变化后写回存档，死了也不回滚——装备是消耗品 */
   syncGear() {
     const P = this.player;
     if (!P) return;
-    Save.gear.weapons = P.weapons.map(w => (w ? w.id : null));
+    P.weapons[P.slot] && (P.weapons[P.slot].magCur = P.mag);   // 手上那把的余弹先同步
+    Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur) : null));
     Save.gear.helmet = P.helmet ? Object.assign({}, P.helmet) : null;
     Save.gear.body = P.body ? Object.assign({}, P.body) : null;
     Save.save();
@@ -2184,8 +2321,9 @@ const Game = {
       if (!vis) continue;
 
       const sx = b.tx * TS - camX, sy = b.ty * TS - camY;
-      const cols = { fast: '#8fa374', std: '#b09a62', heavy: '#d8b055' };
-      const sz = { fast: 12, std: 16, heavy: 20 }[b.kind];
+      const Q = CONTAINER_QUALITY[b.kind] || CONTAINER_QUALITY.plain;
+      const cols = Q.color;
+      const sz = 10 + Q.lv * 2;     // 品质越高，占格越满
 
       const bImg = Art.get('props', b.art || 'crate_' + b.kind);
       if (bImg) {
@@ -2199,14 +2337,14 @@ const Game = {
         continue;
       }
 
-      c.fillStyle = b.opened ? '#1e2a26' : cols[b.kind];
+      c.fillStyle = b.opened ? '#1e2a26' : cols;
       c.fillRect(sx + (TS - sz) / 2, sy + (TS - sz) / 2, sz, sz);
       c.strokeStyle = b.opened ? 'rgba(90,120,110,0.3)' : 'rgba(240,235,200,0.8)';
       c.lineWidth = 1.6;
       c.strokeRect(sx + (TS - sz) / 2 + 0.5, sy + (TS - sz) / 2 + 0.5, sz - 1, sz - 1);
 
-      // 未开过的重容器加个记号
-      if (!b.opened && b.kind === 'heavy') {
+      // 贵重 / 秘藏容器加个记号
+      if (!b.opened && Q.lv >= 5) {
         c.fillStyle = 'rgba(230,200,120,0.8)';
         c.fillRect(sx + TS / 2 - 1, sy + TS / 2 - 4, 2, 8);
       }
@@ -2621,7 +2759,10 @@ const Game = {
       prompt = '';
     } else if (it) {
       if (it.type === 'extract') prompt = '[E] 撤离（6 秒，站定）';
-      else if (it.type === 'box') prompt = '[E] 打开 ' + ({ fast: '抽屉', std: '柜子', heavy: '保险箱（5 秒）' }[it.obj.kind]);
+      else if (it.type === 'box') {
+        const q = CONTAINER_QUALITY[it.obj.kind] || CONTAINER_QUALITY.plain;
+        prompt = '[E] 打开 ' + (it.obj.name || '容器') + (q.time > 0 ? '（' + q.time.toFixed(1) + ' 秒' + (q.still ? '，站定' : '') + '）' : '');
+      }
       else if (it.type === 'corpse') prompt = '[E] 搜尸体';
       else if (it.type === 'door') prompt = '[E] ' + (it.obj.t.door.open ? '关门' : '开门');
     }
@@ -2644,6 +2785,11 @@ const Game = {
       c.fillRect(CFG.VIEW_W / 2 - bw / 2, CFG.VIEW_H / 2 + 54, bw, 8);
       c.fillStyle = a.type === 'extract' ? '#3fbf9b' : '#8a7d5a';
       c.fillRect(CFG.VIEW_W / 2 - bw / 2, CFG.VIEW_H / 2 + 54, bw * p, 8);
+      if (a.type === 'heal') {
+        c.fillStyle = '#c4e0d2'; c.font = '12px monospace';
+        c.fillText('使用' + a.item.name + ' · ' + Math.max(0, a.total - a.t).toFixed(1) + ' 秒', CFG.VIEW_W / 2, CFG.VIEW_H / 2 + 44);
+        c.fillText('保持站定 · E / Esc 取消', CFG.VIEW_W / 2, CFG.VIEW_H / 2 + 79);
+      }
     }
 
     /* --- Toast --- */
@@ -2673,14 +2819,38 @@ const Save = {
   codex: {},
   stash: [],          // [{ id, n }]
   credits: START_CREDITS,
+  hp: CFG.P.HP,
   loadout: { ammo: 60, bandage: 3, stone: 3 },
-  // 配装：三个武器位 + 头盔 / 护甲（带各自耐久，同型号不共用）
+  // 配装：三个武器位 + 头盔 / 护甲
+  // 武器位和护甲一样存"物品"（EQUIP.gun 伪物品，带余弹），不是光存一个 id：
+  // 这样从尸体上捡的枪、军火商买的枪、身上那把，走的是同一套数据结构。
   gear: {
-    weapons: ['rifle', 'shotgun', 'pistol'],
+    weapons: [EQUIP.gun('rifle', 30), EQUIP.gun('shotgun', 6), EQUIP.gun('pistol', 12)],
     helmet: null,      // { type:'helmet', lv, dur }
     body: null         // { type:'body',   lv, dur }
   },
   runs: 0,
+  codexCount() { return ITEMS.filter(item=>!item.noCodex&&itemGroup(item)==='collectible'&&this.codex[item.id]).length; },
+
+  /* 武器位的老格式是 ['rifle','shotgun','pistol']（只有 id，余弹丢失）。
+     统一转成 EQUIP.gun 伪物品；缺位补 null，副武器空着就发一把手枪。 */
+  migrateWeapons(list) {
+    const out = [null, null, null];
+    if (Array.isArray(list)) {
+      for (let i = 0; i < 3; i++) {
+        const e = list[i];
+        if (!e) continue;
+        if (typeof e === 'string') {
+          if (WEAPONS[e]) out[i] = EQUIP.gun(e, WEAPONS[e].mag);
+        } else if (e.equip && e.equip.kind === 'gun' && WEAPONS[e.equip.gun]) {
+          out[i] = EQUIP.gun(e.equip.gun, e.equip.mag | 0);   // 重新包一遍，字段补齐
+        }
+      }
+    }
+    /* 副武器不能空 —— 空手进去就没得打了 */
+    if (!out[SIDEARM_SLOT]) out[SIDEARM_SLOT] = EQUIP.gun('pistol', WEAPONS.pistol.mag);
+    return out;
+  },
 
   load() {
     try {
@@ -2692,19 +2862,27 @@ const Save = {
       this.runs = d.runs || 0;
       // 老存档没有这两个字段，补默认值
       this.credits = (typeof d.credits === 'number') ? d.credits : START_CREDITS;
+      this.hp = Number.isFinite(d.hp) ? U.clamp(d.hp, 1, CFG.P.HP) : CFG.P.HP;
       this.loadout = d.loadout || { ammo: 60, bandage: 3, stone: 3 };
       for (const k in SUPPLY) {
         if (typeof this.loadout[k] !== 'number') this.loadout[k] = SUPPLY[k].start;
       }
+      const meds = {};
+      for (const [rawId, n] of Object.entries(this.loadout.medical || {})) {
+        const id = Medical.canonicalId(rawId), item = ITEM_BY_ID[id];
+        if (!Medical.is(item)) continue;
+        if (id === 'heal01') this.loadout.bandage = U.clamp((this.loadout.bandage || 0) + (Number(n) || 0), 0, item.stack);
+        else meds[id] = U.clamp(Math.floor(Number(n) || 0), 0, item.stack);
+      }
+      this.loadout.medical = meds;
 
       // 配装：老存档没有就补默认，缺字段逐项兜底
       const g = d.gear || {};
       this.gear = {
-        weapons: Array.isArray(g.weapons) ? g.weapons.slice(0, 3) : ['rifle', 'shotgun', 'pistol'],
+        weapons: this.migrateWeapons(g.weapons),
         helmet: g.helmet ? GEAR.make('helmet', g.helmet.lv, g.helmet.dur) : null,
         body: g.body ? GEAR.make('body', g.body.lv, g.body.dur) : null
       };
-      while (this.gear.weapons.length < 3) this.gear.weapons.push(null);
 
       this.normalizeStash();
     } catch (e) { /* 忽略，从零开始 */ }
@@ -2732,10 +2910,11 @@ const Save = {
     this._dirty = false;
     try {
       localStorage.setItem(this.key, JSON.stringify({
-        v: 2,
+        v: 3,
         codex: this.codex,
         stash: this.stash.slice(-300),
         credits: this.credits,
+        hp: this.hp,
         loadout: this.loadout,
         gear: this.gear,
         runs: this.runs
@@ -2750,22 +2929,36 @@ const Save = {
     const gears = [];
     for (const e of this.stash) {
       if (!e) continue;
-      if (e.gear && e.gear.equip) { gears.push({ id: e.id, n: 1, gear: e.gear }); continue; }
-      if (!ITEM_BY_ID[e.id]) continue;
-      m.set(e.id, (m.get(e.id) || 0) + (e.n || 1));
+      if (e.gear && e.gear.equip) {
+        // 用当前模板重算价格与回收价，耐久、余弹仍来自旧快照。
+        const spec=e.gear.equip;
+        const current=spec.kind==='armor'?EQUIP.armor(spec.gear):spec.kind==='gun'?EQUIP.gun(spec.gun,spec.mag):null;
+        if(current)e.gear=current;
+        gears.push({ id: e.id, n: 1, gear: e.gear }); continue;
+      }
+      const id = Medical.canonicalId(e.id);
+      if (!ITEM_BY_ID[id]) continue;
+      m.set(id, (m.get(id) || 0) + (e.n || 1));
     }
     this.stash = [...m].map(([id, n]) => ({ id, n })).concat(gears);
   },
 
   stashCount(id) {
+    id = Medical.canonicalId(id);
     const e = this.stash.find(x => x.id === id && !x.gear);
     return e ? e.n : 0;
   },
 
   addStash(id, n) {
+    id = Medical.canonicalId(id);
     const e = this.stash.find(x => x.id === id && !x.gear);
     if (e) e.n += n;
     else this.stash.push({ id, n });
+  },
+
+  setHP(hp, immediate = true) {
+    this.hp = U.clamp(Number.isFinite(hp) ? hp : CFG.P.HP, 1, CFG.P.HP);
+    this.save(); if (immediate) this.flush();
   },
 
   /* 装备进仓库：独立一条，带耐久，卖价由伪物品的 sell 决定 */
@@ -2805,6 +2998,7 @@ const Base = {
     document.getElementById('mapVeil').classList.add('hidden');
     Game.state = 'base';
     Save.normalizeStash();
+    this.ensureSidearm();     // 副武器永远不能空着
     this.render();
   },
 
@@ -2827,10 +3021,11 @@ const Base = {
 
   render() {
     const totalCodex = ITEMS.filter(i => !i.noCodex).length;
-    document.getElementById('bCredits').textContent = '¥' + Save.credits;
+    document.getElementById('bHealth').textContent = Math.round(Save.hp * 10) / 10 + ' / ' + CFG.P.HP;
+    document.getElementById('bCredits').textContent = formatMoney(Save.credits);
     document.getElementById('bRuns').textContent = Save.runs;
     document.getElementById('bCodex').textContent =
-      Object.keys(Save.codex).length + ' / ' + totalCodex;
+      Save.codexCount() + ' / ' + totalCodex;
 
     this.renderGear();
     this.renderPicker();
@@ -2838,6 +3033,23 @@ const Base = {
     this.renderTabs();
     this.renderFilter();
     this.renderStash();
+  },
+
+  /* ---- 装备槽的读写：'w0'/'w1'/'w2' 走武器位，'helmet'/'body' 走护甲 ---- */
+  slotKind(key) { return (key && key[0] === 'w') ? 'gun' : 'armor'; },
+  slotIdx(key) { return parseInt(String(key).slice(1), 10) || 0; },
+  slotLabel(key) {
+    if (key === 'helmet') return '头盔';
+    if (key === 'body') return '护甲';
+    return this.slotIdx(key) < 2 ? '主武器 ' + (this.slotIdx(key) + 1) : '副武器';
+  },
+  getEquip(key) {
+    if (this.slotKind(key) === 'gun') return Save.gear.weapons[this.slotIdx(key)] || null;
+    return Save.gear[key] || null;
+  },
+  setEquip(key, item) {
+    if (this.slotKind(key) === 'gun') Save.gear.weapons[this.slotIdx(key)] = item || null;
+    else Save.gear[key] = item || null;
   },
 
   /* ---- 装备：3 个武器位 + 头盔 / 护甲 / 背包 ---- */
@@ -2848,16 +3060,25 @@ const Base = {
     const G = Save.gear;
 
     for (let i = 0; i < 3; i++) {
-      const w = WEAPONS[G.weapons[i]];
+      const key = 'w' + i;
+      const it = G.weapons[i];                  // 伪物品（EQUIP.gun）
+      const w = it ? WEAPONS[it.equip.gun] : null;
+      const ammo = it ? (it.equip.mag | 0) : 0;
+      const own = this.stashEquip(key).length;
+      const act = this.picker === key
+        ? '<b class="price">↓ 正在挑选</b>'
+        : (own ? '点击从仓库挑选（' + own + ' 把）'
+               : '点击挑选 · 仓库里没有' + (i === SIDEARM_SLOT ? '（副武器必带）' : ''));
+
       const row = document.createElement('div');
-      row.className = 'slot' + (w ? '' : ' empty');
+      row.className = 'slot' + (w ? '' : ' empty') + (this.picker === key ? ' open' : '');
       row.innerHTML =
         '<div class="slot-ico">' + Icons.gearIcon(w ? w.id : null, i < 2 ? '主' : '副') + '</div>' +
-        '<div class="slot-txt"><b>' + (w ? w.name : '空') + '</b><span>' +
-          (w ? w.dmgMin + '–' + w.dmgMax + ' 伤害 · 弹匣 ' + w.mag + ' · ' + w.rpm + ' 发/分'
-             : '点击选一把' + (i < 2 ? '主武器' : '副武器')) +
+        '<div class="slot-txt"><b>' + (w ? w.name + (i === SIDEARM_SLOT ? '（必带）' : '') : '空') + '</b><span>' +
+          (w ? w.dmgMin + '–' + w.dmgMax + ' 伤害 · 弹匣 ' + ammo + '/' + w.mag + ' · ' : '') +
+          act +
         '</span></div>';
-      row.onclick = () => this.cycleWeapon(i);
+      row.onclick = () => this.togglePicker(key, row);
       el.appendChild(row);
     }
 
@@ -2890,26 +3111,41 @@ const Base = {
     el.appendChild(bag);
   },
 
-  /* 武器位：在同类型武器之间轮换 */
-  cycleWeapon(slotIdx) {
-    const want = slotIdx < 2 ? 'primary' : 'secondary';
-    const ids = Object.keys(WEAPONS).filter(k => WEAPONS[k].slot === want);
-    const cur = Save.gear.weapons[slotIdx];
-    const i = ids.indexOf(cur);
-    Save.gear.weapons[slotIdx] = ids[(i + 1) % ids.length];
-    Save.save();
-    this.renderGear();
-    this.note('换上 ' + WEAPONS[Save.gear.weapons[slotIdx]].name);
-  },
+  /* ---- 装备槽：点开一个列表，从仓库里挑一件 ----
+     武器位和护甲位共用这一套：list 只列同类的东西，点一件就换上，旧的回仓库。 */
 
-  /* ---- 护甲槽：点开一个列表，从仓库里挑一件 ---- */
-
-  /* 仓库里能穿在这一位的装备（按等级降序） */
-  stashArmor(type) {
+  /* 仓库里能放进这一位的装备 */
+  stashEquip(key) {
+    if (this.slotKind(key) === 'gun') {
+      const want = this.slotIdx(key) < 2 ? 'primary' : 'secondary';
+      return Save.stash.filter(e => {
+        const it = stashItem(e);
+        if (!it || !it.equip || it.equip.kind !== 'gun') return false;
+        const def = WEAPONS[it.equip.gun];
+        return def && def.slot === want;
+      }).sort((a, b) => {
+        const ia = WEAPONS[stashItem(a).equip.gun], ib = WEAPONS[stashItem(b).equip.gun];
+        return (ib.price - ia.price) || (stashItem(b).equip.mag - stashItem(a).equip.mag);
+      });
+    }
     return Save.stash.filter(e => {
       const it = stashItem(e);
-      return it && it.equip && it.equip.kind === 'armor' && it.equip.gear.type === type;
+      return it && it.equip && it.equip.kind === 'armor' && it.equip.gear.type === key;
     }).sort((a, b) => stashItem(b).equip.gear.lv - stashItem(a).equip.gear.lv);
+  },
+
+  /* 老名字还留着，测试和别处都按这个找护甲 */
+  stashArmor(type) { return this.stashEquip(type); },
+
+  /* 这一位能不能空着：副武器不行，其它都行 */
+  canUnequip(key) { return key !== 'w' + SIDEARM_SLOT; },
+
+  /* 副武器不能空着 —— 没有手枪就发一把，保证永远能空手不进去 */
+  ensureSidearm() {
+    if (Save.gear.weapons[SIDEARM_SLOT]) return false;
+    Save.gear.weapons[SIDEARM_SLOT] = EQUIP.gun('pistol', WEAPONS.pistol.mag);
+    Save.save();
+    return true;
   },
 
   /* 悬浮窗跟着被点的那个槽位走：先记下它的位置，renderGear 会把行重建掉 */
@@ -2977,26 +3213,30 @@ const Base = {
     const box = document.getElementById('gearPicker');
     if (!box) return;
     box.innerHTML = '';
-    const type = this.picker;
-    if (!type) { box.style.display = 'none'; return; }
+    const key = this.picker;
+    if (!key) { box.style.display = 'none'; return; }
     box.style.display = '';
 
-    const cur = Save.gear[type];
-    const list = this.stashArmor(type);
+    const isGun = this.slotKind(key) === 'gun';
+    const cur = this.getEquip(key);
+    const list = this.stashEquip(key);
+    const unit = isGun ? '把' : '件';
+    const label = this.slotLabel(key);
 
     const hd = document.createElement('div');
     hd.className = 'picker-hd';
-    hd.innerHTML = '<span>选择' + GEAR[type].label + '</span><span>仓库里有 ' + list.length + ' 件</span>';
+    hd.innerHTML = '<span>选择' + label + '</span><span>仓库里有 ' + list.length + ' ' + unit + '</span>';
     box.appendChild(hd);
 
-    /* 第一条永远是"不穿"，否则穿上了就取不下来 */
-    if (cur) {
+    /* 第一条是"不穿"，否则装上了就取不下来。
+       副武器不给这一条 —— 空手进局没法打，必须一直带一把。 */
+    if (cur && this.canUnequip(key)) {
       box.appendChild(this.pickerRow({
-        fb: GEAR[type].short,
-        name: '不穿',
+        fb: isGun ? '空' : GEAR[key].short,
+        name: isGun ? '不装' : '不穿',
         sub: '把 ' + cur.name + ' 放回仓库',
         cls: 'off',
-        click: () => this.unequip(type)
+        click: () => this.unequip(key)
       }));
     }
 
@@ -3004,24 +3244,38 @@ const Base = {
       const empty = document.createElement('div');
       empty.className = 'picker-empty';
       empty.innerHTML = cur
-        ? '仓库里没有别的' + GEAR[type].label + '了。'
-        : '仓库里没有' + GEAR[type].label + '。<br>右侧<b>护甲商人</b>那儿能买到崭新的一~三级，' +
-          '更高级的只能从尸体上带回来。';
+        ? '仓库里没有别的' + label + '了。'
+        : (isGun
+            ? '仓库里没有' + label + '。<br>顶部<b>军火商</b>那儿能买到全新的，尸体上也能捡。'
+            : '仓库里没有' + label + '。<br>顶部<b>护甲商人</b>那儿能买到崭新的一~三级，' +
+              '更高级的只能从尸体上带回来。');
       box.appendChild(empty);
     } else {
       for (const e of list) {
-        const it = e.gear;                  // 伪物品，equip.gear 是真正的护甲实例
-        const g = it.equip.gear;
-        const st = GEAR.state(g);
-        const stName = st === 'ok' ? '完好' : (st === 'worn' ? '破损 · 减伤减半' : '失效 · 不减伤');
-        box.appendChild(this.pickerRow({
-          icon: it.icon, fb: it.short,
-          name: g.name + ' Lv' + g.lv,
-          sub: Math.round(GEAR.reduction(g) * 100) + '% 减伤 · 耐久 ' +
-               Math.ceil(g.dur) + '/' + g.max + ' · ' +
-               (st === 'ok' ? '完好' : '<span class="' + st + '">' + stName + '</span>'),
-          click: () => this.equipFromStash(e, type)
-        }));
+        const it = stashItem(e);
+        if (isGun) {
+          const def = WEAPONS[it.equip.gun];
+          const ammo = it.equip.mag | 0;
+          box.appendChild(this.pickerRow({
+            icon: it.icon, fb: def.short,
+            name: def.name,
+            sub: def.dmgMin + '–' + def.dmgMax + ' 伤害 · 弹匣 ' + ammo + '/' + def.mag +
+                 ' · ' + def.rpm + ' 发/分',
+            click: () => this.equipFromStash(e, key)
+          }));
+        } else {
+          const g = it.equip.gear;
+          const st = GEAR.state(g);
+          const stName = st === 'ok' ? '完好' : (st === 'worn' ? '破损 · 减伤减半' : '失效 · 不减伤');
+          box.appendChild(this.pickerRow({
+            icon: it.icon, fb: it.short,
+            name: g.name + ' Lv' + g.lv,
+            sub: Math.round(GEAR.reduction(g) * 100) + '% 减伤 · 耐久 ' +
+                 Math.ceil(g.dur) + '/' + g.max + ' · ' +
+                 (st === 'ok' ? '完好' : '<span class="' + st + '">' + stName + '</span>'),
+            click: () => this.equipFromStash(e, key)
+          }));
+        }
       }
     }
 
@@ -3046,37 +3300,58 @@ const Base = {
     return row;
   },
 
-  /* 穿上仓库里那一件；身上原有的落回仓库，不会消失 */
-  equipFromStash(entry, type) {
+  /* 装上仓库里那一件（枪或甲）；身上原有的落回仓库，不会消失。
+     武器位存 EQUIP.gun 伪物品（带余弹），护甲位存护甲实例 —— 和之前一致。 */
+  equipFromStash(entry, key) {
     const it = stashItem(entry);
-    if (!it || !it.equip || it.equip.kind !== 'armor') return;
-    const g = it.equip.gear;
-    const cur = Save.gear[type];
+    if (!it || !it.equip) return;
+    const cur = this.getEquip(key);
+    const isGun = this.slotKind(key) === 'gun';
+    let next, name;
+
+    if (isGun) {
+      const def = WEAPONS[it.equip.gun];
+      if (!def) return;
+      const want = this.slotIdx(key) < 2 ? 'primary' : 'secondary';
+      if (def.slot !== want) return;                      // 类型不对，别硬塞
+      next = EQUIP.gun(it.equip.gun, it.equip.mag | 0);   // 余弹跟着枪走
+      name = def.name;
+    } else {
+      const g = it.equip.gear;
+      if (!g || it.equip.kind !== 'armor') return;
+      next = GEAR.make(key, g.lv, g.dur);                 // 拷一份，仓库那件要移除
+      name = g.name;
+    }
 
     Save.stash = Save.stash.filter(x => x !== entry);
-    if (cur) Save.addGearStash(EQUIP.armor(cur));
-    Save.gear[type] = GEAR.make(type, g.lv, g.dur);
+    if (cur) Save.addGearStash(isGun ? cur : EQUIP.armor(cur));
+    this.setEquip(key, next);
     Save.save();
 
     this.closePicker();
     this.render();
-    this.note('穿上 ' + g.name + (cur ? '，' + cur.name + ' 放回仓库' : ''));
+    this.note((isGun ? '装上 ' : '穿上 ') + name + (cur ? '，' + cur.name + ' 放回仓库' : ''));
   },
 
-  /* 卸下：放回仓库，不是销毁 */
-  unequip(type) {
-    const cur = Save.gear[type];
+  /* 卸下：放回仓库，不是销毁。副武器不能卸 */
+  unequip(key) {
+    if (!this.canUnequip(key)) {
+      this.note('副武器必须带一把手枪 —— 空手进去没法打', true);
+      this.closePicker();
+      return;
+    }
+    const cur = this.getEquip(key);
     if (!cur) { this.closePicker(); return; }
     if (Save.stash.length >= STASH_SLOTS) {
       this.note('仓库满了，先卖点东西', true);
       return;
     }
-    Save.addGearStash(EQUIP.armor(cur));
-    Save.gear[type] = null;
+    Save.addGearStash(this.slotKind(key) === 'gun' ? cur : EQUIP.armor(cur));
+    this.setEquip(key, null);
     Save.save();
     this.closePicker();
     this.render();
-    this.note('卸下' + GEAR[type].label + '，已放回仓库');
+    this.note('卸下' + cur.name + '，已放回仓库');
   },
 
   /* ---- 护甲商人：只卖崭新的一~三级 ---- */
@@ -3085,9 +3360,9 @@ const Base = {
   renderTabs() {
     const el = document.getElementById('baseTabs');
     if (!el) return;
-    const shop = this.tab === 'shop';
+    const shop = ['shop','gun','doctor'].includes(this.tab);
     if (!el.dataset.built) {
-      const opts = [['stash', '仓库'], ['shop', '护甲商人']];
+      const opts = [['stash', '仓库'], ['shop', '护甲商人'], ['gun', '军火商'], ['doctor', '医生']];
       el.innerHTML = opts.map(([k, name]) =>
         '<button class="' + (k === (this.tab || 'stash') ? 'on' : '') +
         '" data-t="' + k + '">' + name + '</button>'
@@ -3102,27 +3377,43 @@ const Base = {
       });
     }
 
-    /* 商人页展开在左边那一块，右边的仓库始终可见 —— 买完能直接看见东西进库 */
+    /* 商人页（护甲 / 军火）展开在左边那一块，右边的仓库始终可见 —— 买完能直接看见东西进库 */
     const pg = document.getElementById('paneGear');
     const ps = document.getElementById('paneShop');
     if (pg) pg.style.display = shop ? 'none' : '';
     if (ps) ps.style.display = shop ? '' : 'none';
     const tip = document.getElementById('navTip');
     if (tip) {
-      tip.textContent = shop
-        ? '只进崭新的一~三级 · 买下的东西直接进右边仓库'
-        : '左边配装带补给，右边是仓库';
+      tip.textContent = this.tab === 'doctor' ? '白绿蓝医疗品 · 库存用药与收费治疗'
+        : this.tab === 'gun'
+        ? '全新枪械 · 买下的东西直接进右边仓库'
+        : (this.tab === 'shop'
+            ? '只进崭新的一~三级 · 买下的东西直接进右边仓库'
+            : '左边配装带补给，右边是仓库');
     }
     if (shop) this.renderShop();
   },
 
-  /* 商品也用格子摆，点一下弹交易框确认金额 */
+  /* 商品也用格子摆，点一下弹交易框确认金额。
+     护甲商人和军火商共用同一块面板，只是货架内容不同。 */
   renderShop() {
     const el = document.getElementById('shopGrid');
     if (!el) return;
     el.innerHTML = '';
     const wallet = document.getElementById('shopWallet');
-    if (wallet) wallet.textContent = '¥' + Save.credits;
+    if (wallet) wallet.textContent = formatMoney(Save.credits);
+    const clinic = document.getElementById('doctorService');
+    if (clinic) clinic.hidden = this.tab !== 'doctor';
+
+    if (this.tab === 'doctor') return this.renderDoctor(el);
+    if (this.tab === 'gun') return this.renderGunShop(el);
+
+    const note = document.getElementById('shopNote');
+    if (note) {
+      note.innerHTML = '只进<b>崭新</b>的一~三级货。更高级的东西他也弄不到，那得你自己下去找。';
+    }
+    const hint = document.getElementById('shopHint');
+    if (hint) hint.textContent = '买下的东西直接进右边的仓库';
 
     for (const type of ['helmet', 'body']) {
       for (let lv = 1; lv <= this.SHOP_MAX_LV; lv++) {
@@ -3135,7 +3426,7 @@ const Base = {
           : '<span class="gl">' + esc(GEAR[type].short) + '</span>';
         cell.innerHTML = ico +
           '<span class="cn">' + esc(d.short || d.name) + '</span>' +
-          '<span class="pr">¥' + d.price + '</span>';
+          '<span class="pr">' + formatMoney(d.price) + '</span>';
         cell.title = d.name + ' · Lv' + lv + ' · ' + Math.round(d.dr * 100) +
           '% 减伤 · 耐久 ' + d.dur + ' · ' + d.w + 'kg · 右键看详情';
         cell.onclick = () => this.askBuy(type, lv, cell);
@@ -3148,7 +3439,98 @@ const Base = {
     }
   },
 
+  /* 军火商的货架：两个主武器 + 一个副武器，全是崭新的满弹匣 */
+  renderGunShop(el) {
+    const note = document.getElementById('shopNote');
+    if (note) {
+      note.innerHTML = '全新枪械，<b>满弹匣</b>出手。三个位子都能配 —— 但副武器必须一直带一把。';
+    }
+    const hint = document.getElementById('shopHint');
+    if (hint) hint.textContent = '买下的枪直接进右边的仓库，回左边装上';
+
+    for (const [group, label] of [['primary', '主武器'], ['secondary', '副武器']]) {
+      const title = document.createElement('div');
+      title.className = 'shop-cat';
+      title.textContent = label;
+      el.appendChild(title);
+
+      for (const id of Object.keys(WEAPONS)) {
+        const d = WEAPONS[id];
+        if (d.slot !== group) continue;
+        const item = EQUIP.gun(id, d.mag);          // 崭新：满弹匣
+        const cell = document.createElement('div');
+        cell.className = 'scell r' + item.r;
+        const ico = Icons.gear[id]
+          ? '<img src="' + Icons.gear[id].src + '" alt="">'
+          : '<span class="gl">' + esc(d.short) + '</span>';
+        cell.innerHTML = ico +
+          '<span class="cn">' + esc(d.short) + '</span>' +
+          '<span class="pr">' + formatMoney(d.price) + '</span>';
+        cell.title = d.name + ' · ' + d.dmgMin + '–' + d.dmgMax + ' 伤害 · 弹匣 ' + d.mag +
+          ' · ' + d.rpm + ' 发/分 · ' + d.w + 'kg · 右键看详情';
+        cell.onclick = () => this.askBuyGun(id, cell);
+        cell.oncontextmenu = (ev) => {
+          ev.preventDefault();
+          Tips.show(item, cell.getBoundingClientRect(), '左键买下');
+        };
+        el.appendChild(cell);
+      }
+    }
+  },
+
   /* 买之前先把金额摆出来 */
+  renderDoctor(el) {
+    document.getElementById('shopNote').innerHTML = '出售<b>寻常、良品、上乘</b>医疗品。紫金恢复药需要探索获取；标有“效果待开放”的商品当前不可使用。';
+    document.getElementById('shopHint').textContent = '购买后进入仓库；点击库存医疗品可使用或出售';
+    const q = Medical.quote(), service = document.getElementById('doctorService');
+    service.innerHTML = '<h3>治疗服务</h3><p>生命值 <b>' + Math.round(Save.hp * 10) / 10 + ' / 100 HP</b> · 补满 ' +
+      Math.round(q.missing * 10) / 10 + ' HP</p><p>绷带等效成本 ' + formatMoney(q.medicine) + ' + 服务费 ' + formatMoney(q.service) +
+      '</p><button id="btnDoctorTreat"' + (!q.missing || Save.credits < q.total ? ' disabled' : '') + '>' +
+      (q.missing ? '立即治疗至满血 · ' + formatMoney(q.total) : '生命值已满') + '</button><p class="medical-muted">' +
+      (q.missing && Save.credits < q.total ? '信用点不足。' : '') + '损伤清除服务待状态系统开放。</p>';
+    document.getElementById('btnDoctorTreat').onclick = ev => {
+      const quote = Medical.quote();
+      Deal.show({ kind:'buy', title:'治疗服务', name:'立即恢复至满血',
+        sub:'恢复 ' + Math.round(quote.missing * 10) / 10 + ' HP · 药费 ' + formatMoney(quote.medicine) + ' + 服务费 ' + formatMoney(quote.service),
+        price:quote.total, can:quote.missing > 0 && Save.credits >= quote.total,
+        onGo:() => this.treat(quote.total) }, ev.currentTarget.getBoundingClientRect());
+    };
+    for (const [group, label] of Object.entries(MEDICAL_GROUPS)) {
+      const title = document.createElement('div'); title.className = 'shop-cat'; title.textContent = label; el.appendChild(title);
+      for (const item of MEDICAL_ITEMS.filter(i => i.medicalGroup === group && i.r <= 3)) {
+        const cell = document.createElement('div'); cell.className = 'scell r' + item.r; cell.dataset.medical = item.id;
+        cell.innerHTML = Icons.bagTag(item, '') + '<span class="cn">' + esc(item.short || item.name) + '</span>' +
+          '<span class="pr">' + formatMoney(item.price) + '</span>' + (!Medical.ready(item) ? '<span class="pending-mark">效果待开放</span>' : '');
+        cell.title = item.name + ' · ' + Medical.summary(item) + ' · ' + formatMoney(item.price);
+        cell.onclick = () => Deal.show({ kind:'buy', title:'买入医疗品', name:item.name, id:item.id,
+          sub:Medical.summary(item), price:item.price,
+          can:Save.credits >= item.price && (Save.stashCount(item.id) > 0 || Save.stash.length < STASH_SLOTS),
+          onGo:() => this.buyMedical(item.id) }, cell.getBoundingClientRect());
+        cell.oncontextmenu = ev => { ev.preventDefault(); Tips.show(item, cell.getBoundingClientRect(), '左键购买一件'); };
+        el.appendChild(cell);
+      }
+    }
+  },
+
+  buyMedical(id) {
+    const item = ITEM_BY_ID[id];
+    if (Game.state !== 'base' || !Medical.is(item) || item.r > 3) return false;
+    if (Save.credits < item.price) { this.note('信用点不足', true); return false; }
+    if (!Save.stashCount(id) && Save.stash.length >= STASH_SLOTS) { this.note('仓库满了', true); return false; }
+    Save.credits -= item.price; Save.addStash(id, 1); Save.save(); Save.flush();
+    this.render(); this.note('买下' + item.name + '，已放入仓库'); return true;
+  },
+
+  treat(expectedPrice) {
+    if (Game.state !== 'base') return false;
+    const q = Medical.quote();
+    if (!q.missing) return false;
+    if (q.total !== expectedPrice) { this.note('伤势已变化，请重新确认诊费', true); return false; }
+    if (Save.credits < q.total) { this.note('信用点不足', true); return false; }
+    Save.credits -= q.total; Save.setHP(CFG.P.HP);
+    this.render(); this.note('治疗完成，已恢复至满血（-' + formatMoney(q.total) + '）'); return true;
+  },
+
   askBuy(type, lv, cell) {
     const d = GEAR.def(type, lv);
     if (!d) return;
@@ -3165,13 +3547,46 @@ const Base = {
     }, cell.getBoundingClientRect());
   },
 
+  askBuyGun(id, cell) {
+    const d = WEAPONS[id];
+    if (!d) return;
+    Deal.show({
+      kind: 'buy',
+      title: '买入',
+      name: d.name,
+      sub: (d.slot === 'primary' ? '主武器' : '副武器') + ' · ' + d.dmgMin + '–' + d.dmgMax +
+           ' 伤害 · 弹匣 ' + d.mag + ' · 满弹',
+      icon: id,
+      short: d.short,
+      price: d.price,
+      can: Save.credits >= d.price && Save.stash.length < STASH_SLOTS,
+      onGo: () => this.buyGun(id)
+    }, cell.getBoundingClientRect());
+  },
+
+  buyGun(id) {
+    const d = WEAPONS[id];
+    if (!d) return;
+    if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return; }
+    if (Save.credits < d.price) {
+      this.note('买 ' + d.name + ' 还差 ' + formatMoney(d.price - Save.credits), true);
+      return;
+    }
+    Save.credits -= d.price;
+    Save.addGearStash(EQUIP.gun(id, d.mag));      // 崭新：满弹匣
+    Save.save();
+    Game.sfx('pickup');
+    this.render();
+    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），在仓库里，回左边装上');
+  },
+
   buyArmor(type, lv) {
     const d = GEAR.def(type, lv);
     if (!d) return;
     if (lv > this.SHOP_MAX_LV) return;                 // 商人进不到更高级的货
     if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return; }
     if (Save.credits < d.price) {
-      this.note('买 ' + d.name + ' 还差 ¥' + (d.price - Save.credits), true);
+      this.note('买 ' + d.name + ' 还差 ' + formatMoney(d.price - Save.credits), true);
       return;
     }
     Save.credits -= d.price;
@@ -3179,7 +3594,7 @@ const Base = {
     Save.save();
     Game.sfx('pickup');
     this.render();
-    this.note('买下 ' + d.name + '（-¥' + d.price + '），在仓库里，回左边换上');
+    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），在仓库里，回左边换上');
   },
 
   /* ---- 携带配置 ---- */
@@ -3211,7 +3626,7 @@ const Base = {
       row.innerHTML =
         '<span class="cn">' + sp.name +
           '<i>' + (fromStash > 0 ? '仓库 ' + fromStash : '') +
-          (buy > 0 ? (fromStash > 0 ? ' · ' : '') + '买 ' + buy + ' ¥' + (buy * sp.price) : '') +
+          (buy > 0 ? (fromStash > 0 ? ' · ' : '') + '买 ' + buy + ' ' + formatMoney(buy * sp.price) : '') +
         '</i></span>' +
         '<div class="stepper"><button data-d="-1">−</button><b>' + want +
         '</b><button data-d="1">+</button></div>';
@@ -3223,7 +3638,24 @@ const Base = {
     }
     const cc = this.computeCost();
     document.getElementById('carryCost').textContent =
-      (Save.credits < BROKE_LINE) ? '救济补给 · 免费' : '¥' + cc;
+      (Save.credits < BROKE_LINE) ? '救济补给 · 免费' : formatMoney(cc);
+    const meds = document.getElementById('medicalCarry');
+    meds.innerHTML = '';
+    for (const item of MEDICAL_ITEMS.filter(i => i.id !== 'heal01' && (Save.stashCount(i.id) > 0 || Save.loadout.medical?.[i.id] > 0))) {
+      const count = Save.stashCount(item.id), selected = Save.loadout.medical?.[item.id] || 0;
+      const row = document.createElement('div'); row.className = 'carry-row';
+      row.innerHTML = '<span class="cn">' + esc(item.name) + '<i>库存 ' + count + ' · ' + item.w + 'kg/件' +
+        (!Medical.ready(item) ? ' · 效果待开放' : '') + (selected > count ? ' · 库存不足' : '') + '</i></span>' +
+        '<div class="stepper"><button data-d="-1">−</button><b>' + selected + '</b><button data-d="1">+</button></div>';
+      row.querySelectorAll('button').forEach(button => button.onclick = () => {
+        Save.loadout.medical ||= {};
+        const dir = Number(button.dataset.d);
+        Save.loadout.medical[item.id] = dir < 0 ? Math.max(0, selected - 1) : Math.min(selected + 1, count, item.stack);
+        Save.save(); this.renderCarry();
+      });
+      meds.appendChild(row);
+    }
+    if (!meds.innerHTML) meds.innerHTML = '<p class="medical-muted">仓库中的其他医疗品可在这里选择携带，不自动购买。</p>';
   },
 
   stepCarry(key, dir) {
@@ -3243,7 +3675,7 @@ const Base = {
     if (el.dataset.built) return;      // 只建一次，之后只切 class
     const opts = [
       ['all', '全部'], ['sell', '可出售'],
-      ['sup', '补给品'], ['col', '收藏品']
+      ['sup', '物资'], ['col', '收集品']
     ];
     el.innerHTML = opts.map(([k, name]) =>
       '<button class="pill' + (k === this.filter ? ' on' : '') + '" data-f="' + k + '">' + name + '</button>'
@@ -3301,11 +3733,9 @@ const Base = {
       const it = stashItem(e);
       if (!it) return false;
       if (this.filter === 'sup') {
-        if (e.gear) return false;
-        for (const k in SUPPLY) if (SUPPLY[k].itemId === e.id) return true;
-        return false;
+        return itemGroup(it)==='supply';
       }
-      if (this.filter === 'col') return !it.noCodex && !it.equip;
+      if (this.filter === 'col') return itemGroup(it)==='collectible';
       return true;
     }).sort((a, b) => {
       const ia = stashItem(a), ib = stashItem(b);
@@ -3318,7 +3748,7 @@ const Base = {
       const it = stashItem(e);
       return a + (it ? unitPrice(it) * (e.n || 1) : 0);
     }, 0);
-    document.getElementById('stashValue').textContent = '¥' + total;
+    document.getElementById('stashValue').textContent = formatMoney(total);
 
     /* 分页：一页就是当前屏幕能摆下的格数 */
     const m = this.gridMetrics();
@@ -3348,9 +3778,9 @@ const Base = {
         Icons.bagTag(it, '') +
         '<span class="cn">' + esc(it.short || it.name) + '</span>' +
         (n > 1 ? '<span class="qty">' + n + '</span>' : '');
-      cell.title = it.name + ' · ' + it.w.toFixed(2) + 'kg · ¥' +
-        (unitPrice(it) * n) + ' · 左键卖出 · 右键看详情';
-      cell.onclick = () => this.askSell(e, n, cell);
+      cell.title = it.name + ' · ' + it.w.toFixed(2) + 'kg · ' +
+        formatMoney(unitPrice(it) * n) + (Medical.is(it) ? ' · 左键医疗操作' : ' · 左键卖出') + ' · 右键看详情';
+      cell.onclick = () => Medical.is(it) ? Medical.open(e, 'stash', cell) : this.askSell(e, n, cell);
       cell.oncontextmenu = (ev) => {
         ev.preventDefault();
         Tips.show(it, cell.getBoundingClientRect(), '左键卖出这一格');
@@ -3391,7 +3821,7 @@ const Base = {
       kind: 'sell',
       title: '卖出',
       name: it.name + (n > 1 ? ' ×' + n : ''),
-      sub: it.equip ? '装备按剩余耐久折价' : (CATS[it.cat] || CATS.ind).name,
+      sub: it.equip ? '装备按剩余耐久折价' : itemCategoryLabel(it),
       icon: it.icon,
       id: it.id,
       short: it.short,
@@ -3423,10 +3853,10 @@ const Base = {
     const keep = [];
     for (const e of Save.stash) {
       const it = stashItem(e);
-      if (it && !it.equip && it.r === 1) { gain += it.price * e.n; count += e.n; }
+      if (it && itemGroup(it) === 'collectible' && it.r === 1) { gain += it.price * e.n; count += e.n; }
       else keep.push(e);
     }
-    if (!count) { this.note('仓库里没有寻常物可卖'); return; }
+    if (!count) { this.note('仓库里没有寻常收集品可卖'); return; }
     Save.stash = keep;
     Save.credits += gain;
     Save.save();
@@ -3435,12 +3865,41 @@ const Base = {
   },
 
   /* ---- 出发 ---- */
+  previewCarry() {
+    const bag = new Bag(), requests = [];
+    for (const k of Object.keys(SUPPLY)) {
+      const supply = SUPPLY[k], n = Save.loadout[k] || 0;
+      if (!Number.isInteger(n) || n < 0 || n > supply.max) return { ok:false, why:'补给数量无效' };
+      if (supply.itemId && n) requests.push({ item:ITEM_BY_ID[supply.itemId], n });
+    }
+    for (const [id, n] of Object.entries(Save.loadout.medical || {})) {
+      if (!n) continue;
+      const item = ITEM_BY_ID[id];
+      if (!Medical.is(item) || id === 'heal01' || !Number.isInteger(n) || n < 0 || n > item.stack) return { ok:false, why:'医疗携带数量无效' };
+      if (Save.stashCount(id) < n) return { ok:false, why:item.name + '库存不足，请调整携带数量' };
+      requests.push({ item, n });
+    }
+    for (const req of requests) {
+      const check = bag.canAdd(req.item, req.n);
+      if (!check.ok || !bag.add(req.item, req.n)) return { ok:false, why:check.why || '背包无法容纳补给' };
+    }
+    return { ok:true, bag };
+  },
+
   deploy(mapId) {
     const map=MAP_CATALOG.find(m=>m.id===(mapId||RAID_MAP.id));
     if(!map)return;
+    /* 空手不准下海：没有副武器就发一把，有主武器就照常带 */
+    this.ensureSidearm();
+    if (!Save.gear.weapons[SIDEARM_SLOT]) {
+      this.note('副武器必须带一把手枪 —— 先去军火商买一把', true);
+      return;
+    }
     const cost = this.computeCost();
+    const carry = this.previewCarry();
+    if (!carry.ok) { this.note(carry.why, true); return; }
     if (cost > Save.credits) {
-      this.note('信用点不够，还差 ¥' + (cost - Save.credits), true);
+      this.note('信用点不够，还差 ' + formatMoney(cost - Save.credits), true);
       return;
     }
 
@@ -3456,6 +3915,12 @@ const Base = {
         left -= take;
         if (e.n <= 0) Save.stash = Save.stash.filter(x => x !== e);
       }
+    }
+    for (const [id, n] of Object.entries(Save.loadout.medical || {})) {
+      if (!n) continue;
+      const entry = Save.stash.find(e => e.id === id && !e.gear);
+      entry.n -= n;
+      if (!entry.n) Save.stash.splice(Save.stash.indexOf(entry), 1);
     }
     Save.credits -= cost;
     Save.save();
@@ -3498,7 +3963,7 @@ const MapSelect = {
     }
     const map=MAP_CATALOG.find(m=>m.id===this.selectedId),cost=Base.computeCost();
     document.getElementById('mapSelectedName').textContent=map.title;
-    document.getElementById('mapSupplyCost').textContent=cost===0?'补给免费':'补给 ¥'+cost;
+    document.getElementById('mapSupplyCost').textContent=cost===0?'补给免费':'补给 '+formatMoney(cost);
     document.getElementById('mapSelectionHint').textContent='出发时结算补给，返回藏身处可调整携带。';
     document.getElementById('btnMapStart').disabled=cost>Save.credits;
     if(cost>Save.credits)document.getElementById('mapSelectionHint').textContent='信用点不足，请返回藏身处调整补给。';
@@ -3513,6 +3978,7 @@ const MapSelect = {
 window.addEventListener('DOMContentLoaded', () => {
   try {
     Save.load();
+    window.addEventListener('pagehide', () => Save.flush());
     // 首次打开面板可能早于贴图加载；加载结束后刷新当前可见的列表。
     // sprites 的键是 目录/文件名（items/life01、chars/player）。
     const sprites = window.__SPRITES__ || window.__ICONS__ || null;
@@ -3526,7 +3992,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (location.hash.startsWith('#base')) {
       if (location.hash.indexOf('demo') >= 0) {
         const demo = ['antiq01','antiq03','antiq04','lux02','lux01','art01','elec02',
-                      'ind01','med01','med01','spec01','odd01','life01','life03','ammo'];
+                      'ind01','heal01','heal01','spec01','odd01','life01','life03','ammo'];
         for (const id of demo) Save.addStash(id, 1);
         Save.addStash('ammo', 40);
         Save.credits = 860;

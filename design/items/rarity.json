@@ -1,0 +1,522 @@
+{
+  "version": 5,
+  "date": "2026-10-27",
+  "basis": "结合世界观v0.1、现有物品描述、原有设计定位与本轮六级稀有度要求重评；不凭未知设定提高等级。",
+  "tiers": [
+    {
+      "k": 1,
+      "name": "寻常",
+      "color": "#c6ceca",
+      "cls": "r1"
+    },
+    {
+      "k": 2,
+      "name": "良品",
+      "color": "#3f8b78",
+      "cls": "r2"
+    },
+    {
+      "k": 3,
+      "name": "上乘",
+      "color": "#3f6d9b",
+      "cls": "r3"
+    },
+    {
+      "k": 4,
+      "name": "稀见",
+      "color": "#9165b3",
+      "cls": "r4"
+    },
+    {
+      "k": 5,
+      "name": "珍罕",
+      "color": "#a8862a",
+      "cls": "r5"
+    },
+    {
+      "k": 6,
+      "name": "孤品",
+      "color": "#8d3a3a",
+      "cls": "r6"
+    }
+  ],
+  "principles": [
+    "综合常见程度、保存与技术状态、工艺、文化及信息价值判断，不把交易价格当作唯一门槛。",
+    "异常性质与稀有程度分开；未知画面、实验所来源及受水淹本身不能证明独特性。",
+    "孤品只保留给有明确\"唯一\"依据的器物：潮汐仪、工业釉色母版、零号打火机；机械腕表和错版硬币不再称孤品。",
+    "第一批 31 件收集品逐项重评；弹药和绷带仍为一级寻常物资，不调整补给功能。",
+    "第一批物品的价格、重量、名称与贴图不改；本轮改造的 5 件按新定位重写名称与文案，稀有度不变。",
+    "第二批生活器物按 6/10/25/27/23/9 的目标比例分配；本轮重构后生活库保留 1 件孤品，孤品总数控制在 3 件。",
+    "扩容优先补场景（交通、办公、公共服务、港口、旅馆），不为凑数重复同类器物。"
+  ],
+  "items": [
+    {
+      "id": "life01",
+      "name": "搪瓷缸",
+      "rarity": 1,
+      "reason": "普通搪瓷饮具，常见且已有磕损。",
+      "batch": "first",
+      "previousRarity": 1,
+      "previousName": "寻常"
+    },
+    {
+      "id": "life06",
+      "name": "铝饭盒",
+      "rarity": 1,
+      "reason": "工人日常带饭器具，敲打的工号属使用痕迹，不构成稀缺。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life04",
+      "name": "铁皮饼干盒",
+      "rarity": 2,
+      "reason": "保留纹饰和日用痕迹的完整铁盒，高于散碎杂物。",
+      "batch": "first",
+      "previousRarity": 2,
+      "previousName": "完好"
+    },
+    {
+      "id": "life08",
+      "name": "玻璃糖罐",
+      "rarity": 2,
+      "reason": "完整玻璃容器，罐内糖块是内容物残留，无非普通来源。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life20",
+      "name": "纪念瓷器套装",
+      "rarity": 4,
+      "reason": "整套三十二件未缺件，成套性提高保存价值；纹样由厂方设计，仍属量产纪念瓷。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life28",
+      "name": "银餐具一套",
+      "rarity": 5,
+      "reason": "纯银成套餐具，手柄带成色印记，绒布无压痕说明未使用，材质与套件完整度高。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life03",
+      "name": "老式台灯",
+      "rarity": 2,
+      "reason": "完整老式照明器具，有日用品保存与工艺价值，未见稀缺来源。",
+      "batch": "first",
+      "previousRarity": 2,
+      "previousName": "完好"
+    },
+    {
+      "id": "life05",
+      "name": "未拆封的毛巾",
+      "rarity": 2,
+      "reason": "未拆封的日用品，保存状态较好，但不假设限量。",
+      "batch": "first",
+      "previousRarity": 1,
+      "previousName": "寻常"
+    },
+    {
+      "id": "life11",
+      "name": "双铃闹钟",
+      "rarity": 3,
+      "reason": "完整机械闹钟，缺齿导致卡停，属普通家用器具。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life15",
+      "name": "古董电熨斗",
+      "rarity": 3,
+      "reason": "千禧年前的重金属电熨斗，工业设计完整，磨损充分，无特殊工艺来源。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life19",
+      "name": "老式缝纫机头",
+      "rarity": 4,
+      "reason": "铸铁机头带贴花，是当年家庭主要大件，工艺完整但产量极大。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life22",
+      "name": "手工丝绸礼服",
+      "rarity": 4,
+      "reason": "丝绸面料与手工补丁体现保存状态与工艺，两种裁剪传统并存，非定制名作。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life10",
+      "name": "玻璃弹珠袋",
+      "rarity": 2,
+      "reason": "儿童玩具的常见形态，彩纹弹珠是当年批量生产的款式。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life13",
+      "name": "铁皮玩具火车",
+      "rarity": 3,
+      "reason": "发条铁皮玩具，机械仍可用，属常见儿童玩具。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life41",
+      "name": "家庭磁带盒",
+      "rarity": 3,
+      "reason": "六盘磁带与收纳盒成套，标签手写，保存状态好于散件。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life43",
+      "name": "发条旋转木马",
+      "rarity": 5,
+      "reason": "限量生产的高端机械玩具，手工上色与齿轮传动完整，价格来自工艺与产量。",
+      "batch": "life-3"
+    },
+    {
+      "id": "antiq03",
+      "name": "磨损的硬币",
+      "rarity": 1,
+      "reason": "既有描述明确到处都有的零钱，不因旧币身份提高稀有度。",
+      "batch": "first",
+      "previousRarity": 1,
+      "previousName": "寻常"
+    },
+    {
+      "id": "life36",
+      "name": "折叠城市地图",
+      "rarity": 2,
+      "reason": "批量印发的导览图，存量大、纸面磨损，属常见印刷品。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life37",
+      "name": "售票检票钳",
+      "rarity": 3,
+      "reason": "全金属检票工具，结构完整、手柄有包浆，工艺高于散碎五金，但仍属量产工具。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life38",
+      "name": "按键式电话机",
+      "rarity": 3,
+      "reason": "完整可用的台式电话，按键与卷线齐备，属当年普及型电器。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life47",
+      "name": "经理日程簿",
+      "rarity": 4,
+      "reason": "皮面日程簿带金属书签，成色好、页面完整，仅一页被撕，属高档文具。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life44",
+      "name": "船员帆布包",
+      "rarity": 3,
+      "reason": "厚帆布行李包，三层印刷船名显示长期使用，保存完整。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life45",
+      "name": "旅馆服务铃",
+      "rarity": 2,
+      "reason": "黄铜或镀银的机械呼叫铃，结构完整，属服务业常见器具。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life46",
+      "name": "旅行洗漱套装",
+      "rarity": 4,
+      "reason": "皮革洗漱包与金属器具成套，皮面完好，属旅馆配备品中的完整件。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life39",
+      "name": "旅行保温杯",
+      "rarity": 3,
+      "reason": "不锈钢保温容器，密封件老化，属通用工业消费品。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life32",
+      "name": "真皮手提箱",
+      "rarity": 5,
+      "reason": "真皮与黄铜锁扣的贵重箱具，内衬气味说明保存良好。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life33",
+      "name": "金丝眼镜",
+      "rarity": 5,
+      "reason": "实金镜架配手工磨边镜片，材质与工艺支撑高价；度数差异记录个人特征。",
+      "batch": "life-2"
+    },
+    {
+      "id": "life48",
+      "name": "便携式打字机",
+      "rarity": 5,
+      "reason": "全金属便携打字机，机芯完整、烤漆保存尚可，价格由结构与品牌型号支撑。",
+      "batch": "life-3"
+    },
+    {
+      "id": "life49",
+      "name": "零号打火机",
+      "rarity": 6,
+      "reason": "量产前的第一件原型，手敲编号与全外露点火机构均为独有结构，不存在第二件。",
+      "batch": "life-3"
+    },
+    {
+      "id": "elec01",
+      "name": "收音机",
+      "rarity": 3,
+      "reason": "可工作的收音设备有完整技术价值；收到回响不足以证明本体独一。",
+      "batch": "first",
+      "previousRarity": 3,
+      "previousName": "稀见"
+    },
+    {
+      "id": "elec02",
+      "name": "随身听",
+      "rarity": 4,
+      "reason": "仍能播放且保留磁带的旧随身听，灾后可用整机较难获取。",
+      "batch": "first",
+      "previousRarity": 4,
+      "previousName": "珍稀"
+    },
+    {
+      "id": "elec03",
+      "name": "计算器",
+      "rarity": 2,
+      "reason": "普通计算工具，现有描述不支持限量或特殊原型。",
+      "batch": "first",
+      "previousRarity": 2,
+      "previousName": "完好"
+    },
+    {
+      "id": "elec04",
+      "name": "电路板",
+      "rarity": 3,
+      "reason": "已停止生产的专用标准电路板，替代性比普通消费电子元件更低。",
+      "batch": "first",
+      "previousRarity": 2,
+      "previousName": "完好"
+    },
+    {
+      "id": "elec05",
+      "name": "掌上电子游戏机",
+      "rarity": 4,
+      "reason": "单色液晶掌机，外壳完好、屏幕未漏液，属停产后的稀缺消费电子。",
+      "batch": "life-3"
+    },
+    {
+      "id": "elec06",
+      "name": "即影相机",
+      "rarity": 4,
+      "reason": "即时成像相机，机身与相纸出口完好，属停产的专用光学消费设备。",
+      "batch": "life-3"
+    },
+    {
+      "id": "ind01",
+      "name": "铜管",
+      "rarity": 1,
+      "reason": "常见工程金属材料，重量和交易用途不等于稀缺。",
+      "batch": "first",
+      "previousRarity": 1,
+      "previousName": "寻常"
+    },
+    {
+      "id": "ind02",
+      "name": "轴承",
+      "rarity": 2,
+      "reason": "仍可顺畅运转的工业组件，状态较好但并非特殊装置。",
+      "batch": "first",
+      "previousRarity": 2,
+      "previousName": "完好"
+    },
+    {
+      "id": "ind03",
+      "name": "压力表",
+      "rarity": 3,
+      "reason": "完整工程测量仪器，具技术与回收价值，不认定为异常研究原型。",
+      "batch": "first",
+      "previousRarity": 3,
+      "previousName": "稀见"
+    },
+    {
+      "id": "med02",
+      "name": "注射器",
+      "rarity": 2,
+      "reason": "未拆封常规医疗耗材，状态明确，未注明特殊检验用途。",
+      "batch": "first",
+      "previousRarity": 2,
+      "previousName": "完好"
+    },
+    {
+      "id": "med03",
+      "name": "X 光片",
+      "rarity": 2,
+      "reason": "现有描述仅为普通诊断影像；未知患者与日期不足以赋予罕见病理意义。",
+      "batch": "first",
+      "previousRarity": 3,
+      "previousName": "稀见"
+    },
+    {
+      "id": "antiq01",
+      "name": "座钟",
+      "rarity": 4,
+      "reason": "沿用古董座钟定位，完整木壳与机械工艺有收藏价值；停摆巧合不构成异常加分。",
+      "batch": "first",
+      "previousRarity": 4,
+      "previousName": "珍稀"
+    },
+    {
+      "id": "antiq02",
+      "name": "黄铜怀表",
+      "rarity": 3,
+      "reason": "古董黄铜怀表具有工艺与私人刻字信息，但并未确认为唯一历史名物。",
+      "batch": "first",
+      "previousRarity": 3,
+      "previousName": "稀见"
+    },
+    {
+      "id": "antiq04",
+      "name": "错版硬币",
+      "rarity": 5,
+      "reason": "错版与据称有限存世量构成明确稀缺依据，尚不足以称为唯一孤品。",
+      "batch": "first",
+      "previousRarity": 4,
+      "previousName": "珍稀"
+    },
+    {
+      "id": "antiq05",
+      "name": "门牌铜片",
+      "rarity": 2,
+      "reason": "可辨识地点的历史门牌，有地方记忆价值，不因地址唯一就视为孤品。",
+      "batch": "first",
+      "previousRarity": 2,
+      "previousName": "完好"
+    },
+    {
+      "id": "antiq06",
+      "name": "工业釉色母版",
+      "rarity": 6,
+      "reason": "工厂定釉色标准时的原始母版，分格试烧一次性完成，不存在第二块。",
+      "batch": "life-2"
+    },
+    {
+      "id": "art01",
+      "name": "黑胶唱片",
+      "rarity": 3,
+      "reason": "音乐文化载体及使用痕迹有保存价值，未注明绝版或限量版本。",
+      "batch": "first",
+      "previousRarity": 3,
+      "previousName": "稀见"
+    },
+    {
+      "id": "art02",
+      "name": "小幅油画",
+      "rarity": 4,
+      "reason": "具署名的绘画作品，按现有艺术收藏定位列稀见；不虚构名家身份。",
+      "batch": "first",
+      "previousRarity": 4,
+      "previousName": "珍稀"
+    },
+    {
+      "id": "lux01",
+      "name": "机械腕表",
+      "rarity": 5,
+      "reason": "既有高档机械表定位与持续正常运转的状态使其珍贵，但现有信息不支持全球唯一。",
+      "batch": "first",
+      "previousRarity": 5,
+      "previousName": "孤品"
+    },
+    {
+      "id": "lux02",
+      "name": "金条",
+      "rarity": 5,
+      "reason": "集中承载贵金属财富，列珍罕；可铸造的标准财富实物不列孤品。",
+      "batch": "first",
+      "previousRarity": 4,
+      "previousName": "珍稀"
+    },
+    {
+      "id": "lux03",
+      "name": "钢笔",
+      "rarity": 3,
+      "reason": "沿用贵重书写器具定位，笔尖完好，不补写品牌或名人来历以抬高等级。",
+      "batch": "first",
+      "previousRarity": 3,
+      "previousName": "稀见"
+    },
+    {
+      "id": "spec01",
+      "name": "贝壳",
+      "rarity": 1,
+      "reason": "普通贝壳标本；被带至三楼属于环境线索，不证明标本本体稀有。",
+      "batch": "first",
+      "previousRarity": 1,
+      "previousName": "寻常"
+    },
+    {
+      "id": "spec02",
+      "name": "矿石标本",
+      "rarity": 2,
+      "reason": "有产地记录的常规矿物标本，未确认稀有矿种或异常结晶。",
+      "batch": "first",
+      "previousRarity": 2,
+      "previousName": "完好"
+    },
+    {
+      "id": "spec03",
+      "name": "干燥的植物",
+      "rarity": 1,
+      "reason": "常见压制植物标本；叶色尚绿不足以确立超自然保存机制。",
+      "batch": "first",
+      "previousRarity": 1,
+      "previousName": "寻常"
+    },
+    {
+      "id": "life02",
+      "name": "旧报纸",
+      "rarity": 1,
+      "reason": "普通历史报纸，听证会内容尚未确认具有关键调查价值。",
+      "batch": "first",
+      "previousRarity": 1,
+      "previousName": "寻常"
+    },
+    {
+      "id": "art03",
+      "name": "摄影底片",
+      "rarity": 3,
+      "reason": "保存下来的影像底片有信息与档案价值，未知画面不直接判为高阶秘密情报。",
+      "batch": "first",
+      "previousRarity": 3,
+      "previousName": "稀见"
+    },
+    {
+      "id": "odd01",
+      "name": "回响结晶",
+      "rarity": 4,
+      "reason": "可自行发声的异常产物列稀见；未确认不可重复形成，故不因异常身份直接列孤品。",
+      "batch": "first",
+      "previousRarity": 4,
+      "previousName": "珍稀"
+    },
+    {
+      "id": "odd02",
+      "name": "潮汐仪",
+      "rarity": 6,
+      "reason": "既定孤品定位；悬浮微型海洋、恒定水平面与偶现灯塔构成独特完整遗物。",
+      "batch": "first",
+      "previousRarity": 5,
+      "previousName": "孤品"
+    },
+    {
+      "id": "odd03",
+      "name": "停摆的怀表",
+      "rarity": 4,
+      "reason": "每天重复停在同一时刻的异常性有明确描述，但未确认唯一来源或不可复制。",
+      "batch": "first",
+      "previousRarity": 3,
+      "previousName": "稀见"
+    }
+  ]
+}

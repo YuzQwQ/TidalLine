@@ -6,6 +6,8 @@ const path = require('path');
 const { writeSheet } = require('./tools/wiki-layout');
 
 const dir = __dirname;
+const money=n=>'¥'+Number(n).toLocaleString('en-US');
+require('./tools/build-economy.js').build();
 const ctx = { console, Math, Object, Array };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
@@ -69,7 +71,7 @@ function weaponCard(key) {
       <div class="thumb">${thumb(id)}</div>
       <div class="meta">
         <div class="name">${esc(w.name)}<i class="tag">${esc(slotName)}</i></div>
-        <div class="sub"><code>${esc(id)}.png</code> · ${esc(w.short)} · ${w.dmgMin}–${w.dmgMax} 伤害 · 弹匣 ${w.mag} · ${w.rpm} 发/分 · ${w.w}kg · ¥${w.value}</div>
+        <div class="sub"><code>${esc(id)}.png</code> · ${esc(w.short)} · ${w.dmgMin}–${w.dmgMax} 伤害 · 弹匣 ${w.mag} · ${w.rpm} 发/分 · ${w.w}kg · ${money(w.price)}</div>
         <div class="desc">${esc(w.desc || '')}</div>
         <div class="vis"><b>画什么</b>${esc(VISUAL[key] || '')}</div>
       </div>
@@ -86,7 +88,7 @@ function armorCard(type, g) {
       <div class="thumb">${thumb(id)}</div>
       <div class="meta">
         <div class="name">${esc(g.name)}<i class="tag">Lv${g.lv} ${tag}</i><i class="tag dim">${esc(g.short)}</i></div>
-        <div class="sub"><code>${esc(id)}.png</code> · 减伤 <b class="dr">${Math.round(g.dr * 100)}%</b> · 耐久 ${g.dur} · ${g.w}kg${move} · ¥${g.price}</div>
+        <div class="sub"><code>${esc(id)}.png</code> · 减伤 <b class="dr">${Math.round(g.dr * 100)}%</b> · 耐久 ${g.dur} · ${g.w}kg${move} · ${money(g.price)}</div>
         <div class="vis"><b>画什么</b>${esc(VISUAL[id] || '')}</div>
       </div>
     </div>`;

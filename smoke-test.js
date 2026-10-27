@@ -21,7 +21,7 @@ for (const f of ['config.js', 'data.js', 'core.js']) {
 vm.runInContext(`
   globalThis.CFG = CFG;
   globalThis.RARITY = RARITY;
-  globalThis.CATS = CATS;
+  globalThis.CATS = CATS;globalThis.COLLECTION_CATS=COLLECTION_CATS;globalThis.ITEM_GROUPS=ITEM_GROUPS;
   globalThis.MAP_ROWS = MAP_ROWS;
   globalThis.TILE_H = TILE_H;
   globalThis.BOX_KIND = BOX_KIND;
@@ -31,6 +31,7 @@ vm.runInContext(`
   globalThis.Noise = Noise;
   globalThis.Quiet = Quiet;
   globalThis.Loot = Loot;
+  globalThis.CONTAINER_QUALITY = CONTAINER_QUALITY;
 `, ctx, { filename: 'export' });
 
 let pass = 0, fail = 0;
@@ -140,9 +141,9 @@ console.log('\n=== 物品与掉落 ===');
 const ITEMS = ctx.ITEMS;
 ok('物品数量', ITEMS.length >= 28, ITEMS.length + ' 件');
 const cats = new Set(ITEMS.map(i => i.cat));
-ok('覆盖全部九类', cats.size === 9, cats.size + ' 类');
+ok('定义两层分类，收集品保留九类', ctx.COLLECTION_CATS.length === 9 && Object.keys(ctx.ITEM_GROUPS).length===2 && [...cats].every(cat => ctx.CATS[cat]), cats.size + ' 个子类已有物品');
 const rs = new Set(ITEMS.map(i => i.r));
-ok('稀有度覆盖 1-5', [1,2,3,4,5].every(r => rs.has(r)));
+ok('稀有度覆盖 1-6', [1,2,3,4,5,6].every(r => rs.has(r)));
 
 let ids = new Set(), dup = 0;
 for (const it of ITEMS) { if (ids.has(it.id)) dup++; ids.add(it.id); }
@@ -150,18 +151,25 @@ ok('物品 id 唯一', dup === 0, dup + ' 重复');
 
 let noLootLeak = 0;
 for (let i = 0; i < 400; i++) {
-  const r = ctx.Loot.roll('fast');
+  const r = ctx.Loot.roll('junk');
   if (r.item.noLoot) noLootLeak++;
 }
 ok('弹药不会出现在随机掉落里', noLootLeak === 0, noLootLeak + ' 次泄漏');
 
-// 掉落分布
-const dist = { fast: 0, std: 0, heavy: 0 };
-for (let i = 0; i < 600; i++) {
-  const f = ctx.Loot.fill('heavy');
-  if (f.length >= 2) dist.heavy++;
+// 六档容器：件数区间与"每档都能出金红"
+const Q = ctx.CONTAINER_QUALITY;
+let badCount = 0, noGold = [];
+for (const [q, def] of Object.entries(Q)) {
+  const seen = new Set();
+  for (let i = 0; i < 6000; i++) {
+    const f = ctx.Loot.fill(q);
+    if (f.length < def.count[0] || f.length > def.count[1]) badCount++;
+    for (const d of f) seen.add(d.item.r);
+  }
+  if (!seen.has(5)) noGold.push(def.name);
 }
-ok('重型容器至少出 2 件', dist.heavy > 550, dist.heavy + '/600');
+ok('每档件数都在配置区间内', badCount === 0, badCount + ' 次越界');
+ok('六档容器都能出金色', noGold.length === 0, noGold.join(',') || '六档全覆盖');
 
 console.log('\n=== 潮汐 ===');
 M.load(ctx.MAP_ROWS);

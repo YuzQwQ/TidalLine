@@ -36,7 +36,7 @@ async function prepare(entry) {
   for (let i = 3; i < sprite.length; i += 4) sprite[i] = sprite[i] >= 128 ? 255 : 0;
   await sharp(sprite, { raw: { width: 40, height: 40, channels: 4 } })
     .extend({ top: 4, bottom: 4, left: 4, right: 4, background: '#00000000' })
-    .png({ palette: true, colours: 32, dither: 0 })
+    .png({ palette: true, colours: entry.paletteColours || 32, dither: 0 })
     .toFile(path.join(root, 'assets', 'items', entry.id + '.png'));
   // 独立展示图不进入游戏内嵌表，保留既有 48px 图标接口。
   for (const size of entry.previewSizes || []) {

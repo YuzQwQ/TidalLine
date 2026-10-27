@@ -29,7 +29,7 @@ for(let y=0;y<rows.length;y++) for(let x=0;x<rows[y].length;x++) {
   if(ch==='H') layers.push(`<rect x="${left+x*size}" y="${top+y*size}" width="20" height="20" fill="#8ab99b" opacity=".16"/>`);
   if(types[ch]) {
     sprite('props',types[ch].art,x,y);
-    if(types[ch].kind==='heavy') layers.push(`<rect x="${left+x*size+1}" y="${top+y*size+1}" width="18" height="18" fill="none" stroke="#e6bf6c" stroke-width="1.5"/>`);
+    if(CONTAINER_QUALITY[types[ch].q].lv>=5) layers.push(`<rect x="${left+x*size+1}" y="${top+y*size+1}" width="18" height="18" fill="none" stroke="#e6bf6c" stroke-width="1.5"/>`);
   }
   if(ch==='+'||ch==='S') {
     const wall=(a,b)=>rows[b]&&rows[b][a]==='#';

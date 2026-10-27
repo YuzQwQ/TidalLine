@@ -1,0 +1,169 @@
+{
+  "generator": "Built-in image_gen; one transparent image per item",
+  "delivery": "48x48 PNG, <=16 palette entries including transparency, binary alpha, nearest-neighbour fit within 40x40 with 4px transparent margins",
+  "items": [
+    {
+      "id": "heal01",
+      "name": "绷带",
+      "source": "heal01.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-bbd07019-8e36-44d4-91f5-3efa6f7690eb.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A clean ivory white COTTON GAUZE ROLL with its visible spiral end facing front-right, a narrow beige paper sealing band around the roll, and ONE loose strip of gauze gently unfurling to the lower right. Gray-blue pixel shadows define the soft cylindrical shape; white weave suggested by a few large pixel marks. Generic everyday medical supply. NO blood stains, no colored medical cross, no brand text.",
+      "paletteColours": 16,
+      "output": "assets/items/heal01.png"
+    },
+    {
+      "id": "heal02",
+      "name": "安禾无菌敷料",
+      "source": "heal02.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-d2589cab-40bc-4df9-bbf3-e872ba7de169.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A SINGLE flat sealed sterile dressing PAPER POUCH, warm ivory-white medical paper, lying at a slight 3/4 angle with visible folded edge. ANHE mass-market packaging: muted herbal green #648865 border stripe and a simple green LEAF with tiny cross cutout, a small old-fashioned warm orange FLOWER advertising illustration in one corner. Broad clear shape, folded heat-sealed crimp, no extra bandages outside.",
+      "paletteColours": 16,
+      "output": "assets/items/heal02.png"
+    },
+    {
+      "id": "heal03",
+      "name": "家庭急救包",
+      "source": "heal03.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-54e7f262-ac40-4c4e-9e27-abe47bc2b8aa.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A compact CLOSED RED HARD PLASTIC FAMILY FIRST AID BOX, rounded rectangular case with clear shallow thickness and rigid clasp, FOLDING CARRY HANDLE on top, a bold ivory white medical cross centered on its front/lid, and a small faded beige public-health promotional STICKER on a corner. Red molded plastic, a few white printed lines only, no readable phone number, no extra medical objects.",
+      "paletteColours": 16,
+      "output": "assets/items/heal03.png"
+    },
+    {
+      "id": "heal04",
+      "name": "制式野战医疗包",
+      "source": "heal04.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b0c1170b-19ff-4e0a-8c4a-ce6534fc34dc.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A sturdy dark OLIVE GREEN CANVAS MILITARY FIELD MEDICAL BAG, closed rectangular soft satchel, visibly padded depth, two gray-black WEBBING STRAPS and BUCKLES, broad WHITE MEDICAL CROSS on the front flap, very small black model number 'M-17' beneath it. Rugged fabric, rolled stitched edges, practical compact silhouette; no weapons, no medicines outside.",
+      "paletteColours": 16,
+      "output": "assets/items/heal04.png"
+    },
+    {
+      "id": "heal05",
+      "name": "HV-300 精密医疗箱",
+      "source": "heal05.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-4c55e804-05e2-4131-bc2d-f45ea0f2d86f.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A CLOSED precision modular MEDICAL HARD CASE from fictional HELVIEN. Silver-gray metal shell, deep emerald green #165A50 geometric RING enclosing a MEDICAL CROSS centered on the lid, black reinforced impact-resistant CORNER GUARDS, two firm metal latches, top carrying handle, small dark serial-number METAL PLATE marked 'HV-300' only if readable at pixel scale. Refined 1980s-1990s expedition equipment, angular precise construction. Distinctly silver box with emerald emblem, not a green cloth bag.",
+      "paletteColours": 16,
+      "output": "assets/items/heal05.png"
+    },
+    {
+      "id": "heal06",
+      "name": "安禾止痛片",
+      "source": "heal06.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-f32b4871-ac52-4f05-bdb1-708e6f7e0d32.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A SINGLE six-tablet SILVER BLISTER STRIP partially sliding out of an ORANGE AND IVORY cardboard medicine SLEEVE, both read as one compact packaged product. Exactly SIX pale round tablet blisters in TWO columns of THREE, broad simplified silver highlights. ANHE packaging carries a small herbal GREEN LEAF emblem with tiny medical cross, orange block bands, no advertising text. Bright orange/white dominant, green emblem secondary.",
+      "paletteColours": 16,
+      "output": "assets/items/heal06.png"
+    },
+    {
+      "id": "heal07",
+      "name": "复方镇痛胶囊",
+      "source": "heal07.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2e05fbb5-c54b-4e53-993f-5fb20e878546.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A squat closed AMBER BROWN PLASTIC MEDICINE BOTTLE, ridged dark brown screw cap, ivory paper label with distinct BLUE HORIZONTAL STRIPES and tiny generic batch marks. Through its lower amber side, show a couple orange-and-white two-tone capsules, simplified large shapes inside the bottle. 1990s industrial clinic generic medicine; no branded cross, no loose pills outside, no glass syringe.",
+      "paletteColours": 16,
+      "output": "assets/items/heal07.png"
+    },
+    {
+      "id": "heal08",
+      "name": "强效镇痛剂",
+      "source": "heal08.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-586daf02-d8c9-428f-a5c0-5dbac86a39dc.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A DARK NAVY BLUE cardboard PHARMACEUTICAL BOX with one short WHITE MEDICINE BOTTLE standing immediately in front as a SINGLE boxed product arrangement. Bottle has a ribbed child-resistant white screw cap. Both share a very clear thin RED CONTROLLED-MEDICINE STRIPE across otherwise dark-blue/white labeling. Strong box/bottle silhouette, do not add syringe, ampoule or loose pills. This is official hospital packaging, no extra brand emblem.",
+      "paletteColours": 16,
+      "output": "assets/items/heal08.png"
+    },
+    {
+      "id": "heal09",
+      "name": "止血带",
+      "source": "heal09.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-bdd9a5b1-61fb-4f75-babf-7ee2a297d06a.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A compact BLACK WEBBING TOURNIQUET, folded strap loop with a very clear DARK SILVER METAL WINDLASS BAR held across the top and one vivid small RED PULL TAB at its end. Small industrial steel BLUE #496A8B rectangular NORTHSTAR emblem with simple WHITE CROSS on its strap label. Show stiff webbing weave through sparse pixels; closed folded equipment form, no limb, no wound, no people.",
+      "paletteColours": 16,
+      "output": "assets/items/heal09.png"
+    },
+    {
+      "id": "heal10",
+      "name": "医用夹板",
+      "source": "heal10.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-6971476b-9fee-4b27-9bb1-01f8520ce6c8.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: One long rectangular BLUE FOAM MEDICAL SPLINT, slightly curved longitudinally, broad blue padded face with narrow exposed SILVER ALUMINUM EDGES, TWO distinct GRAY FIXATION STRAPS wrapping across its width. Laid diagonally across square image so full length fits. NORTHSTAR practical 1990s equipment with a tiny blue rectangular white-cross label, no patient or limb. Readable strong elongated silhouette.",
+      "paletteColours": 16,
+      "output": "assets/items/heal10.png"
+    },
+    {
+      "id": "heal11",
+      "name": "创伤处理包",
+      "source": "heal11.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-24480d0d-5189-422c-9d19-536ef84c1874.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: One closed ORANGE CANVAS TRAUMA KIT, compact horizontal rectangular soft bag with top carrying handle, BLACK WEBBING STRAPS and BUCKLES, broad WHITE MEDICAL CROSS on its front, a worn ivory LOGISTICS LABEL with a tiny '17' shelter-number mark. Emergency evacuation supply, slightly worn but intact. Dominant muted safety-orange, black, white. Not a rigid hard plastic box, not green military canvas, no loose tools.",
+      "paletteColours": 16,
+      "output": "assets/items/heal11.png"
+    },
+    {
+      "id": "heal12",
+      "name": "外科手术包",
+      "source": "heal12.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3b34a482-4ada-44c0-af43-0c9191a64ccc.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: A portable DARK GREEN METAL SURGICAL CASE, lid hinged open about 80 degrees, handle on lower front edge. In the open lower tray show THREE simplified separately sealed pale sterile instrument packets with recognizable SILVER FORCEPS / SCISSOR silhouettes, plus one folded ivory medical supply packet. Inside lid darker green empty inset, exterior green enamel and silver hinges. NORTHSTAR professional industrial medical equipment, no blood, no organs, no hands. Treat the case and contents as ONE integrated inventory object with readable chunky planes.",
+      "paletteColours": 16,
+      "output": "assets/items/heal12.png"
+    },
+    {
+      "id": "heal13",
+      "name": "H-7 应急医疗针",
+      "source": "heal13.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-5cacc167-b8be-4866-9198-cf1b8e37ebfc.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: ONE precision ivory-white PEN-SHAPED AUTO-INJECTOR from HELVIEN, laid diagonally fully visible, thick short cylindrical body, deep EMERALD GREEN #165A50 identification RING around the upper middle, tiny geometric circle/cross mark, SILVER SAFETY CAP on one end, restrained dark-gray mechanical seams, small 'H-7' if feasible. 1990s spring-loaded medical instrument, clean precision construction. No exposed needle, no separate cap, no box, no glow.",
+      "paletteColours": 16,
+      "output": "assets/items/heal13.png"
+    },
+    {
+      "id": "heal14",
+      "name": "M-4 代谢激活剂",
+      "source": "heal14.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-8c066a01-d06d-4b30-9fd9-5ceabc9ca46f.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: ONE slender transparent GLASS AMPOULE sealed at the narrow neck, containing AMBER GOLD LIQUID in lower two thirds. Deep EMERALD GREEN #165A50 thin identification BAND around neck and a small white label bearing 'M-4'. HELVIEN experimental product family, precision muted silver-gray glass rim highlights, broad pixel transparency shapes, slightly diagonal view, entire closed ampoule visible. No syringe, no cap detached, no neon glow, no extra bottles.",
+      "paletteColours": 16,
+      "output": "assets/items/heal14.png"
+    },
+    {
+      "id": "heal15",
+      "name": "R-9 再生试验剂",
+      "source": "heal15.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-4e6847e7-1106-48ce-a1a2-a6eb8b684e5d.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: ONE research vial containing DARK CRIMSON RED LIQUID, protected within a SILVER METAL MECHANICAL FRAME with two strong vertical rails and protective top and bottom collars. Small ivory label with RED 'R-9' and a simple RED triangular experimental warning symbol; tiny emerald green HELVIEN ring/cross seal secondary. Precision 1990s lab product, transparent central reservoir with dark-red contents visible, complete upright compact vial with volumetric metal supports. No loose syringe, no glowing liquid, no gore.",
+      "paletteColours": 16,
+      "output": "assets/items/heal15.png"
+    },
+    {
+      "id": "heal16",
+      "name": "镇静香膏",
+      "source": "heal16.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-60c06b9e-c5ac-4dbe-b172-737f61860ea6.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: ONE small squat DARK GREEN GLASS OINTMENT JAR with a wide BRASS SCREW LID still attached, visible gray-white herbal balm through a small lighter glass area. Weathered parchment LABEL on front with a dark-brown TRIANGULAR HERB & ROOT emblem enclosing a symmetrical HERB SPRIG and tiny SUN DOT, no words required. Apothecary tradition, muted olive, brass and aged cream, gentle antique mood. Closed lid, no spoon, no plants outside, no occult glow.",
+      "paletteColours": 16,
+      "output": "assets/items/heal16.png"
+    },
+    {
+      "id": "heal17",
+      "name": "认知稳定剂",
+      "source": "heal17.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2d73d42f-f997-4e8b-bbd7-92c230367e23.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: ONE small WHITE MEDICINE BOTTLE with a ribbed pale gray cap, a BLUE-GRAY GEOMETRIC HEXAGON / GRID symbol on the label and a few tiny research BATCH NUMBER marks, one modest transparent lower inspection strip showing a few PALE BLUE TABLETS INSIDE. Anonymous research institution; distinct austere white/blue-gray palette, NO corporate cross, no emerald HELVIEN branding. Closed bottle, no pills outside, no glow, no scenery.",
+      "paletteColours": 16,
+      "output": "assets/items/heal17.png"
+    },
+    {
+      "id": "heal18",
+      "name": "祛咒圣露",
+      "source": "heal18.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-33eba9d6-1075-489b-aad4-4a46719a16c1.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended to be delivered as 48x48 pixels. Draw with a logical 48x48 grid: very large crisp square pixel clusters, only 12-20 muted colors, hard edges, NO antialiasing, NO painterly detail, no photographic texture. A cohesive 3/4 inventory display view from above, showing TOP and FRONT/RIGHT faces, about 30 degrees elevation, fixed light from upper left. Readable silhouette and broad material planes, restrained vintage wear, not filthy. Object occupies the central 38-40 logical pixels, complete object visible with clear transparent margins, centered. GENUINELY TRANSPARENT BACKGROUND; no scenery, ground, cast shadow, decorative frame, glow, watermark, UI, people, hands, extra unrelated objects. Tiny packaging marks should be simplified pixel symbols, not dense readable text.  Subject: ONE antique DEEP BLUE SLENDER-NECK GLASS BOTTLE, rounded tapering body containing PALE GOLD LIQUID clearly visible in the lower body, SILVER METAL MOUTH COLLAR and an old muted wine-brown WAX SEAL closing the neck. A tiny restrained archaic sigil embossed in the wax, no readable words. Unknown occult purification tradition, vintage maritime apothecary mood, dark blue/gold/silver strong silhouette. No floating magic, glow, ribbons, candles, scenery, or extra containers.",
+      "paletteColours": 16,
+      "output": "assets/items/heal18.png"
+    }
+  ],
+  "status": "18/18 finished"
+}

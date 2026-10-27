@@ -35,15 +35,21 @@
   .sw em { color: #47645c; font-style: normal; font-size: 10px; }
 
   .cat { max-width: 1240px; margin: 34px auto 0; }
-  .cat h2 {
+  .cat h2, .cat h3 {
     display: flex; align-items: center; gap: 10px;
     font-size: 14px; letter-spacing: 1px; color: #cfdcd7; font-weight: 600;
     margin: 0 0 14px; padding-bottom: 9px;
     border-bottom: 1px solid #1a2a25;
   }
-  .cat h2 .dot { width: 9px; height: 9px; border-radius: 50%; }
-  .cat h2 em { font-style: normal; font-size: 10.5px; color: #47645c; letter-spacing: 1px; }
-  .cat h2 i { margin-left: auto; font-style: normal; font-size: 11px; color: #4d7d70; }
+  .cat h2 .dot, .cat h3 .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .cat h2 em, .cat h3 em { font-style: normal; font-size: 10.5px; color: #47645c; letter-spacing: 1px; }
+  .cat h2 i, .cat h3 i { margin-left: auto; font-style: normal; font-size: 11px; color: #4d7d70; }
+  .item-group { max-width:1240px;margin:38px auto 0; }
+  .item-group-title { display:flex;gap:18px;align-items:center;color:#c5dfd2;border-bottom:2px solid #426e5c;padding-bottom:14px;font-size:22px; }
+  .item-group-title span { margin-left:auto;font-size:13px;color:#83a695;font-weight:400; }
+  .category-description { color:#7d948c;font-size:12px;line-height:1.9;margin:12px 0 16px; }
+  .category-description b { color:#b9cac4;font-weight:500; }
+  .category-empty { color:#6d8780;font-size:12px;line-height:1.8;border:1px dashed #294237;padding:16px; }
 
   .grid {
     display: grid; gap: 12px;
@@ -113,6 +119,18 @@
   .wiki-noscript { max-width: 1240px; margin: 0 auto 20px; }
   .lede b, .panel p b { color: #b9cac4; font-weight: 600; }
   .sub { line-height: 1.7; }
+  .economy-guide { margin:28px 0; }
+  .economy-guide p { color:#819c90; font-size:12px; line-height:1.8; }
+  .value-bands { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+  .value-band { padding:12px; border:1px solid #294137; display:flex; flex-wrap:wrap; gap:8px 12px; min-width:0; }
+  .value-stripe { flex:0 0 100%; height:4px; background:var(--rc); }
+  .value-band b { color:var(--rc); }
+  .value-band span:not(.value-stripe) { color:#819c90; font-size:12px; }
+  .value-band strong { flex:0 0 100%; color:#cbdcd4; font:14px Consolas,monospace; }
+  @media(max-width:720px) { .value-bands { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media(max-width:400px) { .value-bands { grid-template-columns:1fr; } }
+  .medical-group h4 { color:#adc8b8; margin:20px 0 12px; font-size:14px; }
+  .desc { white-space:pre-line; }
   .sub .dr { color: #9fc4b3; font-weight: 600; }
   .item.lv5, .item.lv6 { border-left-color: #6b5c33; }
   .wiki-stats { display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: 20px; font-size: 12px; color: #819c90; }

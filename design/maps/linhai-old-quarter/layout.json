@@ -5174,7 +5174,7 @@
     {
       "id": "c01",
       "region": "apartment",
-      "type": "C",
+      "type": "N",
       "x": 6,
       "y": 9,
       "preference": [
@@ -5184,7 +5184,7 @@
     {
       "id": "c02",
       "region": "apartment",
-      "type": "C",
+      "type": "N",
       "x": 14,
       "y": 9,
       "preference": [
@@ -5194,9 +5194,9 @@
     {
       "id": "c03",
       "region": "apartment",
-      "type": "L",
-      "x": 6,
-      "y": 17,
+      "type": "C",
+      "x": 9,
+      "y": 10,
       "preference": [
         "life"
       ]
@@ -5206,7 +5206,7 @@
       "region": "apartment",
       "type": "L",
       "x": 6,
-      "y": 21,
+      "y": 17,
       "preference": [
         "life"
       ]
@@ -5214,9 +5214,9 @@
     {
       "id": "c05",
       "region": "apartment",
-      "type": "C",
-      "x": 17,
-      "y": 17,
+      "type": "L",
+      "x": 6,
+      "y": 21,
       "preference": [
         "life"
       ]
@@ -5224,9 +5224,9 @@
     {
       "id": "c06",
       "region": "apartment",
-      "type": "L",
+      "type": "m",
       "x": 17,
-      "y": 18,
+      "y": 17,
       "preference": [
         "life"
       ]
@@ -5234,7 +5234,17 @@
     {
       "id": "c07",
       "region": "apartment",
-      "type": "M",
+      "type": "J",
+      "x": 17,
+      "y": 18,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c08",
+      "region": "apartment",
+      "type": "D",
       "x": 17,
       "y": 21,
       "preference": [
@@ -5242,243 +5252,243 @@
       ]
     },
     {
-      "id": "c08",
-      "region": "clinic",
-      "type": "M",
-      "x": 7,
-      "y": 42,
-      "preference": [
-        "med"
-      ]
-    },
-    {
       "id": "c09",
       "region": "clinic",
-      "type": "M",
+      "type": "F",
       "x": 10,
-      "y": 43,
+      "y": 34,
       "preference": [
-        "med"
+        "med",
+        "medical"
       ]
     },
     {
       "id": "c10",
       "region": "clinic",
-      "type": "M",
+      "type": "C",
       "x": 6,
-      "y": 39,
+      "y": 35,
       "preference": [
-        "med"
+        "med",
+        "medical"
       ]
     },
     {
       "id": "c11",
       "region": "clinic",
-      "type": "L",
-      "x": 10,
-      "y": 34,
+      "type": "M",
+      "x": 6,
+      "y": 39,
       "preference": [
-        "med"
+        "med",
+        "medical"
       ]
     },
     {
       "id": "c12",
       "region": "clinic",
-      "type": "C",
-      "x": 6,
-      "y": 35,
+      "type": "M",
+      "x": 7,
+      "y": 39,
       "preference": [
-        "med"
+        "med",
+        "medical"
       ]
     },
     {
       "id": "c13",
-      "region": "clockshop",
-      "type": "C",
-      "x": 45,
-      "y": 25,
+      "region": "clinic",
+      "type": "H",
+      "x": 7,
+      "y": 42,
       "preference": [
-        "antiq",
-        "lux"
+        "med",
+        "medical"
       ]
     },
     {
       "id": "c14",
-      "region": "clockshop",
-      "type": "L",
-      "x": 53,
-      "y": 19,
+      "region": "clinic",
+      "type": "Y",
+      "x": 10,
+      "y": 43,
       "preference": [
-        "antiq",
-        "lux"
+        "med",
+        "medical"
       ]
     },
     {
       "id": "c15",
       "region": "clockshop",
-      "type": "R",
-      "x": 50,
-      "y": 18,
+      "type": "C",
+      "x": 45,
+      "y": 25,
       "preference": [
-        "antiq",
-        "lux"
+        "collect"
       ]
     },
     {
       "id": "c16",
       "region": "clockshop",
-      "type": "B",
-      "x": 50,
-      "y": 25,
+      "type": "L",
+      "x": 53,
+      "y": 19,
       "preference": [
-        "antiq",
-        "lux"
+        "collect"
       ]
     },
     {
       "id": "c17",
       "region": "clockshop",
-      "type": "B",
-      "x": 53,
-      "y": 25,
+      "type": "R",
+      "x": 50,
+      "y": 18,
       "preference": [
-        "antiq",
-        "lux"
+        "collect"
       ]
     },
     {
       "id": "c18",
       "region": "clockshop",
-      "type": "L",
-      "x": 45,
-      "y": 18,
+      "type": "B",
+      "x": 50,
+      "y": 25,
       "preference": [
-        "antiq",
-        "lux"
+        "collect"
       ]
     },
     {
       "id": "c19",
-      "region": "bank",
-      "type": "C",
+      "region": "clockshop",
+      "type": "B",
       "x": 53,
-      "y": 32,
+      "y": 25,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c20",
-      "region": "bank",
+      "region": "clockshop",
       "type": "L",
-      "x": 56,
-      "y": 32,
+      "x": 45,
+      "y": 18,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c21",
-      "region": "bank",
-      "type": "L",
-      "x": 53,
-      "y": 38,
+      "region": "clockshop",
+      "type": "G",
+      "x": 46,
+      "y": 21,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c22",
       "region": "bank",
-      "type": "L",
-      "x": 55,
-      "y": 45,
+      "type": "F",
+      "x": 53,
+      "y": 32,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c23",
       "region": "bank",
-      "type": "B",
-      "x": 61,
-      "y": 42,
+      "type": "L",
+      "x": 56,
+      "y": 32,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c24",
       "region": "bank",
-      "type": "B",
-      "x": 66,
-      "y": 42,
+      "type": "F",
+      "x": 53,
+      "y": 38,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c25",
       "region": "bank",
-      "type": "B",
-      "x": 61,
-      "y": 44,
+      "type": "L",
+      "x": 55,
+      "y": 45,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c26",
       "region": "bank",
       "type": "B",
-      "x": 66,
-      "y": 44,
+      "x": 61,
+      "y": 42,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c27",
       "region": "bank",
       "type": "B",
-      "x": 61,
-      "y": 45,
+      "x": 66,
+      "y": 42,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c28",
       "region": "bank",
-      "type": "B",
-      "x": 66,
-      "y": 45,
+      "type": "V",
+      "x": 61,
+      "y": 44,
       "preference": [
-        "lux",
-        "antiq",
-        "art"
+        "collect"
       ]
     },
     {
       "id": "c29",
+      "region": "bank",
+      "type": "O",
+      "x": 66,
+      "y": 44,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c30",
+      "region": "bank",
+      "type": "G",
+      "x": 61,
+      "y": 45,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c31",
+      "region": "bank",
+      "type": "B",
+      "x": 66,
+      "y": 45,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c32",
       "region": "warehouse",
       "type": "T",
       "x": 40,
@@ -5489,7 +5499,7 @@
       ]
     },
     {
-      "id": "c30",
+      "id": "c33",
       "region": "warehouse",
       "type": "T",
       "x": 47,
@@ -5500,9 +5510,42 @@
       ]
     },
     {
-      "id": "c31",
+      "id": "c34",
       "region": "warehouse",
-      "type": "R",
+      "type": "b",
+      "x": 46,
+      "y": 45,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c35",
+      "region": "warehouse",
+      "type": "b",
+      "x": 41,
+      "y": 48,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c36",
+      "region": "warehouse",
+      "type": "e",
+      "x": 42,
+      "y": 51,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c37",
+      "region": "warehouse",
+      "type": "Q",
       "x": 40,
       "y": 51,
       "preference": [
@@ -5511,9 +5554,9 @@
       ]
     },
     {
-      "id": "c32",
+      "id": "c38",
       "region": "warehouse",
-      "type": "L",
+      "type": "A",
       "x": 40,
       "y": 52,
       "preference": [
@@ -5522,7 +5565,7 @@
       ]
     },
     {
-      "id": "c33",
+      "id": "c39",
       "region": "warehouse",
       "type": "K",
       "x": 47,
@@ -5533,9 +5576,9 @@
       ]
     },
     {
-      "id": "c34",
+      "id": "c40",
       "region": "outdoors",
-      "type": "C",
+      "type": "Z",
       "x": 22,
       "y": 19,
       "preference": [
@@ -5544,7 +5587,7 @@
       ]
     },
     {
-      "id": "c35",
+      "id": "c41",
       "region": "outdoors",
       "type": "T",
       "x": 16,
@@ -5555,42 +5598,9 @@
       ]
     },
     {
-      "id": "c36",
+      "id": "c42",
       "region": "outdoors",
-      "type": "M",
-      "x": 18,
-      "y": 44,
-      "preference": [
-        "life",
-        "ind"
-      ]
-    },
-    {
-      "id": "c37",
-      "region": "outdoors",
-      "type": "C",
-      "x": 4,
-      "y": 47,
-      "preference": [
-        "life",
-        "ind"
-      ]
-    },
-    {
-      "id": "c38",
-      "region": "outdoors",
-      "type": "R",
-      "x": 58,
-      "y": 24,
-      "preference": [
-        "life",
-        "ind"
-      ]
-    },
-    {
-      "id": "c39",
-      "region": "outdoors",
-      "type": "C",
+      "type": "U",
       "x": 64,
       "y": 30,
       "preference": [
@@ -5599,7 +5609,51 @@
       ]
     },
     {
-      "id": "c40",
+      "id": "c43",
+      "region": "outdoors",
+      "type": "H",
+      "x": 18,
+      "y": 44,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c44",
+      "region": "outdoors",
+      "type": "W",
+      "x": 4,
+      "y": 47,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c45",
+      "region": "outdoors",
+      "type": "b",
+      "x": 58,
+      "y": 24,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c46",
+      "region": "outdoors",
+      "type": "C",
+      "x": 67,
+      "y": 31,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c47",
       "region": "outdoors",
       "type": "T",
       "x": 61,
@@ -5610,7 +5664,7 @@
       ]
     },
     {
-      "id": "c41",
+      "id": "c48",
       "region": "outdoors",
       "type": "K",
       "x": 59,
@@ -5622,33 +5676,105 @@
     }
   ],
   "containerTypes": {
+    "Z": {
+      "name": "垃圾桶",
+      "q": "junk"
+    },
+    "W": {
+      "name": "废纸篓",
+      "q": "junk"
+    },
+    "b": {
+      "name": "遗弃纸箱",
+      "q": "junk"
+    },
+    "U": {
+      "name": "遗落的工作服",
+      "q": "junk"
+    },
     "C": {
       "name": "抽屉",
-      "kind": "fast"
-    },
-    "L": {
-      "name": "储物柜",
-      "kind": "std"
-    },
-    "B": {
-      "name": "保险箱",
-      "kind": "heavy"
+      "q": "plain"
     },
     "T": {
       "name": "工具箱",
-      "kind": "fast"
+      "q": "plain"
+    },
+    "N": {
+      "name": "床头柜",
+      "q": "plain"
+    },
+    "e": {
+      "name": "员工储物盒",
+      "q": "plain"
+    },
+    "m": {
+      "name": "帆布挎包",
+      "q": "plain"
+    },
+    "L": {
+      "name": "储物柜",
+      "q": "ample"
+    },
+    "J": {
+      "name": "旅行箱",
+      "q": "ample"
+    },
+    "F": {
+      "name": "办公文件柜",
+      "q": "ample"
+    },
+    "D": {
+      "name": "运动包",
+      "q": "ample"
     },
     "M": {
       "name": "医疗柜",
-      "kind": "std"
+      "q": "fine"
     },
     "R": {
       "name": "电子设备柜",
-      "kind": "std"
+      "q": "fine"
+    },
+    "H": {
+      "name": "急救器材箱",
+      "q": "fine"
+    },
+    "Q": {
+      "name": "通讯设备箱",
+      "q": "fine"
+    },
+    "Y": {
+      "name": "救援人员背心",
+      "q": "fine"
+    },
+    "B": {
+      "name": "小型保险箱",
+      "q": "rich"
     },
     "K": {
       "name": "防水补给箱",
-      "kind": "heavy"
+      "q": "rich"
+    },
+    "G": {
+      "name": "珠宝匣",
+      "q": "rich"
+    },
+    "A": {
+      "name": "皮质旅行包",
+      "q": "rich"
+    },
+    "V": {
+      "name": "大型保险箱",
+      "q": "secret"
+    },
+    "I": {
+      "name": "机密封存箱",
+      "q": "secret"
+    },
+    "O": {
+      "name": "密封公文包",
+      "q": "secret"
     }
   },
   "enemies": [
@@ -5974,19 +6100,19 @@
     ]
   },
   "quotas": {
-    "containers": 41,
+    "containers": 48,
     "enemies": 24,
     "regions": {
       "apartment": [
-        7,
+        8,
         3
       ],
       "clinic": [
-        5,
+        6,
         2
       ],
       "clockshop": [
-        6,
+        7,
         3
       ],
       "bank": [
@@ -5994,11 +6120,11 @@
         5
       ],
       "warehouse": [
-        5,
+        8,
         2
       ],
       "outdoors": [
-        8,
+        9,
         9
       ]
     }
@@ -6999,12 +7125,12 @@
           21
         ],
         [
-          46,
-          21
+          45,
+          20
         ],
         [
-          47,
-          21
+          46,
+          20
         ],
         [
           47,

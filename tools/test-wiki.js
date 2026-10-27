@@ -10,7 +10,7 @@ const output = path.join(root, 'output/wiki');
 const url = file => pathToFileURL(path.join(root, file)).href;
 const context = vm.createContext({});
 for (const file of ['config.js', 'data.js']) vm.runInContext(fs.readFileSync(path.join(root, 'js', file), 'utf8'), context);
-const expected = vm.runInContext('({types:CONTAINER_TYPES,rows:MAP_ROWS,search:CFG.SEARCH,itemCount:ITEMS.length,gearCount:Object.keys(WEAPONS).length+HELMETS.length+BODIES.length+1})', context);
+const expected = vm.runInContext('({types:CONTAINER_TYPES,rows:MAP_ROWS,quality:CONTAINER_QUALITY,itemCount:ITEMS.length,gearCount:Object.keys(WEAPONS).length+HELMETS.length+BODIES.length+1})', context);
 
 (async () => {
   fs.mkdirSync(output, { recursive: true });
@@ -39,7 +39,7 @@ const expected = vm.runInContext('({types:CONTAINER_TYPES,rows:MAP_ROWS,search:C
       const count = expected.rows.join('').split(ch).length - 1;
       assert((await card.locator('summary').textContent()).includes(`当前地图 ${count} 个`));
       assert.equal(await card.locator('img').getAttribute('src'), `assets/props/${type.art}.png`);
-      assert.equal(await card.locator('dd').first().textContent(), expected.search[type.kind].time ? expected.search[type.kind].time + ' 秒' : '即时打开');
+      assert.equal(await card.locator('dd').first().textContent(), expected.quality[type.q].time ? expected.quality[type.q].time + ' 秒' : '即时打开');
       await card.locator('summary').click();
       assert.equal(await card.locator('.container-positions code').count(), count);
       await card.locator('summary').click();
@@ -62,7 +62,7 @@ const expected = vm.runInContext('({types:CONTAINER_TYPES,rows:MAP_ROWS,search:C
       }
       if (width === 390) await page.screenshot({ path: path.join(output, 'containers-mobile.png'), fullPage: true });
     }
-    for (const [file, key, count] of [['物品清单.html', 'items', expected.itemCount], ['装备清单.html', 'gear', expected.gearCount], ['容器清单.html', 'containers', 10]]) {
+    for (const [file, key, count] of [['物品清单.html', 'items', expected.itemCount], ['装备清单.html', 'gear', expected.gearCount], ['容器清单.html', 'containers', Object.keys(expected.types).length + 3]]) {
       await page.goto(url(file));
       assert.equal(await page.locator('.wiki-sheet .item').count(), count);
       assert.equal(await page.locator('[aria-current="page"]').getAttribute('data-wiki-link'), key);

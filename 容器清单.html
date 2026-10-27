@@ -14,12 +14,12 @@
   <div class="kicker">TIDELINE · CONTAINER SHEET</div>
   <h1>容器清单</h1>
   <div class="lede">所有可搜刮箱柜与遗留物，一处查看。箱柜的类型、数量、位置、搜刮时间与掉落偏好均取自当前游戏数据，预览共用游戏中的场景贴图。</div>
-  <div class="wiki-stats"><span><b>7</b> 种场景容器</span><span><b>41</b> 个地图实例</span><span><b>3</b> 类可搜刮遗留物</span></div>
+  <div class="wiki-stats"><span><b>25</b> 种场景容器</span><span><b>48</b> 个地图实例</span><span><b>3</b> 类可搜刮遗留物</span></div>
 </header>
 <div class="spec">
   <div class="panel"><h3>搜刮与掉落</h3>
-    <p>靠近后按 <code>E</code> 搜刮。开箱后，物品仍需逐件搜索：按稀有度耗时 0.45 / 0.85 / 1.4 / 2.1 / 3 秒。</p>
-    <p>抽取次数是随机抽取的轮数，同一箱内重复物品会被跳过，因此最终件数可能少于抽取次数。类别偏好提高权重，不保证掉落。</p>
+    <p>靠近后按 <code>E</code> 搜刮。开箱后，物品仍需逐件搜索：按稀有度耗时 0.45 / 0.85 / 1.4 / 1.8 / 2.1 / 3 秒。</p>
+    <p>抽取次数是随机抽取的轮数；同一箱内重抽几次仍撞上同一件时才会重复，所以件数稳定落在区间内。每档稀有度概率见各分区标题下那一行，合计 100%。类别偏好只在该档内重新分配类别，不改变稀有度曲线。</p>
     <p>箱柜打开、拿空后仍占一个完整格子。尸体与残骸可通行；桌椅、货架、油桶属于场景摆设，不能搜刮。</p>
   </div>
   <div class="panel"><h3>贴图与透视</h3>
@@ -28,120 +28,408 @@
     <p><b>位置</b>　贴图来自 <code>assets/props/</code>。地图位置使用从 0 开始的格坐标 <code>(x, y)</code>，x 向右，y 向下。</p>
   </div>
 </div>
-<section class="cat"><h2><span class="dot" style="background:#7fae9f"></span>快取容器<em>fast</em><i>2 种 · 13 个</i></h2><div class="grid container-grid"><article class="item container-card" data-container="C" style="--rc:#7fae9f">
-    <div class="thumb container-thumb"><img src="assets/props/crate_fast.png" width="96" height="96" alt="抽屉"></div>
+<section class="cat"><h2><span class="dot" style="background:#c6ceca"></span>1 级 废弃<em>junk</em><i>4 种 · 6 个</i></h2><p class="category-description"><b>白 65% · 绿 25% · 蓝 8% · 紫 1.7% · 金 0.28% · 红 0.02%</b> · 即开即取。九成是白绿，但有 0.3% 的机会翻出金红——真正意义上的垃圾堆里淘黄金。</p><div class="grid container-grid"><article class="item container-card" data-container="Z" style="--rc:#c6ceca">
+    <div class="thumb container-thumb"><img src="assets/props/barrel.png" width="96" height="96" alt="垃圾桶"></div>
     <div class="meta">
-      <div class="name">抽屉<i class="tag">快取容器</i></div>
-      <div class="sub"><code>crate_fast.png</code> · 地图标记 <code>C</code></div>
+      <div class="name">垃圾桶<i class="tag" style="color:#c6ceca">1 · 废弃</i></div>
+      <div class="sub"><code>barrel.png</code> · 地图标记 <code>Z</code></div>
       <dl class="container-facts">
         <div><dt>开箱</dt><dd>即时打开</dd></div>
         <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
         <div><dt>掉落偏好</dt><dd>通用物品池</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
-      <div class="desc">即开即取，适合快速搜刮。</div>
-      <details class="container-positions"><summary>当前地图 9 个 · 查看位置</summary><p><code>(6, 9)</code> <code>(14, 9)</code> <code>(17, 17)</code> <code>(22, 19)</code> <code>(45, 25)</code> <code>(64, 30)</code> <code>(53, 32)</code> <code>(6, 35)</code> <code>(4, 47)</code></p></details>
+      <div class="desc">即开即取。九成是白绿，但有 0.3% 的机会翻出金红——真正意义上的垃圾堆里淘黄金。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(22, 19)</code></p></details>
+      <div class="vis"><b>画什么</b>旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。</div>
+    </div>
+  </article>
+<article class="item container-card" data-container="W" style="--rc:#c6ceca">
+    <div class="thumb container-thumb"><img src="assets/props/crate_wastepaper.png" width="96" height="96" alt="废纸篓"></div>
+    <div class="meta">
+      <div class="name">废纸篓<i class="tag" style="color:#c6ceca">1 · 废弃</i></div>
+      <div class="sub"><code>crate_wastepaper.png</code> · 地图标记 <code>W</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>即时打开</dd></div>
+        <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>情报资料 / 生活用品</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">即开即取。九成是白绿，但有 0.3% 的机会翻出金红——真正意义上的垃圾堆里淘黄金。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(4, 47)</code></p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="b" style="--rc:#c6ceca">
+    <div class="thumb container-thumb"><img src="assets/props/crate_cardboard.png" width="96" height="96" alt="遗弃纸箱"></div>
+    <div class="meta">
+      <div class="name">遗弃纸箱<i class="tag" style="color:#c6ceca">1 · 废弃</i></div>
+      <div class="sub"><code>crate_cardboard.png</code> · 地图标记 <code>b</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>即时打开</dd></div>
+        <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>通用物品池</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">即开即取。九成是白绿，但有 0.3% 的机会翻出金红——真正意义上的垃圾堆里淘黄金。</div>
+      <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(58, 24)</code> <code>(46, 45)</code> <code>(41, 48)</code></p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="U" style="--rc:#c6ceca">
+    <div class="thumb container-thumb"><img src="assets/props/crate_workwear.png" width="96" height="96" alt="遗落的工作服"></div>
+    <div class="meta">
+      <div class="name">遗落的工作服<i class="tag" style="color:#c6ceca">1 · 废弃</i></div>
+      <div class="sub"><code>crate_workwear.png</code> · 地图标记 <code>U</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>即时打开</dd></div>
+        <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 工业器材</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">即开即取。九成是白绿，但有 0.3% 的机会翻出金红——真正意义上的垃圾堆里淘黄金。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(64, 30)</code></p></details>
+      
+    </div>
+  </article></div></section>
+<section class="cat"><h2><span class="dot" style="background:#3f8b78"></span>2 级 普通<em>plain</em><i>5 种 · 12 个</i></h2><p class="category-description"><b>白 43% · 绿 32% · 蓝 18% · 紫 6% · 金 0.9% · 红 0.1%</b> · 0.6 秒读条，走开就断。白绿占七成半，用来填满背包空位。</p><div class="grid container-grid"><article class="item container-card" data-container="C" style="--rc:#3f8b78">
+    <div class="thumb container-thumb"><img src="assets/props/crate_fast.png" width="96" height="96" alt="抽屉"></div>
+    <div class="meta">
+      <div class="name">抽屉<i class="tag" style="color:#3f8b78">2 · 普通</i></div>
+      <div class="sub"><code>crate_fast.png</code> · 地图标记 <code>C</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>0.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>通用物品池</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">0.6 秒读条，走开就断。白绿占七成半，用来填满背包空位。</div>
+      <details class="container-positions"><summary>当前地图 4 个 · 查看位置</summary><p><code>(9, 10)</code> <code>(45, 25)</code> <code>(67, 31)</code> <code>(6, 35)</code></p></details>
       <div class="vis"><b>画什么</b>一只低矮的旧木抽屉柜，长横向顶面占大部分，能看到南侧短而清晰的立面和铜色抽屉把手。顶面木纹横向，前面明显比顶面暗，左侧比右侧亮。保持矮柜低于储物柜。</div>
     </div>
   </article>
-<article class="item container-card" data-container="T" style="--rc:#7fae9f">
+<article class="item container-card" data-container="T" style="--rc:#3f8b78">
     <div class="thumb container-thumb"><img src="assets/props/crate_tool.png" width="96" height="96" alt="工具箱"></div>
     <div class="meta">
-      <div class="name">工具箱<i class="tag">快取容器</i></div>
+      <div class="name">工具箱<i class="tag" style="color:#3f8b78">2 · 普通</i></div>
       <div class="sub"><code>crate_tool.png</code> · 地图标记 <code>T</code></div>
       <dl class="container-facts">
-        <div><dt>开箱</dt><dd>即时打开</dd></div>
+        <div><dt>开箱</dt><dd>0.6 秒</dd></div>
         <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
         <div><dt>掉落偏好</dt><dd>工业器材</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
-      <div class="desc">即开即取，适合快速搜刮。偏好类别的抽取权重 ×4，也可能获得其他类别物品。</div>
+      <div class="desc">0.6 秒读条，走开就断。白绿占七成半，用来填满背包空位。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
       <details class="container-positions"><summary>当前地图 4 个 · 查看位置</summary><p><code>(61, 9)</code> <code>(16, 27)</code> <code>(40, 45)</code> <code>(47, 45)</code></p></details>
       <div class="vis"><b>画什么</b>低矮的锈红金属工具抽屉箱，横向宽顶面占主要部分，下面短立面上两层抽屉和银色拉手，角落黄铜扣与少许磨损，顶面和短侧壁都清晰可见。一格体积，比例同参考矮柜，绝对不要画正面立式大图。</div>
     </div>
+  </article>
+<article class="item container-card" data-container="N" style="--rc:#3f8b78">
+    <div class="thumb container-thumb"><img src="assets/props/crate_bedside.png" width="96" height="96" alt="床头柜"></div>
+    <div class="meta">
+      <div class="name">床头柜<i class="tag" style="color:#3f8b78">2 · 普通</i></div>
+      <div class="sub"><code>crate_bedside.png</code> · 地图标记 <code>N</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>0.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 医疗物资</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">0.6 秒读条，走开就断。白绿占七成半，用来填满背包空位。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 2 个 · 查看位置</summary><p><code>(6, 9)</code> <code>(14, 9)</code></p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="e" style="--rc:#3f8b78">
+    <div class="thumb container-thumb"><img src="assets/props/crate_staff.png" width="96" height="96" alt="员工储物盒"></div>
+    <div class="meta">
+      <div class="name">员工储物盒<i class="tag" style="color:#3f8b78">2 · 普通</i></div>
+      <div class="sub"><code>crate_staff.png</code> · 地图标记 <code>e</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>0.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 工业器材</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">0.6 秒读条，走开就断。白绿占七成半，用来填满背包空位。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(42, 51)</code></p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="m" style="--rc:#3f8b78">
+    <div class="thumb container-thumb"><img src="assets/props/crate_satchel.png" width="96" height="96" alt="帆布挎包"></div>
+    <div class="meta">
+      <div class="name">帆布挎包<i class="tag" style="color:#3f8b78">2 · 普通</i></div>
+      <div class="sub"><code>crate_satchel.png</code> · 地图标记 <code>m</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>0.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>1–2 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 情报资料</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">0.6 秒读条，走开就断。白绿占七成半，用来填满背包空位。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(17, 17)</code></p></details>
+      
+    </div>
   </article></div></section>
-<section class="cat"><h2><span class="dot" style="background:#7e9fb3"></span>标准容器<em>std</em><i>3 种 · 18 个</i></h2><div class="grid container-grid"><article class="item container-card" data-container="L" style="--rc:#7e9fb3">
+<section class="cat"><h2><span class="dot" style="background:#3f6d9b"></span>3 级 充实<em>ample</em><i>4 种 · 11 个</i></h2><p class="category-description"><b>白 23% · 绿 29% · 蓝 31% · 紫 14% · 金 2.8% · 红 0.2%</b> · 1.2 秒读条。蓝色达到峰值，白绿仍过半，开始有稳定的中档收益。</p><div class="grid container-grid"><article class="item container-card" data-container="L" style="--rc:#3f6d9b">
     <div class="thumb container-thumb"><img src="assets/props/crate_std.png" width="96" height="96" alt="储物柜"></div>
     <div class="meta">
-      <div class="name">储物柜<i class="tag">标准容器</i></div>
+      <div class="name">储物柜<i class="tag" style="color:#3f6d9b">3 · 充实</i></div>
       <div class="sub"><code>crate_std.png</code> · 地图标记 <code>L</code></div>
       <dl class="container-facts">
-        <div><dt>开箱</dt><dd>1 秒</dd></div>
+        <div><dt>开箱</dt><dd>1.2 秒</dd></div>
         <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
         <div><dt>掉落偏好</dt><dd>通用物品池</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
-      <div class="desc">需要短暂读条，走出交互范围会中断。</div>
-      <details class="container-positions"><summary>当前地图 10 个 · 查看位置</summary><p><code>(6, 17)</code> <code>(17, 18)</code> <code>(45, 18)</code> <code>(53, 19)</code> <code>(6, 21)</code> <code>(56, 32)</code> <code>(10, 34)</code> <code>(53, 38)</code> <code>(55, 45)</code> <code>(40, 52)</code></p></details>
+      <div class="desc">1.2 秒读条。蓝色达到峰值，白绿仍过半，开始有稳定的中档收益。</div>
+      <details class="container-positions"><summary>当前地图 6 个 · 查看位置</summary><p><code>(6, 17)</code> <code>(45, 18)</code> <code>(53, 19)</code> <code>(6, 21)</code> <code>(56, 32)</code> <code>(55, 45)</code></p></details>
       <div class="vis"><b>画什么</b>一只灰褐色储物柜：顶部平面与下方短立面同时可见，两道金属合页与一个把手，边角掉漆。高于矮木柜但不夸张拉长；有明确的柜门面、顶部和侧面。</div>
     </div>
   </article>
-<article class="item container-card" data-container="M" style="--rc:#7e9fb3">
-    <div class="thumb container-thumb"><img src="assets/props/crate_med.png" width="96" height="96" alt="医疗柜"></div>
+<article class="item container-card" data-container="J" style="--rc:#3f6d9b">
+    <div class="thumb container-thumb"><img src="assets/props/crate_luggage.png" width="96" height="96" alt="旅行箱"></div>
     <div class="meta">
-      <div class="name">医疗柜<i class="tag">标准容器</i></div>
-      <div class="sub"><code>crate_med.png</code> · 地图标记 <code>M</code></div>
+      <div class="name">旅行箱<i class="tag" style="color:#3f6d9b">3 · 充实</i></div>
+      <div class="sub"><code>crate_luggage.png</code> · 地图标记 <code>J</code></div>
       <dl class="container-facts">
-        <div><dt>开箱</dt><dd>1 秒</dd></div>
+        <div><dt>开箱</dt><dd>1.2 秒</dd></div>
         <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
-        <div><dt>掉落偏好</dt><dd>医疗物资</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 文物藏品</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
-      <div class="desc">需要短暂读条，走出交互范围会中断。偏好类别的抽取权重 ×4，也可能获得其他类别物品。</div>
-      <details class="container-positions"><summary>当前地图 5 个 · 查看位置</summary><p><code>(17, 21)</code> <code>(6, 39)</code> <code>(7, 42)</code> <code>(10, 43)</code> <code>(18, 44)</code></p></details>
+      <div class="desc">1.2 秒读条。蓝色达到峰值，白绿仍过半，开始有稳定的中档收益。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(17, 18)</code></p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="F" style="--rc:#3f6d9b">
+    <div class="thumb container-thumb"><img src="assets/props/crate_filing.png" width="96" height="96" alt="办公文件柜"></div>
+    <div class="meta">
+      <div class="name">办公文件柜<i class="tag" style="color:#3f6d9b">3 · 充实</i></div>
+      <div class="sub"><code>crate_filing.png</code> · 地图标记 <code>F</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>1.2 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>情报资料 / 生活用品</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">1.2 秒读条。蓝色达到峰值，白绿仍过半，开始有稳定的中档收益。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(53, 32)</code> <code>(10, 34)</code> <code>(53, 38)</code></p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="D" style="--rc:#3f6d9b">
+    <div class="thumb container-thumb"><img src="assets/props/crate_schoolbag.png" width="96" height="96" alt="运动包"></div>
+    <div class="meta">
+      <div class="name">运动包<i class="tag" style="color:#3f6d9b">3 · 充实</i></div>
+      <div class="sub"><code>crate_schoolbag.png</code> · 地图标记 <code>D</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>1.2 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 情报资料</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">1.2 秒读条。蓝色达到峰值，白绿仍过半，开始有稳定的中档收益。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(17, 21)</code></p></details>
+      
+    </div>
+  </article></div></section>
+<section class="cat"><h2><span class="dot" style="background:#9165b3"></span>4 级 优质<em>fine</em><i>5 种 · 7 个</i></h2><p class="category-description"><b>白 10% · 绿 18% · 蓝 32% · 紫 30% · 金 9.5% · 红 0.5%</b> · 1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。</p><div class="grid container-grid"><article class="item container-card" data-container="M" style="--rc:#9165b3">
+    <div class="thumb container-thumb"><img src="assets/props/crate_med.png" width="96" height="96" alt="医疗柜"></div>
+    <div class="meta">
+      <div class="name">医疗柜<i class="tag" style="color:#9165b3">4 · 优质</i></div>
+      <div class="sub"><code>crate_med.png</code> · 地图标记 <code>M</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>1.8 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>医疗物资 / 医疗物品</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 2 个 · 查看位置</summary><p><code>(6, 39)</code> <code>(7, 39)</code></p></details>
       <div class="vis"><b>画什么</b>一格体积的灰白与暗绿色金属医疗物资柜，顶面占大半，短而可见的前门上一个简单绿色加号、黑色短拉手和密封边，左上光、短侧壁，顶面亮门面暗，比例同参考储物柜，75度高角度俯视。</div>
     </div>
   </article>
-<article class="item container-card" data-container="R" style="--rc:#7e9fb3">
+<article class="item container-card" data-container="R" style="--rc:#9165b3">
     <div class="thumb container-thumb"><img src="assets/props/crate_elec.png" width="96" height="96" alt="电子设备柜"></div>
     <div class="meta">
-      <div class="name">电子设备柜<i class="tag">标准容器</i></div>
+      <div class="name">电子设备柜<i class="tag" style="color:#9165b3">4 · 优质</i></div>
       <div class="sub"><code>crate_elec.png</code> · 地图标记 <code>R</code></div>
       <dl class="container-facts">
-        <div><dt>开箱</dt><dd>1 秒</dd></div>
+        <div><dt>开箱</dt><dd>1.8 秒</dd></div>
         <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
         <div><dt>掉落偏好</dt><dd>电子产品 / 工业器材</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
-      <div class="desc">需要短暂读条，走出交互范围会中断。偏好类别的抽取权重 ×4，也可能获得其他类别物品。</div>
-      <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(50, 18)</code> <code>(58, 24)</code> <code>(40, 51)</code></p></details>
+      <div class="desc">1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(50, 18)</code></p></details>
       <div class="vis"><b>画什么</b>一格体积的蓝灰色电子设备储物机柜，较大顶面有两条散热缝，短前面板有微小暗青指示灯、插口与锁扣，少许外露线束盘绕在侧面，厚度清晰。顶面为主，不画整面正面服务器照片。</div>
     </div>
-  </article></div></section>
-<section class="cat"><h2><span class="dot" style="background:#c8b47a"></span>重型容器<em>heavy</em><i>2 种 · 10 个</i></h2><div class="grid container-grid"><article class="item container-card" data-container="B" style="--rc:#c8b47a">
-    <div class="thumb container-thumb"><img src="assets/props/crate_heavy.png" width="96" height="96" alt="保险箱"></div>
+  </article>
+<article class="item container-card" data-container="H" style="--rc:#9165b3">
+    <div class="thumb container-thumb"><img src="assets/props/crate_emergency.png" width="96" height="96" alt="急救器材箱"></div>
     <div class="meta">
-      <div class="name">保险箱<i class="tag">重型容器</i></div>
+      <div class="name">急救器材箱<i class="tag" style="color:#9165b3">4 · 优质</i></div>
+      <div class="sub"><code>crate_emergency.png</code> · 地图标记 <code>H</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>1.8 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>医疗物资 / 医疗物品</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 2 个 · 查看位置</summary><p><code>(7, 42)</code> <code>(18, 44)</code></p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="Q" style="--rc:#9165b3">
+    <div class="thumb container-thumb"><img src="assets/props/crate_comms.png" width="96" height="96" alt="通讯设备箱"></div>
+    <div class="meta">
+      <div class="name">通讯设备箱<i class="tag" style="color:#9165b3">4 · 优质</i></div>
+      <div class="sub"><code>crate_comms.png</code> · 地图标记 <code>Q</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>1.8 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>电子产品 / 军事物资 / 情报资料</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(40, 51)</code></p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="Y" style="--rc:#9165b3">
+    <div class="thumb container-thumb"><img src="assets/props/crate_rescuevest.png" width="96" height="96" alt="救援人员背心"></div>
+    <div class="meta">
+      <div class="name">救援人员背心<i class="tag" style="color:#9165b3">4 · 优质</i></div>
+      <div class="sub"><code>crate_rescuevest.png</code> · 地图标记 <code>Y</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>1.8 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>医疗物资 / 医疗物品 / 工业器材</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(10, 43)</code></p></details>
+      
+    </div>
+  </article></div></section>
+<section class="cat"><h2><span class="dot" style="background:#a8862a"></span>5 级 贵重<em>rich</em><i>4 种 · 10 个</i></h2><p class="category-description"><b>白 4% · 绿 9% · 蓝 22% · 紫 36% · 金 27% · 红 2%</b> · 2.6 秒，必须站定，读条全程发声。紫金占六成三，值得为它改路线。</p><div class="grid container-grid"><article class="item container-card" data-container="B" style="--rc:#a8862a">
+    <div class="thumb container-thumb"><img src="assets/props/crate_heavy.png" width="96" height="96" alt="小型保险箱"></div>
+    <div class="meta">
+      <div class="name">小型保险箱<i class="tag" style="color:#a8862a">5 · 贵重</i></div>
       <div class="sub"><code>crate_heavy.png</code> · 地图标记 <code>B</code></div>
       <dl class="container-facts">
-        <div><dt>开箱</dt><dd>3.5 秒</dd></div>
-        <div><dt>抽取次数</dt><dd>2–4 次</dd></div>
+        <div><dt>开箱</dt><dd>2.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
         <div><dt>掉落偏好</dt><dd>通用物品池</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
-      <div class="desc">读条期间必须站定，移动会中断；开箱会发出较大噪声。</div>
-      <details class="container-positions"><summary>当前地图 8 个 · 查看位置</summary><p><code>(50, 25)</code> <code>(53, 25)</code> <code>(61, 42)</code> <code>(66, 42)</code> <code>(61, 44)</code> <code>(66, 44)</code> <code>(61, 45)</code> <code>(66, 45)</code></p></details>
+      <div class="desc">2.6 秒，必须站定，读条全程发声。紫金占六成三，值得为它改路线。</div>
+      <details class="container-positions"><summary>当前地图 5 个 · 查看位置</summary><p><code>(50, 25)</code> <code>(53, 25)</code> <code>(61, 42)</code> <code>(66, 42)</code> <code>(66, 45)</code></p></details>
       <div class="vis"><b>画什么</b>一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。</div>
     </div>
   </article>
-<article class="item container-card" data-container="K" style="--rc:#c8b47a">
+<article class="item container-card" data-container="K" style="--rc:#a8862a">
     <div class="thumb container-thumb"><img src="assets/props/crate_supply.png" width="96" height="96" alt="防水补给箱"></div>
     <div class="meta">
-      <div class="name">防水补给箱<i class="tag">重型容器</i></div>
+      <div class="name">防水补给箱<i class="tag" style="color:#a8862a">5 · 贵重</i></div>
       <div class="sub"><code>crate_supply.png</code> · 地图标记 <code>K</code></div>
       <dl class="container-facts">
-        <div><dt>开箱</dt><dd>3.5 秒</dd></div>
-        <div><dt>抽取次数</dt><dd>2–4 次</dd></div>
-        <div><dt>掉落偏好</dt><dd>生活用品 / 医疗物资 / 工业器材</dd></div>
+        <div><dt>开箱</dt><dd>2.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 医疗物资 / 医疗物品 / 工业器材</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
-      <div class="desc">读条期间必须站定，移动会中断；开箱会发出较大噪声。偏好类别的抽取权重 ×4，也可能获得其他类别物品。</div>
+      <div class="desc">2.6 秒，必须站定，读条全程发声。紫金占六成三，值得为它改路线。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
       <details class="container-positions"><summary>当前地图 2 个 · 查看位置</summary><p><code>(59, 50)</code> <code>(47, 52)</code></p></details>
       <div class="vis"><b>画什么</b>一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。</div>
     </div>
+  </article>
+<article class="item container-card" data-container="G" style="--rc:#a8862a">
+    <div class="thumb container-thumb"><img src="assets/props/crate_jewelry.png" width="96" height="96" alt="珠宝匣"></div>
+    <div class="meta">
+      <div class="name">珠宝匣<i class="tag" style="color:#a8862a">5 · 贵重</i></div>
+      <div class="sub"><code>crate_jewelry.png</code> · 地图标记 <code>G</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>2.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>文物藏品 / 生活用品</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">2.6 秒，必须站定，读条全程发声。紫金占六成三，值得为它改路线。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 2 个 · 查看位置</summary><p><code>(46, 21)</code> <code>(61, 45)</code></p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="A" style="--rc:#a8862a">
+    <div class="thumb container-thumb"><img src="assets/props/crate_leatherbag.png" width="96" height="96" alt="皮质旅行包"></div>
+    <div class="meta">
+      <div class="name">皮质旅行包<i class="tag" style="color:#a8862a">5 · 贵重</i></div>
+      <div class="sub"><code>crate_leatherbag.png</code> · 地图标记 <code>A</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>2.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 文物藏品 / 医疗物资</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">2.6 秒，必须站定，读条全程发声。紫金占六成三，值得为它改路线。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(40, 52)</code></p></details>
+      
+    </div>
+  </article></div></section>
+<section class="cat"><h2><span class="dot" style="background:#8d3a3a"></span>6 级 秘藏<em>secret</em><i>3 种 · 2 个</i></h2><p class="category-description"><b>白 1% · 绿 3% · 蓝 10% · 紫 28% · 金 50% · 红 8%</b> · 3.6 秒，必须站定，读条全程发声。金占一半、红 8%，一局里通常只有两三个。</p><div class="grid container-grid"><article class="item container-card" data-container="V" style="--rc:#8d3a3a">
+    <div class="thumb container-thumb"><img src="assets/props/crate_heavy.png" width="96" height="96" alt="大型保险箱"></div>
+    <div class="meta">
+      <div class="name">大型保险箱<i class="tag" style="color:#8d3a3a">6 · 秘藏</i></div>
+      <div class="sub"><code>crate_heavy.png</code> · 地图标记 <code>V</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>3.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>3–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>通用物品池</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">3.6 秒，必须站定，读条全程发声。金占一半、红 8%，一局里通常只有两三个。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(61, 44)</code></p></details>
+      <div class="vis"><b>画什么</b>一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。</div>
+    </div>
+  </article>
+<article class="item container-card" data-container="I" style="--rc:#8d3a3a">
+    <div class="thumb container-thumb"><img src="assets/props/crate_sealed.png" width="96" height="96" alt="机密封存箱"></div>
+    <div class="meta">
+      <div class="name">机密封存箱<i class="tag" style="color:#8d3a3a">6 · 秘藏</i></div>
+      <div class="sub"><code>crate_sealed.png</code> · 地图标记 <code>I</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>3.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>3–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>情报资料 / 神秘学物品 / 异常遗物</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">3.6 秒，必须站定，读条全程发声。金占一半、红 8%，一局里通常只有两三个。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 0 个 · 查看位置</summary><p>当前地图尚未放置</p></details>
+      
+    </div>
+  </article>
+<article class="item container-card" data-container="O" style="--rc:#8d3a3a">
+    <div class="thumb container-thumb"><img src="assets/props/crate_diplomatic.png" width="96" height="96" alt="密封公文包"></div>
+    <div class="meta">
+      <div class="name">密封公文包<i class="tag" style="color:#8d3a3a">6 · 秘藏</i></div>
+      <div class="sub"><code>crate_diplomatic.png</code> · 地图标记 <code>O</code></div>
+      <dl class="container-facts">
+        <div><dt>开箱</dt><dd>3.6 秒</dd></div>
+        <div><dt>抽取次数</dt><dd>3–3 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>情报资料 / 文物藏品 / 神秘学物品</dd></div>
+        <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
+      </dl>
+      <div class="desc">3.6 秒，必须站定，读条全程发声。金占一半、红 8%，一局里通常只有两三个。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
+      <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(66, 44)</code></p></details>
+      
+    </div>
   </article></div></section>
 <section class="cat"><h2>可搜刮遗留物<em>remains</em><i>3 类 · 击败敌人后生成</i></h2>
-  <p class="section-note">遗留物不计入上述 41 个固定容器。当前搜刮读条为 0.35 秒；物品仍按逐件搜索规则揭示。</p>
+  <p class="section-note">遗留物不计入上述 48 个固定容器。当前搜刮读条为 0.35 秒；物品仍按逐件搜索规则揭示。</p>
   <div class="grid container-grid"><article class="item container-card" data-remains="scav">
     <div class="thumb container-thumb"><img src="assets/props/corpse_scav.png" width="96" height="96" alt="拾荒者尸体"></div>
     <div class="meta"><div class="name">拾荒者尸体<i class="tag dim">可通行</i></div>

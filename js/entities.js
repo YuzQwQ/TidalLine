@@ -181,6 +181,7 @@ class Player {
 
   /* 换成第 i 个武器槽。每个槽的弹匣各自记忆。 */
   switchWeapon(i) {
+    Medical.cancel();
     if (i < 0 || i >= this.weapons.length) return false;
     if (!this.weapons[i]) { Game.toast('这个位置是空的'); return false; }
     if (i === this.slot) return false;
@@ -194,14 +195,30 @@ class Player {
     return true;
   }
 
-  fillWeapons(ids) {
+  /* 按存档配装填武器槽。每条可以是：
+     - null / 空
+     - 枪的 id（老存档）
+     - 伪物品 EQUIP.gun(id, mag) —— 现在统一用这个，余弹跟着枪走 */
+  fillWeapons(list) {
     this.weapons = [null, null, null];
-    for (let i = 0; i < 3 && i < ids.length; i++) {
-      const def = WEAPONS[ids[i]];
+    for (let i = 0; i < 3 && i < (list || []).length; i++) {
+      const e = list[i];
+      let def = null, mag = 0;
+      if (typeof e === 'string') {
+        def = WEAPONS[e];
+        mag = def ? def.mag : 0;      // 只给 id 就当满弹匣
+      } else if (e && e.equip && e.equip.kind === 'gun') {
+        def = WEAPONS[e.equip.gun];
+        mag = e.equip.mag || 0;
+      } else if (e && e.id && WEAPONS[e.id]) {
+        def = WEAPONS[e.id];
+      }
       if (!def) continue;
-      this.weapons[i] = Object.assign({}, def, { magCur: def.mag });
+      this.weapons[i] = Object.assign({}, def, { magCur: U.clamp(mag | 0, 0, def.mag) });
     }
+    /* 余弹照存档来 —— 空着就是空着，不白送子弹 */
     this.slot = this.weapons[0] ? 0 : (this.weapons[1] ? 1 : 2);
+    if (!this.weapons[this.slot]) this.slot = 0;   // 三个都空：别让 slot 指到不存在的枪
     this.mag = this.weapon.magCur;
   }
 
@@ -289,6 +306,7 @@ class Player {
       this.waterT += dt;
       if (this.waterT > CFG.P.WATER_DMG_DELAY) {
         this.hp -= CFG.P.WATER_DMG * dt;
+        Medical.cancel(); Save.setHP(this.hp, false);
         if (this.hp <= 0) { this.hp = 0; this.dead = true; }
       }
     } else {
@@ -329,6 +347,7 @@ class Player {
   }
 
   tryShoot() {
+    Medical.cancel();
     if (this.dead) return false;
     if (this.reloadT > 0) return false;
     if (this.fireCd > 0) return false;
@@ -383,6 +402,7 @@ class Player {
   }
 
   tryReload() {
+    Medical.cancel();
     if (this.reloadT > 0) return;
     if (this.mag >= this.weapon.mag) return;
     if (this.bag.hasAmmo() <= 0) { Game.toast('没有弹药了'); return; }
@@ -413,6 +433,8 @@ class Player {
 
     this.hurtAnimT = PLAYER_ANIMS.hurt.frames / PLAYER_ANIMS.hurt.fps;
     this.hp -= dmg;
+    if (dmg > 0) Medical.cancel();
+    Save.setHP(this.hp);
     Game.shake(head ? 4.4 : 3.2);
     Game.flash(head ? '#b23f36' : '#8d3a3a', head ? 0.30 : 0.22);
     Game.hitDir = Game.lastHitAngle;
@@ -439,6 +461,7 @@ class Player {
   }
 
   throwStone() {
+    Medical.cancel();
     if (this.stones <= 0) { Game.toast('没有石子了'); return; }
     this.stones--;
     const a = this.angle;
@@ -962,13 +985,13 @@ class Corpse {
     // 拾荒者身上有他的装备与战利品；回响体留下结晶
     if (enemy.t.faction === 'echo') {
       const od = ITEMS.filter(i => i.cat === 'odd');
-      this.loot.push({ item: U.pick(od), n: 1 });
-      if (Math.random() < 0.5) this.loot.push({ item: ITEMS.find(i => i.id === 'med01'), n: 1 });
+      this.loot.push({ item: Loot.pickFromPool(od), n: 1 });
+      if (Math.random() < 0.5) this.loot.push({ item: ITEMS.find(i => i.id === 'heal01'), n: 1 });
     } else if (enemy.t.faction === 'guard') {
-      this.loot.push({ item: U.pick(ITEMS.filter(i => i.cat === 'ind' || i.cat === 'elec')), n: 1 });
+      this.loot.push({ item: Loot.pickFromPool(ITEMS.filter(i => i.cat === 'ind' || i.cat === 'elec')), n: 1 });
       this.loot.push({ item: ITEMS.find(i => i.id === 'ammo'), n: 12 });
     } else {
-      this.loot.push({ item: U.pick(ITEMS.filter(i => i.r <= 2)), n: 1 });
+      this.loot.push({ item: Loot.pickFromPool(ITEMS.filter(i => i.r <= 2)), n: 1 });
       if (Math.random() < 0.65) {
         this.loot.push({ item: ITEMS.find(i => i.id === 'ammo'), n: U.randInt(6, 14) });
       }

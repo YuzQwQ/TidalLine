@@ -1,0 +1,438 @@
+{
+  "total": 27,
+  "passed": 27,
+  "assets": [
+    {
+      "id": "life06",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 746,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 10,
+        "right": 43,
+        "bottom": 37
+      },
+      "sha256": "7911e95385ddc56c4b34b3406d3add92cf4721be295cea8bc2bee4ff7122d4df"
+    },
+    {
+      "id": "life08",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 859,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 12,
+        "top": 4,
+        "right": 34,
+        "bottom": 43
+      },
+      "sha256": "c200519326e278d983f70674fd8c6c500845bb341624562eb5922b9a3ff3bda4"
+    },
+    {
+      "id": "life20",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1054,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 4,
+        "right": 43,
+        "bottom": 43
+      },
+      "sha256": "1c6049f9c42fd7b185b5c0a7eb60d052fa8c3babfe970e8a3267a3f17630d164"
+    },
+    {
+      "id": "life28",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1080,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 5,
+        "right": 43,
+        "bottom": 42
+      },
+      "sha256": "5a9e4a27e428fa828206437c594b4a5555dfdad75ce9dc457d9b77e70b86ae5a"
+    },
+    {
+      "id": "life11",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 876,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 8,
+        "top": 4,
+        "right": 39,
+        "bottom": 43
+      },
+      "sha256": "37bb2077905e2fd0d17c986b7a91db6d6dcb163ede3080f5e7d1c11db7a59845"
+    },
+    {
+      "id": "life15",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 822,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 7,
+        "right": 43,
+        "bottom": 39
+      },
+      "sha256": "b6567c0f3f9f404bd0636f35cbf6fa0d368f8723d8d8b36cab46d1cff177fff9"
+    },
+    {
+      "id": "life19",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 811,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 7,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "3595346713a8d2a09f6706c94ede9e2d8eddd96d17b783a5d66cf2f26398b3e3"
+    },
+    {
+      "id": "life22",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 841,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 6,
+        "top": 4,
+        "right": 40,
+        "bottom": 43
+      },
+      "sha256": "fe4e698cf3861e659ed44ad77fe4009114767f46286671733da086b1c15cf747"
+    },
+    {
+      "id": "life10",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 730,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 8,
+        "right": 43,
+        "bottom": 38
+      },
+      "sha256": "4d6c1d19f2ee59ac755a859d5f2fe9b1605cc3a77235605a1cf84b6f8ba33b12"
+    },
+    {
+      "id": "life13",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 921,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 6,
+        "right": 43,
+        "bottom": 41
+      },
+      "sha256": "c6e7f5a9a5f0659f1117fc924b4a34858c9fd636e664dd8d6079504f9ee277cf"
+    },
+    {
+      "id": "life41",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1013,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 5,
+        "right": 43,
+        "bottom": 42
+      },
+      "sha256": "aba6f097f12f777b3cdda52f64d9b5b3e6f11fa824fc94f92ccf0537cad38f5d"
+    },
+    {
+      "id": "life43",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 740,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 8,
+        "top": 4,
+        "right": 39,
+        "bottom": 43
+      },
+      "sha256": "6d5a6358b43cc5e4125f41c25ee3d1f25b69652f9c47e935f4a1726e11a063c4"
+    },
+    {
+      "id": "life36",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 779,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 8,
+        "right": 43,
+        "bottom": 39
+      },
+      "sha256": "b351195c53ce041e1b32be42c9bc0baa2dd905f4edcbc3b7ed002c6b8e7a2959"
+    },
+    {
+      "id": "life37",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 525,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 6,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "5475a86cee95f1475364e61ff6d79c093aa6f3c1516548dfb9a9680c4848bd10"
+    },
+    {
+      "id": "life38",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 866,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 7,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "ac1b8890c0c40e945c68be0c90d8b2115e6789d4840d8b49ceb1fc693793a718"
+    },
+    {
+      "id": "life47",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1000,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 4,
+        "right": 43,
+        "bottom": 43
+      },
+      "sha256": "9bb85c15745ecd1d5c44444efc4262f44b068c1322f9b4743f3262eb15a784b4"
+    },
+    {
+      "id": "life44",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 848,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 10,
+        "top": 4,
+        "right": 37,
+        "bottom": 43
+      },
+      "sha256": "e712bb4411aea40f14481b0de4a1b1b3f10153466ae6ceac89c07c312f2b66ce"
+    },
+    {
+      "id": "life45",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1023,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 4,
+        "right": 43,
+        "bottom": 42
+      },
+      "sha256": "c3848d5f6c27985b6759f947f353215b1088f81242f1f76a03071fb84c6fa557"
+    },
+    {
+      "id": "life46",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 964,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 6,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "e47a0fa331383c3ae4d5fdd8f29b2a8db2afbb1db980abc89a4de6ccccf5213d"
+    },
+    {
+      "id": "life39",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 594,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 16,
+        "top": 4,
+        "right": 31,
+        "bottom": 43
+      },
+      "sha256": "f54b1baaaa8d298499b97b2f3793a4523a4560fbc541ecbaef02c51a4854df2d"
+    },
+    {
+      "id": "life32",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 765,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 9,
+        "right": 43,
+        "bottom": 37
+      },
+      "sha256": "9480d8340dd7675df8dfe4f856da76d2063d8e441f13da12bc709dd088eaeaf5"
+    },
+    {
+      "id": "life33",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 264,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 12,
+        "right": 43,
+        "bottom": 34
+      },
+      "sha256": "0a3e1f3852e7a6adbb09a42a7f1f20a570603506cc60044dfb5a0df4aeddcdc0"
+    },
+    {
+      "id": "life48",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 911,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 5,
+        "top": 5,
+        "right": 43,
+        "bottom": 41
+      },
+      "sha256": "aeae39144add94f3a2dc78925ae60ea860be9b73722fa8f282cca0d77e7c0bf0"
+    },
+    {
+      "id": "life49",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 714,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 7,
+        "top": 4,
+        "right": 39,
+        "bottom": 43
+      },
+      "sha256": "f4213a2d154b57309b18af1577b6d16ea11885c99ff531914716342ebd5f0d22"
+    },
+    {
+      "id": "elec05",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 976,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 7,
+        "top": 4,
+        "right": 40,
+        "bottom": 43
+      },
+      "sha256": "dd66da041e53c59dbdcfaa95650bf543fdd7c6c12361bf4b304ef27ed04974eb"
+    },
+    {
+      "id": "elec06",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1126,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 5,
+        "top": 5,
+        "right": 43,
+        "bottom": 41
+      },
+      "sha256": "57e0b4a73a27e9bf714c698f0fae1fb77ea46c70a075e881263ce57a4427541c"
+    },
+    {
+      "id": "antiq06",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 792,
+      "colors": 15,
+      "partialAlphaPixels": 0,
+      "marginPixels": 0,
+      "bounds": {
+        "left": 4,
+        "top": 10,
+        "right": 43,
+        "bottom": 37
+      },
+      "sha256": "7ccbcc599144c5b23e142eee90ce207893e492b102a87126b44bbb22d480f3e2"
+    }
+  ]
+}

@@ -119,14 +119,49 @@ room('warehouse','stock','货架与工具区',[40,45,47,52],[44,48]);
 portal('warehouse','front','北侧装卸入口',[43,44,44,44],['stock','outside']);
 portal('warehouse','side','东侧侧门',[48,49,48,50],['stock','outside']);
 
-const containerTypes={C:{name:'抽屉',kind:'fast'},L:{name:'储物柜',kind:'std'},B:{name:'保险箱',kind:'heavy'},T:{name:'工具箱',kind:'fast'},M:{name:'医疗柜',kind:'std'},R:{name:'电子设备柜',kind:'std'},K:{name:'防水补给箱',kind:'heavy'}};
+/* 容器类型 = 固定品质 + 类别奖池。品质不做二次随机：垃圾桶永远是废弃，大型保险箱永远是秘藏。 */
+const containerTypes={
+ Z:{name:'垃圾桶',q:'junk'},
+ W:{name:'废纸篓',q:'junk'},
+ b:{name:'遗弃纸箱',q:'junk'},
+ U:{name:'遗落的工作服',q:'junk'},
+ C:{name:'抽屉',q:'plain'},
+ T:{name:'工具箱',q:'plain'},
+ N:{name:'床头柜',q:'plain'},
+ e:{name:'员工储物盒',q:'plain'},
+ m:{name:'帆布挎包',q:'plain'},
+ L:{name:'储物柜',q:'ample'},
+ J:{name:'旅行箱',q:'ample'},
+ F:{name:'办公文件柜',q:'ample'},
+ D:{name:'运动包',q:'ample'},
+ M:{name:'医疗柜',q:'fine'},
+ R:{name:'电子设备柜',q:'fine'},
+ H:{name:'急救器材箱',q:'fine'},
+ Q:{name:'通讯设备箱',q:'fine'},
+ Y:{name:'救援人员背心',q:'fine'},
+ B:{name:'小型保险箱',q:'rich'},
+ K:{name:'防水补给箱',q:'rich'},
+ G:{name:'珠宝匣',q:'rich'},
+ A:{name:'皮质旅行包',q:'rich'},
+ V:{name:'大型保险箱',q:'secret'},
+ I:{name:'机密封存箱',q:'secret'},
+ O:{name:'密封公文包',q:'secret'}
+};
+/* 品质绑定在容器类型上，不做二次随机；同一品质掉率完全一致，preference 只重排类别。
+   机密封存箱（I）暂不进初始地图，留给后续封锁设施。 */
 function stash(region,points,preference) {for(const [type,x,y] of points) containers.push({id:'c'+String(containers.length+1).padStart(2,'0'),region,type,x,y,preference});}
-stash('apartment',[['C',6,9],['C',14,9],['L',6,17],['L',6,21],['C',17,17],['L',17,18],['M',17,21]],['life']);
-stash('clinic',[['M',7,42],['M',10,43],['M',6,39],['L',10,34],['C',6,35]],['med']);
-stash('clockshop',[['C',45,25],['L',53,19],['R',50,18],['B',50,25],['B',53,25],['L',45,18]],['antiq','lux']);
-stash('bank',[['C',53,32],['L',56,32],['L',53,38],['L',55,45],['B',61,42],['B',66,42],['B',61,44],['B',66,44],['B',61,45],['B',66,45]],['lux','antiq','art']);
-stash('warehouse',[['T',40,45],['T',47,45],['R',40,51],['L',40,52],['K',47,52]],['ind','elec']);
-stash('outdoors',[['C',22,19],['T',16,27],['M',18,44],['C',4,47],['R',58,24],['C',64,30],['T',61,9],['K',59,50]],['life','ind']);
+
+/* 住宅：床头柜贴床、旅行箱与运动包是搬走前的状态、挎包挂在门厅 */
+stash('apartment',[['N',6,9],['N',14,9],['C',9,10],['L',6,17],['L',6,21],['m',17,17],['J',17,18],['D',17,21]],['life']);
+/* 诊所：诊疗区留医疗柜，办公角是文件柜，急救箱与救援背心来自救援队 */
+stash('clinic',[['F',10,34],['C',6,35],['M',6,39],['M',7,39],['H',7,42],['Y',10,43]],['med','medical']);
+stash('clockshop',[['C',45,25],['L',53,19],['R',50,18],['B',50,25],['B',53,25],['L',45,18],['G',46,21]],['collect']);
+/* 银行金库：两只是大型号，一只公文包是撤离时锁进去的，保管箱业务留一只珠宝匣 */
+stash('bank',[['F',53,32],['L',56,32],['F',53,38],['L',55,45],['B',61,42],['B',66,42],['V',61,44],['O',66,44],['G',61,45],['B',66,45]],['collect']);
+/* 仓库：装卸口堆纸箱，员工储物盒与通讯箱在值班角 */
+stash('warehouse',[['T',40,45],['T',47,45],['b',46,45],['b',41,48],['e',42,51],['Q',40,51],['A',40,52],['K',47,52]],['ind','elec']);
+/* 街面：垃圾桶与废纸篓负责室外杂物，事故点留给急救箱 */
+stash('outdoors',[['Z',22,19],['T',16,27],['U',64,30],['H',18,44],['W',4,47],['b',58,24],['C',67,31],['T',61,9],['K',59,50]],['life','ind']);
 function host(region,type,points,patrolRadius=2) {for(const [x,y] of points) enemies.push({id:'e'+String(enemies.length+1).padStart(2,'0'),region,type,x,y,patrolRadius});}
 host('apartment','scav',[[8,18],[15,17],[14,21]]);
 host('clinic','scav',[[8,38],[13,42]]);
@@ -199,7 +234,7 @@ const data={
  plazas:[{id:'residential-yard',name:'住宅小院',rect:[15,25,22,32]},{id:'bank-square',name:'银行前场',rect:[43,31,50,38]}],
  tide:{implemented:false,permanentWater:'~',note:'水面常态不可涉水；所有预留低地和南桥在本稿按正常可通行地形检查。',
  zones:[{id:'south-lowland',name:'南桥东端低地',rect:[37,39,48,43]},{id:'warehouse-lowland',name:'仓库东巷低地',rect:[49,43,51,49]},{id:'west-stairs',name:'西岸阶梯',rect:[29,27,29,29]},{id:'east-stairs',name:'东岸阶梯',rect:[36,23,36,25]}]},
- quotas:{containers:41,enemies:24,regions:{apartment:[7,3],clinic:[5,2],clockshop:[6,3],bank:[10,5],warehouse:[5,2],outdoors:[8,9]}},
+ quotas:{containers:48,enemies:24,regions:{apartment:[8,3],clinic:[6,2],clockshop:[7,3],bank:[10,5],warehouse:[8,2],outdoors:[9,9]}},
  routeSpecs:[
  {id:'residential',name:'住宅搜刮线',color:'#21937b',waypoints:[[7,4],[19,14],[14,21],[21,26],[16,32],[9,35],[13,40],[6,51]]},
  {id:'commercial',name:'商业深入线',color:'#b47c29',waypoints:[[7,4],[19,14],[14,21],[19,14],[27,14],[38,14],[47,20],[52,24],[49,34],[55,35],[61,35],[59,39],[64,39],[64,43],[58,44],[67,51]]},

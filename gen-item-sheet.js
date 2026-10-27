@@ -6,15 +6,20 @@ const path = require('path');
 const { writeSheet } = require('./tools/wiki-layout');
 
 const dir = __dirname;
+const money=n=>'¥'+Number(n).toLocaleString('en-US');
+require('./tools/build-economy.js').build();
 const ctx = { console, Math, Object, Array };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/config.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/data.js'), 'utf8'), ctx);
-vm.runInContext('globalThis.ITEMS=ITEMS;globalThis.CATS=CATS;globalThis.RARITY=RARITY;', ctx);
+vm.runInContext('globalThis.ITEMS=ITEMS;globalThis.CATS=CATS;globalThis.RARITY=RARITY;globalThis.COLLECTION_CATS=COLLECTION_CATS;globalThis.ITEM_GROUPS=ITEM_GROUPS;globalThis.itemGroup=itemGroup;globalThis.itemCategoryLabel=itemCategoryLabel;globalThis.MEDICAL_GROUPS=MEDICAL_GROUPS;', ctx);
 
-const { ITEMS, CATS, RARITY } = ctx;
-const hasIcon = id => fs.existsSync(path.join(dir, 'assets', 'items', id + '.png'));
+const { ITEMS, CATS, RARITY, COLLECTION_CATS, ITEM_GROUPS, itemGroup, itemCategoryLabel } = ctx;
+const classification=require('./design/items/classification.json');
+const classificationById=new Map(classification.items.map(item=>[item.id,item]));
+const iconId = id => ITEMS.find(i=>i.id===id)?.iconId || id;
+const hasIcon = id => fs.existsSync(path.join(dir, 'assets', 'items', iconId(id) + '.png'));
 const iconCount = ITEMS.filter(it => hasIcon(it.id)).length;
 
 /* 每个物品的「视觉提示」——画图时看这一句就够了 */
@@ -25,10 +30,40 @@ const VISUAL = {
   life04: '圆角铁皮饼干盒，红绿花纹褪色，盖子上有个凹痕',
   life05: '带透明塑料包装的叠好的毛巾，包装印褪色的商标',
 
+  /* 生活用品：29 件。基础层＝工业时代通用器物；文化层＝不同传统交汇；
+     独有层＝环礁湾自己的机构、商业与工艺史。 */
+  life06: '扁方形铝饭盒，盖子上有一排钉出来的工号数字，边角磕凹',
+  life08: '圆柱形玻璃糖罐，金属螺旋盖，罐底结着一块深褐色糖块',
+  life10: '布袋口散出十几颗玻璃弹珠，其中一颗内部有三道彩纹',
+  life11: '双铃机械闹钟，圆形表盘加两只铃铛，指针停在 5:47，背面贴一张小纸条',
+  life13: '发条铁皮小火车，绿漆掉了一半，烟囱歪向一侧',
+  life15: '千禧年前的重金属电熨斗，胶木手柄，调温旋钮，底面磨得发亮',
+  life19: '黑色铸铁缝纫机机头，侧面金色贴花磨淡，手轮裸露，无底座',
+  life20: '白瓷礼盒部分展开，盘沿一圈海鸟与海浪印花，内衬纸泛黄',
+  life22: '深色丝绸礼服，立领加一排盘扣，西式肩线，袖口一块同色补丁',
+  life28: '木盒里的纯银刀叉勺，手柄背面打有成色印记，绒布内衬，金属发暗',
+  life32: '深棕色真皮手提箱，黄铜锁扣，钥匙插在锁上',
+  life33: '实金细框圆眼镜，折叠镜腿，内侧有细小成色戳记，镜片清晰',
+  /* 城市公共生活 */
+  life36: '折叠数层的米黄色城市地图，蓝色道路与红色地名标记，边缘磨损',
+  life37: '深色金属检票钳，手钳结构，手柄包黑色胶木',
+  life38: '米白色按键电话机，灰色卷线，十二个黑色数字键，顶部红色指示灯',
+  life39: '银色圆柱保温杯，深蓝色塑料盖，底部一圈防滑橡胶',
+  life41: '透明灰塑料磁带收纳盒半开，露出六盘黑色卡式磁带与彩色手写标签',
+  life43: '小型红白条纹旋转木马，金色微型立柱，底座带黄铜发条钥匙',
+  life44: '褪色海军蓝帆布圆筒行李包，白色粗绳束口，侧面三层印刷编号',
+  life45: '桌面机械呼叫铃，圆形金属底座，顶部圆钮，黄铜与银色两种版本',
+  life46: '深棕色拉链洗漱包半敞，露出金属剃须刀、折叠牙刷和小镜子',
+  life47: '深绿色皮面日程簿，金色书角，黑色束带，夹一支细长圆珠笔',
+  life48: '深蓝色紧凑机械打字机，银色按键，前部金属铭牌，侧面折叠把手',
+  life49: '小型黄铜机械打火机，外露齿轮与点火轮，底部敲着 000 编号，表面自然氧化',
+
   elec01: '米黄色塑料外壳的便携收音机，拉出半截天线，刻度盘发黄',
   elec02: '深蓝或银色的方形随身听，透明观察窗里能看见一盒磁带',
   elec03: '黑灰塑料计算器，太阳能条发暗，屏幕显示一个「0」',
   elec04: '绿色电路板，上面有几颗电容和插槽，边缘有小缺口',
+  elec05: '淡黄色塑料掌机，墨绿色液晶屏，红色方向键与两个圆形按钮',
+  elec06: '黑银双色方形即时成像相机，突出镜头与前部白色相纸出口',
 
   ind01: '一段截断的黄铜管，切面发亮，管身氧化发暗绿',
   ind02: '金属轴承，外圈锈斑，内圈还能看见打磨的亮面',
@@ -44,6 +79,7 @@ const VISUAL = {
   antiq03: '一枚发黑的小硬币，边缘磨损，图案已经看不清',
   antiq04: '同上的硬币但图案明显压偏，边齿不齐，表面反而更亮',
   antiq05: '一块长方形的绿锈铜门牌，上面刻着「临海路 7 号」',
+  antiq06: '长方形铁皮釉色母版，分格烧了十几种釉，每格边上漆写编号，最后一格颜色停在半路',
 
   art01:  '黑色黑胶唱片，露出半张纸质封套，封套上有手写编号',
   art02:  '小幅油画，画的是灰蓝色的海面，画框掉漆，右下角有签名',
@@ -66,7 +102,7 @@ const byCat = {};
 for (const it of ITEMS) {
   (byCat[it.cat] = byCat[it.cat] || []).push(it);
 }
-const catOrder = Object.keys(CATS);
+const catOrder = Object.values(ITEM_GROUPS).flatMap(group=>group.cats);
 
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -76,40 +112,50 @@ function card(it) {
   const r = RARITY[it.r - 1];
   const cat = CATS[it.cat];
   const isStack = it.stack > 1;
-  const vis = VISUAL[it.id] || '';
+  const vis = it.visual || VISUAL[it.id] || '';
   return `
-    <div class="item" style="--rc:${r.color}">
+    <div class="item" data-item="${it.id}" style="--rc:${r.color}">
       <div class="thumb">
-        ${hasIcon(it.id) ? `<img src="assets/items/${esc(it.id)}.png" width="48" height="48" alt="${esc(it.name)}">` : '<span>待绘制</span><b>48×48</b>'}
+        ${hasIcon(it.id) ? `<img src="assets/items/${esc(iconId(it.id))}.png" width="48" height="48" alt="${esc(it.name)}">` : '<span>'+esc(it.name)+'</span><b>待绘制 · 48×48</b>'}
       </div>
       <div class="meta">
         <div class="name">${esc(it.name)}${isStack ? '<i class="tag">可堆叠 ' + it.stack + '</i>' : ''}${it.noCodex ? '<i class="tag dim">不进图鉴</i>' : ''}</div>
-        <div class="sub"><code>${esc(it.id)}</code> · <span style="color:${cat.color}">${cat.name}</span> · <span style="color:${r.color}">${r.name}</span> · ${it.w}kg · ${it.price > 0 ? '¥' + it.price : '不定价'}${it.short ? ' · 背包简称 <b style="color:#a8c4ba">' + esc(it.short) + '</b>' : ''}</div>
+        <div class="sub"><code>${esc(it.id)}</code> · <span style="color:${cat.color}">${itemCategoryLabel(it)}</span> · <span style="color:${r.color}">${r.name}</span> · ${it.w}kg · ${it.price > 0 ? money(it.price) : '不定价'}${it.short ? ' · 背包简称 <b style="color:#a8c4ba">' + esc(it.short) + '</b>' : ''}</div>
         <div class="desc">${esc(it.desc)}</div>
+        ${it.medicalGroup ? `<div class="vis"><b>${esc(ctx.MEDICAL_GROUPS[it.medicalGroup])} · ${esc(it.source)}</b>${it.heal ? `恢复 ${it.heal} HP · 局内 ${it.useTime} 秒 · 局外立即 · 已开放` : `效果待开放 · 预留：${esc(it.reservedEffect)} · 本轮不掉落`}<br>品牌与历史叙事来自医疗产业提案，尚未并入正式世界观。</div>` : ''}
+        ${classificationById.has(it.id)?`<div class="vis"><b>分类依据</b>${esc(classificationById.get(it.id).reason)}</div>`:''}
         ${vis ? `<div class="vis"><b>画什么</b>${esc(vis)}</div>` : ''}
       </div>
     </div>`;
 }
 
 let body = '';
-for (const k of catOrder) {
-  const list = byCat[k];
-  if (!list) continue;
+for (const [groupId,group] of Object.entries(ITEM_GROUPS)) {
+  const groupItems=ITEMS.filter(item=>itemGroup(item)===groupId);
+  body+=`<section class="item-group" data-item-group="${groupId}"><h2 class="item-group-title">${group.name}<span>${groupItems.length} 件</span></h2><p class="category-description">${groupId==='collectible'?'按九类组织，用于探索、交易与图鉴收集。':'用于装填与治疗，不计入收集图鉴。'}</p>`;
+  for (const k of group.cats) {
+  const list = byCat[k] || [];
   const cat = CATS[k];
   body += `
-  <section class="cat">
-    <h2><span class="dot" style="background:${cat.color}"></span>${cat.name}<em>${k}</em><i>${list.length} 件</i></h2>
-    <div class="grid">${list.map(card).join('')}</div>
+  <section class="cat" data-item-category="${k}">
+    <h3><span class="dot" style="background:${cat.color}"></span>${cat.name}<em>${k}</em><i>${list.length} 件</i></h3>
+    <p class="category-description"><b>${cat.theme}</b> · ${cat.desc}</p>
+    ${!list.length?'<p class="category-empty">目前没有符合此类别的既有物品，保留分类供后续扩充。</p>':''}
+    ${k==='medical' ? Object.entries(ctx.MEDICAL_GROUPS).map(([key,label])=>`<section class="medical-group" data-medical-group="${key}"><h4>${label} · ${list.filter(i=>i.medicalGroup===key).length} 件</h4><div class="grid">${list.filter(i=>i.medicalGroup===key).map(card).join('')}</div></section>`).join('') : `<div class="grid">${list.map(card).join('')}</div>`}
   </section>`;
+  }
+  body+='</section>';
 }
 
 const rarityBar = RARITY.map(r =>
-  `<div class="sw"><span style="background:${r.color}"></span>${r.name}<em>${r.k}</em></div>`).join('');
+  `<div class="sw" data-rarity="${r.k}"><span style="background:${r.color}"></span>${r.name}<em>${r.k} · ${ITEMS.filter(i=>itemGroup(i)==='collectible'&&i.r===r.k).length} 件收集品</em></div>`).join('');
 
 const catBar = catOrder.map(k =>
   `<div class="sw"><span style="background:${CATS[k].color}"></span>${CATS[k].name}<em>${k}</em></div>`).join('');
 
 const total = ITEMS.filter(i => !i.noCodex).length;
+const economy=vm.runInContext('ECONOMY',ctx);
+const valueBands=economy.collectionBands.map(b=>`<div class="value-band" data-value-band="${b.rarity}" style="--rc:${RARITY[b.rarity-1].color}"><span class="value-stripe"></span><b>${RARITY[b.rarity-1].name}</b><span>${b.role}</span><strong>${money(b.min)}–${b.max===null?money(b.referenceUpper)+'+':money(b.max)}</strong></div>`).join('');
 
 const html = `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -123,9 +169,13 @@ const html = `<!DOCTYPE html>
   <div class="kicker">TIDELINE · ITEM SHEET</div>
   <h1>物品清单</h1>
   <div class="lede">
-    共 ${ITEMS.length} 件（含 1 件消耗品），其中 ${total} 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
+    共 ${ITEMS.length} 件：${ITEMS.filter(i=>itemGroup(i)==='collectible').length} 件收集品、${ITEMS.filter(i=>itemGroup(i)==='supply').length} 件物资；${total} 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
     和游戏里的数据完全一致；改完物品表重跑 <code>node gen-item-sheet.js</code> 就会更新。<br>
-    已配置图标 <b>${iconCount} / ${ITEMS.length}</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。
+    已配置图标 <b>${iconCount} / ${ITEMS.length}</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a>。
+    <br>收集品保留九类，物资单独分为弹药类与医疗物品。<a href="design/items/CLASSIFICATION.md">逐件分类与世界观依据</a>。
+    <br>医疗品18件图标已全部绘制，5件开放恢复HP，其余效果待开放。<a href="assets/item-art/medical/index.html">查看医疗图标总览</a>。<a href="design/items/MEDICAL.md">医疗系统说明</a> · <a href="design/world setting/医疗产业提案.md">医疗产业提案（非正式历史）</a>。
+    <br>稀有度采用白、绿、蓝、紫、金、红六级。<a href="design/items/RARITY.md">查看 ${ITEMS.filter(i=>itemGroup(i)==='collectible').length} 件收集品的稀有度评级</a>；
+    生活用品按"工业通用 / 多传统交汇 / 环礁湾独有"三层收敛为 ${ITEMS.filter(i=>i.cat==='life').length} 件，说明见 <a href="design/items/LIFE_COLLECTIBLES.md">生活器物</a>。
   </div>
 </header>
 
@@ -146,11 +196,12 @@ const html = `<!DOCTYPE html>
   </div>
 </div>
 
+<section class="economy-guide"><h2>收集品价值体系</h2><p>单位：游戏货币 ¥。色条仅表示稀有度层次，不按金额线性缩放。医疗品与装备采用各自定价。<a href="design/items/ECONOMY.md">逐件价格与经济说明</a></p><div class="value-bands">${valueBands}</div></section>
+
 ${body}
 
 <footer>
-  清单由 <code>gen-item-sheet.js</code> 生成。物品的重量、价格、稀有度都是首版基准值，可以随便改——
-  改完重跑脚本，这份页面会跟着变。
+  清单由 <code>gen-item-sheet.js</code> 生成。价格源为 <code>design/items/economy.json</code>，重跑生成脚本或构建后同步游戏与页面。
 </footer>
 
 </body>
