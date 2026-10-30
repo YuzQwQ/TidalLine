@@ -118,10 +118,11 @@
     角色是<b>三向图</b>（正 / 背 / 侧），朝左直接用侧面图<b>水平镜像</b>，不用画第四张。
     每张卡右下角可以复制拼好的 prompt。
     玩家动作另见 <a href="玩家动画.html" style="color:#a8c4ba">玩家动画预览</a>（7 种动作、三向图、60 帧）。
+    墙体分层与连接另见 <a href="assets/wall-volume/index.html" style="color:#a8c4ba">立体墙体对照</a>（连续墙顶、南向立面、东向侧面）。
   </div>
   <div class="bar-wrap">
     <div class="pbar"><i style="width:100%"></i></div>
-    <div class="pnum">场景资源 52 / 52 个文件</div>
+    <div class="pnum">场景资源 53 / 53 个文件</div>
   </div>
 </header>
 
@@ -306,7 +307,7 @@
   </div>
   </section>
   <section>
-    <h2><span>场景物件</span><em>props/</em><i>36 / 36</i></h2>
+    <h2><span>场景物件</span><em>props/</em><i>37 / 37</i></h2>
     
     
   <div class="asset done">
@@ -349,12 +350,12 @@
     </div>
     <div class="info">
       <div class="row1">
-        <b>保险箱</b>
+        <b>小型保险箱</b>
         <code>props/crate_heavy.png</code>
       </div>
       <div class="row2">
         <span class="pill p1">必要</span>
-        <span class="used">重型容器。5 秒完全不能动，出声最响。</span>
+        <span class="used">小型保险箱 B，主体缩入20×21范围，保持32×32透明画布及一格碰撞；大型保险箱 V 另用crate_safe_big。</span>
       </div>
       <div class="subj">一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。</div>
       <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。">复制完整 prompt</button>
@@ -921,6 +922,23 @@
       <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 老式户外镀锌铁皮垃圾桶，灰绿色金属，宽圆形椭圆桶口占画面大半，圆盖向北侧半掀开而非完全盖住，露出桶内深灰垃圾袋和两三片旧纸，圆盖中央一个小把手，桶身短立面有稀疏竖向压筋及两侧小提耳，少量锈斑。必须一眼读出带盖生活垃圾桶，不能是油桶、化工桶、网格废纸篓。无油桶加油孔，无回收标志，无文字，不画地面散落垃圾。">复制完整 prompt</button>
     </div>
   </div>
+  <div class="asset done">
+    <div class="thumb">
+      <img src="assets/props/crate_safe_big.png" alt="">
+    </div>
+    <div class="info">
+      <div class="row1">
+        <b>大型保险箱</b>
+        <code>props/crate_safe_big.png</code>
+      </div>
+      <div class="row2">
+        <span class="pill p1">必要</span>
+        <span class="used">大型保险箱 V，秘藏容器。占地、搜索时间和掉落规则保持原样。</span>
+      </div>
+      <div class="subj">石墨灰绿厚钢制保险箱，75°俯视，大面积厚重顶板，南侧厚门框、圆形锁轮与两只右侧铰链，少量暗黄铜细节；左上光源，透明背景，一格占地。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 石墨灰绿厚钢制保险箱，75°俯视，大面积厚重顶板，南侧厚门框、圆形锁轮与两只右侧铰链，少量暗黄铜细节；左上光源，透明背景，一格占地。">复制完整 prompt</button>
+    </div>
+  </div>
   </section>
   <section>
     <h2><span>地形</span><em>tiles/</em><i>4 / 4</i></h2>
@@ -983,15 +1001,15 @@
     </div>
     <div class="info">
       <div class="row1">
-        <b>墙体</b>
+        <b>墙体 · 连续墙顶</b>
         <code>tiles/wall.png</code>
       </div>
       <div class="row2">
         <span class="pill p1">必要</span>
-        <span class="used">所有墙。挡住视线和子弹。</span>
+        <span class="used">通用高墙墙顶：视觉和实体32×48，向北扩展16px，门洞保留开口。预览 assets/wall-volume/index.html。</span>
       </div>
-      <div class="subj">从正上方看的一段墙体：深色粗糙混凝土的顶面，比地板暗两个档，表面有颗粒感，边缘略亮一条。</div>
-      <button class="copy" data-p="Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 从正上方看的一段墙体：深色粗糙混凝土的顶面，比地板暗两个档，表面有颗粒感，边缘略亮一条。">复制完整 prompt</button>
+      <div class="subj">浅灰米色石材墙顶，大块平缓色面与少量石缝，明显亮于深灰绿抹灰墙面。与独立32×32南向立面及4×48东侧面组合成1.5格高墙。</div>
+      <button class="copy" data-p="Use case: stylized-concept. Create ONE square full-bleed terrain texture tile for 潮汐线, a muted post-flood salvage survival game. Authentic coarse 32x32 pixel art, pure overhead 90 degree view, limited muted green-grey palette, crisp square pixels, no antialiasing, subtle low-contrast texture that will not compete with characters. Entire canvas filled with the material up to all four edges, no border, no padding, no object cutout, no perspective or bevel, no cast shadow, no labels or text. Tiles repeat side by side in a grid. All pixels opaque. Subject: 浅灰米色石材墙顶，大块平缓色面与少量石缝，明显亮于深灰绿抹灰墙面。与独立32×32南向立面及4×48东侧面组合成1.5格高墙。">复制完整 prompt</button>
     </div>
   </div>
   </section>

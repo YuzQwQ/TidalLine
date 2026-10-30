@@ -1,0 +1,47 @@
+[
+  {
+    "id": "tree_courtyard_canopy",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      90,
+      90
+    ],
+    "canvas": [
+      96,
+      96
+    ]
+  },
+  {
+    "id": "tree_courtyard_canopy_side",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      89,
+      90
+    ],
+    "canvas": [
+      96,
+      96
+    ]
+  },
+  {
+    "id": "tree_courtyard_canopy_back",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      89,
+      90
+    ],
+    "canvas": [
+      96,
+      96
+    ]
+  }
+]

@@ -751,6 +751,24 @@ window.addEventListener('error', function (e) {
 }
 .picker-empty b { color: #7fb0a3; font-weight: 500; }
 
+/* 右键菜单：贴在鼠标位置的小面板，和详情窗同一套暗绿配色 */
+.ctxmenu {
+  position: fixed; z-index: 64; min-width: 132px;
+  background: #16241f; border: 1px solid #3f6d5f;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(111, 160, 147, 0.12) inset;
+  padding: 4px; box-sizing: border-box;
+}
+.ctxmenu .citem {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+  padding: 7px 10px; font-size: 12px; letter-spacing: 0.04em;
+  color: #a8c4ba; cursor: pointer;
+}
+.ctxmenu .citem:hover { background: #16241f; color: #dbe5e1; }
+.ctxmenu .citem .k { font-size: 10.5px; color: #4d6d64; letter-spacing: 0; }
+.ctxmenu .citem.danger { color: #c98a7e; }
+.ctxmenu .citem.danger:hover { background: #2a1a18; color: #e6a99c; }
+.ctxmenu .citem.danger .k { color: #8a5a52; }
+
 /* 物品详情悬浮窗（尺寸整体 1.5 倍：宽 252→378，字号 13/10.5/10 → 19.5/16/15） */
 #itemTip {
   position: fixed; z-index: 62; box-sizing: border-box; width: 378px;
@@ -1022,10 +1040,10 @@ window.addEventListener('error', function (e) {
 
 <!-- 物品详情悬浮窗：任何地方右键都能看，内容包括名字/类别/稀有度/重量/价格/描述 -->
 <div class="tip" id="itemTip" style="display:none"></div>
-
 <!-- 交易确认悬浮窗：买东西之前把金额和余额摆出来 -->
 <div class="deal" id="dealBox" style="display:none"></div>
-
+<!-- 右键菜单：背包物品的「查看详情 / 丢弃」 -->
+<div class="ctxmenu" id="ctxMenu" style="display:none"></div>
 <script src="js/config.js"></script>
 <script src="js/pixfont.js"></script>
 <script src="js/data.js"></script>

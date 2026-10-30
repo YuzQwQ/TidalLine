@@ -260,7 +260,8 @@ Game.input.interactPressed = true;
 Game.update(1 / 60);
 // 快取容器是 0 秒读条，同一帧就会打开面板 —— 检查最终结果
 ok('搜刮面板已打开', !!Game.lootOpen);
-ok('容器已标记', fastBox.opened === true);
+ok('容器标记为掀开过', fastBox.searched === true);
+ok('还有东西时不算翻空', fastBox.opened === false && Game.boxHasItems(fastBox));
 
 // 拿一件
 const before = P5.bag.slots.length;
@@ -272,6 +273,69 @@ if (Game.lootOpen && Game.lootOpen.items.length) {
   ok('可以拿取物品', P5.bag.slots.length >= before, '背包 ' + P5.bag.slots.length + ' 格');
 }
 Game.closeLoot();
+
+/* 拿走一部分之后必须还能再开：这是"一次性容器"改成"可反复搜刮"的关键 */
+if (Game.boxHasItems(fastBox)) {
+  P5.x = fastBox.x; P5.y = fastBox.y + CFG.TILE / 2 + P5.r + 1;
+  const again = Game.findInteractable();
+  ok('没搜空的容器仍可交互', !!again && again.type === 'box' && again.obj === fastBox);
+  Game.handleInteract();
+  ok('第二次打开不再读条', Game.lootOpen === fastBox);
+  Game.closeLoot();
+}
+
+/* 翻干净 → 变暗、不再提示 */
+fastBox.items = fastBox.items.map(() => null);
+Game.syncBoxState(fastBox);
+ok('翻空的容器标记为已清空', fastBox.opened === true);
+P5.x = fastBox.x; P5.y = fastBox.y + CFG.TILE / 2 + P5.r + 1;
+const afterEmpty = Game.findInteractable();
+ok('翻空后不再提示交互', !afterEmpty || afterEmpty.obj !== fastBox);
+
+console.log('\n=== 丢弃与遗落物品堆 ===');
+Game.startRun();
+const PD = Game.player;
+const ammoItem = ITEMS.find(i => i.id === 'ammo');
+const healItem = ITEMS.find(i => i.id === 'heal01');
+
+const boxes0 = Game.boxes.length;
+PD.bag.slots = [{ item: ammoItem, n: 12 }];
+Game.dropFromBag(0);
+const pile = Game.boxes.find(b => b.pile);
+ok('丢弃生成物品堆', !!pile && Game.boxes.length === boxes0 + 1);
+ok('物品堆落在脚下那一格',
+   !!pile && Math.floor(PD.x / CFG.TILE) === pile.tx && Math.floor(PD.y / CFG.TILE) === pile.ty);
+ok('丢出的物品进入物品堆',
+   !!pile && pile.items.length === 1 && pile.items[0].n === 12 && pile.items[0].item.id === 'ammo');
+ok('丢出的东西一开始就知道是什么', !!pile && pile.items.every(e => e.known === true));
+ok('背包那一格已清掉', PD.bag.slots.length === 0);
+ok('物品堆已掀开但未清空', !!pile && pile.searched === true && pile.opened === false);
+ok('物品堆可以交互', !!pile && Game.boxHasItems(pile) &&
+   (() => { const it = Game.findInteractable(); return !!it && it.obj === pile; })());
+
+/* 同一个格子再丢：并进同一个堆，不刷第二个 */
+PD.bag.slots = [{ item: healItem, n: 1 }];
+Game.dropFromBag(0);
+ok('同格丢弃并入同一堆',
+   Game.boxes.filter(b => b.pile).length === 1 && pile.items.length === 2);
+
+/* 可堆叠的同种物品并成一条，而不是堆里出现两条同名 */
+PD.bag.slots = [{ item: ammoItem, n: 5 }];
+Game.dropFromBag(0);
+ok('同种可堆叠物品合并计数',
+   pile.items.length === 2 && pile.items.find(e => e.item.id === 'ammo').n === 17);
+
+/* 空格子丢弃是空操作 */
+ok('空格丢弃无效', Game.dropFromBag(0) === false);
+
+/* 搜干净 → 物品堆消失 */
+Game.openLoot(pile);
+ok('物品堆能打开', Game.lootOpen === pile);
+pile.items = pile.items.map(() => null);
+Game.syncBoxState(pile);
+ok('物品堆搜空后消失', !Game.boxes.includes(pile));
+ok('搜空后自动关掉面板', Game.lootOpen === null);
+ok('格子上的引用也清掉了', M.at(pile.tx, pile.ty).box !== pile);
 
 console.log('\n=== 装备拾取 ===');
 Game.startRun();
@@ -562,7 +626,7 @@ for (const [label, x, y, dx, dy, check] of [
   ['西侧', M.cx(2), M.cy(2), 200, 0, e => e.x <= obstacleX - 7],
   ['东侧', M.cx(4), M.cy(2), -200, 0, e => e.x >= obstacleX + CFG.TILE + 7],
   ['北侧', M.cx(3), M.cy(1), 0, 200, e => e.y <= obstacleY - 7],
-  ['南侧', M.cx(3), M.cy(3), 0, -200, e => e.y >= obstacleY + CFG.TILE + 7]
+  ['南侧', M.cx(3), M.navigationPoint(3,3).y, 0, -200, e => e.y >= obstacleY + CFG.TILE + 7]
 ]) {
   const actor = { x, y, r: 7 };
   ctx.moveEntity(actor, dx, dy);
@@ -582,8 +646,12 @@ for (let i = 0; i < 300; i++) {
 }
 ok('敌人沿路移动也执行实体碰撞', safeWalk && U.dist(walker.x, walker.y, M.cx(6), M.cy(2)) < 1);
 M.load(vm.runInContext('MAP_ROWS', ctx));
-ok('实体家具不可站立', vm.runInContext('DECOR.filter(p => !p.ground).every(p => !canStand(M.cx(p.x), M.cy(p.y), 7))', ctx));
-ok('地面贴花可站立', vm.runInContext('DECOR.filter(p => p.ground).every(p => canStand(M.cx(p.x), M.cy(p.y), 7))', ctx));
+/* 多格物件的实体格不一定在原点：院落树是 3×3 视觉 + 单格树干碰撞（树冠可走，靠近时淡出）。
+   按 M.propCollisionCells 逐格检查，而不是只看原点。 */
+ok('实体家具不可站立', vm.runInContext('DECOR.filter(p => !p.ground).every(p => M.propCollisionCells(p).every(c => !canStand(M.cx(c[0]), M.cy(c[1]), 7)))', ctx));
+/* 贴花（ground）不产生碰撞格，所以踩得过去——哪怕它压在箱子或家具底下
+   （美术上被家具盖住完全正常，不该要求贴花所在格一定站得下人）。 */
+ok('地面贴花不产生碰撞格', vm.runInContext('DECOR.filter(p => p.ground).every(p => M.propCollisionCells(p).length === 0)', ctx));
 Game.buildBoxes();
 const occupiedBox = Game.boxes[0];
 occupiedBox.opened = true; occupiedBox.items = [];

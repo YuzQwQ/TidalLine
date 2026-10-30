@@ -1,0 +1,152 @@
+[
+  {
+    "id": "bed_home",
+    "sourceSize": [
+      1244,
+      1264
+    ],
+    "spriteSize": [
+      11,
+      26
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "bed_clinic",
+    "sourceSize": [
+      1247,
+      1261
+    ],
+    "spriteSize": [
+      11,
+      26
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "stove_home",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      28,
+      17
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "sofa_home",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      28,
+      15
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "bench_wood",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      28,
+      15
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "display_clock",
+    "sourceSize": [
+      1536,
+      1024
+    ],
+    "spriteSize": [
+      28,
+      13
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "counter_shop",
+    "sourceSize": [
+      1536,
+      1024
+    ],
+    "spriteSize": [
+      28,
+      14
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "counter_bank",
+    "sourceSize": [
+      1774,
+      887
+    ],
+    "spriteSize": [
+      28,
+      10
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "console_security",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      23,
+      26
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "tree_courtyard",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "spriteSize": [
+      26,
+      26
+    ],
+    "canvas": [
+      32,
+      32
+    ]
+  }
+]

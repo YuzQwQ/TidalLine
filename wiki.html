@@ -19,12 +19,12 @@
   <div class="kicker">TIDELINE · ITEM SHEET</div>
   <h1>物品清单</h1>
   <div class="lede">
-    共 108 件：89 件收集品、19 件物资；89 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
+    共 159 件：140 件收集品、19 件物资；140 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
     和游戏里的数据完全一致；改完物品表重跑 <code>node gen-item-sheet.js</code> 就会更新。<br>
-    已配置图标 <b>96 / 108</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a> · <a href="assets/item-art/electronics/index.html">新增电子产品9件</a> · <a href="assets/item-art/medical-collectibles/index.html">新增医疗收集品10件</a>。
+    已配置图标 <b>159 / 159</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a> · <a href="assets/item-art/electronics/index.html">新增电子产品9件</a> · <a href="assets/item-art/medical-collectibles/index.html">新增医疗收集品10件</a> · <a href="assets/item-art/industrial/index.html">新增工业器材12件</a> · <a href="assets/item-art/heritage/index.html">新增文物藏品8件</a> · <a href="assets/item-art/military/index.html">新增军事物资15件</a> · <a href="assets/item-art/intel/index.html">新增情报资料13件</a> · <a href="assets/item-art/occult/index.html">新增神秘学物品15件</a>。
     <br>收集品保留九类，物资单独分为弹药类与医疗物品。<a href="design/items/CLASSIFICATION.md">逐件分类与世界观依据</a>。
     <br>医疗品18件图标已全部绘制，5件开放恢复HP，其余效果待开放。<a href="assets/item-art/medical/index.html">查看医疗图标总览</a>。<a href="design/items/MEDICAL.md">医疗系统说明</a> · <a href="design/world setting/医疗产业提案.md">医疗产业提案（非正式历史）</a>。
-    <br>稀有度采用白、绿、蓝、紫、金、红六级。<a href="design/items/RARITY.md">查看 89 件收集品的稀有度评级</a>；
+    <br>稀有度采用白、绿、蓝、紫、金、红六级。<a href="design/items/RARITY.md">查看 140 件收集品的稀有度评级</a>；
     生活用品按"工业通用 / 多传统交汇 / 环礁湾独有"三层收敛为 29 件，说明见 <a href="design/items/LIFE_COLLECTIBLES.md">生活器物</a>。
   </div>
 </header>
@@ -40,15 +40,15 @@
   </div>
   <div class="panel">
     <h3>稀有度色（用于边框 / 角标）</h3>
-    <div class="sws"><div class="sw" data-rarity="1"><span style="background:#c6ceca"></span>寻常<em>1 · 10 件收集品</em></div><div class="sw" data-rarity="2"><span style="background:#3f8b78"></span>良品<em>2 · 18 件收集品</em></div><div class="sw" data-rarity="3"><span style="background:#3f6d9b"></span>上乘<em>3 · 19 件收集品</em></div><div class="sw" data-rarity="4"><span style="background:#9165b3"></span>稀见<em>4 · 21 件收集品</em></div><div class="sw" data-rarity="5"><span style="background:#a8862a"></span>珍罕<em>5 · 14 件收集品</em></div><div class="sw" data-rarity="6"><span style="background:#8d3a3a"></span>孤品<em>6 · 7 件收集品</em></div></div>
+    <div class="sws"><div class="sw" data-rarity="1"><span style="background:#c6ceca"></span>寻常<em>1 · 15 件收集品</em></div><div class="sw" data-rarity="2"><span style="background:#3f8b78"></span>良品<em>2 · 27 件收集品</em></div><div class="sw" data-rarity="3"><span style="background:#3f6d9b"></span>上乘<em>3 · 30 件收集品</em></div><div class="sw" data-rarity="4"><span style="background:#9165b3"></span>稀见<em>4 · 32 件收集品</em></div><div class="sw" data-rarity="5"><span style="background:#a8862a"></span>珍罕<em>5 · 25 件收集品</em></div><div class="sw" data-rarity="6"><span style="background:#8d3a3a"></span>孤品<em>6 · 11 件收集品</em></div></div>
     <h3 style="margin-top:18px">类别色（用于图鉴分册 / 容器提示）</h3>
     <div class="sws"><div class="sw"><span style="background:#6b7f78"></span>生活用品<em>life</em></div><div class="sw"><span style="background:#4a7fa0"></span>电子产品<em>elec</em></div><div class="sw"><span style="background:#8a7d5a"></span>工业器材<em>ind</em></div><div class="sw"><span style="background:#7a9b85"></span>医疗物资<em>med</em></div><div class="sw"><span style="background:#b39a63"></span>文物藏品<em>collect</em></div><div class="sw"><span style="background:#7d9163"></span>军事物资<em>mil</em></div><div class="sw"><span style="background:#a89776"></span>情报资料<em>intel</em></div><div class="sw"><span style="background:#907ba8"></span>神秘学物品<em>occult</em></div><div class="sw"><span style="background:#a05050"></span>异常遗物<em>odd</em></div><div class="sw"><span style="background:#a58e61"></span>弹药类<em>ammo</em></div><div class="sw"><span style="background:#7a9b85"></span>医疗物品<em>medical</em></div></div>
   </div>
 </div>
 
-<section class="economy-guide"><h2>收集品价值体系</h2><p>单位：游戏货币 ¥。色条仅表示稀有度层次，不按金额线性缩放。医疗品与装备采用各自定价。<a href="design/items/ECONOMY.md">逐件价格与经济说明</a></p><div class="value-bands"><div class="value-band" data-value-band="1" style="--rc:#c6ceca"><span class="value-stripe"></span><b>寻常</b><span>基础杂物</span><strong>¥1,000–¥3,000</strong></div><div class="value-band" data-value-band="2" style="--rc:#3f8b78"><span class="value-stripe"></span><b>良品</b><span>普通收益</span><strong>¥4,000–¥7,500</strong></div><div class="value-band" data-value-band="3" style="--rc:#3f6d9b"><span class="value-stripe"></span><b>上乘</b><span>稳定收益</span><strong>¥9,000–¥32,000</strong></div><div class="value-band" data-value-band="4" style="--rc:#9165b3"><span class="value-stripe"></span><b>稀见</b><span>主力收益</span><strong>¥22,000–¥98,000</strong></div><div class="value-band" data-value-band="5" style="--rc:#a8862a"><span class="value-stripe"></span><b>珍罕</b><span>高额收益</span><strong>¥80,000–¥450,000</strong></div><div class="value-band" data-value-band="6" style="--rc:#8d3a3a"><span class="value-stripe"></span><b>孤品</b><span>极稀有大奖</span><strong>¥200,000–¥3,000,000+</strong></div></div></section>
+<section class="economy-guide"><h2>收集品价值体系</h2><p>单位：游戏货币 ¥。色条仅表示稀有度层次，不按金额线性缩放。医疗品与装备采用各自定价。<a href="design/items/ECONOMY.md">逐件价格与经济说明</a></p><div class="value-bands"><div class="value-band" data-value-band="1" style="--rc:#c6ceca"><span class="value-stripe"></span><b>寻常</b><span>基础杂物</span><strong>¥1,000–¥3,000</strong></div><div class="value-band" data-value-band="2" style="--rc:#3f8b78"><span class="value-stripe"></span><b>良品</b><span>普通收益</span><strong>¥4,000–¥9,200</strong></div><div class="value-band" data-value-band="3" style="--rc:#3f6d9b"><span class="value-stripe"></span><b>上乘</b><span>稳定收益</span><strong>¥9,000–¥38,000</strong></div><div class="value-band" data-value-band="4" style="--rc:#9165b3"><span class="value-stripe"></span><b>稀见</b><span>主力收益</span><strong>¥22,000–¥110,000</strong></div><div class="value-band" data-value-band="5" style="--rc:#a8862a"><span class="value-stripe"></span><b>珍罕</b><span>高额收益</span><strong>¥80,000–¥480,000</strong></div><div class="value-band" data-value-band="6" style="--rc:#8d3a3a"><span class="value-stripe"></span><b>孤品</b><span>极稀有大奖</span><strong>¥200,000–¥3,000,000+</strong></div></div></section>
 
-<section class="item-group" data-item-group="collectible"><h2 class="item-group-title">收集品<span>89 件</span></h2><p class="category-description">按九类组织，用于探索、交易与图鉴收集。</p>
+<section class="item-group" data-item-group="collectible"><h2 class="item-group-title">收集品<span>140 件</span></h2><p class="category-description">按九类组织，用于探索、交易与图鉴收集。</p>
   <section class="cat" data-item-category="life">
     <h3><span class="dot" style="background:#6b7f78"></span>生活用品<em>life</em><i>29 件</i></h3>
     <p class="category-description"><b>灾前社会的日常生活</b> · 三层结构：工业时代的通用器物打底，不同社会传统的交汇做层次，环礁湾自己的机构、商业与工艺史收口。不用于代表某一种现实文化。</p>
@@ -783,7 +783,7 @@
       <div class="meta">
         <div class="name">铜管</div>
         <div class="sub"><code>ind01</code> · <span style="color:#8a7d5a">收集品 / 工业器材</span> · <span style="color:#c6ceca">寻常</span> · 3.4kg · ¥3,000</div>
-        <div class="desc">很沉，很值钱，很占地方。典型的让人犹豫的东西。</div>
+        <div class="desc">一段从旧管道上切下来的铜管，切口还留着锯齿。外壁氧化发暗，内侧却依然泛着金属光泽。管口残留着一圈干硬的密封材料。</div>
         
         <div class="vis"><b>分类依据</b>城市工程常用金属材料。</div>
         <div class="vis"><b>画什么</b>一段截断的黄铜管，切面发亮，管身氧化发暗绿</div>
@@ -809,7 +809,7 @@
       <div class="meta">
         <div class="name">压力表</div>
         <div class="sub"><code>ind03</code> · <span style="color:#8a7d5a">收集品 / 工业器材</span> · <span style="color:#3f6d9b">上乘</span> · 1.1kg · ¥14,500</div>
-        <div class="desc">指针卡在最右端，说明它最后读到的东西很大。</div>
+        <div class="desc">一只工业弹簧管压力表，表盘玻璃已经碎裂，指针停在量程上限。内部测压机构可能曾遭受过载，单凭指针位置已无法判断最后一次实际压力。</div>
         
         <div class="vis"><b>分类依据</b>工程测量仪器；指针卡在量程端不能单独证明超自然性质。</div>
         <div class="vis"><b>画什么</b>圆形压力表，白色表盘，红色指针顶在最大刻度</div>
@@ -817,7 +817,7 @@
     </div>
     <div class="item" data-item="ind04" style="--rc:#c6ceca">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind04.png" width="48" height="48" alt="生锈的螺栓">
       </div>
       <div class="meta">
         <div class="name">生锈的螺栓</div>
@@ -830,14 +830,12 @@
     </div>
     <div class="item" data-item="ind05" style="--rc:#c6ceca">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind05.png" width="48" height="48" alt="混凝土试块">
       </div>
       <div class="meta">
         <div class="name">混凝土试块</div>
         <div class="sub"><code>ind05</code> · <span style="color:#8a7d5a">收集品 / 工业器材</span> · <span style="color:#c6ceca">寻常</span> · 2.4kg · ¥1,600 · 背包简称 <b style="color:#a8c4ba">试块</b></div>
-        <div class="desc">建筑工地用于检测混凝土强度的小型试样。侧面用油漆写着编号，边角缺了一块。
-
-检测记录不在上面。只知道它很重。</div>
+        <div class="desc">建筑工地浇筑的混凝土强度试样，侧面喷着施工批次和取样日期。试块一角已经崩落，露出内部粗细不一的骨料。原本用于抗压检测，如今已经无法确认是否通过验收。</div>
         
         <div class="vis"><b>分类依据</b>建筑材料试样，归属工业器材。</div>
         <div class="vis"><b>画什么</b>灰色方形混凝土试块，表面粗糙带气孔，侧面白色油漆编号，右上角磕损</div>
@@ -845,7 +843,7 @@
     </div>
     <div class="item" data-item="ind06" style="--rc:#c6ceca">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind06.png" width="48" height="48" alt="钢筋边角料">
       </div>
       <div class="meta">
         <div class="name">钢筋边角料</div>
@@ -860,24 +858,20 @@
     </div>
     <div class="item" data-item="ind07" style="--rc:#3f8b78">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind07.png" width="48" height="48" alt="绝缘胶带">
       </div>
       <div class="meta">
         <div class="name">绝缘胶带</div>
         <div class="sub"><code>ind07</code> · <span style="color:#8a7d5a">收集品 / 工业器材</span> · <span style="color:#3f8b78">良品</span> · 0.2kg · ¥4,200 · 背包简称 <b style="color:#a8c4ba">胶带</b></div>
-        <div class="desc">工业用黑色聚氯乙烯绝缘胶带，耐磨、耐潮，适合一般电气维修。
-
-外包装印着：「安全绝缘，值得信赖。」
-
-胶带卷内侧贴着一张手写纸条：「别再拿我的胶带封纸箱。」</div>
+        <div class="desc">两卷黑色工业绝缘胶带，外包装已经拆开。其中一卷只剩不到一半，胶带边缘沾着细小的金属粉末。另一卷还保留着原厂包装，塑封上印着耐压等级与生产批号。</div>
         
         <div class="vis"><b>分类依据</b>电工安装及维修消耗材料。</div>
-        <div class="vis"><b>画什么</b>两卷黑色绝缘胶带，一卷扯出短截，内圈贴黄色纸质标签</div>
+        <div class="vis"><b>画什么</b>两卷黑色绝缘胶带，一卷扯出短截且边缘沾金属粉末，另一卷仍裹透明塑封，塑封上有印刷标签</div>
       </div>
     </div>
     <div class="item" data-item="ind08" style="--rc:#3f8b78">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind08.png" width="48" height="48" alt="黄铜阀门">
       </div>
       <div class="meta">
         <div class="name">黄铜阀门</div>
@@ -892,33 +886,25 @@
     </div>
     <div class="item" data-item="ind09" style="--rc:#3f8b78">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind09.png" width="48" height="48" alt="电焊面罩">
       </div>
       <div class="meta">
         <div class="name">电焊面罩</div>
         <div class="sub"><code>ind09</code> · <span style="color:#8a7d5a">收集品 / 工业器材</span> · <span style="color:#3f8b78">良品</span> · 0.7kg · ¥7,200 · 背包简称 <b style="color:#a8c4ba">面罩</b></div>
-        <div class="desc">传统手持式焊接防护面罩，采用深色滤光玻璃与耐热外壳。
-
-观察窗边缘有细密的焊渣灼痕。手柄上刻着一个工号，旁边还有一行小字：「借可以，记得还。」</div>
+        <div class="desc">一只手持式焊接防护面罩，深绿色滤光玻璃已经被烟尘熏得发暗，观察窗边缘布满细小的焊渣灼痕。手柄外面缠着一层旧胶布，掌心接触的位置磨得格外光滑。</div>
         
         <div class="vis"><b>分类依据</b>焊接作业专用防护工具，归工业器材而非玩家战斗头盔。</div>
-        <div class="vis"><b>画什么</b>黑色弧面手持电焊面罩，深绿色矩形滤光窗，底部短手柄，边缘焊渣灼痕</div>
+        <div class="vis"><b>画什么</b>黑色弧面手持电焊面罩，深绿色矩形滤光窗，手柄缠着旧胶布，掌心位置磨得发亮</div>
       </div>
     </div>
     <div class="item" data-item="ind10" style="--rc:#3f6d9b">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind10.png" width="48" height="48" alt="精密游标卡尺">
       </div>
       <div class="meta">
         <div class="name">精密游标卡尺</div>
         <div class="sub"><code>ind10</code> · <span style="color:#8a7d5a">收集品 / 工业器材</span> · <span style="color:#3f6d9b">上乘</span> · 0.35kg · ¥16,000 · 背包简称 <b style="color:#a8c4ba">卡尺</b></div>
-        <div class="desc">采用不锈钢制造的机械游标卡尺，刻线细密，滑尺移动依旧顺畅。
-
-原厂配套的木盒内衬已经磨出两道浅槽。盒盖背面贴着一张校准记录，最后一次测量误差仍在标准允许范围内。
-
-有人在记录下面写着：
-
-「测量之前，请先把铁屑擦干净。」</div>
+        <div class="desc">一把经过精细研磨的不锈钢游标卡尺，量爪闭合时几乎看不见缝隙。游标刻线清晰，滑尺移动平稳。木质收纳盒里附有校准证书，记录的测量误差仍处于规定公差范围内。</div>
         
         <div class="vis"><b>分类依据</b>工业长度测量工具。</div>
         <div class="vis"><b>画什么</b>银灰不锈钢游标卡尺，量爪微张，刻度清晰，搁在打开的木盒上</div>
@@ -926,20 +912,12 @@
     </div>
     <div class="item" data-item="ind11" style="--rc:#3f6d9b">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind11.png" width="48" height="48" alt="工业陶瓷轴套">
       </div>
       <div class="meta">
         <div class="name">工业陶瓷轴套</div>
         <div class="sub"><code>ind11</code> · <span style="color:#8a7d5a">收集品 / 工业器材</span> · <span style="color:#3f6d9b">上乘</span> · 0.8kg · ¥24,000 · 背包简称 <b style="color:#a8c4ba">轴套</b></div>
-        <div class="desc">采用高性能工程陶瓷制造的精密轴套，具有优良的耐磨性和耐腐蚀性。
-
-原厂包装中附有一张警告：
-
-「请勿跌落。」
-
-这句话下方另有一行加粗说明：
-
-「即使它看起来比钢还硬。」</div>
+        <div class="desc">采用高纯度氧化铝陶瓷烧结而成的精密轴套，内孔经过精细研磨，表面呈均匀的乳白色。它能够在高温、腐蚀性介质和长期摩擦环境中保持尺寸稳定，但陶瓷材料仍然容易因剧烈冲击而破裂。</div>
         
         <div class="vis"><b>分类依据</b>专业机械零件，主要用于耐磨与耐腐蚀工况。</div>
         <div class="vis"><b>画什么</b>乳白色厚壁陶瓷轴套，中心圆孔，边缘精密，嵌在深蓝泡棉包装里</div>
@@ -947,20 +925,14 @@
     </div>
     <div class="item" data-item="ind12" style="--rc:#9165b3">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind12.png" width="48" height="48" alt="液压控制阀组">
       </div>
       <div class="meta">
         <div class="name">液压控制阀组</div>
         <div class="sub"><code>ind12</code> · <span style="color:#8a7d5a">收集品 / 工业器材</span> · <span style="color:#9165b3">稀见</span> · 3.2kg · ¥58,000 · 背包简称 <b style="color:#a8c4ba">阀组</b></div>
-        <div class="desc">一套高精度液压控制组件，采用钢制阀体和黄铜接头，能够调节工业机械内部的压力与流量。
+        <div class="desc">一套从港口起重设备上拆卸下来的液压控制阀组。钢制阀体采用模块化结构，多个黄铜接头分别连接不同的压力回路。
 
-侧面铭牌注明，这套设备曾安装在某座大型起重设施上。维修记录显示，它一共被拆下来检修过四次。
-
-前三次都是漏油。
-
-第四次记录写着：
-
-「没有漏油。只是司机说起重机听起来不太对劲。」</div>
+其中两组接头的密封圈曾被更换，拆卸螺栓上留下了反复拧紧的痕迹。阀体底部仍积着一层黏稠的旧液压油。</div>
         
         <div class="vis"><b>分类依据</b>工业液压系统的专业控制组件。</div>
         <div class="vis"><b>画什么</b>深灰矩形液压阀组，顶部多个黄铜接头，侧面钢管接口，局部残留机油</div>
@@ -968,22 +940,14 @@
     </div>
     <div class="item" data-item="ind13" style="--rc:#9165b3">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind13.png" width="48" height="48" alt="高纯度钛合金锭">
       </div>
       <div class="meta">
         <div class="name">高纯度钛合金锭</div>
         <div class="sub"><code>ind13</code> · <span style="color:#8a7d5a">收集品 / 工业器材</span> · <span style="color:#9165b3">稀见</span> · 1.6kg · ¥85,000 · 背包简称 <b style="color:#a8c4ba">钛合金锭</b></div>
-        <div class="desc">一块经过真空熔炼处理的高品质钛合金材料，表面保留着铸造编号及材料批次标记。
+        <div class="desc">一块经过真空熔炼与成分检验的航空级钛合金材料，表面保留着铸造批号与检测钢印。
 
-由于加工成本高昂，该材料通常只供应对重量、强度与耐腐蚀性有严格要求的特殊工业项目。
-
-包装箱上的运输说明要求：
-
-「不得与普通废钢混装。」
-
-仓库管理员在旁边写道：
-
-「已经混了。正在找。」</div>
+这种材料兼具高比强度和良好的耐腐蚀性能，常用于对重量和结构可靠性要求严格的精密制造项目。原厂附带的材料合格证明仍封存在包装袋中。</div>
         
         <div class="vis"><b>分类依据</b>高价值工业金属原材料。</div>
         <div class="vis"><b>画什么</b>银灰色梯形钛合金锭，表面细密铸造纹理与深色钢印，边缘有金属光泽</div>
@@ -991,7 +955,7 @@
     </div>
     <div class="item" data-item="ind14" style="--rc:#a8862a">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind14.png" width="48" height="48" alt="精密陀螺组件">
       </div>
       <div class="meta">
         <div class="name">精密陀螺组件</div>
@@ -1016,7 +980,7 @@
     </div>
     <div class="item" data-item="ind15" style="--rc:#8d3a3a">
       <div class="thumb">
-        <span>待绘制</span><b>48×48</b>
+        <img src="assets/items/ind15.png" width="48" height="48" alt="零号标准量块组">
       </div>
       <div class="meta">
         <div class="name">零号标准量块组</div>
@@ -1253,7 +1217,7 @@
     </div></div>
   </section>
   <section class="cat" data-item-category="collect">
-    <h3><span class="dot" style="background:#b39a63"></span>文物藏品<em>collect</em><i>13 件</i></h3>
+    <h3><span class="dot" style="background:#b39a63"></span>文物藏品<em>collect</em><i>21 件</i></h3>
     <p class="category-description"><b>历史、文化与财富</b> · 古董、文物、艺术品、奢侈品和自然标本；价值可来自稀缺性、工艺、学术意义或历史背景。</p>
     
     <div class="grid">
@@ -1264,10 +1228,12 @@
       <div class="meta">
         <div class="name">座钟</div>
         <div class="sub"><code>antiq01</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#9165b3">稀见</span> · 4.5kg · ¥56,000</div>
-        <div class="desc">停了。指针停在潮水涨满的那一刻，纯属巧合。</div>
+        <div class="desc">一台采用实木雕花外壳与黄铜机械机芯的老式座钟，钟摆由独立玻璃门保护。
+
+指针停在一个接近满潮的时刻。没人知道它究竟停了多久，发条早已松尽。</div>
         
-        <div class="vis"><b>分类依据</b>沿用已有古董座钟定位，以工艺与文化财物价值归收藏；停摆时刻已注明为巧合。</div>
-        <div class="vis"><b>画什么</b>木质外壳的座钟，圆形白表盘 + 罗马数字，钟摆停在中间</div>
+        <div class="vis"><b>分类依据</b>具有传统木工、机械制表及古董收藏价值的座钟，不因停摆时间与潮汐接近就归属于异常物品。</div>
+        <div class="vis"><b>画什么</b>深棕实木座钟，顶部对称雕花，圆形白色罗马数字表盘，表盘下方透过玻璃门可见停止摆动的黄铜钟摆</div>
       </div>
     </div>
     <div class="item" data-item="antiq02" style="--rc:#3f6d9b">
@@ -1279,8 +1245,8 @@
         <div class="sub"><code>antiq02</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#3f6d9b">上乘</span> · 0.2kg · ¥17,000</div>
         <div class="desc">表盖内侧刻着两个字母，磨得只剩下一个。</div>
         
-        <div class="vis"><b>分类依据</b>沿用已有古董怀表定位；磨损刻字可承载私人历史，不预设仪式用途。</div>
-        <div class="vis"><b>画什么</b>黄铜怀表，表盖半开，内盖刻着两个磨掉一个的字母</div>
+        <div class="vis"><b>分类依据</b>具有机械工艺及私人收藏价值的旧式怀表，归属于古董钟表。</div>
+        <div class="vis"><b>画什么</b>圆形黄铜怀表，表盖半开，内盖隐约可见两个字母、其中一个已磨平，表冠与短链条露出一部分</div>
       </div>
     </div>
     <div class="item" data-item="antiq04" style="--rc:#a8862a">
@@ -1290,10 +1256,12 @@
       <div class="meta">
         <div class="name">错版硬币</div>
         <div class="sub"><code>antiq04</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#a8862a">珍罕</span> · 0.02kg · ¥80,000</div>
-        <div class="desc">当年压错了模具。据说存世不到百枚，但谁也没数过。</div>
+        <div class="desc">一枚发生明显偏心冲印的流通硬币，图案偏离币面中心，部分外缘没有完整压出。
+
+据钱币收藏者整理的资料，同批次确认存世的错版币不足百枚。至于还有多少枚流落在外，始终没有定论。</div>
         
-        <div class="vis"><b>分类依据</b>错版与有限存世量构成钱币收藏价值。</div>
-        <div class="vis"><b>画什么</b>同上的硬币但图案明显压偏，边齿不齐，表面反而更亮</div>
+        <div class="vis"><b>分类依据</b>特定发行批次的偏心冲印错版钱币，具有明确的制造错误和钱币收藏市场价值。</div>
+        <div class="vis"><b>画什么</b>银灰色圆形硬币，正面浮雕明显偏向一侧，另一侧留大片空白，币缘部分区域没有完整齿纹，金属表面较亮</div>
       </div>
     </div>
     <div class="item" data-item="antiq05" style="--rc:#3f8b78">
@@ -1303,10 +1271,12 @@
       <div class="meta">
         <div class="name">门牌铜片</div>
         <div class="sub"><code>antiq05</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#3f8b78">良品</span> · 0.3kg · ¥5,500</div>
-        <div class="desc">“临海路 7 号”。门牌还在，路早就没了。</div>
+        <div class="desc">「临海路 7 号」。
+
+门牌还在，路早就没了。</div>
         
-        <div class="vis"><b>分类依据</b>作为临海路旧址的地方历史实物归收藏；不因带有地址就认定为秘密地图。</div>
-        <div class="vis"><b>画什么</b>一块长方形的绿锈铜门牌，上面刻着「临海路 7 号」</div>
+        <div class="vis"><b>分类依据</b>环礁湾旧城区的地方历史实物，具有地域记忆与城市建筑史收藏属性。</div>
+        <div class="vis"><b>画什么</b>长方形绿锈铜门牌，四角留有固定孔，刻着「临海路 7 号」，数字较大，边缘有磨损</div>
       </div>
     </div>
     <div class="item" data-item="antiq06" style="--rc:#8d3a3a">
@@ -1316,10 +1286,83 @@
       <div class="meta">
         <div class="name">工业釉色母版</div>
         <div class="sub"><code>antiq06</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#8d3a3a">孤品</span> · 0.5kg · ¥400,000 · 背包简称 <b style="color:#a8c4ba">釉色母版</b></div>
-        <div class="desc">厂里定釉色标准时做的母版，一块铁皮上分格烧了十几种釉，每格边上用漆写着编号。最后一格没烧成，颜色停在了半路。后来的所有产品都对着这块铁皮配色。</div>
+        <div class="desc">一块用于制定工业釉色标准的原始金属母版，表面分格烧制了十余种釉面试样，每格旁边都用耐热颜料标注着编号。
+
+它出自环礁湾一家曾以特殊釉面工艺闻名的老牌制造厂，是该厂首次完成相关工艺标准化时保留下来的原始实物。
+
+当年的技术人员先在金属基板上反复试烧，再根据最终的颜色、光泽和附着性能确定生产标准。后续工厂生产的同系列产品，均以这块母版作为最初的色彩参照。
+
+母版上的最后一格没有烧制成功。
+
+颜色停在了半路。
+
+工厂后来改进了烧制流程，也制作了许多新的标准样板，但这块最初的母版始终没有被替换。它被封存在工艺档案室中，连同原始配方记录一起保存。
+
+随着旧工艺被新技术取代，早期生产线逐渐停用。曾经用于大规模制造的技术，最终只剩下这件能够完整追溯工艺起点的实物。</div>
         
-        <div class="vis"><b>分类依据</b>工厂制定釉色标准时的一次性原始母版，具有工艺史价值，由生活用品迁入文物藏品。</div>
-        <div class="vis"><b>画什么</b>长方形铁皮釉色母版，分格烧了十几种釉，每格边上漆写编号，最后一格颜色停在半路</div>
+        <div class="vis"><b>分类依据</b>具有明确工艺史意义的原始工业标准母版，属于工业技术历史收藏品，而非普通工业生产材料。</div>
+        <div class="vis"><b>画什么</b>长方形深灰金属釉色母版，表面排列十余块釉面试样（蓝绿、米白、深红、灰褐），细窄金属隔线分开，最后一格半烧制、边缘有浅色未覆盖区</div>
+      </div>
+    </div>
+    <div class="item" data-item="antiq07" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/antiq07.png" width="48" height="48" alt="手绘航海图">
+      </div>
+      <div class="meta">
+        <div class="name">手绘航海图</div>
+        <div class="sub"><code>antiq07</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#9165b3">稀见</span> · 0.35kg · ¥96,000 · 背包简称 <b style="color:#a8c4ba">航海图</b></div>
+        <div class="desc">一幅绘制于环礁湾港口扩建之前的近海航行图，使用耐潮绘图纸和多种颜色的防水墨水，标注了暗礁、测深点、灯塔和旧航道。
+
+制图师对港湾内的浅水区域进行了格外细致的测量，部分水深数据后来被红色墨水修订。
+
+如今地图上的几处码头已经不复存在，但海底的礁石并不会因为岸上的建筑改变位置。</div>
+        
+        <div class="vis"><b>分类依据</b>具有专业测绘工艺与地方航海史价值的原始手绘地图，区别于普通印刷导航图或实时情报资料。</div>
+        <div class="vis"><b>画什么</b>半展开的米黄色航海图卷，蓝色海岸轮廓、红色航路、黑色水深标记与角落小型罗盘，纸边轻微卷起</div>
+      </div>
+    </div>
+    <div class="item" data-item="antiq08" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/antiq08.png" width="48" height="48" alt="彩绘陶瓷面具">
+      </div>
+      <div class="meta">
+        <div class="name">彩绘陶瓷面具</div>
+        <div class="sub"><code>antiq08</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#3f8b78">良品</span> · 0.4kg · ¥7,200 · 背包简称 <b style="color:#a8c4ba">陶瓷面具</b></div>
+        <div class="desc">以白色陶土烧制的节庆面具，额头与脸颊绘有对称的蓝色花纹，眼角各悬着一滴金色泪珠。
+
+旧时的节庆演员会在夜间巡游时佩戴此类面具。不同花色代表不同角色，但如今大多数人已经分不清它们的含义。
+
+这一件的系绳曾断过，后来换成了普通的棉线。</div>
+        
+        <div class="vis"><b>分类依据</b>传统节庆表演道具，具有地方民俗文化和手工艺收藏价值。</div>
+        <div class="vis"><b>画什么</b>正面朝上的乳白色椭圆陶瓷面具，空洞眼孔、蓝色对称花纹，眼角两滴金色釉彩，边缘系浅棕棉绳</div>
+      </div>
+    </div>
+    <div class="item" data-item="antiq09" style="--rc:#8d3a3a">
+      <div class="thumb">
+        <img src="assets/items/antiq09.png" width="48" height="48" alt="环礁湾雕刻铜版">
+      </div>
+      <div class="meta">
+        <div class="name">环礁湾雕刻铜版</div>
+        <div class="sub"><code>antiq09</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#8d3a3a">孤品</span> · 2.4kg · ¥1,650,000 · 背包简称 <b style="color:#a8c4ba">城市铜版</b></div>
+        <div class="desc">一块用于印制《环礁湾城市全景图》初版的原始雕刻铜版。
+
+铜版采用传统凹版雕刻工艺制作，表面密布着建筑、街道、港口和船只的精细线条。制版师使用不同规格的刻刀完成建筑轮廓与阴影，再通过腐蚀工艺修整部分细节。
+
+作品最初由城市建设部门委托制作，用于纪念环礁湾一次重要的城市扩建工程。
+
+与当时流行的航空摄影制图不同，主雕版师坚持亲自走访旧城区。为了完整表现城市生活，他在画面中保留了菜市场、旧电影院、沿街书店，以及许多即将在城市改造中被拆除的建筑。
+
+这一决定曾引起委托方的不满。
+
+经过反复修改，最终印刷版本删除了部分旧建筑，但原始铜版中的雕刻线条仍然保留着它们的位置。
+
+铜版完成后，印刷厂使用它制作了首批限量版画。随后，随着复制工艺更新，原版被封存保存。
+
+如今，这块铜版已成为整套城市全景图唯一留存的手工原始母版。</div>
+        
+        <div class="vis"><b>分类依据</b>具有城市建设史、艺术雕版工艺及地方历史记录价值的原始艺术品。</div>
+        <div class="vis"><b>画什么</b>横向长方形暗红色铜版，密布细密的城市建筑与港口凹刻线条，中央旧城区、远处海湾与船只，四角浅绿氧化，斜靠深色木框</div>
       </div>
     </div>
     <div class="item" data-item="art01" style="--rc:#3f6d9b">
@@ -1329,10 +1372,12 @@
       <div class="meta">
         <div class="name">黑胶唱片</div>
         <div class="sub"><code>art01</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#3f6d9b">上乘</span> · 0.3kg · ¥16,000</div>
-        <div class="desc">B 面第三首有明显的划痕，说明有人很爱听这一首。</div>
+        <div class="desc">一张早期压制的黑胶唱片，附有原版纸质封套。封套背面的曲目表上，B 面第三首被人用铅笔圈了起来。
+
+唱片的同一位置留有一道明显划痕。</div>
         
-        <div class="vis"><b>分类依据</b>沿用音乐文化藏品定位；唱片与聆听痕迹体现文化和私人生活，不预设异常录音。</div>
-        <div class="vis"><b>画什么</b>黑色黑胶唱片，露出半张纸质封套，封套上有手写编号</div>
+        <div class="vis"><b>分类依据</b>特定早期压制版本的音乐文化收藏品，价值来自发行批次、唱片保存状态与原版包装。</div>
+        <div class="vis"><b>画什么</b>黑色黑胶唱片从老式纸质封套中露出一半，中心贴纸褪色发红，封套一角有手写编号</div>
       </div>
     </div>
     <div class="item" data-item="art02" style="--rc:#9165b3">
@@ -1342,10 +1387,46 @@
       <div class="meta">
         <div class="name">小幅油画</div>
         <div class="sub"><code>art02</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#9165b3">稀见</span> · 1.2kg · ¥65,000</div>
-        <div class="desc">画的是一片没有海鸥的海。右下角有签名，认不出。</div>
+        <div class="desc">画的是一片没有海鸥的海。
+
+灰蓝色的水面占据了画布大半，远处的地平线低得几乎看不见。厚重的油彩堆积在浪尖上，近看才发现画面用了十几种不同的灰色。
+
+右下角有签名，已经认不出。</div>
         
-        <div class="vis"><b>分类依据</b>具备署名的绘画作品，按艺术收藏归类；没有海鸥不等于超自然证据。</div>
-        <div class="vis"><b>画什么</b>小幅油画，画的是灰蓝色的海面，画框掉漆，右下角有签名</div>
+        <div class="vis"><b>分类依据</b>具有成熟绘画技法及地方艺术展览收藏记录的小幅油画，属于艺术作品。</div>
+        <div class="vis"><b>画什么</b>小型横向油画，灰蓝色海面与阴沉天空、无船无海鸥，深色木框掉漆，右下角签名模糊</div>
+      </div>
+    </div>
+    <div class="item" data-item="art04" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/art04.png" width="48" height="48" alt="限量游戏卡带">
+      </div>
+      <div class="meta">
+        <div class="name">限量游戏卡带</div>
+        <div class="sub"><code>art04</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#9165b3">稀见</span> · 0.18kg · ¥78,000 · 背包简称 <b style="color:#a8c4ba">游戏卡带</b></div>
+        <div class="desc">家用游戏《最后一班列车》的初回限定版卡带，附带彩色说明书、编号证书和原厂收藏盒。
+
+这款冒险游戏以复杂的分支剧情闻名。玩家需要在列车抵达终点站之前完成调查，但游戏没有设置中途存档功能。
+
+当年有杂志专门刊登了通关流程。整整十二页，最后一页印错了。</div>
+        
+        <div class="vis"><b>分类依据</b>特定版本的电子游戏文化收藏品，价值主要来自限定发行、完整包装与历史收藏意义，而非电子元件。</div>
+        <div class="vis"><b>画什么</b>深紫色长方形游戏卡带，正面黑色蒸汽火车与黄色站台灯，后方露出彩色包装盒一角，盒上银色限定标记</div>
+      </div>
+    </div>
+    <div class="item" data-item="art05" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/art05.png" width="48" height="48" alt="电影首映海报">
+      </div>
+      <div class="meta">
+        <div class="name">电影首映海报</div>
+        <div class="sub"><code>art05</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#3f6d9b">上乘</span> · 0.25kg · ¥21,000 · 背包简称 <b style="color:#a8c4ba">首映海报</b></div>
+        <div class="desc">悬疑电影《灯塔以北》的首映宣传海报，采用多色胶印工艺印制。画面中只有一座亮着灯的灯塔，几乎占满背景的海面完全没有船只。
+
+影片发行时票房平平，后来却因为独特的摄影风格在录像带租赁市场重新流行起来。这张首映版本的海报保留了早期被发行商撤换的原始片名字体。</div>
+        
+        <div class="vis"><b>分类依据</b>具有明确发行版本与影视文化背景的宣传收藏品。</div>
+        <div class="vis"><b>画什么</b>微微卷曲的竖版深蓝色电影海报，中央白色灯塔，底部一行暗红色大字，边缘有折痕</div>
       </div>
     </div>
     <div class="item" data-item="lux01" style="--rc:#a8862a">
@@ -1355,10 +1436,16 @@
       <div class="meta">
         <div class="name">机械腕表</div>
         <div class="sub"><code>lux01</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#a8862a">珍罕</span> · 0.1kg · ¥220,000</div>
-        <div class="desc">还在走。这是这栋楼里唯一还在正常运转的东西。</div>
+        <div class="desc">一枚采用贵金属表壳与复杂机械机芯制作的高级腕表，配备自动上链机构与精密调校的摆轮组件。
+
+表盘上的夜光涂层已经泛黄，表镜却几乎没有划痕。
+
+还在走。
+
+这是这栋楼里唯一还在正常运转的东西。</div>
         
-        <div class="vis"><b>分类依据</b>沿用原有奢侈机械表的贵重藏品定位；正常走时属于机械性能，不归电子或异常。</div>
-        <div class="vis"><b>画什么</b>机械腕表，银色表壳 + 深色表盘，秒针还在走</div>
+        <div class="vis"><b>分类依据</b>采用高级制表工艺与贵金属材料制作的奢侈机械腕表，属于高端钟表收藏。</div>
+        <div class="vis"><b>画什么</b>银金双色高级机械腕表，深色表盘，细长金属指针，一个小型复杂功能副盘，抛光表壳，深棕皮革表带</div>
       </div>
     </div>
     <div class="item" data-item="lux02" style="--rc:#a8862a">
@@ -1367,11 +1454,13 @@
       </div>
       <div class="meta">
         <div class="name">金条</div>
-        <div class="sub"><code>lux02</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#a8862a">珍罕</span> · 5kg · ¥200,000</div>
-        <div class="desc">一公斤。拿一块就够走一趟了，但你就走不动了。</div>
+        <div class="sub"><code>lux02</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#a8862a">珍罕</span> · 1kg · ¥200,000</div>
+        <div class="desc">一公斤，成色足，钢印完整。
+
+没有来历不明的秘密，也没有动人的故事。熔了以后，还是一公斤金子。</div>
         
-        <div class="vis"><b>分类依据</b>贵金属财富实物，按收藏品的财富维度归类。</div>
-        <div class="vis"><b>画什么</b>一小块金条，表面有铸造纹理和一串钢印编号</div>
+        <div class="vis"><b>分类依据</b>高纯度标准投资金条，以贵金属材料价值和财富储藏属性归入文物藏品。</div>
+        <div class="vis"><b>画什么</b>厚实金黄色梯形金条，表面铸造纹理，中央压有重量、纯度与序列编号钢印，三分之二俯视</div>
       </div>
     </div>
     <div class="item" data-item="lux03" style="--rc:#3f6d9b">
@@ -1381,10 +1470,48 @@
       <div class="meta">
         <div class="name">钢笔</div>
         <div class="sub"><code>lux03</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#3f6d9b">上乘</span> · 0.05kg · ¥18,000</div>
-        <div class="desc">笔尖还是好的，墨囊空了。</div>
+        <div class="desc">黑色树脂笔身，金质笔尖，笔帽采用精细的金属螺纹连接结构。笔夹有一道浅浅的划痕。
+
+笔尖还是好的，墨囊空了。</div>
         
-        <div class="vis"><b>分类依据</b>沿用原有贵重书写器具定位归收藏；不新增品牌、年代或名人归属。普通钢笔变体应归生活用品。</div>
-        <div class="vis"><b>画什么</b>黑色树脂笔身的钢笔，笔帽扣着，笔夹有一道划痕</div>
+        <div class="vis"><b>分类依据</b>具有贵金属笔尖与精密书写工艺的高档钢笔，属于奢侈书写器具收藏，而非普通办公用品。</div>
+        <div class="vis"><b>画什么</b>黑色抛光树脂钢笔，笔帽旋开置于一侧，露出金色笔尖，银金双色笔夹与细窄装饰环</div>
+      </div>
+    </div>
+    <div class="item" data-item="lux04" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/lux04.png" width="48" height="48" alt="珐琅音乐盒">
+      </div>
+      <div class="meta">
+        <div class="name">珐琅音乐盒</div>
+        <div class="sub"><code>lux04</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#a8862a">珍罕</span> · 0.8kg · ¥268,000 · 背包简称 <b style="color:#a8c4ba">音乐盒</b></div>
+        <div class="desc">一件采用银质胎体与手工珐琅彩装饰的机械音乐盒。盒盖绘有一座悬崖庄园，深蓝色天空使用多次烧制的透明釉层表现，转动角度时能够看到不同的光泽。
+
+内部装有精密滚筒式音乐机芯，演奏一首流传已久的圆舞曲。
+
+它出自某家历史悠久的钟表工坊，为纪念工坊成立周年而限量制作。不同于后续采用彩绘外壳的普及版本，这一批仍使用传统珐琅烧制工艺。
+
+音乐盒底部保留着工匠签名与发行编号。机芯运转正常，只是其中一枚梳齿的音色稍显沉闷。</div>
+        
+        <div class="vis"><b>分类依据</b>融合贵金属工艺、传统珐琅烧制与精密机械音乐装置的高级艺术收藏品。</div>
+        <div class="vis"><b>画什么</b>椭圆形深蓝色珐琅音乐盒，银色雕花边框，盒盖半开露出小型金色音乐滚筒，盖面中央白色庄园</div>
+      </div>
+    </div>
+    <div class="item" data-item="lux05" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/lux05.png" width="48" height="48" alt="蓝宝石胸针">
+      </div>
+      <div class="meta">
+        <div class="name">蓝宝石胸针</div>
+        <div class="sub"><code>lux05</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#a8862a">珍罕</span> · 0.12kg · ¥340,000 · 背包简称 <b style="color:#a8c4ba">胸针</b></div>
+        <div class="desc">一枚以展翼海鸟为原型设计的高级珠宝胸针，中央镶嵌一颗天然蓝宝石，双翼由铂金与细小钻石构成。
+
+主石采用阶梯式切割，深蓝色内部带有轻微的天然色带。左右两翼的钻石排列并不完全对称，这是设计师在原始设计稿中就确定的造型。
+
+胸针曾作为私人珠宝展的重点展品，附有完整的宝石鉴定资料及工坊制作记录。</div>
+        
+        <div class="vis"><b>分类依据</b>天然高品质宝石、贵金属镶嵌及珠宝艺术设计相结合的奢侈品收藏。</div>
+        <div class="vis"><b>画什么</b>展翼海鸟造型的银白色胸针，中央大型深蓝色多面切割宝石，两翼镶嵌细小白色钻石，斜侧俯视</div>
       </div>
     </div>
     <div class="item" data-item="spec01" style="--rc:#c6ceca">
@@ -1396,8 +1523,8 @@
         <div class="sub"><code>spec01</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#c6ceca">寻常</span> · 0.1kg · ¥1,600</div>
         <div class="desc">从海里来的，出现在三楼。水真的上来过。</div>
         
-        <div class="vis"><b>分类依据</b>按现有自然标本定位归收藏；贝壳被洪水带至楼内不代表本体异常。</div>
-        <div class="vis"><b>画什么</b>一枚巴掌大的螺旋贝壳，螺纹清晰，边缘有一点破损</div>
+        <div class="vis"><b>分类依据</b>自然贝壳标本，兼具地方自然收藏与灾后环境痕迹价值；贝壳本体没有异常性质。</div>
+        <div class="vis"><b>画什么</b>一枚巴掌大的黄白色螺旋贝壳，螺纹清晰，边缘有一点破损，斜侧俯视</div>
       </div>
     </div>
     <div class="item" data-item="spec02" style="--rc:#3f8b78">
@@ -1407,10 +1534,12 @@
       <div class="meta">
         <div class="name">矿石标本</div>
         <div class="sub"><code>spec02</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#3f8b78">良品</span> · 0.6kg · ¥5,700</div>
-        <div class="desc">标签写着产地和编号。编号被人划掉了。</div>
+        <div class="desc">深色岩体上生长着一簇蓝绿色晶体，晶面完整，部分边缘因搬运而崩裂。
+
+标签写着产地和编号。编号被人划掉了。</div>
         
-        <div class="vis"><b>分类依据</b>带产地和编号的矿物标本，按自然收藏与学术价值归类；编号划去不等于异常。</div>
-        <div class="vis"><b>画什么</b>不规则矿石标本，深色岩体上有一层蓝绿色结晶</div>
+        <div class="vis"><b>分类依据</b>带采集标签的矿物学标本，以自然收藏及基础学术价值归类。</div>
+        <div class="vis"><b>画什么</b>不规则深灰岩石，表面覆盖簇状蓝绿色晶体（孔雀石与蓝铜矿共生外观），一侧贴小型纸质标签</div>
       </div>
     </div>
     <div class="item" data-item="spec03" style="--rc:#c6ceca">
@@ -1422,22 +1551,513 @@
         <div class="sub"><code>spec03</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#c6ceca">寻常</span> · 0.05kg · ¥2,000 · 背包简称 <b style="color:#a8c4ba">干植物</b></div>
         <div class="desc">夹在一本书里，压得很平。叶子还是绿的。</div>
         
-        <div class="vis"><b>分类依据</b>压制植物标本或私人自然收藏；叶色仍绿不足以证明超自然性质。</div>
-        <div class="vis"><b>画什么</b>压平的干燥叶片，夹在一小片发黄的纸里，叶脉清晰</div>
+        <div class="vis"><b>分类依据</b>有意压制保存的私人植物标本，属于基础自然收藏品；缺少正式采集记录，不具备较高学术价值。</div>
+        <div class="vis"><b>画什么</b>压平的绿色叶片夹在两张发黄薄纸之间，叶脉清晰，纸角微微翘起</div>
+      </div>
+    </div>
+    <div class="item" data-item="spec04" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/spec04.png" width="48" height="48" alt="菊石化石">
+      </div>
+      <div class="meta">
+        <div class="name">菊石化石</div>
+        <div class="sub"><code>spec04</code> · <span style="color:#b39a63">收集品 / 文物藏品</span> · <span style="color:#3f6d9b">上乘</span> · 0.9kg · ¥26,000</div>
+        <div class="desc">菊石的螺旋外壳嵌在灰黑色石灰岩中，经过局部清理，隔室线仍然清晰。
+
+这块化石没有经过完全抛光。标本师只清除了外壳周围的岩层，让原始沉积面保留在背面。</div>
+        
+        <div class="vis"><b>分类依据</b>古生物化石标本，具有自然历史与学术收藏价值。</div>
+        <div class="vis"><b>画什么</b>深灰不规则石块，中央一枚黄褐色螺旋菊石，清晰的弧形分节线与微微突起的化石轮廓</div>
       </div>
     </div></div>
   </section>
   <section class="cat" data-item-category="mil">
-    <h3><span class="dot" style="background:#7d9163"></span>军事物资<em>mil</em><i>0 件</i></h3>
+    <h3><span class="dot" style="background:#7d9163"></span>军事物资<em>mil</em><i>15 件</i></h3>
     <p class="category-description"><b>封锁、疏散与军事行动</b> · 军用通信器材、制式工具、识别设备、武器零件与军用补给，可关联首次潮汐的撤离行动及后续封锁。</p>
-    <p class="category-empty">目前没有符合此类别的既有物品，保留分类供后续扩充。</p>
-    <div class="grid"></div>
+    
+    <div class="grid">
+    <div class="item" data-item="mil01" style="--rc:#c6ceca">
+      <div class="thumb">
+        <img src="assets/items/mil01.png" width="48" height="48" alt="旧弹链盒">
+      </div>
+      <div class="meta">
+        <div class="name">旧弹链盒</div>
+        <div class="sub"><code>mil01</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#c6ceca">寻常</span> · 1.5kg · ¥1,800 · 背包简称 <b style="color:#a8c4ba">弹链盒</b></div>
+        <div class="desc">绿色铁盒，提手弯了，盒盖扣得很紧。里面的弹链早已取走，只剩几枚生锈的连接片和一层干硬的油污。</div>
+        
+        <div class="vis"><b>分类依据</b>军用弹药储运容器，作为收集品的空盒，不提供弹药或武器功能。</div>
+        <div class="vis"><b>画什么</b>暗橄榄绿色长方形铁制弹链盒，顶部折叠金属提手，侧面褪色白色批次字样，盒盖微开露出深色空腔与锈迹</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil02" style="--rc:#c6ceca">
+      <div class="thumb">
+        <img src="assets/items/mil02.png" width="48" height="48" alt="制式军用水壶">
+      </div>
+      <div class="meta">
+        <div class="name">制式军用水壶</div>
+        <div class="sub"><code>mil02</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#c6ceca">寻常</span> · 0.45kg · ¥2,300 · 背包简称 <b style="color:#a8c4ba">军用水壶</b></div>
+        <div class="desc">壶身压着几道深浅不一的凹痕，橄榄绿色的漆面磨出了底下的铝色。壶盖用一截旧绳系在壶颈上，免得再丢一次。</div>
+        
+        <div class="vis"><b>分类依据</b>军队制式单兵饮水器具，属于基础军需用品，无局内饮水或恢复功能。</div>
+        <div class="vis"><b>画什么</b>扁圆形铝制军用水壶，橄榄绿磨损漆面，短小黑色旋盖，壶颈系一截棕色细绳，斜侧俯视，突出扁平壶身与肩部轮廓，不画布套与餐杯</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil03" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/mil03.png" width="48" height="48" alt="军用身份牌">
+      </div>
+      <div class="meta">
+        <div class="name">军用身份牌</div>
+        <div class="sub"><code>mil03</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#3f8b78">良品</span> · 0.08kg · ¥5,400 · 背包简称 <b style="color:#a8c4ba">身份牌</b></div>
+        <div class="desc">两片薄金属牌挂在同一条链上。
+
+姓名、服役编号、血型，除此以外没有别的内容。其中一片的编号被反复摩擦，刻痕比另一片浅得多。</div>
+        
+        <div class="vis"><b>分类依据</b>军事人员制式身份识别物品，具有军事后勤与人员管理属性。</div>
+        <div class="vis"><b>画什么</b>两枚银灰色椭圆形金属身份牌串在细珠链上，牌面浅黑色编号与规则压印，两片磨损程度不同</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil04" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/mil04.png" width="48" height="48" alt="制式信号灯">
+      </div>
+      <div class="meta">
+        <div class="name">制式信号灯</div>
+        <div class="sub"><code>mil04</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#3f8b78">良品</span> · 0.7kg · ¥6,500 · 背包简称 <b style="color:#a8c4ba">信号灯</b></div>
+        <div class="desc">一种带有可更换彩色滤镜的手持信号灯，常用于夜间引导与临时交通管制。金属外壳上还贴着使用单位的器材标签。
+
+灯罩保存完好，电池仓的弹簧已经锈死。</div>
+        
+        <div class="vis"><b>分类依据</b>军事行动与后勤引导使用的专用光学信号器材。</div>
+        <div class="vis"><b>画什么</b>深绿色筒形金属信号灯，前端红色圆形滤光罩，侧面小型拨动开关，棕色帆布提带</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil05" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/mil05.png" width="48" height="48" alt="封锁区标识牌">
+      </div>
+      <div class="meta">
+        <div class="name">封锁区标识牌</div>
+        <div class="sub"><code>mil05</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#3f8b78">良品</span> · 0.6kg · ¥7,100 · 背包简称 <b style="color:#a8c4ba">封锁标识</b></div>
+        <div class="desc">一块从临时封锁线拆下的金属标识牌，正面印有军方警戒图案和禁止通行标志。
+
+背面留着不同型号的固定螺孔。它曾被装在铁丝围栏上，后来又被重新安装到路障支架上。</div>
+        
+        <div class="vis"><b>分类依据</b>军事封锁行动使用的制式警戒设施组件，区别于普通民用交通标识。</div>
+        <div class="vis"><b>画什么</b>方形铁灰色警戒牌，中央黑黄警戒图案，底部白色军事识别条带，边缘有螺孔与刮痕，略微倾斜</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil06" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/mil06.png" width="48" height="48" alt="军用罗盘">
+      </div>
+      <div class="meta">
+        <div class="name">军用罗盘</div>
+        <div class="sub"><code>mil06</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#3f6d9b">上乘</span> · 0.25kg · ¥19,000</div>
+        <div class="desc">采用液体阻尼结构的精密军用罗盘，带有可折叠瞄准镜片和夜光方位刻度。
+
+保护盖内侧固定着一面小镜子，外壳的防滑涂层已经磨损。与普通旅行指南针相比，它更耐碰撞，也更适合长时间野外测绘。</div>
+        
+        <div class="vis"><b>分类依据</b>用于军事导航、方位判定和野外测绘的制式精密仪器。</div>
+        <div class="vis"><b>画什么</b>打开的深绿色金属军用罗盘，中央圆形方位盘，白色刻度与橙色指针，翻开盖板内可见小镜片与瞄准结构</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil07" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/mil07.png" width="48" height="48" alt="野战电话机">
+      </div>
+      <div class="meta">
+        <div class="name">野战电话机</div>
+        <div class="sub"><code>mil07</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#3f6d9b">上乘</span> · 2.1kg · ¥28,000 · 背包简称 <b style="color:#a8c4ba">野战电话</b></div>
+        <div class="desc">一部便携式有线野战电话，采用坚固的金属机箱和独立手柄，侧面设有线路接线端子。
+
+连接线已经被整齐地剪断，手柄却仍被扣在原来的位置。箱盖内侧贴着一份简易故障检查表，最下面的两项被反复打过勾。</div>
+        
+        <div class="vis"><b>分类依据</b>军事野外有线通信设备，具有区别于普通民用电话的专用结构和防护设计。</div>
+        <div class="vis"><b>画什么</b>深橄榄绿方形野战电话箱，盒盖打开，内部黑色听筒、金属接线柱与一段短电缆，侧面带折叠摇柄</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil08" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/mil08.png" width="48" height="48" alt="制式枪机组件">
+      </div>
+      <div class="meta">
+        <div class="name">制式枪机组件</div>
+        <div class="sub"><code>mil08</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#3f6d9b">上乘</span> · 0.65kg · ¥34,000 · 背包简称 <b style="color:#a8c4ba">枪机组件</b></div>
+        <div class="desc">一套封存在防锈纸中的制式枪械枪机总成，表面涂有薄薄的防护油脂。关键接触部位经过精密加工，金属零件保留着统一的检验钢印。
+
+外包装没有拆封痕迹。</div>
+        
+        <div class="vis"><b>分类依据</b>军用制式枪械的精密机械零部件，作为不可装备的军械收集品存在。</div>
+        <div class="vis"><b>画什么</b>一组紧凑的深灰色机械枪机零件，切削面有银色反光，置于打开的棕色防锈纸包装内，旁边有小检验标签</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil09" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/mil09.png" width="48" height="48" alt="单筒夜视仪">
+      </div>
+      <div class="meta">
+        <div class="name">单筒夜视仪</div>
+        <div class="sub"><code>mil09</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#9165b3">稀见</span> · 1.1kg · ¥90,000 · 背包简称 <b style="color:#a8c4ba">夜视仪</b></div>
+        <div class="desc">一台采用像增强技术的单筒夜视观察设备，能够在低照度环境下提供绿色调的增强图像。
+
+镜筒外侧的橡胶防护层已经开裂，目镜边缘留有长期佩戴留下的磨损。镜片没有明显划伤，配套的遮光盖也还在。</div>
+        
+        <div class="vis"><b>分类依据</b>军用低照度光电观察仪器，依赖精密光学与像增强器制造技术。</div>
+        <div class="vis"><b>画什么</b>黑灰色短筒状夜视仪，前端大口径镜头呈深绿色反光，侧面调焦环、金属安装座与橡胶眼罩</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil10" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/mil10.png" width="48" height="48" alt="通信密钥模块">
+      </div>
+      <div class="meta">
+        <div class="name">通信密钥模块</div>
+        <div class="sub"><code>mil10</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#9165b3">稀见</span> · 0.55kg · ¥74,000 · 背包简称 <b style="color:#a8c4ba">密钥模块</b></div>
+        <div class="desc">一种用于专用军用通信系统的可拆卸电子模块，采用金属屏蔽外壳，外部仅保留状态指示灯和设备识别接口。
+
+它本身不保存完整的通信记录。离开配套主机后，也无法独立完成通信。
+
+此件模块的保管封签完好，外壳上却贴着两种不同颜色的资产标签，分别来自通信部门和后勤部门。</div>
+        
+        <div class="vis"><b>分类依据</b>军用通信设备的专用安全组件，价值来自专业电子制造与系统配套需求，而非其储存的情报内容。</div>
+        <div class="vis"><b>画什么</b>深灰色扁平矩形电子模块，一端密集金属触点，正面两个小型状态灯，侧面贴红白资产标签，九十年代工业电子质感</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil11" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/mil11.png" width="48" height="48" alt="野战剂量仪">
+      </div>
+      <div class="meta">
+        <div class="name">野战剂量仪</div>
+        <div class="sub"><code>mil11</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#9165b3">稀见</span> · 1.4kg · ¥68,000 · 背包简称 <b style="color:#a8c4ba">剂量仪</b></div>
+        <div class="desc">一台军用便携式辐射剂量测量仪，使用模拟指针显示测量结果，外壳具有防潮和防冲击结构。
+
+这类仪器原本服务于部队的常规危险环境防护工作，并不意味着使用它的地区一定存在放射性污染。
+
+探头接口处的橡胶保护盖已经脱落，携行箱中的校准附件却保存得十分完整。</div>
+        
+        <div class="vis"><b>分类依据</b>军事危险环境监测设备，属于专用测量器材，而非能直接消除环境异常的医疗道具。</div>
+        <div class="vis"><b>画什么</b>橄榄绿色小型矩形检测仪，正面白色模拟表盘与黑色指针，侧面连接短圆柱形探头，黑色旋钮与背带</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil12" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/mil12.png" width="48" height="48" alt="热成像观察仪">
+      </div>
+      <div class="meta">
+        <div class="name">热成像观察仪</div>
+        <div class="sub"><code>mil12</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#a8862a">珍罕</span> · 2.4kg · ¥240,000 · 背包简称 <b style="color:#a8c4ba">热成像仪</b></div>
+        <div class="desc">早期便携式军用热成像观察设备，使用专用红外探测器和低分辨率电子显示系统。
+
+在光学夜视设备仍占据主流的年代，热成像技术的高昂成本限制了它的普及。其红外探测组件和专用电子处理单元，需要复杂的制造与校准工艺。
+
+与后来的轻型设备不同，这个型号体积笨重，机身后部还保留着独立供电接口。</div>
+        
+        <div class="vis"><b>分类依据</b>高端军用红外光电观察设备，价值由红外探测组件、复杂电子系统和技术稀缺性支撑。</div>
+        <div class="vis"><b>画什么</b>厚重黑色长方体热成像仪，前端大型圆形红外镜头带紫黑色镀膜，顶部提手，后端小型绿色观察屏与电缆接口</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil13" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/mil13.png" width="48" height="48" alt="光学测距仪">
+      </div>
+      <div class="meta">
+        <div class="name">光学测距仪</div>
+        <div class="sub"><code>mil13</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#a8862a">珍罕</span> · 1.5kg · ¥190,000 · 背包简称 <b style="color:#a8c4ba">测距仪</b></div>
+        <div class="desc">一台军用精密光学测距设备，采用高品质棱镜和复杂的光学测量机构，主要用于远距离目标观测与工程测量。
+
+它出自一家长期生产军用测量设备的专业光学厂。由于制造过程中需要严格控制光轴误差，同系列产品的产量始终不高。
+
+此件设备保存着原厂调校证书，镜组未见明显霉斑。</div>
+        
+        <div class="vis"><b>分类依据</b>专业军用测距仪器，价值来自高精度光学组件、制造工艺及完整校准资料。</div>
+        <div class="vis"><b>画什么</b>深灰绿色双目式光学测距仪，前端两个大小不同的圆形镜头，中央厚重金属主体，侧面精细旋钮与刻度环</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil14" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/mil14.png" width="48" height="48" alt="指挥通信主机">
+      </div>
+      <div class="meta">
+        <div class="name">指挥通信主机</div>
+        <div class="sub"><code>mil14</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#a8862a">珍罕</span> · 3.8kg · ¥420,000 · 背包简称 <b style="color:#a8c4ba">通信主机</b></div>
+        <div class="desc">从军用指挥车辆中拆卸下来的专用通信控制主机，采用模块化电子结构，负责协调多路无线电设备的音频、状态与控制信号。
+
+设备面板上的频道选择开关已经被拆除，内部电子组件却保存完整。金属框架上刻有原厂制造编号，不同模块的检验封漆颜色也不相同。
+
+这类设备通常按照特定指挥通信系统配套制造，脱离原有车辆后，很难由普通民用设备替代。</div>
+        
+        <div class="vis"><b>分类依据</b>专业军事通信系统的核心控制设备，具有复杂电子制造工艺及较高的专用设备价值。</div>
+        <div class="vis"><b>画什么</b>军绿色矩形金属通信主机，正面排列多组旋钮、黑色接口与绿色状态灯，部分插槽空置，底部厚重散热与安装支架</div>
+      </div>
+    </div>
+    <div class="item" data-item="mil15" style="--rc:#8d3a3a">
+      <div class="thumb">
+        <img src="assets/items/mil15.png" width="48" height="48" alt="首潮撤离标图板">
+      </div>
+      <div class="meta">
+        <div class="name">首潮撤离标图板</div>
+        <div class="sub"><code>mil15</code> · <span style="color:#7d9163">收集品 / 军事物资</span> · <span style="color:#8d3a3a">孤品</span> · 2.6kg · ¥1,600,000 · 背包简称 <b style="color:#a8c4ba">撤离标图</b></div>
+        <div class="desc">一块曾用于环礁湾首次大规模撤离行动的原始军事指挥标图板。
+
+它由金属框架和可更换的透明标绘板组成，底层压着一张当时使用的城市地图。不同颜色的标记分别代表道路管制区、人员集中点、后勤集结区与撤离路线。
+
+标图板经历过多次人工修改。部分标记被擦去后重新绘制，旧线条仍隐约透在下面。板面边缘的时间栏中，几次更新的记录间隔越来越短。
+
+这块标图板属于首次撤离行动的原始指挥器材，而不是事后根据档案制作的纪念复制品。与它同时保存的还有使用登记、交接记录，以及后来对撤离路线变更过程的整理资料。
+
+其中一条通往港口的线路，被连续修改了三次。
+
+最后的版本没有画到港口。
+
+标图板右下角还留着一小片没有被覆盖的区域，那里标注着最早设定的一处人员集合点。后续更新中，这个位置既没有被涂掉，也没有重新标记。
+
+它只是留在那里。</div>
+        
+        <div class="vis"><b>分类依据</b>真实参与特定军事撤离行动的原始指挥实物，具有重大军事行动史、城市灾变史及历史档案价值。其主要收藏价值来自载体本身及使用过程，而非作为可读取的情报文件。</div>
+        <div class="vis"><b>画什么</b>紧凑长方形金属框军事标图板，深灰绿边框，内部浅黄色旧城区地图上覆盖透明标绘层，可见红蓝黑三色路线、圆形集合点与被擦除的旧线，右下角白色时间记录格，斜侧俯视</div>
+      </div>
+    </div></div>
   </section>
   <section class="cat" data-item-category="intel">
-    <h3><span class="dot" style="background:#a89776"></span>情报资料<em>intel</em><i>2 件</i></h3>
+    <h3><span class="dot" style="background:#a89776"></span>情报资料<em>intel</em><i>15 件</i></h3>
     <p class="category-description"><b>信息、调查与历史记录</b> · 官方档案、实验报告、地图、信函、秘密文件及其他记录载体；部分物品还可能具有探索信息价值。</p>
     
     <div class="grid">
+    <div class="item" data-item="intel01" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/intel01.png" width="48" height="48" alt="港口货运清单">
+      </div>
+      <div class="meta">
+        <div class="name">港口货运清单</div>
+        <div class="sub"><code>intel01</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#3f8b78">良品</span> · 0.15kg · ¥5,200 · 背包简称 <b style="color:#a8c4ba">货运清单</b></div>
+        <div class="desc">一张港口仓库的货物交接清单，列着箱号、重量、运输方式与收货单位。
+
+大部分货物已经签收，只有最底下那一批被划去，重新安排了运输日期。</div>
+        
+        <div class="vis"><b>分类依据</b>港口物流与商业活动的原始记录，具有地方经济史及运输信息价值。</div>
+        <div class="vis"><b>画什么</b>一张发黄的长条货运单，表格线清晰，右上角有红色港口印章，底部横着一道蓝色修改笔迹</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel02" style="--rc:#c6ceca">
+      <div class="thumb">
+        <img src="assets/items/intel02.png" width="48" height="48" alt="旧电话簿">
+      </div>
+      <div class="meta">
+        <div class="name">旧电话簿</div>
+        <div class="sub"><code>intel02</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#c6ceca">寻常</span> · 0.35kg · ¥1,800</div>
+        <div class="desc">电话号码按街区排列。许多号码旁边都被打了勾，最后几页的空白处则写满了临时联络方式。
+
+纸页被翻得发软，书脊却还完整。</div>
+        
+        <div class="vis"><b>分类依据</b>记录居民、商业机构与公共服务联系方式的城市公共信息载体。</div>
+        <div class="vis"><b>画什么</b>一本厚重的浅黄色旧电话簿，深绿色封面，书页边缘呈阶梯式索引结构，封面有磨损的电话听筒图案</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel03" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/intel03.png" width="48" height="48" alt="撤离登记卡">
+      </div>
+      <div class="meta">
+        <div class="name">撤离登记卡</div>
+        <div class="sub"><code>intel03</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#3f8b78">良品</span> · 0.08kg · ¥6,800 · 背包简称 <b style="color:#a8c4ba">登记卡</b></div>
+        <div class="desc">卡片正面留有姓名、年龄、同行人数和指定集合地点。背面的交通方式一栏先是填了「汽车」，后来改成了「步行」。</div>
+        
+        <div class="vis"><b>分类依据</b>紧急撤离过程中使用的人员登记资料，属于行政与历史记录，而非具有实体装备价值的军事物资。</div>
+        <div class="vis"><b>画什么</b>米黄色横向登记卡，顶部红色编号，中央排列填写栏与黑色印刷字，右下角有蓝色圆形公章，边缘轻微折起</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel04" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/intel04.png" width="48" height="48" alt="城市建设蓝图">
+      </div>
+      <div class="meta">
+        <div class="name">城市建设蓝图</div>
+        <div class="sub"><code>intel04</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#3f6d9b">上乘</span> · 0.4kg · ¥24,000 · 背包简称 <b style="color:#a8c4ba">建设蓝图</b></div>
+        <div class="desc">一份旧城区地下排水设施的施工蓝图。暗蓝色图纸上印着白色管线、检查井和泵站位置，工程变更部分用红笔单独标出。
+
+图纸边缘留着设计院与施工单位的签章。</div>
+        
+        <div class="vis"><b>分类依据</b>城市基础设施的专业工程图纸，具有工程记录及潜在的区域探索信息价值。</div>
+        <div class="vis"><b>画什么</b>半展开的深蓝色工程图纸，白色地下管线网格，局部红色路线标记，纸角有白色标题栏</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel05" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/intel05.png" width="48" height="48" alt="磁带录音">
+      </div>
+      <div class="meta">
+        <div class="name">磁带录音</div>
+        <div class="sub"><code>intel05</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#3f6d9b">上乘</span> · 0.12kg · ¥29,000 · 背包简称 <b style="color:#a8c4ba">录音磁带</b></div>
+        <div class="desc">一盘贴着会议日期的录音磁带，透明外壳内能看见两卷深褐色磁带。
+
+标签上的会议地点被改过一次。录音内容尚未整理成文字。</div>
+        
+        <div class="vis"><b>分类依据</b>记录特定会议内容的模拟录音载体，其价值来自保存的信息，而非磁带本身。</div>
+        <div class="vis"><b>画什么</b>透明浅灰色紧凑型录音磁带，中央两枚白色卷轴，外壳贴一张米黄色手写标签</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel07" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/intel07.png" width="48" height="48" alt="电报码底稿">
+      </div>
+      <div class="meta">
+        <div class="name">电报码底稿</div>
+        <div class="sub"><code>intel07</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#3f6d9b">上乘</span> · 0.1kg · ¥32,000 · 背包简称 <b style="color:#a8c4ba">电报稿</b></div>
+        <div class="desc">一张从通信台留存的电报底稿，正文由短语和数字代码组成。原始报文已经发出，纸张下端保留着收发时间与操作员签名。
+
+最后一组代码写得很挤，几乎碰到了纸边。</div>
+        
+        <div class="vis"><b>分类依据</b>通信机构的原始收发记录，具有历史通信与行政信息价值。</div>
+        <div class="vis"><b>画什么</b>窄长的浅黄色电报纸，密集排列打字机印出的字母与数字，顶部带两处蓝色时间戳</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel06" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/intel06.png" width="48" height="48" alt="潮位观测日志">
+      </div>
+      <div class="meta">
+        <div class="name">潮位观测日志</div>
+        <div class="sub"><code>intel06</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#9165b3">稀见</span> · 0.6kg · ¥58,000 · 背包简称 <b style="color:#a8c4ba">潮位日志</b></div>
+        <div class="desc">一本港口水文站使用的潮位观测簿，按日期记录海面高度、气压、风向与观测时间。
+
+前半部分的记录间隔十分规律。后来，观测员开始在原定时刻之外增加测量次数，并在部分数据旁画上红圈。
+
+最后几页附着一张从自动记录仪上剪下来的纸带。纸带上的曲线没有超出量程，却与当天的人工记录存在明显差异。</div>
+        
+        <div class="vis"><b>分类依据</b>港口水文监测的原始数据记录，具有专业研究及灾变历史调查价值。</div>
+        <div class="vis"><b>画什么</b>翻开的蓝灰色硬皮记录簿，左页密集数字表格，右页手绘潮位曲线，中央夹着一截白色自动记录纸带</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel08" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/intel08.png" width="48" height="48" alt="封锁区通行名册">
+      </div>
+      <div class="meta">
+        <div class="name">封锁区通行名册</div>
+        <div class="sub"><code>intel08</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#9165b3">稀见</span> · 0.35kg · ¥82,000 · 背包简称 <b style="color:#a8c4ba">通行名册</b></div>
+        <div class="desc">一份供封锁区检查站核验的人员通行名册，记录获准通行的单位、人员及证件有效期限。
+
+名册最初按单位排列，后来改为按通行区域分类。重新装订时，有几页被放错了位置。
+
+同一个名字出现在两个不同区域的名单上，签发日期相隔一天。</div>
+        
+        <div class="vis"><b>分类依据</b>军事封锁与人员通行管理资料，主要价值来自记录内容，而非装订载体。</div>
+        <div class="vis"><b>画什么</b>一册深绿色窄长名册，封面黑色标题与红色权限标记，翻开内页显示姓名列表、通行区域代码与印章</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel09" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/intel09.png" width="48" height="48" alt="实验原始数据盘">
+      </div>
+      <div class="meta">
+        <div class="name">实验原始数据盘</div>
+        <div class="sub"><code>intel09</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#9165b3">稀见</span> · 0.2kg · ¥96,000 · 背包简称 <b style="color:#a8c4ba">数据盘</b></div>
+        <div class="desc">一组装有研究数据的 3.5 英寸软盘，记录着实验仪器输出的原始测量结果。
+
+软盘标签依次编号，日期跨越数个月。最后一张盘片贴有重新复制的标识，说明原始数据曾经过一次迁移或备份。
+
+没有对应的软件和设备，磁盘里的内容很难直接查看。</div>
+        
+        <div class="vis"><b>分类依据</b>实验数据的数字存储载体，内容属于科研记录，而非普通电子产品。</div>
+        <div class="vis"><b>画什么</b>三张深灰色 3.5 英寸软盘错开叠放，顶部贴不同颜色的纸质编号标签，最上面一张露出银色金属滑盖</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel10" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/intel10.png" width="48" height="48" alt="撤离电台录音带">
+      </div>
+      <div class="meta">
+        <div class="name">撤离电台录音带</div>
+        <div class="sub"><code>intel10</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#a8862a">珍罕</span> · 0.18kg · ¥220,000 · 背包简称 <b style="color:#a8c4ba">撤离录音</b></div>
+        <div class="desc">一盘由紧急通信中心保存的专业录音带，记录了某次撤离行动中的无线电调度通信。
+
+录音并不是连续的。为了节约磁带，值班人员使用了语音触发录音装置，只有出现通信信号时才启动记录。
+
+因此，部分对话之间只隔着数秒，实际时间却可能相差数十分钟。
+
+后来的调查人员为录音重新制作了时间索引，并将几段关键通信单独标出。
+
+原始磁带没有经过剪辑。</div>
+        
+        <div class="vis"><b>分类依据</b>重大撤离行动中的原始通信记录，属于具有历史调查价值的军事与行政档案。</div>
+        <div class="vis"><b>画什么</b>一盘黑色专业录音带装在扁平圆形保护盘中，中央白色编号标签，旁边搭着一小截展开的磁带</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel11" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/intel11.png" width="48" height="48" alt="异常区域勘测报告">
+      </div>
+      <div class="meta">
+        <div class="name">异常区域勘测报告</div>
+        <div class="sub"><code>intel11</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#a8862a">珍罕</span> · 0.7kg · ¥310,000 · 背包简称 <b style="color:#a8c4ba">勘测报告</b></div>
+        <div class="desc">一份关于环礁湾特殊环境区域的联合勘测报告，内容包括地形测量、环境取样、仪器校准记录及不同时间的观测结果。
+
+报告没有直接使用「超自然」一词，而是将无法用既有模型解释的测量结果统一列入待复核项目。
+
+几处观测地点的坐标被反复修订。
+
+附录中的测量方法没有变化，修订的却是测量对象的位置。</div>
+        
+        <div class="vis"><b>分类依据</b>专业环境调查与区域勘测文件，具有潜在的异常研究及地理调查价值。</div>
+        <div class="vis"><b>画什么</b>一份厚实的灰白色勘测报告，深蓝色封面印有测绘网格标志，侧面露出折叠地形图与红色索引标签</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel12" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/intel12.png" width="48" height="48" alt="未公开调查卷宗">
+      </div>
+      <div class="meta">
+        <div class="name">未公开调查卷宗</div>
+        <div class="sub"><code>intel12</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#a8862a">珍罕</span> · 1.1kg · ¥460,000 · 背包简称 <b style="color:#a8c4ba">调查卷宗</b></div>
+        <div class="desc">一份尚未公开的联合调查卷宗，汇集了证人陈述、现场照片、机构往来文件及数次调查会议的记录。
+
+卷宗中的部分证言存在矛盾，调查人员没有将其删除，而是按照不同证据来源分别归档。
+
+最厚的一部分并非现场报告，而是关于资料真实性的核查记录。
+
+调查最终没有形成统一结论。封面原定用于填写结案意见的位置，至今仍然空白。</div>
+        
+        <div class="vis"><b>分类依据</b>具有完整证据索引与调查过程记录的非公开官方档案。</div>
+        <div class="vis"><b>画什么</b>一摞厚重的灰黄色档案纸以红色棉绳交叉捆扎，顶部放着一张黑白现场照片，纸张侧边露出不同颜色的索引签</div>
+      </div>
+    </div>
+    <div class="item" data-item="intel13" style="--rc:#8d3a3a">
+      <div class="thumb">
+        <img src="assets/items/intel13.png" width="48" height="48" alt="首潮原始观测记录">
+      </div>
+      <div class="meta">
+        <div class="name">首潮原始观测记录</div>
+        <div class="sub"><code>intel13</code> · <span style="color:#a89776">收集品 / 情报资料</span> · <span style="color:#8d3a3a">孤品</span> · 0.45kg · ¥1,850,000 · 背包简称 <b style="color:#a8c4ba">首潮记录</b></div>
+        <div class="desc">这是环礁湾首次大规模异常潮汐事件发生期间，一处早期观测站保存的原始记录。
+
+载体是一册普通的线装观测簿，纸张已经发黄，封面上留着潮湿环境造成的水渍。记录从日常水文数据开始，包含潮位、气压、风速及定时人工观测结果。
+
+最初几页没有任何特别之处。
+
+随后，记录开始出现密集的修订。观测员在同一时间段内反复测量，将自动记录仪的数据抄写到纸面，再用不同颜色的笔补充人工读数。
+
+两组数据持续出现差异。
+
+负责记录的人员没有立即将其判定为仪器故障，而是补做了校准检查。
+
+校准结果正常。
+
+直到记录簿的最后几页，原本用于登记潮位的表格逐渐不够使用。观测员开始借用空白区域，绘制建筑物、道路和水位之间的位置关系。
+
+最后一页的记录并没有写完。
+
+表格中的时间和日期完整，测量结果的位置却只画了一道横线。
+
+这册记录簿并不能独立解释灾变的起因，但它保存了人们第一次尝试用熟悉的测量方法理解异常现象时，留下的原始观测过程。
+
+后来的调查报告引用了其中的部分数据，而原始记录始终只有这一册。</div>
+        
+        <div class="vis"><b>分类依据</b>首次大规模异常潮汐事件期间的原始科学观测档案，具有重大灾变历史与研究价值。</div>
+        <div class="vis"><b>画什么</b>一本摊开的暗蓝色线装观测簿，泛黄纸页上有密集黑色数字、蓝色曲线与少量红色修订标记，左侧规整水文表格，右侧渐变为简略道路与建筑轮廓，书页边缘带水渍</div>
+      </div>
+    </div>
     <div class="item" data-item="life02" style="--rc:#c6ceca">
       <div class="thumb">
         <img src="assets/items/life02.png" width="48" height="48" alt="旧报纸">
@@ -1466,10 +2086,267 @@
     </div></div>
   </section>
   <section class="cat" data-item-category="occult">
-    <h3><span class="dot" style="background:#907ba8"></span>神秘学物品<em>occult</em><i>0 件</i></h3>
+    <h3><span class="dot" style="background:#907ba8"></span>神秘学物品<em>occult</em><i>15 件</i></h3>
     <p class="category-description"><b>隐藏于历史中的超自然传统</b> · 古代仪式用品、神秘学文物、祭器、符号器具和现代神秘学实践制作的物品；能否生效不决定分类。</p>
-    <p class="category-empty">目前没有符合此类别的既有物品，保留分类供后续扩充。</p>
-    <div class="grid"></div>
+    
+    <div class="grid">
+    <div class="item" data-item="occ01" style="--rc:#c6ceca">
+      <div class="thumb">
+        <img src="assets/items/occ01.png" width="48" height="48" alt="褪色祈愿绳">
+      </div>
+      <div class="meta">
+        <div class="name">褪色祈愿绳</div>
+        <div class="sub"><code>occ01</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#c6ceca">寻常</span> · 0.05kg · ¥1,800 · 背包简称 <b style="color:#a8c4ba">祈愿绳</b></div>
+        <div class="desc">一截用红、白、黑三色棉线编成的细绳，绳结已经松散。按照一种古老的民间习惯，系绳时应当默念愿望，解开时则不许回头。
+
+现在它只剩下五个结。</div>
+        
+        <div class="vis"><b>分类依据</b>具有明确祈愿仪式用途的民俗器物，而非普通纺织品。</div>
+        <div class="vis"><b>画什么</b>一条略微弯曲的三色编织细绳，红白黑线交错，带五个大小不同的结，末端磨损起毛</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ02" style="--rc:#c6ceca">
+      <div class="thumb">
+        <img src="assets/items/occ02.png" width="48" height="48" alt="仪式粉笔">
+      </div>
+      <div class="meta">
+        <div class="name">仪式粉笔</div>
+        <div class="sub"><code>occ02</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#c6ceca">寻常</span> · 0.2kg · ¥2,400</div>
+        <div class="desc">由白垩粉、少量矿物颜料和植物胶压制而成的粗短粉笔。某些仪式传统认为，描绘符号时应当一笔完成，中途断裂便需从头开始。
+
+这截粉笔已经断了三次。</div>
+        
+        <div class="vis"><b>分类依据</b>专用于民俗仪式或神秘学符号绘制的消耗器具。</div>
+        <div class="vis"><b>画什么</b>三四截粗短的灰白色粉笔，断口粗糙，其中一截沾着暗红色颜料粉末，斜向散放</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ03" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/occ03.png" width="48" height="48" alt="七结护符">
+      </div>
+      <div class="meta">
+        <div class="name">七结护符</div>
+        <div class="sub"><code>occ03</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#3f8b78">良品</span> · 0.08kg · ¥6,800</div>
+        <div class="desc">七枚小铜环由一根黑线依次穿过，每环之间系着不同的结。
+
+佩戴者相信它可以挡住不愿被看见的东西。制作这种护符的匠人则认为，结打错了也没关系，只要佩戴者不知道。</div>
+        
+        <div class="vis"><b>分类依据</b>依据特定民间保护仪式制作的护身器物。</div>
+        <div class="vis"><b>画什么</b>七枚大小相近的暗金色小铜环串在黑色细绳上，排列成下垂弧形，绳结清晰</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ04" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/occ04.png" width="48" height="48" alt="铜制占卜盘">
+      </div>
+      <div class="meta">
+        <div class="name">铜制占卜盘</div>
+        <div class="sub"><code>occ04</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#3f8b78">良品</span> · 0.5kg · ¥8,500 · 背包简称 <b style="color:#a8c4ba">占卜盘</b></div>
+        <div class="desc">一面刻有十二个等距符号的黄铜圆盘。中心安装着可以自由转动的短指针，盘面被反复摩擦，边缘逐渐磨得光滑。
+
+不同流派对第七个符号的解释始终无法达成一致。</div>
+        
+        <div class="vis"><b>分类依据</b>专为象征解释与仪式占卜制作的器具。</div>
+        <div class="vis"><b>画什么</b>一枚暗黄铜圆盘，外圈十二个抽象几何符号，中央短黑色旋转指针，局部有绿锈</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ05" style="--rc:#3f8b78">
+      <div class="thumb">
+        <img src="assets/items/occ05.png" width="48" height="48" alt="灰烬香炉">
+      </div>
+      <div class="meta">
+        <div class="name">灰烬香炉</div>
+        <div class="sub"><code>occ05</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#3f8b78">良品</span> · 0.8kg · ¥9,200</div>
+        <div class="desc">一只三足陶制香炉，内壁凝着厚厚的灰白色残留物。
+
+炉口周围分布着四处指尖大小的黑色印记。长期主持仪式的人习惯在点火前触摸这四个位置，后来即使炉身更换，动作也不会改变。</div>
+        
+        <div class="vis"><b>分类依据</b>具有特定燃香仪式结构和使用习惯的祭器。</div>
+        <div class="vis"><b>画什么</b>暗褐色三足小香炉，敞口矮圆形，炉口有四处黑色磨痕，内有浅灰香灰</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ06" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/occ06.png" width="48" height="48" alt="观星仪式尺">
+      </div>
+      <div class="meta">
+        <div class="name">观星仪式尺</div>
+        <div class="sub"><code>occ06</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#3f6d9b">上乘</span> · 0.35kg · ¥22,000 · 背包简称 <b style="color:#a8c4ba">仪式尺</b></div>
+        <div class="desc">一把以黄铜和硬木制作的折叠测量尺，刻度并不对应普通的长度单位，而是按照星辰位置与季节划分。
+
+尺臂可以展开成特定角度，用于在仪式开始前确定祭坛方向。至于它是否真的能测出什么，使用者之间从来没有统一说法。</div>
+        
+        <div class="vis"><b>分类依据</b>为特定天象崇拜或星辰仪式设计的专用测量器具。</div>
+        <div class="vis"><b>画什么</b>两段折叠展开的黄铜测量尺，黑色木柄，细密几何刻度，中央有精致转轴</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ07" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/occ07.png" width="48" height="48" alt="银丝封印针">
+      </div>
+      <div class="meta">
+        <div class="name">银丝封印针</div>
+        <div class="sub"><code>occ07</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#3f6d9b">上乘</span> · 0.12kg · ¥34,000 · 背包简称 <b style="color:#a8c4ba">封印针</b></div>
+        <div class="desc">细长的银质仪式针，针柄缠绕着三股极细的银丝，末端嵌有一粒深红色玻璃珠。
+
+某些封缄传统使用它在蜡封尚未凝固时穿过封面，象征誓言已经固定。它封住的通常不是门，也不是箱子，而是一份不得轻易撤回的约定。</div>
+        
+        <div class="vis"><b>分类依据</b>具有明确誓约、封缄仪式用途的手工金属器具。</div>
+        <div class="vis"><b>画什么</b>一根修长的银色仪式针，针柄缠绕螺旋银丝，顶部一颗暗红玻璃珠，斜向放置</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ08" style="--rc:#3f6d9b">
+      <div class="thumb">
+        <img src="assets/items/occ08.png" width="48" height="48" alt="密仪蜡印">
+      </div>
+      <div class="meta">
+        <div class="name">密仪蜡印</div>
+        <div class="sub"><code>occ08</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#3f6d9b">上乘</span> · 0.18kg · ¥38,000 · 背包简称 <b style="color:#a8c4ba">密仪印章</b></div>
+        <div class="desc">印面由一整块黑色硬石雕成，刻着三组彼此嵌套的几何图形。
+
+它的主人似乎特别在意印迹的完整性。手柄边缘已经磨圆，印面的尖角却几乎没有损伤。</div>
+        
+        <div class="vis"><b>分类依据</b>用于秘密结社或仪式文书封缄的专用印章，具有神秘学象征体系背景。</div>
+        <div class="vis"><b>画什么</b>深棕色短木柄的黑石印章，印面朝向观众，可见嵌套三角与圆环图案，边缘沾少量暗红封蜡</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ09" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/occ09.png" width="48" height="48" alt="黑曜石卜镜">
+      </div>
+      <div class="meta">
+        <div class="name">黑曜石卜镜</div>
+        <div class="sub"><code>occ09</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#9165b3">稀见</span> · 0.7kg · ¥78,000 · 背包简称 <b style="color:#a8c4ba">卜镜</b></div>
+        <div class="desc">一面以整块黑曜石磨制的圆形镜子，背面嵌在银质支架中。
+
+普通玻璃镜追求清晰，这种卜镜却特意保留了暗淡的反射效果。使用者会在微弱烛光下凝视镜面，借由模糊的倒影进行冥想与象征解读。</div>
+        
+        <div class="vis"><b>分类依据</b>为凝视、占卜和仪式冥想专门制作的黑曜石镜。</div>
+        <div class="vis"><b>画什么</b>圆形黑曜石镜面近乎纯黑，仅留一道冷白色弧形反光，背后为细致的银色支架</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ10" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/occ10.png" width="48" height="48" alt="潮蚀符板">
+      </div>
+      <div class="meta">
+        <div class="name">潮蚀符板</div>
+        <div class="sub"><code>occ10</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#9165b3">稀见</span> · 0.6kg · ¥95,000</div>
+        <div class="desc">一块从沿海旧祭坛遗址中发现的石质符板，表面刻着交错的弧形纹路，局部留下长期盐蚀形成的细小孔洞。
+
+研究者曾将这些纹路解释为海浪、月相或季节循环。后来发现，不同地区出土的类似器物，其纹路组合并不完全相同。
+
+没有人能确定它们是否属于同一种传统。</div>
+        
+        <div class="vis"><b>分类依据</b>具有明确仪式遗址来源和符号刻制特征的神秘学文物。</div>
+        <div class="vis"><b>画什么</b>扁平的不规则深灰石板，表面刻着三组交错弧线与小圆孔，边缘呈海水侵蚀后的粗糙质感</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ11" style="--rc:#9165b3">
+      <div class="thumb">
+        <img src="assets/items/occ11.png" width="48" height="48" alt="逆序祷文卷">
+      </div>
+      <div class="meta">
+        <div class="name">逆序祷文卷</div>
+        <div class="sub"><code>occ11</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#9165b3">稀见</span> · 0.25kg · ¥110,000 · 背包简称 <b style="color:#a8c4ba">祷文卷</b></div>
+        <div class="desc">一份书写在薄皮纸上的仪式祷文，采用一种古老文字的变体。
+
+常规文本从开头向结尾排列，这份祷文却将每个句群的内部顺序倒置。研究者已经完成了词语对照，却始终无法确认正确的诵读顺序。
+
+其中一些句子在不同的排列方式下，意义恰好相反。</div>
+        
+        <div class="vis"><b>分类依据</b>以特定仪式语言和非标准文本结构制作的神秘学文献，而非普通宗教读物。</div>
+        <div class="vis"><b>画什么</b>一卷部分展开的浅黄皮纸，边缘卷曲，纸面排列黑褐色细密奇异文字，左右两端有深色木轴</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ12" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/occ12.png" width="48" height="48" alt="镀金星盘核心">
+      </div>
+      <div class="meta">
+        <div class="name">镀金星盘核心</div>
+        <div class="sub"><code>occ12</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#a8862a">珍罕</span> · 1.1kg · ¥260,000 · 背包简称 <b style="color:#a8c4ba">星盘核心</b></div>
+        <div class="desc">一件从大型仪式星盘中拆卸下来的中央机械组件，由多层同心黄铜环、镀金刻度盘与精密转轴组成。
+
+它既可以按照传统天文学的方式表示星辰位置，也保留了若干无法与已知星图对应的符号。
+
+从机械结构来看，这些额外刻度并非后人随意添加，而是在制造时便已纳入整套传动系统。</div>
+        
+        <div class="vis"><b>分类依据</b>融合古典天文仪器与神秘学仪式用途的精密机械器物。</div>
+        <div class="vis"><b>画什么</b>多层交错的金色同心圆环，中央一颗深蓝色小球，金属环刻着细密符号，立体而对称</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ13" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/occ13.png" width="48" height="48" alt="三重誓约戒">
+      </div>
+      <div class="meta">
+        <div class="name">三重誓约戒</div>
+        <div class="sub"><code>occ13</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#a8862a">珍罕</span> · 0.08kg · ¥340,000 · 背包简称 <b style="color:#a8c4ba">誓约戒</b></div>
+        <div class="desc">三枚由不同金属制作的窄戒被精巧地连接在一起，可以独立旋转，却无法在不破坏结构的情况下完全分开。
+
+据一支古老誓约传统的传承记录，这种戒指只会在三名参与者共同完成仪式后制作。每枚戒指都代表一种不同的义务。
+
+现存的完整三环戒极少，多数藏品只剩下一环或两环。</div>
+        
+        <div class="vis"><b>分类依据</b>与特定结盟和誓约仪式直接相关的贵金属工艺器物。</div>
+        <div class="vis"><b>画什么</b>三枚相互交锁的金、银、暗铜色细戒，中央形成三重环形结构，局部有细小雕刻符文</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ14" style="--rc:#a8862a">
+      <div class="thumb">
+        <img src="assets/items/occ14.png" width="48" height="48" alt="无声祈祷铃">
+      </div>
+      <div class="meta">
+        <div class="name">无声祈祷铃</div>
+        <div class="sub"><code>occ14</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#a8862a">珍罕</span> · 0.45kg · ¥480,000 · 背包简称 <b style="color:#a8c4ba">祈祷铃</b></div>
+        <div class="desc">这只银质小铃没有安装铃舌。
+
+它属于一种已经式微的守夜传统。仪式主持者会在祈祷结束时轻轻举起铃身，以没有发出的铃声象征某种不可言说的回应。
+
+后世仿制品通常会在铃内悬挂短链，以产生细微声响。这只早期原件的内壁没有任何安装痕迹。
+
+它从制作之初，就没有被设计成会响的东西。</div>
+        
+        <div class="vis"><b>分类依据</b>具有明确守夜仪式和象征用途的古代祭器。</div>
+        <div class="vis"><b>画什么</b>古银色细长小铃，顶部圆环提手，铃口朝向观众可见空无一物的内部，外壁三道细密环纹</div>
+      </div>
+    </div>
+    <div class="item" data-item="occ15" style="--rc:#8d3a3a">
+      <div class="thumb">
+        <img src="assets/items/occ15.png" width="48" height="48" alt="第零页圣典">
+      </div>
+      <div class="meta">
+        <div class="name">第零页圣典</div>
+        <div class="sub"><code>occ15</code> · <span style="color:#907ba8">收集品 / 神秘学物品</span> · <span style="color:#8d3a3a">孤品</span> · 0.65kg · ¥1,800,000 · 背包简称 <b style="color:#a8c4ba">零页圣典</b></div>
+        <div class="desc">一页保存于特殊防潮夹层中的古老手写文献，书写材料由植物纤维与薄皮层复合制成，边缘保留着曾经装订的针孔。
+
+它原本属于一部已经散佚的仪式圣典。
+
+根据后世留下的抄本记录，这部圣典共有十二章。各地流传的版本虽然在内容上存在差异，却都从相同的第一章开始。
+
+直到某次文献整理中，研究者发现了一份更早的目录。
+
+目录的最前面，还有一个没有编号的章节。
+
+这页文献便被认为是该章节仅存的原始残页。
+
+它使用的文字与后世抄本一致，但书写方向、段落结构和部分符号形态却明显不同。研究者对其中大部分词语已经形成了相对一致的释读。
+
+真正存在分歧的是它的用途。
+
+有人认为它是整部圣典的序言，有人认为它是一套独立仪式的残存说明。还有一种较少被接受的解释认为，后世十二章实际上是对这页文献内容的不断重新阐释。
+
+无论哪一种观点成立，它都可能改变人们对某个古老神秘学传统起源的理解。
+
+文献的最后一段只剩下半行。
+
+缺失的部分恰好位于原始装订边缘，无法判断是破损造成，还是原作者从未写完。</div>
+        
+        <div class="vis"><b>分类依据</b>具有古代仪式传统来源、特殊文字体系与重要传承研究价值的原始神秘学文献。</div>
+        <div class="vis"><b>画什么</b>一页不规则浅灰黄色古老文献，装在细窄的暗金色保护框中，纸面数行黑褐色古文字，顶部三重圆环符号，左侧一排细小装订孔，底部文字在边缘突然中断</div>
+      </div>
+    </div></div>
   </section>
   <section class="cat" data-item-category="odd">
     <h3><span class="dot" style="background:#a05050"></span>异常遗物<em>odd</em><i>3 件</i></h3>
@@ -2531,10 +3408,10 @@ M-4。
     </div>
   </article></div></section>
 <section class="cat"><h2><span class="dot" style="background:#8d3a3a"></span>6 级 秘藏<em>secret</em><i>3 种 · 2 个</i></h2><p class="category-description"><b>白 1% · 绿 3% · 蓝 10% · 紫 28% · 金 50% · 红 8%</b> · 3.6 秒，必须站定，读条全程发声。金占一半、红 8%，一局里通常只有两三个。</p><div class="grid container-grid"><article class="item container-card" data-container="V" style="--rc:#8d3a3a">
-    <div class="thumb container-thumb"><img src="assets/props/crate_heavy.png" width="96" height="96" alt="大型保险箱"></div>
+    <div class="thumb container-thumb"><img src="assets/props/crate_safe_big.png" width="96" height="96" alt="大型保险箱"></div>
     <div class="meta">
       <div class="name">大型保险箱<i class="tag" style="color:#8d3a3a">6 · 秘藏</i></div>
-      <div class="sub"><code>crate_heavy.png</code> · 地图标记 <code>V</code></div>
+      <div class="sub"><code>crate_safe_big.png</code> · 地图标记 <code>V</code></div>
       <dl class="container-facts">
         <div><dt>开箱</dt><dd>3.6 秒</dd></div>
         <div><dt>抽取次数</dt><dd>3–3 次</dd></div>
@@ -2543,7 +3420,7 @@ M-4。
       </dl>
       <div class="desc">3.6 秒，必须站定，读条全程发声。金占一半、红 8%，一局里通常只有两三个。</div>
       <details class="container-positions"><summary>当前地图 1 个 · 查看位置</summary><p><code>(61, 44)</code></p></details>
-      <div class="vis"><b>画什么</b>一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。</div>
+      <div class="vis"><b>画什么</b>石墨灰绿厚钢制保险箱，75°俯视，大面积厚重顶板，南侧厚门框、圆形锁轮与两只右侧铰链，少量暗黄铜细节；左上光源，透明背景，一格占地。</div>
     </div>
   </article>
 <article class="item container-card" data-container="I" style="--rc:#8d3a3a">

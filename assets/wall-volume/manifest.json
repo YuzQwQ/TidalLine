@@ -1,0 +1,85 @@
+{
+  "title": "通用墙体 · 1.5格高墙",
+  "generator": "Built-in image_gen",
+  "visualSize": [
+    32,
+    48
+  ],
+  "collisionSize": [
+    32,
+    48
+  ],
+  "assets": [
+    {
+      "id": "wall",
+      "size": [
+        32,
+        32
+      ],
+      "prompt": "Use case: stylized-concept. Redraw a single full-bleed seamlessly tiling wall TOP CAP texture for an original muted 1990s post-flood pixel-art game. This is a pale warm limestone coping surface, NOT a grey noisy floor. Large quiet flat grey-beige planes around #b7b29b with very sparse worn stone joins/chips, minimum grain. Strong contrast from dark sage plaster wall face. Coarse logical32x32 pixel art, crisp edges, <=16 muted colors, 75degree orthographic top view, fixed upper-left light, no border, no face, no floor, no scene, no text. Fill square fully opaque to edges. Reference image shows project style only; new cap must be markedly lighter and calmer.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-24cabd89-c141-43ca-8871-1b7619a0dbce.png",
+      "target": "assets/tiles/wall.png",
+      "source": "sources/wall.png",
+      "references": [
+        "assets/wall-volume/scene-after.png",
+        "assets/wall-volume/v1/sources/wall_face_s.png"
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processing": "nearest-neighbour native-size sampling; 16-color quantization; joining-edge pixel pairing"
+    },
+    {
+      "id": "wall_face_s",
+      "size": [
+        32,
+        32
+      ],
+      "prompt": "Use case: stylized-concept. Draw one full-bleed SQUARE horizontally seamless SOUTH VERTICAL WALL FACE texture for a roofless high-angle orthographic pixel-art survival game. Logical32x32 coarse pixels, 16 restrained colors. This face belongs to a raised wall module of total32x48 including separate pale stone top cap16px and THIS 32px tall front. Draw a clearly architectural flat dark desaturated sage plaster wall (#56665b), a thin pale limestone cornice across top, large quiet plaster area upper two thirds, sparse chipped plaster exposing 2-3 masonry blocks lower down, dark stone skirting across bottom4pixels. Clear horizontal architectural bands, not noisy gravel and not a top-down ground tile. Left/right edges join seamless, no columns, no bevel side edges. Bright pale cap is a separate asset not shown here. Upper-left light; no windows, doors, signs, floor, cast shadow or background margin. Opaque full rectangle. Reference is old face for material identity, now much taller and stronger contrast, broad shapes, hard pixels.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-1a932dac-bab9-4501-a124-9737a48b78f6.png",
+      "target": "assets/tiles/wall_face_s.png",
+      "source": "sources/wall_face_s.png",
+      "references": [
+        "assets/wall-volume/scene-after.png",
+        "assets/wall-volume/v1/sources/wall_face_s.png"
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "processing": "nearest-neighbour native-size sampling; 16-color quantization; joining-edge pixel pairing"
+    },
+    {
+      "id": "wall_face_e",
+      "size": [
+        4,
+        48
+      ],
+      "prompt": "Use case: stylized-concept. Draw one tall narrow EAST SIDE wall face texture strip, aspect1:6, in coarse pixel art for a high75degree orthographic roofless game. Full filled rectangle, no white canvas or padding. Dark sage stone and plaster (#34483d), narrow subdued light left arris, dark right edge, very sparse horizontal joints, broad quiet shading no noise. Continuous repeat vertically, no end caps. Standalone4x48 logical pixel side material for a32x48 tall wall; NOT an isometric block and not a rotated front face. Fixed upper-left light, east face darker than south. No floor, no shadow, text, objects or scene.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e17824b0-5444-49f0-84a1-6fce74f62c78.png",
+      "target": "assets/tiles/wall_face_e.png",
+      "source": "sources/wall_face_e.png",
+      "references": [
+        "assets/wall-volume/scene-after.png",
+        "assets/wall-volume/v1/sources/wall_face_s.png"
+      ],
+      "sourceCrop": {
+        "left": 508,
+        "top": 0,
+        "width": 129,
+        "height": 1374
+      },
+      "status": "ready",
+      "sourceSize": [
+        1145,
+        1374
+      ],
+      "processing": "nearest-neighbour native-size sampling; 16-color quantization; joining-edge pixel pairing; white canvas crop; east-face brightness 80%"
+    }
+  ],
+  "referenceNote": "References record generation-time scene and prior face; prior originals archived in v1/sources. Scene preview regenerated after updates.",
+  "collisionNote": "foot remains fixed; extends16px north; door and special opening cells remain clear; no player-position fade"
+}

@@ -421,21 +421,21 @@
     },
     {
       "id": "floor_wood",
-      "name": "住宅 / 钟表店木地板",
+      "name": "旧木板地面",
       "kind": "ground",
       "files": [
         "assets/tiles/floor_wood.png"
       ],
-      "note": "后补室内材质区分；首版通用 floor.png 足够。"
+      "note": "通用平行木板，供住宅、商铺、公共室内或木步道组合使用；统一灰棕色组，不绑定建筑。"
     },
     {
       "id": "floor_ceramic",
-      "name": "诊所瓷砖地面",
+      "name": "灰色方砖地面",
       "kind": "ground",
       "files": [
         "assets/tiles/floor_ceramic.png"
       ],
-      "note": "细瓷砖、低亮度旧化，不把病床或药柜烘焙进地面。"
+      "note": "通用低饱和方砖，供家居、公共建筑和商铺等使用；污渍与裂缝优先作为独立叠加件，不绑定诊所。"
     },
     {
       "id": "quay_cap_n",
@@ -526,6 +526,7 @@
     "entry": "../../../index.html",
     "offline": "../../../潮汐线.html",
     "source": "../../../tools/build-linhai-map.js",
-    "provisionalProps": "七类家具暂复用现有桌椅、货架和桶；实体占格保留。"
-  }
+    "provisionalProps": "7类占位家具已补齐独立素材，另新增安保监控台，共10张图替换23处；实体占格保留。"
+  },
+  "furnitureGallery": "../../../assets/scene-furniture/index.html"
 }

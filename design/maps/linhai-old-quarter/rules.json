@@ -1,0 +1,59 @@
+{
+  "id": "linhai-old-quarter",
+  "_note": "这张图现在是手工设计稿。原本的 expect 配额与 M1–M6 专项检查是给 AI 生成版用的锚点，2026-10-29 起全部停用：expect 归零、specialChecks 清空。校验只剩硬性错误（尺寸、占格、连通、撤离、门洞结构、敌人巡逻）会拦住构建；配额、分区、净宽、出入口等一律降为提醒。想恢复某条专项检查，把名字加回 specialChecks 即可。",
+  "expect": {
+    "width": null,
+    "height": null,
+    "tileSize": null,
+    "buildings": null,
+    "rooms": null,
+    "portals": null,
+    "windows": null,
+    "props": null,
+    "containers": null,
+    "enemies": null,
+    "containerTypes": null,
+    "containerTypesUsed": null,
+    "exits": null,
+    "bridges": null,
+    "routes": null,
+    "windowsMin": null
+  },
+  "enemySpacing": {
+    "between": 3,
+    "fromSpawn": 12,
+    "fromExit": 6
+  },
+  "portal": {
+    "maxWidth": 3
+  },
+  "canal": {
+    "x": [30, 35]
+  },
+  "specialChecks": [],
+  "special": {
+    "minExitsPerBuilding": 2,
+    "bank": {
+      "building": "bank",
+      "vault": "bank.vault",
+      "guardDoors": ["bank.security", "bank.vault"],
+      "front": "bank.front",
+      "rear": "bank.rear"
+    },
+    "tide": {
+      "southBridge": "south"
+    },
+    "routing": {
+      "pairs": [
+        ["apartment.living-s", "apartment.entry", "apartment.living"],
+        ["clinic.treatment", "clinic.waiting", "clinic.treatment"],
+        ["clockshop.repair", "clockshop.showroom", "clockshop.repair"],
+        ["clockshop.counter", "clockshop.counter", "clockshop.store"]
+      ],
+      "sealed": {
+        "room": "clinic.pharmacy",
+        "door": "clinic.pharmacy"
+      }
+    }
+  }
+}

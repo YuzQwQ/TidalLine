@@ -1,0 +1,188 @@
+{
+  "total": 13,
+  "passed": 13,
+  "assets": [
+    {
+      "id": "intel01",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 407,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 15,
+        "right": 43,
+        "bottom": 32
+      },
+      "sha256": "cf91d11f102b32a21276448bf9f8b8f4d7c410e8f1445e6b3350557743bdae9f"
+    },
+    {
+      "id": "intel02",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 896,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 6,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "55c2f6c1c1e8a2e903c9b34bdc6acc87a485723c6ddd1fc301d040e06fa52857"
+    },
+    {
+      "id": "intel03",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 596,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 11,
+        "right": 43,
+        "bottom": 35
+      },
+      "sha256": "a41a560411cd1eb83af369723fecb1e29424d80e696c423a1460804743df3665"
+    },
+    {
+      "id": "intel04",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 567,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 11,
+        "right": 43,
+        "bottom": 35
+      },
+      "sha256": "5ed278c06691f0f0a61d871fea264565d75dae04abb9bf5fbeb3e16193b1972e"
+    },
+    {
+      "id": "intel05",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 799,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 7,
+        "right": 43,
+        "bottom": 39
+      },
+      "sha256": "7de55b32ab90114cdd12e0c09ac2741fa4c51f6221c8399dd0e73bb06fd54652"
+    },
+    {
+      "id": "intel06",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 789,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 9,
+        "right": 43,
+        "bottom": 38
+      },
+      "sha256": "322a45c156f9b44de5d1d473fdb9d297d08bd295678e2652dc2e83144f42ce90"
+    },
+    {
+      "id": "intel07",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 334,
+      "colors": 15,
+      "bounds": {
+        "left": 17,
+        "top": 5,
+        "right": 30,
+        "bottom": 43
+      },
+      "sha256": "7887f3a50bcd21c36205a2f0587e1b0e837a0b7c0e376b2ba40476657d23a792"
+    },
+    {
+      "id": "intel08",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 741,
+      "colors": 15,
+      "bounds": {
+        "left": 10,
+        "top": 5,
+        "right": 36,
+        "bottom": 43
+      },
+      "sha256": "2bbda860016caa7a675b04568cab172f1526115787ccb0468b853e3c208661e8"
+    },
+    {
+      "id": "intel09",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 926,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 7,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "d2a7608a576b42666fbfed0940c6476893a65b1dc95e8e486ef84ebc93653ee8"
+    },
+    {
+      "id": "intel10",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 917,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 8,
+        "right": 42,
+        "bottom": 39
+      },
+      "sha256": "bf04dcd042e55edca58e3bedb2d04f376fd381b853aff8f8cd349dae1978a2e9"
+    },
+    {
+      "id": "intel11",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1038,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 4,
+        "right": 43,
+        "bottom": 42
+      },
+      "sha256": "86f7a306fc4a3f9a20ac0ce50761a4ca48420cf9d8f66602991e5e03a288c9db"
+    },
+    {
+      "id": "intel12",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 857,
+      "colors": 15,
+      "bounds": {
+        "left": 5,
+        "top": 7,
+        "right": 43,
+        "bottom": 39
+      },
+      "sha256": "14d1469808562d5606c518d190992be162963608d2587779c4aaa26057b9f884"
+    },
+    {
+      "id": "intel13",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 787,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 9,
+        "right": 43,
+        "bottom": 38
+      },
+      "sha256": "3fb1a47dfc7c5bf5936af6dad85f33fb46876df3533833df5e940a29e15472a2"
+    }
+  ]
+}

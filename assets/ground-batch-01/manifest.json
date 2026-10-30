@@ -1,0 +1,108 @@
+{
+  "generator": "Built-in image_gen; one call per material/decal",
+  "delivery": "32x32 PNG, <=16 colors; opaque ground and transparent decals",
+  "assets": [
+    {
+      "id": "ground_concrete_plain_01",
+      "name": "平整水泥 A",
+      "kind": "ground",
+      "material": "concrete",
+      "prompt": "Create ONE seamless flat ground texture tile for TidalLine, 1990s coastal pixel-art game. Authentic chunky PIXEL ART natively intended for32x32 pixels, hard square clusters, NO antialiasing. FULL-BLEED OPAQUE SQUARE, texture covers whole canvas edge to edge, no margins, no border, no frame, no isolated slab. Perfect orthographic TOP DOWN, flat diffuse light, no perspective, no bevel, no cast shadow, no vignette, no glow, no text/objects/grass/footprints. Muted restrained mid-value grey-green and grey-brown, sparse broad subtle variation, NOT dense speckled noise. All four edges must tile seamlessly, very quiet consistent outer rim with no features reaching edges. 8-12 muted colors. Smooth weathered cement in desaturated grey-green (#737D70 base,#81897B subtle lighter patches,#626C60 soft darker patches). Broad almost invisible irregular mottling, extremely sparse shallow wear. No cracks, NO tiles/grout, no pebbles, no circular marks. Average value matches subdued stone paving. Calm readable background.",
+      "transparent": false,
+      "source": "sources/ground_concrete_plain_01.png",
+      "target": "assets/tiles/ground_concrete_plain_01.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-bf89202d-4007-429d-81f8-c8b6c2dda27c.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processing": "32px nearest sampling; 16-color quantization; A periodic 2px rim; B mean-color alignment and shared A rim"
+    },
+    {
+      "id": "ground_soil_compact_01",
+      "name": "压实泥土 A",
+      "kind": "ground",
+      "material": "soil",
+      "prompt": "Create ONE seamless flat ground texture tile for TidalLine, 1990s coastal pixel-art game. Authentic chunky PIXEL ART natively intended for32x32 pixels, hard square clusters, NO antialiasing. FULL-BLEED OPAQUE SQUARE, texture covers whole canvas edge to edge, no margins, no border, no frame, no isolated slab. Perfect orthographic TOP DOWN, flat diffuse light, no perspective, no bevel, no cast shadow, no vignette, no glow, no text/objects/grass/footprints. Muted restrained mid-value grey-green and grey-brown, sparse broad subtle variation, NOT dense speckled noise. All four edges must tile seamlessly, very quiet consistent outer rim with no features reaching edges. 8-12 muted colors. Compacted earthen ground, muted grey-brown olive (#6C705E base,#7A7B65 shallow lighter patches,#5D6253 darker). Flat gently pressed dirt with about6-8 tiny angular stones, each1-2 logical pixels, low contrast. NO rocks piles, no distinct landmark, no water, no plant or grass. Similar mid brightness to grey-green cement.",
+      "transparent": false,
+      "source": "sources/ground_soil_compact_01.png",
+      "target": "assets/tiles/ground_soil_compact_01.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-768b14ea-6364-42ca-96ab-da023b01437b.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processing": "32px nearest sampling; 16-color quantization; A periodic 2px rim; B mean-color alignment and shared A rim"
+    },
+    {
+      "id": "ground_concrete_plain_02",
+      "name": "平整水泥 B",
+      "kind": "ground",
+      "material": "concrete",
+      "transparent": false,
+      "source": "sources/ground_concrete_plain_02.png",
+      "target": "assets/tiles/ground_concrete_plain_02.png",
+      "status": "ready",
+      "prompt": "Edit the supplied seamless square pixel-art ground texture into VARIANT B of the SAME material. Preserve exact palette, average brightness, scale of grain, full opaque edge-to-edge canvas, no border/vignette/shadows. Keep all edge regions unchanged and modify ONLY sparse interior texture clusters. Move a few subtle worn patches of grey-green cement; no cracks, grout, stones or tiles. Low contrast native32x32 chunky hard pixel texture. No new objects, no dense noise. Quiet background.",
+      "reference": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-bf89202d-4007-429d-81f8-c8b6c2dda27c.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-70109dea-ffb5-4da3-98c0-18f731b36cde.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processing": "32px nearest sampling; 16-color quantization; A periodic 2px rim; B mean-color alignment and shared A rim"
+    },
+    {
+      "id": "ground_soil_compact_02",
+      "name": "压实泥土 B",
+      "kind": "ground",
+      "material": "soil",
+      "transparent": false,
+      "source": "sources/ground_soil_compact_02.png",
+      "target": "assets/tiles/ground_soil_compact_02.png",
+      "status": "ready",
+      "prompt": "Edit the supplied seamless square pixel-art ground texture into VARIANT B of the SAME material. Preserve exact palette, average brightness, scale of grain, full opaque edge-to-edge canvas, no border/vignette/shadows. Keep all edge regions unchanged and modify ONLY sparse interior texture clusters. Move a few subtle worn patches and a few tiny1-2 pixel stones; no large rocks, vegetation or water. Low contrast native32x32 chunky hard pixel texture. No new objects, no dense noise. Quiet background.",
+      "reference": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-768b14ea-6364-42ca-96ab-da023b01437b.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-09e9ae08-6bef-4f28-84a6-c413a86ad153.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processing": "32px nearest sampling; 16-color quantization; A periodic 2px rim; B mean-color alignment and shared A rim"
+    },
+    {
+      "id": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "kind": "decal",
+      "prompt": "ONE flat dark damp-stain DECAL for a32x32 pixel-art ground tile. Genuinely TRANSPARENT BACKGROUND. Irregular low-contrast dark neutral grey-green wet patch, asymmetrical broken outline, covers less than half logical tile, centered with clear margins. No blue water, no white reflections, no glow, no pool edge, no surface, no ground plane, no shadow, no 3D. Only2-3 dark muted colors, chunky restrained hard-edged pixel clusters, few detached tiny patches. Softness expressed via sparse pixels, not blurry glow. Intended to overlay cement, soil and stone using opacity.",
+      "transparent": true,
+      "source": "sources/decal_surface_damp_01.png",
+      "target": "assets/props/decal_surface_damp_01.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-08d73b9c-4390-4c4a-ab08-c8c381771b66.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processing": "alpha crop; nearest contain26px; discrete alpha"
+    },
+    {
+      "id": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "kind": "decal",
+      "prompt": "ONE thin small ground CRACK DECAL for32x32 pixel art. Genuinely transparent background, no ground. An off-center dark grey-green branching hairline fissure, modest diagonal length around20 logical pixels, thickness about1 pixel, one main branch and two shorter forks, irregular angular steps. Clear margins, crack does not cross canvas edges. No open chasm, no rubble, no white outline or highlight, no shadow/glow/background. Only2 dark neutral colors, sparse hard pixel clusters. A restrained overlay for concrete/stone.",
+      "transparent": true,
+      "source": "sources/decal_surface_crack_01.png",
+      "target": "assets/props/decal_surface_crack_01.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7b3f3711-24d6-498a-833d-3b5af7650f87.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processing": "alpha crop; nearest contain26px; discrete alpha"
+    }
+  ]
+}

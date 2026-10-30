@@ -1,0 +1,917 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "group": "tiles",
+      "id": "bridge_stone_deck",
+      "name": "bridge_stone_deck",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "bridge_wood_deck",
+      "name": "bridge_wood_deck",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "canal_steps_e",
+      "name": "canal_steps_e",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "canal_steps_w",
+      "name": "canal_steps_w",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "canal_water",
+      "name": "canal_water",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "courtyard_paving",
+      "name": "courtyard_paving",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "floor",
+      "name": "室内地板",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "ground_concrete_plain_01",
+      "name": "平整水泥 A",
+      "role": "ground",
+      "material": "concrete",
+      "ch": "1",
+      "rule": {
+        "name": "平整水泥 A",
+        "walkable": true,
+        "opaque": false,
+        "color": "#737d70",
+        "art": "ground_concrete_plain_01"
+      }
+    },
+    {
+      "group": "tiles",
+      "id": "ground_concrete_plain_02",
+      "name": "平整水泥 B",
+      "role": "ground",
+      "material": "concrete",
+      "ch": "2",
+      "rule": {
+        "name": "平整水泥 B",
+        "walkable": true,
+        "opaque": false,
+        "color": "#737d70",
+        "art": "ground_concrete_plain_02"
+      }
+    },
+    {
+      "group": "tiles",
+      "id": "ground_soil_compact_01",
+      "name": "压实泥土 A",
+      "role": "ground",
+      "material": "soil",
+      "ch": "3",
+      "rule": {
+        "name": "压实泥土 A",
+        "walkable": true,
+        "opaque": false,
+        "color": "#6c705e",
+        "art": "ground_soil_compact_01"
+      }
+    },
+    {
+      "group": "tiles",
+      "id": "ground_soil_compact_02",
+      "name": "压实泥土 B",
+      "role": "ground",
+      "material": "soil",
+      "ch": "4",
+      "rule": {
+        "name": "压实泥土 B",
+        "walkable": true,
+        "opaque": false,
+        "color": "#6c705e",
+        "art": "ground_soil_compact_02"
+      }
+    },
+    {
+      "group": "tiles",
+      "id": "low",
+      "name": "低地",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "marsh",
+      "name": "洼地",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "quay_top",
+      "name": "quay_top",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "street_stone",
+      "name": "street_stone",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "wall",
+      "name": "墙体 · 连续墙顶",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "wall_face_e",
+      "name": "wall_face_e",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "wall_face_s",
+      "name": "wall_face_s",
+      "role": "terrain-component"
+    },
+    {
+      "group": "props",
+      "id": "barrel",
+      "name": "油桶",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "barrel_back",
+      "name": "barrel_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "barrel_side",
+      "name": "barrel_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_clinic",
+      "name": "bed_clinic",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_clinic_back",
+      "name": "bed_clinic_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_clinic_large",
+      "name": "bed_clinic_large",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_clinic_large_back",
+      "name": "bed_clinic_large_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_clinic_large_side",
+      "name": "bed_clinic_large_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_clinic_side",
+      "name": "bed_clinic_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_home",
+      "name": "bed_home",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_home_back",
+      "name": "bed_home_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_home_large",
+      "name": "bed_home_large",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_home_large_back",
+      "name": "bed_home_large_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_home_large_side",
+      "name": "bed_home_large_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bed_home_side",
+      "name": "bed_home_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bench_wood",
+      "name": "bench_wood",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bench_wood_back",
+      "name": "bench_wood_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bench_wood_large",
+      "name": "bench_wood_large",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bench_wood_large_back",
+      "name": "bench_wood_large_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bench_wood_large_side",
+      "name": "bench_wood_large_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bench_wood_side",
+      "name": "bench_wood_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "blood",
+      "name": "地面血迹",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bridge_stone_rail_n",
+      "name": "bridge_stone_rail_n",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bridge_stone_rail_s",
+      "name": "bridge_stone_rail_s",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bridge_wood_rail_n",
+      "name": "bridge_wood_rail_n",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "bridge_wood_rail_s",
+      "name": "bridge_wood_rail_s",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "canal_bank_e",
+      "name": "canal_bank_e",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "canal_bank_w",
+      "name": "canal_bank_w",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "chair",
+      "name": "翻倒的椅子",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "chair_back",
+      "name": "chair_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "chair_side",
+      "name": "chair_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "console_security",
+      "name": "console_security",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "console_security_back",
+      "name": "console_security_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "console_security_side",
+      "name": "console_security_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "corpse",
+      "name": "corpse",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "corpse_echo",
+      "name": "尸体 · 回响体（异常）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "corpse_guard",
+      "name": "尸体 · 潮汐守卫（机械）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "corpse_scav",
+      "name": "尸体 · 拾荒者（人类）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_bank",
+      "name": "counter_bank",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_bank_back",
+      "name": "counter_bank_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_bank_large",
+      "name": "counter_bank_large",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_bank_large_back",
+      "name": "counter_bank_large_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_bank_large_side",
+      "name": "counter_bank_large_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_bank_side",
+      "name": "counter_bank_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_shop",
+      "name": "counter_shop",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_shop_back",
+      "name": "counter_shop_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_shop_large",
+      "name": "counter_shop_large",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_shop_large_back",
+      "name": "counter_shop_large_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_shop_large_side",
+      "name": "counter_shop_large_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "counter_shop_side",
+      "name": "counter_shop_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_bedside",
+      "name": "床头柜",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_cardboard",
+      "name": "遗弃纸箱",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_comms",
+      "name": "通讯设备箱",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_diplomatic",
+      "name": "密封公文包",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_elec",
+      "name": "电子设备柜",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_emergency",
+      "name": "急救器材箱",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_fast",
+      "name": "抽屉 / 矮柜",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_filing",
+      "name": "办公文件柜",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_heavy",
+      "name": "保险箱",
+      "role": "scene-component",
+      "spriteFit": [
+        20,
+        21
+      ],
+      "generationManifest": "assets/container-small-safe/manifest.json"
+    },
+    {
+      "group": "props",
+      "id": "crate_jewelry",
+      "name": "珠宝匣",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_leatherbag",
+      "name": "皮质旅行包",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_luggage",
+      "name": "旅行箱",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_med",
+      "name": "医疗柜",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_rescuevest",
+      "name": "救援人员背心",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_satchel",
+      "name": "帆布挎包",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_schoolbag",
+      "name": "运动包",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_sealed",
+      "name": "机密封存箱",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_staff",
+      "name": "员工储物盒",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_std",
+      "name": "储物柜",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_supply",
+      "name": "防水补给箱",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_tool",
+      "name": "工具箱",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_trash",
+      "name": "垃圾桶",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_wastepaper",
+      "name": "废纸篓",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_workwear",
+      "name": "遗落的工作服",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "role": "decal",
+      "material": "surface",
+      "paint": {
+        "kind": "prop",
+        "type": "decal_surface_crack_01",
+        "label": "细裂纹",
+        "name": "细裂纹",
+        "footprint": [
+          1,
+          1
+        ],
+        "ground": true
+      }
+    },
+    {
+      "group": "props",
+      "id": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "role": "decal",
+      "material": "surface",
+      "paint": {
+        "kind": "prop",
+        "type": "decal_surface_damp_01",
+        "label": "潮湿痕迹",
+        "name": "潮湿痕迹",
+        "footprint": [
+          1,
+          1
+        ],
+        "ground": true
+      }
+    },
+    {
+      "group": "props",
+      "id": "desk",
+      "name": "办公桌",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "desk_back",
+      "name": "desk_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "desk_large",
+      "name": "desk_large",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "desk_large_back",
+      "name": "desk_large_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "desk_large_side",
+      "name": "desk_large_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "desk_side",
+      "name": "desk_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "display_clock",
+      "name": "display_clock",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "display_clock_back",
+      "name": "display_clock_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "display_clock_large",
+      "name": "display_clock_large",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "display_clock_large_back",
+      "name": "display_clock_large_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "display_clock_large_side",
+      "name": "display_clock_large_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "display_clock_side",
+      "name": "display_clock_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "door",
+      "name": "门 · 正向（关闭）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "door_open",
+      "name": "门 · 正向（打开）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "door_side",
+      "name": "普通门 · 侧向（关闭）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "door_side_open",
+      "name": "普通门 · 侧向（打开）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "exit",
+      "name": "撤离点",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "rubble_decal",
+      "name": "rubble_decal",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sdoor",
+      "name": "避难间门 · 正向（关闭）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sdoor_open",
+      "name": "避难间门 · 正向（打开）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sdoor_side",
+      "name": "避难门 · 侧向（关闭）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sdoor_side_open",
+      "name": "避难门 · 侧向（打开）",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "shelf",
+      "name": "货架",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "shelf_back",
+      "name": "shelf_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "shelf_large",
+      "name": "shelf_large",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "shelf_large_back",
+      "name": "shelf_large_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "shelf_large_side",
+      "name": "shelf_large_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "shelf_side",
+      "name": "shelf_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "shop_window_ns",
+      "name": "shop_window_ns",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sofa_home",
+      "name": "sofa_home",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sofa_home_back",
+      "name": "sofa_home_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sofa_home_large",
+      "name": "sofa_home_large",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sofa_home_large_back",
+      "name": "sofa_home_large_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sofa_home_large_side",
+      "name": "sofa_home_large_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "sofa_home_side",
+      "name": "sofa_home_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "stove_home",
+      "name": "stove_home",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "stove_home_back",
+      "name": "stove_home_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "stove_home_side",
+      "name": "stove_home_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "tree_courtyard",
+      "name": "tree_courtyard",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "tree_courtyard_back",
+      "name": "tree_courtyard_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "tree_courtyard_canopy",
+      "name": "tree_courtyard_canopy",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "tree_courtyard_canopy_back",
+      "name": "tree_courtyard_canopy_back",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "tree_courtyard_canopy_side",
+      "name": "tree_courtyard_canopy_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "tree_courtyard_side",
+      "name": "tree_courtyard_side",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "wall_breach_n",
+      "name": "wall_breach_n",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "wall_breach_s",
+      "name": "wall_breach_s",
+      "role": "scene-component"
+    },
+    {
+      "group": "props",
+      "id": "crate_safe_big",
+      "name": "大型保险箱",
+      "role": "scene-component",
+      "containerType": "V"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "total": 8,
+  "passed": 8,
+  "assets": [
+    {
+      "id": "antiq07",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 517,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 12,
+        "right": 43,
+        "bottom": 34
+      },
+      "sha256": "3ed0302bceb02067d9746bb4218acf5dd8637a488f570edaad8f5339fa914ede"
+    },
+    {
+      "id": "antiq08",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 989,
+      "colors": 15,
+      "bounds": {
+        "left": 6,
+        "top": 4,
+        "right": 41,
+        "bottom": 43
+      },
+      "sha256": "ee341728ed2e2fa12f9976db2a0031ea2a81e0cc1ff5b678772685125db81d67"
+    },
+    {
+      "id": "antiq09",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 778,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 9,
+        "right": 43,
+        "bottom": 37
+      },
+      "sha256": "ad3ece4db0184afe3b673dd6cc927eb31c08daa240bcfbabbff334fcfc05a1b5"
+    },
+    {
+      "id": "art04",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1235,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 5,
+        "right": 43,
+        "bottom": 42
+      },
+      "sha256": "5ff63558d3ca83230db08e5f50f25e7b081dbceb061d105600bb4b8adbfbc2b5"
+    },
+    {
+      "id": "art05",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 888,
+      "colors": 15,
+      "bounds": {
+        "left": 10,
+        "top": 4,
+        "right": 38,
+        "bottom": 43
+      },
+      "sha256": "911804fec0490deb46b134caca04393d8844a6cbbe04a071adbde210781ef5ac"
+    },
+    {
+      "id": "lux04",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1185,
+      "colors": 15,
+      "bounds": {
+        "left": 6,
+        "top": 4,
+        "right": 41,
+        "bottom": 43
+      },
+      "sha256": "4df0c564476046d1f408020b27a0c64c9624bf9ae0584525c8ff6f185598f088"
+    },
+    {
+      "id": "lux05",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 443,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 9,
+        "right": 43,
+        "bottom": 38
+      },
+      "sha256": "17d3c9994b7e1362e95a4abb756c8b3116ea314e3a50ef2a402cdd3688111ef1"
+    },
+    {
+      "id": "spec04",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1060,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 5,
+        "right": 43,
+        "bottom": 41
+      },
+      "sha256": "c3ad790ce5135d508b2de1427949fc8fb0e4efa777cd1ce2736deb3c7e9a4a9c"
+    }
+  ]
+}

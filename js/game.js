@@ -194,7 +194,7 @@ const Art = {
           ? inlineMap[key]
           : ('assets/' + key + '.png');
         const img = new Image();
-        img.onload = () => { this.map[key] = img; resolve(); };
+        img.onload = () => { img.artKey=key; this.map[key] = img; resolve(); };
         img.onerror = () => { this.map[key] = null; resolve(); };
         img.src = src;
       }));
@@ -214,6 +214,43 @@ const Art = {
   },
 
   get(group, id) { return this.map[group + '/' + id] || null; },
+
+  // 家具方向使用独立重绘图，固定相机和光照，不旋转或镜像正面贴图。
+  prop(prop) {
+    const original = prop.art || prop.id;
+    const facing = prop.facing === 'side' || prop.facing === 'back' ? prop.facing : 'front';
+    const suffix=facing==='front'?'':'_'+facing;
+    if(prop.footprint&&prop.footprint[0]*prop.footprint[1]>1){
+      const native=this.get('props',original+'_large'+suffix);
+      if(native)return native;
+    }
+    const base=original;
+    return (facing !== 'front' && this.get('props', base + '_' + facing)) || this.get('props', base);
+  },
+
+  propBounds(image) {
+    if(image.propBounds)return image.propBounds;
+    const prepared=PROP_SPRITE_BOUNDS[(image.artKey||'').replace(/^props\//,'')];
+    if(prepared)return image.propBounds=prepared;
+    const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
+    const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0);
+    let left=canvas.width,top=canvas.height,right=-1,bottom=-1;
+    try {
+      const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+      for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++)if(pixels[(y*canvas.width+x)*4+3]){
+        left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);
+      }
+    }catch(_){left=top=0;right=canvas.width-1;bottom=canvas.height-1;}
+    return image.propBounds=right>=left?[left,top,right-left+1,bottom-top+1]:[0,0,canvas.width,canvas.height];
+  },
+
+  propRect(prop,image,tileSize) {
+    if(prop.ground)return {sx:0,sy:0,sw:image.naturalWidth,sh:image.naturalHeight,
+      x:prop.x*tileSize,y:prop.y*tileSize,w:tileSize,h:tileSize};
+    const [w,h]=M.propSize(prop),[sx,sy,sw,sh]=this.propBounds(image);
+    const scale=Math.min((w*tileSize-4)/sw,(h*tileSize-4)/sh),dw=sw*scale,dh=sh*scale;
+    return {sx,sy,sw,sh,x:prop.x*tileSize+(w*tileSize-dw)/2,y:(prop.y+h)*tileSize-3-dh,w:dw,h:dh};
+  },
 
   // 方向沿墙体走向命名，不能旋转正面位图，否则立面和光源都会跟着转。
   door(door) {
@@ -289,6 +326,38 @@ const Art = {
     return this.map['props/corpse_' + key]
         || this.map['props/corpse']
         || null;
+  },
+
+  // 墙体视觉32×48，底边不变；碰撞仍由原32×32格决定。
+  wallCell(tile) {
+    return M.wallCell(tile);
+  },
+
+  wallEdges(x, y, at) {
+    at = at || ((x,y) => M.at(x,y));
+    return { north:!this.wallCell(at(x,y-1)), south:!this.wallCell(at(x,y+1)),
+      west:!this.wallCell(at(x-1,y)), east:!this.wallCell(at(x+1,y)) };
+  },
+
+  drawWallFaces(c, x, y, size, edges) {
+    const front = this.get('tiles','wall_face_s'), side = this.get('tiles','wall_face_e');
+    const h = size, w = size * 4 / 32, topY = y - size / 2;
+    const top = this.get('tiles','wall');
+    if(top){ c.drawImage(top,x,topY,size,size); c.drawImage(top,0,0,32,16,x,y+size/2,size,size/2); }
+    if (edges.north) {
+      c.fillStyle = 'rgba(211,216,192,0.35)'; c.fillRect(x,topY,size,1);
+    }
+    if (edges.west) {
+      c.fillStyle = '#566357'; c.fillRect(x,topY,1,size*1.5);
+    }
+    if (edges.south) {
+      if (front) c.drawImage(front,x,y+size-h,size,h);
+      else { c.fillStyle='#616e60'; c.fillRect(x,y+size-h,size,h); }
+    }
+    if (edges.east) {
+      if (side) c.drawImage(side,x+size-w,topY,w,size*1.5);
+      else { c.fillStyle='#3c4e43'; c.fillRect(x+size-w,topY,w,size*1.5); }
+    }
   },
 
   /* 按字符取地形图 */
@@ -433,6 +502,67 @@ const Tips = {
     if (box) box.style.display = 'none';
   }
 };
+
+/* 右键菜单：目前只有背包物品用（查看详情 / 丢弃）。
+   和详情窗一样贴在 body 上按视口坐标摆，不受 #hudPanel 缩放影响。 */
+const Ctx = {
+  el: null,
+
+  show(x, y, entries) {
+    if (typeof document === 'undefined' || !document.getElementById) return;
+    if (!this.el) this.el = document.getElementById('ctxMenu');
+    const el = this.el;
+    if (!el || !entries || !entries.length) return;
+
+    el.innerHTML = entries.map((e, i) =>
+      '<div class="citem' + (e.danger ? ' danger' : '') + '" data-i="' + i + '">' +
+      esc(e.label) + (e.hint ? '<span class="k">' + esc(e.hint) + '</span>' : '') + '</div>'
+    ).join('');
+    el.style.display = 'block';
+
+    /* 先显示再量，避免贴右边 / 底边溢出屏幕 */
+    const w = el.offsetWidth || 140, h = el.offsetHeight || 40;
+    const vw = (typeof window !== 'undefined' && window.innerWidth) || 1280;
+    const vh = (typeof window !== 'undefined' && window.innerHeight) || 800;
+    el.style.left = Math.max(6, Math.min(x, vw - w - 8)) + 'px';
+    el.style.top = Math.max(6, Math.min(y, vh - h - 8)) + 'px';
+
+    const rows = el.querySelectorAll ? el.querySelectorAll('.citem') : [];
+    rows.forEach((row, i) => {
+      row.onmousedown = ev => { ev.preventDefault(); ev.stopPropagation(); };
+      row.onclick = ev => {
+        ev.preventDefault(); ev.stopPropagation();
+        this.hide();
+        const fn = entries[i] && entries[i].onClick;
+        if (fn) fn();
+      };
+    });
+
+    Tips.hide();
+    this.bindClose();
+  },
+
+  hide() {
+    if (this.el) this.el.style.display = 'none';
+  },
+
+  bindClose() {
+    if (this._bound) return;
+    this._bound = true;
+    if (typeof document === 'undefined' || !document.addEventListener) return;
+    document.addEventListener('mousedown', ev => {
+      const t = ev.target;
+      if (t && t.closest && t.closest('#ctxMenu')) return;
+      this.hide();
+    });
+    document.addEventListener('keydown', ev => { if (ev.key === 'Escape') this.hide(); });
+    if (typeof window !== 'undefined' && window.addEventListener) {
+      window.addEventListener('resize', () => this.hide());
+    }
+    document.addEventListener('scroll', () => this.hide(), true);
+  }
+};
+
 
 /* 装备没有写死的文案，按数值拼一句人话 */
 function equipDesc(it) {
@@ -613,6 +743,10 @@ const SFX = {
       case 'search':
         noiseHit(0.22, 620, 0.07);
         break;
+      case 'drop':
+        // 丢东西：一声闷响，别太响，丢东西本来就该低调
+        noiseHit(0.12, 380, 0.08);
+        break;
       case 'hurt':
         tone(0.16, 180, 90, 0.12, 'sawtooth');
         break;
@@ -661,6 +795,8 @@ const Game = {
 
   /* ---------------- 初始化 ---------------- */
   init() {
+    if (this._initialized) return;
+    this._initialized = true;
     this.canvas = document.getElementById('game');
     this.ctx = this.canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
@@ -693,16 +829,7 @@ const Game = {
     }
 
     this.lastT = performance.now();
-    requestAnimationFrame(t => this.loop(t));
-
-    // 兜底：某些环境（后台标签页、部分本地文件场景）会把 rAF 停掉，
-    // 这里用定时器检测，超过 500ms 没有心跳就自己驱动一帧。
-    setInterval(() => {
-      const now = performance.now();
-      if (now - this.lastT > 500) {
-        this.loop(now);
-      }
-    }, 300);
+    this.scheduleFrame();
   },
 
   buildBoxes() {
@@ -722,13 +849,106 @@ const Game = {
             q: CONTAINER_QUALITY[kind],
             art: type.art, name: type.name,
             items: Loot.fill(kind, type.cats || (spot && spot.preference)),
-            opened: false
+            opened: false,
+            searched: false             // 有没有被掀开过；和"是否已空"分开记
           };
           t.box = box;
           this.boxes.push(box);
         }
       }
     }
+  },
+
+  /* ---------------- 容器状态 ----------------
+     两个状态必须分开：
+       searched  掀开过 —— 再交互不用重新读条
+       opened    彻底翻空 —— 不可再交互，画面上压暗
+     早先把 opened 当成"打开过"，导致拿了一半的箱子再也开不了。 */
+  boxHasItems(b) {
+    return !!(b && b.items && b.items.some(e => e && e.item));
+  },
+
+  /* 拿完一件后同步状态；返回是否还有东西 */
+  syncBoxState(b) {
+    if (!b) return false;
+    const has = this.boxHasItems(b);
+    b.opened = !has;
+    if (b.pile && !has) this.removePile(b);
+    return has;
+  },
+
+  /* ---------------- 丢弃 / 遗落物品堆 ----------------
+     丢在脚下一格。同格已经有物品堆就并进去，不重复刷容器。
+     物品堆是"已经知道里面是什么"的容器：掀开不用读条、逐件也不用再搜。 */
+  dropSpot() {
+    const P = this.player;
+    if (!P) return null;
+    const tx = M.tx(P.x), ty = M.ty(P.y);
+    if (M.walkable(tx, ty)) return { x: tx, y: ty };
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        if (!dx && !dy) continue;
+        if (M.walkable(tx + dx, ty + dy)) return { x: tx + dx, y: ty + dy };
+      }
+    }
+    return null;
+  },
+
+  makePile(tx, ty) {
+    this.pileSeq = (this.pileSeq || 0) + 1;
+    const pile = {
+      id: 'pile-' + this.pileSeq, region: null,
+      x: M.cx(tx), y: M.cy(ty), tx, ty,
+      kind: 'junk', q: CONTAINER_QUALITY.junk,
+      art: null, name: '遗落物品堆',
+      items: [],
+      opened: false,
+      searched: true,               // 自己丢的东西，不用再"搜"
+      pile: true
+    };
+    const t = M.at(tx, ty);
+    if (t) t.box = pile;
+    this.boxes.push(pile);
+    return pile;
+  },
+
+  removePile(p) {
+    const i = this.boxes.indexOf(p);
+    if (i >= 0) this.boxes.splice(i, 1);
+    const t = M.at(p.tx, p.ty);
+    if (t && t.box === p) t.box = null;
+    if (this.lootOpen === p) this.closeLoot();
+    this.toast('物品堆空了');
+  },
+
+  /* 把背包第 i 格整叠丢下 */
+  dropFromBag(i) {
+    const P = this.player;
+    if (!P) return false;
+    const s = P.bag.slots[i];
+    if (!s || !s.item) return false;
+
+    const spot = this.dropSpot();
+    if (!spot) { this.toast('这里没有能放东西的空地'); return false; }
+
+    let pile = this.boxes.find(b => b.pile && b.tx === spot.x && b.ty === spot.y);
+    if (!pile) pile = this.makePile(spot.x, spot.y);
+
+    /* 可堆叠的同种物品并进已有条目，别在一个堆里堆出两条同名 */
+    const same = s.item.stack > 1
+      ? pile.items.find(e => e && e.item.id === s.item.id && e.n + s.n <= s.item.stack)
+      : null;
+    if (same) same.n += s.n;
+    else pile.items.push({ item: s.item, n: s.n, known: true });
+
+    pile.opened = false;
+    P.bag.slots.splice(i, 1);
+
+    this.renderBag();
+    if (this.lootOpen === pile) this.renderLootList();
+    SFX.play('drop');
+    this.toast('丢下 ' + s.item.name + (s.n > 1 ? ' ×' + s.n : ''));
+    return true;
   },
 
   resize() {
@@ -870,6 +1090,7 @@ const Game = {
     document.getElementById('btnMapStart').onclick = () => MapSelect.confirm();
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&this.state==='map-select'){e.preventDefault();MapSelect.back();}});
     document.getElementById('btnSellJunk').onclick = () => Base.sellJunk();
+    Ctx.bindClose();
   },
 
   /* ---------------- 开局 ---------------- */
@@ -889,6 +1110,7 @@ const Game = {
     this.corpses = [];
     this.particles = [];
     this.toasts = [];
+    this.pileSeq = 0;
     this.action = null;
     this.lootOpen = null;
     this.extractDone = false;
@@ -903,7 +1125,8 @@ const Game = {
 
     // 玩家
     const sp = M.playerSpawn;
-    this.player = new Player(M.cx(sp.x), M.cy(sp.y));
+    const start=M.navigationPoint(sp.x,sp.y);
+    this.player = new Player(start.x,start.y);
     this.player.hp = Save.hp;
     const L = loadout || Save.loadout || { ammo: 60, bandage: 3, stone: 3 };
     const ammo = ITEMS.find(i => i.id === 'ammo');
@@ -926,7 +1149,8 @@ const Game = {
 
     // 敌人
     for (const s of map.enemies) {
-      this.enemies.push(new Enemy(s.type||s.t, M.cx(s.x), M.cy(s.y), s.patrolRadius));
+      const point=M.navigationPoint(s.x,s.y);
+      this.enemies.push(new Enemy(s.type||s.t, point.x,point.y, s.patrolRadius));
     }
 
     Noise.clear();
@@ -945,6 +1169,15 @@ const Game = {
   },
 
   /* ---------------- 主循环 ---------------- */
+  // 每页最多保留一个动画请求。后台暂停由浏览器恢复原请求，不另开循环。
+  scheduleFrame() {
+    if (this._frameId != null) return;
+    this._frameId = requestAnimationFrame(t => {
+      this._frameId = null;
+      this.loop(t);
+    });
+  },
+
   loop(now) {
     let dt = (now - this.lastT) / 1000;
     this.lastT = now;
@@ -972,7 +1205,7 @@ const Game = {
     }
 
     this.render();
-    requestAnimationFrame(t => this.loop(t));
+    this.scheduleFrame();
   },
 
   /* ---------------- 更新 ---------------- */
@@ -1191,9 +1424,9 @@ const Game = {
       }
     }
 
-    // 容器
+    // 容器：只要里面还有东西就能反复翻，翻空的才不再提示
     for (const b of this.boxes) {
-      if (b.opened) continue;
+      if (!this.boxHasItems(b)) continue;
       const d = U.dist(P.x, P.y, b.x, b.y);
       if (d < bd && M.lineOfSight(M.tx(P.x), M.ty(P.y), b.tx, b.ty)) {
         bd = d; best = { type: 'box', obj: b, dist: d };
@@ -1261,14 +1494,18 @@ const Game = {
     }
 
     if (it.type === 'box') {
-      const q = CONTAINER_QUALITY[it.obj.kind] || CONTAINER_QUALITY.plain;
+      const b = it.obj;
+      /* 已经掀开过的容器不用重新撬：直接看里子，也不再重复发声。
+         只有第一次要按品质读条——那是"撬开"的动作，之后只是翻找。 */
+      if (b.searched) { this.openLoot(b); return; }
+      const q = CONTAINER_QUALITY[b.kind] || CONTAINER_QUALITY.plain;
       this.action = {
         type: 'search', t: 0, total: Math.max(0.01, q.time),
-        target: it.obj, kind: it.obj.kind, still: q.still
+        target: b, kind: b.kind, still: q.still
       };
       // 贵重 / 秘藏容器读条全程发声
       if (q.still) {
-        Noise.emit(it.obj.x, it.obj.y, q.noise, 'search');
+        Noise.emit(b.x, b.y, q.noise, 'search');
       }
       SFX.play('search');
       return;
@@ -1313,7 +1550,8 @@ const Game = {
 
     if (a.t >= a.total) {
       if (a.type === 'search') {
-        a.target.opened = true;
+        a.target.searched = true;        // 掀开过了，之后可以反复打开
+        this.syncBoxState(a.target);     // 有东西就保持可交互，空的才变暗
         this.openLoot(a.target);
         this.stats.found++;
       } else if (a.type === 'corpse') {
@@ -1486,6 +1724,9 @@ const Game = {
         if (!it.noCodex) this.registerCodex(it);
         this.lootOpen.items[i] = null;
         SFX.play('pickup');
+        /* 拿空后：普通容器压暗停用，遗落物品堆直接消失（并关掉面板） */
+        this.syncBoxState(this.lootOpen);
+        if (!this.lootOpen) { this.renderBag(); return; }
         this.renderLootList();
         this.stepAutoSearch();      // 拿东西不打断自动搜索，拿完接着搜
         if (this.bagOpen) this.renderBag();
@@ -1801,11 +2042,23 @@ const Game = {
           else if (it.equip) this.equipFromBag(i);
           else this.moveToSafe(i);
         };
-        /* 右键统一是看详情。装备不能塞进安全箱 —— 穿着的东西才算数 */
+        /* 右键菜单：详情 / 丢弃。丢弃会整叠落在脚下一格 */
         cell.oncontextmenu = (ev) => {
           ev.preventDefault();
-          Tips.show(it, cell.getBoundingClientRect(),
-            it.equip ? '左键替换身上那件' : '左键移入安全箱');
+          ev.stopPropagation();
+          Ctx.show(ev.clientX, ev.clientY, [
+            {
+              label: '查看详情',
+              onClick: () => Tips.show(it, cell.getBoundingClientRect(),
+                it.equip ? '左键替换身上那件' : '左键移入安全箱')
+            },
+            {
+              label: '丢弃',
+              hint: s.n > 1 ? '整叠 ×' + s.n : '脚下',
+              danger: true,
+              onClick: () => this.dropFromBag(i)
+            }
+          ]);
         };
       } else {
         cell.className = 'cell empty';
@@ -2050,6 +2303,8 @@ const Game = {
      渲染
      ============================================================ */
   render() {
+    // 全屏仓库/选图页不提交隐藏画布，避免每帧清屏触发合成和背景模糊。
+    if (this.state === 'base' || this.state === 'map-select') return;
     const c = this.ctx;
     const W = CFG.VIEW_W, H = CFG.VIEW_H;
     /* 所有绘制仍然用 720×480 的逻辑坐标，这里按渲染倍率整体缩放 */
@@ -2058,7 +2313,6 @@ const Game = {
     c.fillStyle = '#070b09';
     c.fillRect(0, 0, W, H);
 
-    if (this.state === 'base' || this.state === 'map-select') return; // 全屏页面下不绘制场景
     if (this.state === 'menu' && !this.player) return;
 
     // 摄像机偏移可能让坐标变成负的（震屏时），必须再夹一次
@@ -2071,6 +2325,8 @@ const Game = {
     this.renderObjects(c, camX, camY);
     if (this.debug) this.renderOccupancy(c, camX, camY);
     this.renderEntities(c, camX, camY);
+    this.renderRaisedWalls(c, camX, camY, true);
+    this.renderCanopies(c, camX, camY);
     this.renderParticles(c, camX, camY);
     this.renderNoiseEdge(c);
     this.renderHUD(c);
@@ -2209,20 +2465,8 @@ const Game = {
           }
         }
 
-        // 只在墙体暴露的边缘补短立面，顶面纹理保持连续，避免每格都像独立方块。
-        if (t.solid && !t.wallCap) {
-          const south = M.at(x, y + 1), east = M.at(x + 1, y);
-          if (south && !south.solid) {
-            c.fillStyle = '#1c2a26';
-            c.fillRect(sx, sy + TS - 5, TS, 5);
-            c.fillStyle = '#6a786d';
-            c.fillRect(sx, sy + TS - 6, TS, 1);
-          }
-          if (east && !east.solid) {
-            c.fillStyle = '#17231f';
-            c.fillRect(sx + TS - 2, sy, 2, TS);
-          }
-        }
+        // 连续墙网只在暴露边画立面；相邻墙之间不画独立方框。
+        // 墙体在地面全部绘完后统一绘制，防止下一格地面擦掉加高部分。
 
         // 岸线、桥栏、玻璃和断墙端头随所在格一起进入视野/记忆层。
         for (const id of t.overlays) {
@@ -2236,14 +2480,27 @@ const Game = {
           c.fillRect(sx, sy, TS, TS);
         }
 
-        // 记忆层描边（让结构清晰）
-        if (!M.visible[i] && M.seen[i] && t.ch === '#') {
-          c.strokeStyle = 'rgba(90,130,120,0.16)';
-          c.lineWidth = 1;
-          c.strokeRect(sx + 0.5, sy + 0.5, TS - 1, TS - 1);
-        }
+        // 记忆层保留相同立面，只暗化；不逐格描框切碎连续墙顶。
       }
     }
+    this.renderRaisedWalls(c,camX,camY);
+  },
+
+  renderRaisedWalls(c,camX,camY,overhang=false) {
+    const size=CFG.TILE;
+    for(let y=Math.max(0,Math.floor(camY/size));y<Math.min(M.H,Math.ceil((camY+CFG.VIEW_H)/size)+1);y++)
+      for(let x=Math.max(0,Math.floor(camX/size));x<Math.min(M.W,Math.ceil((camX+CFG.VIEW_W)/size));x++){
+        const t=M.at(x,y),i=M.idx(x,y);if(!Art.wallCell(t)||!M.seen[i])continue;
+        const edges=Art.wallEdges(x,y),sx=x*size-camX,sy=y*size-camY;
+        if(overhang&&(!edges.north||y===0||M.at(x,y-1).door||M.at(x,y-1).wallCap||M.at(x,y-1).terrainCh==='w'||!M.seen[M.idx(x,y-1)]))continue;
+        const bright=Math.min(M.visible[i]?CFG.FOV.BRIGHT_NOW:CFG.FOV.BRIGHT_MEM,
+          overhang?(M.visible[M.idx(x,y-1)]?CFG.FOV.BRIGHT_NOW:CFG.FOV.BRIGHT_MEM):1);
+        c.save();c.beginPath();c.rect(sx,overhang?sy-size/2:sy,size,overhang?size/2:size);c.clip();
+        // 加高区域已为实体，无需再按玩家位置淡化。
+        Art.drawWallFaces(c,sx,sy,size,edges);
+        if(bright<1){c.fillStyle='rgba(4,8,7,'+(1-bright)+')';c.fillRect(sx,sy-size/2,size,size*1.5);}
+        c.restore();
+      }
   },
 
   renderOccupancy(c, camX, camY) {
@@ -2262,19 +2519,18 @@ const Game = {
 
     // 摆设按实体/地贴配置占格；这里只负责绘制并遵循视野层亮度。
     for (const prop of (M.map ? M.map.props : DECOR)) {
+      if(prop.canopy)continue;
       const tile = M.grid[prop.y] && M.grid[prop.y][prop.x];
       if (!tile || tile.ch === '#') continue;
-      const i = prop.y * M.W + prop.x;
-      if (!M.seen[i]) continue;
-      const image = Art.get('props', prop.art || prop.id);
+      const cells=M.propCells(prop),seen=cells.some(([x,y])=>M.seen[y*M.W+x]);
+      if (!seen) continue;
+      const image = Art.prop(prop);
       if (!image) continue;
       c.save();
-      c.globalAlpha = M.visible[i] ? 0.9 : 0.3;
+      c.globalAlpha = cells.some(([x,y])=>M.visible[y*M.W+x]) ? 0.9 : 0.3;
       if (M.waterDepth(prop.x, prop.y) > 1.05) c.globalAlpha *= 0.4;
-      c.translate((prop.x + 0.5) * TS - camX, (prop.y + 0.5) * TS - camY);
-      c.rotate(prop.angle || 0);
-      const size = (prop.art || prop.id) === 'chair' ? TS * 0.8 : TS;
-      c.drawImage(image, -size / 2, -size / 2, size, size);
+      const rect=Art.propRect(prop,image,TS);
+      c.drawImage(image,rect.sx,rect.sy,rect.sw,rect.sh,rect.x-camX,rect.y-camY,rect.w,rect.h);
       c.restore();
     }
 
@@ -2310,7 +2566,7 @@ const Game = {
       const i = b.ty * M.W + b.tx;
       if (!M.seen[i]) continue;
       const vis = M.visible[i];
-      if (!vis && !b.opened) {
+      if (!vis && !b.searched) {
         // 记忆里的轮廓
         const sx = b.tx * TS - camX, sy = b.ty * TS - camY;
         c.strokeStyle = 'rgba(120,160,148,0.22)';
@@ -2321,6 +2577,31 @@ const Game = {
       if (!vis) continue;
 
       const sx = b.tx * TS - camX, sy = b.ty * TS - camY;
+
+      /* 遗落物品堆：不借用箱子贴图，画一小摊杂物，露出来的几件用品色标出来 */
+      if (b.pile) {
+        c.fillStyle = 'rgba(6,10,9,0.42)';
+        c.beginPath();
+        c.ellipse(sx + TS / 2, sy + TS - 6, 11, 5.5, 0, 0, 6.29);
+        c.fill();
+        c.fillStyle = '#4c463c';
+        c.beginPath();
+        c.moveTo(sx + 6, sy + TS - 6);
+        c.quadraticCurveTo(sx + TS / 2, sy + 7, sx + TS - 6, sy + TS - 6);
+        c.closePath();
+        c.fill();
+        c.strokeStyle = 'rgba(210,198,166,0.55)';
+        c.lineWidth = 1;
+        c.stroke();
+        const bits = (b.items || []).filter(e => e && e.item).slice(0, 3);
+        bits.forEach((e, k) => {
+          const rc = RARITY[U.clamp(e.item.r - 1, 0, RARITY.length - 1)].color;
+          c.fillStyle = rc;
+          c.fillRect(sx + 10 + k * 5, sy + TS - 12 - k * 2, 3, 3);
+        });
+        continue;
+      }
+
       const Q = CONTAINER_QUALITY[b.kind] || CONTAINER_QUALITY.plain;
       const cols = Q.color;
       const sz = 10 + Q.lv * 2;     // 品质越高，占格越满
@@ -2431,6 +2712,29 @@ const Game = {
           c.strokeRect(sx + 3, sy + 3, TS - 6, TS - 6);
         }
       }
+    }
+  },
+
+  canopyAlpha(prop) {
+    const player=this.player;if(!player)return 1;
+    const x=player.x/CFG.TILE-prop.x,y=player.y/CFG.TILE-prop.y;
+    return x>=0&&x<prop.footprint[0]&&y>=0&&y<prop.canopy.fadeRows?prop.canopy.opacity:1;
+  },
+
+  renderCanopies(c,camX,camY) {
+    const TS=CFG.TILE;
+    for(const prop of (M.map?M.map.props:DECOR)){
+      if(!prop.canopy)continue;
+      const cells=M.propCells(prop),seen=cells.filter(([x,y])=>M.seen[y*M.W+x]);
+      if(!seen.length)continue;
+      const image=Art.prop(prop);if(!image)continue;
+      const rect=Art.propRect(prop,image,TS),visible=cells.some(([x,y])=>M.visible[y*M.W+x]);
+      c.save();
+      // 不把完整树冠画进未探索的格；树冠在角色之后绘制，透明时可看见树下场景。
+      c.beginPath();for(const [x,y]of seen)c.rect(x*TS-camX,y*TS-camY,TS,TS);c.clip();
+      c.globalAlpha=visible?this.canopyAlpha(prop):0.3;
+      c.drawImage(image,rect.sx,rect.sy,rect.sw,rect.sh,rect.x-camX,rect.y-camY,rect.w,rect.h);
+      c.restore();
     }
   },
 
@@ -2760,8 +3064,13 @@ const Game = {
     } else if (it) {
       if (it.type === 'extract') prompt = '[E] 撤离（6 秒，站定）';
       else if (it.type === 'box') {
-        const q = CONTAINER_QUALITY[it.obj.kind] || CONTAINER_QUALITY.plain;
-        prompt = '[E] 打开 ' + (it.obj.name || '容器') + (q.time > 0 ? '（' + q.time.toFixed(1) + ' 秒' + (q.still ? '，站定' : '') + '）' : '');
+        const b = it.obj;
+        const q = CONTAINER_QUALITY[b.kind] || CONTAINER_QUALITY.plain;
+        const nm = b.name || '容器';
+        /* 掀开过的箱子不用再撬，提示也不该再报秒数 */
+        prompt = b.searched
+          ? '[E] ' + (b.pile ? '查看 ' : '继续翻 ') + nm
+          : '[E] 打开 ' + nm + (q.time > 0 ? '（' + q.time.toFixed(1) + ' 秒' + (q.still ? '，站定' : '') + '）' : '');
       }
       else if (it.type === 'corpse') prompt = '[E] 搜尸体';
       else if (it.type === 'door') prompt = '[E] ' + (it.obj.t.door.open ? '关门' : '开门');

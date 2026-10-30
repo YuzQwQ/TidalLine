@@ -1,0 +1,146 @@
+{
+  "generator": "Built-in image_gen, one call per prop",
+  "delivery": "32x32 transparent PNG, <=16 colors, 2px clear margins, 75-degree down view, fixed upper-left light",
+  "assets": [
+    {
+      "id": "bed_home",
+      "name": "住宅床",
+      "visual": "深棕木质单人床，泛黄枕头在北端，灰蓝旧棉被覆盖床面，南端短木床尾。床沿南北方向延伸。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A narrow wooden single bed aligned north-south, pillow at north, faded blue-grey blanket. 深棕木质单人床，泛黄枕头在北端，灰蓝旧棉被覆盖床面，南端短木床尾。床沿南北方向延伸。",
+      "source": "sources/bed_home.png",
+      "target": "assets/props/bed_home.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-47d74e61-96c5-41ad-8c1b-bd139595185d.png"
+    },
+    {
+      "id": "bed_clinic",
+      "name": "诊疗床",
+      "visual": "白漆钢管诊疗床，灰绿色薄床垫，小型米白枕头置于北端，南端露出钢管床尾，少量掉漆。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A north-south medical examination bed, white painted tubular steel, pale sage mattress, small ivory pillow at north. 白漆钢管诊疗床，灰绿色薄床垫，小型米白枕头置于北端，南端露出钢管床尾，少量掉漆。",
+      "source": "sources/bed_clinic.png",
+      "target": "assets/props/bed_clinic.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-eec0cf2a-c7a3-412a-b6d2-726a4ae5ccfa.png"
+    },
+    {
+      "id": "stove_home",
+      "name": "旧灶台",
+      "visual": "米白搪瓷双眼燃气灶，深色铸铁炉架，顶面两只圆形炉头，南侧短立面两个黑旋钮，少量油渍。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact rectangular enamel gas stove, TWO dark burner circles on top, short south fascia with black knobs. 米白搪瓷双眼燃气灶，深色铸铁炉架，顶面两只圆形炉头，南侧短立面两个黑旋钮，少量油渍。",
+      "source": "sources/stove_home.png",
+      "target": "assets/props/stove_home.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-fc47c0a1-20db-4f1d-b448-f88b43e4c1de.png"
+    },
+    {
+      "id": "sofa_home",
+      "name": "旧布艺沙发",
+      "visual": "褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact two-seat faded sage cloth sofa, horizontal east-west seat, low back at north, two broad cushions. 褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "source": "sources/sofa_home.png",
+      "target": "assets/props/sofa_home.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-98d5f2e4-59d9-4d48-a204-daefebe68dff.png"
+    },
+    {
+      "id": "bench_wood",
+      "name": "木条长椅",
+      "visual": "横向木条长椅，旧棕色木条座面，北侧低靠背，深灰铸铁椅脚，露出大面积座面。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact east-west wooden slat bench, low north back, dark cast iron feet, broad visible seating plane. 横向木条长椅，旧棕色木条座面，北侧低靠背，深灰铸铁椅脚，露出大面积座面。",
+      "source": "sources/bench_wood.png",
+      "target": "assets/props/bench_wood.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-9fadd027-7b38-4815-9668-a210f47a1bec.png"
+    },
+    {
+      "id": "display_clock",
+      "name": "玻璃展柜",
+      "visual": "低矮矩形钟表展柜，深棕木底座、细黄铜包边、低反光灰青玻璃顶面，内垫暗蓝布，两个小钟表剪影。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A low compact east-west shop display case, walnut base, thin brass rim, pale transparent glass TOP, navy lining and two tiny watches underneath. 低矮矩形钟表展柜，深棕木底座、细黄铜包边、低反光灰青玻璃顶面，内垫暗蓝布，两个小钟表剪影。",
+      "source": "sources/display_clock.png",
+      "target": "assets/props/display_clock.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7897784c-ebb6-4800-bf99-ccf0124a327c.png"
+    },
+    {
+      "id": "counter_shop",
+      "name": "商店柜台",
+      "visual": "矮矩形深棕木柜台，大面积磨损木顶，南侧短木饰面，两条竖向拼板缝，没有抽屉把手。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact rectangular east-west walnut shop counter, broad worn wooden TOP, short south paneled face, no drawer handles. 矮矩形深棕木柜台，大面积磨损木顶，南侧短木饰面，两条竖向拼板缝，没有抽屉把手。",
+      "source": "sources/counter_shop.png",
+      "target": "assets/props/counter_shop.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-61501d5c-0dbe-4336-8d82-8a01760b60ca.png"
+    },
+    {
+      "id": "counter_bank",
+      "name": "银行柜台",
+      "visual": "矮矩形银行柜台，宽阔灰白石材顶面，南侧短深色木饰面，细黄铜压条，不画玻璃隔断。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact rectangular east-west bank counter, broad grey-white stone TOP, short dark walnut south fascia and thin brass trim, no glass barrier. 矮矩形银行柜台，宽阔灰白石材顶面，南侧短深色木饰面，细黄铜压条，不画玻璃隔断。",
+      "source": "sources/counter_bank.png",
+      "target": "assets/props/counter_bank.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-9131e493-a7cc-4149-9423-c4d2288ad75e.png"
+    },
+    {
+      "id": "console_security",
+      "name": "安保监控台",
+      "visual": "灰绿钢板监控操作台，顶面偏北嵌一台凸面小显像管，屏幕熄灭深绿，前侧为黑色按键操作面，短钢板南立面。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact grey-green security console, ONE small tilted CRT at north, dark inactive green screen, broad sloped TOP keyboard panel south, minimal switches. 灰绿钢板监控操作台，顶面偏北嵌一台凸面小显像管，屏幕熄灭深绿，前侧为黑色按键操作面，短钢板南立面。",
+      "source": "sources/console_security.png",
+      "target": "assets/props/console_security.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0084daed-e3d3-4857-9c0d-f1afef9da310.png"
+    },
+    {
+      "id": "tree_courtyard",
+      "name": "庭院树木",
+      "visual": "一棵紧凑的庭院小树，灰褐树干，低饱和灰绿树冠，顶部明亮、右下暗，树冠不超过一格，底部露出短树干，无地面底座。",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A single compact small courtyard tree, rounded irregular muted grey-green crown viewed nearly straight down, short grey-brown trunk visible at south, no planter or ground. 一棵紧凑的庭院小树，灰褐树干，低饱和灰绿树冠，顶部明亮、右下暗，树冠不超过一格，底部露出短树干，无地面底座。",
+      "source": "sources/tree_courtyard.png",
+      "target": "assets/props/tree_courtyard.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2e038333-9cd4-4ded-9a35-c190f9d85449.png"
+    }
+  ]
+}

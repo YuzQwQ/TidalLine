@@ -48,9 +48,9 @@ function render(data,result,view) {
   for(let x=rect[0];x<=rect[2];x++)if(building||x%4===0){t(px(x)+u/2,top-10,x,10,'#627c74','text-anchor="middle"');t(px(x)+u/2,top+mapH+18,x,10,'#627c74','text-anchor="middle"');}
   for(let y=rect[1];y<=rect[3];y++)if(building||y%4===0){t(left-12,py(y)+u*.65,y,10,'#627c74','text-anchor="end"');}
   for(const p of data.props)if(inView(p.x,p.y)) {
-    const x=px(p.x),y=py(p.y),pad=u*.15;
-    if(p.type==='tree'){circle(x+u/2,y+u/2,u*.36,'#80a078','#63855d');circle(x+u*.43,y+u*.4,u*.22,'#a3ba8b');}
-    else {box(x+pad,y+pad,u-2*pad,u-2*pad,p.type==='display'?'#7eabb0':p.type==='bed'?'#9caeb5':'#9e9a82','#7c806f',`rx="${u*.06}"`);out.push(`<path d="M${x+pad},${y+u*.45}h${u-2*pad}" stroke="#eef0e5" stroke-width="1"/>`);}
+    const x=px(p.x),y=py(p.y),pad=u*.15,[pw,ph]=p.footprint||[1,1];
+    if(p.type==='tree'){circle(x+u*pw/2,y+u*ph*.38,u*Math.min(pw,ph)*.43,'#80a078','#63855d');for(const [dx,dy]of p.collisionCells||[[0,0]])box(x+dx*u+pad,y+dy*u+pad,u-2*pad,u-2*pad,'#776650','#554832');}
+    else {box(x+pad,y+pad,u*pw-2*pad,u*ph-2*pad,p.type==='display'?'#7eabb0':p.type==='bed'?'#9caeb5':'#9e9a82','#7c806f',`rx="${u*.06}"`);out.push(`<path d="M${x+pad},${y+u*.45}h${u*pw-2*pad}" stroke="#eef0e5" stroke-width="1"/>`);}
   }
   if(view.id==='overview')for(const route of result.routes){
     out.push(`<polyline points="${route.points.map(([x,y])=>`${px(x)+u/2},${py(y)+u/2}`).join(' ')}" fill="none" stroke="${route.color}" stroke-opacity=".72" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="${route.id==='commercial'?'7 3':route.id==='shortcut'?'2 4':'none'}"/>`);

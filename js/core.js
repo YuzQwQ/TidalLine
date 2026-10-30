@@ -35,6 +35,30 @@ const M = {
   tideEnabled: true,
   doors: [],
 
+  // x/y 为占地左上角；尺寸为地图轴向的宽×高，朝向不会隐式交换尺寸。
+  propSize(prop) {
+    const size = prop.footprint === undefined ? [1,1] : prop.footprint;
+    if (!Array.isArray(size) || size.length !== 2 || !size.every(n=>Number.isInteger(n)&&n>0))
+      throw new Error('物件占地必须为两个正整数: '+prop.id);
+    return size;
+  },
+
+  propCells(prop) {
+    const [w,h]=this.propSize(prop),cells=[];
+    for(let y=prop.y;y<prop.y+h;y++)for(let x=prop.x;x<prop.x+w;x++)cells.push([x,y]);
+    return cells;
+  },
+
+  propCollisionCells(prop) {
+    if(prop.collisionCells===undefined)return this.propCells(prop);
+    const [w,h]=this.propSize(prop),seen=new Set();
+    if(!Array.isArray(prop.collisionCells))throw new Error('碰撞格配置非法: '+prop.id);
+    return prop.collisionCells.map(cell=>{
+      if(!Array.isArray(cell)||cell.length!==2||!cell.every(Number.isInteger)||cell[0]<0||cell[0]>=w||cell[1]<0||cell[1]>=h||seen.has(cell.join(',')))throw new Error('碰撞格越界/重复: '+prop.id);
+      seen.add(cell.join(','));return [prop.x+cell[0],prop.y+cell[1]];
+    });
+  },
+
   load(rows, doorAxes, props, mapSpec) {
     const map = mapSpec || MAP_CATALOG.find(map=>map.rows===rows) || null;
     // 地形与容器可以共用字符（旧图H为高地）；正式地图按显式点位判定。
@@ -109,12 +133,21 @@ const M = {
     // 自定义测试/扩展地图可显式传摆设；主地图默认使用 DECOR。
     const furnishings = props || (map ? map.props : []);
     for (const prop of furnishings) {
-      const tile = this.at(prop.x, prop.y);
-      if (!tile || tile.solid || tile.door || tile.container || tile.ch === 'P' || tile.ch === 'E') {
-        throw new Error('场景摆设位置冲突: ' + prop.id + ' @ ' + prop.x + ',' + prop.y);
+      if(!Number.isInteger(prop.x)||!Number.isInteger(prop.y))throw new Error('物件坐标必须为整数: '+prop.id);
+      const [pw,ph]=this.propSize(prop);
+      if(prop.x<0||prop.y<0||pw>this.W-prop.x||ph>this.H-prop.y)throw new Error('场景摆设越界: '+prop.id);
+      const cells=this.propCollisionCells(prop);
+      for(const [x,y] of cells){
+        const tile=this.at(x,y);
+        if (!tile || tile.solid || tile.obstacle || tile.prop || tile.door || tile.container || tile.ch === 'P' || tile.ch === 'E'
+          || (map&&map.exits.some(ex=>ex.x===x&&ex.y===y)))
+          throw new Error('场景摆设位置冲突: ' + prop.id + ' @ ' + x + ',' + y);
       }
-      tile.prop = prop;
-      if (!prop.ground) tile.obstacle = true;
+      for(const [x,y] of cells){
+        const tile=this.at(x,y);
+        tile.prop = prop;
+        if (!prop.ground) tile.obstacle = true;
+      }
     }
   },
 
@@ -126,7 +159,7 @@ const M = {
   idx(x, y) { return y * this.W + x; },
 
   /* 人物与寻路统一使用同一占用表：墙、实体物件、关门、深水不可进入。 */
-  walkable(x, y) {
+  baseWalkable(x, y) {
     const t = this.at(x, y);
     if (!t) return false;
     if (t.solid || t.obstacle) return false;
@@ -135,22 +168,37 @@ const M = {
     return true;
   },
 
+  // 与48px高墙的可见范围一致：原格 + 北侧半格，特殊破口/玻璃除外。
+  wallCell(t) { return !!(t&&t.solid&&!t.wallCap&&t.terrainCh!=='w'&&(t.ch==='#'||t.art==='wall')); },
+  wallAtPoint(wx,wy) {
+    const x=this.tx(wx),y=this.ty(wy),t=this.at(x,y);
+    return this.wallCell(t)||(!t?.door&&!t?.wallCap&&t?.terrainCh!=='w'&&this.wallCell(this.at(x,y+1))&&wy>=(y+.5)*CFG.TILE);
+  },
+  walkable(x,y) { return this.baseWalkable(x,y); },
+  navigationPoint(x,y) { return {x:this.cx(x),y:this.cy(y)-(this.wallCell(this.at(x,y+1))&&!this.at(x,y)?.door?CFG.TILE/4:0)}; },
+  walkablePoint(wx,wy) { return this.baseWalkable(this.tx(wx),this.ty(wy))&&!this.wallAtPoint(wx,wy); },
+  collisionRects(x,y) {
+    const size=CFG.TILE;
+    if(!this.baseWalkable(x,y))return [[x*size,y*size,size,size]];
+    return !this.at(x,y)?.door&&!this.at(x,y)?.wallCap&&this.wallCell(this.at(x,y+1))?[[x*size,(y+.5)*size,size,size/2]]:[];
+  },
+
   /* 是否挡视线。
      容器（抽屉 / 柜子 / 保险箱）不算：它挡住走路，但看得见后面，
      不然整个房间的视野会被一堆箱子切得七零八落。 */
   opaque(x, y) {
     const t = this.at(x, y);
     if (!t) return true;
-    if (t.opaque) return true;
+    if (t.opaque || this.wallAtPoint(this.cx(x),this.cy(y))) return true;
     if (t.door && !t.door.open) return true;
     if (t.prop && !t.prop.ground && t.prop.opaque !== false) return true;
     return false;
   },
 
   // 不可走的水面、驳岸允许子弹越过；玻璃、实体家具与门仍阻挡弹道。
-  blocksShot(x,y) {
+  blocksShot(x,y,wx=this.cx(x),wy=this.cy(y)) {
     const t=this.at(x,y);
-    return !t || t.solid || t.container || !!(t.prop&&!t.prop.ground)
+    return !t || this.wallAtPoint(wx,wy) || t.solid || t.container || !!(t.prop&&!t.prop.ground)
       || t.terrainCh==='w' || !!(t.door&&!t.door.open);
   },
 
@@ -202,6 +250,9 @@ const M = {
         this._oct[0][o], this._oct[1][o],
         this._oct[2][o], this._oct[3][o], mark);
     }
+    // 看见墙体伸入上格的实体部分时，也显示所属墙格；避免出现隐形碰撞。
+    for(let y=0;y<this.H-1;y++)for(let x=0;x<this.W;x++)
+      if(this.raw[this.idx(x,y)]&&!this.wallCell(this.at(x,y))&&this.wallCell(this.at(x,y+1)))mark(x,y+1);
   },
 
   /* 把 360° 的 raw 可见，按视锥 + 近身 过滤成 visible，并累积 seen */

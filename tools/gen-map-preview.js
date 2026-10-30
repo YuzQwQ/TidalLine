@@ -4,9 +4,11 @@ const path = require('path');
 const vm = require('vm');
 const sharp = require('sharp');
 const root = path.resolve(__dirname, '..');
+(async()=>{
 const ctx = vm.createContext({});
 for (const file of ['config.js','data.js']) vm.runInContext(fs.readFileSync(path.join(root,'js',file),'utf8'),ctx);
 const { rows, districts, spawns, props, types, map } = vm.runInContext('({rows:MAP_ROWS,districts:MAP_DISTRICTS,spawns:SPAWNS,props:DECOR,types:CONTAINER_TYPES,map:RAID_MAP})',ctx);
+const CONTAINER_QUALITY = vm.runInContext('CONTAINER_QUALITY',ctx);
 const esc = value => String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const size=20, left=28, top=128, width=rows[0].length*size+left*2, height=rows.length*size+top+106;
 const defs=[], layers=[], images=new Map();
@@ -45,7 +47,13 @@ for(let y=0;y<rows.length;y++) for(let x=0;x<rows[y].length;x++) {
     layers.push(`<circle cx="${left+(x+.5)*size}" cy="${top+(y+.5)*size}" r="12" fill="none" stroke="#8affc5" stroke-width="2"/>`);
   }
 }
-for(const prop of props) sprite('props',prop.art||prop.id,prop.x,prop.y);
+for(const prop of props) {
+  const original=prop.art||prop.id,suffix=['side','back'].includes(prop.facing)?'_'+prop.facing:'',multi=(prop.footprint||[1,1]).reduce((a,b)=>a*b,1)>1;
+  const base=multi&&fs.existsSync(path.join(root,'assets/props',original+'_large'+suffix+'.png'))?original+'_large':original,variant=base+suffix;
+  const id=fs.existsSync(path.join(root,'assets/props',variant+'.png'))?variant:base,[w,h]=prop.footprint||[1,1];
+  const png=await sharp(path.join(root,'assets/props',id+'.png')).trim().resize(w*size-4,h*size-4,{fit:'contain',position:'south',kernel:'nearest',background:'#00000000'}).png().toBuffer();
+  layers.push('<image x="'+(left+prop.x*size+2)+'" y="'+(top+prop.y*size+2)+'" width="'+(w*size-4)+'" height="'+(h*size-4)+'" href="data:image/png;base64,'+png.toString('base64')+'"/>');
+}
 const palette={scav:'#e6a364',echo:'#c390df',guard:'#81b8ef'}, names={scav:'拾',echo:'响',guard:'守'};
 for(const spawn of spawns) {
   const x=left+(spawn.x+.5)*size,y=top+(spawn.y+.5)*size;
@@ -64,9 +72,8 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${he
 <text x="28" y="94" fill="#b0c4b7" font-size="13">黄框：重型物资　橙「拾」：拾荒者　紫「响」：回响体　蓝「守」：潮汐守卫　绿框：撤离　绿圈：出生</text>
 ${layers.join('')}
 <text x="28" y="${height-65}" fill="#9ec7ac" font-size="14">西北入口 → 西岸住宅/诊所 → 双桥 → 钟表店/银行/仓库；两岸南侧均可撤离。</text>
-<text x="28" y="${height-37}" fill="#789b88" font-size="13">稳定水位，运河常态不可涉水。七类家具暂复用现有外观；容器与家具均保留实体占格。</text>
+<text x="28" y="${height-37}" fill="#789b88" font-size="13">稳定水位，运河常态不可涉水。住宅、医疗、商业家具与树木已配置独立外观；保留实体占格。</text>
 </svg>`;
-(async()=>{
  const output=path.join(root,'output/map');fs.mkdirSync(output,{recursive:true});
  const file=path.join(output,'map-overview.png');
  await sharp(Buffer.from(svg)).png().toFile(file);

@@ -1,68 +1,111 @@
 {
   "status": "passed",
+  "schemaVersion": 2,
+  "ruleCount": 18,
+  "errors": 0,
+  "warnings": 0,
   "checks": [
     {
-      "name": "72×56 方格、完整图例与不可越界边缘",
+      "code": "G1",
+      "name": "G1 尺寸、行宽与边界",
       "passed": true
     },
     {
-      "name": "实体家具与 41 个箱柜无重叠、无地形冲突",
+      "code": "G2",
+      "name": "G2 图例字段完整",
       "passed": true
     },
     {
-      "name": "全部空地、室内、门洞、阶梯与两处撤离点连通",
+      "code": "G3",
+      "name": "G3 实体占格、重叠与地形冲突",
       "passed": true
     },
     {
-      "name": "每个箱柜都有可达、可交互的操作面",
+      "code": "G4",
+      "name": "G4 实体分区归属",
       "passed": true
     },
     {
-      "name": "主街 6 格、支巷至少 3 格、主要室内走廊 2 格净宽",
+      "code": "G5",
+      "name": "G5 空地、房间、门洞与撤离点连通",
       "passed": true
     },
     {
-      "name": "两座桥为仅有的跨岸路线，任一桥均可独立连接两岸",
+      "code": "G6",
+      "name": "G6 容器具备可交互面",
       "passed": true
     },
     {
-      "name": "五栋建筑均有两处独立室外入口，诊所有两格破口",
+      "code": "G7",
+      "name": "G7 敌人间距与出生 / 撤离缓冲",
       "passed": true
     },
     {
-      "name": "公寓、诊所与钟表店有实际室内绕行，药储不直连破口",
+      "code": "G8",
+      "name": "G8 门洞结构合法",
       "passed": true
     },
     {
-      "name": "银行必须通过安保过渡门和金库门，金库不连接室外",
+      "code": "G9",
+      "name": "G9 出生点与撤离点合法",
       "passed": true
     },
     {
-      "name": "分区物资 / 布防配额、敌人间距和出生 / 撤离缓冲",
+      "code": "G10",
+      "name": "G10 推荐路线可寻路",
       "passed": true
     },
     {
-      "name": "室内物资与敌人确实位于所属建筑，室外点不混入室内",
+      "code": "G11",
+      "name": "G11 配额与计数一致",
       "passed": true
     },
     {
-      "name": "潮汐只做预留：低地仍可通行，稳定路线不受模拟封路影响",
+      "code": "G12",
+      "name": "G12 实体编号唯一且非空",
       "passed": true
     },
     {
-      "name": "三条推荐路线均按实体占格寻路生成",
+      "code": "M1",
+      "name": "M1 建筑出入口与橱窗",
+      "passed": true
+    },
+    {
+      "code": "M2",
+      "name": "M2 净宽标注与占用",
+      "passed": true
+    },
+    {
+      "code": "M3",
+      "name": "M3 桥为唯一跨河通路",
+      "passed": true
+    },
+    {
+      "code": "M4",
+      "name": "M4 银行安保链",
+      "passed": true
+    },
+    {
+      "code": "M5",
+      "name": "M5 潮汐预留不影响撤离",
+      "passed": true
+    },
+    {
+      "code": "M6",
+      "name": "M6 室内绕行与封闭房间",
       "passed": true
     }
   ],
+  "issues": [],
   "stats": {
     "width": 72,
     "height": 56,
     "buildings": 5,
     "rooms": 24,
-    "containers": 41,
+    "containers": 48,
     "enemies": 24,
     "props": 40,
-    "walkableCells": 2944,
+    "walkableCells": 2920,
     "containersByType": {
       "Z": 1,
       "W": 1,
@@ -92,8 +135,8 @@
     },
     "enemiesByType": {
       "scav": 12,
-      "echo": 7,
-      "guard": 5
+      "guard": 5,
+      "echo": 7
     },
     "regions": {
       "apartment": {

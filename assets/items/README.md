@@ -1,5 +1,13 @@
 # 物品贴图
 
+新增情报资料13件（intel01–intel13）：原稿在 `assets/item-art/intel/sources/`，完整实际提示词与来源见 `assets/intel-generation.json`，审核页为 [情报资料图标总览](../item-art/intel/index.html)。运行 `node tools/prepare-intel-art.js` 整理48×48、16色以内、4px透明留边的图标，再生成Wiki并构建离线版。原有旧报纸与摄影底片图标保留。
+
+新增军事收集品15件（mil01–mil15）：原稿在 `assets/item-art/military/sources/`，完整实际提示词与来源见 `assets/military-generation.json`，审核页为 [军事物资图标总览](../item-art/military/index.html)。运行 `node tools/prepare-military-art.js` 整理48×48、16色以内、4px透明留边的图标，再生成Wiki并构建离线版。
+
+新增文物藏品8件（antiq07–09、art04–05、lux04–05、spec04）：原稿在 `assets/item-art/heritage/sources/`，完整实际提示词与来源见 `assets/heritage-generation.json`，审核页为 [文物藏品图标总览](../item-art/heritage/index.html)。运行 `node tools/prepare-heritage-art.js` 整理48×48、16色以内、4px透明留边的图标，再生成Wiki并构建离线版。
+
+新增工业器材12件（ind04–ind15）：原稿在 `assets/item-art/industrial/sources/`，完整实际提示词和来源见 `assets/industrial-generation.json`，审核页为 [工业器材图标总览](../item-art/industrial/index.html)。运行 `node tools/prepare-industrial-art.js` 通过现有流程整理48×48、16色以内、4px透明边的图标，随后生成Wiki并构建离线版。
+
 新增医疗收集品10件（med06–med15）：原稿在 `assets/item-art/medical-collectibles/sources/`，完整提示词见 `assets/medical-collectibles-generation.json`，审核页为 [医疗收集品图标总览](../item-art/medical-collectibles/index.html)。运行 `node tools/prepare-medical-collectibles-art.js` 整理为48×48透明像素图，再生成Wiki并重新构建离线版。这批图标用于科室器材与科研标本，与heal01–heal18治疗用品分别存档。
 
 新增电子产品9件（elec07–elec15）：原稿在 `assets/item-art/electronics/sources/`，完整实际提示词与生成来源见 `assets/electronics-generation.json`，审核页为 [电子产品图标总览](../item-art/electronics/index.html)。运行 `node tools/prepare-electronics-art.js` 通过现有素材整理流程生成48×48、16色以内、4px透明边的图标；随后生成Wiki并重新构建离线版。
@@ -33,3 +41,5 @@ node build.js
 
 
 本轮新增收集品共27件：24件生活用品、2件电子产品、1件文物藏品。最终图标均为48×48透明PNG、16色内、4px透明留边，运行时按ID自动装载。原稿在 assets/item-art/collectibles/sources，完整生成提示词与来源在 assets/collectibles-generation.json，审核页在 assets/item-art/collectibles/index.html。重新整理时以该sources目录为输入，并用prepare-item-icons.js第三参数逐件指定manifest中的ID。
+
+新增神秘学物品15件（occ01–occ15）：[图标总览](../item-art/occult/index.html)，原稿位于 `assets/item-art/occult/sources/`，完整提示词记录在 `assets/occult-generation.json`。使用 `node tools/prepare-occult-art.js` 整理为48×48透明像素图标。

@@ -273,6 +273,7 @@ const html = `<!DOCTYPE html>
     角色是<b>三向图</b>（正 / 背 / 侧），朝左直接用侧面图<b>水平镜像</b>，不用画第四张。
     每张卡右下角可以复制拼好的 prompt。
     玩家动作另见 <a href="玩家动画.html" style="color:#a8c4ba">玩家动画预览</a>（7 种动作、三向图、60 帧）。
+    墙体分层与连接另见 <a href="assets/wall-volume/index.html" style="color:#a8c4ba">立体墙体对照</a>（连续墙顶、南向立面、东向侧面）。
   </div>
   <div class="bar-wrap">
     <div class="pbar"><i style="width:${pct}%"></i></div>

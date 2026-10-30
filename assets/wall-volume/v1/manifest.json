@@ -1,0 +1,83 @@
+{
+  "title": "通用墙体 · 体积重绘",
+  "generator": "Built-in image_gen",
+  "referencesRole": "Classic scene reference for architectural readability only; crate reference for existing pixel art style and lighting",
+  "assets": [
+    {
+      "id": "wall",
+      "name": "灰绿抹灰墙 · 连续墙顶",
+      "target": "assets/tiles/wall.png",
+      "size": [
+        32,
+        32
+      ],
+      "prompt": "Use case: stylized-concept. Production modular wall texture for 潮汐线, muted post-flood pixel-art salvage game. The supplied classic-game screenshots are reference for readable roofless walls and architectural volume ONLY; do not recreate any screenshot, building or scene. Existing crate is reference for crisp pixel size, muted colors and fixed upper-left light. Original design. Hard-edged coarse pixel art, small restrained palette, no photographic noise, no antialiasing, no text, no objects, no cast shadow, no vignette, no floor. Create ONE full-bleed square seamlessly repeatable TOP CAP material only for a thick old masonry wall seen from a high 75-degree overhead orthographic camera. Warm grey-green cut stone / worn cement cap, broad quiet pixel clusters with very few weathered chips, subtly lighter than a grey-green floor. NO brick grid, NO face or bevel inside this square, NO outline or border. Continuous surface, no obvious central motif. Main medium grey-sage around #929384, restrained dark #6c756b and light #a3a494. This top material will be joined to separately drawn dark vertical face strips by renderer. Image filled to every edge, fully opaque. Target logical32x32 texture.",
+      "source": "sources/wall.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-461adfda-75a8-4449-8e2e-869099a3c290.png",
+      "references": [
+        "temp files/maps/reference1.jpg",
+        "temp files/maps/reference2.jpg",
+        "temp files/maps/reference3.jpg",
+        "assets/props/crate_std.png"
+      ],
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processing": "nearest-neighbour native-size sampling; 16-color quantization; joining-edge pixel pairing"
+    },
+    {
+      "id": "wall_face_s",
+      "name": "灰绿抹灰墙 · 南向立面",
+      "target": "assets/tiles/wall_face_s.png",
+      "size": [
+        32,
+        12
+      ],
+      "prompt": "Use case: stylized-concept. Production modular wall texture for 潮汐线, muted post-flood pixel-art salvage game. The supplied classic-game screenshots are reference for readable roofless walls and architectural volume ONLY; do not recreate any screenshot, building or scene. Existing crate is reference for crisp pixel size, muted colors and fixed upper-left light. Original design. Hard-edged coarse pixel art, small restrained palette, no photographic noise, no antialiasing, no text, no objects, no cast shadow, no vignette, no floor. Create ONE horizontally seamless rectangular FRONT VERTICAL FACE strip for a thick old plastered masonry wall. Canvas aspect ratio8:3, target32x12 logical pixels. This is the visible south-facing wall face, NOT a top-down floor texture. Full rectangular flat material strip: narrow light grey-green stone coping lip along the top (one logical pixel), below it a visibly darker desaturated sage-grey PLASTER face, a sparse pair of exposed mortar blocks beneath chipped plaster near lower part, then a narrow darker stone footing along bottom two logical pixels. Horizontal lines level, vertical edges seamless with no end pillars, no side bevels, no perspective converging edges. Top lip around #929384, plaster #666f64, shadow #394b43. Broad solid color planes, only sparse tiny chips; not a noisy field. No windows, no door, no vines, no signs, no scene. All canvas opaque, no padding. Must read as an architectural vertical face even when reduced to32x12.",
+      "source": "sources/wall_face_s.png",
+      "status": "ready",
+      "references": [
+        "temp files/maps/reference1.jpg",
+        "temp files/maps/reference3.jpg",
+        "assets/props/crate_std.png"
+      ],
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2816f3cc-ed07-4032-bf2f-540396303184.png",
+      "sourceSize": [
+        2048,
+        768
+      ],
+      "processing": "nearest-neighbour native-size sampling; 16-color quantization; joining-edge pixel pairing"
+    },
+    {
+      "id": "wall_face_e",
+      "name": "灰绿抹灰墙 · 东向短侧面",
+      "target": "assets/tiles/wall_face_e.png",
+      "size": [
+        4,
+        32
+      ],
+      "prompt": "Use case: stylized-concept. Production modular wall texture for 潮汐线, muted post-flood pixel-art salvage game. The supplied classic-game screenshots are reference for readable roofless walls and architectural volume ONLY; do not recreate any screenshot, building or scene. Existing crate is reference for crisp pixel size, muted colors and fixed upper-left light. Original design. Hard-edged coarse pixel art, small restrained palette, no photographic noise, no antialiasing, no text, no objects, no cast shadow, no vignette, no floor. Create ONE vertically seamless tall narrow rectangular EAST SIDE FACE material strip for the same old grey-green plastered masonry wall, viewed at high75degree orthographic overhead. Aspect ratio1:4. This will become an extremely narrow4x32 logical pixel side, so make it very simple and legible: left edge one thin dull light stone rim, main surface dark grey-sage plaster, darker at right edge. Horizontal masonry joins very sparse, no end caps, no top/bottom border, fully opaque to all edges. Fixed upper-left light means this east side is distinctly darker than the south/front face, around #35473f / #46594d; no highlights brighter than #798577. NO full wall block, NO floor, NO shadow, NO windows, NO scene. Keep silhouette a filled rectangle with straight vertical edges, not an isometric parallelogram. Designed to be placed at the exposed rightmost edge of a continuous wall network.",
+      "source": "sources/wall_face_e.png",
+      "status": "ready",
+      "references": [
+        "temp files/maps/reference1.jpg",
+        "temp files/maps/reference3.jpg",
+        "assets/props/crate_std.png"
+      ],
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3aebd8a1-00f3-46c7-bc22-b990b4c05a18.png",
+      "sourceCrop": {
+        "left": 286,
+        "top": 0,
+        "width": 221,
+        "height": 1983
+      },
+      "sourceSize": [
+        793,
+        1983
+      ],
+      "processing": "nearest-neighbour native-size sampling; 16-color quantization; joining-edge pixel pairing; white canvas crop; east-face brightness 80%"
+    }
+  ]
+}

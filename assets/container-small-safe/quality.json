@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "small": {
+    "width": 17,
+    "height": 21,
+    "bottom": 28,
+    "colors": 16
+  },
+  "large": {
+    "width": 24,
+    "height": 27,
+    "bottom": 28,
+    "colors": 16
+  },
+  "checks": [
+    "32px canvas",
+    "<=20x21 subject",
+    "binary alpha",
+    "same foot",
+    "editor placement undo redo reopen",
+    "developer and offline images"
+  ]
+}

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>地图编辑器 · 临海路旧街区</title>
+<link rel="stylesheet" href="editor.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand">
+    <span class="eyebrow">TIDELINE · MAP EDITOR</span>
+    <h1>地图编辑器<span class="tag">M3 新建与定位</span></h1>
+  </div>
+  <div class="actions">
+    <a href="../../../assets/scene-library/index.html" target="_blank" rel="noopener">场景素材库</a>
+    <button id="btn-new" type="button">新建</button>
+    <button id="btn-open" type="button">打开 JSON</button>
+    <button id="btn-reload" type="button">重新载入</button>
+    <span class="sep"></span>
+    <button id="btn-art" type="button" title="重画了 assets 里的贴图后点这里（Alt+R）；切回窗口时也会自动检查">重载贴图</button>
+    <span class="sep"></span>
+    <div class="seg" role="group" aria-label="视图旋转">
+      <button type="button" data-rot="0" class="on">N</button>
+      <button type="button" data-rot="90">E</button>
+      <button type="button" data-rot="180">S</button>
+      <button type="button" data-rot="270">W</button>
+    </div>
+    <span class="sep"></span>
+    <button id="btn-zoom-out" type="button" aria-label="缩小">−</button>
+    <span id="zoom-label" class="mono">100%</span>
+    <button id="btn-zoom-in" type="button" aria-label="放大">+</button>
+    <button id="btn-fit" type="button">适应</button>
+    <span class="sep"></span>
+    <span id="status" class="status">载入中…</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="tools" role="group" aria-label="编辑工具">
+    <button type="button" data-tool="select">选择<kbd>1</kbd></button>
+    <button type="button" data-tool="brush">画笔<kbd>2</kbd></button>
+    <button type="button" data-tool="rect">矩形<kbd>3</kbd></button>
+    <button type="button" data-tool="bucket">油漆桶<kbd>4</kbd></button>
+    <button type="button" data-tool="erase">橡皮<kbd>5</kbd></button>
+  </div>
+  <div class="material" id="material"><span class="m-label">材质</span><span class="m-name">未选择</span></div>
+  <span class="sep"></span>
+  <button id="btn-undo" type="button" disabled>撤销<kbd>⌘Z</kbd></button>
+  <button id="btn-redo" type="button" disabled>重做<kbd>⇧⌘Z</kbd></button>
+  <span class="sep"></span>
+  <button id="btn-save" type="button" class="primary">保存<kbd>⌘S</kbd></button>
+  <button id="btn-save-as" type="button">另存为</button>
+  <button id="btn-download" type="button">导出</button>
+  <button id="btn-quotas" type="button" title="把 quotas 里的容器 / 敌人 / 分区计数改成当前实际值">同步配额</button>
+  <span class="sep"></span>
+  <span id="dirty" class="dirty clean">已保存</span>
+</div>
+
+<div id="draft-bar" class="draft-bar" hidden>
+  <span id="draft-text">检测到未保存的草稿</span>
+  <button id="draft-restore" type="button">恢复</button>
+  <button id="draft-discard" type="button">丢弃</button>
+</div>
+
+<main class="app">
+  <aside class="panel left" aria-label="分类调色板">
+    <div class="panel-head">
+      <h2>材质</h2>
+      <span class="hint">点击拿起 · Esc 放下</span>
+    </div>
+    <div id="palette" class="palette"></div>
+  </aside>
+
+  <section class="view" id="view">
+    <canvas id="map" aria-label="地图画布"></canvas>
+    <div class="drop" id="drop" hidden>
+      <div class="drop-inner">
+        <h3>需要先给一份地图</h3>
+        <p>浏览器在 <code>file://</code> 下不允许直接读取同目录 JSON。<br>
+           把 <code>layout.json</code> 拖进来，或点下面的按钮选择。<br>
+           可选：再拖一次 <code>rules.json</code>，带上本图专属规则（M1–M6）。<br>
+           也可以在项目根目录起一个本地服务：<code>python -m http.server 8765</code>。</p>
+        <label class="file-btn">选择 layout.json<input id="file-input" type="file" accept=".json,application/json" hidden></label>
+      </div>
+    </div>
+    <div id="rot-hint" class="rot-hint" hidden>旋转视角 · 家具按屏幕方向换贴图</div>
+    <div class="tool-hint" id="tool-hint" hidden></div>
+    <div class="legend-float" id="view-hint">
+      <span class="mono" id="coord">—</span>
+      <span id="coord-name"></span>
+    </div>
+  </section>
+
+  <aside class="panel right" aria-label="检查器与校验">
+    <div class="block" id="inspector-block">
+      <div class="panel-head"><h2>检查器</h2><span class="hint" id="sel-hint"></span></div>
+      <div id="inspector" class="inspector"></div>
+    </div>
+    <div class="block">
+      <div class="panel-head"><h2>概览</h2><span class="hint" id="map-id"></span></div>
+      <dl id="stats" class="stats"></dl>
+    </div>
+    <div class="block">
+      <div class="panel-head"><h2>校验</h2><span class="hint mono" id="rule-count"></span></div>
+      <div id="issues" class="issues">—</div>
+    </div>
+    <div class="block">
+      <div class="panel-head"><h2>图层</h2></div>
+      <div id="layers" class="layers"></div>
+    </div>
+    <div class="block grow">
+      <div class="panel-head"><h2>光标</h2><span class="hint" id="hover-kind"></span></div>
+      <div id="hover" class="hover">把鼠标移到地图上</div>
+    </div>
+  </aside>
+</main>
+
+<div id="newmap" class="modal" hidden></div>
+
+<script src="../shared/scene-library.js"></script>
+<script src="../shared/map-core.js"></script>
+<script src="../shared/map-rules.js"></script>
+<script src="../shared/map-validator.js"></script>
+<script src="../shared/map-art-map.js"></script>
+<script src="../shared/map-templates.js"></script>
+<script src="store.js"></script>
+<script src="palette.js"></script>
+<script src="tools.js"></script>
+<script src="history.js"></script>
+<script src="render.js"></script>
+<script src="io.js"></script>
+<script src="inspector.js"></script>
+<script src="issues.js"></script>
+<script src="newmap.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>

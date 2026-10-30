@@ -5,17 +5,17 @@ const crypto = require('crypto');
 const root = path.resolve(__dirname, '..');
 const draftDir = path.join(root, 'design/maps/linhai-old-quarter');
 const { validate } = require(path.join(draftDir, 'validate.cjs'));
+const MapArt = require(path.join(root, 'design/maps/shared/map-art-map.js'));
 const START = '/* BEGIN GENERATED LINHAI MAP */';
 const END = '/* END GENERATED LINHAI MAP */';
-function compile() {
-  const bytes = fs.readFileSync(path.join(draftDir, 'layout.json'));
+function compile(layoutOverride) {
+  const bytes = layoutOverride ? Buffer.from(JSON.stringify(layoutOverride)) : fs.readFileSync(path.join(draftDir, 'layout.json'));
   const d = JSON.parse(bytes); validate(d);
   const grid = d.rows.map(row => [...row]);
   for (const box of d.containers) grid[box.y][box.x] = box.type;
   grid[d.spawn.y][d.spawn.x] = 'P';
   for (const ex of d.exits) grid[ex.y][ex.x] = 'E';
-  const visual = {'#':'wall',X:'wall','.':'low',r:'street_stone',q:'courtyard_paving',i:'floor','~':'canal_water',k:'quay_top','=':'bridge_stone_deck','-':'bridge_wood_deck','+':'floor','/':'floor',w:'floor',s:'canal_steps_w'};
-  const terrain = Object.fromEntries(Object.entries(d.legend).map(([ch, rule]) => [ch, {art:visual[ch],solid:ch==='#'||ch==='X',blocked:!rule.walkable,opaque:rule.opaque,permanentWater:ch==='~'}]));
+  const terrain = Object.fromEntries(Object.entries(d.legend).map(([ch, rule]) => [ch, {art:rule.art||MapArt.TILE_ART[ch]||'low',solid:ch==='#'||ch==='X',blocked:!rule.walkable,opaque:rule.opaque,permanentWater:ch==='~'}]));
   const doorAxes = {}, doors = [];
   for (const p of d.portals.filter(p => p.kind === 'door')) {
     const [x,y] = p.cells[0];
@@ -25,15 +25,8 @@ function compile() {
     const door = {id:p.id,cells:p.cells,axis,reinforced:['bank.security','bank.vault'].includes(p.id)};
     doors.push(door); for (const c of p.cells) doorAxes[c.join(',')] = axis;
   }
-  const proxy = {bed:'desk',stove:'desk',sofa:'chair',bench:'chair',display:'shelf',counter:'desk',tree:'barrel'};
-  const props = d.props.map(p => ({...p,id:p.id,art:proxy[p.type]||p.type,provisional:!!proxy[p.type],ground:false}));
-  const overlays = [], add=(art,x,y,extra={})=>overlays.push({art,x,y,...extra});
-  for(let y=0;y<d.height;y++) for(const [x,dir]of [[29,'w'],[36,'e']]) if(d.rows[y][x]==='k') add('canal_bank_'+dir,x,y);
-  for(const bridge of d.bridges) for(const [side,y]of [['n',bridge.rect[1]-1],['s',bridge.rect[3]+1]])
-    for(let x=bridge.rect[0];x<=bridge.rect[2];x++) add('bridge_'+(bridge.id==='north'?'stone':'wood')+'_rail_'+side,x,y);
-  for(const w of d.windows) for(const [x,y]of w.cells) add('shop_window_ns',x,y);
-  add('wall_breach_n',14,38,{replaceWall:true}); add('wall_breach_s',14,41,{replaceWall:true});
-  add('rubble_decal',14,39); add('rubble_decal',14,40);
+  const props = d.props.map(p => ({...p,id:p.id,art:MapArt.resolvePropArt(p),provisional:false,ground:p.ground===true})).sort((a,b)=>Number(b.ground)-Number(a.ground));
+  const overlays = MapArt.resolveOverlays(d);
   return {id:'linhai-old-quarter',title:d.title,width:d.width,height:d.height,source:'design/maps/linhai-old-quarter/layout.json',sourceSha256:crypto.createHash('sha256').update(bytes).digest('hex'),tideEnabled:false,
     terrain,terrainRows:d.rows,rows:grid.map(r=>r.join('')),spawn:d.spawn,exits:d.exits,doors,doorAxes,props,overlays,
     containers:d.containers,enemies:d.enemies,rooms:d.rooms,bridges:d.bridges,tideReserve:d.tide,

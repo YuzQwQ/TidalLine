@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "linhai-old-quarter-draft",
   "title": "临海路旧街区",
   "status": "独立设计评审稿，未接入游戏",
@@ -9,6 +9,27 @@
   "coordinateConvention": "左上角 (0,0)，x 向东、y 向南；所有 rect 为包含端点的 [x1,y1,x2,y2]。",
   "reference": "../../../temp files/临海路旧街区·概念平面.png",
   "legend": {
+    "1": {
+      "name": "平整水泥 A",
+      "walkable": true,
+      "opaque": false,
+      "color": "#737d70",
+      "art": "ground_concrete_plain_01"
+    },
+    "2": {
+      "name": "平整水泥 B",
+      "walkable": true,
+      "opaque": false,
+      "color": "#737d70",
+      "art": "ground_concrete_plain_02"
+    },
+    "3": {
+      "name": "压实泥土 A",
+      "walkable": true,
+      "opaque": false,
+      "color": "#6c705e",
+      "art": "ground_soil_compact_01"
+    },
     "#": {
       "name": "墙体 / 边界",
       "walkable": false,
@@ -98,58 +119,58 @@
     "#############################k~~~~~~k###################################",
     "#............................k~~~~~~k..................................#",
     "#............................k~~~~~~k..................................#",
-    "#......................rrrrrrk~~~~~~k..................................#",
-    "#......................rrrrrrk~~~~~~krrrrrr.XXXXXXXXXXX................#",
-    "#......................rrrrrrk~~~~~~krrrrrr.XXXXXXXXXXX...qqqqqqqqqq...#",
-    "#......................rrrrrrk~~~~~~krrrrrr.XXXXXXXXXXX...qqqqqqqqqq...#",
-    "#....###########...rrrrrrrrrrk~~~~~~krrrrrr.XXXXXXXXXXX...qqqqqqqqqq...#",
-    "#....#iiii#iiii#...rrrrrrrrrrk~~~~~~krrrrrr.XXXXXXXX......qqqqqqqqqq...#",
-    "#....#iiii#iiii#...rrrrrrrrrrk~~~~~~krrrrrr.XXXXXXXX......qqqqqqqqqq...#",
-    "#....#iiii#iiii#...rrrrrrrrrrk~~~~~~krrrrrr.XXXXXXXX......qqqqqqqqqq...#",
-    "#....#iiii#iiii####rrrrrrrrrrk~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
-    "#..rr###+####+#####rrrrrrrrrr========rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
-    "#..rr#iiiiiiiiiiii+rrrrrrrrrr========rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
-    "#..rr#iiiiiiiiiiii+rrrrrrrrrr========rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
-    "#..rr###+#ii####++#rrrrrrrrrr========rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
-    "#....#iii#ii#iiiii#rrrrrrrrrrk~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
-    "#....#iii+ii+iiiii#rrrrrrrrrrk~~~~~~krrrrrr.###########rrrr............#",
-    "#....#iii#ii+iiiii#rrrrrrrrrrk~~~~~~krrrrrr.wiiii#iiii#rrrr............#",
-    "#....#####ii###++##rrrrrrrrrrk~~~~~~krrrrrr.wiiii#iiii#rrrr............#",
-    "#....#iii#iiiiiiii#rrrrrrrrrrk~~~~~~krrrrrr.#iiii+iiii#rrrr............#",
-    "#....#iii+iiiiiiii#rrrrrrrrrrk~~~~~~krrrrrr.+iiii+iiii#rrrr............#",
-    "#....#########++###rrrrrrrrrrk~~~~~~krrrrrr.#iiii##++##rrrr............#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.wiiii#iiii#rrrr............#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.wiiii+iiii+rrrr............#",
-    "#..rrqqqqqqqqqrqqqqqqqqrrrrrrk~~~~~~srrrrrr.#iiii+iiii#rrrr............#",
-    "#..rrqqqqqqqqqrqqqqqqqqrrrrrrk~~~~~~krrrrrr.###########rrrr............#",
-    "#....qqqqqqqqq.qqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
-    "#....qqqqqqqqq.qqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
-    "#..rrqqqqqqqqqrqqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
-    "#..rrqqqqqqqqqrqqqqqqqqrrrrrrk~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
-    "#..rrqqqqqqqqqrqqqqqqqqrrrrrrk~~~~~~krrrrrrqqqqqqqq.##############..rrr#",
-    "#..rrrrrrrrrrrrqqqqqqqqrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiii#..rrr#",
-    "#....###++#####rrrr....rrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiii##rrr#",
-    "#....#iiiii#ii#rrrr....rrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
-    "#....#iiiii+ii#rrrr....rrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
-    "#....#iiiii+ii#rrrr....rrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiiii#rrr#",
-    "#....###++##ii#rrrr....rrrrrrk~~~~~~krrrrrrqqqqqqqq.###+##++########rrr#",
-    "#....#iiiii#ii#rrrr....rrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiii#ii#iiiiii#rrr#",
-    "#....#iiiii+ii/rrrr....rrrrrrk~~~~~~krrrrrr.........#iiii+ii+iiiiii#rrr#",
-    "#....#iiiii+ii/rrrr....rrrrrr--------rrrrrr.........#iiii+ii+iiiiii#rrr#",
-    "#....#######ii#rrrr....rrrrrr--------rrrrrr.........###+##++###++###rrr#",
-    "#....##iiii+ii#rrrr....rrrrrr--------rrrrrr.........#iiiiiii#iiiiii#rrr#",
-    "#......#iii#ii#rrrr....rrrrrrk~~~~~~krrrrrr......rrr#iiiiiii#iiiiii#rrr#",
-    "#......########rrrr....rrrrrrk~~~~~~kkk####++####rrr##iiiiii#iiiiii#rrr#",
-    "#..............rrrr....rrrrrrk~~~~~~kkk#iiiiiiii#rrr..#iiiii#iiiiii#rrr#",
-    "#..............rrrr....rrrrrrk~~~~~~kkk#iiiiiiii#rrr..####++########rrr#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii+rrrrrrrrrrrrrrrrrrrrrr#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii+rrrrrrrrrrrrrrrrrrrrrr#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
-    "#............................k~~~~~~kkk##########rrrrrrrrrrrrrrrrrrrrrr#",
-    "#............................k~~~~~~k..................................#",
+    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
+    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrXXXXXXXXXXX###rrrrrrrrrrr..#",
+    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr###########...rrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiii#iiii#...rrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiii#iiii#...rrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiii#iiii#...rrrrrrrrrrk~~~~~~krrrrrrrX#####i###########//#####..#",
+    "#..rr#iiii#iiii####rrrrrrrrrrk~~~~~~krrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr###+####+#####rrrrrrrrrr========rrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr#222222222222+rrrrrrrrrr========rrrrrrr.iiiiiiiiiiiiiiiiiiiiiii#..#",
+    "#..rr#222222222222+rrrrrrrrrr========rrrrrrr.iiiiiiiiiiiiiiiiiiiiiii#..#",
+    "#..rr###+#22##222+#rrrrrrrrrr========rrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr#iii#22#iiiii#rrrrrrrrrrk~~~~~~krrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr#iii+22+iiiii#rrrrrrrrrrk~~~~~~krrrrrr.###############ii########..#",
+    "#..rr#iii#22+iiiii#rrrrrrrrrrk~~~~~~krrrrrr.w2111#11111#iiiii#111111#..#",
+    "#..rr#####22###++##rrrrrrrrrrk~~~~~~krrrrrr.w2111111111#iiiii#111111#..#",
+    "#.rrr#iii#22222222#rrrrrrrrrrk~~~~~~krrrrrr.#2111#11111#iiiii#111111#..#",
+    "#.rrr#iii+22222222#rrrrrrrrrrk~~~~~~krrrrrr.#2111#11111#iiiii#111111#..#",
+    "#rrrr#########++###rrrrrrrrrrk~~~~~~krrrrrr.#2111#######iiiii#####1##..#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.w2111#11111#iiiiii111111#..#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.i21111111111iiiii#111111#..#",
+    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~srrrrrr.#2222#11111#iiiii#111111#..#",
+    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrr.#########################..#",
+    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrrrq.qqqqqqqqq.qqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrqqqqqqqq.################rrr#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiiii#rrr#",
+    "#rrrr###++#####rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiii##rrr#",
+    "#rrrr#iiiii#ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
+    "#rrrr#iiiii+ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
+    "#rrrr#iiiii+ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiiii#rrr#",
+    "#rrrr###++##ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.################rrr#",
+    "#rrrr#iiiii#ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiii#ii#iiiiii#rrr#",
+    "#rrrr#iiiii+ii/rrrrrrrrrrrrrrk~~~~~~krrrrrr.........#iiiiiiiiiiiiii#rrr#",
+    "#rrrr#iiiii+ii/rrrrrrrrrrrrrr--------rrrrrr.........#iiiiiiiiiiiiii#rrr#",
+    "#rrrr#######ii#rrrrrrrrrrrrrr--------rrrrrr.........###i#######++###rrr#",
+    "#rrrr#iiiii+ii#rrrrrrrrrrrrrr--------rrrrrr.........#iiiiiii#iiiiii#rrr#",
+    "#rrrr#iiiii#ii#rrrrrrrrrrrrrrk~~~~~~krrrrrr......rrr#iiiiiii#iiiiii#rrr#",
+    "#rrrr##########rrrrrrrrrrrrrrk~~~~~~kkk####++####rrr#.iiiiii#iiiiii#rrr#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrr#..iiiii#iiiiii#rrr#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrr######ii########rrr#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii+rrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii+rrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrq.qqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk##########rrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~k..................................#",
     "#############################k~~~~~~k###################################"
   ],
   "buildings": [
@@ -3781,6 +3802,12 @@
       "role": "货架与工具区"
     }
   ],
+  "roomFlows": {
+    "apartment": "南侧门厅 → 客厅 → 侧廊；厨房通过北门与侧门接入侧廊环路。侧廊通东侧后巷门；卧室与小储藏间为支路。",
+    "clinic": "北门 → 候诊 → 诊疗；候诊和诊疗分别连接后勤侧廊。东侧破口直入侧廊，药储入口位于破口南侧，需转向进入。",
+    "clockshop": "营业厅 → 维修间 → 后仓 → 柜台区 → 营业厅，形成内部环路；后仓侧门接东巷，橱窗不可通行但可透视。",
+    "bank": "前厅 → 柜台 / 办公室 → 柜台后通道 → 安保室 → 金库。南门接后勤环廊；办公室、后通道、后勤三者成环，金库只经安保门进入。"
+  },
   "portals": [
     {
       "id": "apartment.bed1",
@@ -4095,103 +4122,6 @@
       "width": 2
     },
     {
-      "id": "clockshop.front",
-      "building": "clockshop",
-      "name": "临街正门",
-      "cells": [
-        [
-          44,
-          21
-        ]
-      ],
-      "connects": [
-        "clockshop.showroom",
-        "outside"
-      ],
-      "kind": "door",
-      "width": 1
-    },
-    {
-      "id": "clockshop.repair",
-      "building": "clockshop",
-      "name": "营业厅侧向连门",
-      "cells": [
-        [
-          49,
-          20
-        ],
-        [
-          49,
-          21
-        ]
-      ],
-      "connects": [
-        "clockshop.showroom",
-        "clockshop.repair"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "clockshop.store",
-      "building": "clockshop",
-      "name": "维修通后仓",
-      "cells": [
-        [
-          51,
-          22
-        ],
-        [
-          52,
-          22
-        ]
-      ],
-      "connects": [
-        "clockshop.repair",
-        "clockshop.store"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "clockshop.counter",
-      "building": "clockshop",
-      "name": "柜台通后仓",
-      "cells": [
-        [
-          49,
-          24
-        ],
-        [
-          49,
-          25
-        ]
-      ],
-      "connects": [
-        "clockshop.counter",
-        "clockshop.store"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "clockshop.rear",
-      "building": "clockshop",
-      "name": "后仓侧巷出口",
-      "cells": [
-        [
-          54,
-          24
-        ]
-      ],
-      "connects": [
-        "clockshop.store",
-        "outside"
-      ],
-      "kind": "door",
-      "width": 1
-    },
-    {
       "id": "bank.front",
       "building": "bank",
       "name": "西侧正门",
@@ -4229,44 +4159,6 @@
       "connects": [
         "bank.lobby",
         "bank.counter"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "bank.office-front",
-      "building": "bank",
-      "name": "前厅通办公室",
-      "cells": [
-        [
-          55,
-          37
-        ]
-      ],
-      "connects": [
-        "bank.lobby",
-        "bank.office"
-      ],
-      "kind": "door",
-      "width": 1
-    },
-    {
-      "id": "bank.passage",
-      "building": "bank",
-      "name": "柜台后通道口",
-      "cells": [
-        [
-          58,
-          37
-        ],
-        [
-          59,
-          37
-        ]
-      ],
-      "connects": [
-        "bank.counter",
-        "bank.passage"
       ],
       "kind": "door",
       "width": 2
@@ -4330,65 +4222,6 @@
       "connects": [
         "bank.security",
         "bank.vault"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "bank.office-service",
-      "building": "bank",
-      "name": "办公室通后勤",
-      "cells": [
-        [
-          55,
-          41
-        ]
-      ],
-      "connects": [
-        "bank.office",
-        "bank.service"
-      ],
-      "kind": "door",
-      "width": 1
-    },
-    {
-      "id": "bank.passage-service",
-      "building": "bank",
-      "name": "通道连接后勤",
-      "cells": [
-        [
-          58,
-          41
-        ],
-        [
-          59,
-          41
-        ]
-      ],
-      "connects": [
-        "bank.passage",
-        "bank.service"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "bank.rear",
-      "building": "bank",
-      "name": "南侧后勤门",
-      "cells": [
-        [
-          58,
-          46
-        ],
-        [
-          59,
-          46
-        ]
-      ],
-      "connects": [
-        "bank.service",
-        "outside"
       ],
       "kind": "door",
       "width": 2
@@ -4460,10 +4293,6 @@
         [
           44,
           23
-        ],
-        [
-          44,
-          24
         ]
       ],
       "walkable": false,
@@ -4814,36 +4643,39 @@
       "region": "apartment",
       "type": "bed",
       "name": "床",
-      "x": 6,
+      "x": 7,
       "y": 8,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ]
     },
     {
       "id": "p02",
       "region": "apartment",
       "type": "bed",
       "name": "床",
-      "x": 11,
+      "x": 12,
       "y": 8,
-      "solid": true
-    },
-    {
-      "id": "p03",
-      "region": "apartment",
-      "type": "desk",
-      "name": "床头柜",
-      "x": 9,
-      "y": 8,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ]
     },
     {
       "id": "p04",
       "region": "apartment",
       "type": "desk",
       "name": "床头柜",
-      "x": 14,
-      "y": 11,
-      "solid": true
+      "x": 13,
+      "y": 8,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
     },
     {
       "id": "p05",
@@ -4851,8 +4683,13 @@
       "type": "stove",
       "name": "灶台",
       "x": 6,
-      "y": 16,
-      "solid": true
+      "y": 17,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
     },
     {
       "id": "p06",
@@ -4861,52 +4698,64 @@
       "name": "沙发",
       "x": 13,
       "y": 16,
-      "solid": true
-    },
-    {
-      "id": "p07",
-      "region": "apartment",
-      "type": "bench",
-      "name": "门厅长凳",
-      "x": 17,
-      "y": 20,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p08",
       "region": "clinic",
       "type": "chair",
       "name": "候诊椅",
-      "x": 7,
-      "y": 35,
-      "solid": true
+      "x": 6,
+      "y": 36,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
     },
     {
       "id": "p09",
       "region": "clinic",
       "type": "chair",
       "name": "候诊椅",
-      "x": 8,
-      "y": 35,
-      "solid": true
+      "x": 13,
+      "y": 43,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
     },
     {
       "id": "p10",
       "region": "clinic",
       "type": "bed",
       "name": "诊疗床",
-      "x": 8,
+      "x": 6,
       "y": 39,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "side"
     },
     {
       "id": "p11",
       "region": "clinic",
       "type": "desk",
       "name": "诊疗台",
-      "x": 10,
+      "x": 6,
       "y": 38,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p12",
@@ -4914,44 +4763,55 @@
       "type": "display",
       "name": "橱窗展柜",
       "x": 45,
-      "y": 19,
-      "solid": true
+      "y": 20,
+      "solid": true,
+      "facing": "side",
+      "footprint": [
+        1,
+        2
+      ]
     },
     {
       "id": "p13",
       "region": "clockshop",
       "type": "display",
       "name": "橱窗展柜",
-      "x": 46,
-      "y": 19,
-      "solid": true
+      "x": 48,
+      "y": 20,
+      "solid": true,
+      "facing": "side",
+      "footprint": [
+        1,
+        2
+      ]
     },
     {
       "id": "p14",
-      "region": "clockshop",
+      "region": "outdoors",
       "type": "counter",
       "name": "营业柜台",
-      "x": 45,
-      "y": 23,
-      "solid": true
+      "x": 53,
+      "y": 15,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
     },
     {
       "id": "p15",
-      "region": "clockshop",
+      "region": "outdoors",
       "type": "counter",
       "name": "营业柜台",
-      "x": 46,
-      "y": 23,
-      "solid": true
-    },
-    {
-      "id": "p16",
-      "region": "clockshop",
-      "type": "desk",
-      "name": "维修台",
       "x": 53,
-      "y": 21,
-      "solid": true
+      "y": 11,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
     },
     {
       "id": "p17",
@@ -4960,43 +4820,63 @@
       "name": "前厅长凳",
       "x": 53,
       "y": 36,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p18",
-      "region": "bank",
+      "region": "outdoors",
       "type": "counter",
       "name": "银行柜台",
-      "x": 62,
-      "y": 34,
-      "solid": true
+      "x": 53,
+      "y": 7,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p19",
-      "region": "bank",
+      "region": "outdoors",
       "type": "counter",
       "name": "银行柜台",
-      "x": 63,
-      "y": 34,
-      "solid": true
+      "x": 46,
+      "y": 5,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p20",
-      "region": "bank",
+      "region": "outdoors",
       "type": "counter",
       "name": "银行柜台",
-      "x": 64,
-      "y": 34,
-      "solid": true
+      "x": 46,
+      "y": 7,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p21",
-      "region": "bank",
+      "region": "warehouse",
       "type": "desk",
       "name": "办公桌",
-      "x": 56,
-      "y": 38,
-      "solid": true
+      "x": 40,
+      "y": 51,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p22",
@@ -5005,16 +4885,25 @@
       "name": "安保监控台",
       "x": 66,
       "y": 38,
-      "solid": true
+      "solid": true,
+      "facing": "back",
+      "footprint": [
+        1,
+        1
+      ]
     },
     {
       "id": "p23",
-      "region": "bank",
+      "region": "warehouse",
       "type": "shelf",
       "name": "后勤架",
-      "x": 54,
-      "y": 43,
-      "solid": true
+      "x": 42,
+      "y": 52,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p24",
@@ -5023,7 +4912,11 @@
       "name": "后勤架",
       "x": 55,
       "y": 43,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p25",
@@ -5031,89 +4924,150 @@
       "type": "shelf",
       "name": "工具货架",
       "x": 40,
-      "y": 47,
-      "solid": true
+      "y": 46,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
     },
     {
       "id": "p26",
       "region": "warehouse",
       "type": "shelf",
       "name": "工具货架",
-      "x": 41,
-      "y": 47,
-      "solid": true
+      "x": 42,
+      "y": 46,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
     },
     {
       "id": "p27",
       "region": "warehouse",
       "type": "shelf",
       "name": "工具货架",
-      "x": 46,
-      "y": 47,
-      "solid": true
+      "x": 44,
+      "y": 46,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
     },
     {
       "id": "p28",
       "region": "warehouse",
       "type": "shelf",
       "name": "工具货架",
-      "x": 47,
-      "y": 47,
-      "solid": true
+      "x": 46,
+      "y": 46,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
     },
     {
       "id": "p29",
       "region": "outdoors",
       "type": "tree",
       "name": "院落树木",
-      "x": 6,
+      "x": 5,
       "y": 27,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      }
     },
     {
       "id": "p30",
       "region": "outdoors",
       "type": "tree",
       "name": "院落树木",
-      "x": 10,
-      "y": 29,
-      "solid": true
+      "x": 3,
+      "y": 50,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      }
     },
     {
       "id": "p31",
       "region": "outdoors",
       "type": "tree",
       "name": "院落树木",
-      "x": 19,
-      "y": 29,
-      "solid": true
-    },
-    {
-      "id": "p32",
-      "region": "outdoors",
-      "type": "tree",
-      "name": "院落树木",
-      "x": 65,
-      "y": 7,
-      "solid": true
+      "x": 15,
+      "y": 27,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      }
     },
     {
       "id": "p33",
       "region": "outdoors",
       "type": "bench",
       "name": "庭院长椅",
-      "x": 15,
-      "y": 29,
-      "solid": true
+      "x": 7,
+      "y": 26,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p34",
       "region": "outdoors",
       "type": "bench",
       "name": "庭院长椅",
-      "x": 16,
-      "y": 29,
-      "solid": true
+      "x": 18,
+      "y": 26,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p35",
@@ -5121,35 +5075,52 @@
       "type": "bench",
       "name": "庭院长椅",
       "x": 45,
-      "y": 37,
-      "solid": true
+      "y": 36,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p36",
       "region": "outdoors",
       "type": "bench",
       "name": "庭院长椅",
-      "x": 46,
-      "y": 37,
-      "solid": true
+      "x": 8,
+      "y": 52,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
     },
     {
       "id": "p37",
       "region": "outdoors",
       "type": "barrel",
       "name": "杂物桶",
-      "x": 22,
-      "y": 9,
-      "solid": true
+      "x": 42,
+      "y": 43,
+      "solid": true,
+      "facing": "side",
+      "footprint": [
+        1,
+        1
+      ]
     },
     {
       "id": "p38",
       "region": "outdoors",
       "type": "barrel",
       "name": "杂物桶",
-      "x": 58,
-      "y": 18,
-      "solid": true
+      "x": 52,
+      "y": 30,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
     },
     {
       "id": "p39",
@@ -5158,7 +5129,11 @@
       "name": "杂物桶",
       "x": 70,
       "y": 28,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
     },
     {
       "id": "p40",
@@ -5167,7 +5142,1103 @@
       "name": "杂物桶",
       "x": 67,
       "y": 9,
-      "solid": true
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p41",
+      "region": "outdoors",
+      "type": "bench",
+      "name": "庭院长椅",
+      "x": 38,
+      "y": 35,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p42",
+      "region": "outdoors",
+      "type": "bench",
+      "name": "庭院长椅",
+      "x": 7,
+      "y": 30,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p43",
+      "region": "outdoors",
+      "type": "bench",
+      "name": "庭院长椅",
+      "x": 18,
+      "y": 30,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p44",
+      "region": "outdoors",
+      "type": "bench",
+      "name": "庭院长椅",
+      "x": 27,
+      "y": 35,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p45",
+      "region": "outdoors",
+      "type": "bench",
+      "name": "庭院长椅",
+      "x": 27,
+      "y": 24,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p46",
+      "region": "outdoors",
+      "type": "tree",
+      "name": "院落树木",
+      "x": 64,
+      "y": 6,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "p47",
+      "region": "outdoors",
+      "type": "counter",
+      "name": "银行柜台",
+      "x": 53,
+      "y": 5,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p48",
+      "region": "outdoors",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 46,
+      "y": 11,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p49",
+      "region": "outdoors",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 48,
+      "y": 11,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p50",
+      "region": "outdoors",
+      "type": "tree",
+      "name": "院落树木",
+      "x": 45,
+      "y": 33,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "p51",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 44,
+      "y": 32,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p52",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 46,
+      "y": 31,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p53",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 52,
+      "y": 15,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p54",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 59,
+      "y": 5,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p55",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 67,
+      "y": 9,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p56",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 65,
+      "y": 9,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p57",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 66,
+      "y": 5,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p58",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 13,
+      "y": 27,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p59",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 20,
+      "y": 28,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p60",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 13,
+      "y": 31,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p61",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 22,
+      "y": 25,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p62",
+      "region": "apartment",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 16,
+      "y": 13,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p63",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 57,
+      "y": 23,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p64",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 60,
+      "y": 18,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p65",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 63,
+      "y": 14,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p66",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 51,
+      "y": 12,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p67",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 45,
+      "y": 16,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p68",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 38,
+      "y": 30,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p69",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 41,
+      "y": 20,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p70",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 42,
+      "y": 26,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p71",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 43,
+      "y": 29,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p72",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 41,
+      "y": 35,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p73",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 41,
+      "y": 41,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p74",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 39,
+      "y": 43,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p75",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 23,
+      "y": 46,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p76",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 26,
+      "y": 30,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p77",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 17,
+      "y": 37,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p78",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 20,
+      "y": 42,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p79",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 23,
+      "y": 36,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p80",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 24,
+      "y": 40,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p81",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 27,
+      "y": 20,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p82",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 23,
+      "y": 9,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p83",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 23,
+      "y": 6,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p84",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 20,
+      "y": 15,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p85",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 25,
+      "y": 17,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p86",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 24,
+      "y": 22,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p87",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 39,
+      "y": 9,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p88",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 42,
+      "y": 13,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p89",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 38,
+      "y": 17,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p90",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 68,
+      "y": 30,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p91",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 69,
+      "y": 36,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p92",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 70,
+      "y": 45,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p93",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 68,
+      "y": 44,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p94",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 70,
+      "y": 39,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p95",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 17,
+      "y": 50,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p96",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 22,
+      "y": 52,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p97",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 23,
+      "y": 52,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p98",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 28,
+      "y": 49,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p99",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 16,
+      "y": 53,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p100",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 3,
+      "y": 43,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p101",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 4,
+      "y": 34,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p102",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 3,
+      "y": 26,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p103",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 4,
+      "y": 25,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p104",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 3,
+      "y": 14,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p105",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 55,
+      "y": 50,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p106",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 51,
+      "y": 52,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p107",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 51,
+      "y": 48,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p108",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 63,
+      "y": 53,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p109",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 64,
+      "y": 49,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p110",
+      "region": "outdoors",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 62,
+      "y": 19,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
     }
   ],
   "containers": [
@@ -5176,7 +6247,7 @@
       "region": "apartment",
       "type": "N",
       "x": 6,
-      "y": 9,
+      "y": 8,
       "preference": [
         "life"
       ]
@@ -5185,8 +6256,8 @@
       "id": "c02",
       "region": "apartment",
       "type": "N",
-      "x": 14,
-      "y": 9,
+      "x": 11,
+      "y": 8,
       "preference": [
         "life"
       ]
@@ -5195,18 +6266,8 @@
       "id": "c03",
       "region": "apartment",
       "type": "C",
-      "x": 9,
-      "y": 10,
-      "preference": [
-        "life"
-      ]
-    },
-    {
-      "id": "c04",
-      "region": "apartment",
-      "type": "L",
-      "x": 6,
-      "y": 17,
+      "x": 8,
+      "y": 8,
       "preference": [
         "life"
       ]
@@ -5235,8 +6296,8 @@
       "id": "c07",
       "region": "apartment",
       "type": "J",
-      "x": 17,
-      "y": 18,
+      "x": 6,
+      "y": 20,
       "preference": [
         "life"
       ]
@@ -5253,10 +6314,10 @@
     },
     {
       "id": "c09",
-      "region": "clinic",
+      "region": "outdoors",
       "type": "F",
-      "x": 10,
-      "y": 34,
+      "x": 3,
+      "y": 41,
       "preference": [
         "med",
         "medical"
@@ -5267,7 +6328,7 @@
       "region": "clinic",
       "type": "C",
       "x": 6,
-      "y": 35,
+      "y": 34,
       "preference": [
         "med",
         "medical"
@@ -5278,7 +6339,7 @@
       "region": "clinic",
       "type": "M",
       "x": 6,
-      "y": 39,
+      "y": 40,
       "preference": [
         "med",
         "medical"
@@ -5288,8 +6349,8 @@
       "id": "c12",
       "region": "clinic",
       "type": "M",
-      "x": 7,
-      "y": 39,
+      "x": 10,
+      "y": 38,
       "preference": [
         "med",
         "medical"
@@ -5299,7 +6360,7 @@
       "id": "c13",
       "region": "clinic",
       "type": "H",
-      "x": 7,
+      "x": 6,
       "y": 42,
       "preference": [
         "med",
@@ -5308,9 +6369,9 @@
     },
     {
       "id": "c14",
-      "region": "clinic",
+      "region": "outdoors",
       "type": "Y",
-      "x": 10,
+      "x": 6,
       "y": 43,
       "preference": [
         "med",
@@ -5321,18 +6382,18 @@
       "id": "c15",
       "region": "clockshop",
       "type": "C",
-      "x": 45,
-      "y": 25,
+      "x": 46,
+      "y": 18,
       "preference": [
         "collect"
       ]
     },
     {
       "id": "c16",
-      "region": "clockshop",
-      "type": "L",
-      "x": 53,
-      "y": 19,
+      "region": "outdoors",
+      "type": "B",
+      "x": 48,
+      "y": 5,
       "preference": [
         "collect"
       ]
@@ -5341,7 +6402,7 @@
       "id": "c17",
       "region": "clockshop",
       "type": "R",
-      "x": 50,
+      "x": 51,
       "y": 18,
       "preference": [
         "collect"
@@ -5351,8 +6412,8 @@
       "id": "c18",
       "region": "clockshop",
       "type": "B",
-      "x": 50,
-      "y": 25,
+      "x": 47,
+      "y": 18,
       "preference": [
         "collect"
       ]
@@ -5361,18 +6422,18 @@
       "id": "c19",
       "region": "clockshop",
       "type": "B",
-      "x": 53,
-      "y": 25,
+      "x": 45,
+      "y": 22,
       "preference": [
         "collect"
       ]
     },
     {
       "id": "c20",
-      "region": "clockshop",
-      "type": "L",
-      "x": 45,
-      "y": 18,
+      "region": "outdoors",
+      "type": "B",
+      "x": 52,
+      "y": 5,
       "preference": [
         "collect"
       ]
@@ -5381,8 +6442,8 @@
       "id": "c21",
       "region": "clockshop",
       "type": "G",
-      "x": 46,
-      "y": 21,
+      "x": 54,
+      "y": 18,
       "preference": [
         "collect"
       ]
@@ -5449,10 +6510,10 @@
     },
     {
       "id": "c28",
-      "region": "bank",
+      "region": "clockshop",
       "type": "V",
-      "x": 61,
-      "y": 44,
+      "x": 54,
+      "y": 19,
       "preference": [
         "collect"
       ]
@@ -5461,8 +6522,8 @@
       "id": "c29",
       "region": "bank",
       "type": "O",
-      "x": 66,
-      "y": 44,
+      "x": 65,
+      "y": 45,
       "preference": [
         "collect"
       ]
@@ -5502,8 +6563,8 @@
       "id": "c33",
       "region": "warehouse",
       "type": "T",
-      "x": 47,
-      "y": 45,
+      "x": 46,
+      "y": 48,
       "preference": [
         "ind",
         "elec"
@@ -5511,10 +6572,10 @@
     },
     {
       "id": "c34",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "b",
-      "x": 46,
-      "y": 45,
+      "x": 3,
+      "y": 47,
       "preference": [
         "ind",
         "elec"
@@ -5522,9 +6583,9 @@
     },
     {
       "id": "c35",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "b",
-      "x": 41,
+      "x": 49,
       "y": 48,
       "preference": [
         "ind",
@@ -5535,8 +6596,8 @@
       "id": "c36",
       "region": "warehouse",
       "type": "e",
-      "x": 42,
-      "y": 51,
+      "x": 40,
+      "y": 48,
       "preference": [
         "ind",
         "elec"
@@ -5546,8 +6607,8 @@
       "id": "c37",
       "region": "warehouse",
       "type": "Q",
-      "x": 40,
-      "y": 51,
+      "x": 45,
+      "y": 52,
       "preference": [
         "ind",
         "elec"
@@ -5557,7 +6618,7 @@
       "id": "c38",
       "region": "warehouse",
       "type": "A",
-      "x": 40,
+      "x": 47,
       "y": 52,
       "preference": [
         "ind",
@@ -5568,7 +6629,7 @@
       "id": "c39",
       "region": "warehouse",
       "type": "K",
-      "x": 47,
+      "x": 40,
       "y": 52,
       "preference": [
         "ind",
@@ -5590,8 +6651,8 @@
       "id": "c41",
       "region": "outdoors",
       "type": "T",
-      "x": 16,
-      "y": 27,
+      "x": 3,
+      "y": 49,
       "preference": [
         "life",
         "ind"
@@ -5612,8 +6673,8 @@
       "id": "c43",
       "region": "outdoors",
       "type": "H",
-      "x": 18,
-      "y": 44,
+      "x": 14,
+      "y": 45,
       "preference": [
         "life",
         "ind"
@@ -5623,8 +6684,8 @@
       "id": "c44",
       "region": "outdoors",
       "type": "W",
-      "x": 4,
-      "y": 47,
+      "x": 7,
+      "y": 52,
       "preference": [
         "life",
         "ind"
@@ -5634,8 +6695,8 @@
       "id": "c45",
       "region": "outdoors",
       "type": "b",
-      "x": 58,
-      "y": 24,
+      "x": 62,
+      "y": 25,
       "preference": [
         "life",
         "ind"
@@ -5643,10 +6704,10 @@
     },
     {
       "id": "c46",
-      "region": "outdoors",
+      "region": "bank",
       "type": "C",
-      "x": 67,
-      "y": 31,
+      "x": 62,
+      "y": 32,
       "preference": [
         "life",
         "ind"
@@ -5665,13 +6726,225 @@
     },
     {
       "id": "c48",
-      "region": "outdoors",
+      "region": "bank",
       "type": "K",
-      "x": 59,
-      "y": 50,
+      "x": 64,
+      "y": 32,
       "preference": [
         "life",
         "ind"
+      ]
+    },
+    {
+      "id": "c49",
+      "region": "outdoors",
+      "type": "W",
+      "x": 49,
+      "y": 9,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c50",
+      "region": "outdoors",
+      "type": "W",
+      "x": 45,
+      "y": 16,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c51",
+      "region": "outdoors",
+      "type": "T",
+      "x": 67,
+      "y": 12,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c52",
+      "region": "outdoors",
+      "type": "U",
+      "x": 55,
+      "y": 11,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c53",
+      "region": "outdoors",
+      "type": "e",
+      "x": 54,
+      "y": 16,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c54",
+      "region": "outdoors",
+      "type": "D",
+      "x": 56,
+      "y": 16,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c55",
+      "region": "outdoors",
+      "type": "J",
+      "x": 45,
+      "y": 12,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c56",
+      "region": "outdoors",
+      "type": "Q",
+      "x": 54,
+      "y": 11,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c57",
+      "region": "outdoors",
+      "type": "Q",
+      "x": 55,
+      "y": 5,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c58",
+      "region": "outdoors",
+      "type": "R",
+      "x": 54,
+      "y": 9,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c59",
+      "region": "outdoors",
+      "type": "F",
+      "x": 55,
+      "y": 16,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c60",
+      "region": "apartment",
+      "type": "A",
+      "x": 14,
+      "y": 8,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c61",
+      "region": "apartment",
+      "type": "B",
+      "x": 9,
+      "y": 8,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c62",
+      "region": "apartment",
+      "type": "T",
+      "x": 6,
+      "y": 16,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c63",
+      "region": "outdoors",
+      "type": "M",
+      "x": 60,
+      "y": 11,
+      "preference": [
+        "med",
+        "medical"
+      ]
+    },
+    {
+      "id": "c64",
+      "region": "outdoors",
+      "type": "G",
+      "x": 67,
+      "y": 15,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c65",
+      "region": "outdoors",
+      "type": "K",
+      "x": 67,
+      "y": 18,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c67",
+      "region": "outdoors",
+      "type": "W",
+      "x": 62,
+      "y": 21,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c68",
+      "region": "outdoors",
+      "type": "O",
+      "x": 62,
+      "y": 18,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c69",
+      "region": "outdoors",
+      "type": "L",
+      "x": 63,
+      "y": 25,
+      "preference": [
+        "collect"
       ]
     }
   ],
@@ -5806,7 +7079,7 @@
       "id": "e04",
       "region": "clinic",
       "type": "scav",
-      "x": 8,
+      "x": 9,
       "y": 38,
       "patrolRadius": 2
     },
@@ -5823,14 +7096,6 @@
       "region": "clockshop",
       "type": "scav",
       "x": 47,
-      "y": 20,
-      "patrolRadius": 2
-    },
-    {
-      "id": "e07",
-      "region": "clockshop",
-      "type": "scav",
-      "x": 52,
       "y": 20,
       "patrolRadius": 2
     },
@@ -5871,7 +7136,7 @@
       "region": "bank",
       "type": "guard",
       "x": 62,
-      "y": 39,
+      "y": 43,
       "patrolRadius": 2
     },
     {
@@ -5886,7 +7151,7 @@
       "id": "e14",
       "region": "warehouse",
       "type": "scav",
-      "x": 42,
+      "x": 43,
       "y": 48,
       "patrolRadius": 2
     },
@@ -5926,8 +7191,8 @@
       "id": "e19",
       "region": "outdoors",
       "type": "echo",
-      "x": 17,
-      "y": 39,
+      "x": 16,
+      "y": 36,
       "patrolRadius": 3
     },
     {
@@ -5958,8 +7223,8 @@
       "id": "e23",
       "region": "outdoors",
       "type": "echo",
-      "x": 39,
-      "y": 29,
+      "x": 37,
+      "y": 35,
       "patrolRadius": 3
     },
     {
@@ -6100,31 +7365,31 @@
     ]
   },
   "quotas": {
-    "containers": 48,
-    "enemies": 24,
+    "containers": 67,
+    "enemies": 23,
     "regions": {
       "apartment": [
-        8,
+        10,
         3
       ],
       "clinic": [
-        6,
+        4,
         2
       ],
       "clockshop": [
-        7,
-        3
+        6,
+        2
       ],
       "bank": [
-        10,
+        11,
         5
       ],
       "warehouse": [
-        8,
+        6,
         2
       ],
       "outdoors": [
-        9,
+        30,
         9
       ]
     }
@@ -6286,1656 +7551,6 @@
           51
         ]
       ]
-    }
-  ],
-  "roomFlows": {
-    "apartment": "南侧门厅 → 客厅 → 侧廊；厨房通过北门与侧门接入侧廊环路。侧廊通东侧后巷门；卧室与小储藏间为支路。",
-    "clinic": "北门 → 候诊 → 诊疗；候诊和诊疗分别连接后勤侧廊。东侧破口直入侧廊，药储入口位于破口南侧，需转向进入。",
-    "clockshop": "营业厅 → 维修间 → 后仓 → 柜台区 → 营业厅，形成内部环路；后仓侧门接东巷，橱窗不可通行但可透视。",
-    "bank": "前厅 → 柜台 / 办公室 → 柜台后通道 → 安保室 → 金库。南门接后勤环廊；办公室、后通道、后勤三者成环，金库只经安保门进入。"
-  },
-  "routes": [
-    {
-      "id": "residential",
-      "name": "住宅搜刮线",
-      "color": "#21937b",
-      "waypoints": [
-        [
-          7,
-          4
-        ],
-        [
-          19,
-          14
-        ],
-        [
-          14,
-          21
-        ],
-        [
-          21,
-          26
-        ],
-        [
-          16,
-          32
-        ],
-        [
-          9,
-          35
-        ],
-        [
-          13,
-          40
-        ],
-        [
-          6,
-          51
-        ]
-      ],
-      "points": [
-        [
-          7,
-          4
-        ],
-        [
-          8,
-          4
-        ],
-        [
-          9,
-          4
-        ],
-        [
-          10,
-          4
-        ],
-        [
-          11,
-          4
-        ],
-        [
-          12,
-          4
-        ],
-        [
-          13,
-          4
-        ],
-        [
-          14,
-          4
-        ],
-        [
-          15,
-          4
-        ],
-        [
-          16,
-          4
-        ],
-        [
-          17,
-          4
-        ],
-        [
-          18,
-          4
-        ],
-        [
-          19,
-          4
-        ],
-        [
-          19,
-          5
-        ],
-        [
-          19,
-          6
-        ],
-        [
-          19,
-          7
-        ],
-        [
-          19,
-          8
-        ],
-        [
-          19,
-          9
-        ],
-        [
-          19,
-          10
-        ],
-        [
-          19,
-          11
-        ],
-        [
-          19,
-          12
-        ],
-        [
-          19,
-          13
-        ],
-        [
-          19,
-          14
-        ],
-        [
-          18,
-          14
-        ],
-        [
-          17,
-          14
-        ],
-        [
-          16,
-          14
-        ],
-        [
-          16,
-          15
-        ],
-        [
-          16,
-          16
-        ],
-        [
-          15,
-          16
-        ],
-        [
-          15,
-          17
-        ],
-        [
-          15,
-          18
-        ],
-        [
-          15,
-          19
-        ],
-        [
-          15,
-          20
-        ],
-        [
-          14,
-          20
-        ],
-        [
-          14,
-          21
-        ],
-        [
-          15,
-          21
-        ],
-        [
-          15,
-          22
-        ],
-        [
-          15,
-          23
-        ],
-        [
-          16,
-          23
-        ],
-        [
-          17,
-          23
-        ],
-        [
-          18,
-          23
-        ],
-        [
-          19,
-          23
-        ],
-        [
-          20,
-          23
-        ],
-        [
-          21,
-          23
-        ],
-        [
-          21,
-          24
-        ],
-        [
-          21,
-          25
-        ],
-        [
-          21,
-          26
-        ],
-        [
-          20,
-          26
-        ],
-        [
-          19,
-          26
-        ],
-        [
-          18,
-          26
-        ],
-        [
-          17,
-          26
-        ],
-        [
-          17,
-          27
-        ],
-        [
-          17,
-          28
-        ],
-        [
-          17,
-          29
-        ],
-        [
-          17,
-          30
-        ],
-        [
-          16,
-          30
-        ],
-        [
-          16,
-          31
-        ],
-        [
-          16,
-          32
-        ],
-        [
-          15,
-          32
-        ],
-        [
-          14,
-          32
-        ],
-        [
-          13,
-          32
-        ],
-        [
-          12,
-          32
-        ],
-        [
-          11,
-          32
-        ],
-        [
-          10,
-          32
-        ],
-        [
-          9,
-          32
-        ],
-        [
-          9,
-          33
-        ],
-        [
-          9,
-          34
-        ],
-        [
-          9,
-          35
-        ],
-        [
-          10,
-          35
-        ],
-        [
-          11,
-          35
-        ],
-        [
-          12,
-          35
-        ],
-        [
-          13,
-          35
-        ],
-        [
-          13,
-          36
-        ],
-        [
-          13,
-          37
-        ],
-        [
-          13,
-          38
-        ],
-        [
-          13,
-          39
-        ],
-        [
-          13,
-          40
-        ],
-        [
-          14,
-          40
-        ],
-        [
-          15,
-          40
-        ],
-        [
-          15,
-          41
-        ],
-        [
-          15,
-          42
-        ],
-        [
-          15,
-          43
-        ],
-        [
-          15,
-          44
-        ],
-        [
-          15,
-          45
-        ],
-        [
-          14,
-          45
-        ],
-        [
-          13,
-          45
-        ],
-        [
-          12,
-          45
-        ],
-        [
-          11,
-          45
-        ],
-        [
-          10,
-          45
-        ],
-        [
-          9,
-          45
-        ],
-        [
-          8,
-          45
-        ],
-        [
-          7,
-          45
-        ],
-        [
-          6,
-          45
-        ],
-        [
-          6,
-          46
-        ],
-        [
-          6,
-          47
-        ],
-        [
-          6,
-          48
-        ],
-        [
-          6,
-          49
-        ],
-        [
-          6,
-          50
-        ],
-        [
-          6,
-          51
-        ]
-      ],
-      "steps": 98
-    },
-    {
-      "id": "commercial",
-      "name": "商业深入线",
-      "color": "#b47c29",
-      "waypoints": [
-        [
-          7,
-          4
-        ],
-        [
-          19,
-          14
-        ],
-        [
-          14,
-          21
-        ],
-        [
-          19,
-          14
-        ],
-        [
-          27,
-          14
-        ],
-        [
-          38,
-          14
-        ],
-        [
-          47,
-          20
-        ],
-        [
-          52,
-          24
-        ],
-        [
-          49,
-          34
-        ],
-        [
-          55,
-          35
-        ],
-        [
-          61,
-          35
-        ],
-        [
-          59,
-          39
-        ],
-        [
-          64,
-          39
-        ],
-        [
-          64,
-          43
-        ],
-        [
-          58,
-          44
-        ],
-        [
-          67,
-          51
-        ]
-      ],
-      "points": [
-        [
-          7,
-          4
-        ],
-        [
-          8,
-          4
-        ],
-        [
-          9,
-          4
-        ],
-        [
-          10,
-          4
-        ],
-        [
-          11,
-          4
-        ],
-        [
-          12,
-          4
-        ],
-        [
-          13,
-          4
-        ],
-        [
-          14,
-          4
-        ],
-        [
-          15,
-          4
-        ],
-        [
-          16,
-          4
-        ],
-        [
-          17,
-          4
-        ],
-        [
-          18,
-          4
-        ],
-        [
-          19,
-          4
-        ],
-        [
-          19,
-          5
-        ],
-        [
-          19,
-          6
-        ],
-        [
-          19,
-          7
-        ],
-        [
-          19,
-          8
-        ],
-        [
-          19,
-          9
-        ],
-        [
-          19,
-          10
-        ],
-        [
-          19,
-          11
-        ],
-        [
-          19,
-          12
-        ],
-        [
-          19,
-          13
-        ],
-        [
-          19,
-          14
-        ],
-        [
-          18,
-          14
-        ],
-        [
-          17,
-          14
-        ],
-        [
-          16,
-          14
-        ],
-        [
-          16,
-          15
-        ],
-        [
-          16,
-          16
-        ],
-        [
-          15,
-          16
-        ],
-        [
-          15,
-          17
-        ],
-        [
-          15,
-          18
-        ],
-        [
-          15,
-          19
-        ],
-        [
-          15,
-          20
-        ],
-        [
-          14,
-          20
-        ],
-        [
-          14,
-          21
-        ],
-        [
-          15,
-          21
-        ],
-        [
-          16,
-          21
-        ],
-        [
-          16,
-          20
-        ],
-        [
-          16,
-          19
-        ],
-        [
-          16,
-          18
-        ],
-        [
-          16,
-          17
-        ],
-        [
-          16,
-          16
-        ],
-        [
-          17,
-          16
-        ],
-        [
-          17,
-          15
-        ],
-        [
-          17,
-          14
-        ],
-        [
-          18,
-          14
-        ],
-        [
-          19,
-          14
-        ],
-        [
-          20,
-          14
-        ],
-        [
-          21,
-          14
-        ],
-        [
-          22,
-          14
-        ],
-        [
-          23,
-          14
-        ],
-        [
-          24,
-          14
-        ],
-        [
-          25,
-          14
-        ],
-        [
-          26,
-          14
-        ],
-        [
-          27,
-          14
-        ],
-        [
-          28,
-          14
-        ],
-        [
-          29,
-          14
-        ],
-        [
-          30,
-          14
-        ],
-        [
-          31,
-          14
-        ],
-        [
-          32,
-          14
-        ],
-        [
-          33,
-          14
-        ],
-        [
-          34,
-          14
-        ],
-        [
-          35,
-          14
-        ],
-        [
-          36,
-          14
-        ],
-        [
-          37,
-          14
-        ],
-        [
-          38,
-          14
-        ],
-        [
-          39,
-          14
-        ],
-        [
-          40,
-          14
-        ],
-        [
-          41,
-          14
-        ],
-        [
-          42,
-          14
-        ],
-        [
-          43,
-          14
-        ],
-        [
-          43,
-          15
-        ],
-        [
-          43,
-          16
-        ],
-        [
-          43,
-          17
-        ],
-        [
-          43,
-          18
-        ],
-        [
-          43,
-          19
-        ],
-        [
-          43,
-          20
-        ],
-        [
-          43,
-          21
-        ],
-        [
-          44,
-          21
-        ],
-        [
-          45,
-          21
-        ],
-        [
-          45,
-          20
-        ],
-        [
-          46,
-          20
-        ],
-        [
-          47,
-          20
-        ],
-        [
-          48,
-          20
-        ],
-        [
-          49,
-          20
-        ],
-        [
-          50,
-          20
-        ],
-        [
-          51,
-          20
-        ],
-        [
-          52,
-          20
-        ],
-        [
-          52,
-          21
-        ],
-        [
-          52,
-          22
-        ],
-        [
-          52,
-          23
-        ],
-        [
-          52,
-          24
-        ],
-        [
-          53,
-          24
-        ],
-        [
-          54,
-          24
-        ],
-        [
-          55,
-          24
-        ],
-        [
-          55,
-          25
-        ],
-        [
-          55,
-          26
-        ],
-        [
-          55,
-          27
-        ],
-        [
-          54,
-          27
-        ],
-        [
-          53,
-          27
-        ],
-        [
-          52,
-          27
-        ],
-        [
-          51,
-          27
-        ],
-        [
-          50,
-          27
-        ],
-        [
-          49,
-          27
-        ],
-        [
-          49,
-          28
-        ],
-        [
-          49,
-          29
-        ],
-        [
-          49,
-          30
-        ],
-        [
-          49,
-          31
-        ],
-        [
-          49,
-          32
-        ],
-        [
-          49,
-          33
-        ],
-        [
-          49,
-          34
-        ],
-        [
-          50,
-          34
-        ],
-        [
-          51,
-          34
-        ],
-        [
-          52,
-          34
-        ],
-        [
-          53,
-          34
-        ],
-        [
-          54,
-          34
-        ],
-        [
-          55,
-          34
-        ],
-        [
-          55,
-          35
-        ],
-        [
-          56,
-          35
-        ],
-        [
-          57,
-          35
-        ],
-        [
-          58,
-          35
-        ],
-        [
-          59,
-          35
-        ],
-        [
-          60,
-          35
-        ],
-        [
-          61,
-          35
-        ],
-        [
-          60,
-          35
-        ],
-        [
-          59,
-          35
-        ],
-        [
-          59,
-          36
-        ],
-        [
-          59,
-          37
-        ],
-        [
-          59,
-          38
-        ],
-        [
-          59,
-          39
-        ],
-        [
-          60,
-          39
-        ],
-        [
-          61,
-          39
-        ],
-        [
-          62,
-          39
-        ],
-        [
-          63,
-          39
-        ],
-        [
-          64,
-          39
-        ],
-        [
-          64,
-          40
-        ],
-        [
-          64,
-          41
-        ],
-        [
-          64,
-          42
-        ],
-        [
-          64,
-          43
-        ],
-        [
-          63,
-          43
-        ],
-        [
-          63,
-          42
-        ],
-        [
-          63,
-          41
-        ],
-        [
-          63,
-          40
-        ],
-        [
-          62,
-          40
-        ],
-        [
-          61,
-          40
-        ],
-        [
-          60,
-          40
-        ],
-        [
-          59,
-          40
-        ],
-        [
-          58,
-          40
-        ],
-        [
-          58,
-          41
-        ],
-        [
-          58,
-          42
-        ],
-        [
-          58,
-          43
-        ],
-        [
-          58,
-          44
-        ],
-        [
-          59,
-          44
-        ],
-        [
-          59,
-          45
-        ],
-        [
-          59,
-          46
-        ],
-        [
-          59,
-          47
-        ],
-        [
-          60,
-          47
-        ],
-        [
-          61,
-          47
-        ],
-        [
-          62,
-          47
-        ],
-        [
-          63,
-          47
-        ],
-        [
-          64,
-          47
-        ],
-        [
-          65,
-          47
-        ],
-        [
-          66,
-          47
-        ],
-        [
-          67,
-          47
-        ],
-        [
-          67,
-          48
-        ],
-        [
-          67,
-          49
-        ],
-        [
-          67,
-          50
-        ],
-        [
-          67,
-          51
-        ]
-      ],
-      "steps": 167
-    },
-    {
-      "id": "shortcut",
-      "name": "南部捷径线",
-      "color": "#9262ab",
-      "waypoints": [
-        [
-          13,
-          40
-        ],
-        [
-          16,
-          41
-        ],
-        [
-          27,
-          41
-        ],
-        [
-          38,
-          41
-        ],
-        [
-          44,
-          45
-        ],
-        [
-          46,
-          51
-        ],
-        [
-          50,
-          51
-        ],
-        [
-          58,
-          44
-        ],
-        [
-          64,
-          39
-        ],
-        [
-          67,
-          51
-        ]
-      ],
-      "points": [
-        [
-          13,
-          40
-        ],
-        [
-          14,
-          40
-        ],
-        [
-          15,
-          40
-        ],
-        [
-          16,
-          40
-        ],
-        [
-          16,
-          41
-        ],
-        [
-          17,
-          41
-        ],
-        [
-          18,
-          41
-        ],
-        [
-          19,
-          41
-        ],
-        [
-          20,
-          41
-        ],
-        [
-          21,
-          41
-        ],
-        [
-          22,
-          41
-        ],
-        [
-          23,
-          41
-        ],
-        [
-          24,
-          41
-        ],
-        [
-          25,
-          41
-        ],
-        [
-          26,
-          41
-        ],
-        [
-          27,
-          41
-        ],
-        [
-          28,
-          41
-        ],
-        [
-          29,
-          41
-        ],
-        [
-          30,
-          41
-        ],
-        [
-          31,
-          41
-        ],
-        [
-          32,
-          41
-        ],
-        [
-          33,
-          41
-        ],
-        [
-          34,
-          41
-        ],
-        [
-          35,
-          41
-        ],
-        [
-          36,
-          41
-        ],
-        [
-          37,
-          41
-        ],
-        [
-          38,
-          41
-        ],
-        [
-          39,
-          41
-        ],
-        [
-          40,
-          41
-        ],
-        [
-          41,
-          41
-        ],
-        [
-          42,
-          41
-        ],
-        [
-          43,
-          41
-        ],
-        [
-          44,
-          41
-        ],
-        [
-          44,
-          42
-        ],
-        [
-          44,
-          43
-        ],
-        [
-          44,
-          44
-        ],
-        [
-          44,
-          45
-        ],
-        [
-          45,
-          45
-        ],
-        [
-          45,
-          46
-        ],
-        [
-          45,
-          47
-        ],
-        [
-          45,
-          48
-        ],
-        [
-          46,
-          48
-        ],
-        [
-          46,
-          49
-        ],
-        [
-          46,
-          50
-        ],
-        [
-          46,
-          51
-        ],
-        [
-          47,
-          51
-        ],
-        [
-          47,
-          50
-        ],
-        [
-          48,
-          50
-        ],
-        [
-          49,
-          50
-        ],
-        [
-          50,
-          50
-        ],
-        [
-          50,
-          51
-        ],
-        [
-          51,
-          51
-        ],
-        [
-          52,
-          51
-        ],
-        [
-          53,
-          51
-        ],
-        [
-          54,
-          51
-        ],
-        [
-          55,
-          51
-        ],
-        [
-          56,
-          51
-        ],
-        [
-          57,
-          51
-        ],
-        [
-          58,
-          51
-        ],
-        [
-          58,
-          50
-        ],
-        [
-          58,
-          49
-        ],
-        [
-          58,
-          48
-        ],
-        [
-          58,
-          47
-        ],
-        [
-          58,
-          46
-        ],
-        [
-          58,
-          45
-        ],
-        [
-          58,
-          44
-        ],
-        [
-          59,
-          44
-        ],
-        [
-          59,
-          43
-        ],
-        [
-          59,
-          42
-        ],
-        [
-          59,
-          41
-        ],
-        [
-          59,
-          40
-        ],
-        [
-          60,
-          40
-        ],
-        [
-          61,
-          40
-        ],
-        [
-          62,
-          40
-        ],
-        [
-          63,
-          40
-        ],
-        [
-          64,
-          40
-        ],
-        [
-          64,
-          39
-        ],
-        [
-          63,
-          39
-        ],
-        [
-          62,
-          39
-        ],
-        [
-          61,
-          39
-        ],
-        [
-          60,
-          39
-        ],
-        [
-          59,
-          39
-        ],
-        [
-          59,
-          40
-        ],
-        [
-          59,
-          41
-        ],
-        [
-          59,
-          42
-        ],
-        [
-          59,
-          43
-        ],
-        [
-          59,
-          44
-        ],
-        [
-          59,
-          45
-        ],
-        [
-          59,
-          46
-        ],
-        [
-          59,
-          47
-        ],
-        [
-          60,
-          47
-        ],
-        [
-          61,
-          47
-        ],
-        [
-          62,
-          47
-        ],
-        [
-          63,
-          47
-        ],
-        [
-          64,
-          47
-        ],
-        [
-          65,
-          47
-        ],
-        [
-          66,
-          47
-        ],
-        [
-          67,
-          47
-        ],
-        [
-          67,
-          48
-        ],
-        [
-          67,
-          49
-        ],
-        [
-          67,
-          50
-        ],
-        [
-          67,
-          51
-        ]
-      ],
-      "steps": 101
     }
   ]
 }

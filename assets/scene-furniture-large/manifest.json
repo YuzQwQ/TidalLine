@@ -1,0 +1,735 @@
+{
+  "generator": "Native two-tile re-export from original high-resolution built-in image_gen sources; no low-resolution sprite upscaling",
+  "delivery": "32x64 or 64x32 transparent PNG, <=16 palette entries, hard edges, 2px clear margins, upper-left light",
+  "assets": [
+    {
+      "id": "bed_home_large",
+      "base": "bed_home",
+      "facing": "front",
+      "name": "住宅床",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/bed_home_large.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bed_home.png",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A narrow wooden single bed aligned north-south, pillow at north, faded blue-grey blanket. 深棕木质单人床，泛黄枕头在北端，灰蓝旧棉被覆盖床面，南端短木床尾。床沿南北方向延伸。",
+      "target": "assets/props/bed_home_large.png",
+      "status": "ready",
+      "sourceSize": [
+        1244,
+        1264
+      ],
+      "contentSize": [
+        25,
+        58
+      ]
+    },
+    {
+      "id": "bed_home_large_side",
+      "base": "bed_home",
+      "facing": "side",
+      "name": "住宅床 · 侧面",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/bed_home_large_side.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\bed_home_side.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE pillow WEST, bed long axis EAST-WEST. BACK pillow SOUTH, bed long axis NORTH-SOUTH. Follow ONLY the requested direction.\nObject: 深棕木质单人床，泛黄枕头在北端，灰蓝旧棉被覆盖床面，南端短木床尾。床沿南北方向延伸。",
+      "target": "assets/props/bed_home_large_side.png",
+      "status": "ready",
+      "sourceSize": [
+        1244,
+        1265
+      ],
+      "contentSize": [
+        44,
+        26
+      ]
+    },
+    {
+      "id": "bed_home_large_back",
+      "base": "bed_home",
+      "facing": "back",
+      "name": "住宅床 · 背面",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/bed_home_large_back.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\bed_home_back.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NORTH-SOUTH narrow wooden bed seen from overhead, PILLOW AT BOTTOM/SOUTH edge, blue blanket upper/NORTH half, tall headboard at BOTTOM in front of pillow, short footboard TOP. This is reverse-facing from original with headboard/pillow at top. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/bed_home_large_back.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        28,
+        50
+      ]
+    },
+    {
+      "id": "bed_clinic_large",
+      "base": "bed_clinic",
+      "facing": "front",
+      "name": "诊疗床",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/bed_clinic_large.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bed_clinic.png",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A north-south medical examination bed, white painted tubular steel, pale sage mattress, small ivory pillow at north. 白漆钢管诊疗床，灰绿色薄床垫，小型米白枕头置于北端，南端露出钢管床尾，少量掉漆。",
+      "target": "assets/props/bed_clinic_large.png",
+      "status": "ready",
+      "sourceSize": [
+        1247,
+        1261
+      ],
+      "contentSize": [
+        25,
+        58
+      ]
+    },
+    {
+      "id": "bed_clinic_large_side",
+      "base": "bed_clinic",
+      "facing": "side",
+      "name": "诊疗床 · 侧面",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/bed_clinic_large_side.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\bed_clinic_side.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE pillow WEST, bed long axis EAST-WEST. BACK pillow SOUTH, bed long axis NORTH-SOUTH. Follow ONLY the requested direction.\nObject: 白漆钢管诊疗床，灰绿色薄床垫，小型米白枕头置于北端，南端露出钢管床尾，少量掉漆。",
+      "target": "assets/props/bed_clinic_large_side.png",
+      "status": "ready",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "contentSize": [
+        50,
+        26
+      ]
+    },
+    {
+      "id": "bed_clinic_large_back",
+      "base": "bed_clinic",
+      "facing": "back",
+      "name": "诊疗床 · 背面",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/bed_clinic_large_back.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\bed_clinic_back.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NORTH-SOUTH narrow white steel medical bed, sage mattress, PILLOW AT BOTTOM/SOUTH end, head rail BOTTOM, low foot rail TOP. Pillow must be at bottom, NOT TOP. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/bed_clinic_large_back.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        25,
+        58
+      ]
+    },
+    {
+      "id": "sofa_home_large",
+      "base": "sofa_home",
+      "facing": "front",
+      "name": "旧布艺沙发",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/sofa_home_large.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\sofa_home.png",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact two-seat faded sage cloth sofa, horizontal east-west seat, low back at north, two broad cushions. 褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "target": "assets/props/sofa_home_large.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        48,
+        26
+      ]
+    },
+    {
+      "id": "sofa_home_large_side",
+      "base": "sofa_home",
+      "facing": "side",
+      "name": "旧布艺沙发 · 侧面",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/sofa_home_large_side.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\sofa_home_side.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE narrow NORTH-SOUTH sofa, backrest WEST, open seating toward EAST. BACK backrest SOUTH with rear fabric panel, opening NORTH. Follow ONLY the requested direction.\nObject: 褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "target": "assets/props/sofa_home_large_side.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        28,
+        46
+      ]
+    },
+    {
+      "id": "sofa_home_large_back",
+      "base": "sofa_home",
+      "facing": "back",
+      "name": "旧布艺沙发 · 背面",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/sofa_home_large_back.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\sofa_home_back.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE narrow NORTH-SOUTH sofa, backrest WEST, open seating toward EAST. BACK backrest SOUTH with rear fabric panel, opening NORTH. Follow ONLY the requested direction.\nObject: 褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "target": "assets/props/sofa_home_large_back.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        52,
+        26
+      ]
+    },
+    {
+      "id": "bench_wood_large",
+      "base": "bench_wood",
+      "facing": "front",
+      "name": "木条长椅",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/bench_wood_large.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bench_wood.png",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact east-west wooden slat bench, low north back, dark cast iron feet, broad visible seating plane. 横向木条长椅，旧棕色木条座面，北侧低靠背，深灰铸铁椅脚，露出大面积座面。",
+      "target": "assets/props/bench_wood_large.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        48,
+        26
+      ]
+    },
+    {
+      "id": "bench_wood_large_side",
+      "base": "bench_wood",
+      "facing": "side",
+      "name": "木条长椅 · 侧面",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/bench_wood_large_side.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\bench_wood_side.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL wooden slat park bench, long axis running TOP TO BOTTOM. Image silhouette height about 2.2 TIMES width. Brown seat slats run vertically, low backrest runs vertically along LEFT edge, seating opens RIGHT. Dark iron end supports at TOP and BOTTOM. Not horizontal. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/bench_wood_large_side.png",
+      "status": "ready",
+      "sourceSize": [
+        846,
+        1858
+      ],
+      "contentSize": [
+        16,
+        58
+      ]
+    },
+    {
+      "id": "bench_wood_large_back",
+      "base": "bench_wood",
+      "facing": "back",
+      "name": "木条长椅 · 背面",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/bench_wood_large_back.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\bench_wood_back.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A horizontal wooden slat bench viewed OVER ITS BACK. Broad brown seat beyond to TOP, backrest at BOTTOM/foreground obscures seat front. Exposed rear support uprights and bolts on SOUTH rear backrest. Not front view. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/bench_wood_large_back.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        40,
+        26
+      ]
+    },
+    {
+      "id": "display_clock_large",
+      "base": "display_clock",
+      "facing": "front",
+      "name": "玻璃展柜",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/display_clock_large.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\display_clock.png",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A low compact east-west shop display case, walnut base, thin brass rim, pale transparent glass TOP, navy lining and two tiny watches underneath. 低矮矩形钟表展柜，深棕木底座、细黄铜包边、低反光灰青玻璃顶面，内垫暗蓝布，两个小钟表剪影。",
+      "target": "assets/props/display_clock_large.png",
+      "status": "ready",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "contentSize": [
+        55,
+        26
+      ]
+    },
+    {
+      "id": "display_clock_large_side",
+      "base": "display_clock",
+      "facing": "side",
+      "name": "玻璃展柜 · 侧面",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/display_clock_large_side.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\display_clock_side.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL glass-top watch display cabinet, long axis TOP TO BOTTOM, height 2.3 TIMES width. Walnut plinth, thin brass frame, navy felt, TWO tiny watches stacked one ABOVE the other under glass. All corners square, not diamond. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/display_clock_large_side.png",
+      "status": "ready",
+      "sourceSize": [
+        1046,
+        1504
+      ],
+      "contentSize": [
+        18,
+        58
+      ]
+    },
+    {
+      "id": "display_clock_large_back",
+      "base": "display_clock",
+      "facing": "back",
+      "name": "玻璃展柜 · 背面",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/display_clock_large_back.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\display_clock_back.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE long axis NORTH-SOUTH. BACK long axis EAST-WEST, plain rear wood panel on SOUTH with glass top, same two watches inside. Follow ONLY the requested direction.\nObject: 低矮矩形钟表展柜，深棕木底座、细黄铜包边、低反光灰青玻璃顶面，内垫暗蓝布，两个小钟表剪影。",
+      "target": "assets/props/display_clock_large_back.png",
+      "status": "ready",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "contentSize": [
+        60,
+        26
+      ]
+    },
+    {
+      "id": "counter_shop_large",
+      "base": "counter_shop",
+      "facing": "front",
+      "name": "商店柜台",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/counter_shop_large.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\counter_shop.png",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact rectangular east-west walnut shop counter, broad worn wooden TOP, short south paneled face, no drawer handles. 矮矩形深棕木柜台，大面积磨损木顶，南侧短木饰面，两条竖向拼板缝，没有抽屉把手。",
+      "target": "assets/props/counter_shop_large.png",
+      "status": "ready",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "contentSize": [
+        51,
+        26
+      ]
+    },
+    {
+      "id": "counter_shop_large_side",
+      "base": "counter_shop",
+      "facing": "side",
+      "name": "商店柜台 · 侧面",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/counter_shop_large_side.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\counter_shop_side.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL walnut counter, rectangular top runs TOP TO BOTTOM, height 2.4 TIMES width. Broad scratched wooden TOP, very short SOUTH end panel at BOTTOM. NO horizontal wide counter. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/counter_shop_large_side.png",
+      "status": "ready",
+      "sourceSize": [
+        1024,
+        1536
+      ],
+      "contentSize": [
+        20,
+        58
+      ]
+    },
+    {
+      "id": "counter_shop_large_back",
+      "base": "counter_shop",
+      "facing": "back",
+      "name": "商店柜台 · 背面",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/counter_shop_large_back.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\counter_shop_back.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE long axis NORTH-SOUTH. BACK broad wood top with employee-side open storage recess on SOUTH. Follow ONLY the requested direction.\nObject: 矮矩形深棕木柜台，大面积磨损木顶，南侧短木饰面，两条竖向拼板缝，没有抽屉把手。",
+      "target": "assets/props/counter_shop_large_back.png",
+      "status": "ready",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "contentSize": [
+        52,
+        26
+      ]
+    },
+    {
+      "id": "counter_bank_large",
+      "base": "counter_bank",
+      "facing": "front",
+      "name": "银行柜台",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/counter_bank_large.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\counter_bank.png",
+      "prompt": "Use case: stylized-concept. ONE standalone environment PROP sprite for TidalLine, 1990s abandoned coastal neighborhood. Authentic chunky low-resolution PIXEL ART for a 32x32 tile. FIXED 75 DEGREE DOWNWARD VIEW from horizontal: almost top-down, very broad TOP surfaces, very short SOUTH-facing vertical surfaces, NO isometric diamond orientation, NO low camera. Object axes aligned with screen horizontal/vertical. Fixed upper-left illumination, right/south dark. Only 12-15 muted colors, large hard-edged square pixel clusters, NO smooth gradients, no antialiasing, no photorealism. Entire object visible, centered, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No ground, floor, cast shadow outside silhouette, no diorama base, no scenery, no text, no UI, no glow, no people. One tile footprint. A compact rectangular east-west bank counter, broad grey-white stone TOP, short dark walnut south fascia and thin brass trim, no glass barrier. 矮矩形银行柜台，宽阔灰白石材顶面，南侧短深色木饰面，细黄铜压条，不画玻璃隔断。",
+      "target": "assets/props/counter_bank_large.png",
+      "status": "ready",
+      "sourceSize": [
+        1774,
+        887
+      ],
+      "contentSize": [
+        60,
+        22
+      ]
+    },
+    {
+      "id": "counter_bank_large_side",
+      "base": "counter_bank",
+      "facing": "side",
+      "name": "银行柜台 · 侧面",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/counter_bank_large_side.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\counter_bank_side.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL bank counter, rectangular white-grey stone TOP runs TOP TO BOTTOM, height 2.4 TIMES width. Short walnut end fascia at BOTTOM, thin brass strips. NO horizontal counter. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/counter_bank_large_side.png",
+      "status": "ready",
+      "sourceSize": [
+        809,
+        1942
+      ],
+      "contentSize": [
+        13,
+        58
+      ]
+    },
+    {
+      "id": "counter_bank_large_back",
+      "base": "counter_bank",
+      "facing": "back",
+      "name": "银行柜台 · 背面",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/counter_bank_large_back.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\counter_bank_back.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A horizontal walnut bank counter with WHITE-GREY STONE TOP. The SOUTH foreground employee side has TWO OPEN DARK STORAGE CUBBIES under the stone top, NO paneled closed front. Broad top plane with short rear fascia. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/counter_bank_large_back.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        49,
+        26
+      ]
+    },
+    {
+      "id": "desk_large",
+      "base": "desk",
+      "facing": "front",
+      "name": "办公桌",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/desk_large.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-17bf12b7-f671-47dc-946c-e7cf7e6eefa1.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。",
+      "target": "assets/props/desk_large.png",
+      "status": "ready",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "contentSize": [
+        55,
+        26
+      ]
+    },
+    {
+      "id": "desk_large_side",
+      "base": "desk",
+      "facing": "side",
+      "name": "办公桌 · 侧面",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/desk_large_side.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\desk_side.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL old dark walnut writing desk, top long axis TOP TO BOTTOM, height 2.5 TIMES width. Simple scratched wooden TOP, short SOUTH apron at BOTTOM and two short feet. Empty top, no drawers. NO horizontal desk. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/desk_large_side.png",
+      "status": "ready",
+      "sourceSize": [
+        793,
+        1983
+      ],
+      "contentSize": [
+        18,
+        58
+      ]
+    },
+    {
+      "id": "desk_large_back",
+      "base": "desk",
+      "facing": "back",
+      "name": "办公桌 · 背面",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/desk_large_back.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\desk_back.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE tabletop long axis NORTH-SOUTH. BACK long axis EAST-WEST, reverse-side apron, same tabletop. Follow ONLY the requested direction.\nObject: 旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。",
+      "target": "assets/props/desk_large_back.png",
+      "status": "ready",
+      "sourceSize": [
+        1402,
+        1122
+      ],
+      "contentSize": [
+        60,
+        26
+      ]
+    },
+    {
+      "id": "shelf_large",
+      "base": "shelf",
+      "facing": "front",
+      "name": "货架",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/shelf_large.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-25e491d6-e950-4c8a-848a-78e23d694e16.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone 32x32 pixel-art world sprite for 潮汐线. Match the supplied character reference's high-angle three-quarter TOP-DOWN camera: view elevation 75 degrees above the horizontal ground (15 degrees off straight-down), orthographic game projection, screen top = north, east-west edges stay horizontal. Show a dominant top plane and a SHORT south-facing vertical face with clearly separated top/light, front/midtone, side/dark values to express physical HEIGHT, matching the existing robot and survivor sprites. NOT a pure overhead flat diagram, NOT a frontal inventory icon, NOT diamond/isometric ground rotation. Weathered desaturated green-grey, brown or blue-grey materials, upper-left light that stays fixed for every orientation, chunky crisp square pixels, no antialiasing, no pure black outline, limited 12-color palette. Center the complete object in the logical 28x28 area of a 32x32 square, with 2 transparent pixels around it, feet/base aligned near logical y=28. Transparent PNG, no ground patch, no backdrop, no cast shadow, no text, no border. Subject: 旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。",
+      "target": "assets/props/shelf_large.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        32,
+        26
+      ]
+    },
+    {
+      "id": "shelf_large_side",
+      "base": "shelf",
+      "facing": "side",
+      "name": "货架 · 侧面",
+      "canvas": [
+        32,
+        64
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "source": "sources/shelf_large_side.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\shelf_side.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL grey-blue steel shelving unit viewed from high above, top shelf runs TOP TO BOTTOM, silhouette height 2.2 TIMES width. Short SOUTH END at bottom with vertical end posts and narrow cross brace; the long open shelf face runs along RIGHT edge. Never horizontal. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/shelf_large_side.png",
+      "status": "ready",
+      "sourceSize": [
+        1070,
+        1470
+      ],
+      "contentSize": [
+        12,
+        58
+      ]
+    },
+    {
+      "id": "shelf_large_back",
+      "base": "shelf",
+      "facing": "back",
+      "name": "货架 · 背面",
+      "canvas": [
+        64,
+        32
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "source": "sources/shelf_large_back.png",
+      "originalSource": "D:\\develop\\project\\tide\\assets\\scene-furniture-directions\\sources\\shelf_back.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A horizontal grey-blue metal shelving unit seen from REAR and high above. Broad top shelf, SOUTH rear face has TWO diagonal crossed steel braces making a clearly visible X across the rear. No front-open compartments at bottom. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "target": "assets/props/shelf_large_back.png",
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "contentSize": [
+        30,
+        26
+      ]
+    }
+  ]
+}

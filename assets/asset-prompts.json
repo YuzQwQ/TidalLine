@@ -139,11 +139,16 @@
     {
       "group": "props",
       "id": "crate_heavy",
-      "name": "保险箱",
+      "name": "小型保险箱",
       "priority": 1,
       "subject": "一个厚重深金属灰保险箱，顶面占大部分，朝画面下方的短立面有圆形转盘锁，四角铆钉，包边深色；表现厚金属体积，锁不要贴在水平顶面。",
-      "usedFor": "重型容器。5 秒完全不能动，出声最响。",
-      "source": "exec-2e645290-c446-47e2-86c8-ce9e112651c8.png"
+      "usedFor": "小型保险箱 B，主体缩入20×21范围，保持32×32透明画布及一格碰撞；大型保险箱 V 另用crate_safe_big。",
+      "source": "container-small-safe/sources/crate_heavy.png",
+      "spriteFit": [
+        20,
+        21
+      ],
+      "generationManifest": "container-small-safe/manifest.json"
     },
     {
       "group": "props",
@@ -249,11 +254,11 @@
     {
       "group": "tiles",
       "id": "wall",
-      "name": "墙体",
+      "name": "墙体 · 连续墙顶",
       "priority": 1,
-      "subject": "从正上方看的一段墙体：深色粗糙混凝土的顶面，比地板暗两个档，表面有颗粒感，边缘略亮一条。",
-      "usedFor": "所有墙。挡住视线和子弹。",
-      "source": "exec-4e459dfe-4b8b-4151-b18f-bb0c764951e6.png"
+      "subject": "浅灰米色石材墙顶，大块平缓色面与少量石缝，明显亮于深灰绿抹灰墙面。与独立32×32南向立面及4×48东侧面组合成1.5格高墙。",
+      "usedFor": "通用高墙墙顶：视觉和实体32×48，向北扩展16px，门洞保留开口。预览 assets/wall-volume/index.html。",
+      "source": "wall-volume/sources/wall.png"
     },
     {
       "group": "props",
@@ -513,6 +518,16 @@
       "sourceArchive": "assets/container-redraw/sources/crate_trash.png",
       "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 老式户外镀锌铁皮垃圾桶，灰绿色金属，宽圆形椭圆桶口占画面大半，圆盖向北侧半掀开而非完全盖住，露出桶内深灰垃圾袋和两三片旧纸，圆盖中央一个小把手，桶身短立面有稀疏竖向压筋及两侧小提耳，少量锈斑。必须一眼读出带盖生活垃圾桶，不能是油桶、化工桶、网格废纸篓。无油桶加油孔，无回收标志，无文字，不画地面散落垃圾。",
       "usedFor": "独立垃圾桶容器，地图标记 Z；与装饰油桶 barrel.png 分开。"
+    },
+    {
+      "group": "props",
+      "id": "crate_safe_big",
+      "name": "大型保险箱",
+      "priority": 1,
+      "subject": "石墨灰绿厚钢制保险箱，75°俯视，大面积厚重顶板，南侧厚门框、圆形锁轮与两只右侧铰链，少量暗黄铜细节；左上光源，透明背景，一格占地。",
+      "usedFor": "大型保险箱 V，秘藏容器。占地、搜索时间和掉落规则保持原样。",
+      "source": "container-large-safe/sources/crate_safe_big.png",
+      "generationManifest": "container-large-safe/manifest.json"
     }
   ],
   "optional": [
@@ -560,5 +575,11 @@
   "stylePromptGround": "Use case: stylized-concept. Create ONE 32x32 pixel-art ground decal for 潮汐线, in the ground plane of a 75-degree top-down orthographic game. The decal lies flat on the ground, no upright extrusion, no invented height. Muted weathered palette and upper-left light, coarse crisp pixel clusters, no antialiasing. Fit complete decal within central 28x28, 2px transparent margin, transparent PNG. No surrounding ground, label, border or shadow. Subject: ",
   "styleVersion": "2.1",
   "specification": "ART_STYLE.md",
-  "collisionNote": "容器及实体家具完整占一格，只有地面贴花 ground:true 可通行；见 ART_STYLE.md。"
+  "collisionNote": "容器及实体家具完整占一格，只有地面贴花 ground:true 可通行；见 ART_STYLE.md。",
+  "wallSystem": {
+    "manifest": "wall-volume/manifest.json",
+    "preview": "wall-volume/index.html",
+    "front": "tiles/wall_face_s.png",
+    "east": "tiles/wall_face_e.png"
+  }
 }

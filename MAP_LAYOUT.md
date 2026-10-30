@@ -23,7 +23,9 @@
 
 游戏沿用原存档键和局外结构，旧收藏、信用点、配装和仓库保留。地图每局重建，不迁移旧局的地图坐标。
 
-数据链：source.cjs → layout.json → tools/build-linhai-map.js → js/data.js中的RAID_MAP。保留地形与容器/P/E两层行数据，避免容器格丢失室内、庭院、街道材质；保存设计稿SHA-256，可检测快照过期。修改设计源后先构建设计目录，再运行node build.js，自动验收、同步快照并生成离线包，不直接修改生成区块。
+查看与编辑：`python -m http.server 8765` 后打开 `http://127.0.0.1:8765/design/maps/editor/`（地形/实体编辑、实时校验、Ctrl+S 写回）；加 `?selftest=1` 跑 44 项自测。也可直接双击 `design/maps/editor/index.html`，把 layout.json 拖进页面（此时只能导出，不能直接写盘）。
+
+数据链：layout.json（唯一手工源，schemaVersion 2）→ tools/build-linhai-map.js → js/data.js 中的 RAID_MAP；`routes` 不再入库，由校验器按实体占格现场计算。校验规则在 `design/maps/shared/map-validator.js`（18 条：通用 G1–G12 + 本图 M1–M6，本图部分配置在 `design/maps/linhai-old-quarter/rules.json`），浏览器与 node 共用同一份，`design/maps/linhai-old-quarter/validate.cjs` 只是 node 壳。保留地形与容器/P/E两层行数据，避免容器格丢失室内、庭院、街道材质；保存设计稿SHA-256，可检测快照过期。修改设计源后先构建设计目录，再运行node build.js，自动验收、同步快照并生成离线包，不直接修改生成区块。
 
 验证命令：
 

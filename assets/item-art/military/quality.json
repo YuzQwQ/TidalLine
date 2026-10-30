@@ -1,0 +1,216 @@
+{
+  "total": 15,
+  "passed": 15,
+  "assets": [
+    {
+      "id": "mil01",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 951,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 6,
+        "right": 43,
+        "bottom": 41
+      },
+      "sha256": "10931924d1c1ab5607baa1bdfcdd0f2ab7f5f10caa2ef77423d16503bcd73cbc"
+    },
+    {
+      "id": "mil02",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 987,
+      "colors": 15,
+      "bounds": {
+        "left": 6,
+        "top": 4,
+        "right": 41,
+        "bottom": 43
+      },
+      "sha256": "79e489a8c6cd04c4b7c520077f99ac1d2896d1afb9b1c7824892dc7e4c02226c"
+    },
+    {
+      "id": "mil03",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 819,
+      "colors": 15,
+      "bounds": {
+        "left": 5,
+        "top": 4,
+        "right": 42,
+        "bottom": 43
+      },
+      "sha256": "6ef1caf2e2d7c5a2e923fd9f3bc51fb248241682482dd1bdc4034f2aa7a79ab7"
+    },
+    {
+      "id": "mil04",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 859,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 7,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "ee2ce7b8b88e53a101f8a3a9b92a31a20d3bc04a09e550eade2700bf879281ae"
+    },
+    {
+      "id": "mil05",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1085,
+      "colors": 15,
+      "bounds": {
+        "left": 7,
+        "top": 4,
+        "right": 40,
+        "bottom": 43
+      },
+      "sha256": "de6003d05f5057cfb3c5691b4e8e928b3d1b4f8ad752a5ac6796034e0c5bf38b"
+    },
+    {
+      "id": "mil06",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 730,
+      "colors": 15,
+      "bounds": {
+        "left": 8,
+        "top": 4,
+        "right": 39,
+        "bottom": 43
+      },
+      "sha256": "80d70e993f3ac36a86fe9373250962635872c61cff4d7b00d9125994c9c5fc7a"
+    },
+    {
+      "id": "mil07",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1008,
+      "colors": 15,
+      "bounds": {
+        "left": 5,
+        "top": 4,
+        "right": 41,
+        "bottom": 43
+      },
+      "sha256": "e9594b8d2807860b10f2597cc30b7c26bac0941288883fc35d88fd047df84bc6"
+    },
+    {
+      "id": "mil08",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 824,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 7,
+        "right": 43,
+        "bottom": 39
+      },
+      "sha256": "7bd0c8de82ac56d89b0ab24eec4ba032684bef28bc498f5845a85a546685f298"
+    },
+    {
+      "id": "mil09",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 677,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 11,
+        "right": 43,
+        "bottom": 36
+      },
+      "sha256": "93e4957502a0d71164c258de11f151e0d15f62258444ef2c3db0bd5572cd6432"
+    },
+    {
+      "id": "mil10",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 544,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 12,
+        "right": 43,
+        "bottom": 34
+      },
+      "sha256": "ab0a04c1bc2082394a112d3eed6c64994959efc91e6908fcc231ac5fc6ab53cc"
+    },
+    {
+      "id": "mil11",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 1004,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 6,
+        "right": 43,
+        "bottom": 40
+      },
+      "sha256": "33b344eda970837dca44538e8c8d48273a8e81a1e3403e85317b23b2670e9c58"
+    },
+    {
+      "id": "mil12",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 829,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 9,
+        "right": 43,
+        "bottom": 38
+      },
+      "sha256": "a69b1fb02ef7494e06487e9b7689a600c5cf85c586bb71ec4926b74a01db4dcb"
+    },
+    {
+      "id": "mil13",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 766,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 10,
+        "right": 43,
+        "bottom": 36
+      },
+      "sha256": "69acf6876c8d269d2960ec4501188f717aa4b9fcbbe7d7e786a8027a5996da64"
+    },
+    {
+      "id": "mil14",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 864,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 8,
+        "right": 43,
+        "bottom": 38
+      },
+      "sha256": "db3fb0d85e455785e4bfe34121cf5957cfe6f1694d2e5212aa5c4b617b4a83c5"
+    },
+    {
+      "id": "mil15",
+      "width": 48,
+      "height": 48,
+      "visiblePixels": 678,
+      "colors": 15,
+      "bounds": {
+        "left": 4,
+        "top": 10,
+        "right": 43,
+        "bottom": 36
+      },
+      "sha256": "009e4579aea3e0c08042f460fab68204d592a8b64b33fa5123dace8b8647611b"
+    }
+  ]
+}

@@ -109,7 +109,7 @@
   开箱 0 / 0.6 / 1.2 / 1.8 / 2.6 / 3.6 秒，后两档必须站定且全程发声；每箱抽 1–2 或 2–3 件，秘藏固定 3 件。
   25 种容器（每档 3–5 种）用 `cats` 声明类别偏好，强度由 CFG.LOOT.catPref 统一控制（当前 ×9）；
   同品质的稀有度曲线完全一致，偏好只改"出哪一类"。六条曲线见 design/items/CONTAINER_QUALITY.md
-- 108 件物品分为 89 件收集品和 19 件物资；收集品九类，物资下分弹药类和医疗物品；六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 29 件，见 design/items/LIFE_COLLECTIBLES.md；电子产品 15 件，见 design/items/ELECTRONICS.md；工业器材 15 件，见 design/items/INDUSTRIAL.md；医疗收集品 12 件，见 design/items/MEDICAL_COLLECTIBLES.md；
+- 159 件物品分为 140 件收集品和 19 件物资；收集品九类，物资下分弹药类和医疗物品；六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 29 件，见 design/items/LIFE_COLLECTIBLES.md；电子产品 15 件，见 design/items/ELECTRONICS.md；工业器材 15 件，见 design/items/INDUSTRIAL.md；医疗收集品 12 件，见 design/items/MEDICAL_COLLECTIBLES.md；文物藏品 21 件，见 design/items/COLLECTIBLES.md；军事收集品 15 件，见 design/items/MILITARY_COLLECTIBLES.md；情报收集品 15 件，见 design/items/INTEL_COLLECTIBLES.md；神秘学物品 15 件，见 design/items/OCCULT_COLLECTIBLES.md；
   逐条数值（编号 / 类别 / 名称 / 稀有度 / 重量 / 价值 / 简称 / 描述 / 画什么）见 design/items/ITEM_INDEX.md，由 `node tools/gen-item-index.js` 从 ITEMS 生成
 - 统一单格背包 24 格 + 安全箱 4 格 + 45kg 负重上限，负重四档影响移速和噪声
 - 未录入的物品在搜刮面板里有橙色「新」角标
@@ -351,6 +351,8 @@
 - 排队中的条目显示「排队」，正在搜的那件走进度条
 - 拿走已搜出来的东西不会打断自动搜索，拿完接着搜下一件
 - 搜到一半点另一件，前一件进度归零——想换目标就要重新花时间
+- **没搜空的容器可以反复打开**：第一次要按品质读条，之后再开直接掀盖，不重演撬箱动作
+- 搜空的容器压暗、不再提示交互（`opened` 记"已清空"，`searched` 记"掀开过"，两个状态分开）
 - 搜过的容器**会记住状态**，关掉再打开还是已搜的样子
 - 搜出来之前**完全看不到物品**：没有贴图、没有名字、没有稀有度，只有一个 `?` 空格
 - 搜出来之后，行底色按稀有度上色（寻常灰 / 完好青 / 稀见蓝 / 珍稀金 / 孤品红），背包格子也一样
@@ -360,6 +362,22 @@
 足够别人从两个房间外走过来。这就是"搜到哪一件就走"成为真决定的原因。
 
 数值都在 `js/config.js` 的 `SEARCH` 和 `ITEM_SEARCH` 两段。
+
+## 丢弃与遗落物品堆
+
+背包里**右键物品 → 丢弃**，整叠落在脚下一格：
+
+| 行为 | 规则 |
+|---|---|
+| 落点 | 玩家所在格；站不住（水里、墙里）就退到相邻可走格 |
+| 合并 | 同一格已经有物品堆就并进去，同种可堆叠物品并成一条（不刷第二个堆） |
+| 可见性 | 丢下去的东西**直接可见**——自己放的东西不用再"搜"一遍 |
+| 搜刮 | 物品堆就是容器，能打开、能再捡回来；拿完最后一件就地消失 |
+| 生存期 | 只存在于本局，撤离或死亡后不保留 |
+
+画面上物品堆画成一小摊杂物，露出的三件按稀有度上色，站在上面会被角色挡住，走开一格就看得见。
+代码在 `js/game.js` 的 `dropSpot / makePile / dropFromBag / syncBoxState`，
+右键菜单是 `Ctx`（`index.html` 里的 `.ctxmenu`）。
 
 ## 战斗手感（后坐力）
 
@@ -464,7 +482,7 @@ assets/props/corpse_guard.png   机械：潮汐守卫
 外观、品质与掉落偏好配置在 `CONTAINER_TYPES`（品质取 `CONTAINER_QUALITY`）；扩建地图有 48 个容器，覆盖全部六档品质。
 字模避开 `P` 出生点、`E` 撤离点、`S` 已开的门、`X` 背景街坊；纸箱/员工储物盒/帆布挎包用小写 `b`/`e`/`m` 补位。
 
-地图布局与巡逻说明见 [MAP_LAYOUT.md](MAP_LAYOUT.md)。运行 `node tools/gen-map-preview.js` 可从实际游戏数据重绘总览，运行 `node tools/test-map-layout.js` 检查出生点、操作面、巡逻间距和潮汐通路。
+地图布局与巡逻说明见 [MAP_LAYOUT.md](MAP_LAYOUT.md)；地图编辑器在 `design/maps/editor/`（起本地服务后打开，或双击拖入 layout.json）：五工具改地形、放实体、撤销重做、实时校验、点问题条目跳到出事的格子、选中家具按 `R` 顺时针转 90°（占格与贴图一起转，视图旋转是 `Shift+R`）、Ctrl+S 写回 layout.json；打开别的图用 `index.html?map=../layout1.json`（路径相对 editor/，rules.json 自动从同目录取）；重画了 `assets/` 里的贴图后点顶栏"重载贴图"或按 `Alt+R`（切回窗口时也会自动比对 `Last-Modified` 并重载，改了图看不到效果就是这层缓存）；门与橱窗可点选、改名/改类型、删除（原地自动封墙），要从无到有开一扇就用左侧「结构 → 门洞」点墙，两侧空间自动推断；校验分两级：**硬性错误会拦构建**（尺寸、行宽、实体占格重叠、地形冲突、撤离点可达、门洞结构、敌人出生格与巡逻可达、编号唯一），其余一律降为提醒（孤立格、房间标注点、箱柜操作面、分区、配额、净宽、建筑出入口）——`rules.json` 的 `expect` 全 `null`、`specialChecks` 为空时 M1–M6 整段不跑，想恢复某条专项检查把名字加回 `specialChecks` 即可；顶栏"新建"可从三个尺寸预设与三种模板开一张新图；`?selftest=1` 跑自测。要一次生成 `layout.json` + `rules.json` + `README.md` 三件套用 `node tools/new-map.js --id <编号> --size 48x36 --template blank|canal|building`（浏览器写不了目录，这一步只能在命令行做）。方案见 `design/maps/MAP_EDITOR_DESIGN.md`。运行 `node tools/gen-map-preview.js` 可从实际游戏数据重绘总览。地图相关测试有六层：`design/maps/linhai-old-quarter/test.cjs`（破坏性样例，证明校验器会拦）、`tools/test-map-validator.js`（18 条规则逐条破坏，跑的是全约束规则，与某张图关不关它无关）、`tools/test-map-roundtrip.js`（字段往返 + 浏览器 UMD）、`tools/test-map-layout.js`（设计稿与游戏快照一致）、`tools/test-map-templates.js`（15 组预设 × 模板）、`tools/test-map-art-map.js`（美术登记表与 `assets/props` 对齐）。规则本体与模板在 `design/maps/shared/`，浏览器与 node 共用。
 
 #### 角色是三向图
 

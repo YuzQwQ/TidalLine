@@ -1,4 +1,6 @@
-/* 临海路设计稿的唯一手工源。所有输出独立于游戏运行数据。 */
+/* @deprecated 2026-10-29：layout.json 已升为唯一手工源（schemaVersion 2），本文件不再被任何脚本引用。
+ * 保留一个版本用于对照历史坐标与初稿结构，之后删除。请勿在此继续修改设计。 */
+/* 临海路设计稿的初稿脚本。所有输出独立于游戏运行数据。 */
 const WIDTH = 72, HEIGHT = 56;
 const legend = {
   '#': { name: '墙体 / 边界', walkable: false, opaque: true, color: '#354550' },

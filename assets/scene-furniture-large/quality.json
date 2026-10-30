@@ -1,0 +1,353 @@
+[
+  {
+    "id": "bed_home_large",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      1244,
+      1264
+    ],
+    "visiblePixels": 1330,
+    "colors": 15
+  },
+  {
+    "id": "bed_home_large_side",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1244,
+      1265
+    ],
+    "visiblePixels": 838,
+    "colors": 15
+  },
+  {
+    "id": "bed_home_large_back",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 1233,
+    "colors": 15
+  },
+  {
+    "id": "bed_clinic_large",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      1247,
+      1261
+    ],
+    "visiblePixels": 1333,
+    "colors": 15
+  },
+  {
+    "id": "bed_clinic_large_side",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1536,
+      1024
+    ],
+    "visiblePixels": 865,
+    "colors": 15
+  },
+  {
+    "id": "bed_clinic_large_back",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 1332,
+    "colors": 15
+  },
+  {
+    "id": "sofa_home_large",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 1112,
+    "colors": 15
+  },
+  {
+    "id": "sofa_home_large_side",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 1094,
+    "colors": 15
+  },
+  {
+    "id": "sofa_home_large_back",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 1137,
+    "colors": 15
+  },
+  {
+    "id": "bench_wood_large",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 777,
+    "colors": 15
+  },
+  {
+    "id": "bench_wood_large_side",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      846,
+      1858
+    ],
+    "visiblePixels": 827,
+    "colors": 15
+  },
+  {
+    "id": "bench_wood_large_back",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 811,
+    "colors": 15
+  },
+  {
+    "id": "display_clock_large",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1536,
+      1024
+    ],
+    "visiblePixels": 1292,
+    "colors": 15
+  },
+  {
+    "id": "display_clock_large_side",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      1046,
+      1504
+    ],
+    "visiblePixels": 1024,
+    "colors": 15
+  },
+  {
+    "id": "display_clock_large_back",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1536,
+      1024
+    ],
+    "visiblePixels": 1429,
+    "colors": 15
+  },
+  {
+    "id": "counter_shop_large",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1536,
+      1024
+    ],
+    "visiblePixels": 1278,
+    "colors": 15
+  },
+  {
+    "id": "counter_shop_large_side",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      1024,
+      1536
+    ],
+    "visiblePixels": 1012,
+    "colors": 15
+  },
+  {
+    "id": "counter_shop_large_back",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1536,
+      1024
+    ],
+    "visiblePixels": 1289,
+    "colors": 15
+  },
+  {
+    "id": "counter_bank_large",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1774,
+      887
+    ],
+    "visiblePixels": 1275,
+    "colors": 15
+  },
+  {
+    "id": "counter_bank_large_side",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      809,
+      1942
+    ],
+    "visiblePixels": 735,
+    "colors": 15
+  },
+  {
+    "id": "counter_bank_large_back",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 1207,
+    "colors": 15
+  },
+  {
+    "id": "desk_large",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1536,
+      1024
+    ],
+    "visiblePixels": 1286,
+    "colors": 15
+  },
+  {
+    "id": "desk_large_side",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      793,
+      1983
+    ],
+    "visiblePixels": 972,
+    "colors": 15
+  },
+  {
+    "id": "desk_large_back",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1402,
+      1122
+    ],
+    "visiblePixels": 1371,
+    "colors": 15
+  },
+  {
+    "id": "shelf_large",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 758,
+    "colors": 15
+  },
+  {
+    "id": "shelf_large_side",
+    "canvas": [
+      32,
+      64
+    ],
+    "sourceSize": [
+      1070,
+      1470
+    ],
+    "visiblePixels": 601,
+    "colors": 15
+  },
+  {
+    "id": "shelf_large_back",
+    "canvas": [
+      64,
+      32
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "visiblePixels": 699,
+    "colors": 15
+  }
+]

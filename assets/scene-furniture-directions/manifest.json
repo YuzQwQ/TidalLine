@@ -1,0 +1,618 @@
+{
+  "generator": "Built-in image_gen, one call per directional variant",
+  "delivery": "32x32 transparent PNG, <=16 colors, 2px clear margins, 75-degree down view, fixed upper-left light",
+  "bases": [
+    {
+      "id": "bed_home",
+      "name": "住宅床",
+      "visual": "深棕木质单人床，泛黄枕头在北端，灰蓝旧棉被覆盖床面，南端短木床尾。床沿南北方向延伸。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bed_home.png",
+      "originalSha256": "b62a3bc2f6a6fea2397536e8114dedccacb45a7d2a66880ce94aa37b77017ea7"
+    },
+    {
+      "id": "bed_clinic",
+      "name": "诊疗床",
+      "visual": "白漆钢管诊疗床，灰绿色薄床垫，小型米白枕头置于北端，南端露出钢管床尾，少量掉漆。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bed_clinic.png",
+      "originalSha256": "8c32f004c4461babf25477d2c8053c88db0541e1bfd339f3db8c6fbca4ba87b6"
+    },
+    {
+      "id": "stove_home",
+      "name": "旧灶台",
+      "visual": "米白搪瓷双眼燃气灶，深色铸铁炉架，顶面两只圆形炉头，南侧短立面两个黑旋钮，少量油渍。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\stove_home.png",
+      "originalSha256": "3c5851a3bbbd2fae401ac317305c84cf023e801171aa281acef935309016b19d"
+    },
+    {
+      "id": "sofa_home",
+      "name": "旧布艺沙发",
+      "visual": "褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\sofa_home.png",
+      "originalSha256": "e3d191a9ccad07b0f9f89dfd0399f41364ae835958f64030385d76b909e8bc9b"
+    },
+    {
+      "id": "bench_wood",
+      "name": "木条长椅",
+      "visual": "横向木条长椅，旧棕色木条座面，北侧低靠背，深灰铸铁椅脚，露出大面积座面。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bench_wood.png",
+      "originalSha256": "9fa050cda2c75177aee5086c45471b5b90186091672c7a5696e4d252629bb2e5"
+    },
+    {
+      "id": "display_clock",
+      "name": "玻璃展柜",
+      "visual": "低矮矩形钟表展柜，深棕木底座、细黄铜包边、低反光灰青玻璃顶面，内垫暗蓝布，两个小钟表剪影。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\display_clock.png",
+      "originalSha256": "8be81130dc7bd50630b504d286840fe07f9d5fffb599d1faaf9d26b340ca26ae"
+    },
+    {
+      "id": "counter_shop",
+      "name": "商店柜台",
+      "visual": "矮矩形深棕木柜台，大面积磨损木顶，南侧短木饰面，两条竖向拼板缝，没有抽屉把手。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\counter_shop.png",
+      "originalSha256": "0cf27ca4352bb8a87b3be865a0d18fabf07b1e4e235b7c4c06c418b0fb4f79cc"
+    },
+    {
+      "id": "counter_bank",
+      "name": "银行柜台",
+      "visual": "矮矩形银行柜台，宽阔灰白石材顶面，南侧短深色木饰面，细黄铜压条，不画玻璃隔断。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\counter_bank.png",
+      "originalSha256": "50d88f5df44bb6368d36efb72c0f53afe2611f0896d2a9d814c8c76447a5df8b"
+    },
+    {
+      "id": "console_security",
+      "name": "安保监控台",
+      "visual": "灰绿钢板监控操作台，顶面偏北嵌一台凸面小显像管，屏幕熄灭深绿，前侧为黑色按键操作面，短钢板南立面。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\console_security.png",
+      "originalSha256": "a2b2c1817ee731a2062f1f27e6294bee7b58292036b817ce819c09babba8a5f1"
+    },
+    {
+      "id": "tree_courtyard",
+      "name": "庭院树木",
+      "visual": "一棵紧凑的庭院小树，灰褐树干，低饱和灰绿树冠，顶部明亮、右下暗，树冠不超过一格，底部露出短树干，无地面底座。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\tree_courtyard.png",
+      "originalSha256": "632e8e60caba480b0deeed2f6f85625c91650acc2664e18cbf17ec79e5874e0a"
+    },
+    {
+      "id": "desk",
+      "name": "办公桌",
+      "visual": "旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\desk.png",
+      "originalSha256": "ff445521f121349fd5cedbba82f03d353cd666fd9dc377c07bf25170660983f4"
+    },
+    {
+      "id": "chair",
+      "name": "翻倒的椅子",
+      "visual": "一把翻倒的深木椅子，从75度俯视看见斜着的椅座平面、椅背厚度和向一侧伸出的四条椅腿，简洁有体积的木件，不要画成平面线稿。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\chair.png",
+      "originalSha256": "5f14df528b2f425f9e50d30994ed5b9ffc9f6d02997d1b98185dccdb2f0eac7b"
+    },
+    {
+      "id": "shelf",
+      "name": "货架",
+      "visual": "旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\shelf.png",
+      "originalSha256": "de529a6c0656f1dd3f3cf29740490931aa522120ea20901f093a57de422b9d05"
+    },
+    {
+      "id": "barrel",
+      "name": "油桶",
+      "visual": "旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\barrel.png",
+      "originalSha256": "a721c8cdc47b804a554f02e20e0778a86973ea0bd057736750de1246d4596230"
+    }
+  ],
+  "assets": [
+    {
+      "id": "bed_home_side",
+      "base": "bed_home",
+      "name": "住宅床 · 侧面",
+      "facing": "side",
+      "visual": "深棕木质单人床，泛黄枕头在北端，灰蓝旧棉被覆盖床面，南端短木床尾。床沿南北方向延伸。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bed_home.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE pillow WEST, bed long axis EAST-WEST. BACK pillow SOUTH, bed long axis NORTH-SOUTH. Follow ONLY the requested direction.\nObject: 深棕木质单人床，泛黄枕头在北端，灰蓝旧棉被覆盖床面，南端短木床尾。床沿南北方向延伸。",
+      "source": "sources/bed_home_side.png",
+      "target": "assets/props/bed_home_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-4354bf94-36c0-4958-bf4b-b27424db5323.png"
+    },
+    {
+      "id": "bed_home_back",
+      "base": "bed_home",
+      "name": "住宅床 · 背面",
+      "facing": "back",
+      "visual": "深棕木质单人床，泛黄枕头在北端，灰蓝旧棉被覆盖床面，南端短木床尾。床沿南北方向延伸。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bed_home.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NORTH-SOUTH narrow wooden bed seen from overhead, PILLOW AT BOTTOM/SOUTH edge, blue blanket upper/NORTH half, tall headboard at BOTTOM in front of pillow, short footboard TOP. This is reverse-facing from original with headboard/pillow at top. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/bed_home_back.png",
+      "target": "assets/props/bed_home_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-eea8bf0e-577b-47ea-8952-2ab60b350ffe.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE pillow WEST, bed long axis EAST-WEST. BACK pillow SOUTH, bed long axis NORTH-SOUTH. Follow ONLY the requested direction.\nObject: 深棕木质单人床，泛黄枕头在北端，灰蓝旧棉被覆盖床面，南端短木床尾。床沿南北方向延伸。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-62f0ae40-1e2e-44e7-b36b-0f755667fe10.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "bed_clinic_side",
+      "base": "bed_clinic",
+      "name": "诊疗床 · 侧面",
+      "facing": "side",
+      "visual": "白漆钢管诊疗床，灰绿色薄床垫，小型米白枕头置于北端，南端露出钢管床尾，少量掉漆。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bed_clinic.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE pillow WEST, bed long axis EAST-WEST. BACK pillow SOUTH, bed long axis NORTH-SOUTH. Follow ONLY the requested direction.\nObject: 白漆钢管诊疗床，灰绿色薄床垫，小型米白枕头置于北端，南端露出钢管床尾，少量掉漆。",
+      "source": "sources/bed_clinic_side.png",
+      "target": "assets/props/bed_clinic_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-30e675bc-97f8-46f5-927b-1770fb0e1aed.png"
+    },
+    {
+      "id": "bed_clinic_back",
+      "base": "bed_clinic",
+      "name": "诊疗床 · 背面",
+      "facing": "back",
+      "visual": "白漆钢管诊疗床，灰绿色薄床垫，小型米白枕头置于北端，南端露出钢管床尾，少量掉漆。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bed_clinic.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NORTH-SOUTH narrow white steel medical bed, sage mattress, PILLOW AT BOTTOM/SOUTH end, head rail BOTTOM, low foot rail TOP. Pillow must be at bottom, NOT TOP. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/bed_clinic_back.png",
+      "target": "assets/props/bed_clinic_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e52ed95e-c176-4d70-a6ed-2beab8b3fac3.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE pillow WEST, bed long axis EAST-WEST. BACK pillow SOUTH, bed long axis NORTH-SOUTH. Follow ONLY the requested direction.\nObject: 白漆钢管诊疗床，灰绿色薄床垫，小型米白枕头置于北端，南端露出钢管床尾，少量掉漆。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2be8ea2b-1267-4a99-b66a-cb47d7c31436.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "stove_home_side",
+      "base": "stove_home",
+      "name": "旧灶台 · 侧面",
+      "facing": "side",
+      "visual": "米白搪瓷双眼燃气灶，深色铸铁炉架，顶面两只圆形炉头，南侧短立面两个黑旋钮，少量油渍。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\stove_home.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE two burners aligned NORTH-SOUTH, knobs EAST. BACK burners EAST-WEST, knobs hidden NORTH, SOUTH has plain rear casing. Follow ONLY the requested direction.\nObject: 米白搪瓷双眼燃气灶，深色铸铁炉架，顶面两只圆形炉头，南侧短立面两个黑旋钮，少量油渍。",
+      "source": "sources/stove_home_side.png",
+      "target": "assets/props/stove_home_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7b9a6892-666e-4cee-88a9-ad903d129647.png"
+    },
+    {
+      "id": "stove_home_back",
+      "base": "stove_home",
+      "name": "旧灶台 · 背面",
+      "facing": "back",
+      "visual": "米白搪瓷双眼燃气灶，深色铸铁炉架，顶面两只圆形炉头，南侧短立面两个黑旋钮，少量油渍。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\stove_home.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE two burners aligned NORTH-SOUTH, knobs EAST. BACK burners EAST-WEST, knobs hidden NORTH, SOUTH has plain rear casing. Follow ONLY the requested direction.\nObject: 米白搪瓷双眼燃气灶，深色铸铁炉架，顶面两只圆形炉头，南侧短立面两个黑旋钮，少量油渍。",
+      "source": "sources/stove_home_back.png",
+      "target": "assets/props/stove_home_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2b12a84e-fb8a-46ae-91db-d7d38ca2b4b9.png"
+    },
+    {
+      "id": "sofa_home_side",
+      "base": "sofa_home",
+      "name": "旧布艺沙发 · 侧面",
+      "facing": "side",
+      "visual": "褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\sofa_home.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE narrow NORTH-SOUTH sofa, backrest WEST, open seating toward EAST. BACK backrest SOUTH with rear fabric panel, opening NORTH. Follow ONLY the requested direction.\nObject: 褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "source": "sources/sofa_home_side.png",
+      "target": "assets/props/sofa_home_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0f50d075-3990-4d03-bebb-df96a1f9f1dc.png"
+    },
+    {
+      "id": "sofa_home_back",
+      "base": "sofa_home",
+      "name": "旧布艺沙发 · 背面",
+      "facing": "back",
+      "visual": "褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\sofa_home.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE narrow NORTH-SOUTH sofa, backrest WEST, open seating toward EAST. BACK backrest SOUTH with rear fabric panel, opening NORTH. Follow ONLY the requested direction.\nObject: 褪色灰绿色双座布艺沙发，北侧低靠背，左右圆钝扶手，两块清楚的坐垫，大面积坐面可见。",
+      "source": "sources/sofa_home_back.png",
+      "target": "assets/props/sofa_home_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-5f799fe1-685d-4c25-9d0d-f02a2e50e80e.png"
+    },
+    {
+      "id": "bench_wood_side",
+      "base": "bench_wood",
+      "name": "木条长椅 · 侧面",
+      "facing": "side",
+      "visual": "横向木条长椅，旧棕色木条座面，北侧低靠背，深灰铸铁椅脚，露出大面积座面。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bench_wood.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL wooden slat park bench, long axis running TOP TO BOTTOM. Image silhouette height about 2.2 TIMES width. Brown seat slats run vertically, low backrest runs vertically along LEFT edge, seating opens RIGHT. Dark iron end supports at TOP and BOTTOM. Not horizontal. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/bench_wood_side.png",
+      "target": "assets/props/bench_wood_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-c0e5393b-42b8-4385-a74d-0bbb898a8717.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE long axis NORTH-SOUTH, low backrest WEST. BACK long axis EAST-WEST, low backrest SOUTH with rear slats visible, opening NORTH. Follow ONLY the requested direction.\nObject: 横向木条长椅，旧棕色木条座面，北侧低靠背，深灰铸铁椅脚，露出大面积座面。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-721bcc99-4de4-4569-89b3-fb96b775f9eb.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "bench_wood_back",
+      "base": "bench_wood",
+      "name": "木条长椅 · 背面",
+      "facing": "back",
+      "visual": "横向木条长椅，旧棕色木条座面，北侧低靠背，深灰铸铁椅脚，露出大面积座面。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\bench_wood.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A horizontal wooden slat bench viewed OVER ITS BACK. Broad brown seat beyond to TOP, backrest at BOTTOM/foreground obscures seat front. Exposed rear support uprights and bolts on SOUTH rear backrest. Not front view. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/bench_wood_back.png",
+      "target": "assets/props/bench_wood_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-9fd209fb-af8e-4cae-b3fb-056c6f096d75.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE long axis NORTH-SOUTH, low backrest WEST. BACK long axis EAST-WEST, low backrest SOUTH with rear slats visible, opening NORTH. Follow ONLY the requested direction.\nObject: 横向木条长椅，旧棕色木条座面，北侧低靠背，深灰铸铁椅脚，露出大面积座面。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-56e02b0c-6f2e-493b-b122-097af2d31060.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "display_clock_side",
+      "base": "display_clock",
+      "name": "玻璃展柜 · 侧面",
+      "facing": "side",
+      "visual": "低矮矩形钟表展柜，深棕木底座、细黄铜包边、低反光灰青玻璃顶面，内垫暗蓝布，两个小钟表剪影。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\display_clock.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL glass-top watch display cabinet, long axis TOP TO BOTTOM, height 2.3 TIMES width. Walnut plinth, thin brass frame, navy felt, TWO tiny watches stacked one ABOVE the other under glass. All corners square, not diamond. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/display_clock_side.png",
+      "target": "assets/props/display_clock_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-45e7d025-ef1a-41ee-ba4e-0bae61990e97.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE long axis NORTH-SOUTH. BACK long axis EAST-WEST, plain rear wood panel on SOUTH with glass top, same two watches inside. Follow ONLY the requested direction.\nObject: 低矮矩形钟表展柜，深棕木底座、细黄铜包边、低反光灰青玻璃顶面，内垫暗蓝布，两个小钟表剪影。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-56baf129-f3e2-4198-9113-654cae3e029d.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "display_clock_back",
+      "base": "display_clock",
+      "name": "玻璃展柜 · 背面",
+      "facing": "back",
+      "visual": "低矮矩形钟表展柜，深棕木底座、细黄铜包边、低反光灰青玻璃顶面，内垫暗蓝布，两个小钟表剪影。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\display_clock.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE long axis NORTH-SOUTH. BACK long axis EAST-WEST, plain rear wood panel on SOUTH with glass top, same two watches inside. Follow ONLY the requested direction.\nObject: 低矮矩形钟表展柜，深棕木底座、细黄铜包边、低反光灰青玻璃顶面，内垫暗蓝布，两个小钟表剪影。",
+      "source": "sources/display_clock_back.png",
+      "target": "assets/props/display_clock_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0016862d-7403-4d15-8543-9a4cb813293e.png"
+    },
+    {
+      "id": "counter_shop_side",
+      "base": "counter_shop",
+      "name": "商店柜台 · 侧面",
+      "facing": "side",
+      "visual": "矮矩形深棕木柜台，大面积磨损木顶，南侧短木饰面，两条竖向拼板缝，没有抽屉把手。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\counter_shop.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL walnut counter, rectangular top runs TOP TO BOTTOM, height 2.4 TIMES width. Broad scratched wooden TOP, very short SOUTH end panel at BOTTOM. NO horizontal wide counter. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/counter_shop_side.png",
+      "target": "assets/props/counter_shop_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7acfe604-de6c-4f77-ac20-4984563cdb14.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE long axis NORTH-SOUTH. BACK broad wood top with employee-side open storage recess on SOUTH. Follow ONLY the requested direction.\nObject: 矮矩形深棕木柜台，大面积磨损木顶，南侧短木饰面，两条竖向拼板缝，没有抽屉把手。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3c7271a0-1d0e-4d1e-b7e6-40f157cbd013.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "counter_shop_back",
+      "base": "counter_shop",
+      "name": "商店柜台 · 背面",
+      "facing": "back",
+      "visual": "矮矩形深棕木柜台，大面积磨损木顶，南侧短木饰面，两条竖向拼板缝，没有抽屉把手。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\counter_shop.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE long axis NORTH-SOUTH. BACK broad wood top with employee-side open storage recess on SOUTH. Follow ONLY the requested direction.\nObject: 矮矩形深棕木柜台，大面积磨损木顶，南侧短木饰面，两条竖向拼板缝，没有抽屉把手。",
+      "source": "sources/counter_shop_back.png",
+      "target": "assets/props/counter_shop_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-d6fb5036-fcdf-4826-9b84-bec23e844f8a.png"
+    },
+    {
+      "id": "counter_bank_side",
+      "base": "counter_bank",
+      "name": "银行柜台 · 侧面",
+      "facing": "side",
+      "visual": "矮矩形银行柜台，宽阔灰白石材顶面，南侧短深色木饰面，细黄铜压条，不画玻璃隔断。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\counter_bank.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL bank counter, rectangular white-grey stone TOP runs TOP TO BOTTOM, height 2.4 TIMES width. Short walnut end fascia at BOTTOM, thin brass strips. NO horizontal counter. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/counter_bank_side.png",
+      "target": "assets/props/counter_bank_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-ed7d8da1-1806-4999-8cc6-8044955ee788.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE long axis NORTH-SOUTH. BACK broad stone top and employee-side storage recess on SOUTH, dark wood and brass. Follow ONLY the requested direction.\nObject: 矮矩形银行柜台，宽阔灰白石材顶面，南侧短深色木饰面，细黄铜压条，不画玻璃隔断。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-488ee477-f3b7-4501-8535-a99b4e14f3f5.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "counter_bank_back",
+      "base": "counter_bank",
+      "name": "银行柜台 · 背面",
+      "facing": "back",
+      "visual": "矮矩形银行柜台，宽阔灰白石材顶面，南侧短深色木饰面，细黄铜压条，不画玻璃隔断。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\counter_bank.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A horizontal walnut bank counter with WHITE-GREY STONE TOP. The SOUTH foreground employee side has TWO OPEN DARK STORAGE CUBBIES under the stone top, NO paneled closed front. Broad top plane with short rear fascia. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/counter_bank_back.png",
+      "target": "assets/props/counter_bank_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7fb75922-2b2f-46c1-bc81-37adf4e8cb4a.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE long axis NORTH-SOUTH. BACK broad stone top and employee-side storage recess on SOUTH, dark wood and brass. Follow ONLY the requested direction.\nObject: 矮矩形银行柜台，宽阔灰白石材顶面，南侧短深色木饰面，细黄铜压条，不画玻璃隔断。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7ba12515-d0ea-462b-8918-bb6e69cbe646.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "console_security_side",
+      "base": "console_security",
+      "name": "安保监控台 · 侧面",
+      "facing": "side",
+      "visual": "灰绿钢板监控操作台，顶面偏北嵌一台凸面小显像管，屏幕熄灭深绿，前侧为黑色按键操作面，短钢板南立面。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\console_security.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A grey-green security console turned SIDEWAYS in world. CRT monitor is at LEFT/WEST of console. Keyboard occupies RIGHT/EAST half and its key rows run VERTICALLY. Monitor screen faces RIGHT/EAST, we mostly see grey monitor side casing at LEFT. Do not put monitor at top or bottom. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/console_security_side.png",
+      "target": "assets/props/console_security_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-590f1e12-26eb-4141-a618-3de2d0593fdc.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE monitor at WEST, keyboard toward EAST. BACK monitor back casing SOUTH, keyboard beyond it NORTH, rear ventilation slots, NO screen on rear casing. Follow ONLY the requested direction.\nObject: 灰绿钢板监控操作台，顶面偏北嵌一台凸面小显像管，屏幕熄灭深绿，前侧为黑色按键操作面，短钢板南立面。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-168d3464-0eaf-4863-9e75-eea219e20de8.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "console_security_back",
+      "base": "console_security",
+      "name": "安保监控台 · 背面",
+      "facing": "back",
+      "visual": "灰绿钢板监控操作台，顶面偏北嵌一台凸面小显像管，屏幕熄灭深绿，前侧为黑色按键操作面，短钢板南立面。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\console_security.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE monitor at WEST, keyboard toward EAST. BACK monitor back casing SOUTH, keyboard beyond it NORTH, rear ventilation slots, NO screen on rear casing. Follow ONLY the requested direction.\nObject: 灰绿钢板监控操作台，顶面偏北嵌一台凸面小显像管，屏幕熄灭深绿，前侧为黑色按键操作面，短钢板南立面。",
+      "source": "sources/console_security_back.png",
+      "target": "assets/props/console_security_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-be826788-917f-49ef-98e6-5e08d5f8a10a.png"
+    },
+    {
+      "id": "tree_courtyard_side",
+      "base": "tree_courtyard",
+      "name": "庭院树木 · 侧面",
+      "facing": "side",
+      "visual": "一棵紧凑的庭院小树，灰褐树干，低饱和灰绿树冠，顶部明亮、右下暗，树冠不超过一格，底部露出短树干，无地面底座。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\tree_courtyard.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. Nearly rotationally symmetric. Same compact overhead crown mass and short trunk. SIDE right-hand branches, BACK rear branching. No tall side-elevation tree. Follow ONLY the requested direction.\nObject: 一棵紧凑的庭院小树，灰褐树干，低饱和灰绿树冠，顶部明亮、右下暗，树冠不超过一格，底部露出短树干，无地面底座。",
+      "source": "sources/tree_courtyard_side.png",
+      "target": "assets/props/tree_courtyard_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-59f62eb6-8b87-4254-a3d9-e659452b4259.png"
+    },
+    {
+      "id": "tree_courtyard_back",
+      "base": "tree_courtyard",
+      "name": "庭院树木 · 背面",
+      "facing": "back",
+      "visual": "一棵紧凑的庭院小树，灰褐树干，低饱和灰绿树冠，顶部明亮、右下暗，树冠不超过一格，底部露出短树干，无地面底座。",
+      "reference": "D:\\develop\\project\\tide\\assets\\scene-furniture\\sources\\tree_courtyard.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. Nearly rotationally symmetric. Same compact overhead crown mass and short trunk. SIDE right-hand branches, BACK rear branching. No tall side-elevation tree. Follow ONLY the requested direction.\nObject: 一棵紧凑的庭院小树，灰褐树干，低饱和灰绿树冠，顶部明亮、右下暗，树冠不超过一格，底部露出短树干，无地面底座。",
+      "source": "sources/tree_courtyard_back.png",
+      "target": "assets/props/tree_courtyard_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e01d621b-feb0-41ac-bff8-f701f5d110c3.png"
+    },
+    {
+      "id": "desk_side",
+      "base": "desk",
+      "name": "办公桌 · 侧面",
+      "facing": "side",
+      "visual": "旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\desk.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL old dark walnut writing desk, top long axis TOP TO BOTTOM, height 2.5 TIMES width. Simple scratched wooden TOP, short SOUTH apron at BOTTOM and two short feet. Empty top, no drawers. NO horizontal desk. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/desk_side.png",
+      "target": "assets/props/desk_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-ddba61e1-af65-4f07-bf8f-fddd6a1b1917.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE tabletop long axis NORTH-SOUTH. BACK long axis EAST-WEST, reverse-side apron, same tabletop. Follow ONLY the requested direction.\nObject: 旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-480fa253-aaeb-40e3-9f88-ab1e42679bfb.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "desk_back",
+      "base": "desk",
+      "name": "办公桌 · 背面",
+      "facing": "back",
+      "visual": "旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\desk.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE tabletop long axis NORTH-SOUTH. BACK long axis EAST-WEST, reverse-side apron, same tabletop. Follow ONLY the requested direction.\nObject: 旧深木办公桌，主体是宽横向长方桌面，清楚看到桌面下方南侧短桌裙和两条短桌腿，深木划痕与干污渍，顶面最亮、立面次暗、桌底深色，不能只有一块平木板。",
+      "source": "sources/desk_back.png",
+      "target": "assets/props/desk_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-72925016-7568-4603-993a-21a6c1a06f80.png"
+    },
+    {
+      "id": "chair_side",
+      "base": "chair",
+      "name": "翻倒的椅子 · 侧面",
+      "facing": "side",
+      "visual": "一把翻倒的深木椅子，从75度俯视看见斜着的椅座平面、椅背厚度和向一侧伸出的四条椅腿，简洁有体积的木件，不要画成平面线稿。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\chair.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. Keep same TIPPED OVER wooden chair lying on its side, never upright. SIDE physical pose turned 90 degrees in world. BACK pose turned 180 degrees in world. Repaint geometry and lighting. Follow ONLY the requested direction.\nObject: 一把翻倒的深木椅子，从75度俯视看见斜着的椅座平面、椅背厚度和向一侧伸出的四条椅腿，简洁有体积的木件，不要画成平面线稿。",
+      "source": "sources/chair_side.png",
+      "target": "assets/props/chair_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-9f6c143c-eb4f-4b50-9524-c346fa059f02.png"
+    },
+    {
+      "id": "chair_back",
+      "base": "chair",
+      "name": "翻倒的椅子 · 背面",
+      "facing": "back",
+      "visual": "一把翻倒的深木椅子，从75度俯视看见斜着的椅座平面、椅背厚度和向一侧伸出的四条椅腿，简洁有体积的木件，不要画成平面线稿。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\chair.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. Keep same TIPPED OVER wooden chair lying on its side, never upright. SIDE physical pose turned 90 degrees in world. BACK pose turned 180 degrees in world. Repaint geometry and lighting. Follow ONLY the requested direction.\nObject: 一把翻倒的深木椅子，从75度俯视看见斜着的椅座平面、椅背厚度和向一侧伸出的四条椅腿，简洁有体积的木件，不要画成平面线稿。",
+      "source": "sources/chair_back.png",
+      "target": "assets/props/chair_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7667b1d4-24c1-4b0f-963d-4cdfe50404ff.png"
+    },
+    {
+      "id": "shelf_side",
+      "base": "shelf",
+      "name": "货架 · 侧面",
+      "facing": "side",
+      "visual": "旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\shelf.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A NARROW VERTICAL grey-blue steel shelving unit viewed from high above, top shelf runs TOP TO BOTTOM, silhouette height 2.2 TIMES width. Short SOUTH END at bottom with vertical end posts and narrow cross brace; the long open shelf face runs along RIGHT edge. Never horizontal. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/shelf_side.png",
+      "target": "assets/props/shelf_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-657b7107-8f05-4997-a1e8-94e7c4a0e770.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. SIDE narrow NORTH-SOUTH top shelf, closed short end. BACK EAST-WEST broad top and plain rear bracing SOUTH; no front shelf openings through solid back. Follow ONLY the requested direction.\nObject: 旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-bb0c48ee-4bdd-4228-94ec-0e1d39df24ad.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "shelf_back",
+      "base": "shelf",
+      "name": "货架 · 背面",
+      "facing": "back",
+      "visual": "旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\shelf.png",
+      "prompt": "Create ONE 32x32 low-resolution chunky PIXEL ART game prop. A horizontal grey-blue metal shelving unit seen from REAR and high above. Broad top shelf, SOUTH rear face has TWO diagonal crossed steel braces making a clearly visible X across the rear. No front-open compartments at bottom. Fixed 75 degree downward orthographic camera, nearly top-down. Top dominates, very short SOUTH elevation only. Axis aligned, no diamond isometric. Muted old coastal 1990s materials, fixed UPPER LEFT light. Whole isolated object centered, 15 visible colors, crisp square pixel clusters. Transparent background, no ground, no cast shadow, no glow, no labels, no people. One tile footprint. Preserve worn materials and restrained proportions.",
+      "source": "sources/shelf_back.png",
+      "target": "assets/props/shelf_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-1c7a5c07-45f4-4935-a6c5-8e8a28eee9ec.png",
+      "initialPrompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. SIDE narrow NORTH-SOUTH top shelf, closed short end. BACK EAST-WEST broad top and plain rear bracing SOUTH; no front shelf openings through solid back. Follow ONLY the requested direction.\nObject: 旧灰蓝色金属货架，高角度俯视，宽横向顶层板占大部分，同时露出南侧立柱、下方两层短隔板边缘、少许格子内阴影，表现立体框架，不要画成平铺地上的梯子。",
+      "initialSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b9f2f389-0f95-44a8-b96e-460f785f4f56.png",
+      "finalUsesReference": false
+    },
+    {
+      "id": "barrel_side",
+      "base": "barrel",
+      "name": "油桶 · 侧面",
+      "facing": "side",
+      "visual": "旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\barrel.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: SIDE ONLY. Nearly rotationally symmetric. Same rust-red drum and lid ellipse, short south body. SIDE top bung EAST. BACK top bung NORTH. Repaint rust; light remains upper-left. Follow ONLY the requested direction.\nObject: 旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。",
+      "source": "sources/barrel_side.png",
+      "target": "assets/props/barrel_side.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-adbaf77f-fd52-4b87-8c98-bc6fa91b327a.png"
+    },
+    {
+      "id": "barrel_back",
+      "base": "barrel",
+      "name": "油桶 · 背面",
+      "facing": "back",
+      "visual": "旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。",
+      "reference": "D:\\develop\\project\\tide\\assets\\props\\barrel.png",
+      "prompt": "Create ONE directional variant of reference prop. Reference role: preserve exact object identity, proportions, materials and colors. Chunky low resolution PIXEL ART for 32x32. Fixed orthographic camera 75 degrees DOWN FROM HORIZONTAL, almost top-down, TOP occupies most of object, SOUTH elevation only 15-25%. Screen axes horizontal/vertical, NOT diamond isometric. Change object orientation IN WORLD, do NOT rotate/flip image or change camera. Fixed UPPER LEFT light. Entire object within 80% canvas, centered, clear margins. Only 12-15 muted colors, hard square pixels, no smooth shading. GENUINELY TRANSPARENT BACKGROUND. No ground/base/scenery/cast shadow/glow/text/people. Same one-tile size across directions. \nRequested direction: BACK ONLY. Nearly rotationally symmetric. Same rust-red drum and lid ellipse, short south body. SIDE top bung EAST. BACK top bung NORTH. Repaint rust; light remains upper-left. Follow ONLY the requested direction.\nObject: 旧锈红铁皮油桶，俯视75度，顶部为横向椭圆金属圆盖，能看到南侧一小段弧形圆柱桶身、加强筋与底缘，顶盖小加油口，顶面亮、桶身暗，保持圆柱高度。",
+      "source": "sources/barrel_back.png",
+      "target": "assets/props/barrel_back.png",
+      "fit": [
+        28,
+        26
+      ],
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-11f2f8f7-46ec-4580-892f-b54f76a4ccb6.png"
+    }
+  ]
+}

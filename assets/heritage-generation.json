@@ -1,0 +1,194 @@
+{
+  "generator": "Built-in image_gen; one transparent image per heritage collectible",
+  "delivery": "48x48 transparent PNG; <=16 palette entries; 4px clear margins; upper-left light and 3/4 inventory display view",
+  "stylePrompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet. ",
+  "references": [
+    "D:/develop/project/tide/assets/items/art02.png",
+    "D:/develop/project/tide/assets/items/lux01.png"
+  ],
+  "items": [
+    {
+      "id": "antiq07",
+      "name": "手绘航海图",
+      "cat": "collect",
+      "r": 4,
+      "visual": "半展开的米黄色航海图卷，蓝色海岸轮廓、红色航路、黑色水深标记与角落小型罗盘，纸边轻微卷起",
+      "original": {
+        "id": "antiq07",
+        "name": "手绘航海图",
+        "short": "航海图",
+        "cat": "collect",
+        "r": 4,
+        "w": 0.35,
+        "price": 96000,
+        "desc": "一幅绘制于环礁湾港口扩建之前的近海航行图，使用耐潮绘图纸和多种颜色的防水墨水，标注了暗礁、测深点、灯塔和旧航道。\n\n制图师对港湾内的浅水区域进行了格外细致的测量，部分水深数据后来被红色墨水修订。\n\n如今地图上的几处码头已经不复存在，但海底的礁石并不会因为岸上的建筑改变位置。"
+      },
+      "status": "generated",
+      "source": "antiq07.png",
+      "paletteColours": 16,
+      "output": "assets/items/antiq07.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: ONE PARTIALLY UNROLLED HORIZONTAL NAUTICAL CHART on aged CREAM drawing paper. LEFT AND RIGHT edges curl into modest horizontal scroll rolls. The visible center has BLUE coastal outline of an old harbour, thin RED navigation routes, sparse BLACK depth soundings, and a SMALL COMPASS ROSE in a corner. A few red correction marks, softly worn paper edges. Preserve broad LANDSCAPE scroll silhouette, not a vertical poster, a fantasy treasure map or modern screen. All drawing stays ON the paper; no ship model, quill, frame, table or scenery. Source visual brief: 半展开的米黄色航海图卷，蓝色海岸轮廓、红色航路、黑色水深标记与角落小型罗盘，纸边轻微卷起",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e64e5f6e-5627-4504-9939-a075982be27f.png"
+    },
+    {
+      "id": "antiq08",
+      "name": "彩绘陶瓷面具",
+      "cat": "collect",
+      "r": 2,
+      "visual": "正面朝上的乳白色椭圆陶瓷面具，空洞眼孔、蓝色对称花纹，眼角两滴金色釉彩，边缘系浅棕棉绳",
+      "original": {
+        "id": "antiq08",
+        "name": "彩绘陶瓷面具",
+        "short": "陶瓷面具",
+        "cat": "collect",
+        "r": 2,
+        "w": 0.4,
+        "price": 7200,
+        "desc": "以白色陶土烧制的节庆面具，额头与脸颊绘有对称的蓝色花纹，眼角各悬着一滴金色泪珠。\n\n旧时的节庆演员会在夜间巡游时佩戴此类面具。不同花色代表不同角色，但如今大多数人已经分不清它们的含义。\n\n这一件的系绳曾断过，后来换成了普通的棉线。"
+      },
+      "status": "generated",
+      "source": "antiq08.png",
+      "paletteColours": 16,
+      "output": "assets/items/antiq08.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: ONE IVORY-WHITE OVAL CERAMIC festival MASK, face upward in gentle three-quarter inventory view. TWO EMPTY DARK EYE HOLES, a modest raised nose, SYMMETRICAL BLUE painted flourishes across forehead and cheeks, ONE SMALL GOLDEN GLAZED TEARDROP below EACH eye. A short pale-brown COTTON TIE CORD curls closely along one side, with a tiny repaired knot. Clearly fired glazed ceramic, not a human face, metal helmet, respirator, skull, jewellery or supernatural mask. No person or dramatic lighting. Source visual brief: 正面朝上的乳白色椭圆陶瓷面具，空洞眼孔、蓝色对称花纹，眼角两滴金色釉彩，边缘系浅棕棉绳",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-9f06e9ad-2bd9-4825-8b30-de3884715008.png"
+    },
+    {
+      "id": "antiq09",
+      "name": "环礁湾雕刻铜版",
+      "cat": "collect",
+      "r": 6,
+      "visual": "横向长方形暗红色铜版，密布细密的城市建筑与港口凹刻线条，中央旧城区、远处海湾与船只，四角浅绿氧化，斜靠深色木框",
+      "original": {
+        "id": "antiq09",
+        "name": "环礁湾雕刻铜版",
+        "short": "城市铜版",
+        "cat": "collect",
+        "r": 6,
+        "w": 2.4,
+        "price": 1650000,
+        "desc": "一块用于印制《环礁湾城市全景图》初版的原始雕刻铜版。\n\n铜版采用传统凹版雕刻工艺制作，表面密布着建筑、街道、港口和船只的精细线条。制版师使用不同规格的刻刀完成建筑轮廓与阴影，再通过腐蚀工艺修整部分细节。\n\n作品最初由城市建设部门委托制作，用于纪念环礁湾一次重要的城市扩建工程。\n\n与当时流行的航空摄影制图不同，主雕版师坚持亲自走访旧城区。为了完整表现城市生活，他在画面中保留了菜市场、旧电影院、沿街书店，以及许多即将在城市改造中被拆除的建筑。\n\n这一决定曾引起委托方的不满。\n\n经过反复修改，最终印刷版本删除了部分旧建筑，但原始铜版中的雕刻线条仍然保留着它们的位置。\n\n铜版完成后，印刷厂使用它制作了首批限量版画。随后，随着复制工艺更新，原版被封存保存。\n\n如今，这块铜版已成为整套城市全景图唯一留存的手工原始母版。"
+      },
+      "status": "generated",
+      "source": "antiq09.png",
+      "paletteColours": 16,
+      "output": "assets/items/antiq09.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: ONE HEAVY HORIZONTAL RECTANGULAR DARK RED-COPPER INTAGLIO PRINTING PLATE leaning slightly against a minimal DARK WOODEN supporting FRAME. Its surface is DENSELY ENGRAVED with fine shallow lines depicting old-city rooftops and streets in center, harbour piers, bay and TINY BOATS in distance. Pale GREEN oxidation at FOUR corners, visible thick copper edge, restrained bright copper highlights along engraved lines. MONOCHROME RED-COPPER engraving, not a colored painting, not an enamel color-swatch board or map on paper. The recognizable focus is a wide plate filled with architectural linework; no typography outside object. Source visual brief: 横向长方形暗红色铜版，密布细密的城市建筑与港口凹刻线条，中央旧城区、远处海湾与船只，四角浅绿氧化，斜靠深色木框",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-6584945f-6244-4deb-95ff-ff28e08d063a.png"
+    },
+    {
+      "id": "art04",
+      "name": "限量游戏卡带",
+      "cat": "collect",
+      "r": 4,
+      "visual": "深紫色长方形游戏卡带，正面黑色蒸汽火车与黄色站台灯，后方露出彩色包装盒一角，盒上银色限定标记",
+      "original": {
+        "id": "art04",
+        "name": "限量游戏卡带",
+        "short": "游戏卡带",
+        "cat": "collect",
+        "r": 4,
+        "w": 0.18,
+        "price": 78000,
+        "desc": "家用游戏《最后一班列车》的初回限定版卡带，附带彩色说明书、编号证书和原厂收藏盒。\n\n这款冒险游戏以复杂的分支剧情闻名。玩家需要在列车抵达终点站之前完成调查，但游戏没有设置中途存档功能。\n\n当年有杂志专门刊登了通关流程。整整十二页，最后一页印错了。"
+      },
+      "status": "generated",
+      "source": "art04.png",
+      "paletteColours": 16,
+      "output": "assets/items/art04.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: ONE SMALL THICK DARK PURPLE 1990s home-console GAME CARTRIDGE, clearly plastic rectangular shell with a stepped top edge and a few screws. FRONT LABEL shows a simple BLACK STEAM TRAIN and tiny YELLOW PLATFORM LIGHTS. A CORNER of its COLORFUL ORIGINAL COLLECTOR PACKAGING BOX protrudes closely from BEHIND, with a tiny SILVER limited-edition emblem. Cartridge remains main object. No actual console, controller, screen, handheld game, real brand, extra cartridges, loose manual or sprawling accessories. Source visual brief: 深紫色长方形游戏卡带，正面黑色蒸汽火车与黄色站台灯，后方露出彩色包装盒一角，盒上银色限定标记",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-14dbba46-f6cd-473a-af38-1ea5bddd823e.png"
+    },
+    {
+      "id": "art05",
+      "name": "电影首映海报",
+      "cat": "collect",
+      "r": 3,
+      "visual": "微微卷曲的竖版深蓝色电影海报，中央白色灯塔，底部一行暗红色大字，边缘有折痕",
+      "original": {
+        "id": "art05",
+        "name": "电影首映海报",
+        "short": "首映海报",
+        "cat": "collect",
+        "r": 3,
+        "w": 0.25,
+        "price": 21000,
+        "desc": "悬疑电影《灯塔以北》的首映宣传海报，采用多色胶印工艺印制。画面中只有一座亮着灯的灯塔，几乎占满背景的海面完全没有船只。\n\n影片发行时票房平平，后来却因为独特的摄影风格在录像带租赁市场重新流行起来。这张首映版本的海报保留了早期被发行商撤换的原始片名字体。"
+      },
+      "status": "generated",
+      "source": "art05.png",
+      "paletteColours": 16,
+      "output": "assets/items/art05.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: ONE VERTICAL slightly CURLED DEEP NAVY BLUE MOVIE PREMIERE POSTER, aged paper with subtle fold creases. The artwork is a SINGLE prominent WHITE LIGHTHOUSE with a small warm lamp, surrounded by DARK BLUE EMPTY SEA, no boats or birds. A SINGLE LINE of DARK RED TITLE-LETTER shapes near the BOTTOM. Clearly PORTRAIT printed paper, with curled lower corners and a small rolled upper edge, complete paper silhouette. No decorative frame, copper sheet, signboard, separate text outside the poster or full environment. Source visual brief: 微微卷曲的竖版深蓝色电影海报，中央白色灯塔，底部一行暗红色大字，边缘有折痕",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-c0f2161a-a693-423b-9a5f-4d9a78bcfe4d.png"
+    },
+    {
+      "id": "lux04",
+      "name": "珐琅音乐盒",
+      "cat": "collect",
+      "r": 5,
+      "visual": "椭圆形深蓝色珐琅音乐盒，银色雕花边框，盒盖半开露出小型金色音乐滚筒，盖面中央白色庄园",
+      "original": {
+        "id": "lux04",
+        "name": "珐琅音乐盒",
+        "short": "音乐盒",
+        "cat": "collect",
+        "r": 5,
+        "w": 0.8,
+        "price": 268000,
+        "desc": "一件采用银质胎体与手工珐琅彩装饰的机械音乐盒。盒盖绘有一座悬崖庄园，深蓝色天空使用多次烧制的透明釉层表现，转动角度时能够看到不同的光泽。\n\n内部装有精密滚筒式音乐机芯，演奏一首流传已久的圆舞曲。\n\n它出自某家历史悠久的钟表工坊，为纪念工坊成立周年而限量制作。不同于后续采用彩绘外壳的普及版本，这一批仍使用传统珐琅烧制工艺。\n\n音乐盒底部保留着工匠签名与发行编号。机芯运转正常，只是其中一枚梳齿的音色稍显沉闷。"
+      },
+      "status": "generated",
+      "source": "lux04.png",
+      "paletteColours": 16,
+      "output": "assets/items/lux04.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: ONE SMALL OVAL DARK BLUE ENAMEL MECHANICAL MUSIC BOX with SILVER engraved edging. LID PARTLY OPEN revealing a compact GOLDEN PINNED MUSIC CYLINDER and comb mechanism inside. The visible enamel lid panel contains a tiny WHITE CLIFFSIDE MANOR silhouette under a DEEP BLUE SKY, broad glossy enamel planes, restrained antique wear. Show OVAL outline, half-open lid and gold mechanism clearly. Not rectangular jewellery chest, ring box, clock or fantasy treasure. No ballerina, floating music notes, magical glow or loose accessories. Source visual brief: 椭圆形深蓝色珐琅音乐盒，银色雕花边框，盒盖半开露出小型金色音乐滚筒，盖面中央白色庄园",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-047ce2ea-8bcc-4ca3-857d-94435c6bbbaa.png"
+    },
+    {
+      "id": "lux05",
+      "name": "蓝宝石胸针",
+      "cat": "collect",
+      "r": 5,
+      "visual": "展翼海鸟造型的银白色胸针，中央大型深蓝色多面切割宝石，两翼镶嵌细小白色钻石，斜侧俯视",
+      "original": {
+        "id": "lux05",
+        "name": "蓝宝石胸针",
+        "short": "胸针",
+        "cat": "collect",
+        "r": 5,
+        "w": 0.12,
+        "price": 340000,
+        "desc": "一枚以展翼海鸟为原型设计的高级珠宝胸针，中央镶嵌一颗天然蓝宝石，双翼由铂金与细小钻石构成。\n\n主石采用阶梯式切割，深蓝色内部带有轻微的天然色带。左右两翼的钻石排列并不完全对称，这是设计师在原始设计稿中就确定的造型。\n\n胸针曾作为私人珠宝展的重点展品，附有完整的宝石鉴定资料及工坊制作记录。"
+      },
+      "status": "generated",
+      "source": "lux05.png",
+      "paletteColours": 16,
+      "output": "assets/items/lux05.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: ONE PRECIOUS JEWELRY BROOCH shaped like a SEABIRD WITH SPREAD WINGS. CENTRAL LARGE DEEP BLUE faceted SAPPHIRE in an elegant SILVERY PLATINUM setting; wings carry tiny WHITE DIAMOND highlights in subtly ASYMMETRICAL arrangements, not mirror-identical decoration. Gentle angled inventory view from above, broad readable wing silhouette and single blue central stone, restrained luxury sparkle through hard pixel highlights only. A metal jewellery object, NOT a living bird, pendant necklace or fantasy winged creature. No box, chain, feathers falling away, glow or starburst. Source visual brief: 展翼海鸟造型的银白色胸针，中央大型深蓝色多面切割宝石，两翼镶嵌细小白色钻石，斜侧俯视",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-9843b2ee-957d-431c-bfd3-2086d2937765.png"
+    },
+    {
+      "id": "spec04",
+      "name": "菊石化石",
+      "cat": "collect",
+      "r": 3,
+      "visual": "深灰不规则石块，中央一枚黄褐色螺旋菊石，清晰的弧形分节线与微微突起的化石轮廓",
+      "original": {
+        "id": "spec04",
+        "name": "菊石化石",
+        "cat": "collect",
+        "r": 3,
+        "w": 0.9,
+        "price": 26000,
+        "desc": "菊石的螺旋外壳嵌在灰黑色石灰岩中，经过局部清理，隔室线仍然清晰。\n\n这块化石没有经过完全抛光。标本师只清除了外壳周围的岩层，让原始沉积面保留在背面。"
+      },
+      "status": "generated",
+      "source": "spec04.png",
+      "paletteColours": 16,
+      "output": "assets/items/spec04.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory sprite for the 1990s coastal salvage game 潮汐线 / TidalLine. Authentic chunky PIXEL ART intended for 48x48 pixels. Use large crisp square pixel clusters and only 12-20 muted colors; hard edges, no antialiasing, no painterly detail, no photorealistic texture. Cohesive 3/4 inventory display view from above, showing top and front/right faces, roughly 30 degrees elevation, fixed upper-left light. Clear recognizable silhouette, broad material planes, restrained age and wear appropriate to the item. Entire object fully visible, centered within 80% of square canvas, generous clear margins. GENUINELY TRANSPARENT BACKGROUND. No scenery, ground plane, cast shadow, decorative frame, glow, watermark, UI, people or hands. No unrelated extra objects. Tiny printing becomes sparse deliberate pixel marks, no dense text. One item/product arrangement only, no multi-icon sheet.  Subject: ONE AMMONITE FOSSIL still EMBEDDED IN A ROUGH compact DARK GREY-BLACK LIMESTONE matrix. Pale grey-brown SPIRAL SHELL relief clearly visible, with segmented chamber/rib lines, only rock immediately around the fossil cleaned away. Uneven raw stone BACK AND EDGES remain unpolished. Focus on recognisable large fossil SPIRAL contrasting against dark irregular ROCK, three-quarter view showing stone thickness. Not a loose seashell, gemstone, polished slab, skull, standing display or living animal. No label stand or surrounding gravel. Source visual brief: 深灰不规则石块，中央一枚黄褐色螺旋菊石，清晰的弧形分节线与微微突起的化石轮廓",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-baaa81d7-22fd-411c-a95e-cb58e357a396.png"
+    }
+  ]
+}

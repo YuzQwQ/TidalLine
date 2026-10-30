@@ -1,0 +1,338 @@
+[
+  {
+    "id": "bed_home_side",
+    "visible": 345,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 13,
+      "bottom": 28
+    },
+    "sha256": "3a9c360de9cb2ede2fd59b63f59e16db80c7723058569375de2d8aa45c4f666c"
+  },
+  {
+    "id": "bed_home_back",
+    "visible": 323,
+    "colors": 15,
+    "bounds": {
+      "left": 9,
+      "right": 22,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "b173cd95e68eb2fa8cf258339b13de1b008d9204891d4c1b3ca027614f343df6"
+  },
+  {
+    "id": "bed_clinic_side",
+    "visible": 267,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 15,
+      "bottom": 28
+    },
+    "sha256": "eaca9bb2e52689b30fa32dd9cffb534409644573a035a2c48158ab670abd7bfe"
+  },
+  {
+    "id": "bed_clinic_back",
+    "visible": 275,
+    "colors": 15,
+    "bounds": {
+      "left": 10,
+      "right": 20,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "37b6268a4bba60c0cea4515218491a0dab7cc0f732a2ce14986490835f58ba62"
+  },
+  {
+    "id": "stove_home_side",
+    "visible": 465,
+    "colors": 15,
+    "bounds": {
+      "left": 6,
+      "right": 24,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "a2c2eea5ad39bc1c2ee049d167b969bab4ae7ec47ce82c0985abad3934bfffe4"
+  },
+  {
+    "id": "stove_home_back",
+    "visible": 470,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 12,
+      "bottom": 28
+    },
+    "sha256": "2a15c9f1fd91373b46bf1c8ede4955338e1906a9ff2bb929ab2db4f857ccaacc"
+  },
+  {
+    "id": "sofa_home_side",
+    "visible": 348,
+    "colors": 15,
+    "bounds": {
+      "left": 8,
+      "right": 22,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "62324f61fb7bc7d6bff745e108fcdc0748593c80dd16a0cc2508fbcb78c9d33a"
+  },
+  {
+    "id": "sofa_home_back",
+    "visible": 316,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 15,
+      "bottom": 28
+    },
+    "sha256": "49745ab0beb8b1da5edbf68c7377eb360d261f26832764a2e8475fa91b577ad6"
+  },
+  {
+    "id": "bench_wood_side",
+    "visible": 158,
+    "colors": 15,
+    "bounds": {
+      "left": 12,
+      "right": 18,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "2a68c65045e8444b299f04750f5dca319bc37107675129dc07576447861da9b7"
+  },
+  {
+    "id": "bench_wood_back",
+    "visible": 398,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 11,
+      "bottom": 28
+    },
+    "sha256": "dd40f656bc32858488a7c1de34aae18384959cbbcf85610f40f4fd7bffa6992a"
+  },
+  {
+    "id": "display_clock_side",
+    "visible": 201,
+    "colors": 15,
+    "bounds": {
+      "left": 12,
+      "right": 19,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "e3b72fcb2031e8407cc791e41d1ead320c5e71c31dc6d31f2ed4e0d883b4601e"
+  },
+  {
+    "id": "display_clock_back",
+    "visible": 321,
+    "colors": 14,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 17,
+      "bottom": 28
+    },
+    "sha256": "66a6f6f1dbbcbeb6abc6252aa39ff64f1b01641fce523faac12ca7aea516c80d"
+  },
+  {
+    "id": "counter_shop_side",
+    "visible": 216,
+    "colors": 15,
+    "bounds": {
+      "left": 11,
+      "right": 19,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "d4174c635dfe2bcfa6e7b754236739c799dc52e1206f2d1b294632802366062c"
+  },
+  {
+    "id": "counter_shop_back",
+    "visible": 374,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 15,
+      "bottom": 28
+    },
+    "sha256": "c9b35715251b940572694af70005e766af93b647aa76543e733eb89eb88fbc60"
+  },
+  {
+    "id": "counter_bank_side",
+    "visible": 126,
+    "colors": 14,
+    "bounds": {
+      "left": 13,
+      "right": 18,
+      "top": 4,
+      "bottom": 28
+    },
+    "sha256": "f257e1458904afef3a0a57dd46c0db013a00e4ff3b0ce4029384f059c592ade9"
+  },
+  {
+    "id": "counter_bank_back",
+    "visible": 371,
+    "colors": 14,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 15,
+      "bottom": 28
+    },
+    "sha256": "62c6309d6b9679368073b3152865633aa2c8e54b7dc56617055fa3d0a25a48e3"
+  },
+  {
+    "id": "console_security_side",
+    "visible": 563,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 28,
+      "top": 4,
+      "bottom": 28
+    },
+    "sha256": "98a49903aca9e459c94cbe1a857a44a9f0cf5cdfee54e2b065b8f35e94d52d85"
+  },
+  {
+    "id": "console_security_back",
+    "visible": 642,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 28,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "f9b3d75ae4dbc1aef103196f1c8619a49f6c7fa4c92a0e1d04ad7b789a9d49a6"
+  },
+  {
+    "id": "tree_courtyard_side",
+    "visible": 409,
+    "colors": 15,
+    "bounds": {
+      "left": 3,
+      "right": 28,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "d9148b71637fecceea1e9e2ffe68df0f9a5ca3cd0f2848cd98db916555d015b9"
+  },
+  {
+    "id": "tree_courtyard_back",
+    "visible": 400,
+    "colors": 15,
+    "bounds": {
+      "left": 3,
+      "right": 27,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "3fb635c4789e4e08eb2cb6045daf56abb81fe4811e006c463ee1a8db6b7dd7bd"
+  },
+  {
+    "id": "desk_side",
+    "visible": 196,
+    "colors": 15,
+    "bounds": {
+      "left": 12,
+      "right": 19,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "309f763f512ce79814f177c82565f592b01da44a45c02863ba43f453a21a951c"
+  },
+  {
+    "id": "desk_back",
+    "visible": 298,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 17,
+      "bottom": 28
+    },
+    "sha256": "5aba6005df8ecbeca9ff95676bc7ec817cc35f3edf788584c729eb39c99476d6"
+  },
+  {
+    "id": "chair_side",
+    "visible": 330,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 4,
+      "bottom": 28
+    },
+    "sha256": "70913b887675a214afcb2fb4ff6f8de4ea8e83827d9fb98f2c3f691edd43b40f"
+  },
+  {
+    "id": "chair_back",
+    "visible": 377,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "ec440a8d4ca06ad9ce4d9265977ba19d2ea931ed5c1ebfe4272f0e6881706e3b"
+  },
+  {
+    "id": "shelf_side",
+    "visible": 121,
+    "colors": 15,
+    "bounds": {
+      "left": 13,
+      "right": 17,
+      "top": 4,
+      "bottom": 28
+    },
+    "sha256": "fddd05d35ac1a8a5c963b35d880949bcf3ed77be35f08c277c586206f7121e27"
+  },
+  {
+    "id": "shelf_back",
+    "visible": 598,
+    "colors": 15,
+    "bounds": {
+      "left": 2,
+      "right": 29,
+      "top": 5,
+      "bottom": 28
+    },
+    "sha256": "aaba7669839e40a64f43ca87c2221deccfd12e17598eff8beb0fc78d55528d87"
+  },
+  {
+    "id": "barrel_side",
+    "visible": 482,
+    "colors": 15,
+    "bounds": {
+      "left": 4,
+      "right": 26,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "bbe686528ed6f83234a2303fad5c00a767c2cab2cd28a8036d5092d6c290ca61"
+  },
+  {
+    "id": "barrel_back",
+    "visible": 495,
+    "colors": 15,
+    "bounds": {
+      "left": 4,
+      "right": 27,
+      "top": 3,
+      "bottom": 28
+    },
+    "sha256": "8885a0a3f90d15ccf893f8aaedea2dc06ed798b77801df23979b535af8bef950"
+  }
+]

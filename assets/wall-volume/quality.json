@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "assets": [
+    {
+      "id": "wall",
+      "size": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "meanLuminance": 168.50922089843775
+    },
+    {
+      "id": "wall_face_s",
+      "size": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "meanLuminance": 101.89653007812342
+    },
+    {
+      "id": "wall_face_e",
+      "size": [
+        4,
+        48
+      ],
+      "colors": 16,
+      "meanLuminance": 76.4290614583333
+    }
+  ],
+  "results": [
+    {
+      "entry": "index.html",
+      "maps": [
+        {
+          "id": "linhai-old-quarter",
+          "unchanged": true,
+          "walls": 588
+        },
+        {
+          "id": "fenced-zone",
+          "unchanged": true,
+          "walls": 604
+        }
+      ],
+      "adjacency": true,
+      "noSpecial": true,
+      "contained": true,
+      "hidden": true,
+      "memory": true,
+      "raisedFade": true,
+      "faded": 255,
+      "solid": 255,
+      "unknown": 0,
+      "embedded": false
+    },
+    {
+      "entry": "潮汐线.html",
+      "maps": [
+        {
+          "id": "linhai-old-quarter",
+          "unchanged": true,
+          "walls": 588
+        },
+        {
+          "id": "fenced-zone",
+          "unchanged": true,
+          "walls": 604
+        }
+      ],
+      "adjacency": true,
+      "noSpecial": true,
+      "contained": true,
+      "hidden": true,
+      "memory": true,
+      "raisedFade": true,
+      "faded": 255,
+      "solid": 255,
+      "unknown": 0,
+      "embedded": true
+    }
+  ],
+  "narrowViewports": [
+    320,
+    390
+  ]
+}

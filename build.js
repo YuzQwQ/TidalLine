@@ -5,9 +5,13 @@ const fs = require('fs');
 const path = require('path');
 
 const dir = __dirname;
-require('./tools/build-economy.js').build();
+require('./tools/build-scene-library.js').build();
+if (!process.argv.includes('--assets-only')) require('./tools/build-economy.js').build();
 // 地图由设计稿编译，避免多文件版与离线版使用不同点位。
-require('./tools/build-linhai-map.js').build();
+// 纯素材更新沿用已编译的地图快照，不写入或绕过正在编辑的地图草稿。
+if (!process.argv.includes('--assets-only')) require('./tools/build-linhai-map.js').build();
+// 预计算家具透明边，file:// 无需读取可能受跨域限制的Canvas像素。
+require('./tools/build-prop-bounds.js').build();
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
 const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js', 'game.js'];

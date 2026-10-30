@@ -1,0 +1,27 @@
+{
+  "generator": "Built-in image_gen",
+  "prompt": "Use case: precise-object-edit. Edit the supplied small safe sprite by SHRINKING ITS VISIBLE OBJECT relative to the square canvas. Keep the exact same small steel safe design, grey-brown muted palette, weathered top panel, tiny circular front lock, rivets, high75-degree orthographic camera and upper-left lighting. Do not redesign it or add new details. The sole goal is visibly smaller compact safe compared to the previous version: object occupies only around20x21 logical pixels within the unchanged32x32 transparent square instead of almost28x28. Center horizontally, bottom resting at logicaly28, extra transparent empty space around it. Crisp nearest-neighbor-style pixel clusters, no antialiasing. Genuine transparent background, no ground shadow, scene, text or labels. One safe only. Keep correct perspective and intact silhouette. Reference is the original asset whose identity must be preserved.",
+  "source": "sources/crate_heavy.png",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e190d115-150e-4b38-bda1-5551e4346072.png",
+  "target": "assets/props/crate_heavy.png",
+  "fit": [
+    20,
+    21
+  ],
+  "canvas": [
+    32,
+    32
+  ],
+  "footprint": [
+    1,
+    1
+  ],
+  "references": [
+    "sources/crate_heavy-before.png"
+  ],
+  "spriteSize": [
+    17,
+    21
+  ],
+  "processing": "alpha crop; nearest-neighbour contain20x21; foot y28; binary alpha; <=16 colors"
+}

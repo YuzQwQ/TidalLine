@@ -1,0 +1,59 @@
+{
+  "generator": "Built-in image_gen, one transparent image per direction",
+  "assets": [
+    {
+      "id": "tree_courtyard_canopy",
+      "facing": "front",
+      "prompt": "SQUARE CANVAS, square overall TREE silhouette. A single 96x96 pixel-art tree sprite, total object is 90px WIDE and90px TALL. Rounded leafy crown spans x3..93 and y3..62; short exposed grey-brown trunk spans x39..57 and y62..93. Crown is on upper TWO ROWS of 3x3 tile grid, trunk BOTTOM-CENTER tile, bottom left/right empty. The whole tree must be as TALL AS WIDE, not a wide flat shrub. Fixed nearly overhead75 degree downward orthographic game view, upper-left light, sage olive green leaves, dark grey brown bark. Chunky hard square pixels, only15 muted colors, transparent background. NO ground, NO shadow outside silhouette, no base, no text, no grid. front orientation with left fork structure.",
+      "source": "sources/tree_front.png",
+      "target": "assets/props/tree_courtyard_canopy.png",
+      "canvas": [
+        96,
+        96
+      ],
+      "fit": [
+        92,
+        90
+      ],
+      "status": "ready",
+      "initialPrompt": "Use case: stylized-concept. ONE large TREE game sprite, native 96x96 pixel art for 3x3 tiles. Fixed 75-degree downward orthographic view, nearly top-down, no diamond isometric. Broad mature coastal sage-green/olive leafy CROWN fills TOP TWO THIRDS of square, three tiles wide and two tiles tall. A single short grey-brown trunk descends in BOTTOM CENTER tile ONLY (x48,y80). Bottom left and bottom right transparent. Chunky angular pixel clusters, only 15 muted colors, fixed upper-left light, dark right/bottom. Whole tree with 2px clear margins. No ground/base/roots on ground/cast shadow/glow/text/people. GENUINELY TRANSPARENT background. Small visible trunk, do not draw a tall side-view tree. Direction front; slightly different left forked crown silhouette, same species and proportions.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-814c9627-bf4c-4853-beb1-f60bd8eeeebd.png"
+    },
+    {
+      "id": "tree_courtyard_canopy_side",
+      "facing": "side",
+      "prompt": "SQUARE CANVAS, square overall TREE silhouette. A single 96x96 pixel-art tree sprite, total object is 90px WIDE and90px TALL. Rounded leafy crown spans x3..93 and y3..62; short exposed grey-brown trunk spans x39..57 and y62..93. Crown is on upper TWO ROWS of 3x3 tile grid, trunk BOTTOM-CENTER tile, bottom left/right empty. The whole tree must be as TALL AS WIDE, not a wide flat shrub. Fixed nearly overhead75 degree downward orthographic game view, upper-left light, sage olive green leaves, dark grey brown bark. Chunky hard square pixels, only15 muted colors, transparent background. NO ground, NO shadow outside silhouette, no base, no text, no grid. side orientation with right fork structure.",
+      "source": "sources/tree_side.png",
+      "target": "assets/props/tree_courtyard_canopy_side.png",
+      "canvas": [
+        96,
+        96
+      ],
+      "fit": [
+        92,
+        90
+      ],
+      "status": "ready",
+      "initialPrompt": "Use case: stylized-concept. ONE large TREE game sprite, native 96x96 pixel art for 3x3 tiles. Fixed 75-degree downward orthographic view, nearly top-down, no diamond isometric. Broad mature coastal sage-green/olive leafy CROWN fills TOP TWO THIRDS of square, three tiles wide and two tiles tall. A single short grey-brown trunk descends in BOTTOM CENTER tile ONLY (x48,y80). Bottom left and bottom right transparent. Chunky angular pixel clusters, only 15 muted colors, fixed upper-left light, dark right/bottom. Whole tree with 2px clear margins. No ground/base/roots on ground/cast shadow/glow/text/people. GENUINELY TRANSPARENT background. Small visible trunk, do not draw a tall side-view tree. Direction side; slightly different right branching crown silhouette, same species and proportions.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-80a09566-c95a-40ef-89b9-0530d03e7b96.png"
+    },
+    {
+      "id": "tree_courtyard_canopy_back",
+      "facing": "back",
+      "prompt": "SQUARE CANVAS, square overall TREE silhouette. A single 96x96 pixel-art tree sprite, total object is 90px WIDE and90px TALL. Rounded leafy crown spans x3..93 and y3..62; short exposed grey-brown trunk spans x39..57 and y62..93. Crown is on upper TWO ROWS of 3x3 tile grid, trunk BOTTOM-CENTER tile, bottom left/right empty. The whole tree must be as TALL AS WIDE, not a wide flat shrub. Fixed nearly overhead75 degree downward orthographic game view, upper-left light, sage olive green leaves, dark grey brown bark. Chunky hard square pixels, only15 muted colors, transparent background. NO ground, NO shadow outside silhouette, no base, no text, no grid. back orientation with rear branch structure.",
+      "source": "sources/tree_back.png",
+      "target": "assets/props/tree_courtyard_canopy_back.png",
+      "canvas": [
+        96,
+        96
+      ],
+      "fit": [
+        92,
+        90
+      ],
+      "status": "ready",
+      "initialPrompt": "Use case: stylized-concept. ONE large TREE game sprite, native 96x96 pixel art for 3x3 tiles. Fixed 75-degree downward orthographic view, nearly top-down, no diamond isometric. Broad mature coastal sage-green/olive leafy CROWN fills TOP TWO THIRDS of square, three tiles wide and two tiles tall. A single short grey-brown trunk descends in BOTTOM CENTER tile ONLY (x48,y80). Bottom left and bottom right transparent. Chunky angular pixel clusters, only 15 muted colors, fixed upper-left light, dark right/bottom. Whole tree with 2px clear margins. No ground/base/roots on ground/cast shadow/glow/text/people. GENUINELY TRANSPARENT background. Small visible trunk, do not draw a tall side-view tree. Direction back; slightly different dense rear branching crown silhouette, same species and proportions.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-ad463665-6602-4be4-9e1a-83c198be6850.png"
+    }
+  ]
+}

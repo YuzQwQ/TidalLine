@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "scope": "art-review-only",
+  "assets": [
+    {
+      "id": "ground_concrete_plain_01",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "visiblePixels": 1024
+    },
+    {
+      "id": "ground_soil_compact_01",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "visiblePixels": 1024
+    },
+    {
+      "id": "ground_concrete_plain_02",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "visiblePixels": 1024
+    },
+    {
+      "id": "ground_soil_compact_02",
+      "width": 32,
+      "height": 32,
+      "colors": 15,
+      "visiblePixels": 1024
+    },
+    {
+      "id": "decal_surface_damp_01",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "visiblePixels": 196
+    },
+    {
+      "id": "decal_surface_crack_01",
+      "width": 32,
+      "height": 32,
+      "colors": 16,
+      "visiblePixels": 46
+    }
+  ],
+  "families": [
+    {
+      "family": "ground_concrete_plain",
+      "meanA": 120.97608545918249,
+      "meanB": 120.74642882652921,
+      "relativeDifference": 0.0018983638938355348,
+      "changedInteriorPixels": 598,
+      "sharedRimPixels": 240
+    },
+    {
+      "family": "ground_soil_compact",
+      "meanA": 109.12559030612307,
+      "meanB": 108.74478086734764,
+      "relativeDifference": 0.003489643792140496,
+      "changedInteriorPixels": 522,
+      "sharedRimPixels": 240
+    }
+  ],
+  "previewImages": 33,
+  "browser": {
+    "engine": "Edge",
+    "decodedImages": 47,
+    "viewports": [
+      1180,
+      390,
+      320
+    ]
+  },
+  "gameplayChanges": false
+}

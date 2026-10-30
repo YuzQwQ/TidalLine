@@ -8,7 +8,7 @@ const rarityReview=require('../design/items/rarity.json');
 const economy=require('../design/items/economy.json');
 assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,review.worldSetting))).digest('hex'),review.worldSettingSha256,'世界观文件已变更，需要重审');
 assert.deepEqual(Array.from(order,k=>cats[k].name),['生活用品','电子产品','工业器材','医疗物资','文物藏品','军事物资','情报资料','神秘学物品','异常遗物']);
-assert.equal(new Set(review.items.map(r=>r.id)).size,items.length);assert.equal(items.length,108);
+assert.equal(new Set(review.items.map(r=>r.id)).size,items.length);assert.equal(items.length,159);
 for(const item of items){
  const record=review.items.find(r=>r.id===item.id);assert(record&&record.reason);assert.equal(item.cat,record.category);assert.equal(groupOf(item),record.group);assert(groups[record.group].cats.includes(item.cat));
  const original={...record.original,cat:record.category};
@@ -20,8 +20,8 @@ for(const item of items){
  const pendingArt=new Set(review.items.filter(r=>r.pendingArt).map(r=>r.id));
  assert((item.cat==='medical'&&!item.iconId)||fs.existsSync(path.join(root,'assets/items',hasIcon+'.png'))||pendingArt.has(item.id),'缺贴图 '+item.id);
 }
-assert.equal(items.filter(i=>!i.noCodex).length,89);assert.equal(items.filter(i=>i.cat==='occult').length,0);
-assert.equal(items.filter(i=>groupOf(i)==='collectible').length,89);assert.equal(items.filter(i=>groupOf(i)==='supply').length,19);
+assert.equal(items.filter(i=>!i.noCodex).length,140);assert.equal(items.filter(i=>i.cat==='occult').length,15);
+assert.equal(items.filter(i=>groupOf(i)==='collectible').length,140);assert.equal(items.filter(i=>groupOf(i)==='supply').length,19);
 for(const id of ['life02','art03'])assert.equal(items.find(i=>i.id===id).cat,'intel');
 assert.equal(items.find(i=>i.id==='antiq03').cat,'life');assert.equal(items.find(i=>i.id==='elec01').cat,'elec');
 const ammo=items.find(i=>i.id==='ammo');assert.equal(ammo.cat,'ammo');assert(ammo.noCodex&&ammo.noLoot);
@@ -31,4 +31,4 @@ for(const k of ['antiq','art','lux','spec'])assert(!cats[k],'旧分类不应留�
 for(const box of map.containers)for(const cat of box.preference)assert(cats[cat],'地图掉落偏好失效 '+box.id);
 for(const box of Object.values(types))for(const cat of box.cats||[])assert(cats[cat]);
 for(const kind of ['junk','plain','ample','fine','rich','secret'])for(let i=0;i<200;i++){const drop=loot.fill(kind,['collect']);assert(drop.length);for(const d of drop){assert(cats[d.item.cat]);assert(!d.item.noLoot);}}
-console.log('OK: 文物藏品 / 89收集品与19物资 / 弹药和医疗子类 / 89图鉴 / ID贴图及原值不变 / 绷带治疗掉落语义 / 医疗偏好');
+console.log('OK: 文物藏品 / 140收集品与19物资 / 弹药和医疗子类 / 140图鉴 / ID贴图及原值不变 / 绷带治疗掉落语义 / 医疗偏好');

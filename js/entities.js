@@ -8,10 +8,10 @@ function canStand(x, y, r) {
   const size = CFG.TILE;
   for (let ty = M.ty(y - r); ty <= M.ty(y + r); ty++) {
     for (let tx = M.tx(x - r); tx <= M.tx(x + r); tx++) {
-      if (M.walkable(tx, ty)) continue;
-      const closestX = U.clamp(x, tx * size, (tx + 1) * size);
-      const closestY = U.clamp(y, ty * size, (ty + 1) * size);
-      if ((x - closestX) ** 2 + (y - closestY) ** 2 < r * r) return false;
+      for(const [rx,ry,rw,rh] of M.collisionRects(tx,ty)) {
+        const closestX=U.clamp(x,rx,rx+rw),closestY=U.clamp(y,ry,ry+rh);
+        if((x-closestX)**2+(y-closestY)**2<r*r)return false;
+      }
     }
   }
   return true;
@@ -587,7 +587,7 @@ class Enemy {
     if (!this.path || this.pathI >= this.path.length) return false;
     const node = this.path[this.pathI];
     if (!M.walkable(node.x, node.y)) { this.path = null; return false; }
-    const wx = M.cx(node.x), wy = M.cy(node.y);
+    const point=M.navigationPoint(node.x,node.y),wx=point.x,wy=point.y;
     const d = U.dist(this.x, this.y, wx, wy);
     if (d < 0.5) {
       this.pathI++;
@@ -867,7 +867,7 @@ class Bullet {
     for (let i = 1; i <= probes; i++) {
       const t = i / probes;
       const px = ax + (bx - ax) * t, py = ay + (by - ay) * t;
-      if (M.blocksShot(M.tx(px), M.ty(py))) { wallT = t; break; }
+      if (M.blocksShot(M.tx(px), M.ty(py),px,py)) { wallT = t; break; }
     }
 
     // 2) 角色：线段到圆心最短距离 ≤ 有效半径就算碰到
@@ -957,7 +957,7 @@ class Throwable {
     this.vy *= (1 - 3.2 * dt);
     const nx = this.x + this.vx * dt;
     const ny = this.y + this.vy * dt;
-    if (!M.walkable(M.tx(nx), M.ty(ny))) {
+    if (!M.walkablePoint(nx,ny)) {
       this.land();
       return;
     }

@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "title": "通用地面素材第一批",
+  "status": "registered",
+  "registered": true,
+  "gameplayChanges": false,
+  "reference": "GROUND_BATCH_01.md",
+  "tileSize": 32,
+  "assets": [
+    {
+      "id": "ground_concrete_plain_01",
+      "name": "平整水泥 A",
+      "layer": "ground",
+      "material": "concrete",
+      "pattern": "plain",
+      "variantGroup": "ground_concrete_plain",
+      "canvas": [
+        32,
+        32
+      ],
+      "alpha": "opaque",
+      "status": "ready",
+      "suggestedPath": "assets/tiles/ground_concrete_plain_01.png",
+      "compatibleMaterials": [
+        "concrete"
+      ],
+      "path": "assets/tiles/ground_concrete_plain_01.png"
+    },
+    {
+      "id": "ground_concrete_plain_02",
+      "name": "平整水泥 B",
+      "layer": "ground",
+      "material": "concrete",
+      "pattern": "plain",
+      "variantGroup": "ground_concrete_plain",
+      "canvas": [
+        32,
+        32
+      ],
+      "alpha": "opaque",
+      "status": "ready",
+      "suggestedPath": "assets/tiles/ground_concrete_plain_02.png",
+      "compatibleMaterials": [
+        "concrete"
+      ],
+      "path": "assets/tiles/ground_concrete_plain_02.png"
+    },
+    {
+      "id": "ground_soil_compact_01",
+      "name": "压实泥土 A",
+      "layer": "ground",
+      "material": "soil",
+      "pattern": "compact",
+      "variantGroup": "ground_soil_compact",
+      "canvas": [
+        32,
+        32
+      ],
+      "alpha": "opaque",
+      "status": "ready",
+      "suggestedPath": "assets/tiles/ground_soil_compact_01.png",
+      "compatibleMaterials": [
+        "soil"
+      ],
+      "path": "assets/tiles/ground_soil_compact_01.png"
+    },
+    {
+      "id": "ground_soil_compact_02",
+      "name": "压实泥土 B",
+      "layer": "ground",
+      "material": "soil",
+      "pattern": "compact",
+      "variantGroup": "ground_soil_compact",
+      "canvas": [
+        32,
+        32
+      ],
+      "alpha": "opaque",
+      "status": "ready",
+      "suggestedPath": "assets/tiles/ground_soil_compact_02.png",
+      "compatibleMaterials": [
+        "soil"
+      ],
+      "path": "assets/tiles/ground_soil_compact_02.png"
+    },
+    {
+      "id": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "layer": "decal",
+      "material": "surface",
+      "pattern": "damp",
+      "variantGroup": null,
+      "canvas": [
+        32,
+        32
+      ],
+      "alpha": "transparent",
+      "status": "ready",
+      "suggestedPath": "assets/props/decal_surface_damp_01.png",
+      "compatibleMaterials": [
+        "concrete",
+        "soil",
+        "stone"
+      ],
+      "path": "assets/props/decal_surface_damp_01.png"
+    },
+    {
+      "id": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "layer": "decal",
+      "material": "surface",
+      "pattern": "crack",
+      "variantGroup": null,
+      "canvas": [
+        32,
+        32
+      ],
+      "alpha": "transparent",
+      "status": "ready",
+      "suggestedPath": "assets/props/decal_surface_crack_01.png",
+      "compatibleMaterials": [
+        "concrete",
+        "stone",
+        "ceramic"
+      ],
+      "path": "assets/props/decal_surface_crack_01.png"
+    }
+  ],
+  "transitions": {
+    "status": "preview-only",
+    "method": "base material + overlay material + independent mask",
+    "firstPair": [
+      "soil",
+      "concrete"
+    ],
+    "cases": [
+      "straight",
+      "convex-corner",
+      "concave-corner",
+      "narrow-strip"
+    ],
+    "edgeWidthPixels": [
+      4,
+      6
+    ],
+    "rotatesMaterialTexture": false,
+    "implementationIncluded": false
+  },
+  "acceptance": {
+    "baseVariantMixedGrid": [
+      8,
+      8
+    ],
+    "decalOpacityChecks": [
+      1,
+      0.7,
+      0.4
+    ],
+    "compositions": [
+      "open-space",
+      "interior",
+      "alley"
+    ],
+    "requiresExistingStoneAndCourtyardComparison": true
+  },
+  "generationManifest": "../../assets/ground-batch-01/manifest.json",
+  "preview": "../../assets/ground-batch-01/index.html",
+  "qualityReport": "../../assets/ground-batch-01/quality.json",
+  "editorLibrary": "shared/scene-assets.json",
+  "integration": "4 terrain brushes plus 2 noncolliding ground decals; existing map unchanged"
+}
