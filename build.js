@@ -15,7 +15,9 @@ require('./tools/build-prop-bounds.js').build();
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
 const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js',
-  'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js', 'game.js', 'medhud.js'];
+  'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
+  'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
+  'medhud.js', 'boot.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */

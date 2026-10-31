@@ -597,7 +597,7 @@ node tools/cdp-shot.js "file:///D:/develop/project/tide/潮汐线.html#play,13,4
 
 ## 代码结构
 
-`game.js` 曾经是一个 4869 行的文件，按 `Game` / `Base` / `Save` / 医疗 / 浮窗 这些已有的注释边界拆成了下面这些。拆的时候一行逻辑都没改，拼回去和原文件去掉注释后逐字一致。
+`game.js` 曾经是一个 4869 行的文件。分两轮拆成现在这样：先按 `Game` / `Base` / `Save` / 医疗 / 浮窗 这些**已有的注释边界**整段搬运，再把 `Game` 的 68 个方法按职责分到四个文件。两轮都只搬不改，拼回去和原文件去掉注释后逐字（逐方法）一致。
 
 | 文件 | 行数 | 管什么 |
 |---|---|---|
@@ -611,8 +611,12 @@ node tools/cdp-shot.js "file:///D:/develop/project/tide/潮汐线.html#play,13,4
 | `js/ui.js` | 424 | `Tips` 详情浮窗、`Ctx` 右键菜单、`Deal` 交易框、`SFX` 音效 |
 | `js/save.js` | 329 | `Save` 存档、仓库与背包条目、图鉴、装备配装 |
 | `js/base.js` | 1070 | `Base` 藏身处（仓库/背包搬运/配装/商人）与 `MapSelect` 地图选择 |
-| `js/game.js` | 2655 | `Game` 局内循环、输入、碰撞、渲染、面板、结算，以及启动 |
+| `js/game.js` | 459 | `Game` 的**状态字段**、输入绑定、开局与主循环、反馈特效（后坐力/枪口/命中/飘字） |
+| `js/game-update.js` | 532 | 每帧逻辑：`update` / `updateTide` / `updateCamera`、交互判定、容器与遗落堆、击杀与死亡、撤离 |
+| `js/game-render.js` | 831 | 绘制：地形、抬升墙、物件、树冠、实体、粒子、噪声边、HUD |
+| `js/game-panels.js` | 813 | 面板：搜刮列表、背包、装备面板、弹药选择、结算两页 |
 | `js/medhud.js` | 467 | 医疗 HUD：轮盘、快捷栏、顶层进度条 |
+| `js/boot.js` | 70 | 启动：读存档、加载贴图、按 URL hash 进藏身处 / 直接开局 |
 
 全是普通 classic script，**顶层 `const` 跨文件共享**，没有 IIFE 也没有打包器 —— 双击 `file://` 直接能玩是硬约束，别为了模块化引入构建步骤。
 
@@ -622,10 +626,14 @@ node tools/cdp-shot.js "file:///D:/develop/project/tide/潮汐线.html#play,13,4
 - `build.js` 的 `JS_FILES`（单文件包按这个顺序内联）
 - `run-test.js` 顶部 `for (const f of [...]) `（无头测试的加载顺序）
 
-依赖方向是单向的：`config → data → core → entities → common → medical → art → ui → save → base → game → medhud`。
+依赖方向是单向的：`config → data → core → entities → common → medical → art → ui → save → base → game → game-update → game-render → game-panels → medhud → boot`。
 后面的文件可以用前面的任何东西，反过来不行 —— 因为顶层 `const` 在脚本执行完就已就绪，函数体里的引用要到调用时才解析，所以「谁先加载」只影响**顶层立即求值**的表达式。
 
-`Game` 仍是最大的一块。要继续拆的话，按 `update` / `render` / `panels` 三段用 `Object.assign(Game, { ... })` 搬，`this` 语义不变，每搬一段跑一次 `run-test` 就能确认没串。
+`Game` 的四个文件用 `Object.assign(Game, { ... })` 挂到同一个对象上，`this` 语义不变，所以方法之间互相调用跟以前完全一样。
+`game.js` 只留字段和生命周期，另外三个文件**只是把方法从原来的对象字面量里挪出来**，顺序无关。
+
+加新方法时按职责挑文件：会改状态的进 `game-update.js`，只画不改进 `game-render.js`，碰 DOM 面板的进 `game-panels.js`。
+现在四个文件最大 831 行，`game-render.js` 最不适合再往下切（绘制顺序是隐式契约），真要拆就按「地形层 / 物件层 / 实体层 / HUD」切开。
 
 ## 改参数
 

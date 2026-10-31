@@ -2962,6 +2962,8 @@ const EQUIP = {
 
 
 
+
+
 /* BEGIN SCENE LIBRARY */
 for(const a of [{"group":"tiles","id":"ground_concrete_plain_01"},{"group":"tiles","id":"ground_concrete_plain_02"},{"group":"tiles","id":"ground_soil_compact_01"},{"group":"tiles","id":"ground_soil_compact_02"},{"group":"props","id":"decal_surface_crack_01"},{"group":"props","id":"decal_surface_damp_01"}]){if(!ART[a.group].includes(a.id))ART[a.group].push(a.id);}
 /* END SCENE LIBRARY */
@@ -7079,13 +7081,9 @@ const MapSelect = {
 <script>
 /* ===== game.js ===== */
 /* ============================================================
-   潮汐线 · 主逻辑
-   循环 / 输入 / 渲染 / 交互 / 存档
-   ============================================================ */
-
-/* ============================================================
-   局内主循环：输入 / 更新 / 碰撞 / 渲染 / 面板 / 结算
-   存档见 save.js，藏身处见 base.js，浮窗与音效见 ui.js。
+   局内主循环：状态字段、输入绑定、开局与循环、反馈特效
+   每帧逻辑在 game-update.js，绘制在 game-render.js，
+   面板在 game-panels.js，启动在 boot.js。
    ============================================================ */
 
 const Game = {
@@ -7120,7 +7118,7 @@ const Game = {
     reloadPressed: false, bagPressed: false
   },
 
-  /* ---------------- 初始化 ---------------- */
+
   init() {
     if (this._initialized) return;
     this._initialized = true;
@@ -7157,131 +7155,6 @@ const Game = {
 
     this.lastT = performance.now();
     this.scheduleFrame();
-  },
-
-  buildBoxes() {
-    this.boxes = [];
-    for (let y = 0; y < M.H; y++) {
-      for (let x = 0; x < M.W; x++) {
-        const t = M.at(x, y);
-        const kind = t.container && BOX_KIND[t.ch];
-        if (kind) {
-          const type = CONTAINER_TYPES[t.ch];
-          const spot = M.map && M.map.containers.find(b=>b.x===x&&b.y===y);
-          const box = {
-            id: spot ? spot.id : null, region: spot ? spot.region : null,
-            x: M.cx(x), y: M.cy(y),
-            tx: x, ty: y,
-            kind,                       // 品质名（junk…secret）
-            q: CONTAINER_QUALITY[kind],
-            art: type.art, name: type.name,
-            items: Loot.fill(kind, type.cats || (spot && spot.preference), type),
-            opened: false,
-            searched: false             // 有没有被掀开过；和"是否已空"分开记
-          };
-          t.box = box;
-          this.boxes.push(box);
-        }
-      }
-    }
-  },
-
-  /* ---------------- 容器状态 ----------------
-     两个状态必须分开：
-       searched  掀开过 —— 再交互不用重新读条
-       opened    彻底翻空 —— 不可再交互，画面上压暗
-     早先把 opened 当成"打开过"，导致拿了一半的箱子再也开不了。 */
-  boxHasItems(b) {
-    return !!(b && b.items && b.items.some(e => e && e.item));
-  },
-
-  /* 拿完一件后同步状态；返回是否还有东西 */
-  syncBoxState(b) {
-    if (!b) return false;
-    const has = this.boxHasItems(b);
-    b.opened = !has;
-    if (b.pile && !has) this.removePile(b);
-    return has;
-  },
-
-  /* ---------------- 丢弃 / 遗落物品堆 ----------------
-     丢在脚下一格。同格已经有物品堆就并进去，不重复刷容器。
-     物品堆是"已经知道里面是什么"的容器：掀开不用读条、逐件也不用再搜。 */
-  dropSpot() {
-    const P = this.player;
-    if (!P) return null;
-    const tx = M.tx(P.x), ty = M.ty(P.y);
-    if (M.walkable(tx, ty)) return { x: tx, y: ty };
-    for (let dy = -1; dy <= 1; dy++) {
-      for (let dx = -1; dx <= 1; dx++) {
-        if (!dx && !dy) continue;
-        if (M.walkable(tx + dx, ty + dy)) return { x: tx + dx, y: ty + dy };
-      }
-    }
-    return null;
-  },
-
-  makePile(tx, ty) {
-    this.pileSeq = (this.pileSeq || 0) + 1;
-    const pile = {
-      id: 'pile-' + this.pileSeq, region: null,
-      x: M.cx(tx), y: M.cy(ty), tx, ty,
-      kind: 'junk', q: CONTAINER_QUALITY.junk,
-      art: null, name: '遗落物品堆',
-      items: [],
-      opened: false,
-      searched: true,               // 自己丢的东西，不用再"搜"
-      pile: true
-    };
-    const t = M.at(tx, ty);
-    if (t) t.box = pile;
-    this.boxes.push(pile);
-    return pile;
-  },
-
-  removePile(p) {
-    const i = this.boxes.indexOf(p);
-    if (i >= 0) this.boxes.splice(i, 1);
-    const t = M.at(p.tx, p.ty);
-    if (t && t.box === p) t.box = null;
-    if (this.lootOpen === p) this.closeLoot();
-    this.toast('物品堆空了');
-  },
-
-  /* 把背包第 i 格整叠丢下 */
-  dropFromBag(i) {
-    const P = this.player;
-    if (!P) return false;
-    const s = P.bag.slots[i];
-    if (!s || !s.item) return false;
-
-    const spot = this.dropSpot();
-    if (!spot) { this.toast('这里没有能放东西的空地'); return false; }
-
-    let pile = this.boxes.find(b => b.pile && b.tx === spot.x && b.ty === spot.y);
-    if (!pile) pile = this.makePile(spot.x, spot.y);
-
-    /* 可堆叠的同种物品并进已有条目，别在一个堆里堆出两条同名；
-       用过一半的医疗品不和满的合并，容量一起带进堆里 */
-    const max = s.item.healCap || 0;
-    const isPartial = max > 0 && typeof s.cap === 'number' && s.cap < max - 1e-6;
-    const isFull = e => !max || (typeof e.cap === 'number' ? e.cap : max) >= max - 1e-6;
-    const same = (!isPartial && s.item.stack > 1)
-      ? pile.items.find(e => e && e.item.id === s.item.id && isFull(e) && e.n + s.n <= s.item.stack)
-      : null;
-    if (same) same.n += s.n;
-    else pile.items.push(typeof s.cap === 'number'
-      ? { item: s.item, n: s.n, known: true, cap: s.cap }
-      : { item: s.item, n: s.n, known: true });
-
-    pile.opened = false;
-    P.bag.slots.splice(i, 1);
-
-    this.renderBag();
-    if (this.lootOpen === pile) this.renderLootList();
-    SFX.play('drop');
-    this.toast('丢下 ' + s.item.name + (s.n > 1 ? ' ×' + s.n : ''));
-    return true;
   },
 
   resize() {
@@ -7448,10 +7321,6 @@ const Game = {
     Ctx.bindClose();
   },
 
-  /* ---------------- 开局 ---------------- */
-
-  /* 藏身处的背包 → 局内背包。装不下的（理论上藏身处已经拦过）
-     留在 Save.bag 里，不带进图也不会丢。 */
   fillBagFromSave() {
     Save.normalizeBag();
     const stay = [];
@@ -7475,8 +7344,6 @@ const Game = {
     Save.bag = stay;
   },
 
-  /* 旧式 loadout（{ammo556/ammo9mm/ammo12g/bandage/medical}）→ 直接发进背包。
-     只有调试入口和老测试还在用这条路。 */
   grantLegacyBag(L) {
     const band = ITEM_BY_ID.heal01;
     const grants = [
@@ -7606,6 +7473,188 @@ const Game = {
     this.render();
     if (typeof MedHud !== 'undefined') MedHud.frame();
     this.scheduleFrame();
+  },
+
+  /* ---------------- 反馈 ---------------- */
+  /* 护甲耐久 / 武器余弹变化后写回存档，死了也不回滚——装备是消耗品 */
+  syncGear() {
+    const P = this.player;
+    if (!P) return;
+    P.weapons[P.slot] && (P.weapons[P.slot].magCur = P.mag);   // 手上那把的余弹先同步
+    Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo) : null));
+    Save.gear.helmet = P.helmet ? Object.assign({}, P.helmet) : null;
+    Save.gear.body = P.body ? Object.assign({}, P.body) : null;
+    Save.save();
+  },
+
+  /* 被爆头时的一次性提示 */
+  headshotMark() {
+    this.headT = 0.45;
+  },
+
+  toast(msg) {
+    this.toasts.push({ msg, t: 2.2 });
+    if (this.toasts.length > 4) this.toasts.shift();
+  },
+
+  sfx(name) { SFX.play(name); },
+
+  shake(a) { this.shakeAmt = Math.min(12, this.shakeAmt + a); },
+
+  flash(c, a) { this.flashColor = c; this.flashA = Math.max(this.flashA, a); },
+
+  muzzle(x, y) {
+    for (let i = 0; i < 4; i++) {
+      this.particles.push({
+        x, y,
+        vx: Math.cos(this.player.angle) * U.rand(60, 180) + U.rand(-30, 30),
+        vy: Math.sin(this.player.angle) * U.rand(60, 180) + U.rand(-30, 30),
+        life: U.rand(0.06, 0.16), c: '#e8c88a', s: U.rand(1.5, 2.6)
+      });
+    }
+  },
+
+  impact(x, y, angle, blood, head) {
+    const n = head ? 12 : (blood ? 7 : 4);
+    for (let i = 0; i < n; i++) {
+      const a = angle + Math.PI + U.rand(-0.9, 0.9);
+      this.particles.push({
+        x, y,
+        vx: Math.cos(a) * U.rand(30, head ? 170 : 120),
+        vy: Math.sin(a) * U.rand(30, head ? 170 : 120),
+        life: U.rand(0.15, head ? 0.55 : 0.4),
+        c: head ? '#e8c98a' : (blood ? '#8d3a3a' : '#7a8a84'),
+        s: U.rand(1, head ? 3 : 2.4)
+      });
+    }
+  }
+};
+
+</script>
+<script>
+/* ===== game-update.js ===== */
+/* ============================================================
+   局内每帧逻辑：更新、交互判定、容器与遗落堆、死亡与撤离
+   Game 的字段和生命周期在 game.js，这里用 Object.assign 挂上去。
+   ============================================================ */
+
+Object.assign(Game, {
+
+  buildBoxes() {
+    this.boxes = [];
+    for (let y = 0; y < M.H; y++) {
+      for (let x = 0; x < M.W; x++) {
+        const t = M.at(x, y);
+        const kind = t.container && BOX_KIND[t.ch];
+        if (kind) {
+          const type = CONTAINER_TYPES[t.ch];
+          const spot = M.map && M.map.containers.find(b=>b.x===x&&b.y===y);
+          const box = {
+            id: spot ? spot.id : null, region: spot ? spot.region : null,
+            x: M.cx(x), y: M.cy(y),
+            tx: x, ty: y,
+            kind,                       // 品质名（junk…secret）
+            q: CONTAINER_QUALITY[kind],
+            art: type.art, name: type.name,
+            items: Loot.fill(kind, type.cats || (spot && spot.preference), type),
+            opened: false,
+            searched: false             // 有没有被掀开过；和"是否已空"分开记
+          };
+          t.box = box;
+          this.boxes.push(box);
+        }
+      }
+    }
+  },
+
+  boxHasItems(b) {
+    return !!(b && b.items && b.items.some(e => e && e.item));
+  },
+
+  /* 拿完一件后同步状态；返回是否还有东西 */
+  syncBoxState(b) {
+    if (!b) return false;
+    const has = this.boxHasItems(b);
+    b.opened = !has;
+    if (b.pile && !has) this.removePile(b);
+    return has;
+  },
+
+  dropSpot() {
+    const P = this.player;
+    if (!P) return null;
+    const tx = M.tx(P.x), ty = M.ty(P.y);
+    if (M.walkable(tx, ty)) return { x: tx, y: ty };
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        if (!dx && !dy) continue;
+        if (M.walkable(tx + dx, ty + dy)) return { x: tx + dx, y: ty + dy };
+      }
+    }
+    return null;
+  },
+
+  makePile(tx, ty) {
+    this.pileSeq = (this.pileSeq || 0) + 1;
+    const pile = {
+      id: 'pile-' + this.pileSeq, region: null,
+      x: M.cx(tx), y: M.cy(ty), tx, ty,
+      kind: 'junk', q: CONTAINER_QUALITY.junk,
+      art: null, name: '遗落物品堆',
+      items: [],
+      opened: false,
+      searched: true,               // 自己丢的东西，不用再"搜"
+      pile: true
+    };
+    const t = M.at(tx, ty);
+    if (t) t.box = pile;
+    this.boxes.push(pile);
+    return pile;
+  },
+
+  removePile(p) {
+    const i = this.boxes.indexOf(p);
+    if (i >= 0) this.boxes.splice(i, 1);
+    const t = M.at(p.tx, p.ty);
+    if (t && t.box === p) t.box = null;
+    if (this.lootOpen === p) this.closeLoot();
+    this.toast('物品堆空了');
+  },
+
+  /* 把背包第 i 格整叠丢下 */
+  dropFromBag(i) {
+    const P = this.player;
+    if (!P) return false;
+    const s = P.bag.slots[i];
+    if (!s || !s.item) return false;
+
+    const spot = this.dropSpot();
+    if (!spot) { this.toast('这里没有能放东西的空地'); return false; }
+
+    let pile = this.boxes.find(b => b.pile && b.tx === spot.x && b.ty === spot.y);
+    if (!pile) pile = this.makePile(spot.x, spot.y);
+
+    /* 可堆叠的同种物品并进已有条目，别在一个堆里堆出两条同名；
+       用过一半的医疗品不和满的合并，容量一起带进堆里 */
+    const max = s.item.healCap || 0;
+    const isPartial = max > 0 && typeof s.cap === 'number' && s.cap < max - 1e-6;
+    const isFull = e => !max || (typeof e.cap === 'number' ? e.cap : max) >= max - 1e-6;
+    const same = (!isPartial && s.item.stack > 1)
+      ? pile.items.find(e => e && e.item.id === s.item.id && isFull(e) && e.n + s.n <= s.item.stack)
+      : null;
+    if (same) same.n += s.n;
+    else pile.items.push(typeof s.cap === 'number'
+      ? { item: s.item, n: s.n, known: true, cap: s.cap }
+      : { item: s.item, n: s.n, known: true });
+
+    pile.opened = false;
+    P.bag.slots.splice(i, 1);
+
+    this.renderBag();
+    if (this.lootOpen === pile) this.renderLootList();
+    SFX.play('drop');
+    this.toast('丢下 ' + s.item.name + (s.n > 1 ? ' ×' + s.n : ''));
+    return true;
   },
 
   /* ---------------- 更新 ---------------- */
@@ -7960,582 +8009,6 @@ const Game = {
     }
   },
 
-  /* ---------------- 搜刮面板 ---------------- */
-  openLoot(obj, isCorpse) {
-    Medical.cancel();
-    this.lootOpen = obj;
-    this.lootIsCorpse = !!isCorpse;
-    if (isCorpse && !obj.items) obj.items = obj.loot;
-
-    // 第一次打开时每一件都是"未搜索"。搜过的容器再打开会记住状态。
-    for (const e of (obj.items || [])) {
-      if (e && e.known === undefined) e.known = false;
-    }
-
-    const box = document.getElementById('lootBox');
-    box.style.display = 'block';
-    document.getElementById('lootTitle').textContent = isCorpse
-      ? (obj.enemy ? obj.enemy.t.name + '的尸体' : '尸体')
-      : (obj.name || '容器');
-
-    this.search = null;
-    this._searchBar = null;
-    this.autoSearch = true;      // 打开就一件件往下搜，点某一件才转成目标搜索
-    this.renderLootList();
-    this.stepAutoSearch();
-
-    // 搜刮时背包一起打开（左侧），关面板时如果是自动开的就收回去
-    if (!this.bagOpen) {
-      this.bagWasAuto = true;
-      this.toggleBag();
-    }
-  },
-
-  closeLoot() {
-    this.lootOpen = null;
-    this.search = null;
-    this.autoSearch = false;
-    this._searchBar = null;
-    document.getElementById('lootBox').style.display = 'none';
-    if (this.bagWasAuto) {
-      this.bagWasAuto = false;
-      if (this.bagOpen) this.toggleBag();
-    }
-  },
-
-  /* 按稀有度算这一件要搜多久 */
-  searchTime(it) {
-    const arr = CFG.ITEM_SEARCH.timeByRarity;
-    return arr[U.clamp(it.r - 1, 0, arr.length - 1)];
-  },
-
-  /* 自动顺序搜索：容器一打开就自己往下搜，一件完接下一件。
-     玩家点某一件时 autoSearch 关掉，之后只搜他指定的那件。
-     拿走已搜出来的东西不打断队列（拿完接着搜）。 */
-  stepAutoSearch() {
-    if (!this.autoSearch || this.search || !this.lootOpen) return;
-    const arr = this.lootOpen.items || [];
-    for (let i = 0; i < arr.length; i++) {
-      const e = arr[i];
-      if (e && e.item && !e.known) { this.startItemSearch(i); return; }
-    }
-    this.autoSearch = false;      // 都搜完了
-  },
-
-  /* 点一下未搜索的物品开始搜。搜到一半换一件，前一件的进度归零。
-     manual = true 表示玩家指定了目标，就此停下自动顺序搜索。 */
-  startItemSearch(idx, manual) {
-    const box = this.lootOpen;
-    if (!box || !box.items) return false;
-    const e = box.items[idx];
-    if (!e || e.known) return false;
-
-    if (manual) this.autoSearch = false;
-    this.search = { idx: idx, t: 0, total: this.searchTime(e.item), noiseT: 0 };
-    this.renderLootList();
-    SFX.play('search');
-    return true;
-  },
-
-  renderLootList() {
-    const el = document.getElementById('lootList');
-    el.innerHTML = '';
-    this._searchBar = null;
-    if (!this.lootOpen || !this.lootOpen.items) {
-      this.renderLootGear();
-      return;
-    }
-
-    const arr = this.lootOpen.items;
-    this.renderLootGear();
-
-    const left = arr.filter(Boolean).length;
-    const hint = document.getElementById('lootHint');
-    if (hint) {
-      hint.textContent = !left ? 'E 关闭'
-        : (this.autoSearch ? '自动搜索中 · 点某件优先搜' : '点击搜索 · E 关闭');
-    }
-
-    if (!left) {
-      el.innerHTML = '<div style="font-size:11.5px;color:#4f665f;padding:8px 2px">空的。</div>';
-      return;
-    }
-
-    arr.forEach((entry, i) => {
-      if (!entry) return;
-
-      /* ---- 尸体身上的装备：已经画在上面的装备格里，不在下面重复 ---- */
-      if (entry.gear || entry.gun) return;
-
-      const it = entry.item;
-      const row = document.createElement('div');
-
-      /* ---- 还没搜出来：只给一个压暗的剪影，不透露稀有度和价值 ---- */
-      if (!entry.known) {
-        const searching = this.search && this.search.idx === i;
-        row.className = 'row unknown';
-        if (!searching) {
-          /* 自动模式下后面几件是"排队"，点一下就插队 */
-          row.innerHTML =
-            '<span class="ico phq">?</span>' +
-            '<span class="nm">' + (this.autoSearch ? '排队' : '未搜索') + '</span>' +
-            '<span class="vv">—</span>';
-        } else {
-          row.innerHTML =
-            '<span class="ico phq">?</span>' +
-            '<span class="nm">搜索中</span>' +
-            '<span class="prog"><i style="width:' +
-            Math.min(100, this.search.t / this.search.total * 100) + '%"></i></span>';
-        }
-        /* 点一件 = 我要先搜这个：中断自动顺序搜索，改搜指定目标 */
-        row.onclick = () => { if (!this.search || this.search.idx !== i) this.startItemSearch(i, true); };
-        row.oncontextmenu = (ev) => { ev.preventDefault(); this.toast('还没搜出来，看不了'); };
-        el.appendChild(row);
-        if (searching) this._searchBar = row.querySelector('.prog i');
-        return;
-      }
-
-      /* ---- 搜出来了：显示名称、重量、价格 ---- */
-      row.className = 'row ' + RARITY[it.r - 1].cls;
-      const known = Save.codex[it.id];
-
-      let badges = '';
-      if (!it.noCodex && !known) badges += '<span class="badge">新</span>';
-
-      row.innerHTML =
-        Icons.tag(it.id) +
-        '<span class="nm">' + it.name + badges + '</span>' +
-        '<span class="vv">' + it.w.toFixed(2) + 'kg · ' +
-        (it.price > 0 ? formatMoney(it.price) : '—') + '</span>';
-
-      row.onclick = () => {
-        const cur = this.lootOpen && this.lootOpen.items[i];
-        if (!cur) return;
-        const res = this.player.bag.canAdd(it, cur.n, cur.cap);
-        if (!res.ok) { this.toast(res.why); return; }
-        this.player.bag.add(it, cur.n, cur.cap);
-        if (!it.noCodex) this.registerCodex(it);
-        this.lootOpen.items[i] = null;
-        SFX.play('pickup');
-        /* 拿空后：普通容器压暗停用，遗落物品堆直接消失（并关掉面板） */
-        this.syncBoxState(this.lootOpen);
-        if (!this.lootOpen) { this.renderBag(); return; }
-        this.renderLootList();
-        this.stepAutoSearch();      // 拿东西不打断自动搜索，拿完接着搜
-        if (this.bagOpen) this.renderBag();
-      };
-      /* 右键看详情：拿之前先确认这东西值不值得占一格 */
-      row.oncontextmenu = (ev) => {
-        ev.preventDefault();
-        const cur2 = this.lootOpen && this.lootOpen.items[i];
-        if (!cur2) return;
-        Tips.show(it, row.getBoundingClientRect(), '左键装进背包');
-      };
-      el.appendChild(row);
-    });
-  },
-
-  /* ---------------- 尸体装备：方格布局 ---------------- */
-  /* 和背包顶部同一套方格：头盔 / 护甲 / 武器 三格，左键穿上、右键带回 */
-  renderLootGear() {
-    const bar = document.getElementById('lootGear');
-    const tip = document.getElementById('lootGearTip');
-    if (!bar) return;
-
-    const arr = (this.lootOpen && this.lootOpen.items) || [];
-    const at = {
-      helmet: arr.findIndex(e => e && e.gear && e.gear.type === 'helmet'),
-      body: arr.findIndex(e => e && e.gear && e.gear.type === 'body'),
-      gun: arr.findIndex(e => e && e.gun)
-    };
-    const any = at.helmet >= 0 || at.body >= 0 || at.gun >= 0;
-
-    if (!this.lootIsCorpse || !any) {
-      bar.style.display = 'none';
-      if (tip) tip.style.display = 'none';
-      return;
-    }
-    bar.style.display = 'grid';
-    if (tip) tip.style.display = 'block';
-
-    const P = this.player;
-    const cells = [];
-
-    /* 头盔 */
-    {
-      const e = at.helmet >= 0 ? arr[at.helmet] : null;
-      const g = e && e.gear;
-      cells.push({
-        idx: at.helmet,
-        icon: g ? 'helmet' + g.lv : null,
-        fb: g ? '盔' : '—',
-        label: g ? g.short : '头盔',
-        tag: g ? Math.ceil(g.dur) + '/' + g.max : '',
-        tagCls: g ? (GEAR.state(g) === 'ok' ? '' : GEAR.state(g)) : '',
-        own: !!(P && P.helmet),
-        item: g ? EQUIP.armor(g) : null
-      });
-    }
-
-    /* 护甲 */
-    {
-      const e = at.body >= 0 ? arr[at.body] : null;
-      const g = e && e.gear;
-      cells.push({
-        idx: at.body,
-        icon: g ? 'body' + g.lv : null,
-        fb: g ? '甲' : '—',
-        label: g ? g.short : '护甲',
-        tag: g ? Math.ceil(g.dur) + '/' + g.max : '',
-        tagCls: g ? (GEAR.state(g) === 'ok' ? '' : GEAR.state(g)) : '',
-        own: !!(P && P.body),
-        item: g ? EQUIP.armor(g) : null
-      });
-    }
-
-    /* 武器 */
-    {
-      const e = at.gun >= 0 ? arr[at.gun] : null;
-      const id = e ? this.gunId(e) : null;
-      const w = id ? WEAPONS[id] : null;
-      cells.push({
-        idx: at.gun,
-        icon: id,
-        fb: w ? w.short.charAt(0) : '—',
-        label: w ? w.short : '武器',
-        tag: w ? w.mag + '发' : '',
-        own: !!(P && w && (w.slot === 'primary' ? (P.weapons[0] && P.weapons[1]) : P.weapons[2])),
-        item: w ? EQUIP.gun(id, 0) : null
-      });
-    }
-
-    /* 身上已经有同类装备时，这一格点下去是"放进背包"，用角标提示 */
-    bar.innerHTML = cells.map(c =>
-      '<div class="eqs' + (c.icon ? '' : ' empty') + '" title="' +
-        esc(c.label) +
-        (c.icon ? (c.own ? ' · 已有同类，点击放进背包' : ' · 点击穿上') + ' · 右键看详情' : '') + '">' +
-        (c.icon && c.own ? '<span class="carry">包</span>' : '') +
-        '<span class="lbl">' + esc(c.label) + '</span>' +
-        '<span class="ic">' + Icons.gearIcon(c.icon, c.fb) + '</span>' +
-        (c.tag ? '<span class="tag ' + (c.tagCls || '') + '">' + esc(c.tag) + '</span>' : '') +
-      '</div>').join('');
-
-    // 每格绑定点：左键拾取（没有同类装备就穿，有就放包）；右键看详情
-    const nodes = bar.children || [];
-    for (let n = 0; n < nodes.length; n++) {
-      const c = cells[n];
-      const node = nodes[n];
-      if (!c || c.idx < 0) { node.classList.add('empty'); continue; }
-      node.onclick = () => this.takeGear(this.lootOpen.items[c.idx], c.idx);
-      if (c.item && node.addEventListener) {
-        node.oncontextmenu = (ev) => {
-          ev.preventDefault();
-          Tips.show(c.item, node.getBoundingClientRect(),
-            c.own ? '已有同类，左键放进背包' : '左键直接穿上');
-        };
-      }
-    }
-  },
-
-  /* 尸体上的枪可能存成 id 字符串，也可能是早期写的整份 WEAPONS 对象 */
-  gunId(entry) {
-    const g = entry && entry.gun;
-    if (!g) return null;
-    return typeof g === 'string' ? g : (g.id || null);
-  },
-
-  /* 从尸体上拿装备：身上没有对应的就直接穿上，已经有了就塞进背包。
-     装备进背包会占一格、算重量 —— 这是把它带出去要付的代价。 */
-  takeGear(entry, idx) {
-    const P = this.player;
-    if (!P || !entry) return false;
-    const isGun = !!entry.gun;
-    const gunId = this.gunId(entry);
-    const g = isGun ? WEAPONS[gunId] : entry.gear;
-    if (!g) return false;
-
-    let msg = '';
-
-    if (isGun) {
-      /* 主武器进 0/1，副武器进 2；有空位就先穿上 */
-      const range = g.slot === 'primary' ? [0, 1] : [2];
-      const free = range.find(k => !P.weapons[k]);
-      if (free != null) {
-        const got = Math.max(1, Math.round(g.mag * 0.3));
-        P.weapons[free] = Object.assign({}, g, { magCur: got });
-        if (!P.weapons[P.slot]) { P.slot = free; P.mag = got; }
-        msg = '换上 ' + g.name + '（' + got + ' 发）';
-      }
-    } else if (!P[g.type]) {
-      P[g.type] = Object.assign({}, g);
-      msg = '穿上 ' + g.name;
-    }
-
-    if (!msg) {
-      const item = isGun
-        ? EQUIP.gun(gunId, Math.max(1, Math.round(g.mag * 0.3)))
-        : EQUIP.armor(g);
-      const res = P.bag.canAdd(item, 1);
-      if (!res.ok) { this.toast(res.why); return false; }
-      P.bag.add(item, 1);
-      msg = '放进背包 · ' + g.name;
-    }
-
-    this.lootOpen.items[idx] = null;
-    SFX.play('pickup');
-    this.toast(msg);
-    this.syncGear();                 // 穿上的东西直接写回存档
-    this.renderLootList();
-    if (this.bagOpen) this.renderBag();
-    return true;
-  },
-
-  /* 点背包里的装备 → 穿上；手上已有同类，就把换下来的塞回这一格 */
-  equipFromBag(i) {
-    const P = this.player;
-    const s = P && P.bag.slots[i];
-    if (!s || !s.item || !s.item.equip) return false;
-    const eq = s.item.equip;
-    let old = null;
-
-    if (eq.kind === 'gun') {
-      const def = WEAPONS[eq.gun];
-      if (!def) return false;
-      const range = def.slot === 'primary' ? [0, 1] : [2];
-      const free = range.find(k => !P.weapons[k]);
-      const at = (free != null) ? free : P.slot;     // 没有空位就换手上这把
-      const cur = P.weapons[at];
-      if (cur) old = EQUIP.gun(cur.id, cur.magCur, cur.ammo);
-      P.weapons[at] = Object.assign({}, def, {
-        magCur: eq.mag || 0,
-        ammo: (AMMO_BY_ID[eq.ammo] && AMMO_BY_ID[eq.ammo].caliber === def.caliber) ? eq.ammo : def.ammo
-      });
-      P.slot = at;
-      P.mag = P.weapons[at].magCur;
-    } else {
-      const g = eq.gear;
-      const cur = P[g.type];
-      if (cur) old = EQUIP.armor(cur);
-      P[g.type] = Object.assign({}, g);
-    }
-
-    if (old) P.bag.slots[i] = { item: old, n: 1 };
-    else P.bag.slots.splice(i, 1);
-
-    SFX.play('pickup');
-    this.toast('穿上 ' + s.item.name + (old ? '，' + old.name + ' 留在背包' : ''));
-    this.syncGear();
-    this.renderBag();
-    return true;
-  },
-
-  registerCodex(it) {
-    if(it.noCodex || it.equip || itemGroup(it)!=='collectible')return;
-    if (!Save.codex[it.id]) {
-      Save.codex[it.id] = { first: Date.now(), count: 0 };
-      this.stats.newItems.push(it);
-      this.toast('新收录：' + it.name);
-    }
-    Save.codex[it.id].count++;
-    Save.save();
-  },
-
-  /* ---------------- 背包面板 ---------------- */
-  toggleBag() {
-    this.bagOpen = !this.bagOpen;
-    const el = document.getElementById('bagBox');
-    el.classList.toggle('open', this.bagOpen);
-    if (this.bagOpen) this.renderBag();
-  },
-
-  /* 背包顶部的装备格：和物品格同一种方格，名字压在格子上面。
-     一行 6 格（主1 主2 副手 头盔 护甲 背包），整条 38px 高。 */
-  renderGearPanel() {
-    const P = this.player;
-    if (!P) return;
-    const el = document.getElementById('eqStrip');
-    if (!el) return;
-
-    const cells = [];
-
-    /* --- 三个武器位 --- */
-    for (let i = 0; i < 3; i++) {
-      const w = P.weapons[i];
-      cells.push({
-        icon: w ? w.id : null,
-        fb: w ? w.short.charAt(0) : '',
-        label: w ? w.short : (i < 2 ? '主武器' + (i + 1) : '副武器'),
-        on: i === P.slot,
-        /* 手上那把读 P.mag（实时），其它槽读各自记着的余弹 */
-        tag: w ? ((i === P.slot ? P.mag : w.magCur) + '/' + w.mag) : '',
-        click: w ? () => { P.switchWeapon(i); this.renderGearPanel(); } : null
-      });
-    }
-
-    /* --- 头盔 / 护甲 --- */
-    for (const type of ['helmet', 'body']) {
-      const g = P[type];
-      const st = g ? GEAR.state(g) : '';
-      cells.push({
-        icon: g ? type + g.lv : null,
-        fb: g ? (type === 'helmet' ? '盔' : '甲') : '',
-        label: g ? g.short : (type === 'helmet' ? '头盔' : '护甲'),
-        tag: g ? 'Lv' + g.lv : '',
-        tagCls: st === 'ok' ? '' : st,
-        click: null
-      });
-    }
-
-    /* --- 背包（还没开放，占一个位） --- */
-    cells.push({
-      icon: 'bag',
-      fb: '包',
-      label: '背包',
-      tag: CFG.BAG.SLOTS + '格',
-      click: null
-    });
-
-    el.innerHTML = cells.map(c =>
-      '<div class="eqs' + (c.on ? ' on' : '') + (c.icon ? '' : ' empty') +
-        (c.click ? ' live' : '') + '" title="' + esc(c.label) + '">' +
-        '<span class="lbl">' + esc(c.label) + '</span>' +
-        '<span class="ic">' + Icons.gearIcon(c.icon, c.fb) + '</span>' +
-        (c.tag ? '<span class="tag ' + (c.tagCls || '') + '">' + esc(c.tag) + '</span>' : '') +
-      '</div>').join('');
-
-    // 点武器格切枪（无头测试里的假 DOM 没有 children，跳过绑定即可）
-    const nodes = el.children || [];
-    for (let n = 0; n < nodes.length; n++) {
-      const c = cells[n];
-      if (c && c.click) nodes[n].onclick = c.click;
-    }
-  },
-
-  renderBag() {
-    const P = this.player;
-    if (!P) return;
-    this.renderGearPanel();
-    const grid = document.getElementById('bagGrid');
-    grid.innerHTML = '';
-    for (let i = 0; i < CFG.BAG.SLOTS; i++) {
-      const cell = document.createElement('div');
-      const s = P.bag.slots[i];
-      if (s) {
-        const it = s.item;
-        cell.className = 'cell ' + RARITY[it.r - 1].cls + (it.equip ? ' eq' : '');
-        cell.style.color = '#b9cac4';
-        const ico = Icons.bagTag(it, 'ico-bag');
-        /* 装备只有一件，右上角改显示枪里的余弹 */
-        const qty = it.note
-          ? '<span class="qty">' + esc(it.note) + '</span>'
-          : (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '');
-        /* 用过的恢复品把剩余容量直接标在格子里，不用点开详情才知道 */
-        const capTag = (it.healCap && Medical.isPartial(s))
-          ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '';
-        const label = it.short || it.name;
-        cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty + capTag;
-        /* 弹药：左键把它设为当前武器的待装填弹种（口径不对会直接提示） */
-        const isAmmo = it.cat === 'ammo';
-        const isLoaded = isAmmo && P.ammoId === it.id;
-        cell.title = (it.healCap && Medical.isPartial(s)
-            ? it.name + ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + it.healCap
-            : it.name + ' · ' + it.w + 'kg') + ' · 右键看详情' +
-          (isAmmo ? (isLoaded ? ' · 当前装填' : ' · 左键设为待装填')
-           : Medical.is(it) ? ' · 左键打开医疗操作'
-           : it.equip ? ' · 左键替换身上那件' : ' · 左键移入安全箱');
-        if (isLoaded) cell.classList.add('loaded');
-        cell.onclick = () => {
-          if (isAmmo) { this.selectAmmo(i); return; }
-          if (Medical.is(it)) Medical.open(s, 'bag', cell);
-          else if (it.equip) this.equipFromBag(i);
-          else this.moveToSafe(i);
-        };
-        /* 右键菜单：详情 / 丢弃。丢弃会整叠落在脚下一格 */
-        cell.oncontextmenu = (ev) => {
-          ev.preventDefault();
-          ev.stopPropagation();
-          Ctx.show(ev.clientX, ev.clientY, [
-            {
-              label: '查看详情',
-              onClick: () => Tips.show(it, cell.getBoundingClientRect(),
-                it.cat === 'ammo' ? '左键设为待装填' : it.equip ? '左键替换身上那件' : '左键移入安全箱')
-            },
-            {
-              label: '丢弃',
-              hint: s.n > 1 ? '整叠 ×' + s.n : '脚下',
-              danger: true,
-              onClick: () => this.dropFromBag(i)
-            }
-          ]);
-        };
-      } else {
-        cell.className = 'cell empty';
-        cell.textContent = '·';
-      }
-      grid.appendChild(cell);
-    }
-
-    const sg = document.getElementById('safeGrid');
-    sg.innerHTML = '';
-    for (let i = 0; i < CFG.BAG.SAFE; i++) {
-      const cell = document.createElement('div');
-      const s = P.bag.safe[i];
-      if (s) {
-        cell.className = 'cell safe ' + RARITY[s.item.r - 1].cls;
-        cell.style.color = '#b9cac4';
-        const ico2 = Icons.bagTag(s.item, 'ico-safe');
-        cell.innerHTML = ico2 + '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
-          (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '') +
-          ((s.item.healCap && Medical.isPartial(s))
-            ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '');
-        cell.title = s.item.name + (s.item.healCap && Medical.isPartial(s)
-            ? ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + s.item.healCap
-            : ' · ' + s.item.w + 'kg') + ' · 左键移回背包 · 右键看详情';
-        cell.onclick = () => {
-          if (Medical.is(s.item)) { Medical.open(s, 'safe', cell); return; }
-          if (P.bag.slots.length >= CFG.BAG.SLOTS) { this.toast('背包满了'); return; }
-          P.bag.slots.push(P.bag.safe.splice(i, 1)[0]);
-          this.renderBag();
-        };
-        cell.oncontextmenu = (ev) => {
-          ev.preventDefault();
-          Tips.show(s.item, cell.getBoundingClientRect(), '左键移回背包');
-        };
-      } else {
-        cell.className = 'cell empty safe';
-        cell.textContent = '·';
-      }
-      sg.appendChild(cell);
-    }
-
-    const w = P.bag.weight(), t = P.bag.tier();
-    document.getElementById('bagWeight').textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
-    document.getElementById('bagValue').textContent = formatMoney(P.bag.value());
-    const bar = document.getElementById('bagBar');
-    bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';
-    bar.classList.toggle('warn', t.i >= 2);
-
-  },
-
-  /* 背包里点弹药 → 设为当前武器的待装填弹种。
-     弹匣里剩的旧弹会退回背包，数量守恒；口径不对直接拒绝。 */
-  selectAmmo(i) {
-    const P = this.player;
-    const s = P && P.bag.slots[i];
-    if (!s || s.item.cat !== 'ammo') return false;
-    const ok = P.loadAmmo(s.item.id);
-    if (this.bagOpen) this.renderBag();
-    return ok;
-  },
-
-  moveToSafe(i) {
-    const P = this.player;
-    if (P.bag.safe.length >= CFG.BAG.SAFE) { this.toast('安全箱满了'); return; }
-    Medical.cancel();
-    P.bag.safe.push(P.bag.slots.splice(i, 1)[0]);
-    this.renderBag();
-  },
-
   /* ---------------- 事件 ---------------- */
   onEnemyKilled(e) {
     this.stats.kills++;
@@ -8574,287 +8047,19 @@ const Game = {
   doExtract() {
     this.state = 'ended';
     this.showEnd(true);
-  },
+  }
+});
 
-  /* ---------------- 结算 ---------------- */
-  showEnd(success, reason) {
-    this.action = null;
-    this.closeLoot();
-    if (this.bagOpen) this.toggleBag();
-    if (typeof MedHud !== 'undefined') MedHud.reset();   // 收尾：轮盘、快捷栏、进度条一起清
-    if (success || !this._deathSoundPlayed) SFX.play(success ? 'extract' : 'death');
+</script>
+<script>
+/* ===== game-render.js ===== */
+/* ============================================================
+   局内绘制：地形、物件、实体、粒子、噪声边、HUD
+   Game 的字段和生命周期在 game.js，这里用 Object.assign 挂上去。
+   ============================================================ */
 
-    const P = this.player;
-    Save.setHP(success ? P.hp : 1);
-    const carried = P.bag.slots.slice();
-    const safe = P.bag.safe.slice();
-    const kept = success ? carried.concat(safe) : safe;
+Object.assign(Game, {
 
-    /* 回藏身处自动分拣：子弹和药物留在背包里（下一趟接着用），
-       收集品、物资、装备一律回仓库。死亡时只有安全箱里的东西参与分拣。
-       背包实在塞不下的时候退回仓库，宁可多走一步也不吞东西。 */
-    Save.normalizeBag();
-    const newIds = new Set((this.stats.newItems || []).map(x => x.id));
-    const lines = [];
-    let bagged = 0, baggedValue = 0;
-    for (const s of kept) {
-      const it = s.item;
-      const stays = !it.equip && (it.cat === 'ammo' || Medical.is(it));
-      if (stays && !Base.bagBlock(it, s.n)) {
-        Save.addBag(it.id, s.n, s.cap);
-        bagged++;
-        baggedValue += (it.price || 0) * s.n;
-        lines.push({ it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n, bag: true, isNew: false });
-        continue;
-      }
-      if (it.equip) {
-        Save.addGearStash(it);
-        lines.push({ it, n: 1, name: it.name, price: it.sell || 0, gear: true, isNew: false });
-        continue;
-      }
-      Save.addStash(it.id, s.n, s.cap);
-      if (!it.noCodex && !Save.codex[it.id]) {
-        Save.codex[it.id] = { first: Date.now(), count: 1 };
-      }
-      lines.push({
-        it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n,
-        isNew: newIds.has(it.id)
-      });
-    }
-
-    const total = lines.reduce((a, b) => a + b.price, 0);
-    const lost = carried.map(s => ({
-      it: s.item,
-      name: s.item.name + (s.n > 1 ? ' ×' + s.n : ''),
-      price: (unitPrice(s.item) || 0) * s.n
-    }));
-    const lostValue = success ? 0 : lost.reduce((a, b) => a + b.price, 0);
-    const prevBest = Save.bestHaul || 0;
-    const isRecord = success && total > prevBest && total > 0;
-
-    Save.runs = (Save.runs || 0) + 1;
-    if (isRecord) Save.bestHaul = total;
-    Save.save();
-    Save.flush();          // 一局结束，立刻落盘，不等节流
-
-    const known = Save.codexCount();
-    const totalItems = ITEMS.filter(i => !i.noCodex).length;
-    this._end = {
-      success: !!success,
-      reason: reason || '',
-      mapTitle: (M.map || RAID_MAP).title,
-      time: this.time,
-      tide: M.tideEnabled ? this.tidePhase + 1 : 0,
-      kills: this.stats.kills,
-      found: this.stats.found,
-      keptCount: kept.length,
-      gearCount: kept.filter(s => s.item.equip).length,
-      bagged: bagged,
-      baggedValue: baggedValue,
-      total: total,
-      lost: success ? [] : lost,
-      lostValue: lostValue,
-      lines: lines,
-      newOnes: (this.stats.newItems || []).slice(),
-      known: known,
-      totalItems: totalItems,
-      prevBest: prevBest,
-      isRecord: isRecord
-    };
-    this.endPage('cover');
-    document.getElementById('endVeil').classList.remove('hidden');
-  },
-
-  /* 结算分两页：概览（本局收益 + 最值钱的几件）／明细（统计、丢的、逐件清单）。
-     每次结算都从概览开始，明细要点按钮才进。 */
-  endPage(which) {
-    const card = document.getElementById('endCard');
-    if (!card || !this._end) return;
-    card.innerHTML = which === 'detail' ? this.endDetailHTML() : this.endCoverHTML();
-    const hide = () => document.getElementById('endVeil').classList.add('hidden');
-    const again = document.getElementById('btnAgain');
-    if (again) again.onclick = () => { hide(); Base.open(); };
-    const again2 = document.getElementById('btnAgain2');
-    if (again2) again2.onclick = () => { hide(); Base.open(); };
-    const det = document.getElementById('btnEndDetail');
-    if (det) det.onclick = () => this.endPage('detail');
-    const back = document.getElementById('btnEndBack');
-    if (back) back.onclick = () => this.endPage('cover');
-  },
-
-  /* ---- 第一页：这一趟值多少 ---- */
-  endCoverHTML() {
-    const d = this._end;
-    const head = d.success
-      ? '<div class="kicker">EXTRACTED</div><h1>撤离成功</h1>'
-      : '<div class="kicker">LOST IN THE TIDE</div><h1>没能出来</h1>';
-    const sub = d.success
-      ? d.mapTitle + ' · 用时 ' + this.fmtTime(d.time) + (d.tide ? ' · 潮汐第 ' + d.tide + ' 阶段' : '')
-      : (d.reason || '你倒在了' + d.mapTitle + '里');
-
-    let hero;
-    if (d.success) {
-      hero = '<div class="end-hero">' +
-        '<span class="end-hero-cap">本局收益</span>' +
-        '<span class="end-hero-num">' + formatMoney(d.total) + '</span>' +
-        '<span class="end-hero-sub">带回 ' + d.keptCount + ' 件 · 击杀 ' + d.kills +
-          ' · 开箱 ' + d.found + (d.bagged ? ' · 备弹药物 ' + d.bagged + ' 件' : '') + '</span>' +
-        (d.isRecord ? '<span class="end-record">新纪录 · 上一趟最好 ' + formatMoney(d.prevBest) + '</span>' : '') +
-        '</div>';
-    } else {
-      hero = '<div class="end-hero bad">' +
-        '<span class="end-hero-cap">这一趟的损失</span>' +
-        '<span class="end-hero-num">−' + formatMoney(d.lostValue) + '</span>' +
-        '<span class="end-hero-sub">' +
-          (d.keptCount ? '安全箱保住 ' + d.keptCount + ' 件（' + formatMoney(d.total) + '）' : '安全箱是空的') +
-          ' · 用时 ' + this.fmtTime(d.time) + ' · 击杀 ' + d.kills + ' · 开箱 ' + d.found + '</span>' +
-        '</div>';
-    }
-
-    const top = d.lines.filter(l => l.price > 0).sort((a, b) => b.price - a.price).slice(0, 4);
-    let cards;
-    if (top.length) {
-      cards = '<h2>' + (d.success ? '最值钱的几件' : '保住的这几件') + '</h2><div class="end-cards">' +
-        top.map(l => {
-          const it = l.it;
-          const rar = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)];
-          return '<div class="end-card-item ' + rar.cls + '">' +
-            (l.isNew ? '<em>NEW</em>' : '') +
-            '<span class="ic">' + Icons.bagTag(it, 'ico-bag') + '</span>' +
-            '<b>' + esc(it.short || it.name) + '</b>' +
-            '<i>' + formatMoney(l.price) + '</i>' +
-          '</div>';
-        }).join('') + '</div>';
-    } else {
-      cards = '<div class="tip">' + (d.success
-        ? '这一趟什么都没带出来。'
-        : '安全箱是空的。下次先把最值钱的那件塞进去。') + '</div>';
-    }
-
-    const newBlock = d.newOnes.length
-      ? '<div class="end-new"><span>新收录</span>' +
-        d.newOnes.slice(0, 5).map(x => '<b>' + esc(x.name) + '</b>').join('') +
-        (d.newOnes.length > 5 ? '<span>等 ' + d.newOnes.length + ' 件</span>' : '') + '</div>'
-      : '';
-
-    return head +
-      '<div class="sub">' + esc(sub) + '</div>' +
-      hero + cards + newBlock +
-      '<div class="end-acts">' +
-        '<button id="btnAgain">回 藏 身 处</button>' +
-        '<button id="btnEndDetail" class="ghost">本 局 明 细</button>' +
-      '</div>';
-  },
-
-  /* ---- 第二页：想看数字的人才点进来 ---- */
-  endDetailHTML() {
-    const d = this._end;
-    let html = '<div class="kicker">REPORT</div><h1 style="font-size:22px">本局明细</h1>' +
-      '<div class="sub">' + esc(d.mapTitle) + ' · ' + this.fmtTime(d.time) + '</div>';
-
-    html += '<h2>这一趟</h2>';
-    html += '<div class="settle-row"><span>击杀</span><b>' + d.kills + '</b></div>';
-    html += '<div class="settle-row"><span>开过的容器</span><b>' + d.found + '</b></div>';
-    html += '<div class="settle-row"><span>带出物品</span><b>' + d.keptCount + ' 件 / ' + formatMoney(d.total) + '</b></div>';
-    if (d.gearCount) {
-      html += '<div class="settle-row"><span>带出装备</span><b>' + d.gearCount + ' 件 · 已进仓库</b></div>';
-    }
-    if (d.bagged) {
-      html += '<div class="settle-row"><span>子弹 / 药物留背包</span><b>' + d.bagged + ' 件 / ' + formatMoney(d.baggedValue) + '</b></div>';
-    }
-    if (!d.success) {
-      html += '<div class="settle-row"><span>损失</span><b class="bad-val">−' + formatMoney(d.lostValue) + '</b></div>';
-    }
-    html += '<div class="settle-row"><span>新收录</span><b>' + d.newOnes.length + '</b></div>';
-    html += '<div class="settle-row"><span>信用点余额</span><b>' + formatMoney(Save.credits) + '</b></div>';
-
-    if (d.lost.length) {
-      html += '<h2>丢在里面的东西</h2>';
-      for (const l of d.lost) {
-        html += '<div class="settle-row"><span>' + esc(l.name) + '</span><b class="dim">' + formatMoney(l.price) + '</b></div>';
-      }
-      html += '<div class="tip">安全箱里的东西不会掉。这就是它存在的理由。</div>';
-    }
-
-    if (d.lines.length) {
-      html += '<h2>' + (d.success ? '带回' : '保住的') + '</h2>';
-      for (const l of d.lines) {
-        html += '<div class="settle-row"><span>' + esc(l.name) +
-          (l.isNew ? '<span class="newtag">NEW</span>' : '') +
-          (l.bag ? '<span class="inbag">留背包</span>' : '') +
-          '</span><b>' + formatMoney(l.price) + '</b></div>';
-      }
-    }
-
-    html += '<h2>图鉴</h2>';
-    html += '<div class="settle-row"><span>已收录</span><b>' + d.known + ' / ' + d.totalItems + '</b></div>';
-    html += '<div class="bar" style="margin-top:8px"><i style="width:' +
-      (d.known / d.totalItems * 100) + '%"></i></div>';
-    html += '<div class="tip" style="margin-top:18px">弹药和药物留在背包里，下一趟接着用；其它的已经进仓库了。</div>';
-    html += '<div class="end-acts">' +
-      '<button id="btnEndBack">返 回</button>' +
-      '<button id="btnAgain2" class="ghost">回 藏 身 处</button>' +
-      '</div>';
-    return html;
-  },
-
-  fmtTime(s) {
-    const m = Math.floor(s / 60), ss = Math.floor(s % 60);
-    return m + ':' + (ss < 10 ? '0' : '') + ss;
-  },
-
-  /* ---------------- 反馈 ---------------- */
-  /* 护甲耐久 / 武器余弹变化后写回存档，死了也不回滚——装备是消耗品 */
-  syncGear() {
-    const P = this.player;
-    if (!P) return;
-    P.weapons[P.slot] && (P.weapons[P.slot].magCur = P.mag);   // 手上那把的余弹先同步
-    Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo) : null));
-    Save.gear.helmet = P.helmet ? Object.assign({}, P.helmet) : null;
-    Save.gear.body = P.body ? Object.assign({}, P.body) : null;
-    Save.save();
-  },
-
-  /* 被爆头时的一次性提示 */
-  headshotMark() {
-    this.headT = 0.45;
-  },
-
-  toast(msg) {
-    this.toasts.push({ msg, t: 2.2 });
-    if (this.toasts.length > 4) this.toasts.shift();
-  },
-  sfx(name) { SFX.play(name); },
-  shake(a) { this.shakeAmt = Math.min(12, this.shakeAmt + a); },
-  flash(c, a) { this.flashColor = c; this.flashA = Math.max(this.flashA, a); },
-  muzzle(x, y) {
-    for (let i = 0; i < 4; i++) {
-      this.particles.push({
-        x, y,
-        vx: Math.cos(this.player.angle) * U.rand(60, 180) + U.rand(-30, 30),
-        vy: Math.sin(this.player.angle) * U.rand(60, 180) + U.rand(-30, 30),
-        life: U.rand(0.06, 0.16), c: '#e8c88a', s: U.rand(1.5, 2.6)
-      });
-    }
-  },
-  impact(x, y, angle, blood, head) {
-    const n = head ? 12 : (blood ? 7 : 4);
-    for (let i = 0; i < n; i++) {
-      const a = angle + Math.PI + U.rand(-0.9, 0.9);
-      this.particles.push({
-        x, y,
-        vx: Math.cos(a) * U.rand(30, head ? 170 : 120),
-        vy: Math.sin(a) * U.rand(30, head ? 170 : 120),
-        life: U.rand(0.15, head ? 0.55 : 0.4),
-        c: head ? '#e8c98a' : (blood ? '#8d3a3a' : '#7a8a84'),
-        s: U.rand(1, head ? 3 : 2.4)
-      });
-    }
-  },
-
-  /* ============================================================
-     渲染
-     ============================================================ */
   render() {
     // 全屏仓库/选图页不提交隐藏画布，避免每帧清屏触发合成和背景模糊。
     if (this.state === 'base' || this.state === 'map-select') return;
@@ -9665,74 +8870,808 @@ const Game = {
       c.fillText('· 这片区域暂时安静了 ·', CFG.VIEW_W / 2, CFG.VIEW_H - 140);
     }
   }
-};
+});
 
-/* ---------------- 启动 ---------------- */
-window.addEventListener('DOMContentLoaded', () => {
-  try {
-    Save.load();
-    window.addEventListener('pagehide', () => Save.flush());
-    // 首次打开面板可能早于贴图加载；加载结束后刷新当前可见的列表。
-    // sprites 的键是 目录/文件名（items/life01、chars/player）。
-    const sprites = window.__SPRITES__ || window.__ICONS__ || null;
-    Promise.all([Icons.init(sprites), Art.init(sprites)]).then(() => {
-      if (Game.bagOpen) Game.renderBag();
-      if (Game.lootOpen) Game.renderLootList();
-      if (Game.state === 'base') { Base.renderGear(); Base.renderStash(); }
-    });
-    Game.init();
-    // 调试入口：index.html#base 打开藏身处；#base,demo 顺便灌一些测试物资
-    if (location.hash.startsWith('#base')) {
-      if (location.hash.indexOf('demo') >= 0) {
-        const demo = ['antiq01','antiq03','antiq04','lux02','lux01','art01','elec02',
-                      'ind01','heal01','heal01','spec01','odd01','life01','life03'];
-        for (const id of demo) Save.addStash(id, 1);
-        Save.addStash('ammo_556_1', 40);
-        Save.credits = 860;
-        Save.runs = 3;
-      }
-      document.getElementById('startVeil').classList.add('hidden');
-      Base.open();
+</script>
+<script>
+/* ===== game-panels.js ===== */
+/* ============================================================
+   面板：搜刮列表、背包与装备、弹药选择、结算页
+   Game 的字段和生命周期在 game.js，这里用 Object.assign 挂上去。
+   ============================================================ */
+
+Object.assign(Game, {
+
+  /* ---------------- 搜刮面板 ---------------- */
+  openLoot(obj, isCorpse) {
+    Medical.cancel();
+    this.lootOpen = obj;
+    this.lootIsCorpse = !!isCorpse;
+    if (isCorpse && !obj.items) obj.items = obj.loot;
+
+    // 第一次打开时每一件都是"未搜索"。搜过的容器再打开会记住状态。
+    for (const e of (obj.items || [])) {
+      if (e && e.known === undefined) e.known = false;
+    }
+
+    const box = document.getElementById('lootBox');
+    box.style.display = 'block';
+    document.getElementById('lootTitle').textContent = isCorpse
+      ? (obj.enemy ? obj.enemy.t.name + '的尸体' : '尸体')
+      : (obj.name || '容器');
+
+    this.search = null;
+    this._searchBar = null;
+    this.autoSearch = true;      // 打开就一件件往下搜，点某一件才转成目标搜索
+    this.renderLootList();
+    this.stepAutoSearch();
+
+    // 搜刮时背包一起打开（左侧），关面板时如果是自动开的就收回去
+    if (!this.bagOpen) {
+      this.bagWasAuto = true;
+      this.toggleBag();
+    }
+  },
+
+  closeLoot() {
+    this.lootOpen = null;
+    this.search = null;
+    this.autoSearch = false;
+    this._searchBar = null;
+    document.getElementById('lootBox').style.display = 'none';
+    if (this.bagWasAuto) {
+      this.bagWasAuto = false;
+      if (this.bagOpen) this.toggleBag();
+    }
+  },
+
+  /* 按稀有度算这一件要搜多久 */
+  searchTime(it) {
+    const arr = CFG.ITEM_SEARCH.timeByRarity;
+    return arr[U.clamp(it.r - 1, 0, arr.length - 1)];
+  },
+
+  stepAutoSearch() {
+    if (!this.autoSearch || this.search || !this.lootOpen) return;
+    const arr = this.lootOpen.items || [];
+    for (let i = 0; i < arr.length; i++) {
+      const e = arr[i];
+      if (e && e.item && !e.known) { this.startItemSearch(i); return; }
+    }
+    this.autoSearch = false;      // 都搜完了
+  },
+
+  startItemSearch(idx, manual) {
+    const box = this.lootOpen;
+    if (!box || !box.items) return false;
+    const e = box.items[idx];
+    if (!e || e.known) return false;
+
+    if (manual) this.autoSearch = false;
+    this.search = { idx: idx, t: 0, total: this.searchTime(e.item), noiseT: 0 };
+    this.renderLootList();
+    SFX.play('search');
+    return true;
+  },
+
+  renderLootList() {
+    const el = document.getElementById('lootList');
+    el.innerHTML = '';
+    this._searchBar = null;
+    if (!this.lootOpen || !this.lootOpen.items) {
+      this.renderLootGear();
       return;
     }
 
-    // 调试入口：打开 index.html#play 直接进图，跳过开始界面
-    // 可指定格坐标：index.html#play,4,6
-    if (location.hash.startsWith('#play')) {
-      document.getElementById('startVeil').classList.add('hidden');
-      Game.startRun(null);
-      const parts = location.hash.slice(5).split(',').filter(s => s !== '');
-      if (parts.length >= 2 && /^\d+$/.test(parts[0])) {
-        const x = M.cx(parseInt(parts[0], 10)), y = M.cy(parseInt(parts[1], 10));
-        if (canStand(x, y, Game.player.r)) {
-          Game.player.x = x; Game.player.y = y;
-        } else Game.toast('目标位置不可站立，保留出生位置');
-        Game.updateCamera(true);
-      }
-      if (parts.indexOf('ui') >= 0) setTimeout(() => Game.toggleBag(), 200);
-      if (parts.indexOf('recoil') >= 0) {
-        // 调试：把后坐力固定住，方便看准星张开的样子
-        Game.player.recoil = 0.9;
-        Game.player.sinceShot = -999;
-        Game.player.syncSpread();
-      }
-      if (parts.indexOf('loot') >= 0) setTimeout(() => {
-        const b = Game.boxes[0];
-        Game.player.x = b.x; Game.player.y = b.y + CFG.TILE / 2 + Game.player.r + 1;
-        Game.openLoot(b);
-      }, 200);
+    const arr = this.lootOpen.items;
+    this.renderLootGear();
+
+    const left = arr.filter(Boolean).length;
+    const hint = document.getElementById('lootHint');
+    if (hint) {
+      hint.textContent = !left ? 'E 关闭'
+        : (this.autoSearch ? '自动搜索中 · 点某件优先搜' : '点击搜索 · E 关闭');
     }
-  } catch (err) {
-    const d = document.createElement('div');
-    d.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#8d2020;color:#fff;' +
-      'padding:18px;font:13px monospace;z-index:9999;white-space:pre-wrap;line-height:1.6';
-    d.textContent = '启动失败：' + err.message + '\n' +
-      (err.stack || '').split('\n').slice(0, 4).join('\n');
-    document.body.appendChild(d);
-    console.error(err);
+
+    if (!left) {
+      el.innerHTML = '<div style="font-size:11.5px;color:#4f665f;padding:8px 2px">空的。</div>';
+      return;
+    }
+
+    arr.forEach((entry, i) => {
+      if (!entry) return;
+
+      /* ---- 尸体身上的装备：已经画在上面的装备格里，不在下面重复 ---- */
+      if (entry.gear || entry.gun) return;
+
+      const it = entry.item;
+      const row = document.createElement('div');
+
+      /* ---- 还没搜出来：只给一个压暗的剪影，不透露稀有度和价值 ---- */
+      if (!entry.known) {
+        const searching = this.search && this.search.idx === i;
+        row.className = 'row unknown';
+        if (!searching) {
+          /* 自动模式下后面几件是"排队"，点一下就插队 */
+          row.innerHTML =
+            '<span class="ico phq">?</span>' +
+            '<span class="nm">' + (this.autoSearch ? '排队' : '未搜索') + '</span>' +
+            '<span class="vv">—</span>';
+        } else {
+          row.innerHTML =
+            '<span class="ico phq">?</span>' +
+            '<span class="nm">搜索中</span>' +
+            '<span class="prog"><i style="width:' +
+            Math.min(100, this.search.t / this.search.total * 100) + '%"></i></span>';
+        }
+        /* 点一件 = 我要先搜这个：中断自动顺序搜索，改搜指定目标 */
+        row.onclick = () => { if (!this.search || this.search.idx !== i) this.startItemSearch(i, true); };
+        row.oncontextmenu = (ev) => { ev.preventDefault(); this.toast('还没搜出来，看不了'); };
+        el.appendChild(row);
+        if (searching) this._searchBar = row.querySelector('.prog i');
+        return;
+      }
+
+      /* ---- 搜出来了：显示名称、重量、价格 ---- */
+      row.className = 'row ' + RARITY[it.r - 1].cls;
+      const known = Save.codex[it.id];
+
+      let badges = '';
+      if (!it.noCodex && !known) badges += '<span class="badge">新</span>';
+
+      row.innerHTML =
+        Icons.tag(it.id) +
+        '<span class="nm">' + it.name + badges + '</span>' +
+        '<span class="vv">' + it.w.toFixed(2) + 'kg · ' +
+        (it.price > 0 ? formatMoney(it.price) : '—') + '</span>';
+
+      row.onclick = () => {
+        const cur = this.lootOpen && this.lootOpen.items[i];
+        if (!cur) return;
+        const res = this.player.bag.canAdd(it, cur.n, cur.cap);
+        if (!res.ok) { this.toast(res.why); return; }
+        this.player.bag.add(it, cur.n, cur.cap);
+        if (!it.noCodex) this.registerCodex(it);
+        this.lootOpen.items[i] = null;
+        SFX.play('pickup');
+        /* 拿空后：普通容器压暗停用，遗落物品堆直接消失（并关掉面板） */
+        this.syncBoxState(this.lootOpen);
+        if (!this.lootOpen) { this.renderBag(); return; }
+        this.renderLootList();
+        this.stepAutoSearch();      // 拿东西不打断自动搜索，拿完接着搜
+        if (this.bagOpen) this.renderBag();
+      };
+      /* 右键看详情：拿之前先确认这东西值不值得占一格 */
+      row.oncontextmenu = (ev) => {
+        ev.preventDefault();
+        const cur2 = this.lootOpen && this.lootOpen.items[i];
+        if (!cur2) return;
+        Tips.show(it, row.getBoundingClientRect(), '左键装进背包');
+      };
+      el.appendChild(row);
+    });
+  },
+
+  /* ---------------- 尸体装备：方格布局 ---------------- */
+  /* 和背包顶部同一套方格：头盔 / 护甲 / 武器 三格，左键穿上、右键带回 */
+  renderLootGear() {
+    const bar = document.getElementById('lootGear');
+    const tip = document.getElementById('lootGearTip');
+    if (!bar) return;
+
+    const arr = (this.lootOpen && this.lootOpen.items) || [];
+    const at = {
+      helmet: arr.findIndex(e => e && e.gear && e.gear.type === 'helmet'),
+      body: arr.findIndex(e => e && e.gear && e.gear.type === 'body'),
+      gun: arr.findIndex(e => e && e.gun)
+    };
+    const any = at.helmet >= 0 || at.body >= 0 || at.gun >= 0;
+
+    if (!this.lootIsCorpse || !any) {
+      bar.style.display = 'none';
+      if (tip) tip.style.display = 'none';
+      return;
+    }
+    bar.style.display = 'grid';
+    if (tip) tip.style.display = 'block';
+
+    const P = this.player;
+    const cells = [];
+
+    /* 头盔 */
+    {
+      const e = at.helmet >= 0 ? arr[at.helmet] : null;
+      const g = e && e.gear;
+      cells.push({
+        idx: at.helmet,
+        icon: g ? 'helmet' + g.lv : null,
+        fb: g ? '盔' : '—',
+        label: g ? g.short : '头盔',
+        tag: g ? Math.ceil(g.dur) + '/' + g.max : '',
+        tagCls: g ? (GEAR.state(g) === 'ok' ? '' : GEAR.state(g)) : '',
+        own: !!(P && P.helmet),
+        item: g ? EQUIP.armor(g) : null
+      });
+    }
+
+    /* 护甲 */
+    {
+      const e = at.body >= 0 ? arr[at.body] : null;
+      const g = e && e.gear;
+      cells.push({
+        idx: at.body,
+        icon: g ? 'body' + g.lv : null,
+        fb: g ? '甲' : '—',
+        label: g ? g.short : '护甲',
+        tag: g ? Math.ceil(g.dur) + '/' + g.max : '',
+        tagCls: g ? (GEAR.state(g) === 'ok' ? '' : GEAR.state(g)) : '',
+        own: !!(P && P.body),
+        item: g ? EQUIP.armor(g) : null
+      });
+    }
+
+    /* 武器 */
+    {
+      const e = at.gun >= 0 ? arr[at.gun] : null;
+      const id = e ? this.gunId(e) : null;
+      const w = id ? WEAPONS[id] : null;
+      cells.push({
+        idx: at.gun,
+        icon: id,
+        fb: w ? w.short.charAt(0) : '—',
+        label: w ? w.short : '武器',
+        tag: w ? w.mag + '发' : '',
+        own: !!(P && w && (w.slot === 'primary' ? (P.weapons[0] && P.weapons[1]) : P.weapons[2])),
+        item: w ? EQUIP.gun(id, 0) : null
+      });
+    }
+
+    /* 身上已经有同类装备时，这一格点下去是"放进背包"，用角标提示 */
+    bar.innerHTML = cells.map(c =>
+      '<div class="eqs' + (c.icon ? '' : ' empty') + '" title="' +
+        esc(c.label) +
+        (c.icon ? (c.own ? ' · 已有同类，点击放进背包' : ' · 点击穿上') + ' · 右键看详情' : '') + '">' +
+        (c.icon && c.own ? '<span class="carry">包</span>' : '') +
+        '<span class="lbl">' + esc(c.label) + '</span>' +
+        '<span class="ic">' + Icons.gearIcon(c.icon, c.fb) + '</span>' +
+        (c.tag ? '<span class="tag ' + (c.tagCls || '') + '">' + esc(c.tag) + '</span>' : '') +
+      '</div>').join('');
+
+    // 每格绑定点：左键拾取（没有同类装备就穿，有就放包）；右键看详情
+    const nodes = bar.children || [];
+    for (let n = 0; n < nodes.length; n++) {
+      const c = cells[n];
+      const node = nodes[n];
+      if (!c || c.idx < 0) { node.classList.add('empty'); continue; }
+      node.onclick = () => this.takeGear(this.lootOpen.items[c.idx], c.idx);
+      if (c.item && node.addEventListener) {
+        node.oncontextmenu = (ev) => {
+          ev.preventDefault();
+          Tips.show(c.item, node.getBoundingClientRect(),
+            c.own ? '已有同类，左键放进背包' : '左键直接穿上');
+        };
+      }
+    }
+  },
+
+  /* 尸体上的枪可能存成 id 字符串，也可能是早期写的整份 WEAPONS 对象 */
+  gunId(entry) {
+    const g = entry && entry.gun;
+    if (!g) return null;
+    return typeof g === 'string' ? g : (g.id || null);
+  },
+
+  takeGear(entry, idx) {
+    const P = this.player;
+    if (!P || !entry) return false;
+    const isGun = !!entry.gun;
+    const gunId = this.gunId(entry);
+    const g = isGun ? WEAPONS[gunId] : entry.gear;
+    if (!g) return false;
+
+    let msg = '';
+
+    if (isGun) {
+      /* 主武器进 0/1，副武器进 2；有空位就先穿上 */
+      const range = g.slot === 'primary' ? [0, 1] : [2];
+      const free = range.find(k => !P.weapons[k]);
+      if (free != null) {
+        const got = Math.max(1, Math.round(g.mag * 0.3));
+        P.weapons[free] = Object.assign({}, g, { magCur: got });
+        if (!P.weapons[P.slot]) { P.slot = free; P.mag = got; }
+        msg = '换上 ' + g.name + '（' + got + ' 发）';
+      }
+    } else if (!P[g.type]) {
+      P[g.type] = Object.assign({}, g);
+      msg = '穿上 ' + g.name;
+    }
+
+    if (!msg) {
+      const item = isGun
+        ? EQUIP.gun(gunId, Math.max(1, Math.round(g.mag * 0.3)))
+        : EQUIP.armor(g);
+      const res = P.bag.canAdd(item, 1);
+      if (!res.ok) { this.toast(res.why); return false; }
+      P.bag.add(item, 1);
+      msg = '放进背包 · ' + g.name;
+    }
+
+    this.lootOpen.items[idx] = null;
+    SFX.play('pickup');
+    this.toast(msg);
+    this.syncGear();                 // 穿上的东西直接写回存档
+    this.renderLootList();
+    if (this.bagOpen) this.renderBag();
+    return true;
+  },
+
+  /* 点背包里的装备 → 穿上；手上已有同类，就把换下来的塞回这一格 */
+  equipFromBag(i) {
+    const P = this.player;
+    const s = P && P.bag.slots[i];
+    if (!s || !s.item || !s.item.equip) return false;
+    const eq = s.item.equip;
+    let old = null;
+
+    if (eq.kind === 'gun') {
+      const def = WEAPONS[eq.gun];
+      if (!def) return false;
+      const range = def.slot === 'primary' ? [0, 1] : [2];
+      const free = range.find(k => !P.weapons[k]);
+      const at = (free != null) ? free : P.slot;     // 没有空位就换手上这把
+      const cur = P.weapons[at];
+      if (cur) old = EQUIP.gun(cur.id, cur.magCur, cur.ammo);
+      P.weapons[at] = Object.assign({}, def, {
+        magCur: eq.mag || 0,
+        ammo: (AMMO_BY_ID[eq.ammo] && AMMO_BY_ID[eq.ammo].caliber === def.caliber) ? eq.ammo : def.ammo
+      });
+      P.slot = at;
+      P.mag = P.weapons[at].magCur;
+    } else {
+      const g = eq.gear;
+      const cur = P[g.type];
+      if (cur) old = EQUIP.armor(cur);
+      P[g.type] = Object.assign({}, g);
+    }
+
+    if (old) P.bag.slots[i] = { item: old, n: 1 };
+    else P.bag.slots.splice(i, 1);
+
+    SFX.play('pickup');
+    this.toast('穿上 ' + s.item.name + (old ? '，' + old.name + ' 留在背包' : ''));
+    this.syncGear();
+    this.renderBag();
+    return true;
+  },
+
+  registerCodex(it) {
+    if(it.noCodex || it.equip || itemGroup(it)!=='collectible')return;
+    if (!Save.codex[it.id]) {
+      Save.codex[it.id] = { first: Date.now(), count: 0 };
+      this.stats.newItems.push(it);
+      this.toast('新收录：' + it.name);
+    }
+    Save.codex[it.id].count++;
+    Save.save();
+  },
+
+  /* ---------------- 背包面板 ---------------- */
+  toggleBag() {
+    this.bagOpen = !this.bagOpen;
+    const el = document.getElementById('bagBox');
+    el.classList.toggle('open', this.bagOpen);
+    if (this.bagOpen) this.renderBag();
+  },
+
+  renderGearPanel() {
+    const P = this.player;
+    if (!P) return;
+    const el = document.getElementById('eqStrip');
+    if (!el) return;
+
+    const cells = [];
+
+    /* --- 三个武器位 --- */
+    for (let i = 0; i < 3; i++) {
+      const w = P.weapons[i];
+      cells.push({
+        icon: w ? w.id : null,
+        fb: w ? w.short.charAt(0) : '',
+        label: w ? w.short : (i < 2 ? '主武器' + (i + 1) : '副武器'),
+        on: i === P.slot,
+        /* 手上那把读 P.mag（实时），其它槽读各自记着的余弹 */
+        tag: w ? ((i === P.slot ? P.mag : w.magCur) + '/' + w.mag) : '',
+        click: w ? () => { P.switchWeapon(i); this.renderGearPanel(); } : null
+      });
+    }
+
+    /* --- 头盔 / 护甲 --- */
+    for (const type of ['helmet', 'body']) {
+      const g = P[type];
+      const st = g ? GEAR.state(g) : '';
+      cells.push({
+        icon: g ? type + g.lv : null,
+        fb: g ? (type === 'helmet' ? '盔' : '甲') : '',
+        label: g ? g.short : (type === 'helmet' ? '头盔' : '护甲'),
+        tag: g ? 'Lv' + g.lv : '',
+        tagCls: st === 'ok' ? '' : st,
+        click: null
+      });
+    }
+
+    /* --- 背包（还没开放，占一个位） --- */
+    cells.push({
+      icon: 'bag',
+      fb: '包',
+      label: '背包',
+      tag: CFG.BAG.SLOTS + '格',
+      click: null
+    });
+
+    el.innerHTML = cells.map(c =>
+      '<div class="eqs' + (c.on ? ' on' : '') + (c.icon ? '' : ' empty') +
+        (c.click ? ' live' : '') + '" title="' + esc(c.label) + '">' +
+        '<span class="lbl">' + esc(c.label) + '</span>' +
+        '<span class="ic">' + Icons.gearIcon(c.icon, c.fb) + '</span>' +
+        (c.tag ? '<span class="tag ' + (c.tagCls || '') + '">' + esc(c.tag) + '</span>' : '') +
+      '</div>').join('');
+
+    // 点武器格切枪（无头测试里的假 DOM 没有 children，跳过绑定即可）
+    const nodes = el.children || [];
+    for (let n = 0; n < nodes.length; n++) {
+      const c = cells[n];
+      if (c && c.click) nodes[n].onclick = c.click;
+    }
+  },
+
+  renderBag() {
+    const P = this.player;
+    if (!P) return;
+    this.renderGearPanel();
+    const grid = document.getElementById('bagGrid');
+    grid.innerHTML = '';
+    for (let i = 0; i < CFG.BAG.SLOTS; i++) {
+      const cell = document.createElement('div');
+      const s = P.bag.slots[i];
+      if (s) {
+        const it = s.item;
+        cell.className = 'cell ' + RARITY[it.r - 1].cls + (it.equip ? ' eq' : '');
+        cell.style.color = '#b9cac4';
+        const ico = Icons.bagTag(it, 'ico-bag');
+        /* 装备只有一件，右上角改显示枪里的余弹 */
+        const qty = it.note
+          ? '<span class="qty">' + esc(it.note) + '</span>'
+          : (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '');
+        /* 用过的恢复品把剩余容量直接标在格子里，不用点开详情才知道 */
+        const capTag = (it.healCap && Medical.isPartial(s))
+          ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '';
+        const label = it.short || it.name;
+        cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty + capTag;
+        /* 弹药：左键把它设为当前武器的待装填弹种（口径不对会直接提示） */
+        const isAmmo = it.cat === 'ammo';
+        const isLoaded = isAmmo && P.ammoId === it.id;
+        cell.title = (it.healCap && Medical.isPartial(s)
+            ? it.name + ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + it.healCap
+            : it.name + ' · ' + it.w + 'kg') + ' · 右键看详情' +
+          (isAmmo ? (isLoaded ? ' · 当前装填' : ' · 左键设为待装填')
+           : Medical.is(it) ? ' · 左键打开医疗操作'
+           : it.equip ? ' · 左键替换身上那件' : ' · 左键移入安全箱');
+        if (isLoaded) cell.classList.add('loaded');
+        cell.onclick = () => {
+          if (isAmmo) { this.selectAmmo(i); return; }
+          if (Medical.is(it)) Medical.open(s, 'bag', cell);
+          else if (it.equip) this.equipFromBag(i);
+          else this.moveToSafe(i);
+        };
+        /* 右键菜单：详情 / 丢弃。丢弃会整叠落在脚下一格 */
+        cell.oncontextmenu = (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          Ctx.show(ev.clientX, ev.clientY, [
+            {
+              label: '查看详情',
+              onClick: () => Tips.show(it, cell.getBoundingClientRect(),
+                it.cat === 'ammo' ? '左键设为待装填' : it.equip ? '左键替换身上那件' : '左键移入安全箱')
+            },
+            {
+              label: '丢弃',
+              hint: s.n > 1 ? '整叠 ×' + s.n : '脚下',
+              danger: true,
+              onClick: () => this.dropFromBag(i)
+            }
+          ]);
+        };
+      } else {
+        cell.className = 'cell empty';
+        cell.textContent = '·';
+      }
+      grid.appendChild(cell);
+    }
+
+    const sg = document.getElementById('safeGrid');
+    sg.innerHTML = '';
+    for (let i = 0; i < CFG.BAG.SAFE; i++) {
+      const cell = document.createElement('div');
+      const s = P.bag.safe[i];
+      if (s) {
+        cell.className = 'cell safe ' + RARITY[s.item.r - 1].cls;
+        cell.style.color = '#b9cac4';
+        const ico2 = Icons.bagTag(s.item, 'ico-safe');
+        cell.innerHTML = ico2 + '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
+          (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '') +
+          ((s.item.healCap && Medical.isPartial(s))
+            ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '');
+        cell.title = s.item.name + (s.item.healCap && Medical.isPartial(s)
+            ? ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + s.item.healCap
+            : ' · ' + s.item.w + 'kg') + ' · 左键移回背包 · 右键看详情';
+        cell.onclick = () => {
+          if (Medical.is(s.item)) { Medical.open(s, 'safe', cell); return; }
+          if (P.bag.slots.length >= CFG.BAG.SLOTS) { this.toast('背包满了'); return; }
+          P.bag.slots.push(P.bag.safe.splice(i, 1)[0]);
+          this.renderBag();
+        };
+        cell.oncontextmenu = (ev) => {
+          ev.preventDefault();
+          Tips.show(s.item, cell.getBoundingClientRect(), '左键移回背包');
+        };
+      } else {
+        cell.className = 'cell empty safe';
+        cell.textContent = '·';
+      }
+      sg.appendChild(cell);
+    }
+
+    const w = P.bag.weight(), t = P.bag.tier();
+    document.getElementById('bagWeight').textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
+    document.getElementById('bagValue').textContent = formatMoney(P.bag.value());
+    const bar = document.getElementById('bagBar');
+    bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';
+    bar.classList.toggle('warn', t.i >= 2);
+
+  },
+
+  selectAmmo(i) {
+    const P = this.player;
+    const s = P && P.bag.slots[i];
+    if (!s || s.item.cat !== 'ammo') return false;
+    const ok = P.loadAmmo(s.item.id);
+    if (this.bagOpen) this.renderBag();
+    return ok;
+  },
+
+  moveToSafe(i) {
+    const P = this.player;
+    if (P.bag.safe.length >= CFG.BAG.SAFE) { this.toast('安全箱满了'); return; }
+    Medical.cancel();
+    P.bag.safe.push(P.bag.slots.splice(i, 1)[0]);
+    this.renderBag();
+  },
+
+  /* ---------------- 结算 ---------------- */
+  showEnd(success, reason) {
+    this.action = null;
+    this.closeLoot();
+    if (this.bagOpen) this.toggleBag();
+    if (typeof MedHud !== 'undefined') MedHud.reset();   // 收尾：轮盘、快捷栏、进度条一起清
+    if (success || !this._deathSoundPlayed) SFX.play(success ? 'extract' : 'death');
+
+    const P = this.player;
+    Save.setHP(success ? P.hp : 1);
+    const carried = P.bag.slots.slice();
+    const safe = P.bag.safe.slice();
+    const kept = success ? carried.concat(safe) : safe;
+
+    /* 回藏身处自动分拣：子弹和药物留在背包里（下一趟接着用），
+       收集品、物资、装备一律回仓库。死亡时只有安全箱里的东西参与分拣。
+       背包实在塞不下的时候退回仓库，宁可多走一步也不吞东西。 */
+    Save.normalizeBag();
+    const newIds = new Set((this.stats.newItems || []).map(x => x.id));
+    const lines = [];
+    let bagged = 0, baggedValue = 0;
+    for (const s of kept) {
+      const it = s.item;
+      const stays = !it.equip && (it.cat === 'ammo' || Medical.is(it));
+      if (stays && !Base.bagBlock(it, s.n)) {
+        Save.addBag(it.id, s.n, s.cap);
+        bagged++;
+        baggedValue += (it.price || 0) * s.n;
+        lines.push({ it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n, bag: true, isNew: false });
+        continue;
+      }
+      if (it.equip) {
+        Save.addGearStash(it);
+        lines.push({ it, n: 1, name: it.name, price: it.sell || 0, gear: true, isNew: false });
+        continue;
+      }
+      Save.addStash(it.id, s.n, s.cap);
+      if (!it.noCodex && !Save.codex[it.id]) {
+        Save.codex[it.id] = { first: Date.now(), count: 1 };
+      }
+      lines.push({
+        it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n,
+        isNew: newIds.has(it.id)
+      });
+    }
+
+    const total = lines.reduce((a, b) => a + b.price, 0);
+    const lost = carried.map(s => ({
+      it: s.item,
+      name: s.item.name + (s.n > 1 ? ' ×' + s.n : ''),
+      price: (unitPrice(s.item) || 0) * s.n
+    }));
+    const lostValue = success ? 0 : lost.reduce((a, b) => a + b.price, 0);
+    const prevBest = Save.bestHaul || 0;
+    const isRecord = success && total > prevBest && total > 0;
+
+    Save.runs = (Save.runs || 0) + 1;
+    if (isRecord) Save.bestHaul = total;
+    Save.save();
+    Save.flush();          // 一局结束，立刻落盘，不等节流
+
+    const known = Save.codexCount();
+    const totalItems = ITEMS.filter(i => !i.noCodex).length;
+    this._end = {
+      success: !!success,
+      reason: reason || '',
+      mapTitle: (M.map || RAID_MAP).title,
+      time: this.time,
+      tide: M.tideEnabled ? this.tidePhase + 1 : 0,
+      kills: this.stats.kills,
+      found: this.stats.found,
+      keptCount: kept.length,
+      gearCount: kept.filter(s => s.item.equip).length,
+      bagged: bagged,
+      baggedValue: baggedValue,
+      total: total,
+      lost: success ? [] : lost,
+      lostValue: lostValue,
+      lines: lines,
+      newOnes: (this.stats.newItems || []).slice(),
+      known: known,
+      totalItems: totalItems,
+      prevBest: prevBest,
+      isRecord: isRecord
+    };
+    this.endPage('cover');
+    document.getElementById('endVeil').classList.remove('hidden');
+  },
+
+  endPage(which) {
+    const card = document.getElementById('endCard');
+    if (!card || !this._end) return;
+    card.innerHTML = which === 'detail' ? this.endDetailHTML() : this.endCoverHTML();
+    const hide = () => document.getElementById('endVeil').classList.add('hidden');
+    const again = document.getElementById('btnAgain');
+    if (again) again.onclick = () => { hide(); Base.open(); };
+    const again2 = document.getElementById('btnAgain2');
+    if (again2) again2.onclick = () => { hide(); Base.open(); };
+    const det = document.getElementById('btnEndDetail');
+    if (det) det.onclick = () => this.endPage('detail');
+    const back = document.getElementById('btnEndBack');
+    if (back) back.onclick = () => this.endPage('cover');
+  },
+
+  /* ---- 第一页：这一趟值多少 ---- */
+  endCoverHTML() {
+    const d = this._end;
+    const head = d.success
+      ? '<div class="kicker">EXTRACTED</div><h1>撤离成功</h1>'
+      : '<div class="kicker">LOST IN THE TIDE</div><h1>没能出来</h1>';
+    const sub = d.success
+      ? d.mapTitle + ' · 用时 ' + this.fmtTime(d.time) + (d.tide ? ' · 潮汐第 ' + d.tide + ' 阶段' : '')
+      : (d.reason || '你倒在了' + d.mapTitle + '里');
+
+    let hero;
+    if (d.success) {
+      hero = '<div class="end-hero">' +
+        '<span class="end-hero-cap">本局收益</span>' +
+        '<span class="end-hero-num">' + formatMoney(d.total) + '</span>' +
+        '<span class="end-hero-sub">带回 ' + d.keptCount + ' 件 · 击杀 ' + d.kills +
+          ' · 开箱 ' + d.found + (d.bagged ? ' · 备弹药物 ' + d.bagged + ' 件' : '') + '</span>' +
+        (d.isRecord ? '<span class="end-record">新纪录 · 上一趟最好 ' + formatMoney(d.prevBest) + '</span>' : '') +
+        '</div>';
+    } else {
+      hero = '<div class="end-hero bad">' +
+        '<span class="end-hero-cap">这一趟的损失</span>' +
+        '<span class="end-hero-num">−' + formatMoney(d.lostValue) + '</span>' +
+        '<span class="end-hero-sub">' +
+          (d.keptCount ? '安全箱保住 ' + d.keptCount + ' 件（' + formatMoney(d.total) + '）' : '安全箱是空的') +
+          ' · 用时 ' + this.fmtTime(d.time) + ' · 击杀 ' + d.kills + ' · 开箱 ' + d.found + '</span>' +
+        '</div>';
+    }
+
+    const top = d.lines.filter(l => l.price > 0).sort((a, b) => b.price - a.price).slice(0, 4);
+    let cards;
+    if (top.length) {
+      cards = '<h2>' + (d.success ? '最值钱的几件' : '保住的这几件') + '</h2><div class="end-cards">' +
+        top.map(l => {
+          const it = l.it;
+          const rar = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)];
+          return '<div class="end-card-item ' + rar.cls + '">' +
+            (l.isNew ? '<em>NEW</em>' : '') +
+            '<span class="ic">' + Icons.bagTag(it, 'ico-bag') + '</span>' +
+            '<b>' + esc(it.short || it.name) + '</b>' +
+            '<i>' + formatMoney(l.price) + '</i>' +
+          '</div>';
+        }).join('') + '</div>';
+    } else {
+      cards = '<div class="tip">' + (d.success
+        ? '这一趟什么都没带出来。'
+        : '安全箱是空的。下次先把最值钱的那件塞进去。') + '</div>';
+    }
+
+    const newBlock = d.newOnes.length
+      ? '<div class="end-new"><span>新收录</span>' +
+        d.newOnes.slice(0, 5).map(x => '<b>' + esc(x.name) + '</b>').join('') +
+        (d.newOnes.length > 5 ? '<span>等 ' + d.newOnes.length + ' 件</span>' : '') + '</div>'
+      : '';
+
+    return head +
+      '<div class="sub">' + esc(sub) + '</div>' +
+      hero + cards + newBlock +
+      '<div class="end-acts">' +
+        '<button id="btnAgain">回 藏 身 处</button>' +
+        '<button id="btnEndDetail" class="ghost">本 局 明 细</button>' +
+      '</div>';
+  },
+
+  /* ---- 第二页：想看数字的人才点进来 ---- */
+  endDetailHTML() {
+    const d = this._end;
+    let html = '<div class="kicker">REPORT</div><h1 style="font-size:22px">本局明细</h1>' +
+      '<div class="sub">' + esc(d.mapTitle) + ' · ' + this.fmtTime(d.time) + '</div>';
+
+    html += '<h2>这一趟</h2>';
+    html += '<div class="settle-row"><span>击杀</span><b>' + d.kills + '</b></div>';
+    html += '<div class="settle-row"><span>开过的容器</span><b>' + d.found + '</b></div>';
+    html += '<div class="settle-row"><span>带出物品</span><b>' + d.keptCount + ' 件 / ' + formatMoney(d.total) + '</b></div>';
+    if (d.gearCount) {
+      html += '<div class="settle-row"><span>带出装备</span><b>' + d.gearCount + ' 件 · 已进仓库</b></div>';
+    }
+    if (d.bagged) {
+      html += '<div class="settle-row"><span>子弹 / 药物留背包</span><b>' + d.bagged + ' 件 / ' + formatMoney(d.baggedValue) + '</b></div>';
+    }
+    if (!d.success) {
+      html += '<div class="settle-row"><span>损失</span><b class="bad-val">−' + formatMoney(d.lostValue) + '</b></div>';
+    }
+    html += '<div class="settle-row"><span>新收录</span><b>' + d.newOnes.length + '</b></div>';
+    html += '<div class="settle-row"><span>信用点余额</span><b>' + formatMoney(Save.credits) + '</b></div>';
+
+    if (d.lost.length) {
+      html += '<h2>丢在里面的东西</h2>';
+      for (const l of d.lost) {
+        html += '<div class="settle-row"><span>' + esc(l.name) + '</span><b class="dim">' + formatMoney(l.price) + '</b></div>';
+      }
+      html += '<div class="tip">安全箱里的东西不会掉。这就是它存在的理由。</div>';
+    }
+
+    if (d.lines.length) {
+      html += '<h2>' + (d.success ? '带回' : '保住的') + '</h2>';
+      for (const l of d.lines) {
+        html += '<div class="settle-row"><span>' + esc(l.name) +
+          (l.isNew ? '<span class="newtag">NEW</span>' : '') +
+          (l.bag ? '<span class="inbag">留背包</span>' : '') +
+          '</span><b>' + formatMoney(l.price) + '</b></div>';
+      }
+    }
+
+    html += '<h2>图鉴</h2>';
+    html += '<div class="settle-row"><span>已收录</span><b>' + d.known + ' / ' + d.totalItems + '</b></div>';
+    html += '<div class="bar" style="margin-top:8px"><i style="width:' +
+      (d.known / d.totalItems * 100) + '%"></i></div>';
+    html += '<div class="tip" style="margin-top:18px">弹药和药物留在背包里，下一趟接着用；其它的已经进仓库了。</div>';
+    html += '<div class="end-acts">' +
+      '<button id="btnEndBack">返 回</button>' +
+      '<button id="btnAgain2" class="ghost">回 藏 身 处</button>' +
+      '</div>';
+    return html;
+  },
+
+  fmtTime(s) {
+    const m = Math.floor(s / 60), ss = Math.floor(s % 60);
+    return m + ':' + (ss < 10 ? '0' : '') + ss;
   }
 });
-
 
 </script>
 <script>
@@ -10204,6 +10143,79 @@ const MedHud = {
   release() { return MedQuick.release(); },
   tick(dt) { MedQuick.tick(dt); }
 };
+
+</script>
+<script>
+/* ===== boot.js ===== */
+/* ============================================================
+   启动：读存档、加载贴图、按 URL hash 进入藏身处或直接开局
+   ============================================================ */
+
+/* ---------------- 启动 ---------------- */
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    Save.load();
+    window.addEventListener('pagehide', () => Save.flush());
+    // 首次打开面板可能早于贴图加载；加载结束后刷新当前可见的列表。
+    // sprites 的键是 目录/文件名（items/life01、chars/player）。
+    const sprites = window.__SPRITES__ || window.__ICONS__ || null;
+    Promise.all([Icons.init(sprites), Art.init(sprites)]).then(() => {
+      if (Game.bagOpen) Game.renderBag();
+      if (Game.lootOpen) Game.renderLootList();
+      if (Game.state === 'base') { Base.renderGear(); Base.renderStash(); }
+    });
+    Game.init();
+    // 调试入口：index.html#base 打开藏身处；#base,demo 顺便灌一些测试物资
+    if (location.hash.startsWith('#base')) {
+      if (location.hash.indexOf('demo') >= 0) {
+        const demo = ['antiq01','antiq03','antiq04','lux02','lux01','art01','elec02',
+                      'ind01','heal01','heal01','spec01','odd01','life01','life03'];
+        for (const id of demo) Save.addStash(id, 1);
+        Save.addStash('ammo_556_1', 40);
+        Save.credits = 860;
+        Save.runs = 3;
+      }
+      document.getElementById('startVeil').classList.add('hidden');
+      Base.open();
+      return;
+    }
+
+    // 调试入口：打开 index.html#play 直接进图，跳过开始界面
+    // 可指定格坐标：index.html#play,4,6
+    if (location.hash.startsWith('#play')) {
+      document.getElementById('startVeil').classList.add('hidden');
+      Game.startRun(null);
+      const parts = location.hash.slice(5).split(',').filter(s => s !== '');
+      if (parts.length >= 2 && /^\d+$/.test(parts[0])) {
+        const x = M.cx(parseInt(parts[0], 10)), y = M.cy(parseInt(parts[1], 10));
+        if (canStand(x, y, Game.player.r)) {
+          Game.player.x = x; Game.player.y = y;
+        } else Game.toast('目标位置不可站立，保留出生位置');
+        Game.updateCamera(true);
+      }
+      if (parts.indexOf('ui') >= 0) setTimeout(() => Game.toggleBag(), 200);
+      if (parts.indexOf('recoil') >= 0) {
+        // 调试：把后坐力固定住，方便看准星张开的样子
+        Game.player.recoil = 0.9;
+        Game.player.sinceShot = -999;
+        Game.player.syncSpread();
+      }
+      if (parts.indexOf('loot') >= 0) setTimeout(() => {
+        const b = Game.boxes[0];
+        Game.player.x = b.x; Game.player.y = b.y + CFG.TILE / 2 + Game.player.r + 1;
+        Game.openLoot(b);
+      }, 200);
+    }
+  } catch (err) {
+    const d = document.createElement('div');
+    d.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#8d2020;color:#fff;' +
+      'padding:18px;font:13px monospace;z-index:9999;white-space:pre-wrap;line-height:1.6';
+    d.textContent = '启动失败：' + err.message + '\n' +
+      (err.stack || '').split('\n').slice(0, 4).join('\n');
+    document.body.appendChild(d);
+    console.error(err);
+  }
+});
 
 </script>
 </body>

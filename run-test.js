@@ -79,7 +79,9 @@ ctx.globalThis = ctx;
 vm.createContext(ctx);
 
 for (const f of ['config.js', 'data.js', 'core.js', 'entities.js',
-  'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js', 'game.js', 'medhud.js']) {
+  'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
+  'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
+  'medhud.js', 'boot.js']) {
   try {
     vm.runInContext(fs.readFileSync(path.join(dir, 'js', f), 'utf8'), ctx, { filename: f });
   } catch (e) {

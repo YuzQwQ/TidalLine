@@ -98,8 +98,12 @@ tide/
 │   ├── ui.js            物品浮窗、右键菜单、交易框、音效
 │   ├── save.js          存档、仓库与背包、图鉴、配装
 │   ├── base.js          藏身处、商人、地图选择
-│   ├── game.js          局内主循环、渲染、面板、结算
-│   └── medhud.js        医疗 HUD（轮盘 / 快捷栏 / 进度条）
+│   ├── game.js          局内状态、输入、主循环、反馈特效
+│   ├── game-update.js   每帧逻辑：更新、交互、容器、死亡与撤离
+│   ├── game-render.js   绘制：地形、物件、实体、粒子、HUD
+│   ├── game-panels.js   面板：搜刮、背包、装备、结算
+│   ├── medhud.js        医疗 HUD（轮盘 / 快捷栏 / 进度条）
+│   └── boot.js          启动：读存档、加载贴图、按 hash 进不同入口
 ├── assets/              贴图（item / chars / props / tiles / gear）
 ├── docs/screenshots/    README 用的截图
 ├── tools/               CDP 截图、性能探针、字体实验等小工具
