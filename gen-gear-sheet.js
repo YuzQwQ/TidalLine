@@ -88,7 +88,7 @@ function armorCard(type, g) {
       <div class="thumb">${thumb(id)}</div>
       <div class="meta">
         <div class="name">${esc(g.name)}<i class="tag">Lv${g.lv} ${tag}</i><i class="tag dim">${esc(g.short)}</i></div>
-        <div class="sub"><code>${esc(id)}.png</code> · 减伤 <b class="dr">${Math.round(g.dr * 100)}%</b> · 耐久 ${g.dur} · ${g.w}kg${move} · ${money(g.price)}</div>
+        <div class="sub"><code>${esc(id)}.png</code> · 防护 <b class="dr">Lv${g.lv}</b> · 耐久 ${g.dur} · ${g.w}kg${move} · ${money(g.price)}</div>
         <div class="vis"><b>画什么</b>${esc(VISUAL[id] || '')}</div>
       </div>
     </div>`;

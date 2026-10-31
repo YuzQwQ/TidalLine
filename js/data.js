@@ -691,8 +691,8 @@ const ITEMS = [
   { id:'mil15',  name:'首潮撤离标图板', short:'撤离标图', cat:'mil', r:6, w:2.6, price:1600000,
     desc:'一块曾用于环礁湾首次大规模撤离行动的原始军事指挥标图板。\n\n它由金属框架和可更换的透明标绘板组成，底层压着一张当时使用的城市地图。不同颜色的标记分别代表道路管制区、人员集中点、后勤集结区与撤离路线。\n\n标图板经历过多次人工修改。部分标记被擦去后重新绘制，旧线条仍隐约透在下面。板面边缘的时间栏中，几次更新的记录间隔越来越短。\n\n这块标图板属于首次撤离行动的原始指挥器材，而不是事后根据档案制作的纪念复制品。与它同时保存的还有使用登记、交接记录，以及后来对撤离路线变更过程的整理资料。\n\n其中一条通往港口的线路，被连续修改了三次。\n\n最后的版本没有画到港口。\n\n标图板右下角还留着一小片没有被覆盖的区域，那里标注着最早设定的一处人员集合点。后续更新中，这个位置既没有被涂掉，也没有重新标记。\n\n它只是留在那里。' },
 
-  { id:'ammo',   name:'弹药',         cat:'ammo',  r:1, w:0.012,price:100, stack:120, noCodex:true, noLoot:true, desc:'口径通用，散装。' }
-,
+  /* 弹药不在这里逐条写：见本表之后的 AMMO_TABLE（三口径 × 五等级，
+     属性统一从 BALLISTICS / CALIBERS 派生）。 */
 
   /* --- 情报资料 --- */
   /* 13 件情报收集品：城市记录 → 灾变行政 → 专业调查 → 首潮观测，见 design/items/INTEL_COLLECTIBLES.md */
@@ -777,6 +777,57 @@ const ITEMS = [
   { id:'odd03',  name:'停摆的怀表', short:'停摆表',   cat:'odd',  r:4, w:0.2, price:60000,   desc:'停在涨潮那一秒。每天都停在那一秒。' },
 ];
 
+/* ------------------------------------------------------------
+   弹药：三种口径 × 五个等级
+   id 固定是 ammo_{口径}_{等级}，等级数值只在 BALLISTICS / CALIBERS 定义一次，
+   这里只登记名称与单发价格，系数、穿透、显示名全部派生。
+   贴图还没画，先按字符占格（Icons 认不到图会退回带等级数字的色块）。
+   掉落与商店供货数量本轮未定，所以 noLoot，不参与容器抽取。
+   ------------------------------------------------------------ */
+const AMMO_TABLE = [
+  // [口径, 等级, 名称, 单发价格]
+  ['556', 1, '5.56mm普通弹',      60],
+  ['556', 2, '5.56mm改良弹',     140],
+  ['556', 3, '5.56mm钢芯弹',     320],
+  ['556', 4, '5.56mm硬芯穿甲弹', 800],
+  ['556', 5, '5.56mm特种穿甲弹', 2000],
+  ['9mm', 1, '9mm普通弹',         35],
+  ['9mm', 2, '9mm强化弹',         80],
+  ['9mm', 3, '9mm钢芯弹',        180],
+  ['9mm', 4, '9mm穿甲弹',        450],
+  ['9mm', 5, '9mm特种穿甲弹',   1100],
+  ['12g', 1, '普通鹿弹',          80],
+  ['12g', 2, '强化鹿弹',         180],
+  ['12g', 3, '硬质鹿弹',         400],
+  ['12g', 4, '穿甲霰弹',         900],
+  ['12g', 5, '特种穿甲霰弹',    2200]
+];
+
+const AMMO_ITEMS = AMMO_TABLE.map(([caliber, level, name, price]) => {
+  const t = BALLISTICS.tier(level);
+  const cal = BALLISTICS.caliber(caliber);
+  return {
+    id: BALLISTICS.ammoId(caliber, level),
+    iconId: 'ammo_' + caliber,
+    name, short: cal.short + '·' + level,
+    cat: 'ammo', r: level, w: 0.012, price, stack: 120,
+    noCodex: true, noLoot: true,
+    caliber, level, penLevel: t.pen, dmgMul: t.dmgMul,
+    desc: cal.name + ' 制式弹药，' + t.name + '级。\n\n' +
+      '伤害系数 ×' + t.dmgMul.toFixed(2) + '，穿透等级 ' + t.pen + '。' +
+      '同口径的枪都能装，口径不对的装不进去。'
+  };
+});
+ITEMS.push(...AMMO_ITEMS);
+const AMMO_BY_ID = Object.fromEntries(AMMO_ITEMS.map(i => [i.id, i]));
+
+/* 某口径某等级的弹药物品 */
+function ammoItem(caliber, level) {
+  return AMMO_BY_ID[BALLISTICS.ammoId(caliber, level)] || null;
+}
+/* 某口径的默认弹药（Lv1），武器没指定时兜底 */
+function defaultAmmo(caliber) { return ammoItem(caliber, 1); }
+
 /* 稀有度 → 掉落权重（越低越少见） */
 const RARITY_WEIGHT = { 1: 100, 2: 55, 3: 20, 4: 10, 5: 6, 6: 1.2 };
 
@@ -796,6 +847,7 @@ const ENEMY_TYPES = {
     hp: 34, speed: 54, sight: 11, fov: 1.7, hear: 1.0,
     dmg: 9, range: 235, cd: 0.85, faction: 'scav',
     arrow: true,            // 远程
+    human: true,            // 人：会自己穿戴头甲、配对应等级的弹
     desc: '和你一样进来找东西的人，只是他们先到。'
   },
   echo: {
@@ -814,6 +866,34 @@ const ENEMY_TYPES = {
   }
 };
 
+/* ------------------------------------------------------------
+   人类敌人的装备等级
+   一次掷出一个等级 L（1~4），头、甲、身上带的弹全部按 L 走：
+   穿了 Lv3 的头就一定是 Lv3 的甲、Lv3 的弹，不会出现混搭。
+   Lv5 只留给玩家自己造，敌人不会有。
+   levelWeights 是 L=1..4 的权重（越低越常见），
+   helmetChance / bodyChance 是"到底穿不穿"，穿了就按 L 定级。
+   ------------------------------------------------------------ */
+const ENEMY_LOADOUT = {
+  levelWeights: [42, 30, 19, 9],
+  helmetChance: 0.55,
+  bodyChance: 0.65,
+  ammoMin: 10,        // 尸体上掉的弹药数量区间（含两端）
+  ammoMax: 30,
+  /* 按权重抽一个 1~4 的等级 */
+  rollLevel() {
+    const w = this.levelWeights;
+    let total = 0;
+    for (const x of w) total += x;
+    let r = Math.random() * total;
+    for (let i = 0; i < w.length; i++) {
+      r -= w[i];
+      if (r <= 0) return i + 1;
+    }
+    return 1;
+  }
+};
+
 /* 敌人按街区分散：普通街区 2–3 只，高物资区 3–4 只，出生楼无敌人。
    patrolRadius 为巡逻选点半径（格）；追击/调查不受此限制。 */
 const SPAWNS = RAID_MAP.enemies.map(s => ({ ...s, t:s.type }));
@@ -827,21 +907,13 @@ const BEHAVIOR_POOL = {
 };
 
 /* ------------------------------------------------------------
-   藏身处补给
-   itemId 为 null 表示这种物资不进仓库（石子是捡的/买的散装货）
-   携带时先从仓库扣，不够的按 price 用信用点补
+   藏身处已经不再有"携带数量"这套配置：
+   带什么下场完全取决于背包里放了多少（子弹、药物留在包里跨局保留），
+   数量、单价都直接来自物品表，这里只留起始信用点。
    ------------------------------------------------------------ */
-const SUPPLY = {
-  ammo:    { key:'ammo',    itemId:'ammo',  name:'弹药', unit:'发', price:200,  max:120, step:10, start:60 },
-  bandage: { key:'bandage', itemId:'heal01', name:'绷带', unit:'个', price:2000, max:5,   step:1,  start:3  },
-  stone:   { key:'stone',   itemId:null,    name:'石子', unit:'颗', price:500,  max:5,   step:1,  start:3  }
-};
 
 /* 初始信用点（只在第一次玩、还没有存档时给） */
 const START_CREDITS = 60000;
-
-/* 信用点低于这个数时，补给免费（防止连败之后彻底玩不下去） */
-const BROKE_LINE = 20000;
 
 /* 仓库格数（仅显示，不做硬限制） */
 const STASH_SLOTS = 600;     // 藏身处仓库容量；一页显示多少格由屏幕尺寸算
@@ -917,6 +989,7 @@ const DECOR = RAID_MAP.props;
 const WEAPONS = {
   rifle: {
     id: 'rifle', name: '制式步枪', short: '步枪', slot: 'primary', w: 3.2,
+    caliber: '556', ammo: 'ammo_556_1',
     dmgMin: 15, dmgMax: 22, rpm: 420, mag: 30, speed: 620, range: 640,
     spreadBase: 0.040, spreadMax: 0.260, recoilPerShot: 0.075, pellets: 1,
     price: 45000, rarity: 5,       // 军火商买价；回收价 = 买价的一半
@@ -924,6 +997,7 @@ const WEAPONS = {
   },
   shotgun: {
     id: 'shotgun', name: '短管霰弹枪', short: '霰弹', slot: 'primary', w: 3.6,
+    caliber: '12g', ammo: 'ammo_12g_1',
     dmgMin: 7, dmgMax: 10, rpm: 80, mag: 6, speed: 560, range: 300,
     spreadBase: 0.105, spreadMax: 0.30, recoilPerShot: 0.22, pellets: 6,
     price: 24000, rarity: 3,
@@ -931,6 +1005,7 @@ const WEAPONS = {
   },
   smg: {
     id: 'smg', name: '冲锋枪', short: '冲锋', slot: 'primary', w: 2.4,
+    caliber: '9mm', ammo: 'ammo_9mm_1',
     dmgMin: 9, dmgMax: 13, rpm: 780, mag: 25, speed: 600, range: 420,
     spreadBase: 0.050, spreadMax: 0.280, recoilPerShot: 0.055, pellets: 1,
     price: 38000, rarity: 3,
@@ -938,6 +1013,7 @@ const WEAPONS = {
   },
   pistol: {
     id: 'pistol', name: '手枪', short: '手枪', slot: 'secondary', w: 1.1,
+    caliber: '9mm', ammo: 'ammo_9mm_1',
     dmgMin: 14, dmgMax: 19, rpm: 300, mag: 12, speed: 600, range: 460,
     spreadBase: 0.045, spreadMax: 0.220, recoilPerShot: 0.100, pellets: 1,
     price: 5000, rarity: 2,
@@ -951,25 +1027,27 @@ const SIDEARM_SLOT = 2;
 
 /* ------------------------------------------------------------
    护甲：六级头盔 / 六级身体护甲
-   dr = 基础减伤率，dur = 最大耐久，move = 移速倍率（只有身体护甲有）
+   lv = 防护等级（对应 BALLISTICS.MATRIX 的列），dur = 最大耐久，
+   move = 移速倍率（只有身体护甲有）。
+   已经没有"固定减伤率"这回事：挡多少只看弹药穿透等级 × 护甲等级 × 剩余耐久。
    价格采用 economy.json 中六级代表价；同级变体后续可围绕代表价浮动。
    ------------------------------------------------------------ */
 const HELMETS = [
-  { lv: 1, name: '布面工帽',   short: '工帽',   dr: 0.08, dur: 20,  w: 0.5, move: 1,    price: 2000  },
-  { lv: 2, name: '工程安全帽', short: '安全帽', dr: 0.16, dur: 30,  w: 0.8, move: 1,    price: 6000  },
-  { lv: 3, name: '防撞头盔',   short: '防撞盔', dr: 0.24, dur: 45,  w: 1.2, move: 1,    price: 15000  },
-  { lv: 4, name: '防弹头盔',   short: '防弹盔', dr: 0.32, dur: 65,  w: 1.8, move: 1,    price: 48000  },
-  { lv: 5, name: '重型防弹盔', short: '重盔',   dr: 0.40, dur: 85,  w: 2.5, move: 1,    price: 120000 },
-  { lv: 6, name: '攻坚头盔',   short: '攻坚盔', dr: 0.50, dur: 110, w: 3.5, move: 1,    price: 350000 }
+  { lv: 1, name: '布面工帽',   short: '工帽',   dur: 20,  w: 0.5, move: 1,    price: 2000  },
+  { lv: 2, name: '工程安全帽', short: '安全帽', dur: 30,  w: 0.8, move: 1,    price: 6000  },
+  { lv: 3, name: '防撞头盔',   short: '防撞盔', dur: 45,  w: 1.2, move: 1,    price: 15000  },
+  { lv: 4, name: '防弹头盔',   short: '防弹盔', dur: 65,  w: 1.8, move: 1,    price: 48000  },
+  { lv: 5, name: '重型防弹盔', short: '重盔',   dur: 85,  w: 2.5, move: 1,    price: 120000 },
+  { lv: 6, name: '攻坚头盔',   short: '攻坚盔', dur: 110, w: 3.5, move: 1,    price: 350000 }
 ];
 
 const BODIES = [
-  { lv: 1, name: '帆布护胸',   short: '护胸',   dr: 0.10, dur: 40,  w: 1.5, move: 1.00, price: 3000  },
-  { lv: 2, name: '防刺背心',   short: '防刺',   dr: 0.20, dur: 60,  w: 2.5, move: 0.98, price: 9000  },
-  { lv: 3, name: '轻型战术背心', short: '轻甲', dr: 0.30, dur: 85,  w: 4.0, move: 0.96, price: 28000  },
-  { lv: 4, name: '战术防弹衣', short: '战术甲', dr: 0.40, dur: 115, w: 6.0, move: 0.94, price: 85000 },
-  { lv: 5, name: '重型防弹衣', short: '重甲',   dr: 0.50, dur: 150, w: 9.0, move: 0.91, price: 220000 },
-  { lv: 6, name: '攻坚装甲',   short: '攻坚甲', dr: 0.60, dur: 190, w: 13.0, move: 0.88, price: 650000 }
+  { lv: 1, name: '帆布护胸',   short: '护胸',   dur: 40,  w: 1.5, move: 1.00, price: 3000  },
+  { lv: 2, name: '防刺背心',   short: '防刺',   dur: 60,  w: 2.5, move: 0.98, price: 9000  },
+  { lv: 3, name: '轻型战术背心', short: '轻甲', dur: 85,  w: 4.0, move: 0.96, price: 28000  },
+  { lv: 4, name: '战术防弹衣', short: '战术甲', dur: 115, w: 6.0, move: 0.94, price: 85000 },
+  { lv: 5, name: '重型防弹衣', short: '重甲',   dur: 150, w: 9.0, move: 0.91, price: 220000 },
+  { lv: 6, name: '攻坚装甲',   short: '攻坚甲', dur: 190, w: 13.0, move: 0.88, price: 650000 }
 ];
 
 /* 护甲表的查表工具 */
@@ -990,18 +1068,13 @@ const GEAR = {
     if (!d) return null;
     return {
       type, lv: d.lv, name: d.name, short: d.short,
-      dr: d.dr, max: d.dur, dur: (dur == null ? d.dur : U.clamp(dur, 0, d.dur)),
+      max: d.dur, dur: (dur == null ? d.dur : U.clamp(dur, 0, d.dur)),
       w: d.w, move: d.move, price: d.price
     };
   },
 
-  /* 当前有效减伤：完好 100%，破损 50%，失效 0 */
-  reduction(g) {
-    if (!g || g.dur <= 0) return 0;
-    return (g.dur / g.max >= 0.5) ? g.dr : g.dr * 0.5;
-  },
-
-  /* 耐久状态 */
+  /* 耐久状态：只影响显示（颜色 / 提示），不再改变防护数值。
+     防护能力只由穿透矩阵和剩余耐久决定，没有"破损减半"这一档。 */
   state(g) {
     if (!g) return 'none';
     if (g.dur <= 0) return 'broken';
@@ -1047,10 +1120,13 @@ const EQUIP = {
 
   /* 枪（id + 余弹）→ 伪物品。枪没有耐久，回收价固定半价。
      余弹存在 equip.mag 里，所以换下来的枪不会把子弹丢掉。 */
-  gun(id, mag) {
+  gun(id, mag, ammoId) {
     const w = WEAPONS[id];
     if (!w) return null;
     const m = Math.max(0, mag | 0);
+    /* 弹匣里装的是哪一档弹药；没写就回落到武器的默认（同口径 Lv1） */
+    const a = (ammoId && AMMO_BY_ID[ammoId] && AMMO_BY_ID[ammoId].caliber === w.caliber)
+      ? ammoId : w.ammo;
     return {
       id: 'g_' + id,
       name: w.name, short: w.short,
@@ -1059,11 +1135,28 @@ const EQUIP = {
       sell: this.sellPrice(w.price, 1, 1),
       stack: 1,
       icon: id,
-      equip: { kind: 'gun', gun: id, mag: m },
+      equip: { kind: 'gun', gun: id, mag: m, ammo: a },
       note: m > 0 ? String(m) : ''
     };
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -144,6 +144,39 @@ const CFG = {
     HEAD_MULT: 1.5      // 爆头伤害倍率
   },
 
+  /* ---------- 弹药口径 ----------
+     口径是独立枚举，任何地方判断弹种都走 caliber 字段，不看名字。
+     同一口径的枪共用这一口径下的所有等级弹药，跨口径绝对不能混用。 */
+  AMMO: {
+    /* 弹药等级：伤害系数与穿透等级分开存。
+       本版两者数值相同，但结构上分开，后面要拆开时不用改数据。 */
+    TIERS: [
+      { lv: 1, name: '普通',     dmgMul: 0.90, pen: 1 },
+      { lv: 2, name: '改良',     dmgMul: 1.00, pen: 2 },
+      { lv: 3, name: '钢芯',     dmgMul: 1.05, pen: 3 },
+      { lv: 4, name: '穿甲',     dmgMul: 1.10, pen: 4 },
+      { lv: 5, name: '特种穿甲', dmgMul: 1.15, pen: 5 }
+    ],
+
+    /* 护甲穿透矩阵：行 = 弹药穿透等级（1~5），列 = 护甲等级（1~6）。
+       数值是"打完护甲之后还能落到人身上的伤害比例"。
+       高级护甲对低级弹药的保护是有意做得很强的，不要为了平衡把它抹平。 */
+    MATRIX: {
+      1: [0.80, 0.60, 0.40, 0.25, 0.15, 0.15],
+      2: [1.00, 0.80, 0.60, 0.40, 0.25, 0.15],
+      3: [1.00, 1.00, 0.80, 0.60, 0.40, 0.25],
+      4: [1.00, 1.00, 1.00, 0.80, 0.60, 0.40],
+      5: [1.00, 1.00, 1.00, 1.00, 0.80, 0.60]
+    },
+
+    /* 被护甲挡下的伤害换算成耐久损耗的系数。
+       0.5 是首轮测试值，调平衡就动这里，别去改矩阵。 */
+    DURABILITY_FACTOR: 0.5,
+
+    /* 没有弹药来源的伤害（近战、敌人的制式射击）按这个穿透等级结算。 */
+    UNARMED_PEN: 3
+  },
+
   /* ---------- 后坐力 ----------
      recoil 是 0~1 的一个值，驱动准星张开与弹道散布。
      开火累加，停火衰减；移动时累加更快、恢复更慢。
@@ -255,3 +288,73 @@ function itemCategoryLabel(item) {
   const group=ITEM_GROUPS[itemGroup(item)],cat=CATS[item.cat];
   return (group?group.name+' / ':'')+(cat?cat.name:'装备');
 }
+
+/* ------------------------------------------------------------
+   弹道结算
+   口径 / 弹药等级 / 穿透矩阵 / 耐久损耗，全项目只此一份。
+   玩家、敌人、霰弹的每一颗弹丸都调这里，不要另写一套。
+   ------------------------------------------------------------ */
+const CALIBERS = {
+  '556': { id: '556', name: '5.56×45mm', short: '5.56', label: '5.56mm' },
+  '9mm': { id: '9mm', name: '9×19mm',   short: '9mm',  label: '9mm'  },
+  '12g': { id: '12g', name: '12 Gauge', short: '12G',  label: '12 号' }
+};
+
+/* config 不依赖 core.js，这里自带一个夹取，避免加载顺序问题 */
+function clampNum(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
+
+const BALLISTICS = {
+  /* 弹药等级配置（1~5） */
+  tier(lv) {
+    const t = CFG.AMMO.TIERS.find(x => x.lv === lv);
+    return t || CFG.AMMO.TIERS[0];
+  },
+
+  /* 口径 → 显示名 */
+  caliber(id) { return CALIBERS[id] || null; },
+  caliberName(id) { return (CALIBERS[id] || {}).name || String(id || '—'); },
+
+  /* 弹药 id 只有这一种拼法：ammo_{口径}_{等级} */
+  ammoId(caliber, lv) { return 'ammo_' + caliber + '_' + lv; },
+
+  /* 穿透比例：没穿护甲 / 护甲已失效 = 1（全额） */
+  ratio(pen, armorLevel) {
+    if (!armorLevel || armorLevel < 1) return 1;
+    const row = CFG.AMMO.MATRIX[clampNum(pen | 0, 1, 5)];
+    if (!row) return 1;
+    return row[clampNum(armorLevel, 1, 6) - 1];
+  },
+
+  /* 核心公式：给定"进护甲之前的伤害"和护甲状态，算出落在血量上的伤害与耐久损耗。
+       - 完全穿透：护甲这次不掉耐久
+       - 耐久不够挡住本次理论耗时，按剩余耐久折算，护甲被击毁但仍提供部分防护
+     返回的 health 是浮点，展示时再取整。 */
+  resolve(base, pen, armorLevel, durability) {
+    base = Math.max(0, Number(base) || 0);
+    const ratio = this.ratio(pen, armorLevel);
+    const blocked = base * (1 - ratio);
+    const theo = blocked * CFG.AMMO.DURABILITY_FACTOR;
+    const dur = Math.max(0, Number(durability) || 0);
+
+    if (theo <= 1e-9 || dur <= 0) {
+      return { health: base, durabilityLoss: 0, ratio, blocked: 0 };
+    }
+    const eff = clampNum(dur / theo, 0, 1);
+    const actualBlocked = blocked * eff;
+    return {
+      health: base - actualBlocked,
+      durabilityLoss: Math.min(dur, theo),
+      ratio,
+      blocked: actualBlocked
+    };
+  },
+
+  /* 带护甲实体的版本：直接吃 GEAR.make 出来的实例（可以没有）
+     base 必须是"已经乘过部位倍率与弹药系数"的伤害 */
+  hit(base, pen, gear) {
+    if (!gear || !(gear.dur > 0)) {
+      return { health: base, durabilityLoss: 0, ratio: 1, blocked: 0 };
+    }
+    return this.resolve(base, pen, gear.lv, gear.dur);
+  }
+};

@@ -92,7 +92,7 @@ vm.runInContext(`
   globalThis.ITEMS = ITEMS; globalThis.Game = Game; globalThis.Save = Save;
   globalThis.Player = Player; globalThis.Enemy = Enemy; globalThis.Noise = Noise;
   globalThis.Quiet = Quiet; globalThis.SFX = SFX;
-  globalThis.Base = Base; globalThis.SUPPLY = SUPPLY; globalThis.Art = Art; globalThis.ART = ART;
+  globalThis.Base = Base; globalThis.Art = Art; globalThis.ART = ART;
   globalThis.Corpse = Corpse; globalThis.Bullet = Bullet;
   globalThis.GEAR = GEAR; globalThis.WEAPONS = WEAPONS; globalThis.EQUIP = EQUIP; globalThis.HELMETS = HELMETS; globalThis.BODIES = BODIES; globalThis.SIDEARM_SLOT = SIDEARM_SLOT;
   globalThis.START_CREDITS = START_CREDITS;
@@ -110,7 +110,7 @@ function noThrow(name, fn) {
   catch (e) { fail++; console.log('  FAIL ' + name + '  →  ' + e.message + '\n       ' + (e.stack || '').split('\n')[1]); }
 }
 
-const { Game, M, CFG, U, Save, ITEMS, Noise, Quiet, Base, SUPPLY, Art, ART, GEAR, WEAPONS, HELMETS, BODIES, EQUIP, SIDEARM_SLOT } = ctx;
+const { Game, M, CFG, U, Save, ITEMS, Noise, Quiet, Base, Art, ART, GEAR, WEAPONS, HELMETS, BODIES, EQUIP, SIDEARM_SLOT } = ctx;
 
 console.log('\n=== 启动 ===');
 noThrow('Save.load()', () => Save.load());
@@ -241,6 +241,7 @@ for (let i = 0; i < 20; i++) Game.update(1 / 60);
 ok('子弹命中敌人', dummy.hp < hpBefore, 'hp ' + hpBefore + ' → ' + dummy.hp.toFixed(1));
 
 console.log('\n=== 换弹 ===');
+Save.bag = [{ id: 'ammo_556_1', n: 40 }];
 Game.startRun();
 const P4 = Game.player;
 P4.mag = 3;
@@ -297,7 +298,7 @@ ok('翻空后不再提示交互', !afterEmpty || afterEmpty.obj !== fastBox);
 console.log('\n=== 丢弃与遗落物品堆 ===');
 Game.startRun();
 const PD = Game.player;
-const ammoItem = ITEMS.find(i => i.id === 'ammo');
+const ammoItem = ITEMS.find(i => i.id === 'ammo_556_1');
 const healItem = ITEMS.find(i => i.id === 'heal01');
 
 const boxes0 = Game.boxes.length;
@@ -308,7 +309,7 @@ ok('丢弃生成物品堆', !!pile && Game.boxes.length === boxes0 + 1);
 ok('物品堆落在脚下那一格',
    !!pile && Math.floor(PD.x / CFG.TILE) === pile.tx && Math.floor(PD.y / CFG.TILE) === pile.ty);
 ok('丢出的物品进入物品堆',
-   !!pile && pile.items.length === 1 && pile.items[0].n === 12 && pile.items[0].item.id === 'ammo');
+   !!pile && pile.items.length === 1 && pile.items[0].n === 12 && pile.items[0].item.id === 'ammo_556_1');
 ok('丢出的东西一开始就知道是什么', !!pile && pile.items.every(e => e.known === true));
 ok('背包那一格已清掉', PD.bag.slots.length === 0);
 ok('物品堆已掀开但未清空', !!pile && pile.searched === true && pile.opened === false);
@@ -325,7 +326,7 @@ ok('同格丢弃并入同一堆',
 PD.bag.slots = [{ item: ammoItem, n: 5 }];
 Game.dropFromBag(0);
 ok('同种可堆叠物品合并计数',
-   pile.items.length === 2 && pile.items.find(e => e.item.id === 'ammo').n === 17);
+   pile.items.length === 2 && pile.items.find(e => e.item.id === 'ammo_556_1').n === 17);
 
 /* 空格子丢弃是空操作 */
 ok('空格丢弃无效', Game.dropFromBag(0) === false);
@@ -691,9 +692,10 @@ const longNames = ITEMS.filter(i => i.name.replace(/\s/g, '').length > 4);
 ok('长名字物品都写了简称',
    longNames.every(i => !!i.short),
    longNames.filter(i => !i.short).map(i => i.name).join(',') || '全部有');
-ok('简称不超过 4 个字',
-   ITEMS.filter(i => i.short).every(i => i.short.length <= 4),
-   ITEMS.filter(i => i.short && i.short.length > 4).map(i => i.short).join(',') || '全部合规');
+/* 弹药简称是"口径·等级"（如 5.56·3），6 个字符但半角，实际宽度和四个汉字相当 */
+ok('简称不超过 4 个字（弹药为口径·等级）',
+   ITEMS.filter(i => i.short).every(i => i.short.length <= 4 || i.cat === 'ammo'),
+   ITEMS.filter(i => i.short && i.short.length > 4 && i.cat !== 'ammo').map(i => i.short).join(',') || '全部合规');
 
 console.log('\n=== 逐件搜索 ===');
 Game.startRun({ ammo: 0, bandage: 0, stone: 0 });
@@ -802,46 +804,54 @@ ok('偏心的命中算身体', Math.abs(bodyDmg - 20) < 0.01, bodyDmg.toFixed(1)
 const missDmg = shotThrough(0, 12);    // 完全在外圆外
 ok('明显偏离不造成伤害', missDmg === 0, missDmg.toFixed(1));
 
-/* 玩家护甲：爆头 1.5 倍，头盔按百分比减伤，耐久只扣原始伤害 */
-const freshHelmet = () => GEAR.make('helmet', 4);   // 32%
+/* 玩家护甲：爆头倍率先并进伤害，再按"弹药穿透等级 vs 护甲等级"结算；
+   耐久只掉"挡下来的那部分"，穿透干净的一发不磨甲。 */
+const freshHelmet = () => GEAR.make('helmet', 4);   // Lv4 / 65
 PE.helmet = freshHelmet(); PE.body = null; PE.hp = 100;
-PE.hurt(20, 'head');
-ok('爆头 ×1.5 后再吃头盔减伤',
-   Math.abs(PE.hp - (100 - 20 * 1.5 * (1 - 0.32))) < 0.01, PE.hp.toFixed(1));
-ok('头盔耐久只扣基础伤害', PE.helmet.dur === 45, PE.helmet.dur + '/65');
+PE.hurt(20, 'head', 3);        // Lv3 弹打 Lv4 盔：矩阵留 60%
+ok('爆头 ×1.5 后再按穿透结算',
+   Math.abs(PE.hp - (100 - 30 * 0.6)) < 1e-6, PE.hp.toFixed(2));
+ok('头盔耐久按挡下的伤害扣',
+   Math.abs(PE.helmet.dur - (65 - 30 * 0.4 * CFG.AMMO.DURABILITY_FACTOR)) < 1e-6,
+   PE.helmet.dur.toFixed(2) + '/65');
 
-/* 破损：耐久 < 50% 时减伤砍半 */
-PE.helmet.dur = 30; PE.hp = 100;
-PE.hurt(20, 'head');
-ok('破损后减伤减半',
-   Math.abs(PE.hp - (100 - 30 * (1 - 0.16))) < 0.01, PE.hp.toFixed(1));
+/* 穿透干净（同级弹打同级甲留 80%，那 Lv5 弹打 Lv4 甲是 100%）→ 不掉耐久 */
+PE.helmet.dur = 65; PE.hp = 100;
+PE.hurt(20, 'head', 5);
+ok('完全穿透时护甲不掉耐久',
+   Math.abs(PE.hp - 70) < 1e-6 && PE.helmet.dur === 65, PE.helmet.dur + '/65');
 
-/* 失效：耐久归零后没有任何减伤 */
-PE.helmet.dur = 20; PE.hp = 100;
-PE.hurt(20, 'head');      // 扣 20 → 0，这一击仍按破损算
-ok('清空耐久的这一击仍享受防护',
-   Math.abs(PE.hp - (100 - 30 * 0.84)) < 0.01, PE.hp.toFixed(1));
-ok('耐久归零', PE.helmet.dur === 0);
+/* 击毁溢出：耐久不够挡，按剩余耐久折算，护甲被击穿但仍提供部分防护 */
+PE.helmet.dur = 3; PE.hp = 100;
+PE.hurt(20, 'head', 1);        // Lv1 打 Lv4：留 25%，理论耗甲 30*0.75*0.5 = 11.25
+const expectHp = 100 - (30 - 30 * 0.75 * (3 / (30 * 0.75 * CFG.AMMO.DURABILITY_FACTOR)));
+ok('护甲被打穿时仍挡住一部分',
+   Math.abs(PE.hp - expectHp) < 1e-6, PE.hp.toFixed(2));
+ok('这一击把耐久打空', PE.helmet.dur === 0, PE.helmet.dur + '');
+
+/* 失效：没有防护 */
 PE.hp = 100;
-PE.hurt(20, 'head');
-ok('失效后吃满伤害', Math.abs(PE.hp - 70) < 0.01, PE.hp.toFixed(1));
+PE.hurt(20, 'head', 1);
+ok('护甲失效后吃满伤害', Math.abs(PE.hp - 70) < 1e-6, PE.hp.toFixed(2));
 
 /* 身体命中只吃身体护甲，头盔耐久不变 */
 PE.helmet = freshHelmet();
-PE.body = GEAR.make('body', 5);   // 50%
+PE.body = GEAR.make('body', 5);   // Lv5 / 150
 PE.hp = 100;
 const hdBefore = PE.helmet.dur;
-PE.hurt(20, 'body');
-ok('身体命中按身体护甲减伤', Math.abs(PE.hp - 90) < 0.01, PE.hp.toFixed(1));
+PE.hurt(20, 'body', 3);           // Lv3 打 Lv5：留 40%
+ok('身体命中按身体护甲穿透', Math.abs(PE.hp - (100 - 8)) < 1e-6, PE.hp.toFixed(2));
 ok('身体命中不动头盔耐久', PE.helmet.dur === hdBefore);
-ok('身体命中扣身体护甲耐久', PE.body.dur === 130, PE.body.dur + '/150');
+ok('身体命中扣身体护甲耐久',
+   Math.abs(PE.body.dur - (150 - 12 * CFG.AMMO.DURABILITY_FACTOR)) < 1e-6,
+   PE.body.dur.toFixed(2) + '/150');
 
 /* 移速 / 负重 / 存档 */
 PE.body = GEAR.make('body', 6);
 ok('六级甲移速 ×0.88', Math.abs(PE.armorMove - 0.88) < 1e-9);
 ok('护甲重量计入总负重', PE.totalWeight >= 13, PE.totalWeight.toFixed(1) + 'kg');
 PE.helmet = GEAR.make('helmet', 3);
-PE.hurt(20, 'head');
+PE.hurt(20, 'head', 2);
 ok('耐久会写回存档',
    Save.gear.helmet && Save.gear.helmet.dur === PE.helmet.dur,
    Save.gear.helmet ? Save.gear.helmet.dur : 'null');
@@ -890,7 +900,7 @@ Art.map['props/corpse_scav'] = null;
 console.log('\n=== 藏身处 ===');
 // 干净存档
 Save.codex = {}; Save.stash = []; Save.credits = 100000;
-Save.loadout = { ammo: 60, bandage: 3, stone: 3 };
+Save.bag = [];
 Save.runs = 0;
 Game.player = null;
 noThrow('Base.open()', () => Base.open());
@@ -920,37 +930,42 @@ Base.sellJunk();
 ok('清寻常物只清 r1', Save.stashCount('antiq03') === 0 && Save.stashCount('lux02') === 1);
 ok('清仓加钱', Save.credits > c0);
 
-// 补给花费：仓库有 10 发弹药时只买 50 发
+// 背包制：带什么完全由包里的东西决定，出发不花钱
 Save.stash = []; Save.credits = 100000;
-Save.addStash('ammo', 10);
-Save.loadout = { ammo: 60, bandage: 3, stone: 3 };
-const cost = Base.computeCost();
-ok('补给成本扣掉仓库存量', cost === (60 - 10) * SUPPLY.ammo.price
-   + 3 * SUPPLY.bandage.price + 3 * SUPPLY.stone.price, '¥' + cost);
+Save.bag = [];
+Save.addBag('ammo_556_1', 30);
+Save.addBag('ammo_9mm_1', 20);
+Save.addBag('ammo_12g_1', 10);
+Save.addBag('heal01', 3);
+Save.normalizeBag();
+ok('背包条目各自成条', Save.bag.length === 4, Save.bag.length + ' 条');
+ok('背包能数出某弹种', Save.bagCount('ammo_556_1') === 30);
+ok('背包算得出负重', Save.bagWeight() > 0, Save.bagWeight().toFixed(2) + ' kg');
 
-// 出发扣费
 const c1 = Save.credits;
 Base.deploy();
-ok('出发后信用点扣除', Save.credits === c1 - cost, c1 + ' → ' + Save.credits);
-ok('出发消耗仓库弹药', Save.stashCount('ammo') === 0);
+ok('出发不扣信用点', Save.credits === c1, c1 + ' → ' + Save.credits);
+ok('出发后背包清空（东西都带进图了）', Save.bag.length === 0);
 ok('出发进入对局', Game.state === 'playing');
-ok('弹药按配置带入', Game.player.bag.hasAmmo() === 60,
+ok('弹药按背包带入', Game.player.bag.hasAmmo() === 60,
    '备弹 ' + Game.player.bag.hasAmmo());
-ok('石子按配置带入', Game.player.stones === 3);
+ok('按口径分开记', Game.player.bag.ammoCountByCaliber('556') === 30
+   && Game.player.bag.ammoCountByCaliber('9mm') === 20
+   && Game.player.bag.ammoCountByCaliber('12g') === 10);
+ok('石子默认带 3 颗', Game.player.stones === 3);
 
-// 破产保护：钱见底时补给免费，但仍能出发（不能让人卡死）
+// 背包空了、钱也见底，照样能出发（出图不收费，不能把人卡死）
 Game.state = 'base';
 Save.credits = 0;
-Save.loadout = { ammo: 60, bandage: 3, stone: 3 };
+Save.bag = [];
 Save.stash = [];
-ok('信用点见底时补给免费', Base.computeCost() === 0);
-noThrow('救济补给可出发', () => Base.deploy());
-ok('救济补给确实进图', Game.state === 'playing');
+noThrow('空背包空钱包也能出发', () => Base.deploy());
+ok('空背包确实进图', Game.state === 'playing');
 
 // 结算入库：死亡只带回安全箱
 Save.stash = []; Save.credits = 0;
-Save.loadout = { ammo: 10, bandage: 1, stone: 0 };
-Game.startRun(Save.loadout);
+Save.bag = [];
+Game.startRun();
 const PX = Game.player;
 PX.bag.slots.length = 0;
 PX.bag.safe.length = 0;
@@ -964,7 +979,7 @@ ok('死亡后只有安全箱入库',
 
 // 完整流程：死亡 → 结算 → 回藏身处
 Game.state = 'base';
-Game.startRun(Save.loadout);
+Game.startRun();
 Game.player.hurt(999);
 ok('死亡先播放动画', Game.state === 'dying');
 for (let i = 0; i < 60; i++) Game.update(1 / 60);

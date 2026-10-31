@@ -1452,26 +1452,6 @@
       }
     },
     {
-      "id": "ammo",
-      "name": "弹药",
-      "group": "ammo",
-      "rarity": 1,
-      "previousPrice": 1,
-      "price": 100,
-      "reason": "弹药单位出售价格随补给经济尺度放大100倍。",
-      "nonPrice": {
-        "id": "ammo",
-        "name": "弹药",
-        "cat": "ammo",
-        "r": 1,
-        "w": 0.012,
-        "stack": 120,
-        "noCodex": true,
-        "noLoot": true,
-        "desc": "口径通用，散装。"
-      }
-    },
-    {
       "id": "life02",
       "name": "旧报纸",
       "group": "collectible",
@@ -3069,7 +3049,9 @@
     ]
   },
   "supply": {
-    "ammo": 200,
+    "ammo556": 60,
+    "ammo9mm": 35,
+    "ammo12g": 80,
     "bandage": 2000,
     "stone": 500
   },

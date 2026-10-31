@@ -194,10 +194,10 @@ function card(it) {
   const r = RARITY[it.r - 1];
   const cat = CATS[it.cat];
   const isStack = it.stack > 1;
-  const vis = it.visual || VISUAL[it.id] || '';
+  const vis = it.visual || VISUAL[it.id] || ({ammo_556:'橄榄色弹药盒＋细长尖头5.56×45mm步枪弹',ammo_9mm:'蓝灰色弹药盒＋短粗圆头9×19mm手枪弹',ammo_12g:'暗红色弹药盒＋红色圆柱12号霰弹壳'})[iconId(it.id)] || '';
   return `
     <div class="item" data-item="${it.id}" style="--rc:${r.color}">
-      <div class="thumb">
+      <div class="thumb"${it.cat==='ammo'?` style="background:${r.color}26"`:''}>
         ${hasIcon(it.id) ? `<img src="assets/items/${esc(iconId(it.id))}.png" width="48" height="48" alt="${esc(it.name)}">` : '<span>待绘制</span><b>48×48</b>'}
       </div>
       <div class="meta">
@@ -253,7 +253,7 @@ const html = `<!DOCTYPE html>
   <div class="lede">
     共 ${ITEMS.length} 件：${ITEMS.filter(i=>itemGroup(i)==='collectible').length} 件收集品、${ITEMS.filter(i=>itemGroup(i)==='supply').length} 件物资；${total} 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
     和游戏里的数据完全一致；改完物品表重跑 <code>node gen-item-sheet.js</code> 就会更新。<br>
-    已配置图标 <b>${iconCount} / ${ITEMS.length}</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a> · <a href="assets/item-art/electronics/index.html">新增电子产品9件</a> · <a href="assets/item-art/medical-collectibles/index.html">新增医疗收集品10件</a> · <a href="assets/item-art/industrial/index.html">新增工业器材12件</a> · <a href="assets/item-art/heritage/index.html">新增文物藏品8件</a> · <a href="assets/item-art/military/index.html">新增军事物资15件</a> · <a href="assets/item-art/intel/index.html">新增情报资料13件</a> · <a href="assets/item-art/occult/index.html">新增神秘学物品15件</a>。
+    <a href="assets/item-art/ammunition/index.html">弹药三口径图标</a> · 已配置图标 <b>${iconCount} / ${ITEMS.length}</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a> · <a href="assets/item-art/electronics/index.html">新增电子产品9件</a> · <a href="assets/item-art/medical-collectibles/index.html">新增医疗收集品10件</a> · <a href="assets/item-art/industrial/index.html">新增工业器材12件</a> · <a href="assets/item-art/heritage/index.html">新增文物藏品8件</a> · <a href="assets/item-art/military/index.html">新增军事物资15件</a> · <a href="assets/item-art/intel/index.html">新增情报资料13件</a> · <a href="assets/item-art/occult/index.html">新增神秘学物品15件</a>。
     <br>收集品保留九类，物资单独分为弹药类与医疗物品。<a href="design/items/CLASSIFICATION.md">逐件分类与世界观依据</a>。
     <br>医疗品18件图标已全部绘制，5件开放恢复HP，其余效果待开放。<a href="assets/item-art/medical/index.html">查看医疗图标总览</a>。<a href="design/items/MEDICAL.md">医疗系统说明</a> · <a href="design/world setting/医疗产业提案.md">医疗产业提案（非正式历史）</a>。
     <br>稀有度采用白、绿、蓝、紫、金、红六级。<a href="design/items/RARITY.md">查看 ${ITEMS.filter(i=>itemGroup(i)==='collectible').length} 件收集品的稀有度评级</a>；

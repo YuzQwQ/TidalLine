@@ -9,6 +9,8 @@ function build(){
  for(const row of spec.items){
   assert(Number.isInteger(row.price)&&row.price>0,row.id+'价格无效');
   if(row.group==='medical')continue;
+  /* 弹药是 AMMO_TABLE 派生出来的 15 条，价格写在表里，不在这里逐条替换 */
+  if(row.group==='ammo')continue;
   change(new RegExp("(\\{ id:\\s*'"+row.id+"'[^\\r\\n]*?\\bprice:\\s*)\\d+"),row.price);
   if(row.group==='collectible'){
    const band=spec.collectionBands.find(b=>b.rarity===row.rarity);
@@ -29,17 +31,19 @@ function build(){
    });return block;
   });
  }
- src=src.replace(/const SUPPLY = \{[\s\S]*?\n\};/,block=>{
-  for(const [key,price]of Object.entries(spec.supply)){
-   const re=new RegExp('(  '+key+':[^\\r\\n]*?\\bprice:\\s*)\\d+');assert(re.test(block));block=block.replace(re,(_m,prefix)=>prefix+price);
-  }return block;
- });
- change(/(const START_CREDITS = )\d+/,spec.startCredits);change(/(const BROKE_LINE = )\d+/,spec.brokeLine);
+ /* 补给表已删除：带多少全看背包，价格只在物品表里 */
+ change(/(const START_CREDITS = )\d+/,spec.startCredits);
  const runtime={version:spec.version,collectionBands:spec.collectionBands,doctor:spec.doctor};
  const block='/* BEGIN ECONOMY SETTINGS */\nconst ECONOMY = '+JSON.stringify(runtime)+';\n/* END ECONOMY SETTINGS */';
  src=src.includes('/* BEGIN ECONOMY SETTINGS */')?src.replace(/\/\* BEGIN ECONOMY SETTINGS \*\/[\s\S]*?\/\* END ECONOMY SETTINGS \*\//,block):src.replace('const ITEMS = [',block+'\n\nconst ITEMS = [');
  const c=vm.createContext({});vm.runInContext(fs.readFileSync(path.join(root,'js/config.js'),'utf8'),c);vm.runInContext(src,c);
- const items=vm.runInContext('ITEMS',c);assert.equal(items.length,spec.items.length,'物品价格审查需要更新');
+ const items=vm.runInContext('ITEMS',c);
+ assert.equal(items.filter(i=>i.cat!=='ammo').length,spec.items.length,'物品价格审查需要更新');
+ /* 弹药价格直接校验生成结果 */
+ for(const [cal,lv,price] of [[ '556',1,60],['9mm',1,35],['12g',1,80]]){
+  const it=items.find(i=>i.id==='ammo_'+cal+'_'+lv);
+  assert(it&&it.price===price,'弹药价格不一致 ammo_'+cal+'_'+lv);
+ }
  for(const row of spec.items)assert.equal(items.find(i=>i.id===row.id)?.price,row.price,row.id+'运行价格不一致');
  fs.writeFileSync(file,src);
 }

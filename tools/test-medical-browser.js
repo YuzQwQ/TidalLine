@@ -39,12 +39,13 @@ const pendingArt=new Set(require('../design/items/classification.json').items.fi
     if(width===390)await page.screenshot({path:path.join(output,'doctor-mobile.png')});
    }
    await page.setViewportSize({width:1440,height:1000});await page.locator('[data-t="stash"]').click();
-   await page.locator('.medical-carry summary').click();
-   await page.locator('#medicalCarry .carry-row').filter({hasText:'安禾无菌敷料'}).locator('[data-d="1"]').click();
-   assert(await page.evaluate(()=>Save.loadout.medical.heal02===1));
+   /* 背包制：点仓库里的敷料，浮窗里「放入背包」 */
+   await page.locator('#stashGrid .scell').filter({hasText:'安禾无菌敷料'}).first().click();
+   await page.locator('#itemTip .medical-actions button').filter({hasText:'放入背包'}).click();
+   assert(await page.evaluate(()=>Save.bagCount('heal02')===1));
    await page.locator('#btnDeploy').click();await page.locator('#btnMapStart').click();await page.waitForFunction(()=>Game.state==='playing');
    await page.evaluate(()=>{Game.enemies=[];Game.bullets=[];});
-   assert(await page.evaluate(()=>Game.player.hp===40&&Game.player.bag.slots.some(e=>e.item.id==='heal02')&&Save.stashCount('heal02')===1));
+   assert(await page.evaluate(()=>Game.player.hp===40&&Game.player.bag.slots.some(e=>e.item.id==='heal02')&&Save.stashCount('heal02')===0));
    await page.keyboard.press('Tab');
    const bagBand=page.locator('#bagGrid .cell').filter({has:page.locator('.cn',{hasText:/^绷带$/})});
    await bagBand.click();await page.locator('#itemTip [data-med="use"]').click();

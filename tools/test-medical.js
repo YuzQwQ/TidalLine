@@ -35,11 +35,11 @@ function advance(sec,step=0.05){
 }
 
 test('159件唯一物品、18医疗品、140图鉴与准确参数',()=>{
-  assert.equal(ITEMS.length,159);assert.equal(new Set(ITEMS.map(i=>i.id)).size,159);assert(!byId.med01);
+  assert.equal(ITEMS.length,173);assert.equal(new Set(ITEMS.map(i=>i.id)).size,173);assert(!byId.med01);
   assert.equal(ITEMS.filter(i=>!i.noCodex).length,140);
   const spec=require('../design/items/medical.json');assert.equal(spec.items.length,18);
   for(const item of spec.items){const actual=byId[item.id];for(const key of ['name','r','w','price','stack','desc','visual'])assert.equal(actual[key],item[key]);assert(actual.noCodex);assert.equal(actual.cat,'medical');assert.equal(!!actual.noLoot,!actual.heal);}
-  assert.equal(c.SUPPLY.bandage.itemId,'heal01');assert.equal(c.SUPPLY.bandage.price,2000);
+  assert.equal(byId.heal01.price,2000);assert.equal(byId.ammo_556_1.stack,120);
 });
 
 test('五件恢复品的启动/速率/容量/堆叠与新需求一致',()=>{
@@ -257,7 +257,7 @@ test('旧med01与heal01合并、旧存档满血、迁移幂等',()=>{
   c.localStorage.setItem(Save.key,JSON.stringify({v:2,credits:888,stash:[{id:'med01',n:2},{id:'heal01',n:3},{id:'med02',n:1}],loadout:{ammo:60,bandage:3,stone:3},gear:{weapons:['rifle','shotgun','pistol']},codex:{med01:{count:2}}}));
   Save.load();assert.equal(Save.hp,100);assert.equal(Save.stashCount('heal01'),5);assert.equal(Save.stashCount('med02'),1);
   assert.equal(Save.credits,888);assert(Save.codex.med01);
-  Save.save();Save.flush();Save.load();assert.equal(Save.stashCount('heal01'),5);assert.equal(Save.loadout.bandage,3);
+  Save.save();Save.flush();Save.load();assert.equal(Save.stashCount('heal01'),5);assert.equal(Save.bagCount('heal01'),3,'老存档的携带数量折算进背包');
   Save.setHP(37.5);Save.load();assert.equal(Save.hp,37.5);
 });
 
@@ -281,29 +281,31 @@ test('医生白绿蓝10件、购买单件与金额、高级品拒售',()=>{
 test('携带只算满容量；残的留仓库，库存不足会拦下',()=>{
   Base.open();Save.credits=100000;
   Save.stash=[{id:'heal02',n:1},{id:'heal02',n:1,cap:15}];
-  Save.loadout={ammo:0,bandage:0,stone:0,medical:{heal02:1}};
+  Save.bag=[];
   assert.equal(Save.fullCount('heal02'),1,'满容量只有一件');
   assert.equal(Save.stashCount('heal02'),2);
-  assert(Base.previewCarry().ok);
-  /* 想带两件但只有一件是满的 → 拦下 */
-  Save.loadout.medical.heal02=2;
-  assert(!Base.previewCarry().ok);
-  Save.loadout.medical.heal02=1;
+  /* 手动把满的那件放进背包 */
+  const fullEntry=Save.stash.find(e=>e.id==='heal02'&&e.cap==null);
+  assert(Base.toBag(fullEntry));
+  assert.equal(Save.bagCount('heal02'),1);
+  assert.equal(Save.stashCount('heal02'),1,'残的那件留在仓库');
   Base.deploy();
   assert.equal(Game.state,'playing');
   const carried=Game.player.bag.slots.find(e=>e.item.id==='heal02');
   assert.equal(carried.n,1);
   assert.equal(carried.cap,60,'带下场的是满的那件');
-  assert.equal(Save.stashCount('heal02'),1,'残的那件留在仓库');
 });
 
-test('撤离把残容量带回仓库；死亡只保安全箱',()=>{
+test('撤离后药物留在背包且残容量保留',()=>{
   raid(43,'heal03');
   const unit=Game.player.bag.slots[0];
   unit.cap=50;unit.n=1;
+  Save.bag=[];
   Game.showEnd(true);
-  const back=Save.stash.find(x=>x.id==='heal03');
-  assert(back&&near(back.cap,50),'撤离后残容量应保留，实际 '+(back&&back.cap));
+  const back=Save.bag.find(x=>x.id==='heal03');
+  assert(back,'药物应当留在背包里');
+  assert(near(back.cap==null?120:back.cap,50),'残容量应保留，实际 '+back.cap);
+  assert.equal(Save.stashCount('heal03'),0,'药物不进仓库');
 });
 
 test('寻常清仓保留医疗及弹药',()=>{

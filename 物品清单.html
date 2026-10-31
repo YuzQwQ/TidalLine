@@ -18,9 +18,9 @@
   <div class="kicker">TIDELINE · ITEM SHEET</div>
   <h1>物品清单</h1>
   <div class="lede">
-    共 159 件：140 件收集品、19 件物资；140 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
+    共 173 件：140 件收集品、33 件物资；140 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
     和游戏里的数据完全一致；改完物品表重跑 <code>node gen-item-sheet.js</code> 就会更新。<br>
-    已配置图标 <b>159 / 159</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a> · <a href="assets/item-art/electronics/index.html">新增电子产品9件</a> · <a href="assets/item-art/medical-collectibles/index.html">新增医疗收集品10件</a> · <a href="assets/item-art/industrial/index.html">新增工业器材12件</a> · <a href="assets/item-art/heritage/index.html">新增文物藏品8件</a> · <a href="assets/item-art/military/index.html">新增军事物资15件</a> · <a href="assets/item-art/intel/index.html">新增情报资料13件</a> · <a href="assets/item-art/occult/index.html">新增神秘学物品15件</a>。
+    <a href="assets/item-art/ammunition/index.html">弹药三口径图标</a> · 已配置图标 <b>173 / 173</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a> · <a href="assets/item-art/electronics/index.html">新增电子产品9件</a> · <a href="assets/item-art/medical-collectibles/index.html">新增医疗收集品10件</a> · <a href="assets/item-art/industrial/index.html">新增工业器材12件</a> · <a href="assets/item-art/heritage/index.html">新增文物藏品8件</a> · <a href="assets/item-art/military/index.html">新增军事物资15件</a> · <a href="assets/item-art/intel/index.html">新增情报资料13件</a> · <a href="assets/item-art/occult/index.html">新增神秘学物品15件</a>。
     <br>收集品保留九类，物资单独分为弹药类与医疗物品。<a href="design/items/CLASSIFICATION.md">逐件分类与世界观依据</a>。
     <br>医疗品18件图标已全部绘制，5件开放恢复HP，其余效果待开放。<a href="assets/item-art/medical/index.html">查看医疗图标总览</a>。<a href="design/items/MEDICAL.md">医疗系统说明</a> · <a href="design/world setting/医疗产业提案.md">医疗产业提案（非正式历史）</a>。
     <br>稀有度采用白、绿、蓝、紫、金、红六级。<a href="design/items/RARITY.md">查看 140 件收集品的稀有度评级</a>；
@@ -2394,23 +2394,235 @@
         <div class="vis"><b>画什么</b>银色怀表，表盖敞开，指针停在同一个位置，表面有水痕</div>
       </div>
     </div></div>
-  </section></section><section class="item-group" data-item-group="supply"><h2 class="item-group-title">物资<span>19 件</span></h2><p class="category-description">用于装填与治疗，不计入收集图鉴。</p>
+  </section></section><section class="item-group" data-item-group="supply"><h2 class="item-group-title">物资<span>33 件</span></h2><p class="category-description">用于装填与治疗，不计入收集图鉴。</p>
   <section class="cat" data-item-category="ammo">
-    <h3><span class="dot" style="background:#a58e61"></span>弹药类<em>ammo</em><i>1 件</i></h3>
+    <h3><span class="dot" style="background:#a58e61"></span>弹药类<em>ammo</em><i>15 件</i></h3>
     <p class="category-description"><b>武器弹药</b> · 用于武器装填的物资。当前为通用弹药，后续可按枪械与口径扩充分型。</p>
     
     <div class="grid">
-    <div class="item" data-item="ammo" style="--rc:#c6ceca">
-      <div class="thumb">
-        <img src="assets/items/ammo.png" width="48" height="48" alt="弹药">
+    <div class="item" data-item="ammo_556_1" style="--rc:#c6ceca">
+      <div class="thumb" style="background:#c6ceca26">
+        <img src="assets/items/ammo_556.png" width="48" height="48" alt="5.56mm普通弹">
       </div>
       <div class="meta">
-        <div class="name">弹药<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
-        <div class="sub"><code>ammo</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#c6ceca">寻常</span> · 0.012kg · ¥100</div>
-        <div class="desc">口径通用，散装。</div>
+        <div class="name">5.56mm普通弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_556_1</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#c6ceca">寻常</span> · 0.012kg · ¥60 · 背包简称 <b style="color:#a8c4ba">5.56·1</b></div>
+        <div class="desc">5.56×45mm 制式弹药，普通级。
+
+伤害系数 ×0.90，穿透等级 1。同口径的枪都能装，口径不对的装不进去。</div>
         
-        <div class="vis"><b>分类依据</b>归物资 / 弹药类，当前保留通用弹药；后续按枪械与口径细分。仍不进图鉴、不进入随机掉落池。</div>
-        <div class="vis"><b>画什么</b>散装步枪弹，黄铜弹壳配铜色弹头，三发并排</div>
+        
+        <div class="vis"><b>画什么</b>橄榄色弹药盒＋细长尖头5.56×45mm步枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_556_2" style="--rc:#3f8b78">
+      <div class="thumb" style="background:#3f8b7826">
+        <img src="assets/items/ammo_556.png" width="48" height="48" alt="5.56mm改良弹">
+      </div>
+      <div class="meta">
+        <div class="name">5.56mm改良弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_556_2</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f8b78">良品</span> · 0.012kg · ¥140 · 背包简称 <b style="color:#a8c4ba">5.56·2</b></div>
+        <div class="desc">5.56×45mm 制式弹药，改良级。
+
+伤害系数 ×1.00，穿透等级 2。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>橄榄色弹药盒＋细长尖头5.56×45mm步枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_556_3" style="--rc:#3f6d9b">
+      <div class="thumb" style="background:#3f6d9b26">
+        <img src="assets/items/ammo_556.png" width="48" height="48" alt="5.56mm钢芯弹">
+      </div>
+      <div class="meta">
+        <div class="name">5.56mm钢芯弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_556_3</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f6d9b">上乘</span> · 0.012kg · ¥320 · 背包简称 <b style="color:#a8c4ba">5.56·3</b></div>
+        <div class="desc">5.56×45mm 制式弹药，钢芯级。
+
+伤害系数 ×1.05，穿透等级 3。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>橄榄色弹药盒＋细长尖头5.56×45mm步枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_556_4" style="--rc:#9165b3">
+      <div class="thumb" style="background:#9165b326">
+        <img src="assets/items/ammo_556.png" width="48" height="48" alt="5.56mm硬芯穿甲弹">
+      </div>
+      <div class="meta">
+        <div class="name">5.56mm硬芯穿甲弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_556_4</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#9165b3">稀见</span> · 0.012kg · ¥800 · 背包简称 <b style="color:#a8c4ba">5.56·4</b></div>
+        <div class="desc">5.56×45mm 制式弹药，穿甲级。
+
+伤害系数 ×1.10，穿透等级 4。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>橄榄色弹药盒＋细长尖头5.56×45mm步枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_556_5" style="--rc:#a8862a">
+      <div class="thumb" style="background:#a8862a26">
+        <img src="assets/items/ammo_556.png" width="48" height="48" alt="5.56mm特种穿甲弹">
+      </div>
+      <div class="meta">
+        <div class="name">5.56mm特种穿甲弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_556_5</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#a8862a">珍罕</span> · 0.012kg · ¥2,000 · 背包简称 <b style="color:#a8c4ba">5.56·5</b></div>
+        <div class="desc">5.56×45mm 制式弹药，特种穿甲级。
+
+伤害系数 ×1.15，穿透等级 5。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>橄榄色弹药盒＋细长尖头5.56×45mm步枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_9mm_1" style="--rc:#c6ceca">
+      <div class="thumb" style="background:#c6ceca26">
+        <img src="assets/items/ammo_9mm.png" width="48" height="48" alt="9mm普通弹">
+      </div>
+      <div class="meta">
+        <div class="name">9mm普通弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_9mm_1</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#c6ceca">寻常</span> · 0.012kg · ¥35 · 背包简称 <b style="color:#a8c4ba">9mm·1</b></div>
+        <div class="desc">9×19mm 制式弹药，普通级。
+
+伤害系数 ×0.90，穿透等级 1。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>蓝灰色弹药盒＋短粗圆头9×19mm手枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_9mm_2" style="--rc:#3f8b78">
+      <div class="thumb" style="background:#3f8b7826">
+        <img src="assets/items/ammo_9mm.png" width="48" height="48" alt="9mm强化弹">
+      </div>
+      <div class="meta">
+        <div class="name">9mm强化弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_9mm_2</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f8b78">良品</span> · 0.012kg · ¥80 · 背包简称 <b style="color:#a8c4ba">9mm·2</b></div>
+        <div class="desc">9×19mm 制式弹药，改良级。
+
+伤害系数 ×1.00，穿透等级 2。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>蓝灰色弹药盒＋短粗圆头9×19mm手枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_9mm_3" style="--rc:#3f6d9b">
+      <div class="thumb" style="background:#3f6d9b26">
+        <img src="assets/items/ammo_9mm.png" width="48" height="48" alt="9mm钢芯弹">
+      </div>
+      <div class="meta">
+        <div class="name">9mm钢芯弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_9mm_3</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f6d9b">上乘</span> · 0.012kg · ¥180 · 背包简称 <b style="color:#a8c4ba">9mm·3</b></div>
+        <div class="desc">9×19mm 制式弹药，钢芯级。
+
+伤害系数 ×1.05，穿透等级 3。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>蓝灰色弹药盒＋短粗圆头9×19mm手枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_9mm_4" style="--rc:#9165b3">
+      <div class="thumb" style="background:#9165b326">
+        <img src="assets/items/ammo_9mm.png" width="48" height="48" alt="9mm穿甲弹">
+      </div>
+      <div class="meta">
+        <div class="name">9mm穿甲弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_9mm_4</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#9165b3">稀见</span> · 0.012kg · ¥450 · 背包简称 <b style="color:#a8c4ba">9mm·4</b></div>
+        <div class="desc">9×19mm 制式弹药，穿甲级。
+
+伤害系数 ×1.10，穿透等级 4。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>蓝灰色弹药盒＋短粗圆头9×19mm手枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_9mm_5" style="--rc:#a8862a">
+      <div class="thumb" style="background:#a8862a26">
+        <img src="assets/items/ammo_9mm.png" width="48" height="48" alt="9mm特种穿甲弹">
+      </div>
+      <div class="meta">
+        <div class="name">9mm特种穿甲弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_9mm_5</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#a8862a">珍罕</span> · 0.012kg · ¥1,100 · 背包简称 <b style="color:#a8c4ba">9mm·5</b></div>
+        <div class="desc">9×19mm 制式弹药，特种穿甲级。
+
+伤害系数 ×1.15，穿透等级 5。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>蓝灰色弹药盒＋短粗圆头9×19mm手枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_12g_1" style="--rc:#c6ceca">
+      <div class="thumb" style="background:#c6ceca26">
+        <img src="assets/items/ammo_12g.png" width="48" height="48" alt="普通鹿弹">
+      </div>
+      <div class="meta">
+        <div class="name">普通鹿弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_12g_1</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#c6ceca">寻常</span> · 0.012kg · ¥80 · 背包简称 <b style="color:#a8c4ba">12G·1</b></div>
+        <div class="desc">12 Gauge 制式弹药，普通级。
+
+伤害系数 ×0.90，穿透等级 1。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>暗红色弹药盒＋红色圆柱12号霰弹壳</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_12g_2" style="--rc:#3f8b78">
+      <div class="thumb" style="background:#3f8b7826">
+        <img src="assets/items/ammo_12g.png" width="48" height="48" alt="强化鹿弹">
+      </div>
+      <div class="meta">
+        <div class="name">强化鹿弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_12g_2</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f8b78">良品</span> · 0.012kg · ¥180 · 背包简称 <b style="color:#a8c4ba">12G·2</b></div>
+        <div class="desc">12 Gauge 制式弹药，改良级。
+
+伤害系数 ×1.00，穿透等级 2。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>暗红色弹药盒＋红色圆柱12号霰弹壳</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_12g_3" style="--rc:#3f6d9b">
+      <div class="thumb" style="background:#3f6d9b26">
+        <img src="assets/items/ammo_12g.png" width="48" height="48" alt="硬质鹿弹">
+      </div>
+      <div class="meta">
+        <div class="name">硬质鹿弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_12g_3</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f6d9b">上乘</span> · 0.012kg · ¥400 · 背包简称 <b style="color:#a8c4ba">12G·3</b></div>
+        <div class="desc">12 Gauge 制式弹药，钢芯级。
+
+伤害系数 ×1.05，穿透等级 3。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>暗红色弹药盒＋红色圆柱12号霰弹壳</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_12g_4" style="--rc:#9165b3">
+      <div class="thumb" style="background:#9165b326">
+        <img src="assets/items/ammo_12g.png" width="48" height="48" alt="穿甲霰弹">
+      </div>
+      <div class="meta">
+        <div class="name">穿甲霰弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_12g_4</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#9165b3">稀见</span> · 0.012kg · ¥900 · 背包简称 <b style="color:#a8c4ba">12G·4</b></div>
+        <div class="desc">12 Gauge 制式弹药，穿甲级。
+
+伤害系数 ×1.10，穿透等级 4。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>暗红色弹药盒＋红色圆柱12号霰弹壳</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_12g_5" style="--rc:#a8862a">
+      <div class="thumb" style="background:#a8862a26">
+        <img src="assets/items/ammo_12g.png" width="48" height="48" alt="特种穿甲霰弹">
+      </div>
+      <div class="meta">
+        <div class="name">特种穿甲霰弹<i class="tag">可堆叠 120</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_12g_5</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#a8862a">珍罕</span> · 0.012kg · ¥2,200 · 背包简称 <b style="color:#a8c4ba">12G·5</b></div>
+        <div class="desc">12 Gauge 制式弹药，特种穿甲级。
+
+伤害系数 ×1.15，穿透等级 5。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        <div class="vis"><b>画什么</b>暗红色弹药盒＋红色圆柱12号霰弹壳</div>
       </div>
     </div></div>
   </section>

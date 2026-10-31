@@ -1,0 +1,130 @@
+{
+  "status": "passed",
+  "pixels": [
+    {
+      "id": "ammo_556",
+      "colors": 16,
+      "visible": 764
+    },
+    {
+      "id": "ammo_9mm",
+      "colors": 16,
+      "visible": 879
+    },
+    {
+      "id": "ammo_12g",
+      "colors": 16,
+      "visible": 866
+    }
+  ],
+  "entries": [
+    {
+      "entry": "index.html",
+      "count": 15,
+      "groups": [
+        {
+          "caliber": "556",
+          "count": 5,
+          "shared": true,
+          "iconIds": [
+            "ammo_556"
+          ],
+          "backgrounds": [
+            "rgba(198, 206, 202, 0.19)",
+            "rgba(63, 139, 120, 0.19)",
+            "rgba(63, 109, 155, 0.19)",
+            "rgba(145, 101, 179, 0.19)",
+            "rgba(168, 134, 42, 0.19)"
+          ]
+        },
+        {
+          "caliber": "9mm",
+          "count": 5,
+          "shared": true,
+          "iconIds": [
+            "ammo_9mm"
+          ],
+          "backgrounds": [
+            "rgba(198, 206, 202, 0.19)",
+            "rgba(63, 139, 120, 0.19)",
+            "rgba(63, 109, 155, 0.19)",
+            "rgba(145, 101, 179, 0.19)",
+            "rgba(168, 134, 42, 0.19)"
+          ]
+        },
+        {
+          "caliber": "12g",
+          "count": 5,
+          "shared": true,
+          "iconIds": [
+            "ammo_12g"
+          ],
+          "backgrounds": [
+            "rgba(198, 206, 202, 0.19)",
+            "rgba(63, 139, 120, 0.19)",
+            "rgba(63, 109, 155, 0.19)",
+            "rgba(145, 101, 179, 0.19)",
+            "rgba(168, 134, 42, 0.19)"
+          ]
+        }
+      ],
+      "ammoRequests": 3
+    },
+    {
+      "entry": "潮汐线.html",
+      "count": 15,
+      "groups": [
+        {
+          "caliber": "556",
+          "count": 5,
+          "shared": true,
+          "iconIds": [
+            "ammo_556"
+          ],
+          "backgrounds": [
+            "rgba(198, 206, 202, 0.19)",
+            "rgba(63, 139, 120, 0.19)",
+            "rgba(63, 109, 155, 0.19)",
+            "rgba(145, 101, 179, 0.19)",
+            "rgba(168, 134, 42, 0.19)"
+          ]
+        },
+        {
+          "caliber": "9mm",
+          "count": 5,
+          "shared": true,
+          "iconIds": [
+            "ammo_9mm"
+          ],
+          "backgrounds": [
+            "rgba(198, 206, 202, 0.19)",
+            "rgba(63, 139, 120, 0.19)",
+            "rgba(63, 109, 155, 0.19)",
+            "rgba(145, 101, 179, 0.19)",
+            "rgba(168, 134, 42, 0.19)"
+          ]
+        },
+        {
+          "caliber": "12g",
+          "count": 5,
+          "shared": true,
+          "iconIds": [
+            "ammo_12g"
+          ],
+          "backgrounds": [
+            "rgba(198, 206, 202, 0.19)",
+            "rgba(63, 139, 120, 0.19)",
+            "rgba(63, 109, 155, 0.19)",
+            "rgba(145, 101, 179, 0.19)",
+            "rgba(168, 134, 42, 0.19)"
+          ]
+        }
+      ],
+      "ammoRequests": 0
+    }
+  ],
+  "narrowWidths": [
+    320,
+    390
+  ]
+}

@@ -108,24 +108,57 @@ class Bag {
     return this.slots.splice(i, 1)[0];
   }
 
-  hasAmmo() {
-    const s = this.slots.find(s => s.item.id === 'ammo');
+  /* ---------------- 弹药 ----------------
+     弹药按"口径 + 等级"分开存：ammo_556_3 和 ammo_556_1 是两个物品，
+     不会合并成一堆；不同口径更不能混。这里只认 id，不认识就返回 0。 */
+  ammoCount(id) {
+    const s = this.slots.find(s => s.item.id === id);
     return s ? s.n : 0;
   }
-  useAmmo(n) {
-    const s = this.slots.find(s => s.item.id === 'ammo');
-    if (!s) return 0;
-    const take = Math.min(n, s.n);
-    s.n -= take;
-    if (s.n <= 0) this.slots.splice(this.slots.indexOf(s), 1);
-    return take;
+  /* 某口径下所有等级的弹药条目（按格子顺序） */
+  ammoStacks(caliber) {
+    return this.slots.filter(s => s.item.cat === 'ammo' && s.item.caliber === caliber);
   }
-  addAmmo(n) {
-    const ammo = ITEMS.find(i => i.id === 'ammo');
-    if (!ammo) return;
-    const ex = this.slots.find(s => s.item.id === 'ammo');
-    if (ex) { ex.n = Math.min(ammo.stack, ex.n + n); return; }
-    if (this.slots.length < CFG.BAG.SLOTS) this.slots.push({ item: ammo, n });
+  /* 口径总备弹（HUD 用不到，留给将来的快速查看） */
+  ammoCountByCaliber(caliber) {
+    return this.ammoStacks(caliber).reduce((n, s) => n + s.n, 0);
+  }
+  /* 没有口径参数时退回"所有弹药总数"，老调用点（测试）还能用 */
+  hasAmmo(caliber) {
+    if (caliber) return this.ammoCountByCaliber(caliber);
+    return this.slots.reduce((n, s) => n + (s.item.cat === 'ammo' ? s.n : 0), 0);
+  }
+  /* 从指定弹种里扣 n 发，跨多个同类堆一起扣 */
+  useAmmo(id, n) {
+    let left = Math.max(0, n | 0), taken = 0;
+    for (let i = this.slots.length - 1; i >= 0 && left > 0; i--) {
+      const s = this.slots[i];
+      if (!s || s.item.id !== id) continue;
+      const take = Math.min(left, s.n);
+      s.n -= take; left -= take; taken += take;
+      if (s.n <= 0) this.slots.splice(i, 1);
+    }
+    return taken;
+  }
+  /* 往背包里塞某弹种，放不下就返回 false（调用方负责别把东西弄丢） */
+  addAmmo(id, n) {
+    const item = AMMO_BY_ID[id];
+    if (!item || n <= 0) return false;
+    let left = n;
+    for (const s of this.slots) {
+      if (s.item.id !== id) continue;
+      const room = Math.max(0, item.stack - s.n);
+      const put = Math.min(room, left);
+      s.n += put; left -= put;
+      if (left <= 0) return true;
+    }
+    while (left > 0) {
+      if (this.slots.length >= CFG.BAG.SLOTS) return false;
+      const put = Math.min(item.stack, left);
+      this.slots.push({ item, n: put });
+      left -= put;
+    }
+    return true;
   }
 }
 
@@ -173,6 +206,16 @@ class Player {
   get weapon() {
     return this.weapons[this.slot] || WEAPONS.rifle;
   }
+
+  /* 弹匣里装的是哪一档弹药。
+     武器上记的是 id；口径对不上（改过存档 / 换了枪）就退回该口径的 Lv1。 */
+  get ammoItem() {
+    const w = this.weapon;
+    const a = AMMO_BY_ID[w.ammo];
+    if (a && a.caliber === w.caliber) return a;
+    return defaultAmmo(w.caliber);
+  }
+  get ammoId() { const a = this.ammoItem; return a ? a.id : null; }
 
   /* 总重量 = 背包 + 安全箱 + 身上的武器 + 头盔 + 护甲 */
   get totalWeight() {
@@ -223,7 +266,9 @@ class Player {
         def = WEAPONS[e.id];
       }
       if (!def) continue;
-      this.weapons[i] = Object.assign({}, def, { magCur: U.clamp(mag | 0, 0, def.mag) });
+      const loaded = (e && e.equip && AMMO_BY_ID[e.equip.ammo] && AMMO_BY_ID[e.equip.ammo].caliber === def.caliber)
+        ? e.equip.ammo : def.ammo;
+      this.weapons[i] = Object.assign({}, def, { magCur: U.clamp(mag | 0, 0, def.mag), ammo: loaded });
     }
     /* 余弹照存档来 —— 空着就是空着，不白送子弹 */
     this.slot = this.weapons[0] ? 0 : (this.weapons[1] ? 1 : 2);
@@ -380,12 +425,17 @@ class Player {
     const pellets = W.pellets || 1;
     // 霰弹的每颗弹丸再额外散开一点，否则六颗会叠成一束
     const sp = pellets > 1 ? this.spread * 1.7 : this.spread;
+    /* 弹药属性一次取好：伤害系数进单颗伤害，穿透等级随子弹走。
+       霰弹的六颗弹丸分辨率独立，所以这里每颗都带同一份弹药属性、各自结算。 */
+    const ammo = this.ammoItem;
+    const ammoMul = ammo ? ammo.dmgMul : 1;
+    const pen = ammo ? ammo.penLevel : 1;
     for (let i = 0; i < pellets; i++) {
       const a = this.angle + U.rand(-sp, sp);
       const mx = this.x + Math.cos(a) * 14;
       const my = this.y + Math.sin(a) * 14;
       Game.bullets.push(new Bullet(mx, my, a, W.speed, 'player',
-        U.rand(W.dmgMin, W.dmgMax), W.range));
+        U.rand(W.dmgMin, W.dmgMax) * ammoMul, W.range, pen));
     }
 
     // 后坐力累加：冲刺 > 移动 > 站立，潜行更稳
@@ -420,8 +470,18 @@ class Player {
   tryReload() {
     Medical.cancel();
     if (this.reloadT > 0) return;
-    if (this.mag >= this.weapon.mag) return;
-    if (this.bag.hasAmmo() <= 0) { Game.toast('没有弹药了'); return; }
+    const W = this.weapon;
+    if (this.mag >= W.mag) return;
+    const ammo = this.ammoItem;
+    if (!ammo) { Game.toast('这把枪没有配套弹药'); return; }
+    if (this.bag.ammoCount(ammo.id) <= 0) {
+      /* 换弹只吃当前弹种，绝不会顺手拿别的等级顶上 */
+      const alt = this.bag.ammoStacks(W.caliber).find(s => s.item.id !== ammo.id);
+      Game.toast(alt
+        ? ammo.name + ' 用完了 · 背包里还有 ' + alt.item.name + '，点它换弹种'
+        : '没有 ' + BALLISTICS.caliberName(W.caliber) + ' 弹药了');
+      return;
+    }
     this.reloadT = CFG.P.RELOAD_TIME;
     this.reloadPending = true;
     Noise.emit(this.x, this.y, CFG.NOISE.reload, 'reload');
@@ -432,20 +492,58 @@ class Player {
     if (!this.reloadPending) return;
     if (this.reloadT > 0) return;
     this.reloadPending = false;
-    const n = Math.min(this.weapon.mag - this.mag, this.bag.hasAmmo());
-    this.bag.useAmmo(n);
+    const W = this.weapon;
+    const ammo = this.ammoItem;
+    if (!ammo) return;
+    const n = Math.min(W.mag - this.mag, this.bag.ammoCount(ammo.id));
+    if (n <= 0) return;
+    this.bag.useAmmo(ammo.id, n);
     this.mag += n;
   }
 
-  /* base 是「没乘部位倍率、没减伤」的原始伤害 */
-  hurt(base, part) {
+  /* 切换待装填的弹种（背包里点弹药走这里）。
+     只接受同口径；弹匣里剩的旧弹原样退回背包，数量守恒。
+     退不回去（背包满 / 超重）就整个取消 —— 绝不把子弹吞掉。 */
+  loadAmmo(id) {
+    const w = this.weapons[this.slot];
+    const item = AMMO_BY_ID[id];
+    if (!w || !item) return false;
+    if (item.caliber !== w.caliber) {
+      Game.toast(w.name + ' 只能用 ' + BALLISTICS.caliberName(w.caliber) + '，装不进 ' +
+        BALLISTICS.caliberName(item.caliber));
+      return false;
+    }
+    if (w.ammo === id) {
+      Game.toast('弹匣里已经是 ' + item.name);
+      return false;
+    }
+    if (this.mag > 0) {
+      const old = AMMO_BY_ID[w.ammo];
+      if (old && !this.bag.addAmmo(old.id, this.mag)) {
+        Game.toast('背包放不下退出来的 ' + old.name + '（' + this.mag + ' 发）');
+        return false;
+      }
+    }
+    w.ammo = id;
+    this.mag = 0;
+    w.magCur = 0;
+    this.reloadT = 0;
+    this.reloadPending = false;
+    Game.syncGear();
+    Game.toast('待装填：' + item.name);
+    return true;
+  }
+
+  /* base 是「没乘部位倍率、没乘弹药系数」的原始伤害，pen 是弹药穿透等级。
+     部位倍率先并进来，再交给 BALLISTICS 统一算穿透与耐久，别在这里各乘一次。 */
+  hurt(base, part, pen) {
     if (this.dead) return;
     part = part || 'body';
     const head = part === 'head';
     const gear = head ? this.helmet : this.body;
-    const dr = GEAR.reduction(gear);
-
-    const dmg = base * (head ? CFG.COMBAT.HEAD_MULT : 1) * (1 - dr);
+    const pre = base * (head ? CFG.COMBAT.HEAD_MULT : 1);
+    const res = BALLISTICS.hit(pre, pen == null ? CFG.AMMO.UNARMED_PEN : pen, gear);
+    const dmg = res.health;
 
     this.hurtAnimT = PLAYER_ANIMS.hurt.frames / PLAYER_ANIMS.hurt.fps;
     this.hp -= dmg;
@@ -456,15 +554,16 @@ class Player {
     Game.hitDir = Game.lastHitAngle;
     if (head) Game.headshotMark();
 
-    // 耐久损耗只用原始伤害，不乘爆头倍率
-    if (gear && gear.dur > 0) {
+    /* 护甲耐久：只有真的挡下伤害才掉，穿透干净的一发不磨甲 */
+    if (gear && res.durabilityLoss > 0) {
       const wasOk = GEAR.state(gear);
-      gear.dur = Math.max(0, gear.dur - base);
+      gear.dur = Math.max(0, gear.dur - res.durabilityLoss);
       const nowOk = GEAR.state(gear);
-      if (wasOk !== nowOk) {
-        const label = GEAR[gear.type].label;
-        Game.toast(nowOk === 'worn' ? label + '破损了，防护减半' : label + '已经失效');
+      if (wasOk !== 'broken' && nowOk === 'broken') {
+        Game.toast(GEAR[gear.type].label + '被打穿了，已经失效');
         Game.sfx('break');
+      } else if (wasOk === 'ok' && nowOk === 'worn') {
+        Game.toast(GEAR[gear.type].label + '破损了');
       }
       Game.syncGear();
     }
@@ -499,14 +598,22 @@ class Enemy {
     this.x = x; this.y = y;
     this.r = 7;
     this.headR = CFG.COMBAT.HEAD_RADIUS;
-    // 拾荒者是人，会自己穿东西。等级低，但爆头和护甲的关系在他身上也一样成立
-    if (typeKey === 'scav') {
-      this.helmet = Math.random() < 0.45 ? GEAR.make('helmet', U.randInt(1, 2)) : null;
-      this.body = Math.random() < 0.55 ? GEAR.make('body', U.randInt(1, 2)) : null;
-      // 手里那把枪：只决定尸体上能捡到什么，不改变他本身的射击数值
+    /* 人（拾荒者）：先掷一个 1~4 的等级，头、甲、身上带的弹全按这个等级走，
+       "子弹和头甲等级一致"就是在这里保证的。机械体不穿戴，走原来的空手路线。 */
+    if (t.human) {
+      const lv = ENEMY_LOADOUT.rollLevel();
+      this.gearLv = lv;
+      this.helmet = Math.random() < ENEMY_LOADOUT.helmetChance ? GEAR.make('helmet', lv) : null;
+      this.body = Math.random() < ENEMY_LOADOUT.bodyChance ? GEAR.make('body', lv) : null;
+      // 手里那把枪：决定尸体上掉哪种口径的弹，也决定自己打出去的弹
       this.weaponId = U.pick(['pistol', 'pistol', 'smg', 'shotgun']);
+      this.ammoId = BALLISTICS.ammoId((WEAPONS[this.weaponId] || {}).caliber || '9mm', lv);
+      this.penLevel = BALLISTICS.tier(lv).pen;   // 打出来的子弹也是这个等级
     } else {
       this.weaponId = null;
+      this.gearLv = 0;
+      this.ammoId = null;
+      this.penLevel = null;                      // null = 走 UNARMED_PEN
     }
     this.hp = t.hp;
     this.maxHp = t.hp;
@@ -798,7 +905,8 @@ class Enemy {
         + U.rand(-0.07, 0.07);
       Game.bullets.push(new Bullet(
         this.x + Math.cos(a) * 12, this.y + Math.sin(a) * 12,
-        a, 480, this.t.faction, this.t.dmg, 460
+        a, 480, this.t.faction, this.t.dmg, 460,
+        this.penLevel                               // 人打的弹按他自己那个等级穿透
       ));
       Noise.emit(this.x, this.y, CFG.NOISE.shoot * 0.8, 'shot');
       Game.sfx('enemyShot');
@@ -806,19 +914,25 @@ class Enemy {
       // 近战
       const d = U.dist(this.x, this.y, tgt.x, tgt.y);
       if (d < this.t.range + 8) {
-        if (this.target.kind === 'player') Game.player.hurt(this.t.dmg);
+        if (this.target.kind === 'player') Game.player.hurt(this.t.dmg, 'body', this.penLevel);
         else tgt.hp -= this.t.dmg;
       }
       Game.sfx('melee');
     }
   }
 
-  hurt(d, fromFaction, part) {
+  hurt(d, fromFaction, part, pen) {
     if (this.dead) return;
     part = part || 'body';
-    const gear = part === 'head' ? this.helmet : this.body;
-    const dr = GEAR.reduction(gear);
-    this.hp -= d * (1 - dr);
+    const head = part === 'head';
+    const gear = head ? this.helmet : this.body;
+    const pre = d * (head ? CFG.COMBAT.HEAD_MULT : 1);
+    const res = BALLISTICS.hit(pre, pen == null ? CFG.AMMO.UNARMED_PEN : pen, gear);
+    this.hp -= res.health;
+    /* 敌人穿着护甲时一样会被打穿、掉耐久，尸体上捡到的就是打剩下的那件 */
+    if (gear && res.durabilityLoss > 0) {
+      gear.dur = Math.max(0, gear.dur - res.durabilityLoss);
+    }
     this.hurtFlash = 0.12;
     // 被打会立刻警觉
     if (this.state === 'patrol' || this.state === 'suspect') {
@@ -838,7 +952,7 @@ class Enemy {
 
 /* ---------------- 子弹 ---------------- */
 class Bullet {
-  constructor(x, y, angle, speed, faction, dmg, range) {
+  constructor(x, y, angle, speed, faction, dmg, range, pen) {
     this.x = x; this.y = y;
     this.sx = x; this.sy = y;
     this.vx = Math.cos(angle) * speed;
@@ -846,6 +960,9 @@ class Bullet {
     this.faction = faction;   // 'player' | 'scav' | 'echo' | 'guard'
     this.dmg = dmg;
     this.range = range;
+    /* 穿透等级：玩家子弹带的是那一发弹药的等级；
+       没有弹药来源的射击（敌人制式武器）走 UNARMED_PEN。 */
+    this.pen = (pen == null) ? CFG.AMMO.UNARMED_PEN : pen;
     this.life = CFG.BULLET.LIFE;
     this.dead = false;
     this.angle = angle;
@@ -936,14 +1053,13 @@ class Bullet {
 
     if (actor === Game.player) {
       Game.lastHitAngle = Math.atan2(this.vy, this.vx);
-      actor.hurt(base, part);
+      actor.hurt(base, part, this.pen);
       Game.impact(actor.x, actor.y, this.angle, true, false);
       return;
     }
 
-    // 敌人：爆头倍率在子弹侧算，护甲减伤在 hurt 里算
-    const mult = part === 'head' ? CFG.COMBAT.HEAD_MULT : 1;
-    actor.hurt(base * mult, this.faction, part);
+    /* 敌人：部位倍率与护甲穿透都在 hurt 里统一算 */
+    actor.hurt(base, this.faction, part, this.pen);
     Game.impact(actor.x, actor.y, this.angle, true, part === 'head');
     Game.sfx(part === 'head' ? 'headshot' : 'hit');
   }
@@ -1006,12 +1122,14 @@ class Corpse {
       if (Math.random() < 0.5) this.loot.push({ item: ITEMS.find(i => i.id === 'heal01'), n: 1 });
     } else if (enemy.t.faction === 'guard') {
       this.loot.push({ item: Loot.pickFromPool(ITEMS.filter(i => i.cat === 'ind' || i.cat === 'elec')), n: 1 });
-      this.loot.push({ item: ITEMS.find(i => i.id === 'ammo'), n: 12 });
+      this.loot.push({ item: defaultAmmo('556'), n: 12 });
     } else {
       this.loot.push({ item: Loot.pickFromPool(ITEMS.filter(i => i.r <= 2)), n: 1 });
-      if (Math.random() < 0.65) {
-        this.loot.push({ item: ITEMS.find(i => i.id === 'ammo'), n: U.randInt(6, 14) });
-      }
+      /* 他包里的弹：等级和自己身上的头甲一致，10~30 发 */
+      const lv = enemy.gearLv || 1;
+      const caliber = (WEAPONS[enemy.weaponId] || {}).caliber || '9mm';
+      const ammo = ammoItem(caliber, lv) || defaultAmmo(caliber);
+      if (ammo) this.loot.push({ item: ammo, n: U.randInt(ENEMY_LOADOUT.ammoMin, ENEMY_LOADOUT.ammoMax) });
       // 他身上穿的东西：头盔、护甲，还有手里的枪（gun 一律存武器 id 字符串）
       if (enemy.helmet) this.loot.push({ gear: enemy.helmet });
       if (enemy.body) this.loot.push({ gear: enemy.body });

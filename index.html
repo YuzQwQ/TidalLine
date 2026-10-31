@@ -307,6 +307,8 @@ window.addEventListener('error', function (e) {
     line-height: 1.2;
   }
   .cell:hover { border-color: #2a443d; }
+  /* 弹药：当前装填的那一叠描个亮边，一眼知道下一发会打什么弹 */
+  .cell.loaded { border-color: #3f8b78; box-shadow: inset 0 0 0 1px rgba(63, 139, 120, 0.35); }
   .cell .ico-bag {
     width: 22px; height: 22px; display: block;
     image-rendering: pixelated; margin-bottom: 1px;
@@ -394,7 +396,7 @@ window.addEventListener('error', function (e) {
 
 /* 左：装备与携带 */
 .base-left {
-  flex: 0 0 clamp(300px, 22vw, 400px);
+  flex: 0 0 clamp(320px, 27vw, 440px);
   border-right: 1px solid #1a2a25;
   padding: 18px 22px 20px;
   display: flex; flex-direction: column;
@@ -451,30 +453,25 @@ window.addEventListener('error', function (e) {
 .slot-txt b { display: block; font-size: 12.5px; color: #cfdcd7; font-weight: 500; margin-bottom: 2px; }
 .slot-txt span { font-size: 10.5px; color: #5f7a72; }
 
-.carry-row {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 0; border-bottom: 1px solid #13201c;
+/* 背包：和局内背包同一种格子，边长跟着左栏宽度自动铺满 */
+.base-left h3 em {
+  font-style: normal; float: right; font-size: 10px;
+  color: #47645c; letter-spacing: 0; font-weight: 400;
 }
-.carry-row .cn { flex: 1; font-size: 12px; color: #a8bdb5; }
-.carry-row .cn i { font-style: normal; color: #47645c; font-size: 10.5px; margin-left: 5px; }
-.stepper { display: flex; align-items: center; }
-.stepper button {
-  width: 22px; height: 22px; margin: 0; padding: 0;
-  background: #16241f; border: 1px solid #26403a; color: #8ba39b;
-  font-size: 13px; line-height: 1; letter-spacing: 0;
-  cursor: pointer; border-radius: 2px;
+.bag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
+  gap: 6px;
+  margin-bottom: 8px;
 }
-.stepper button:hover { background: #20342c; color: #cfdcd7; }
-.stepper b {
-  width: 40px; text-align: center; font-size: 12.5px;
-  color: #cfdcd7; font-family: Consolas, monospace; font-weight: 500;
-  letter-spacing: 0;
+.bag-grid .cell { width: auto; height: auto; aspect-ratio: 1; }
+.bag-grid .cell.empty { border-style: dashed; border-color: #1d332c; }
+.bag-bar { margin: 0 0 8px; }
+.bag-note {
+  font-size: 10.5px; line-height: 1.7; color: #47645c;
+  margin: 0 0 12px;
 }
-.carry-sum {
-  display: flex; justify-content: space-between;
-  font-size: 11.5px; color: #6d8780; padding: 10px 0 0;
-}
-.carry-sum b { color: #b09a62; font-family: Consolas, monospace; font-weight: 500; }
+
 
 #btnDeploy {
   margin: auto 0 0; padding: 12px 0; width: 100%;
@@ -849,9 +846,6 @@ window.addEventListener('error', function (e) {
 .medical-actions button { flex:1; min-width:105px; margin:0; padding:10px 8px; font-size:12px; letter-spacing:0; }
 .medical-actions button:disabled, #doctorService button:disabled { opacity:.45; cursor:not-allowed; }
 .medical-muted { color:#7d978b; font-size:11px; line-height:1.7; }
-.medical-carry { margin:12px 0; border-top:1px solid #294037; padding-top:9px; }
-.medical-carry summary { cursor:pointer; color:#a8c4ba; font-size:12px; }
-#medicalCarry .cn { min-width:0; overflow-wrap:anywhere; }
 #doctorService { padding:12px; margin-bottom:12px; border:1px solid #315348; background:#12231c; font-size:12px; line-height:1.7; }
 #doctorService[hidden] { display:none; }
 #doctorService p { margin:6px 0; }
@@ -1046,7 +1040,7 @@ window.addEventListener('error', function (e) {
 
     <div class="base-nav">
       <div class="nav-tabs" id="baseTabs"></div>
-      <div class="nav-tip" id="navTip">左边配装带补给，右边是仓库</div>
+      <div class="nav-tip" id="navTip">左边是配装与背包，右边是仓库</div>
     </div>
 
     <div class="base-main">
@@ -1056,10 +1050,10 @@ window.addEventListener('error', function (e) {
           <h3>装备</h3>
           <div id="baseGear"></div>
 
-          <h3>携带</h3>
-          <div id="carryList"></div>
-          <div class="carry-sum"><span>补给花费</span><b id="carryCost">¥0</b></div>
-          <details class="medical-carry"><summary>库存医疗品携带</summary><div id="medicalCarry"></div></details>
+          <h3>背包<em id="bagMeta">0 / 24 格</em></h3>
+          <div class="bag-grid" id="baseBagGrid"></div>
+          <div class="bar bag-bar" id="bagBar"><i></i></div>
+          <p class="bag-note">子弹和药物回来还留在包里，其它东西自动入库。点物品可以把仓库里的放进背包，也可以把包里的放回仓库。</p>
 
           <button id="btnDeploy">进入游戏</button>
           <div class="deploy-hint" id="deployHint"></div>

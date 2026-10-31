@@ -8,8 +8,11 @@ const rarityReview=require('../design/items/rarity.json');
 const economy=require('../design/items/economy.json');
 assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,review.worldSetting))).digest('hex'),review.worldSettingSha256,'世界观文件已变更，需要重审');
 assert.deepEqual(Array.from(order,k=>cats[k].name),['生活用品','电子产品','工业器材','医疗物资','文物藏品','军事物资','情报资料','神秘学物品','异常遗物']);
-assert.equal(new Set(review.items.map(r=>r.id)).size,items.length);assert.equal(items.length,159);
-for(const item of items){
+/* 弹药是三口径×五等级派生出来的家族，不进分类评审表（它没有"归类"这回事），
+   单独在下面对照需求表逐条校验。 */
+const curated=items.filter(i=>i.cat!=='ammo');
+assert.equal(new Set(review.items.map(r=>r.id)).size,curated.length);assert.equal(curated.length,158);
+for(const item of curated){
  const record=review.items.find(r=>r.id===item.id);assert(record&&record.reason);assert.equal(item.cat,record.category);assert.equal(groupOf(item),record.group);assert(groups[record.group].cats.includes(item.cat));
  const original={...record.original,cat:record.category};
  const grade=rarityReview.items.find(r=>r.id===item.id);if(grade)original.r=grade.rarity;
@@ -21,10 +24,23 @@ for(const item of items){
  assert((item.cat==='medical'&&!item.iconId)||fs.existsSync(path.join(root,'assets/items',hasIcon+'.png'))||pendingArt.has(item.id),'缺贴图 '+item.id);
 }
 assert.equal(items.filter(i=>!i.noCodex).length,140);assert.equal(items.filter(i=>i.cat==='occult').length,15);
-assert.equal(items.filter(i=>groupOf(i)==='collectible').length,140);assert.equal(items.filter(i=>groupOf(i)==='supply').length,19);
+assert.equal(items.filter(i=>groupOf(i)==='collectible').length,140);assert.equal(items.filter(i=>groupOf(i)==='supply').length,33);
 for(const id of ['life02','art03'])assert.equal(items.find(i=>i.id===id).cat,'intel');
 assert.equal(items.find(i=>i.id==='antiq03').cat,'life');assert.equal(items.find(i=>i.id==='elec01').cat,'elec');
-const ammo=items.find(i=>i.id==='ammo');assert.equal(ammo.cat,'ammo');assert(ammo.noCodex&&ammo.noLoot);
+/* 弹药：15 种，id 只有 ammo_{口径}_{等级} 这一种写法，全部不进图鉴与掉落 */
+const ammo=items.filter(i=>i.cat==='ammo');
+assert.equal(ammo.length,15);
+assert.equal(new Set(ammo.map(a=>a.id)).size,15);
+for(const a of ammo){
+  assert.equal(a.id,'ammo_'+a.caliber+'_'+a.level);
+  assert(['556','9mm','12g'].includes(a.caliber));
+  assert(a.level>=1&&a.level<=5);
+  assert(a.noCodex&&a.noLoot);
+  assert.equal(a.penLevel,a.level);
+  assert(a.stack>0&&a.w>0&&a.price>0);
+}
+for(const cal of ['556','9mm','12g'])assert.equal(ammo.filter(a=>a.caliber===cal).length,5);
+assert(items.filter(i=>i.id==='ammo').length===0,'老的通用弹药应该已经去掉');
 const bandage=items.find(i=>i.id==='heal01');assert.equal(bandage.cat,'medical');assert(bandage.use&&bandage.noCodex&&!bandage.noLoot);
 assert(types.M.cats.includes('med')&&types.M.cats.includes('medical'));
 for(const k of ['antiq','art','lux','spec'])assert(!cats[k],'旧分类不应留在注册表');

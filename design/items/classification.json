@@ -2505,27 +2505,6 @@
       "batch": "mil-1"
     },
     {
-      "id": "ammo",
-      "name": "弹药",
-      "previousCategory": "ind",
-      "previousCategoryName": "工业器材",
-      "category": "ammo",
-      "reason": "归物资 / 弹药类，当前保留通用弹药；后续按枪械与口径细分。仍不进图鉴、不进入随机掉落池。",
-      "original": {
-        "id": "ammo",
-        "name": "弹药",
-        "cat": "ind",
-        "r": 1,
-        "w": 0.012,
-        "price": 1,
-        "stack": 120,
-        "noCodex": true,
-        "noLoot": true,
-        "desc": "口径通用，散装。"
-      },
-      "group": "supply"
-    },
-    {
       "id": "intel01",
       "name": "港口货运清单",
       "category": "intel",

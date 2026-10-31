@@ -1,0 +1,57 @@
+{
+  "title": "弹药三口径共享图标",
+  "generator": "Built-in image_gen",
+  "canvas": [
+    48,
+    48
+  ],
+  "inner": [
+    40,
+    40
+  ],
+  "levelsShareArt": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "assets": [
+    {
+      "id": "ammo_556",
+      "caliber": "556",
+      "name": "5.56×45mm 步枪弹",
+      "subject": "Olive-drab folded cardboard ammo box with dull cream trim, no printing. Three slender LONG BOTTLENECKED brass rifle cartridges with distinctly tapered pointed copper spitzer bullets, long narrow brass cases and clearly visible shoulder. Loose rounds lying diagonal upright-ish from lower-left to upper-right; elongated, angular pointed silhouette. Box small enough that the pointed rifle cartridges remain obvious, not generic pistol rounds.",
+      "prompt": "Use case: stylized-concept. Create ONE inventory ITEM ICON for original muted post-flood salvage game 潮汐线. Cohesive low-resolution authentic48x48 pixel-art family: hand-placed large hard pixel clusters, simplified realistic materials, about16 restrained colors, crisp dark colored outline, fixed upper-left light, mild three-quarter overhead inventory display angle. Composition: ONE compact half-open rectangular CARDBOARD AMMUNITION BOX occupying back/left, plus THREE corresponding loose cartridges in front/right, separated enough for their silhouettes to read at48px. Complete objects fit central40x40 area with >=4 logical pixels genuinely transparent padding. Subtle box folds and clear brass metal highlights, enough detail for item readability, no dense noise or tiny photorealistic detail. No floor, backdrop, cast shadow, characters, weapons, logos, ANY letters/numbers/text, labels, UI borders, rarity glow, futuristic sci-fi designs. One square icon only, no contact sheet. Every ammo level uses this SAME image, do not encode a level. Olive-drab folded cardboard ammo box with dull cream trim, no printing. Three slender LONG BOTTLENECKED brass rifle cartridges with distinctly tapered pointed copper spitzer bullets, long narrow brass cases and clearly visible shoulder. Loose rounds lying diagonal upright-ish from lower-left to upper-right; elongated, angular pointed silhouette. Box small enough that the pointed rifle cartridges remain obvious, not generic pistol rounds.",
+      "source": "sources/ammo_556.png",
+      "target": "assets/items/ammo_556.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-d0e4a54c-53a7-47ae-bb71-73b33651dad9.png",
+      "visual": "橄榄色弹药盒，搭配细长黄铜弹壳与尖头步枪弹。"
+    },
+    {
+      "id": "ammo_9mm",
+      "caliber": "9mm",
+      "name": "9×19mm 手枪弹",
+      "subject": "Muted slate-blue/grey folded cardboard ammo box with cream inner flap, no printing. Three SHORT STUBBY brass pistol cartridges with rounded copper ogive bullet noses, straight-sided short brass cases, NO bottleneck or sharp rifle point. Loose rounds foreground with squat rounded silhouette, visually much shorter and chunkier than rifle cartridges. Compact small rectangular box.",
+      "prompt": "Use case: stylized-concept. Create ONE inventory ITEM ICON for original muted post-flood salvage game 潮汐线. Cohesive low-resolution authentic48x48 pixel-art family: hand-placed large hard pixel clusters, simplified realistic materials, about16 restrained colors, crisp dark colored outline, fixed upper-left light, mild three-quarter overhead inventory display angle. Composition: ONE compact half-open rectangular CARDBOARD AMMUNITION BOX occupying back/left, plus THREE corresponding loose cartridges in front/right, separated enough for their silhouettes to read at48px. Complete objects fit central40x40 area with >=4 logical pixels genuinely transparent padding. Subtle box folds and clear brass metal highlights, enough detail for item readability, no dense noise or tiny photorealistic detail. No floor, backdrop, cast shadow, characters, weapons, logos, ANY letters/numbers/text, labels, UI borders, rarity glow, futuristic sci-fi designs. One square icon only, no contact sheet. Every ammo level uses this SAME image, do not encode a level. Muted slate-blue/grey folded cardboard ammo box with cream inner flap, no printing. Three SHORT STUBBY brass pistol cartridges with rounded copper ogive bullet noses, straight-sided short brass cases, NO bottleneck or sharp rifle point. Loose rounds foreground with squat rounded silhouette, visually much shorter and chunkier than rifle cartridges. Compact small rectangular box.",
+      "source": "sources/ammo_9mm.png",
+      "target": "assets/items/ammo_9mm.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-45ff2b53-9f4e-47ff-a6a7-9e0c800fb5f6.png",
+      "visual": "蓝灰色弹药盒，搭配短粗黄铜弹壳与圆头手枪弹。"
+    },
+    {
+      "id": "ammo_12g",
+      "caliber": "12g",
+      "name": "12 Gauge 霰弹",
+      "subject": "Muted dark brick-red cardboard shotgun-shell box with kraft-brown inside flap, no printing. Three fat SHORT CYLINDRICAL red polymer SHOTGUN SHELLS with wide gold-brass rimmed bases and FLAT CRIMPED CLOSED mouths. Every shell distinctly cylindrical with flat ends, NO protruding copper bullet, NO pointed projectile or rifle casing. One shell flat crimp end visible, two side-on to show red plastic hull and thick brass head. Shells broad enough to be unmistakable at48px.",
+      "prompt": "Use case: stylized-concept. Create ONE inventory ITEM ICON for original muted post-flood salvage game 潮汐线. Cohesive low-resolution authentic48x48 pixel-art family: hand-placed large hard pixel clusters, simplified realistic materials, about16 restrained colors, crisp dark colored outline, fixed upper-left light, mild three-quarter overhead inventory display angle. Composition: ONE compact half-open rectangular CARDBOARD AMMUNITION BOX occupying back/left, plus THREE corresponding loose cartridges in front/right, separated enough for their silhouettes to read at48px. Complete objects fit central40x40 area with >=4 logical pixels genuinely transparent padding. Subtle box folds and clear brass metal highlights, enough detail for item readability, no dense noise or tiny photorealistic detail. No floor, backdrop, cast shadow, characters, weapons, logos, ANY letters/numbers/text, labels, UI borders, rarity glow, futuristic sci-fi designs. One square icon only, no contact sheet. Every ammo level uses this SAME image, do not encode a level. Muted dark brick-red cardboard shotgun-shell box with kraft-brown inside flap, no printing. Three fat SHORT CYLINDRICAL red polymer SHOTGUN SHELLS with wide gold-brass rimmed bases and FLAT CRIMPED CLOSED mouths. Every shell distinctly cylindrical with flat ends, NO protruding copper bullet, NO pointed projectile or rifle casing. One shell flat crimp end visible, two side-on to show red plastic hull and thick brass head. Shells broad enough to be unmistakable at48px.",
+      "source": "sources/ammo_12g.png",
+      "target": "assets/items/ammo_12g.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e3f39ec5-d4fc-48dc-9531-08ba6d577a40.png",
+      "visual": "暗红色弹药盒，搭配红色圆柱弹壳、黄铜底座与平整卷口。"
+    }
+  ]
+}
