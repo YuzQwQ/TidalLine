@@ -142,7 +142,7 @@ test('受击不中断，冲刺/攻击/切枪/闪避/换弹/投掷/死亡会中�
 
   const stops=[()=>{Game.input.keys[' ']=true;Game.player.update(.016,{mx:1,my:0,sprint:true,aimAngle:0});},
     ()=>Game.player.tryShoot(),()=>Game.player.tryReload(),()=>Game.player.switchWeapon(1),
-    ()=>Game.player.throwStone(),()=>Game.player.hurt(1000)];
+    ()=>Game.player.hurt(1000)];
   for(const stop of stops){
     e=raid(30,'heal05');assert(Medical.use(e,'bag'));
     stop();

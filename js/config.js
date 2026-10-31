@@ -85,8 +85,6 @@ const CFG = {
     search: 4,
     reload: 3,
     dodge: 6,
-    throw: 3,               // 投掷动作本身
-    stone: 6,               // 石子落地
     bottle: 9,
     door: 4,
     waterMult: 2            // 涉水时噪声倍率

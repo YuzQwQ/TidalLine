@@ -195,7 +195,6 @@ class Player {
     this.sprinting = false;
     this.inWater = false;
     this.dead = false;
-    this.stones = 3;
     this.anim = { state: 'idle', time: 0 };
     this.shotAnimT = 0;
     this.hurtAnimT = 0;
@@ -574,18 +573,6 @@ class Player {
       Medical.cancel('死亡打断了治疗');
       Game.onPlayerDeath(this);
     }
-  }
-
-  throwStone() {
-    Medical.cancel();
-    if (this.stones <= 0) { Game.toast('没有石子了'); return; }
-    this.stones--;
-    const a = this.angle;
-    Game.throwables.push(new Throwable(
-      this.x + Math.cos(a) * 12, this.y + Math.sin(a) * 12,
-      a, 260, CFG.NOISE.stone
-    ));
-    Noise.emit(this.x, this.y, CFG.NOISE.throw, 'throw');
   }
 }
 
@@ -1070,38 +1057,6 @@ class Bullet {
     if (d < W.falloffStart) return 1;
     const t = U.clamp((d - W.falloffStart) / (W.falloffEnd - W.falloffStart), 0, 1);
     return 1 - t * 0.45;
-  }
-}
-
-/* ---------------- 投掷物（石子） ---------------- */
-class Throwable {
-  constructor(x, y, angle, speed, noiseRadius) {
-    this.x = x; this.y = y;
-    this.vx = Math.cos(angle) * speed;
-    this.vy = Math.sin(angle) * speed;
-    this.noiseR = noiseRadius;
-    this.dead = false;
-    this.t = 0;
-  }
-  update(dt) {
-    if (this.dead) return;
-    this.t += dt;
-    this.vx *= (1 - 3.2 * dt);
-    this.vy *= (1 - 3.2 * dt);
-    const nx = this.x + this.vx * dt;
-    const ny = this.y + this.vy * dt;
-    if (!M.walkablePoint(nx,ny)) {
-      this.land();
-      return;
-    }
-    this.x = nx; this.y = ny;
-    if (this.t > 1.0) this.land();
-  }
-  land() {
-    this.dead = true;
-    Noise.emit(this.x, this.y, this.noiseR, 'stone');
-    Game.impact(this.x, this.y, Math.random() * 6.28);
-    Game.sfx('stone');
   }
 }
 

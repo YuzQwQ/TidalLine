@@ -918,9 +918,6 @@ const SFX = {
       case 'melee':
         tone(0.13, 220, 70, 0.16, 'sawtooth');
         break;
-      case 'stone':
-        noiseHit(0.10, 900, 0.13);
-        break;
       case 'door':
         noiseHit(0.16, 420, 0.11);
         break;
@@ -952,7 +949,7 @@ const Game = {
   canvas: null, ctx: null,
   state: 'menu',
   player: null,
-  enemies: [], bullets: [], throwables: [], corpses: [], boxes: [],
+  enemies: [], bullets: [], corpses: [], boxes: [],
   particles: [], toasts: [],
   cam: { x: 0, y: 0 },
   time: 0,
@@ -977,7 +974,7 @@ const Game = {
     keys: {}, mx: 0, my: 0, wx: 0, wy: 0,
     aimAngle: 0, mouseDown: false,
     dodgePressed: false, interactPressed: false,
-    throwPressed: false, reloadPressed: false, bagPressed: false
+    reloadPressed: false, bagPressed: false
   },
 
   /* ---------------- 初始化 ---------------- */
@@ -1237,7 +1234,6 @@ const Game = {
       if (this.state !== 'playing') return;
 
       if (k === 'e') K.interactPressed = true;
-      if (k === 'q') K.throwPressed = true;
       if (k === 'r') K.reloadPressed = true;
       if (k === '1' || k === '2' || k === '3') {
         if (this.state === 'playing' && this.player && !this.player.dead) {
@@ -1366,7 +1362,6 @@ const Game = {
     this.tidePhase = 0;
     this.enemies = [];
     this.bullets = [];
-    this.throwables = [];
     this.corpses = [];
     this.particles = [];
     this.toasts = [];
@@ -1395,7 +1390,6 @@ const Game = {
        调试入口和测试还在用这种写法。 */
     if (loadout) {
       this.grantLegacyBag(loadout);
-      this.player.stones = loadout.stone || 0;
     } else {
       this.fillBagFromSave();
     }
@@ -1519,7 +1513,6 @@ const Game = {
     if (P.dead) { this.beginDying(); return; }
     if (K.dodgePressed) K.dodgePressed = false;
     if (K.reloadPressed) { P.tryReload(); K.reloadPressed = false; }
-    if (K.throwPressed) { P.throwStone(); K.throwPressed = false; }
 
     /* 交互 */
     if (K.interactPressed) {
@@ -1540,13 +1533,6 @@ const Game = {
       const b = this.bullets[i];
       b.update(dt);
       if (b.dead) this.bullets.splice(i, 1);
-    }
-
-    /* 投掷物 */
-    for (let i = this.throwables.length - 1; i >= 0; i--) {
-      const t = this.throwables[i];
-      t.update(dt);
-      if (t.dead) this.throwables.splice(i, 1);
     }
 
     /* 粒子 */
@@ -3138,15 +3124,6 @@ const Game = {
       }
     }
 
-    // --- 投掷物 ---
-    for (const t of this.throwables) {
-      const sx = t.x - camX, sy = t.y - camY;
-      c.fillStyle = '#cbbf9a';
-      c.beginPath();
-      c.arc(sx, sy, 2.6, 0, 6.29);
-      c.fill();
-    }
-
     // --- 子弹 ---
     for (const b of this.bullets) {
       const sx = b.x - camX, sy = b.y - camY;
@@ -3322,9 +3299,6 @@ const Game = {
     } else if (P.mag === 0) {
       c.fillStyle = '#8d3a3a';
       c.fillText('按 R 装填', 26, CFG.VIEW_H - 26);
-    } else {
-      c.fillStyle = '#4f665f';
-      c.fillText('石子 ×' + P.stones + '   [Q] 投掷', 26, CFG.VIEW_H - 26);
     }
 
     /* --- 右上：潮汐 --- */

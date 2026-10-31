@@ -543,17 +543,6 @@ for (let i = 0; i < 120; i++) {
 }
 ok('回响体被噪声吸引', echoSuspect, 'state=' + echo.state);
 
-console.log('\n=== 投掷物 ===');
-Game.startRun();
-const P9 = Game.player;
-const stones0 = P9.stones;
-Game.input.aimAngle = 0;
-P9.throwStone();
-ok('石子数量减少', P9.stones === stones0 - 1);
-ok('投掷物存在', Game.throwables.length === 1);
-for (let i = 0; i < 90; i++) Game.update(1 / 60);
-ok('投掷物落地消失', Game.throwables.length === 0);
-
 console.log('\n=== 门 ===');
 Game.startRun();
 const doorTile = (() => {
@@ -952,7 +941,6 @@ ok('弹药按背包带入', Game.player.bag.hasAmmo() === 60,
 ok('按口径分开记', Game.player.bag.ammoCountByCaliber('556') === 30
    && Game.player.bag.ammoCountByCaliber('9mm') === 20
    && Game.player.bag.ammoCountByCaliber('12g') === 10);
-ok('石子默认带 3 颗', Game.player.stones === 3);
 
 // 背包空了、钱也见底，照样能出发（出图不收费，不能把人卡死）
 Game.state = 'base';
