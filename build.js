@@ -14,7 +14,7 @@ if (!process.argv.includes('--assets-only')) require('./tools/build-linhai-map.j
 require('./tools/build-prop-bounds.js').build();
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
-const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js', 'game.js'];
+const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js', 'game.js', 'medhud.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */

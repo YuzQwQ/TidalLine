@@ -287,7 +287,7 @@ window.addEventListener('error', function (e) {
     left: 14px; top: 70px;            /* 让开左上角的血量/负重 HUD */
     width: 388px; display: none;
     padding: 8px 14px;
-    max-height: calc(100% - 78px);    /* 背包够高，会盖住左下弹药 HUD —— 但装备栏里已经显示了弹药 */
+    max-height: calc(100% - 86px);    /* 底部要给治疗进度条和医疗快捷栏让位（它们在最上层） */
     overflow-y: auto;
     box-sizing: border-box;
   }
@@ -333,6 +333,14 @@ window.addEventListener('error', function (e) {
     color: #d8bf86; background: rgba(6,12,10,0.72);
     font-family: Consolas, monospace;
   }
+  /* 用过的医疗品：左上角标剩余容量（右下角已被名称占着），不和图标抢位置 */
+  .cell .cap, .scell .cap {
+    position: absolute; left: 1px; top: 1px;
+    font-size: 9px; line-height: 11px; padding: 0 1px;
+    color: #9fd3b8; background: rgba(6,12,10,0.78);
+    font-family: Consolas, monospace;
+  }
+  .scell .cap { left: 3px; font-size: 10px; }
   .cell .ico-safe {
     width: 26px; height: 26px; image-rendering: pixelated;
     border: 1px solid transparent; border-radius: 2px;
@@ -855,6 +863,70 @@ window.addEventListener('error', function (e) {
 #itemTip { overflow-y:auto; overscroll-behavior:contain; }
 .medical-actions { position:sticky; top:-15px; padding:8px 0; background:#0d1714; z-index:1; }
 .base-left { overflow-y:auto; }
+/* ---- 医疗交互层：快捷栏 / 轮盘 / 治疗进度 ----
+   三块都在 #frame 里按 720×480 逻辑尺寸布局，resize 时和 #hudPanel 一起 zoom。
+   层级：背包（#hudPanel，z10）< 快捷栏 30 < 详情框 62 < 上下文菜单 64 < 轮盘 66 < 治疗进度 70。
+   治疗进度单独占一层，背包和物品详情都盖不住它，也不受任何 overflow 裁剪影响。 */
+#medBar {
+  position: absolute; left: 0; right: 0; bottom: 4px;
+  display: none; justify-content: center;
+  pointer-events: none; z-index: 30;
+}
+#medBar .pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 9px 4px 5px;
+  background: rgba(9, 15, 13, 0.84);
+  border: 1px solid #24382f; border-radius: 2px;
+}
+#medBar .mk {
+  display: block; flex: 0 0 15px; width: 15px; height: 15px;
+  font: bold 10px/15px Consolas, monospace; text-align: center;
+  color: #9fc3b8; background: #132320;
+  border: 1px solid #35564b; border-radius: 2px;
+}
+#medBar .mic {
+  display: block; flex: 0 0 20px; width: 20px; height: 20px;
+  image-rendering: pixelated;
+}
+#medBar .mic.ph { border: 1px solid #24382f; }
+#medBar .mtx {
+  font: 11px Consolas, monospace; color: #c8dcd4;
+  letter-spacing: 0.5px; white-space: nowrap;
+}
+#medBar.empty .mtx { color: #7a8f88; }
+#medBar.empty .mk { color: #5d726b; border-color: #2a3f38; }
+
+/* 轮盘盖住整块画面：既当遮罩，也顺手挡住背包格子的点击 */
+#medWheel {
+  position: absolute; left: 0; top: 0;
+  width: 720px; height: 480px;
+  display: none; z-index: 66;
+  background: transparent; cursor: default;
+  image-rendering: auto;   /* 盘面上的字要抗锯齿，别跟着像素贴图一起发毛 */
+}
+
+#healHud {
+  position: absolute; left: 0; right: 0; bottom: 38px;
+  display: none; z-index: 70; pointer-events: none;
+  text-align: center;
+}
+#healHud .hh-top {
+  font: 11px/1.3 monospace; color: #c4e0d2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  margin-bottom: 3px;
+}
+#healHud .hh-bar {
+  width: 200px; height: 8px; margin: 0 auto;
+  background: rgba(8, 14, 12, 0.9);
+  border: 1px solid rgba(63, 90, 82, 0.7);
+  box-sizing: border-box;
+}
+#healHud .hh-fill {
+  display: block; height: 100%; width: 0%;
+  background: #3fbf6b;
+}
+#healHud.start .hh-fill { background: #d9922f; }
+
 @media(max-width:720px) {
   .base-hd { padding:10px 12px; flex-wrap:wrap; gap:10px; }
   .hd-vals { flex-wrap:wrap; gap:8px; }
@@ -898,6 +970,15 @@ window.addEventListener('error', function (e) {
     <div class="grid24" id="safeGrid" style="grid-template-columns:repeat(4,minmax(0,1fr));max-width:48%"></div>
   </div>
 </div>
+
+    <!-- 医疗层：快捷栏 / 轮盘 / 治疗进度。
+         三块都不属于背包，开关背包不会卸载它们，治疗也不会因此中断。 -->
+    <div id="medBar" style="display:none"></div>
+    <canvas id="medWheel" width="720" height="480" style="display:none"></canvas>
+    <div id="healHud" style="display:none">
+      <div class="hh-top"></div>
+      <div class="hh-bar"><i class="hh-fill"></i></div>
+    </div>
   </div>
 </div>
 
@@ -923,6 +1004,7 @@ window.addEventListener('error', function (e) {
       <div><kbd>Q</kbd><span>投掷石子诱敌</span></div>
       <div><kbd>R</kbd><span>换弹</span></div>
       <div><kbd>Tab</kbd><span>背包</span></div>
+      <div><kbd>5</kbd><span>医疗（长按打开轮盘选药）</span></div>
     </div>
 
     <h2>这一版要试什么</h2>
@@ -1050,5 +1132,6 @@ window.addEventListener('error', function (e) {
 <script src="js/core.js"></script>
 <script src="js/entities.js"></script>
 <script src="js/game.js"></script>
+<script src="js/medhud.js"></script>
 </body>
 </html>

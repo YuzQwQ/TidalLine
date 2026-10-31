@@ -204,7 +204,7 @@ function card(it) {
         <div class="name">${esc(it.name)}${isStack ? '<i class="tag">可堆叠 ' + it.stack + '</i>' : ''}${it.noCodex ? '<i class="tag dim">不进图鉴</i>' : ''}</div>
         <div class="sub"><code>${esc(it.id)}</code> · <span style="color:${cat.color}">${itemCategoryLabel(it)}</span> · <span style="color:${r.color}">${r.name}</span> · ${it.w}kg · ${it.price > 0 ? money(it.price) : '不定价'}${it.short ? ' · 背包简称 <b style="color:#a8c4ba">' + esc(it.short) + '</b>' : ''}</div>
         <div class="desc">${esc(it.desc)}</div>
-        ${it.medicalGroup ? `<div class="vis"><b>${esc(ctx.MEDICAL_GROUPS[it.medicalGroup])} · ${esc(it.source)}</b>${it.heal ? `恢复 ${it.heal} HP · 局内 ${it.useTime} 秒 · 局外立即 · 已开放` : `效果待开放 · 预留：${esc(it.reservedEffect)} · 本轮不掉落`}<br>品牌与历史叙事来自医疗产业提案，尚未并入正式世界观。</div>` : ''}
+        ${it.medicalGroup ? `<div class="vis"><b>${esc(ctx.MEDICAL_GROUPS[it.medicalGroup])} · ${esc(it.source)}</b>${it.healCap ? `启动 ${it.healStart} 秒 · ${it.healRate} HP/秒 · 容量 ${it.healCap} · 局内持续治疗 / 局外立即` : `效果待开放 · 预留：${esc(it.reservedEffect)} · 本轮不掉落`}<br>品牌与历史叙事来自医疗产业提案，尚未并入正式世界观。</div>` : ''}
         ${classificationById.has(it.id)?`<div class="vis"><b>分类依据</b>${esc(classificationById.get(it.id).reason)}</div>`:''}
         ${vis ? `<div class="vis"><b>画什么</b>${esc(vis)}</div>` : ''}
       </div>

@@ -70,11 +70,11 @@ class Bag {
 
   tier() { return weightTier(this.weight()); }
 
-  canAdd(item, n) {
+  canAdd(item, n, cap) {
     n = n || 1;
-    // 可堆叠：找同类
-    if (item.stack > 1) {
-      const ex = this.slots.find(s => s.item.id === item.id);
+    // 可堆叠：找同类（容量类物品只和"满的"那堆合并，用过的不并）
+    if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
+      const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
       if (ex && ex.n + n <= item.stack) return { ok: true, merge: true };
     }
     if (this.slots.length >= CFG.BAG.SLOTS) return { ok: false, why: '背包满了' };
@@ -82,15 +82,24 @@ class Bag {
     return { ok: true };
   }
 
-  add(item, n) {
+  /* 带治疗容量的物品，只有满容量才能互相堆叠 */
+  fullCap(entry, item) {
+    const max = (item && item.healCap) || 0;
+    if (!max) return true;
+    return (typeof entry.cap === 'number' ? entry.cap : max) >= max - 1e-6;
+  }
+
+  add(item, n, cap) {
     n = n || 1;
-    if (item.stack > 1) {
-      const ex = this.slots.find(s => s.item.id === item.id);
+    if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
+      const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
       if (ex && ex.n + n <= item.stack) { ex.n += n; return true; }
     }
     if (this.slots.length >= CFG.BAG.SLOTS) return false;
     if (this.weight() + item.w * n > CFG.BAG.CARRY) return false;
-    this.slots.push({ item, n });
+    this.slots.push(item.healCap
+      ? { item, n, cap: typeof cap === 'number' ? cap : item.healCap }
+      : { item, n });
     return true;
   }
 
@@ -249,6 +258,11 @@ class Player {
     this.angle = input.aimAngle;
     this.sneaking = input.sneak;
     this.sprinting = input.sprint && !input.sneak;
+    /* 治疗期间可以走，但不能冲刺——冲刺直接打断 */
+    if (this.sprinting && Game.action && Game.action.type === 'heal') {
+      Medical.cancel('冲刺打断了治疗');
+      this.sprinting = false;
+    }
     this.inWater = M.flooded(M.tx(this.x), M.ty(this.y));
 
     /* --- 闪避 --- */
@@ -290,6 +304,8 @@ class Player {
     speed *= this.tier.move;
     speed *= this.armorMove;          // 身体护甲的移速惩罚
     if (this.inWater) speed *= CFG.P.WATER_SLOW;
+    /* 边打药边走：正常步行的 30% */
+    if (Game.action && Game.action.type === 'heal') speed *= 0.3;
 
     const targetVx = mx * speed;
     const targetVy = my * speed;
@@ -433,7 +449,7 @@ class Player {
 
     this.hurtAnimT = PLAYER_ANIMS.hurt.frames / PLAYER_ANIMS.hurt.fps;
     this.hp -= dmg;
-    if (dmg > 0) Medical.cancel();
+    /* 受击不打断治疗：只有死亡才强制中断（下面 hp<=0 那一段处理） */
     Save.setHP(this.hp);
     Game.shake(head ? 4.4 : 3.2);
     Game.flash(head ? '#b23f36' : '#8d3a3a', head ? 0.30 : 0.22);
@@ -456,6 +472,7 @@ class Player {
     if (this.hp <= 0) {
       this.hp = 0;
       this.dead = true;
+      Medical.cancel('死亡打断了治疗');
       Game.onPlayerDeath(this);
     }
   }

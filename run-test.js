@@ -78,7 +78,7 @@ const ctx = {
 ctx.globalThis = ctx;
 vm.createContext(ctx);
 
-for (const f of ['config.js', 'data.js', 'core.js', 'entities.js', 'game.js']) {
+for (const f of ['config.js', 'data.js', 'core.js', 'entities.js', 'game.js', 'medhud.js']) {
   try {
     vm.runInContext(fs.readFileSync(path.join(dir, 'js', f), 'utf8'), ctx, { filename: f });
   } catch (e) {
@@ -96,6 +96,8 @@ vm.runInContext(`
   globalThis.Corpse = Corpse; globalThis.Bullet = Bullet;
   globalThis.GEAR = GEAR; globalThis.WEAPONS = WEAPONS; globalThis.EQUIP = EQUIP; globalThis.HELMETS = HELMETS; globalThis.BODIES = BODIES; globalThis.SIDEARM_SLOT = SIDEARM_SLOT;
   globalThis.START_CREDITS = START_CREDITS;
+  globalThis.MedQuick = MedQuick; globalThis.MedWheel = MedWheel;
+  globalThis.MedBar = MedBar; globalThis.HealHud = HealHud; globalThis.MedHud = MedHud;
 `, ctx, { filename: 'export' });
 
 let pass = 0, fail = 0;

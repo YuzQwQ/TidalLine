@@ -287,7 +287,7 @@ window.addEventListener('error', function (e) {
     left: 14px; top: 70px;            /* 让开左上角的血量/负重 HUD */
     width: 388px; display: none;
     padding: 8px 14px;
-    max-height: calc(100% - 78px);    /* 背包够高，会盖住左下弹药 HUD —— 但装备栏里已经显示了弹药 */
+    max-height: calc(100% - 86px);    /* 底部要给治疗进度条和医疗快捷栏让位（它们在最上层） */
     overflow-y: auto;
     box-sizing: border-box;
   }
@@ -333,6 +333,14 @@ window.addEventListener('error', function (e) {
     color: #d8bf86; background: rgba(6,12,10,0.72);
     font-family: Consolas, monospace;
   }
+  /* 用过的医疗品：左上角标剩余容量（右下角已被名称占着），不和图标抢位置 */
+  .cell .cap, .scell .cap {
+    position: absolute; left: 1px; top: 1px;
+    font-size: 9px; line-height: 11px; padding: 0 1px;
+    color: #9fd3b8; background: rgba(6,12,10,0.78);
+    font-family: Consolas, monospace;
+  }
+  .scell .cap { left: 3px; font-size: 10px; }
   .cell .ico-safe {
     width: 26px; height: 26px; image-rendering: pixelated;
     border: 1px solid transparent; border-radius: 2px;
@@ -855,6 +863,70 @@ window.addEventListener('error', function (e) {
 #itemTip { overflow-y:auto; overscroll-behavior:contain; }
 .medical-actions { position:sticky; top:-15px; padding:8px 0; background:#0d1714; z-index:1; }
 .base-left { overflow-y:auto; }
+/* ---- 医疗交互层：快捷栏 / 轮盘 / 治疗进度 ----
+   三块都在 #frame 里按 720×480 逻辑尺寸布局，resize 时和 #hudPanel 一起 zoom。
+   层级：背包（#hudPanel，z10）< 快捷栏 30 < 详情框 62 < 上下文菜单 64 < 轮盘 66 < 治疗进度 70。
+   治疗进度单独占一层，背包和物品详情都盖不住它，也不受任何 overflow 裁剪影响。 */
+#medBar {
+  position: absolute; left: 0; right: 0; bottom: 4px;
+  display: none; justify-content: center;
+  pointer-events: none; z-index: 30;
+}
+#medBar .pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 9px 4px 5px;
+  background: rgba(9, 15, 13, 0.84);
+  border: 1px solid #24382f; border-radius: 2px;
+}
+#medBar .mk {
+  display: block; flex: 0 0 15px; width: 15px; height: 15px;
+  font: bold 10px/15px Consolas, monospace; text-align: center;
+  color: #9fc3b8; background: #132320;
+  border: 1px solid #35564b; border-radius: 2px;
+}
+#medBar .mic {
+  display: block; flex: 0 0 20px; width: 20px; height: 20px;
+  image-rendering: pixelated;
+}
+#medBar .mic.ph { border: 1px solid #24382f; }
+#medBar .mtx {
+  font: 11px Consolas, monospace; color: #c8dcd4;
+  letter-spacing: 0.5px; white-space: nowrap;
+}
+#medBar.empty .mtx { color: #7a8f88; }
+#medBar.empty .mk { color: #5d726b; border-color: #2a3f38; }
+
+/* 轮盘盖住整块画面：既当遮罩，也顺手挡住背包格子的点击 */
+#medWheel {
+  position: absolute; left: 0; top: 0;
+  width: 720px; height: 480px;
+  display: none; z-index: 66;
+  background: transparent; cursor: default;
+  image-rendering: auto;   /* 盘面上的字要抗锯齿，别跟着像素贴图一起发毛 */
+}
+
+#healHud {
+  position: absolute; left: 0; right: 0; bottom: 38px;
+  display: none; z-index: 70; pointer-events: none;
+  text-align: center;
+}
+#healHud .hh-top {
+  font: 11px/1.3 monospace; color: #c4e0d2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  margin-bottom: 3px;
+}
+#healHud .hh-bar {
+  width: 200px; height: 8px; margin: 0 auto;
+  background: rgba(8, 14, 12, 0.9);
+  border: 1px solid rgba(63, 90, 82, 0.7);
+  box-sizing: border-box;
+}
+#healHud .hh-fill {
+  display: block; height: 100%; width: 0%;
+  background: #3fbf6b;
+}
+#healHud.start .hh-fill { background: #d9922f; }
+
 @media(max-width:720px) {
   .base-hd { padding:10px 12px; flex-wrap:wrap; gap:10px; }
   .hd-vals { flex-wrap:wrap; gap:8px; }
@@ -898,6 +970,15 @@ window.addEventListener('error', function (e) {
     <div class="grid24" id="safeGrid" style="grid-template-columns:repeat(4,minmax(0,1fr));max-width:48%"></div>
   </div>
 </div>
+
+    <!-- 医疗层：快捷栏 / 轮盘 / 治疗进度。
+         三块都不属于背包，开关背包不会卸载它们，治疗也不会因此中断。 -->
+    <div id="medBar" style="display:none"></div>
+    <canvas id="medWheel" width="720" height="480" style="display:none"></canvas>
+    <div id="healHud" style="display:none">
+      <div class="hh-top"></div>
+      <div class="hh-bar"><i class="hh-fill"></i></div>
+    </div>
   </div>
 </div>
 
@@ -923,6 +1004,7 @@ window.addEventListener('error', function (e) {
       <div><kbd>Q</kbd><span>投掷石子诱敌</span></div>
       <div><kbd>R</kbd><span>换弹</span></div>
       <div><kbd>Tab</kbd><span>背包</span></div>
+      <div><kbd>5</kbd><span>医疗（长按打开轮盘选药）</span></div>
     </div>
 
     <h2>这一版要试什么</h2>
@@ -1624,7 +1706,9 @@ const MEDICAL_ITEMS = [
     "medicalGroup": "recovery",
     "source": "通用医疗耗材",
     "heal": 20,
-    "useTime": 2,
+    "healStart": 2,
+    "healRate": 10,
+    "healCap": 20,
     "iconId": "heal01",
     "desc": "采用脱脂棉纱制成的标准医用绷带。工业化生产使得这种曾经昂贵的外科耗材成为每个家庭都能够负担的日用品。\n\n过去的纱布工厂常将质量不合格但仍可使用的边角料低价出售给附近居民。部分家庭会拿它们擦桌子、包裹易碎品，甚至制作窗帘。\n\n对纺织厂来说，这大概不算最理想的产品用途。",
     "visual": "白色卷状绷带，纸质封条，有一截松开的纱布。",
@@ -1642,8 +1726,10 @@ const MEDICAL_ITEMS = [
     "stack": 5,
     "medicalGroup": "recovery",
     "source": "安禾制药",
-    "heal": 30,
-    "useTime": 2.5,
+    "heal": 60,
+    "healStart": 1.8,
+    "healRate": 12,
+    "healCap": 60,
     "desc": "安禾制药的标准复合敷料，采用独立灭菌包装与防粘连吸收层。\n\n产品最初以「比母亲的拥抱更温柔」作为宣传口号，在上市后遭到家长团体投诉，认为该广告对母亲这一角色进行了不恰当的商品化。\n\n安禾随后将广告改为：\n\n「轻轻覆盖，让伤口安心休息。」\n\n但旧版包装依然在部分偏远地区流通。",
     "visual": "米白色医用纸袋，浅绿色安禾标志，一角印有旧式花朵广告图案。",
     "iconId": "heal02",
@@ -1658,11 +1744,13 @@ const MEDICAL_ITEMS = [
     "r": 3,
     "w": 0.6,
     "price": 12000,
-    "stack": 3,
+    "stack": 2,
     "medicalGroup": "recovery",
     "source": "环礁湾公共卫生署",
-    "heal": 50,
-    "useTime": 5,
+    "heal": 120,
+    "healStart": 1.5,
+    "healRate": 15,
+    "healCap": 120,
     "desc": "环礁湾公共卫生署发行的标准家庭急救套装，由多家本地医疗企业共同供应。\n\n盒盖上印有当年的公益宣传语：\n\n「意外无法预告，准备可以提前！家中常备急救包，平安健康每一天！」\n\n如遇紧急情况，请立即联系您所在街道的急救服务处。\n\n急救服务热线：123-1234\n\n服务时间：每周七天，全天候接听。\n\n该号码曾连续十三年出现在环礁湾的电视公益广告中。由于广告过于频繁，当地小学生甚至会把它编进跳绳歌里。",
     "visual": "红色硬塑料急救盒，白色十字和公益宣传贴纸，带有折叠提手。",
     "iconId": "heal03",
@@ -1677,11 +1765,13 @@ const MEDICAL_ITEMS = [
     "r": 4,
     "w": 1.2,
     "price": 35000,
-    "stack": 2,
+    "stack": 1,
     "medicalGroup": "recovery",
     "source": "军方制式物资",
-    "heal": 80,
-    "useTime": 7,
+    "heal": 200,
+    "healStart": 1.2,
+    "healRate": 20,
+    "healCap": 200,
     "desc": "M-17 型野战医疗包，采用耐磨帆布与可拆卸内部隔层，适用于高湿度、低照度及缺乏固定医疗设施的环境。\n\n军需部门曾为这一型号提出二十七项改进要求，其中包括：\n\n「所有主要器械必须能够在佩戴手套时取出。」\n\n「包装开启时不得产生过量噪声。」\n\n「医疗标识应当在泥水浸泡后仍保持可辨认。」\n\n最后一项测试因采购部门忘记准备泥水，最终改在军营后方的排水沟内完成。",
     "visual": "深橄榄绿帆布包，白色医疗十字，黑色 M-17 编号及织带扣具。",
     "iconId": "heal04",
@@ -1699,8 +1789,10 @@ const MEDICAL_ITEMS = [
     "stack": 1,
     "medicalGroup": "recovery",
     "source": "赫尔维恩医疗集团",
-    "heal": 100,
-    "useTime": 9,
+    "heal": 400,
+    "healStart": 0.8,
+    "healRate": 25,
+    "healCap": 400,
     "desc": "赫尔维恩医疗集团为远洋科考船、极地研究站及特殊作业团队开发的模块化医疗系统。\n\nHV-300 的每个内部组件均经过独立编号，并附有对应的维护记录。根据制造商的宣传资料，其标准配置能够满足一支小型科考团队在远离医疗设施期间的基本急救需求。\n\n产品保修卡提供五年全球维修服务。\n\n在保修条款的第二十七条中，赫尔维恩特别注明：\n\n「因异常空间位移、不可预测的物理环境变化及未经认证的超自然干涉造成的损坏，不在标准保修范围内。」\n\n这条规定首次出现于环礁湾事故发生之前。",
     "visual": "银灰色硬质医疗箱，深翡翠绿品牌标志，黑色防撞包角和编号铭牌。",
     "iconId": "heal05",
@@ -2628,6 +2720,28 @@ const EQUIP = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* BEGIN SCENE LIBRARY */
 for(const a of [{"group":"tiles","id":"ground_concrete_plain_01"},{"group":"tiles","id":"ground_concrete_plain_02"},{"group":"tiles","id":"ground_soil_compact_01"},{"group":"tiles","id":"ground_soil_compact_02"},{"group":"props","id":"decal_surface_crack_01"},{"group":"props","id":"decal_surface_damp_01"}]){if(!ART[a.group].includes(a.id))ART[a.group].push(a.id);}
 /* END SCENE LIBRARY */
@@ -3327,11 +3441,11 @@ class Bag {
 
   tier() { return weightTier(this.weight()); }
 
-  canAdd(item, n) {
+  canAdd(item, n, cap) {
     n = n || 1;
-    // 可堆叠：找同类
-    if (item.stack > 1) {
-      const ex = this.slots.find(s => s.item.id === item.id);
+    // 可堆叠：找同类（容量类物品只和"满的"那堆合并，用过的不并）
+    if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
+      const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
       if (ex && ex.n + n <= item.stack) return { ok: true, merge: true };
     }
     if (this.slots.length >= CFG.BAG.SLOTS) return { ok: false, why: '背包满了' };
@@ -3339,15 +3453,24 @@ class Bag {
     return { ok: true };
   }
 
-  add(item, n) {
+  /* 带治疗容量的物品，只有满容量才能互相堆叠 */
+  fullCap(entry, item) {
+    const max = (item && item.healCap) || 0;
+    if (!max) return true;
+    return (typeof entry.cap === 'number' ? entry.cap : max) >= max - 1e-6;
+  }
+
+  add(item, n, cap) {
     n = n || 1;
-    if (item.stack > 1) {
-      const ex = this.slots.find(s => s.item.id === item.id);
+    if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
+      const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
       if (ex && ex.n + n <= item.stack) { ex.n += n; return true; }
     }
     if (this.slots.length >= CFG.BAG.SLOTS) return false;
     if (this.weight() + item.w * n > CFG.BAG.CARRY) return false;
-    this.slots.push({ item, n });
+    this.slots.push(item.healCap
+      ? { item, n, cap: typeof cap === 'number' ? cap : item.healCap }
+      : { item, n });
     return true;
   }
 
@@ -3506,6 +3629,11 @@ class Player {
     this.angle = input.aimAngle;
     this.sneaking = input.sneak;
     this.sprinting = input.sprint && !input.sneak;
+    /* 治疗期间可以走，但不能冲刺——冲刺直接打断 */
+    if (this.sprinting && Game.action && Game.action.type === 'heal') {
+      Medical.cancel('冲刺打断了治疗');
+      this.sprinting = false;
+    }
     this.inWater = M.flooded(M.tx(this.x), M.ty(this.y));
 
     /* --- 闪避 --- */
@@ -3547,6 +3675,8 @@ class Player {
     speed *= this.tier.move;
     speed *= this.armorMove;          // 身体护甲的移速惩罚
     if (this.inWater) speed *= CFG.P.WATER_SLOW;
+    /* 边打药边走：正常步行的 30% */
+    if (Game.action && Game.action.type === 'heal') speed *= 0.3;
 
     const targetVx = mx * speed;
     const targetVy = my * speed;
@@ -3690,7 +3820,7 @@ class Player {
 
     this.hurtAnimT = PLAYER_ANIMS.hurt.frames / PLAYER_ANIMS.hurt.fps;
     this.hp -= dmg;
-    if (dmg > 0) Medical.cancel();
+    /* 受击不打断治疗：只有死亡才强制中断（下面 hp<=0 那一段处理） */
     Save.setHP(this.hp);
     Game.shake(head ? 4.4 : 3.2);
     Game.flash(head ? '#b23f36' : '#8d3a3a', head ? 0.30 : 0.22);
@@ -3713,6 +3843,7 @@ class Player {
     if (this.hp <= 0) {
       this.hp = 0;
       this.dead = true;
+      Medical.cancel('死亡打断了治疗');
       Game.onPlayerDeath(this);
     }
   }
@@ -4282,82 +4413,220 @@ function esc(s) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-/* 恢复类已开放；其他医疗品只保存预留说明，不伪造状态效果。 */
+/* ---------------- 恢复治疗 ----------------
+   一件恢复品 = 一个"治疗容量池"。使用流程：
+     启动（healStart 秒，不回血、不扣容量）
+       └─ 持续阶段：每秒 healRate，回多少扣多少容量
+            ├─ 满血 → 结束，剩余容量留在物品上
+            ├─ 容量归零 → 物品移除
+            └─ 主动取消 / 冲刺 / 攻击 / 死亡 → 结束，已扣的不退
+   容量记在"条目"（entry.cap）上：新捡到或满堆里拆出来的都是满容量，
+   用过的那件单独占一格，不会和满的再合并。其他医疗分组（止痛/创伤/针剂/异常）保持原样。 */
 const Medical = {
   canonicalId(id) { return id === 'med01' ? 'heal01' : id; },
   is(item) { return !!item && item.cat === 'medical'; },
-  ready(item) { return this.is(item) && item.use === true && item.heal > 0; },
-  summary(item) {
-    return this.ready(item) ? '恢复 ' + item.heal + ' HP · 局内 ' + item.useTime + ' 秒 / 局外立即'
-      : '效果待开放' + (item.reservedEffect ? ' · 预留：' + item.reservedEffect : '');
+  ready(item) { return this.is(item) && item.use === true && (item.healCap || 0) > 0; },
+  capOf(item) { return (item && item.healCap) || 0; },
+
+  /* 条目剩余容量：没写 cap 就是满的（老存档、新捡到的都走这条路） */
+  entryCap(entry) {
+    if (!entry) return 0;
+    const item = entry.item || stashItem(entry);
+    const max = this.capOf(item);
+    if (!max) return 0;
+    return typeof entry.cap === 'number' ? U.clamp(entry.cap, 0, max) : max;
   },
+  isPartial(entry) {
+    const item = entry && (entry.item || stashItem(entry));
+    const max = this.capOf(item);
+    return max > 0 && this.entryCap(entry) < max - 1e-6;
+  },
+
+  summary(item) {
+    if (!this.ready(item)) {
+      return '效果待开放' + (item.reservedEffect ? ' · 预留：' + item.reservedEffect : '');
+    }
+    return '启动 ' + item.healStart + ' 秒 · ' + item.healRate + ' HP/秒 · 容量 ' + item.healCap;
+  },
+
+  /* 诊所报价：按绷带容量折算需要几卷 */
   quote(hp = Save.hp) {
     const missing = Math.max(0, CFG.P.HP - hp);
     const bandage = ITEM_BY_ID.heal01;
-    const medicine = Math.ceil(missing / bandage.heal) * bandage.price;
+    const medicine = Math.ceil(missing / bandage.healCap) * bandage.price;
     const service = missing > 0 ? Math.max(Math.ceil(bandage.price * ECONOMY.doctor.minimumBandageFraction), Math.ceil(medicine * ECONOMY.doctor.serviceRate)) : 0;
     return { missing, medicine, service, total: medicine + service };
   },
+
   entries(where) {
     if (where === 'stash') return Game.state === 'base' ? Save.stash : [];
     return Game.state === 'playing' && Game.player && !Game.player.dead
       ? (where === 'safe' ? Game.player.bag.safe : Game.player.bag.slots) : [];
   },
+
   valid(entry, where) { return !!entry && entry.n > 0 && this.entries(where).includes(entry); },
-  consume(entry, where) {
+
+  /* 从堆里取出一件来用：
+       n = 1 → 就用这一条，容量记在它身上
+       n > 1 → 拆出一件单独的，需要有空位；拆不动宁可不让用，也不能把东西弄丢 */
+  takeUnit(entry, where) {
+    if (!this.valid(entry, where)) return null;
     const list = this.entries(where);
-    if (!this.valid(entry, where)) return false;
-    if (--entry.n <= 0) list.splice(list.indexOf(entry), 1);
+    const item = where === 'stash' ? stashItem(entry) : entry.item;
+    const max = this.capOf(item);
+    if (!item) return null;
+
+    if (entry.n <= 1) {
+      entry.n = 1;
+      if (entry.cap == null) entry.cap = max;
+      return entry;
+    }
+
+    if (where !== 'stash') {
+      const limit = where === 'safe' ? CFG.BAG.SAFE : CFG.BAG.SLOTS;
+      if (list.length >= limit) { Game.toast('背包没有空位，先腾一格再拆开用'); return null; }
+    }
+    entry.n -= 1;
+    if (entry.cap == null) entry.cap = max;      // 剩下的仍是整堆满容量
+    const unit = where === 'stash' ? { id: item.id, n: 1, cap: max } : { item, n: 1, cap: max };
+    list.push(unit);
+    return unit;
+  },
+
+  /* 实际恢复：受剩余容量和缺口双重限制，绝不超量扣 */
+  applyCap(unit, item, room) {
+    const cap = this.entryCap(unit);
+    const gain = Math.max(0, Math.min(room, cap));
+    if (gain > 0) unit.cap = cap - gain;
+    return gain;
+  },
+
+  /* 容量归零就从所在列表移除 */
+  dropIfEmpty(entry, where) {
+    if (!entry || this.entryCap(entry) > 1e-6) return false;
+    const list = this.entries(where);
+    const i = list.indexOf(entry);
+    if (i < 0) return false;
+    list.splice(i, 1);
+    if (where !== 'stash' && Game.bagOpen) Game.renderBag();
     return true;
   },
+
   use(entry, where) {
     const item = where === 'stash' ? stashItem(entry) : entry && entry.item;
     if (!this.valid(entry, where) || !this.ready(item)) return false;
-    const hp = where === 'stash' ? Save.hp : Game.player.hp;
-    if (hp >= CFG.P.HP) return false;
+
+    /* 局外：立即结算，拆件也不看格子（仓库没有格数限制） */
     if (where === 'stash') {
-      if (!this.consume(entry, where)) return false;
-      const restored = Math.min(item.heal, CFG.P.HP - hp);
-      Save.setHP(hp + restored); Base.render();
-      Base.note(item.name + '：恢复 ' + Math.round(restored * 10) / 10 + ' HP');
+      const hp = Save.hp;
+      if (hp >= CFG.P.HP) return false;
+      const unit = this.takeUnit(entry, where);
+      if (!unit) return false;
+      const healed = this.applyCap(unit, item, CFG.P.HP - hp);
+      this.dropIfEmpty(unit, where);
+      Save.setHP(hp + healed);
+      Base.render();
+      Base.note(item.name + '：恢复 ' + Math.round(healed * 10) / 10 + ' HP');
       return true;
     }
-    if (Game.action || Game.lootOpen || Game.player.dodgeT > 0 || Game.player.reloadT > 0) {
+
+    const P = Game.player;
+    if (!P || P.dead) return false;
+    if (P.hp >= P.maxHp) return false;
+    /* 同一时间只允许一种治疗；读条、搜刮、闪避、换弹期间也不能开始 */
+    if (Game.action || Game.lootOpen || P.dodgeT > 0 || P.reloadT > 0) {
       Game.toast('请先结束当前动作，再开始治疗'); return false;
     }
-    const P = Game.player;
-    if (Math.hypot(P.vx, P.vy) > 1 || ['w','a','s','d'].some(k => Game.input.keys[k])) {
-      Game.toast('请站定后使用医疗品'); return false;
-    }
+    const unit = this.takeUnit(entry, where);
+    if (!unit) return false;
+
     Game.input.mouseDown = false;
-    Game.action = { type:'heal', t:0, total:item.useTime, item, entry, where };
-    Game.toast('使用' + item.name + '，保持站定；E / Esc 取消');
+    Game.action = {
+      type: 'heal', phase: 'start', t: 0,
+      item, unit, where, restored: 0
+    };
+    Game.toast('使用' + item.name + '：' + item.healStart + ' 秒后开始恢复 · E / Esc 取消');
+    if (Game.bagOpen) Game.renderBag();
     return true;
   },
-  cancel(message) {
-    if (Game.action && Game.action.type === 'heal') {
-      Game.action = null; Game.toast(message || '治疗已中断，未消耗医疗品'); return true;
-    }
-    return false;
-  },
-  finish(action) {
-    if (!this.ready(action.item) || !this.valid(action.entry, action.where) || Game.player.dead) return;
+
+  /* 每帧推进：启动阶段不回血，持续阶段按速率结算 */
+  tick(a, dt) {
     const P = Game.player;
-    if (P.hp >= P.maxHp || !this.consume(action.entry, action.where)) return;
-    const restored = Math.min(action.item.heal, P.maxHp - P.hp);
-    P.hp += restored; Save.setHP(P.hp);
-    Game.sfx('pickup'); Game.toast('恢复 ' + Math.round(restored * 10) / 10 + ' HP');
+    const item = a.item, unit = a.unit;
+    if (!P || P.dead || !this.valid(unit, a.where)) { this.cancel('治疗中断'); return; }
+
+    if (a.phase === 'start') {
+      a.t += dt;
+      if (a.t >= item.healStart) {
+        a.phase = 'active';
+        a.t = 0;
+        Game.sfx('pickup');
+      }
+      return;
+    }
+
+    a.t += dt;
+    const room = Math.max(0, P.maxHp - P.hp);
+    const cap = this.entryCap(unit);
+    const gain = Math.min(item.healRate * dt, cap, room);
+    if (gain > 0) {
+      P.hp = Math.min(P.maxHp, P.hp + gain);
+      unit.cap = cap - gain;
+      a.restored += gain;
+      Save.setHP(P.hp);
+    }
+    /* 满血或容量归零都收工；满血时剩余容量留在物品上 */
+    if (room - gain <= 1e-6 || this.entryCap(unit) <= 1e-6) this.finish(a);
+  },
+
+  finish(a) {
+    if (!a || a.type !== 'heal') return;
+    const unit = a.unit, where = a.where;
+    const left = this.entryCap(unit);
+    const emptied = left <= 1e-6;
+    if (emptied) this.dropIfEmpty(unit, where);
+    if (Game.action === a) Game.action = null;
+
+    if (a.restored > 0.01) {
+      Game.sfx('pickup');
+      Game.toast('恢复 ' + Math.round(a.restored * 10) / 10 + ' HP' +
+        (emptied ? ' · ' + a.item.name + ' 用完' : ' · 剩余容量 ' + Math.ceil(left)));
+    } else if (emptied) {
+      Game.toast(a.item.name + ' 已用完');
+    }
     if (Game.bagOpen) Game.renderBag();
   },
+
+  /* 中断：保留已恢复的 HP，已扣的容量不退 */
+  cancel(message) {
+    const a = Game.action;
+    if (!a || a.type !== 'heal') return false;
+    const emptied = this.entryCap(a.unit) <= 1e-6;
+    if (emptied) this.dropIfEmpty(a.unit, a.where);
+    Game.action = null;
+    if (message) Game.toast(message);
+    else if (a.restored > 0.01) Game.toast('治疗中断 · 已恢复 ' + Math.round(a.restored * 10) / 10 + ' HP');
+    else Game.toast('治疗已取消');
+    if (Game.bagOpen) Game.renderBag();
+    return true;
+  },
+
   open(entry, where, node) {
     if (!this.valid(entry, where)) return;
     const item = where === 'stash' ? stashItem(entry) : entry.item;
-    Tips.show(item, node.getBoundingClientRect(), '医疗物品操作');
+    const max = this.capOf(item);
+    const cur = this.entryCap(entry);
+    const capText = max ? Math.ceil(cur) + ' / ' + max : '—';
+    /* 启动与速率已经在「效果」那行写了，这里只补当前容量这个会变的值 */
+    Tips.show(item, node.getBoundingClientRect(), '医疗物品操作', this.ready(item) ? [
+      ['当前容量', capText]
+    ] : null);
     const box = document.getElementById('itemTip');
     const hp = where === 'stash' ? Save.hp : Game.player.hp;
-    const overflow = Math.max(0, (item.heal || 0) - (CFG.P.HP - hp));
+    const missing = Math.max(0, CFG.P.HP - hp);
     const useLabel = !this.ready(item) ? '效果待开放' : hp >= CFG.P.HP ? '生命值已满'
-      : '使用一件' + (overflow ? '（溢出 ' + Math.round(overflow * 10) / 10 + ' HP）' : '');
+      : '使用一件（可恢复 ' + Math.round(Math.min(cur, missing)) + ' HP）';
     box.querySelector('.tip-hd').insertAdjacentHTML('afterend', '<div class="medical-actions"><button data-med="use"' +
       (!this.ready(item) || hp >= CFG.P.HP ? ' disabled' : '') + '>' + esc(useLabel) + '</button>' +
       '<button data-med="move">' + (where === 'stash' ? '出售这一堆' : where === 'safe' ? '移回背包' : '移入安全箱') + '</button></div>');
@@ -4680,8 +4949,8 @@ const Tips = {
     }
   },
 
-  /* 物品详情。it 可以是普通物品，也可以是装备伪物品 */
-  show(it, rect, hint) {
+  /* 物品详情。it 可以是普通物品，也可以是装备伪物品；extra 是调用方补的额外行 */
+  show(it, rect, hint, extra) {
     const box = this._box('itemTip');
     if (!box || !it) return;
 
@@ -4695,6 +4964,7 @@ const Tips = {
       rows.push(['来源', it.source]);
       rows.push(['效果', Medical.summary(it)]);
     }
+    if (Array.isArray(extra)) for (const row of extra) rows.push(row);
 
     if (it.equip && it.equip.kind === 'armor') {
       const g = it.equip.gear;
@@ -5199,12 +5469,18 @@ const Game = {
     let pile = this.boxes.find(b => b.pile && b.tx === spot.x && b.ty === spot.y);
     if (!pile) pile = this.makePile(spot.x, spot.y);
 
-    /* 可堆叠的同种物品并进已有条目，别在一个堆里堆出两条同名 */
-    const same = s.item.stack > 1
-      ? pile.items.find(e => e && e.item.id === s.item.id && e.n + s.n <= s.item.stack)
+    /* 可堆叠的同种物品并进已有条目，别在一个堆里堆出两条同名；
+       用过一半的医疗品不和满的合并，容量一起带进堆里 */
+    const max = s.item.healCap || 0;
+    const isPartial = max > 0 && typeof s.cap === 'number' && s.cap < max - 1e-6;
+    const isFull = e => !max || (typeof e.cap === 'number' ? e.cap : max) >= max - 1e-6;
+    const same = (!isPartial && s.item.stack > 1)
+      ? pile.items.find(e => e && e.item.id === s.item.id && isFull(e) && e.n + s.n <= s.item.stack)
       : null;
     if (same) same.n += s.n;
-    else pile.items.push({ item: s.item, n: s.n, known: true });
+    else pile.items.push(typeof s.cap === 'number'
+      ? { item: s.item, n: s.n, known: true, cap: s.cap }
+      : { item: s.item, n: s.n, known: true });
 
     pile.opened = false;
     P.bag.slots.splice(i, 1);
@@ -5286,6 +5562,14 @@ const Game = {
       hp.style.transform = '';
       hp.style.zoom = String(this._scale);
     }
+
+    /* 医疗层同样按 720×480 布局，跟着一起缩放；
+       轮盘的画布后备尺寸由 MedWheel.sync() 按 _rs 自己对齐 */
+    for (const id of ['medBar', 'healHud', 'medWheel']) {
+      const el = document.getElementById(id);
+      if (el) el.style.zoom = String(this._scale);
+    }
+    if (typeof MedWheel !== 'undefined' && MedWheel.isOpen()) MedWheel.draw();
   },
 
   /* ---------------- 输入 ---------------- */
@@ -5310,7 +5594,17 @@ const Game = {
         return;
       }
       if (k === 'tab') { this.toggleBag(); }
+      if (k === '5') {
+        /* 输入框里按 5 是打字，不该吃药 */
+        const ae = document.activeElement;
+        const typing = ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' ||
+          ae.tagName === 'SELECT' || ae.isContentEditable);
+        if (!typing) MedQuick.press();
+        return;
+      }
       if (k === 'escape') {
+        /* 轮盘优先：Esc 只收轮盘，正在进行的治疗不动 */
+        if (MedQuick.abortWheel()) { Tips.hide(); return; }
         if (Medical.cancel()) { Tips.hide(); return; }
         if (this.lootOpen) this.closeLoot();
         else if (this.bagOpen) this.toggleBag();
@@ -5319,7 +5613,11 @@ const Game = {
     });
 
     window.addEventListener('keyup', e => {
-      K.keys[e.key.toLowerCase()] = false;
+      const k = e.key.toLowerCase();
+      K.keys[k] = false;
+      /* 松手才判定这次是短按还是长按 —— 所以放在状态判断之前，
+         场景切走时也要把轮回状态收干净 */
+      if (k === '5') MedQuick.release();
     });
 
     this.canvas.addEventListener('mousemove', e => {
@@ -5338,10 +5636,11 @@ const Game = {
     });
     this.canvas.addEventListener('contextmenu', e => e.preventDefault());
 
-    // 失焦时松开所有键，避免卡住
+    // 失焦时松开所有键，避免卡住（轮盘也一起收掉，别停在打开状态）
     window.addEventListener('blur', () => {
       for (const k in K.keys) K.keys[k] = false;
       K.mouseDown = false;
+      MedQuick.cancel();
     });
   },
 
@@ -5379,6 +5678,8 @@ const Game = {
     this.action = null;
     this.lootOpen = null;
     this.extractDone = false;
+    /* 新一局：快捷医疗重新按背包顺序选最靠前的那件 */
+    if (typeof MedHud !== 'undefined') MedHud.reset();
     this.stats = { kills: 0, found: 0, newItems: [] };
 
     // 重置地图状态
@@ -5470,6 +5771,7 @@ const Game = {
     }
 
     this.render();
+    if (typeof MedHud !== 'undefined') MedHud.frame();
     this.scheduleFrame();
   },
 
@@ -5490,6 +5792,8 @@ const Game = {
     if (this.state !== 'playing') return;
     this.time += dt;
     this.updateTide();
+    /* 长按 5 的判定：keydown 只立状态，计时在这里走，够 250ms 才开轮盘 */
+    if (typeof MedQuick !== 'undefined') MedQuick.tick(dt);
 
     const P = this.player;
     const K = this.input;
@@ -5784,12 +6088,13 @@ const Game = {
 
   updateAction(dt) {
     const a = this.action;
+    if (!a) return;                 // tick 里可能已经结束（比如容量刚好归零）
     const P = this.player;
+    /* 治疗有自己的状态机（启动 → 持续），不按 total 一刀切：
+       期间允许走路（30% 速度），冲刺/攻击/切枪/闪避会各自调 Medical.cancel。 */
     if (a.type === 'heal') {
-      const K = this.input;
-      if (['w','a','s','d'].some(k => K.keys[k]) || Math.hypot(P.vx, P.vy) > 1 || P.dead) {
-        Medical.cancel(); return;
-      }
+      Medical.tick(a, dt);
+      return;
     }
     a.t += dt;
 
@@ -5822,8 +6127,6 @@ const Game = {
       } else if (a.type === 'corpse') {
         a.target.opened = true;
         this.openLoot(a.target, true);
-      } else if (a.type === 'heal') {
-        Medical.finish(a);
       } else if (a.type === 'extract') {
         this.action = null;
         this.doExtract();
@@ -5983,9 +6286,9 @@ const Game = {
       row.onclick = () => {
         const cur = this.lootOpen && this.lootOpen.items[i];
         if (!cur) return;
-        const res = this.player.bag.canAdd(it, cur.n);
+        const res = this.player.bag.canAdd(it, cur.n, cur.cap);
         if (!res.ok) { this.toast(res.why); return; }
-        this.player.bag.add(it, cur.n);
+        this.player.bag.add(it, cur.n, cur.cap);
         if (!it.noCodex) this.registerCodex(it);
         this.lootOpen.items[i] = null;
         SFX.play('pickup');
@@ -6298,9 +6601,14 @@ const Game = {
         const qty = it.note
           ? '<span class="qty">' + esc(it.note) + '</span>'
           : (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '');
+        /* 用过的恢复品把剩余容量直接标在格子里，不用点开详情才知道 */
+        const capTag = (it.healCap && Medical.isPartial(s))
+          ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '';
         const label = it.short || it.name;
-        cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty;
-        cell.title = it.name + ' · ' + it.w + 'kg · 右键看详情' +
+        cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty + capTag;
+        cell.title = (it.healCap && Medical.isPartial(s)
+            ? it.name + ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + it.healCap
+            : it.name + ' · ' + it.w + 'kg') + ' · 右键看详情' +
           (Medical.is(it) ? ' · 左键打开医疗操作' : it.equip ? ' · 左键替换身上那件' : ' · 左键移入安全箱');
         cell.onclick = () => {
           if (Medical.is(it)) Medical.open(s, 'bag', cell);
@@ -6342,8 +6650,12 @@ const Game = {
         cell.style.color = '#b9cac4';
         const ico2 = Icons.bagTag(s.item, 'ico-safe');
         cell.innerHTML = ico2 + '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
-          (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '');
-        cell.title = s.item.name + ' · ' + s.item.w + 'kg · 左键移回背包 · 右键看详情';
+          (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '') +
+          ((s.item.healCap && Medical.isPartial(s))
+            ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '');
+        cell.title = s.item.name + (s.item.healCap && Medical.isPartial(s)
+            ? ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + s.item.healCap
+            : ' · ' + s.item.w + 'kg') + ' · 左键移回背包 · 右键看详情';
         cell.onclick = () => {
           if (Medical.is(s.item)) { Medical.open(s, 'safe', cell); return; }
           if (P.bag.slots.length >= CFG.BAG.SLOTS) { this.toast('背包满了'); return; }
@@ -6407,6 +6719,7 @@ const Game = {
     this.action = null;
     this.closeLoot();
     if (this.bagOpen) this.toggleBag();
+    if (typeof MedHud !== 'undefined') MedHud.reset();   // 死亡：轮盘和按住状态一并清掉
     this.player.dodgeT = 0;
     this.player.tickAnimation(0, false);
     SFX.play('death'); this.shake(9);
@@ -6422,6 +6735,7 @@ const Game = {
     this.action = null;
     this.closeLoot();
     if (this.bagOpen) this.toggleBag();
+    if (typeof MedHud !== 'undefined') MedHud.reset();   // 收尾：轮盘、快捷栏、进度条一起清
     if (success || !this._deathSoundPlayed) SFX.play(success ? 'extract' : 'death');
 
     const P = this.player;
@@ -6439,7 +6753,7 @@ const Game = {
         lines.push({ name: it.name, price: it.sell, gear: true });
         continue;
       }
-      Save.addStash(it.id, s.n);
+      Save.addStash(it.id, s.n, s.cap);
       if (!it.noCodex && !Save.codex[it.id]) {
         Save.codex[it.id] = { first: Date.now(), count: 1 };
       }
@@ -7350,20 +7664,17 @@ const Game = {
       c.fillText(prompt, CFG.VIEW_W / 2, CFG.VIEW_H - 102);
     }
 
-    /* --- 读条 --- */
-    if (this.action) {
+    /* --- 读条 ---
+       治疗不走这里：它的进度条在顶层 DOM（HealHud），
+       否则一开背包就被面板盖住了。这里只剩搜刮 / 撤离这种画布内的读条。 */
+    if (this.action && this.action.type !== 'heal') {
       const a = this.action;
+      const bw = 200, bx = CFG.VIEW_W / 2 - bw / 2, by = CFG.VIEW_H / 2 + 54;
       const p = U.clamp(a.t / a.total, 0, 1);
-      const bw = 200;
       c.fillStyle = 'rgba(8,14,12,0.9)';
-      c.fillRect(CFG.VIEW_W / 2 - bw / 2, CFG.VIEW_H / 2 + 54, bw, 8);
+      c.fillRect(bx, by, bw, 8);
       c.fillStyle = a.type === 'extract' ? '#3fbf9b' : '#8a7d5a';
-      c.fillRect(CFG.VIEW_W / 2 - bw / 2, CFG.VIEW_H / 2 + 54, bw * p, 8);
-      if (a.type === 'heal') {
-        c.fillStyle = '#c4e0d2'; c.font = '12px monospace';
-        c.fillText('使用' + a.item.name + ' · ' + Math.max(0, a.total - a.t).toFixed(1) + ' 秒', CFG.VIEW_W / 2, CFG.VIEW_H / 2 + 44);
-        c.fillText('保持站定 · E / Esc 取消', CFG.VIEW_W / 2, CFG.VIEW_H / 2 + 79);
-      }
+      c.fillRect(bx, by, bw * p, 8);
     }
 
     /* --- Toast --- */
@@ -7499,7 +7810,8 @@ const Save = {
   /* 同一种物品合并成一条，顺便丢掉物品表里已经不存在的东西。
      装备（e.gear）不合并：同型号的耐久不一样，一件一条。 */
   normalizeStash() {
-    const m = new Map();
+    const m = new Map();          // 满容量堆：id → 件数
+    const partials = [];          // 用过的恢复品：一件一条，带 cap
     const gears = [];
     for (const e of this.stash) {
       if (!e) continue;
@@ -7511,20 +7823,80 @@ const Save = {
         gears.push({ id: e.id, n: 1, gear: e.gear }); continue;
       }
       const id = Medical.canonicalId(e.id);
-      if (!ITEM_BY_ID[id]) continue;
-      m.set(id, (m.get(id) || 0) + (e.n || 1));
+      const item = ITEM_BY_ID[id];
+      if (!item) continue;
+      const n = Math.max(1, e.n || 1);
+      const max = item.healCap || 0;
+      if (!max) { m.set(id, (m.get(id) || 0) + n); continue; }
+      /* 恢复品要保留"用了多少"：老存档没写 cap 就按满容量初始化，归零的直接丢掉 */
+      const cap = typeof e.cap === 'number' ? U.clamp(e.cap, 0, max) : max;
+      if (cap <= 0) continue;
+      if (cap >= max - 1e-6) m.set(id, (m.get(id) || 0) + n);
+      else {
+        partials.push({ id, n: 1, cap });
+        if (n > 1) m.set(id, (m.get(id) || 0) + (n - 1));
+      }
     }
-    this.stash = [...m].map(([id, n]) => ({ id, n })).concat(gears);
+    this.stash = [...m].map(([id, n]) => ({ id, n })).concat(partials, gears);
   },
 
   stashCount(id) {
     id = Medical.canonicalId(id);
-    const e = this.stash.find(x => x.id === id && !x.gear);
-    return e ? e.n : 0;
+    return this.stash.reduce((sum, x) => x.id === id && !x.gear ? sum + x.n : sum, 0);
   },
 
-  addStash(id, n) {
+  /* 能带下场的只有满容量那几件：用过的恢复品留在仓库，不参与携带结算 */
+  fullCount(id) {
     id = Medical.canonicalId(id);
+    const item = ITEM_BY_ID[id];
+    const max = item ? (item.healCap || 0) : 0;
+    if (!max) return this.stashCount(id);
+    return this.stash.reduce((sum, x) =>
+      (x.id === id && !x.gear && (x.cap == null || x.cap >= max - 1e-6)) ? sum + x.n : sum, 0);
+  },
+
+  takeFull(id, n) {
+    id = Medical.canonicalId(id);
+    const item = ITEM_BY_ID[id];
+    const max = item ? (item.healCap || 0) : 0;
+    if (this.fullCount(id) < n) return false;
+    let left = n;
+    for (const e of this.stash.slice()) {
+      if (left <= 0) break;
+      if (e.id !== id || e.gear) continue;
+      if (max && !(e.cap == null || e.cap >= max - 1e-6)) continue;
+      const take = Math.min(e.n, left);
+      e.n -= take; left -= take;
+      if (e.n <= 0) this.stash = this.stash.filter(x => x !== e);
+    }
+    return left <= 0;
+  },
+
+  addStash(id, n, cap) {
+    id = Medical.canonicalId(id);
+    const item = ITEM_BY_ID[id];
+    const max = (item && item.healCap) || 0;
+    if (max) {
+      /* 用过的那件单独入库，容量原样保留 */
+      if (typeof cap === 'number' && cap < max - 1e-6) {
+        this.stash.push({ id, n: 1, cap: U.clamp(cap, 0, max) });
+        return;
+      }
+      /* 只往满容量那一堆里并，超过堆叠上限就另起一条 */
+      const stack = Math.max(1, item.stack || 1);
+      let left = n;
+      const full = this.stash.find(e => e.id === id && !e.gear && (e.cap == null || e.cap >= max - 1e-6));
+      if (full) {
+        const take = Math.min(Math.max(0, stack - full.n), left);
+        full.n += take; left -= take;
+      }
+      while (left > 0) {
+        const put = Math.min(stack, left);
+        this.stash.push({ id, n: put });
+        left -= put;
+      }
+      return;
+    }
     const e = this.stash.find(x => x.id === id && !x.gear);
     if (e) e.n += n;
     else this.stash.push({ id, n });
@@ -8216,7 +8588,8 @@ const Base = {
     const meds = document.getElementById('medicalCarry');
     meds.innerHTML = '';
     for (const item of MEDICAL_ITEMS.filter(i => i.id !== 'heal01' && (Save.stashCount(i.id) > 0 || Save.loadout.medical?.[i.id] > 0))) {
-      const count = Save.stashCount(item.id), selected = Save.loadout.medical?.[item.id] || 0;
+      /* 携带只算满容量的：用过的留仓库，别让玩家以为能带下场 */
+      const count = Save.fullCount(item.id), selected = Save.loadout.medical?.[item.id] || 0;
       const row = document.createElement('div'); row.className = 'carry-row';
       row.innerHTML = '<span class="cn">' + esc(item.name) + '<i>库存 ' + count + ' · ' + item.w + 'kg/件' +
         (!Medical.ready(item) ? ' · 效果待开放' : '') + (selected > count ? ' · 库存不足' : '') + '</i></span>' +
@@ -8351,8 +8724,12 @@ const Base = {
       cell.innerHTML =
         Icons.bagTag(it, '') +
         '<span class="cn">' + esc(it.short || it.name) + '</span>' +
-        (n > 1 ? '<span class="qty">' + n + '</span>' : '');
-      cell.title = it.name + ' · ' + it.w.toFixed(2) + 'kg · ' +
+        (n > 1 ? '<span class="qty">' + n + '</span>' : '') +
+        ((it.healCap && Medical.isPartial(e))
+          ? '<span class="cap">' + Math.ceil(Medical.entryCap(e)) + '</span>' : '');
+      cell.title = it.name + (it.healCap && Medical.isPartial(e)
+          ? ' · 剩余容量 ' + Math.ceil(Medical.entryCap(e)) + ' / ' + it.healCap
+          : ' · ' + it.w.toFixed(2) + 'kg') + ' · ' +
         formatMoney(unitPrice(it) * n) + (Medical.is(it) ? ' · 左键医疗操作' : ' · 左键卖出') + ' · 右键看详情';
       cell.onclick = () => Medical.is(it) ? Medical.open(e, 'stash', cell) : this.askSell(e, n, cell);
       cell.oncontextmenu = (ev) => {
@@ -8450,7 +8827,7 @@ const Base = {
       if (!n) continue;
       const item = ITEM_BY_ID[id];
       if (!Medical.is(item) || id === 'heal01' || !Number.isInteger(n) || n < 0 || n > item.stack) return { ok:false, why:'医疗携带数量无效' };
-      if (Save.stashCount(id) < n) return { ok:false, why:item.name + '库存不足，请调整携带数量' };
+      if (Save.fullCount(id) < n) return { ok:false, why:item.name + '库存不足，请调整携带数量' };
       requests.push({ item, n });
     }
     for (const req of requests) {
@@ -8481,20 +8858,19 @@ const Base = {
     for (const k in SUPPLY) {
       const sp = SUPPLY[k];
       if (!sp.itemId) continue;
-      let left = Save.loadout[k] || 0;
+      const left = Save.loadout[k] || 0;
+      const item = ITEM_BY_ID[sp.itemId];
+      if (item && item.healCap) { Save.takeFull(sp.itemId, left); continue; }
       const e = Save.stash.find(x => x.id === sp.itemId);
       if (e) {
         const take = Math.min(e.n, left);
         e.n -= take;
-        left -= take;
         if (e.n <= 0) Save.stash = Save.stash.filter(x => x !== e);
       }
     }
     for (const [id, n] of Object.entries(Save.loadout.medical || {})) {
       if (!n) continue;
-      const entry = Save.stash.find(e => e.id === id && !e.gear);
-      entry.n -= n;
-      if (!entry.n) Save.stash.splice(Save.stash.indexOf(entry), 1);
+      Save.takeFull(id, n);
     }
     Save.credits -= cost;
     Save.save();
@@ -8613,6 +8989,477 @@ window.addEventListener('DOMContentLoaded', () => {
     console.error(err);
   }
 });
+
+</script>
+<script>
+/* ===== medhud.js ===== */
+/* ============================================================
+   医疗交互层：快捷键 5 / 快捷栏 / 圆形轮盘 / 治疗进度 HUD
+   ------------------------------------------------------------
+   四块职责分明，但都只认同一份数据 —— Medical 的状态机和背包格子：
+
+     MedQuick  短按/长按判定、默认类型记忆、调用 Medical.use
+     MedWheel  轮盘扇区、鼠标方向命中、松开确认
+     MedBar    屏幕下方的快捷栏（当前药 + 剩余容量/数量）
+     HealHud   治疗进度条，独立顶层，不会被背包或详情框盖住
+
+   这里不做任何数值计算：回血、扣容量、拆堆、移除都还是 Medical 的事。
+   数值一律现取自 Medical.entryCap / Medical.capOf，避免 UI 和实际对不上。
+   ============================================================ */
+
+/* ---------------- 快捷医疗控制器 ---------------- */
+const MedQuick = {
+  /* 长按判定阈值（毫秒）。改这个就能调轮盘的触发时间 */
+  HOLD_MS: 250,
+
+  typeId: null,       // 记住的是物品 id，不是格子或实例引用
+  pressing: false,
+  hold: 0,            // 本次按住累计秒数
+  longFired: false,   // 这次按住已经开过轮盘（防重复开）
+
+  /* 背包里所有可用于快捷治疗的条目，按格子顺序分出"种类" */
+  groups() {
+    const out = [];
+    const seen = new Map();
+    const P = Game.player;
+    if (Game.state !== 'playing' || !P || P.dead || !P.bag) return out;
+
+    for (const e of P.bag.slots) {
+      const item = e && e.item;
+      if (!Medical.ready(item)) continue;
+      if (Medical.entryCap(e) <= 1e-6) continue;      // 容量归零的残件不算可用
+      let g = seen.get(item.id);
+      if (!g) {
+        g = { id: item.id, item, entries: [], count: 0 };
+        seen.set(item.id, g);
+        out.push(g);
+      }
+      g.entries.push(e);
+      g.count += Math.max(1, e.n | 0);
+    }
+    for (const g of out) {
+      const max = Medical.capOf(g.item) || 1;
+      const part = g.entries.find(e => Medical.isPartial(e));
+      g.max = max;
+      g.text = g.count > 1
+        ? (part ? '×' + g.count + ' · ' + Math.ceil(Medical.entryCap(part)) + '/' + max : '×' + g.count)
+        : Math.ceil(Medical.entryCap(g.entries[0])) + '/' + max;
+    }
+    return out;
+  },
+
+  /* 当前该用哪一件：优先记忆的类型，没有就退到格子排序最前的；同类型先用残容量的 */
+  pick() {
+    const gs = this.groups();
+    if (!gs.length) return null;
+    let g = this.typeId ? gs.find(x => x.id === this.typeId) : null;
+    if (!g) g = gs[0];
+    const part = g.entries.find(e => Medical.isPartial(e));
+    return { group: g, entry: part || g.entries[0] };
+  },
+
+  /* 真正使用。id 传了就先改默认类型（轮盘确认走这条） */
+  use(id) {
+    if (id) this.typeId = id;
+    const p = this.pick();
+    if (!p) { Game.toast('背包里没有可用的医疗品'); return false; }
+    /* 记忆为空、或者记的那种已经不在背包里：把当前选中的立为新默认，
+       这样快捷栏和下一次短按都指向同一件，不会来回跳 */
+    const gs = this.groups();
+    if (!this.typeId || !gs.some(g => g.id === this.typeId)) this.typeId = p.group.id;
+
+    const a = Game.action;
+    if (a && a.type === 'heal') {
+      /* 正在治同样的药：不重启，也不该白扣一次启动时间 */
+      if (a.item.id === p.group.id) { Game.toast('正在治疗中'); return false; }
+      /* 换药：先按原有规则正常中断，已恢复的 HP 和已扣的容量都保留 */
+      Medical.cancel('已切换医疗品');
+    }
+    const P = Game.player;
+    if (P && P.hp >= P.maxHp) { Game.toast('生命值已满'); return false; }
+    return Medical.use(p.entry, 'bag');
+  },
+
+  press() {
+    if (this.pressing) return false;
+    this.pressing = true;
+    this.hold = 0;
+    this.longFired = false;
+    return true;
+  },
+
+  release() {
+    if (!this.pressing) return false;
+    const wasLong = this.longFired;
+    this.pressing = false;
+    this.hold = 0;
+    this.longFired = false;
+    if (wasLong) return MedWheel.confirm();     // 轮盘已经关掉（Esc）时 confirm 直接返回 false
+    return this.use();
+  },
+
+  tick(dt) {
+    if (!this.pressing) return;
+    this.hold += dt;
+    if (!this.longFired && this.hold >= this.HOLD_MS / 1000) {
+      this.longFired = true;                     // 先立牌子再开，轮盘打不开也不会退化成短按
+      MedWheel.open();
+    }
+  },
+
+  /* Esc：只关轮盘，不动正在进行的治疗 */
+  abortWheel() {
+    if (!MedWheel.isOpen()) return false;
+    MedWheel.close();
+    return true;
+  },
+
+  cancel() {
+    this.pressing = false;
+    this.hold = 0;
+    this.longFired = false;
+    MedWheel.close();
+  },
+
+  reset() {
+    this.cancel();
+    this.typeId = null;
+  }
+};
+
+/* ---------------- 圆形医疗轮盘 ---------------- */
+const MedWheel = {
+  open_: false,
+  sectors: [],
+  sel: -1,
+  /* 圆心放在画面中心偏上一点，给下方的快捷栏和治疗进度留位置 */
+  cx: 360, cy: 214,
+  rOut: 176, rIn: 62,
+  dead: 30,                 // 中心死区半径：靠近圆心不选，松手即取消
+  mx: 360, my: 214,
+  _cv: null,
+  _bound: false,
+
+  isOpen() { return this.open_; },
+
+  cv() {
+    if (!this._cv) {
+      const el = document.getElementById('medWheel');
+      if (el) this._cv = el;
+    }
+    return this._cv;
+  },
+
+  bind() {
+    if (this._bound) return;
+    const cv = this.cv();
+    if (!cv || !cv.addEventListener) return;
+    this._bound = true;
+
+    cv.addEventListener('mousemove', e => {
+      if (!this.open_) return;
+      const r = cv.getBoundingClientRect();
+      if (!r.width) return;
+      const s = CFG.VIEW_W / r.width;
+      this.mx = (e.clientX - r.left) * s;
+      this.my = (e.clientY - r.top) * s;
+      this.sel = this.hitTest(this.mx, this.my);
+    });
+
+    /* 轮盘展开时整块盖住画面：点哪里都不会穿透到背包格子 */
+    cv.addEventListener('mousedown', e => { e.preventDefault(); e.stopPropagation(); });
+    cv.addEventListener('contextmenu', e => e.preventDefault());
+    cv.addEventListener('mouseleave', () => { if (this.open_) this.sel = -1; });
+  },
+
+  /* 圆心到鼠标的方向决定扇区；不看距离，鼠标在盘外也照样命中 */
+  hitTest(x, y) {
+    const n = this.sectors.length;
+    if (!n) return -1;
+    const dx = x - this.cx, dy = y - this.cy;
+    if (Math.hypot(dx, dy) < this.dead) return -1;
+    const step = 360 / n;
+    let deg = Math.atan2(dy, dx) * 180 / Math.PI;   // -180..180，画布里 0 度朝右、顺时针为正
+    let t = (deg + 90 + step / 2) % 360;            // 让第一个扇区的中心落在正上方
+    if (t < 0) t += 360;
+    return Math.min(n - 1, Math.floor(t / step));
+  },
+
+  open() {
+    if (this.open_) return true;
+    const gs = MedQuick.groups();
+    if (!gs.length) { Game.toast('背包里没有可用的医疗品'); return false; }
+
+    this.sectors = gs;
+    this.bind();
+    this.open_ = true;
+    this.sel = -1;
+
+    const cv = this.cv();
+    if (cv) cv.style.display = 'block';
+    Game.input.mouseDown = false;               // 别让开轮盘这一下顺手打出一枪
+
+    /* 打开瞬间就按当前指针方向给个高亮；指针在死区里就先空着 */
+    const gx = Number.isFinite(Game.input.mx) ? Game.input.mx : this.cx;
+    const gy = Number.isFinite(Game.input.my) ? Game.input.my : this.cy;
+    this.mx = gx; this.my = gy;
+    this.sel = this.hitTest(gx, gy);
+    this.draw();
+    return true;
+  },
+
+  close() {
+    if (!this.open_) return false;
+    this.open_ = false;
+    this.sectors = [];
+    this.sel = -1;
+    const cv = this.cv();
+    if (cv) cv.style.display = 'none';
+    return true;
+  },
+
+  /* 松手：把高亮的那种设成默认，然后立刻用一次 */
+  confirm() {
+    if (!this.open_) return false;
+    const sec = this.sel >= 0 ? this.sectors[this.sel] : null;
+    this.close();
+    if (!sec) return false;                     // 没选到就什么都不改、也不用
+    return MedQuick.use(sec.id);
+  },
+
+  /* 画布后备尺寸跟着渲染倍率走，逻辑坐标永远是 720×480 */
+  sync() {
+    const cv = this.cv();
+    if (!cv || !cv.getContext) return null;
+    const rs = Game._rs || 1;
+    const w = Math.round(CFG.VIEW_W * rs);
+    const h = Math.round(CFG.VIEW_H * rs);
+    if (cv.width !== w) cv.width = w;
+    if (cv.height !== h) cv.height = h;
+    const c = cv.getContext('2d');
+    if (!c) return null;
+    if (c.setTransform) c.setTransform(rs, 0, 0, rs, 0, 0);
+    if (c.clearRect) c.clearRect(0, 0, CFG.VIEW_W, CFG.VIEW_H);
+    return c;
+  },
+
+  draw() {
+    if (!this.open_) return;
+    const c = this.sync();
+    if (!c) return;
+    const W = CFG.VIEW_W, H = CFG.VIEW_H;
+    const n = this.sectors.length;
+    if (!n) return;
+
+    /* 背景压暗一点，让轮盘浮出来（不彻底盖住场内，方便判断自己站在哪） */
+    c.fillStyle = 'rgba(5,9,8,0.58)';
+    c.fillRect(0, 0, W, H);
+
+    const cx = this.cx, cy = this.cy, R = this.rOut, r0 = this.rIn;
+    const step = 360 / n;
+    const RAD = Math.PI / 180;
+    /* 扇区越多，图标和字越小，免得挤在一起 */
+    const k = U.clamp(step / 72, 0.72, 1);
+    const rLabel = (R + r0) / 2 + 6;
+
+    for (let i = 0; i < n; i++) {
+      const mid = (-90 + i * step) * RAD;
+      const gap = n > 1 ? 0.012 : 0;
+      const a0 = mid - (step / 2) * RAD + gap;
+      const a1 = mid + (step / 2) * RAD - gap;
+      const on = i === this.sel;
+
+      c.beginPath();
+      c.moveTo(cx + Math.cos(a0) * r0, cy + Math.sin(a0) * r0);
+      c.arc(cx, cy, R, a0, a1);
+      c.arc(cx, cy, r0, a1, a0, true);
+      c.closePath();
+      c.fillStyle = on ? 'rgba(63,191,155,0.3)' : 'rgba(15,26,22,0.9)';
+      c.fill();
+      c.lineWidth = on ? 2 : 1;
+      c.strokeStyle = on ? 'rgba(150,236,208,0.95)' : 'rgba(58,88,80,0.9)';
+      c.stroke();
+
+      /* 标签：稀有度圆标 → 简称 → 剩余容量/数量，整块竖排在扇区中线处 */
+      const lx = cx + Math.cos(mid) * rLabel;
+      const ly = cy + Math.sin(mid) * rLabel;
+      const it = this.sectors[i].item;
+      const rc = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)].color;
+      const br = 12 * k;
+
+      c.globalAlpha = on ? 1 : 0.72;
+      c.beginPath();
+      c.arc(lx, ly - 26 * k, br, 0, Math.PI * 2);
+      c.fillStyle = rc;
+      c.fill();
+      c.fillStyle = '#0c1412';
+      c.font = 'bold ' + Math.round(12 * k) + 'px Consolas, monospace';
+      c.textAlign = 'center';
+      c.textBaseline = 'middle';
+      c.fillText(String(it.r || 1), lx, ly - 26 * k + 0.5);
+
+      c.fillStyle = on ? '#f0f7f4' : '#b8ccc4';
+      c.font = Math.round(12 * k) + 'px "Microsoft YaHei", sans-serif';
+      c.fillText(it.name.length <= 6 ? it.name : (it.short || it.name), lx, ly + 1);
+      c.fillStyle = on ? '#9fe4c9' : '#6f8a82';
+      c.font = Math.round(10 * k) + 'px Consolas, monospace';
+      c.fillText(this.sectors[i].text, lx, ly + 17 * k);
+      c.globalAlpha = 1;
+    }
+
+    /* 内外圈描边，把环带勾出来 */
+    c.lineWidth = 1.4;
+    c.strokeStyle = 'rgba(126,160,150,0.55)';
+    c.beginPath(); c.arc(cx, cy, R, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(cx, cy, r0, 0, Math.PI * 2); c.stroke();
+
+    /* 中心空心区 */
+    c.beginPath();
+    c.arc(cx, cy, r0 - 1, 0, Math.PI * 2);
+    c.fillStyle = 'rgba(8,14,12,0.94)';
+    c.fill();
+    c.textAlign = 'center';
+    c.textBaseline = 'middle';
+    c.fillStyle = '#dbe5e1';
+    c.font = 'bold 14px "Microsoft YaHei", sans-serif';
+    c.fillText('医疗物品', cx, cy - 6);
+    c.fillStyle = '#6f8a82';
+    c.font = '10px "Microsoft YaHei", sans-serif';
+    c.fillText(this.sel >= 0 ? '松开 5 使用' : '移动鼠标选择', cx, cy + 13);
+  }
+};
+
+/* ---------------- 快捷栏 ---------------- */
+const MedBar = {
+  _el: null,
+  _id: undefined,     // 当前显示的是哪种药；换了才重建 DOM
+  _txt: null,
+
+
+  el() {
+    if (!this._el) {
+      const e = document.getElementById('medBar');
+      if (e) this._el = e;
+    }
+    return this._el;
+  },
+
+  /* 只描述"该长什么样"，DOM 更新在 refresh 里做，方便测试直接查 */
+  state() {
+    const show = Game.state === 'playing' && !!Game.player && !Game.player.dead;
+    const p = show ? MedQuick.pick() : null;
+    return {
+      show,
+      id: p ? p.group.id : null,
+      name: p ? (p.group.item.short || p.group.item.name) : '',
+      text: p ? p.group.text : '无医疗品',
+      empty: !p
+    };
+  },
+
+  refresh() {
+    const el = this.el();
+    if (!el) return;
+    const st = this.state();
+    if (!st.show) {
+      if (el.style.display !== 'none') el.style.display = 'none';
+      this._id = undefined;
+      return;
+    }
+    if (el.style.display !== 'flex') el.style.display = 'flex';
+
+    /* 只有换药才重建结构；治疗中容量每帧都在变，那种情况只改文字，
+       免得每帧新建一个 <img> 造成闪烁 */
+    if (st.id !== this._id) {
+      this._id = st.id;
+      el.classList.toggle('empty', st.empty);
+      el.innerHTML =
+        '<span class="pill" title="短按 5 使用 · 长按 5 选择医疗品">' +
+          '<span class="mk">5</span>' +
+          (st.id ? Icons.tag(st.id, 'mic') : '<span class="mic ph"></span>') +
+          '<span class="mtx"></span>' +
+        '</span>';
+      this._txt = el.querySelector('.mtx');
+    }
+    if (this._txt && this._txt.textContent !== st.text) this._txt.textContent = st.text;
+  }
+};
+
+/* ---------------- 治疗进度（顶层 HUD） ----------------
+   两行就够：上面一行写阶段和实时 HP，下面一条两段式进度条。
+   剩余容量在正下方的快捷栏里实时变，不重复占地方。 */
+const HealHud = {
+  _el: null,
+  _top: null, _fill: null,
+
+  el() {
+    if (!this._el) {
+      const e = document.getElementById('healHud');
+      if (e) {
+        this._el = e;
+        this._top = e.querySelector('.hh-top');
+        this._fill = e.querySelector('.hh-fill');
+      }
+    }
+    return this._el;
+  },
+
+  /* 当前该显示什么：进度、阶段、文案 */
+  state() {
+    const a = Game.action;
+    const P = Game.player;
+    const on = !!(a && a.type === 'heal' && Game.state === 'playing' && P && !P.dead);
+    if (!on) return { show: false };
+    const start = a.phase === 'start';
+    const max = Medical.capOf(a.item) || 1;
+    const left = Medical.entryCap(a.unit);
+    const pct = start
+      ? U.clamp(a.t / Math.max(0.01, a.item.healStart), 0, 1)
+      : U.clamp(1 - left / max, 0, 1);
+    const hp = Math.ceil(P.hp) + ' / ' + P.maxHp;
+    return {
+      show: true,
+      start,
+      pct,
+      hp,
+      top: start
+        ? '启动 · ' + Math.max(0, a.item.healStart - a.t).toFixed(1) + ' 秒 · HP ' + hp
+        : '+' + a.item.healRate + ' HP/秒 · HP ' + hp
+    };
+  },
+
+  frame() {
+    const el = this.el();
+    if (!el) return;
+    const st = this.state();
+    const disp = st.show ? 'block' : 'none';
+    if (el.style.display !== disp) el.style.display = disp;
+    if (!st.show) return;
+
+    el.classList.toggle('start', st.start);
+    if (this._top) this._top.textContent = st.top;
+    if (this._fill) this._fill.style.width = (st.pct * 100).toFixed(1) + '%';
+  }
+};
+
+/* ---------------- 统一逐帧刷新 ----------------
+   一次调用把三块都更新掉：轮盘重画、快捷栏换数值、进度条推进。
+   挂在 Game.loop 里，和主渲染同频。 */
+const MedHud = {
+  frame() {
+    MedBar.refresh();
+    HealHud.frame();
+    if (MedWheel.isOpen()) MedWheel.draw();
+  },
+  reset() {
+    MedQuick.reset();
+    MedBar._id = undefined;
+  },
+  /* 给测试和外部用的一个小入口：模拟一次完整的短按/长按 */
+  press() { return MedQuick.press(); },
+  release() { return MedQuick.release(); },
+  tick(dt) { MedQuick.tick(dt); }
+};
 
 </script>
 </body>
