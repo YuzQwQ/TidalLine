@@ -595,6 +595,38 @@ node tools/cdp-shot.js <url> <out.png> [等待ms] [表达式]   # 用真实浏�
 node tools/cdp-shot.js "file:///D:/develop/project/tide/潮汐线.html#play,13,4" shots/a.png 1800   "JSON.stringify({art: Object.keys(Art.map).filter(k=>Art.map[k]).length})"
 ```
 
+## 代码结构
+
+`game.js` 曾经是一个 4869 行的文件，按 `Game` / `Base` / `Save` / 医疗 / 浮窗 这些已有的注释边界拆成了下面这些。拆的时候一行逻辑都没改，拼回去和原文件去掉注释后逐字一致。
+
+| 文件 | 行数 | 管什么 |
+|---|---|---|
+| `js/config.js` | 358 | 所有可调数值：角色、武器、弹药穿透矩阵、搜刮时间 |
+| `js/data.js` | 生成 | 地图 JSON、物品表、敌人表。由 `tools/build-linhai-map.js` 和 `tools/build-economy.js` 重写 |
+| `js/core.js` | 623 | 工具函数、噪声、寻路、`Loot` 掉落 |
+| `js/entities.js` | 1094 | `Player` / `Enemy` / `Bullet` / `Corpse` / `Bag` |
+| `js/common.js` | 18 | `ITEM_BY_ID` 索引和 `esc()`，全局都用 |
+| `js/medical.js` | 242 | `Medical`：治疗容量池、启动/持续流程、条目容量 |
+| `js/art.js` | 273 | `Icons`（物品与装备图标）、`Art`（角色/物件/地形贴图） |
+| `js/ui.js` | 424 | `Tips` 详情浮窗、`Ctx` 右键菜单、`Deal` 交易框、`SFX` 音效 |
+| `js/save.js` | 329 | `Save` 存档、仓库与背包条目、图鉴、装备配装 |
+| `js/base.js` | 1070 | `Base` 藏身处（仓库/背包搬运/配装/商人）与 `MapSelect` 地图选择 |
+| `js/game.js` | 2655 | `Game` 局内循环、输入、碰撞、渲染、面板、结算，以及启动 |
+| `js/medhud.js` | 467 | 医疗 HUD：轮盘、快捷栏、顶层进度条 |
+
+全是普通 classic script，**顶层 `const` 跨文件共享**，没有 IIFE 也没有打包器 —— 双击 `file://` 直接能玩是硬约束，别为了模块化引入构建步骤。
+
+加载顺序写在三个地方，**改任何一个都要同步另外两个**：
+
+- `index.html` 尾部的 `<script src>` 列表（多文件版）
+- `build.js` 的 `JS_FILES`（单文件包按这个顺序内联）
+- `run-test.js` 顶部 `for (const f of [...]) `（无头测试的加载顺序）
+
+依赖方向是单向的：`config → data → core → entities → common → medical → art → ui → save → base → game → medhud`。
+后面的文件可以用前面的任何东西，反过来不行 —— 因为顶层 `const` 在脚本执行完就已就绪，函数体里的引用要到调用时才解析，所以「谁先加载」只影响**顶层立即求值**的表达式。
+
+`Game` 仍是最大的一块。要继续拆的话，按 `update` / `render` / `panels` 三段用 `Object.assign(Game, { ... })` 搬，`this` 语义不变，每搬一段跑一次 `run-test` 就能确认没串。
+
 ## 改参数
 
 所有数值都在 `js/config.js`，改完刷新页面生效。最值得先动的几个：

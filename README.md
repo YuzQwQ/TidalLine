@@ -89,15 +89,22 @@ tide/
 ├── js/
 │   ├── config.js        所有可调参数（视野、后坐力、背包、像素字体…）
 │   ├── pixfont.js       程序化点阵字体
-│   ├── data.js          物品表、武器/护甲数值、地图
-│   ├── core.js          地图、视野、寻路、噪声
+│   ├── data.js          物品表、武器/护甲数值、地图（生成物）
+│   ├── core.js          地图、视野、寻路、噪声、掉落
 │   ├── entities.js      玩家、敌人、子弹、尸体、背包
-│   └── game.js          主循环、渲染、UI、存档、藏身处
+│   ├── common.js        物品索引、HTML 转义
+│   ├── medical.js       恢复治疗（容量池、启动/持续流程）
+│   ├── art.js           物品图标与场景贴图加载
+│   ├── ui.js            物品浮窗、右键菜单、交易框、音效
+│   ├── save.js          存档、仓库与背包、图鉴、配装
+│   ├── base.js          藏身处、商人、地图选择
+│   ├── game.js          局内主循环、渲染、面板、结算
+│   └── medhud.js        医疗 HUD（轮盘 / 快捷栏 / 进度条）
 ├── assets/              贴图（item / chars / props / tiles / gear）
 ├── docs/screenshots/    README 用的截图
 ├── tools/               CDP 截图、性能探针、字体实验等小工具
 ├── build.js             打包成单文件
-├── run-test.js          流程测试（237 项）
+├── run-test.js          流程测试（283 项）
 └── smoke-test.js        冒烟测试（31 项）
 ```
 

@@ -14,7 +14,8 @@ if (!process.argv.includes('--assets-only')) require('./tools/build-linhai-map.j
 require('./tools/build-prop-bounds.js').build();
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
-const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js', 'game.js', 'medhud.js'];
+const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js',
+  'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js', 'game.js', 'medhud.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */
@@ -41,7 +42,7 @@ if (!out.includes(anchor)) {
 }
 out = out.replace(anchor, inlineTag + '\n' + anchor);
 
-/* ---------- 3. 内联 5 个 js ---------- */
+/* ---------- 3. 内联全部 js ---------- */
 let total = 0;
 for (const f of JS_FILES) {
   const code = fs.readFileSync(path.join(dir, 'js', f), 'utf8');
