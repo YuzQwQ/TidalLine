@@ -1032,7 +1032,7 @@ const Game = {
             kind,                       // 品质名（junk…secret）
             q: CONTAINER_QUALITY[kind],
             art: type.art, name: type.name,
-            items: Loot.fill(kind, type.cats || (spot && spot.preference)),
+            items: Loot.fill(kind, type.cats || (spot && spot.preference), type),
             opened: false,
             searched: false             // 有没有被掀开过；和"是否已空"分开记
           };
@@ -2451,6 +2451,7 @@ const Game = {
        收集品、物资、装备一律回仓库。死亡时只有安全箱里的东西参与分拣。
        背包实在塞不下的时候退回仓库，宁可多走一步也不吞东西。 */
     Save.normalizeBag();
+    const newIds = new Set((this.stats.newItems || []).map(x => x.id));
     const lines = [];
     let bagged = 0, baggedValue = 0;
     for (const s of kept) {
@@ -2460,87 +2461,198 @@ const Game = {
         Save.addBag(it.id, s.n, s.cap);
         bagged++;
         baggedValue += (it.price || 0) * s.n;
-        lines.push({ name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n, bag: true });
+        lines.push({ it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n, bag: true, isNew: false });
         continue;
       }
       if (it.equip) {
         Save.addGearStash(it);
-        lines.push({ name: it.name, price: it.sell, gear: true });
+        lines.push({ it, n: 1, name: it.name, price: it.sell || 0, gear: true, isNew: false });
         continue;
       }
       Save.addStash(it.id, s.n, s.cap);
       if (!it.noCodex && !Save.codex[it.id]) {
         Save.codex[it.id] = { first: Date.now(), count: 1 };
       }
-      lines.push({ name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: it.price * s.n });
+      lines.push({
+        it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n,
+        isNew: newIds.has(it.id)
+      });
     }
 
+    const total = lines.reduce((a, b) => a + b.price, 0);
+    const lost = carried.map(s => ({
+      it: s.item,
+      name: s.item.name + (s.n > 1 ? ' ×' + s.n : ''),
+      price: (unitPrice(s.item) || 0) * s.n
+    }));
+    const lostValue = success ? 0 : lost.reduce((a, b) => a + b.price, 0);
+    const prevBest = Save.bestHaul || 0;
+    const isRecord = success && total > prevBest && total > 0;
+
     Save.runs = (Save.runs || 0) + 1;
+    if (isRecord) Save.bestHaul = total;
     Save.save();
     Save.flush();          // 一局结束，立刻落盘，不等节流
 
-    const total = lines.reduce((a, b) => a + b.price, 0);
-    const newOnes = this.stats.newItems;
+    const known = Save.codexCount();
+    const totalItems = ITEMS.filter(i => !i.noCodex).length;
+    this._end = {
+      success: !!success,
+      reason: reason || '',
+      mapTitle: (M.map || RAID_MAP).title,
+      time: this.time,
+      tide: M.tideEnabled ? this.tidePhase + 1 : 0,
+      kills: this.stats.kills,
+      found: this.stats.found,
+      keptCount: kept.length,
+      gearCount: kept.filter(s => s.item.equip).length,
+      bagged: bagged,
+      baggedValue: baggedValue,
+      total: total,
+      lost: success ? [] : lost,
+      lostValue: lostValue,
+      lines: lines,
+      newOnes: (this.stats.newItems || []).slice(),
+      known: known,
+      totalItems: totalItems,
+      prevBest: prevBest,
+      isRecord: isRecord
+    };
+    this.endPage('cover');
+    document.getElementById('endVeil').classList.remove('hidden');
+  },
 
-    let html = '';
-    html += '<div class="kicker">' + (success ? 'EXTRACTED' : 'LOST IN THE TIDE') + '</div>';
-    html += '<h1 style="font-size:26px">' + (success ? '撤离成功' : '没能出来') + '</h1>';
-    html += '<div class="sub">' +
-      (success ? '用时 ' + this.fmtTime(this.time) + (M.tideEnabled ? ' · 潮汐第 ' + (this.tidePhase + 1) + ' 阶段' : ' · ' + (M.map||RAID_MAP).title)
-        : (reason || '你倒在了' + (M.map ? M.map.title : '围栏区') + '里')) + '</div>';
+  /* 结算分两页：概览（本局收益 + 最值钱的几件）／明细（统计、丢的、逐件清单）。
+     每次结算都从概览开始，明细要点按钮才进。 */
+  endPage(which) {
+    const card = document.getElementById('endCard');
+    if (!card || !this._end) return;
+    card.innerHTML = which === 'detail' ? this.endDetailHTML() : this.endCoverHTML();
+    const hide = () => document.getElementById('endVeil').classList.add('hidden');
+    const again = document.getElementById('btnAgain');
+    if (again) again.onclick = () => { hide(); Base.open(); };
+    const again2 = document.getElementById('btnAgain2');
+    if (again2) again2.onclick = () => { hide(); Base.open(); };
+    const det = document.getElementById('btnEndDetail');
+    if (det) det.onclick = () => this.endPage('detail');
+    const back = document.getElementById('btnEndBack');
+    if (back) back.onclick = () => this.endPage('cover');
+  },
+
+  /* ---- 第一页：这一趟值多少 ---- */
+  endCoverHTML() {
+    const d = this._end;
+    const head = d.success
+      ? '<div class="kicker">EXTRACTED</div><h1>撤离成功</h1>'
+      : '<div class="kicker">LOST IN THE TIDE</div><h1>没能出来</h1>';
+    const sub = d.success
+      ? d.mapTitle + ' · 用时 ' + this.fmtTime(d.time) + (d.tide ? ' · 潮汐第 ' + d.tide + ' 阶段' : '')
+      : (d.reason || '你倒在了' + d.mapTitle + '里');
+
+    let hero;
+    if (d.success) {
+      hero = '<div class="end-hero">' +
+        '<span class="end-hero-cap">本局收益</span>' +
+        '<span class="end-hero-num">' + formatMoney(d.total) + '</span>' +
+        '<span class="end-hero-sub">带回 ' + d.keptCount + ' 件 · 击杀 ' + d.kills +
+          ' · 开箱 ' + d.found + (d.bagged ? ' · 备弹药物 ' + d.bagged + ' 件' : '') + '</span>' +
+        (d.isRecord ? '<span class="end-record">新纪录 · 上一趟最好 ' + formatMoney(d.prevBest) + '</span>' : '') +
+        '</div>';
+    } else {
+      hero = '<div class="end-hero bad">' +
+        '<span class="end-hero-cap">这一趟的损失</span>' +
+        '<span class="end-hero-num">−' + formatMoney(d.lostValue) + '</span>' +
+        '<span class="end-hero-sub">' +
+          (d.keptCount ? '安全箱保住 ' + d.keptCount + ' 件（' + formatMoney(d.total) + '）' : '安全箱是空的') +
+          ' · 用时 ' + this.fmtTime(d.time) + ' · 击杀 ' + d.kills + ' · 开箱 ' + d.found + '</span>' +
+        '</div>';
+    }
+
+    const top = d.lines.filter(l => l.price > 0).sort((a, b) => b.price - a.price).slice(0, 4);
+    let cards;
+    if (top.length) {
+      cards = '<h2>' + (d.success ? '最值钱的几件' : '保住的这几件') + '</h2><div class="end-cards">' +
+        top.map(l => {
+          const it = l.it;
+          const rar = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)];
+          return '<div class="end-card-item ' + rar.cls + '">' +
+            (l.isNew ? '<em>NEW</em>' : '') +
+            '<span class="ic">' + Icons.bagTag(it, 'ico-bag') + '</span>' +
+            '<b>' + esc(it.short || it.name) + '</b>' +
+            '<i>' + formatMoney(l.price) + '</i>' +
+          '</div>';
+        }).join('') + '</div>';
+    } else {
+      cards = '<div class="tip">' + (d.success
+        ? '这一趟什么都没带出来。'
+        : '安全箱是空的。下次先把最值钱的那件塞进去。') + '</div>';
+    }
+
+    const newBlock = d.newOnes.length
+      ? '<div class="end-new"><span>新收录</span>' +
+        d.newOnes.slice(0, 5).map(x => '<b>' + esc(x.name) + '</b>').join('') +
+        (d.newOnes.length > 5 ? '<span>等 ' + d.newOnes.length + ' 件</span>' : '') + '</div>'
+      : '';
+
+    return head +
+      '<div class="sub">' + esc(sub) + '</div>' +
+      hero + cards + newBlock +
+      '<div class="end-acts">' +
+        '<button id="btnAgain">回 藏 身 处</button>' +
+        '<button id="btnEndDetail" class="ghost">本 局 明 细</button>' +
+      '</div>';
+  },
+
+  /* ---- 第二页：想看数字的人才点进来 ---- */
+  endDetailHTML() {
+    const d = this._end;
+    let html = '<div class="kicker">REPORT</div><h1 style="font-size:22px">本局明细</h1>' +
+      '<div class="sub">' + esc(d.mapTitle) + ' · ' + this.fmtTime(d.time) + '</div>';
 
     html += '<h2>这一趟</h2>';
-    html += '<div class="settle-row"><span>击杀</span><b>' + this.stats.kills + '</b></div>';
-    html += '<div class="settle-row"><span>开过的容器</span><b>' + this.stats.found + '</b></div>';
-    html += '<div class="settle-row"><span>带出物品</span><b>' + kept.length + ' 件 / ' + formatMoney(total) + '</b></div>';
-    if (bagged) {
-      html += '<div class="settle-row"><span>子弹 / 药物留背包</span><b>' +
-        bagged + ' 件 / ' + formatMoney(baggedValue) + '</b></div>';
+    html += '<div class="settle-row"><span>击杀</span><b>' + d.kills + '</b></div>';
+    html += '<div class="settle-row"><span>开过的容器</span><b>' + d.found + '</b></div>';
+    html += '<div class="settle-row"><span>带出物品</span><b>' + d.keptCount + ' 件 / ' + formatMoney(d.total) + '</b></div>';
+    if (d.gearCount) {
+      html += '<div class="settle-row"><span>带出装备</span><b>' + d.gearCount + ' 件 · 已进仓库</b></div>';
     }
-    html += '<div class="settle-row"><span>新收录</span><b>' + newOnes.length + '</b></div>';
-    const gearCount = kept.filter(s => s.item.equip).length;
-    if (gearCount) {
-      html += '<div class="settle-row"><span>带出装备</span><b>' + gearCount + ' 件 · 已进仓库</b></div>';
+    if (d.bagged) {
+      html += '<div class="settle-row"><span>子弹 / 药物留背包</span><b>' + d.bagged + ' 件 / ' + formatMoney(d.baggedValue) + '</b></div>';
     }
+    if (!d.success) {
+      html += '<div class="settle-row"><span>损失</span><b class="bad-val">−' + formatMoney(d.lostValue) + '</b></div>';
+    }
+    html += '<div class="settle-row"><span>新收录</span><b>' + d.newOnes.length + '</b></div>';
     html += '<div class="settle-row"><span>信用点余额</span><b>' + formatMoney(Save.credits) + '</b></div>';
 
-    if (!success && carried.length) {
+    if (d.lost.length) {
       html += '<h2>丢在里面的东西</h2>';
-      for (const s of carried) {
-        html += '<div class="settle-row"><span>' + s.item.name + '</span><b class="dim">' +
-          formatMoney(s.item.price * s.n) + '</b></div>';
+      for (const l of d.lost) {
+        html += '<div class="settle-row"><span>' + esc(l.name) + '</span><b class="dim">' + formatMoney(l.price) + '</b></div>';
       }
-      html += '<div class="tip">安全箱里的 ' + safe.length + ' 件保住了。这就是它存在的理由。</div>';
+      html += '<div class="tip">安全箱里的东西不会掉。这就是它存在的理由。</div>';
     }
 
-    if (kept.length) {
-      html += '<h2>' + (success ? '带回' : '保住的') + '</h2>';
-      for (const l of lines) {
-        const isNew = newOnes.some(x => x.name === l.name.replace(/ ×\d+$/, ''));
-        html += '<div class="settle-row"><span>' + l.name +
-          (isNew ? '<span class="newtag">NEW</span>' : '') +
+    if (d.lines.length) {
+      html += '<h2>' + (d.success ? '带回' : '保住的') + '</h2>';
+      for (const l of d.lines) {
+        html += '<div class="settle-row"><span>' + esc(l.name) +
+          (l.isNew ? '<span class="newtag">NEW</span>' : '') +
+          (l.bag ? '<span class="inbag">留背包</span>' : '') +
           '</span><b>' + formatMoney(l.price) + '</b></div>';
       }
     }
 
-    const known = Save.codexCount();
-    const totalItems = ITEMS.filter(i => !i.noCodex).length;
     html += '<h2>图鉴</h2>';
-    html += '<div class="settle-row"><span>已收录</span><b>' + known + ' / ' + totalItems + '</b></div>';
+    html += '<div class="settle-row"><span>已收录</span><b>' + d.known + ' / ' + d.totalItems + '</b></div>';
     html += '<div class="bar" style="margin-top:8px"><i style="width:' +
-      (known / totalItems * 100) + '%"></i></div>';
-
-    html += '<div class="tip" style="margin-top:18px">弹药和药物留在背包里，下一趟接着用；其它的已经进仓库了，回藏身处可以卖掉换信用点。</div>';
-    html += '<button id="btnAgain">回 藏 身 处</button>';
-
-    const card = document.getElementById('endCard');
-    card.innerHTML = html;
-    document.getElementById('endVeil').classList.remove('hidden');
-
-    document.getElementById('btnAgain').onclick = () => {
-      document.getElementById('endVeil').classList.add('hidden');
-      Base.open();
-    };
+      (d.known / d.totalItems * 100) + '%"></i></div>';
+    html += '<div class="tip" style="margin-top:18px">弹药和药物留在背包里，下一趟接着用；其它的已经进仓库了。</div>';
+    html += '<div class="end-acts">' +
+      '<button id="btnEndBack">返 回</button>' +
+      '<button id="btnAgain2" class="ghost">回 藏 身 处</button>' +
+      '</div>';
+    return html;
   },
 
   fmtTime(s) {
@@ -3431,6 +3543,7 @@ const Save = {
     body: null         // { type:'body',   lv, dur }
   },
   runs: 0,
+  bestHaul: 0,        // 单局带出价值的历史最高（结算页的"新纪录"用）
   codexCount() { return ITEMS.filter(item=>!item.noCodex&&itemGroup(item)==='collectible'&&this.codex[item.id]).length; },
 
   /* 武器位的老格式是 ['rifle','shotgun','pistol']（只有 id，余弹丢失）。
@@ -3461,6 +3574,7 @@ const Save = {
       this.codex = d.codex || {};
       this.stash = Array.isArray(d.stash) ? d.stash : [];
       this.runs = d.runs || 0;
+      this.bestHaul = Number.isFinite(d.bestHaul) ? d.bestHaul : 0;
       // 老存档没有这两个字段，补默认值
       this.credits = (typeof d.credits === 'number') ? d.credits : START_CREDITS;
       this.hp = Number.isFinite(d.hp) ? U.clamp(d.hp, 1, CFG.P.HP) : CFG.P.HP;
@@ -3541,7 +3655,8 @@ const Save = {
         credits: this.credits,
         hp: this.hp,
         gear: this.gear,
-        runs: this.runs
+        runs: this.runs,
+        bestHaul: this.bestHaul
       }));
     } catch (e) { /* localStorage 不可用就算了 */ }
   },
