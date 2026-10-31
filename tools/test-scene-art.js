@@ -33,23 +33,24 @@ const server = http.createServer((req, res) => {
     await page.waitForFunction(keys => keys.every(key => Art.map[key]), entries);
     const specs = await page.evaluate(keys => keys.map(key => {
       const image = Art.map[key], canvas = document.createElement('canvas');
-      canvas.width = canvas.height = 32;
+      canvas.width = image.naturalWidth; canvas.height = image.naturalHeight;
+      const w=canvas.width,h=canvas.height;
       const ctx = canvas.getContext('2d'); ctx.drawImage(image, 0, 0);
-      const pixels = ctx.getImageData(0, 0, 32, 32).data;
+      const pixels = ctx.getImageData(0, 0, w, h).data;
       let visible = 0, padding = 0, opaque = 0, partial = 0;
-      for (let y = 0; y < 32; y++) for (let x = 0; x < 32; x++) {
-        const a = pixels[(y * 32 + x) * 4 + 3];
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        const a = pixels[(y * w + x) * 4 + 3];
         if (a) visible++;
         if (a === 255) opaque++;
         if (a > 0 && a < 255) partial++;
-        if ((x < 2 || y < 2 || x >= 30 || y >= 30) && a) padding++;
+        if ((x < 2 || y < 2 || x >= w-2 || y >= h-2) && a) padding++;
       }
       return { key, width: image.naturalWidth, height: image.naturalHeight, visible, padding, opaque, partial };
     }), entries);
     for (const s of specs) {
-      assert.equal(s.width, 32, s.key); assert.equal(s.height, 32, s.key);
+      const entry=[...manifest.assets,...manifest.optional].find(a=>s.key===a.group+'/'+a.id||a.facing&&s.key.startsWith(a.group+'/'+a.id+'_'));const size=entry.canvas||[32,32];assert.equal(s.width,size[0],s.key);assert.equal(s.height,size[1],s.key);
       assert(s.visible > 16, s.key + ' is empty'); assert.equal(s.partial, 0, s.key);
-      if (s.key.startsWith('tiles/')) assert.equal(s.opaque, 1024, s.key + ' terrain coverage');
+      if (s.key.startsWith('tiles/')) assert.equal(s.opaque, s.width*s.height, s.key + ' terrain coverage');
       else assert.equal(s.padding, 0, s.key + ' transparent margin');
     }
     console.log('OK: all ' + entries.length + ' scene PNGs, dimensions, transparency, terrain coverage');
@@ -168,7 +169,7 @@ const server = http.createServer((req, res) => {
     console.log('OK: character facing/mirroring, valid decoration positions, live render branches');
 
     await page.goto(origin + '/' + encodeURIComponent('美术清单.html'));
-    await page.waitForFunction(() => [...document.images].every(image => image.complete && image.naturalWidth === 32));
+    await page.waitForFunction(() => [...document.images].every(image => image.complete && image.naturalWidth > 0));
     assert.equal(await page.locator('.asset.done').count(), manifest.assets.length + manifest.optional.length);
     await page.screenshot({ path: path.join(output, 'art-sheet.png'), fullPage: true });
 

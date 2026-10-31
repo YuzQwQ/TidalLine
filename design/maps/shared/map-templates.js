@@ -76,7 +76,7 @@
     M: { name: '医疗柜', q: 'fine' },
     R: { name: '电子设备柜', q: 'fine' },
     H: { name: '急救器材箱', q: 'fine' },
-    Q: { name: '通讯设备箱', q: 'fine' },
+    Q: { name: '军用物资箱', q: 'fine' },
     Y: { name: '救援人员背心', q: 'fine' },
 
     B: { name: '小型保险箱', q: 'rich' },

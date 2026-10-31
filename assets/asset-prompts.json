@@ -412,13 +412,13 @@
     {
       "group": "props",
       "id": "crate_comms",
-      "name": "通讯设备箱",
+      "name": "通讯设备箱（旧稿）",
       "priority": 1,
       "subject": "深蓝灰厚壁通讯仪器箱，宽顶面浅色通信波纹图标，银护角，南侧两个金属搭扣，右侧一截盘绕黑线缆。",
       "source": "crate_comms.png",
       "sourceArchive": "assets/container-redraw/sources/crate_comms.png",
       "prompt": "Use case: stylized-concept. Asset: ONE replacement world-container sprite for the 32px-grid top-down game 潮汐线. Reference 1 defines 75-degree overhead orthographic camera and low-saturation pixel style; reference 2 defines one-tile scale. Draw like authentic hand-placed 32x32 pixel art enlarged with nearest-neighbor, big readable pixel clusters, about 12-15 colors, hard edges, no smooth rendering or tiny noisy detail. Fixed camera elevation 75 degrees ABOVE HORIZONTAL (15 degrees off straight down): dominant top surface, south-facing SHORT vertical face only 15-25 percent height, top brighter, front midtone, right edge dark. Top edges horizontal, sides vertical, no diamond isometric rotation or frontal product view. Upper-left light. Whole complete object centered within a logical 28x28 area of a 32x32 square; transparent padding >=2 logical pixels, base near y28. Muted weathered late-20th-century materials, charcoal-colored outline, never pure black. Genuine transparent background; no ground tile, floor, cast shadow, glow, UI, border, captions or surrounding scene. Tiny labels are abstract marks only. Subject: 深蓝灰厚壁通讯仪器箱，宽顶面浅色通信波纹图标，银护角，南侧两个金属搭扣，右侧一截盘绕黑线缆。",
-      "usedFor": "已接入的单格场景容器；详细生成记录见 assets/container-redraw/manifest.json。"
+      "usedFor": "旧稿存档；Q已改用军用物资箱crate_military_supply。"
     },
     {
       "group": "props",
@@ -528,6 +528,19 @@
       "usedFor": "大型保险箱 V，秘藏容器。占地、搜索时间和掉落规则保持原样。",
       "source": "container-large-safe/sources/crate_safe_big.png",
       "generationManifest": "container-large-safe/manifest.json"
+    },
+    {
+      "group": "props",
+      "id": "crate_military_supply",
+      "name": "军用物资箱",
+      "priority": 1,
+      "canvas": [
+        48,
+        48
+      ],
+      "subject": "深橄榄绿低矮厚重军用储物箱，浅色抽象军需标记、金属护角、双搭扣、帆布束带和提手；75°俯视、左上光源、透明背景。",
+      "usedFor": "Q · 优质 · 1格实体 · 2–4次；25%弹药池，75%原物品池。",
+      "source": "container-military-supply/sources/crate_military_supply.png"
     }
   ],
   "optional": [

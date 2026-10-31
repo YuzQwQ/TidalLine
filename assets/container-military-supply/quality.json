@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "ammoLevelPercent": [
+    10.1975,
+    18.1175,
+    32.195,
+    29.6625,
+    9.8275
+  ],
+  "calibers": {
+    "556": 13369,
+    "12g": 13461,
+    "9mm": 13170
+  },
+  "ammoPoolPercent": 24.27528214206683,
+  "counts": [
+    2,
+    4,
+    3
+  ],
+  "checks": [
+    "48px transparent sprite",
+    "unchanged other containers",
+    "runtime one-cell collision",
+    "editor placement undo redo save reopen",
+    "developer/offline",
+    "container sheet"
+  ]
+}

@@ -40,7 +40,7 @@ function thumb(id, name) {
 function card(type) {
   const tier = tiers[type.q];
   const time = quality[type.q].time;
-  const preference = type.cats ? type.cats.map(cat => cats[cat].name).join(' / ') : '通用物品池';
+  const preference = (type.cats ? type.cats.map(cat => cats[cat].name).join(' / ') : '通用物品池') + (type.ammoPool ? ' / 弹药池' : '');
   const visual = artwork.find(a => a.id === type.art);
   return `<article class="item container-card" data-container="${esc(type.ch)}" style="--rc:${tier.color}">
     <div class="thumb container-thumb">${thumb(type.art, type.name)}</div>
@@ -49,11 +49,12 @@ function card(type) {
       <div class="sub"><code>${esc(type.art)}.png</code> · 地图标记 <code>${esc(type.ch)}</code></div>
       <dl class="container-facts">
         <div><dt>开箱</dt><dd>${time === 0 ? '即时打开' : time + ' 秒'}</dd></div>
-        <div><dt>抽取次数</dt><dd>${counts[type.q].join('–')} 次</dd></div>
+        <div><dt>抽取次数</dt><dd>${(type.rolls || counts[type.q]).join('–')} 次</dd></div>
         <div><dt>掉落偏好</dt><dd>${esc(preference)}</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
       <div class="desc">${tier.rule}${type.cats ? '偏好类别的抽取权重 ×' + catPref + '，也可能获得其他类别物品。' : ''}</div>
+      ${type.ammoPool ? '<div class="vis"><b>独立弹药池</b>每次抽取25%进入弹药池，75%沿用原有物品池。弹药等级：寻常10% / 良品18% / 上乘32% / 稀见30% / 珍罕10%（红档并入金档）；三种口径等概率。5.56mm与9mm每组10–20发，12号霰弹每组4–8发。</div>' : ''}
       <details class="container-positions"><summary>当前地图 ${type.positions.length} 个 · 查看位置</summary><p>${type.positions.map(([x, y]) => `<code>(${x}, ${y})</code>`).join(' ') || '当前地图尚未放置'}</p></details>
       ${visual ? `<div class="vis"><b>画什么</b>${esc(visual.subject)}</div>` : ''}
     </div>

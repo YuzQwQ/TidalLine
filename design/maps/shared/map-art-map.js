@@ -68,7 +68,7 @@
     Z: 'crate_trash', W: 'crate_wastepaper', b: 'crate_cardboard', U: 'crate_workwear',
     C: 'crate_fast', T: 'crate_tool', N: 'crate_bedside', e: 'crate_staff', m: 'crate_satchel',
     L: 'crate_std', J: 'crate_luggage', F: 'crate_filing', D: 'crate_schoolbag',
-    M: 'crate_med', R: 'crate_elec', H: 'crate_emergency', Q: 'crate_comms', Y: 'crate_rescuevest',
+    M: 'crate_med', R: 'crate_elec', H: 'crate_emergency', Q: 'crate_military_supply', Y: 'crate_rescuevest',
     B: 'crate_heavy', K: 'crate_supply', G: 'crate_jewelry', A: 'crate_leatherbag',
     V: 'crate_safe_big', I: 'crate_sealed', O: 'crate_diplomatic'
   };

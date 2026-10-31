@@ -594,16 +594,27 @@ const Loot = {
     return { item: pool[0], n: 1 };
   },
 
-  fill(quality, preferredCats) {
-    const [a, b] = BOX_COUNT[quality] || [1, 2];
+  rollAmmo(quality, options) {
+    const pct = CONTAINER_QUALITY[quality].pct.slice(0,5);
+    pct[4] += CONTAINER_QUALITY[quality].pct[5] || 0;
+    let roll = Math.random() * pct.reduce((a,b)=>a+b,0), level = 5;
+    for(let i=0;i<pct.length;i++){roll-=pct[i];if(roll<0){level=i+1;break;}}
+    const caliber=U.pick(Object.keys(options.count)),item=ammoItem(caliber,level);
+    return {item,n:U.randInt(...options.count[caliber])};
+  },
+
+  fill(quality, preferredCats, type) {
+    const [a, b] = (type && type.rolls) || BOX_COUNT[quality] || [1, 2];
     const n = U.randInt(a, b);
     const out = [];
     const seen = new Set();
     for (let i = 0; i < n; i++) {
       /* 同一个容器尽量不出重复条目；重抽几次仍撞上就照收，
          否则"抽 2–3 件"会被悄悄打折成 1 件。 */
-      let r = this.roll(quality, preferredCats);
-      for (let k = 0; k < 8 && seen.has(r.item.id); k++) r = this.roll(quality, preferredCats);
+      const ammo=type&&type.ammoPool&&Math.random()<type.ammoPool.chance;
+      // 先固定本次抽取池；弹药不去重，避免将25%池占比或等级曲线悄悄改变。
+      let r = ammo ? this.rollAmmo(quality,type.ammoPool) : this.roll(quality, preferredCats);
+      for (let k = 0; !ammo && k < 8 && seen.has(r.item.id); k++) r = this.roll(quality, preferredCats);
       seen.add(r.item.id);
       out.push(r);
     }

@@ -460,7 +460,7 @@
     {
       "group": "props",
       "id": "crate_comms",
-      "name": "通讯设备箱",
+      "name": "通讯设备箱（旧稿）",
       "role": "scene-component"
     },
     {
@@ -912,6 +912,17 @@
       "name": "大型保险箱",
       "role": "scene-component",
       "containerType": "V"
+    },
+    {
+      "group": "props",
+      "id": "crate_military_supply",
+      "name": "军用物资箱",
+      "role": "scene-component",
+      "containerType": "Q",
+      "footprint": [
+        1,
+        1
+      ]
     }
   ]
 }

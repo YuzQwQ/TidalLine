@@ -1,0 +1,40 @@
+{
+  "generator": "Built-in image_gen",
+  "canvas": [
+    48,
+    48
+  ],
+  "containerType": "Q",
+  "assets": [
+    {
+      "id": "crate_military_supply",
+      "name": "军用物资箱",
+      "source": "sources/crate_military_supply.png",
+      "target": "assets/props/crate_military_supply.png",
+      "prompt": "Use case: stylized-concept. Create ONE replacement world-container sprite for the high-angle top-down pixel-art game 潮汐线. Subject: a heavy MILITARY SUPPLY CRATE, NOT a communications instrument case. Authentic coarse48x48 pixel art, simplified realistic low-saturation retro-industrial post-disaster materials, readable big hard square clusters, 16-20 restrained colors, clear silhouette suited to dark grey-green terrain. Camera75degrees ABOVE HORIZONTAL, orthographic grid alignment, top surface dominant about70%, SOUTH short front face30%, small darker right edge. Upper-left light. Box is rectangular, low, squat, sturdy and heavy: dark olive-green and grey-green steel body, slightly broad flat lid, chunky silver-grey metal corner guards, two clearly visible metal latches on front lip, reinforced hinge ends. Sparse chipped paint, scuffed edges and old handling wear. A small simple ivory stencilled SUPPLY SYMBOL on top, e.g. abstract box-outline with two short bars; no readable letters, numbers, brand logo or UI text. One short folded khaki canvas strap and a tiny worn tag near side handle, kept attached close to the body, no loose cable or antenna. Prioritize standardized army storage for ammunition, equipment and military supplies. Fixed top brighter / front midtone / side dark; top edges horizontal and depth edges vertical, not diamond isometric, no perspective convergence. Whole intact closed crate centered inside42x42 area of48x48 canvas, >=3px genuine transparent padding. No floor, scene, shadow, people, weapons, loose ammo, bright saturated colors, glowing effects, sci-fi details or UI. Reference1 is original container for scale and pixel-series style only; redesign the geometry/material as a military supply crate. Reference2 defines project camera.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-25813b70-9b3e-4d6f-9d23-358b16a822d2.png",
+      "fit": [
+        42,
+        42
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        "sources/previous-crate_comms.png",
+        "assets/chars/guard_s.png"
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "spriteSize": [
+        42,
+        32
+      ],
+      "processing": "alpha crop; nearest-neighbour contain; binary alpha; 16-color quantization"
+    }
+  ]
+}
