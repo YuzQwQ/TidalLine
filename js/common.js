@@ -16,3 +16,14 @@ function esc(s) {
   return String(s == null ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
+
+/* ------------------------------------------------------------
+   当前携带容量
+   装了背包就用背包的容量，没装就是基础 4 格 —— 是替换，不是叠加。
+   调用点遍布局内与藏身处，所以放这里；Save 在 save.js 定义，
+   这个函数只会在运行时被调用，那时它一定已经初始化好了。
+   ------------------------------------------------------------ */
+function bagSlots() {
+  const g = Save.gear && Save.gear.back;
+  return (g && g.slots) || BASE_BAG_SLOTS;
+}

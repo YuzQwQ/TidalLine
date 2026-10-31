@@ -390,11 +390,11 @@ Object.assign(Game, {
         if (dImg) {
           // 共用完整门框，每格单独裁切和暗化，避免另一半门泄漏到未探索区域。
           c.save();
-          c.beginPath();c.rect(sx,sy,TS,TS);c.clip();
+          const rect=Art.doorRect(t.door,dImg,x,y,TS);
+          const top=(t.door.axis==='horizontal'||!t.door.cells||y===t.door.y)&&y>0&&M.seen[M.idx(x,y-1)]?rect.lift:0;
+          c.beginPath();c.rect(sx,sy-top,TS,TS+top);c.clip();
           c.globalAlpha = bright;
-          const span=t.door.cells ? t.door.cells.length : 1;
-          const dx=t.door.cells?t.door.x*TS-camX:sx,dy=t.door.cells?t.door.y*TS-camY:sy;
-          c.drawImage(dImg, dx, dy, t.door.axis==='horizontal'?TS*span:TS, t.door.axis==='vertical'?TS*span:TS);
+          c.drawImage(dImg,rect.x-camX,rect.y-camY,rect.w,rect.h);
           c.restore();
           continue;
         }
@@ -747,9 +747,9 @@ Object.assign(Game, {
     c.textAlign = 'right';
     c.fillStyle = 'rgba(8,14,12,0.78)';
     c.fillRect(CFG.VIEW_W - 148, CFG.VIEW_H - 52, 134, 38);
-    c.fillStyle = P.bag.slots.length >= CFG.BAG.SLOTS ? '#c98a5e' : '#9fb5ae';
+    c.fillStyle = P.bag.slots.length >= bagSlots() ? '#c98a5e' : '#9fb5ae';
     c.font = '11px monospace';
-    c.fillText('背包 ' + P.bag.slots.length + ' / ' + CFG.BAG.SLOTS, CFG.VIEW_W - 26, CFG.VIEW_H - 33);
+    c.fillText('背包 ' + P.bag.slots.length + ' / ' + bagSlots(), CFG.VIEW_W - 26, CFG.VIEW_H - 33);
     c.fillStyle = '#4f665f';
     c.fillText('Tab 打开', CFG.VIEW_W - 26, CFG.VIEW_H - 18);
 

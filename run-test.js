@@ -415,7 +415,7 @@ ok('背包里的枪记住余弹', PG.bag.slots[bi].item.equip.mag === 8);
 // 背包满 / 超重时不硬塞
 const full = PG.bag.slots.slice();
 const junkItem = ITEMS.find(i => i.id === 'life01');
-while (PG.bag.slots.length < CFG.BAG.SLOTS) PG.bag.slots.push({ item: junkItem, n: 1 });
+while (PG.bag.slots.length < ctx.bagSlots()) PG.bag.slots.push({ item: junkItem, n: 1 });
 const corpseD = { items: [{ gear: GEAR.make('body', 2) }] };
 Game.openLoot(corpseD, true);
 Game.takeGear(corpseD.items[0], 0);

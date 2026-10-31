@@ -247,8 +247,9 @@ const Game = {
       if (!it) continue;
       let ok = false;
       if (e.gear) {
-        ok = this.player.bag.slots.length < CFG.BAG.SLOTS &&
-             this.player.bag.weight() + it.w <= CFG.BAG.CARRY + 1e-6;
+        /* 装备走 canAdd，这样背包（不能套娃）和其它规则都在一处判断 */
+        const chk = this.player.bag.canAdd(it, 1);
+        ok = chk.ok;
         if (ok) this.player.bag.slots.push({ item: it, n: 1 });
       } else if (it.cat === 'ammo') {
         const before = this.player.bag.ammoCount(it.id);
@@ -330,6 +331,8 @@ const Game = {
     }
     this.player.helmet = Save.gear.helmet ? Object.assign({}, Save.gear.helmet) : null;
     this.player.body = Save.gear.body ? Object.assign({}, Save.gear.body) : null;
+    /* 背包：拷一份，它只提供容量，没有耐久所以不会在局内变化 */
+    this.player.back = Save.gear.back ? Object.assign({}, Save.gear.back) : null;
 
     // 敌人
     for (const s of map.enemies) {
@@ -402,6 +405,7 @@ const Game = {
     Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo) : null));
     Save.gear.helmet = P.helmet ? Object.assign({}, P.helmet) : null;
     Save.gear.body = P.body ? Object.assign({}, P.body) : null;
+    Save.gear.back = P.back ? Object.assign({}, P.back) : null;
     Save.save();
   },
 

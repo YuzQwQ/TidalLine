@@ -57,12 +57,16 @@ const Base = {
     this.renderStash();
   },
 
-  /* ---- 装备槽的读写：'w0'/'w1'/'w2' 走武器位，'helmet'/'body' 走护甲 ---- */
-  slotKind(key) { return (key && key[0] === 'w') ? 'gun' : 'armor'; },
+  /* ---- 装备槽的读写：'w0'/'w1'/'w2' 走武器位，'helmet'/'body' 走护甲，'back' 是背包 ---- */
+  slotKind(key) {
+    if (key === 'back') return 'bag';
+    return (key && key[0] === 'w') ? 'gun' : 'armor';
+  },
   slotIdx(key) { return parseInt(String(key).slice(1), 10) || 0; },
   slotLabel(key) {
     if (key === 'helmet') return '头盔';
     if (key === 'body') return '护甲';
+    if (key === 'back') return '背包';
     return this.slotIdx(key) < 2 ? '主武器 ' + (this.slotIdx(key) + 1) : '副武器';
   },
   getEquip(key) {
@@ -124,7 +128,24 @@ const Base = {
       el.appendChild(row);
     }
 
-    /* 背包不再是一条"装备"，它有自己的格子区（见 renderBag） */
+    /* 背包：独立槽位。空间只由它决定，所以这里显示当前容量 */
+    {
+      const bag = G.back;
+      const own = this.stashEquip('back').length;
+      const act = this.picker === 'back'
+        ? '<b class="price">↓ 正在挑选</b>'
+        : (own ? '点击从仓库挑选（' + own + ' 个）' : '点击挑选 · 仓库里没有');
+      const row = document.createElement('div');
+      row.className = 'slot' + (bag ? '' : ' empty') + (this.picker === 'back' ? ' open' : '');
+      row.innerHTML =
+        '<div class="slot-ico">' + Icons.gearIcon(bag ? bag.id : 'bag', '包') + '</div>' +
+        '<div class="slot-txt"><b>' + (bag ? bag.name : '未装备背包 · 基础 ' + BASE_BAG_SLOTS + ' 格') + '</b><span>' +
+          (bag ? '容量 ' + bag.slots + ' 格 · ' + bag.w.toFixed(1) + 'kg · ' : '') +
+          act +
+        '</span></div>';
+      row.onclick = () => this.togglePicker('back', row);
+      el.appendChild(row);
+    }
   },
 
   /* ---- 装备槽：点开一个列表，从仓库里挑一件 ----
@@ -132,6 +153,7 @@ const Base = {
 
   /* 仓库里能放进这一位的装备 */
   stashEquip(key) {
+    if (this.slotKind(key) === 'bag') return this.stashBags();
     if (this.slotKind(key) === 'gun') {
       const want = this.slotIdx(key) < 2 ? 'primary' : 'secondary';
       return Save.stash.filter(e => {
@@ -148,6 +170,14 @@ const Base = {
       const it = stashItem(e);
       return it && it.equip && it.equip.kind === 'armor' && it.equip.gear.type === key;
     }).sort((a, b) => stashItem(b).equip.gear.lv - stashItem(a).equip.gear.lv);
+  },
+
+  /* 仓库里能放进背包槽的东西：按容量从大到小 */
+  stashBags() {
+    return Save.stash.filter(e => {
+      const it = stashItem(e);
+      return it && it.equip && it.equip.kind === 'bag';
+    }).sort((a, b) => stashItem(b).equip.slots - stashItem(a).equip.slots);
   },
 
   /* 老名字还留着，测试和别处都按这个找护甲 */
@@ -233,7 +263,9 @@ const Base = {
     if (!key) { box.style.display = 'none'; return; }
     box.style.display = '';
 
-    const isGun = this.slotKind(key) === 'gun';
+    const kind = this.slotKind(key);
+    const isGun = kind === 'gun';
+    const isBag = kind === 'bag';
     const cur = this.getEquip(key);
     const list = this.stashEquip(key);
     const unit = isGun ? '把' : '件';
@@ -248,9 +280,10 @@ const Base = {
        副武器不给这一条 —— 空手进局没法打，必须一直带一把。 */
     if (cur && this.canUnequip(key)) {
       box.appendChild(this.pickerRow({
-        fb: isGun ? '空' : GEAR[key].short,
-        name: isGun ? '不装' : '不穿',
-        sub: '把 ' + cur.name + ' 放回仓库',
+        fb: isGun ? '空' : (isBag ? '包' : GEAR[key].short),
+        name: isGun ? '不装' : (isBag ? '不背' : '不穿'),
+        sub: '把 ' + cur.name + ' 放回仓库' +
+             (isBag ? '（容量回到 ' + BASE_BAG_SLOTS + ' 格）' : ''),
         cls: 'off',
         click: () => this.unequip(key)
       }));
@@ -263,8 +296,11 @@ const Base = {
         ? '仓库里没有别的' + label + '了。'
         : (isGun
             ? '仓库里没有' + label + '。<br>顶部<b>军火商</b>那儿能买到全新的，尸体上也能捡。'
-            : '仓库里没有' + label + '。<br>顶部<b>护甲商人</b>那儿能买到崭新的一~三级，' +
-              '更高级的只能从尸体上带回来。');
+            : isBag
+              ? '仓库里没有' + label + '。<br>顶部<b>护甲商人</b>那儿有前三个档位，' +
+                '更好的只在<b>军用物资箱</b>里出。'
+              : '仓库里没有' + label + '。<br>顶部<b>护甲商人</b>那儿能买到崭新的一~三级，' +
+                '更高级的只能从尸体上带回来。');
       box.appendChild(empty);
     } else {
       for (const e of list) {
@@ -277,6 +313,16 @@ const Base = {
             name: def.name,
             sub: BALLISTICS.caliber(def.caliber).short + ' · ' + def.dmgMin + '–' + def.dmgMax + ' 伤害 · 弹匣 ' + ammo + '/' + def.mag +
                  ' · ' + def.rpm + ' 发/分',
+            click: () => this.equipFromStash(e, key)
+          }));
+        } else if (isBag) {
+          const slots = it.equip.slots;
+          const over = Save.bag.length > slots;
+          box.appendChild(this.pickerRow({
+            icon: it.icon, fb: it.short,
+            name: it.name,
+            sub: '容量 ' + slots + ' 格 · ' + it.w.toFixed(1) + 'kg' +
+                 (over ? ' · <span class="worn">当前 ' + Save.bag.length + ' 件放不下</span>' : ''),
             click: () => this.equipFromStash(e, key)
           }));
         } else {
@@ -316,37 +362,49 @@ const Base = {
     return row;
   },
 
-  /* 装上仓库里那一件（枪或甲）；身上原有的落回仓库，不会消失。
-     武器位存 EQUIP.gun 伪物品（带余弹），护甲位存护甲实例 —— 和之前一致。 */
+  /* 装上仓库里那一件（枪 / 甲 / 背包）；身上原有的落回仓库，不会消失。
+     武器位存 EQUIP.gun 伪物品（带余弹），护甲位存护甲实例，背包位存背包实例。 */
   equipFromStash(entry, key) {
     const it = stashItem(entry);
-    if (!it || !it.equip) return;
+    if (!it || !it.equip) return false;
+    const kind = this.slotKind(key);
     const cur = this.getEquip(key);
-    const isGun = this.slotKind(key) === 'gun';
-    let next, name;
+    let next, name, verb;
 
-    if (isGun) {
+    if (kind === 'gun') {
       const def = WEAPONS[it.equip.gun];
-      if (!def) return;
+      if (!def) return false;
       const want = this.slotIdx(key) < 2 ? 'primary' : 'secondary';
-      if (def.slot !== want) return;                      // 类型不对，别硬塞
-      next = EQUIP.gun(it.equip.gun, it.equip.mag | 0);   // 余弹跟着枪走
-      name = def.name;
+      if (def.slot !== want) return false;                 // 类型不对，别硬塞
+      next = EQUIP.gun(it.equip.gun, it.equip.mag | 0);    // 余弹跟着枪走
+      name = def.name; verb = '装上 ';
+    } else if (kind === 'bag') {
+      if (it.equip.kind !== 'bag') return false;
+      const bag = BACKPACK.make(it.equip.bag);
+      if (!bag) return false;
+      /* 换更小的包：已经带在身上的东西装不下就不让换 */
+      if (Save.bag.length > bag.slots) {
+        this.note('背包空间不足，无法装备该背包。', true);
+        this.closePicker();
+        return false;
+      }
+      next = bag; name = bag.name; verb = '背上 ';
     } else {
       const g = it.equip.gear;
-      if (!g || it.equip.kind !== 'armor') return;
-      next = GEAR.make(key, g.lv, g.dur);                 // 拷一份，仓库那件要移除
-      name = g.name;
+      if (!g || it.equip.kind !== 'armor') return false;
+      next = GEAR.make(key, g.lv, g.dur);                   // 拷一份，仓库那件要移除
+      name = g.name; verb = '穿上 ';
     }
 
     Save.stash = Save.stash.filter(x => x !== entry);
-    if (cur) Save.addGearStash(isGun ? cur : EQUIP.armor(cur));
+    if (cur) Save.addGearStash(kind === 'gun' ? cur : kind === 'bag' ? EQUIP.bag(cur.id) : EQUIP.armor(cur));
     this.setEquip(key, next);
     Save.save();
 
     this.closePicker();
     this.render();
-    this.note((isGun ? '装上 ' : '穿上 ') + name + (cur ? '，' + cur.name + ' 放回仓库' : ''));
+    this.note(verb + name + (cur ? '，' + cur.name + ' 放回仓库' : ''));
+    return true;
   },
 
   /* 卸下：放回仓库，不是销毁。副武器不能卸 */
@@ -354,20 +412,28 @@ const Base = {
     if (!this.canUnequip(key)) {
       this.note('副武器必须带一把手枪 —— 空手进去没法打', true);
       this.closePicker();
-      return;
+      return false;
     }
     const cur = this.getEquip(key);
     if (!cur) { this.closePicker(); return; }
+    /* 卸背包等于容量掉回 4 格，带的东西放不下就不让卸 */
+    if (this.slotKind(key) === 'bag' && Save.bag.length > BASE_BAG_SLOTS) {
+      this.note('背包空间不足：先清到 ' + BASE_BAG_SLOTS + ' 格以内再卸下。', true);
+      this.closePicker();
+      return false;
+    }
     if (Save.stash.length >= STASH_SLOTS) {
       this.note('仓库满了，先卖点东西', true);
-      return;
+      return false;
     }
-    Save.addGearStash(this.slotKind(key) === 'gun' ? cur : EQUIP.armor(cur));
+    const kind = this.slotKind(key);
+    Save.addGearStash(kind === 'gun' ? cur : kind === 'bag' ? EQUIP.bag(cur.id) : EQUIP.armor(cur));
     this.setEquip(key, null);
     Save.save();
     this.closePicker();
     this.render();
     this.note('卸下' + cur.name + '，已放回仓库');
+    return true;
   },
 
   /* ---- 护甲商人：只卖崭新的一~三级 ---- */
@@ -453,6 +519,69 @@ const Base = {
         el.appendChild(cell);
       }
     }
+
+    /* 背包：只出前三档。20 / 24 格那两只要下军用物资箱，商人弄不到 */
+    const bt = document.createElement('div');
+    bt.className = 'shop-cat';
+    bt.textContent = '背包（容量 ' + BAGS.filter(d => d.r <= this.SHOP_BAG_MAX_R).map(d => d.slots).join(' / ') + ' 格）';
+    el.appendChild(bt);
+
+    for (const d of BAGS) {
+      if (d.r > this.SHOP_BAG_MAX_R) continue;
+      const item = EQUIP.bag(d.id);
+      const cell = document.createElement('div');
+      cell.className = 'scell r' + d.r;
+      const ico = Icons.gear[d.id]
+        ? '<img src="' + Icons.gear[d.id].src + '" alt="">'
+        : '<span class="gl">包</span>';
+      cell.innerHTML = ico +
+        '<span class="cn">' + esc(d.short) + '</span>' +
+        '<span class="pr">' + formatMoney(d.price) + '</span>';
+      cell.title = d.name + ' · 容量 ' + d.slots + ' 格 · ' + d.w + 'kg · 右键看详情';
+      cell.onclick = () => this.askBuyBag(d.id, cell);
+      cell.oncontextmenu = (ev) => {
+        ev.preventDefault();
+        Tips.show(item, cell.getBoundingClientRect(), '左键买下');
+      };
+      el.appendChild(cell);
+    }
+  },
+
+  /* 护甲商人最多卖到这一档背包（白绿蓝），紫金靠搜 */
+  SHOP_BAG_MAX_R: 3,
+
+  askBuyBag(id, cell) {
+    const d = BACKPACK.def(id);
+    if (!d) return;
+    Deal.show({
+      kind: 'buy',
+      title: '买入',
+      name: d.name,
+      sub: '容量 ' + d.slots + ' 格 · ' + d.w + 'kg',
+      icon: d.id,
+      short: d.short,
+      price: d.price,
+      can: Save.credits >= d.price && Save.stash.length < STASH_SLOTS,
+      onGo: () => this.buyBag(id)
+    }, cell.getBoundingClientRect());
+  },
+
+  buyBag(id) {
+    const d = BACKPACK.def(id);
+    if (!d) return false;
+    if (d.r > this.SHOP_BAG_MAX_R) return false;        // 商人进不到更高级的货
+    if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return false; }
+    if (Save.credits < d.price) {
+      this.note('买 ' + d.name + ' 还差 ' + formatMoney(d.price - Save.credits), true);
+      return false;
+    }
+    Save.credits -= d.price;
+    Save.addGearStash(EQUIP.bag(id));
+    Save.save();
+    Game.sfx('pickup');
+    this.render();
+    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），在仓库里，回左边背上');
+    return true;
   },
 
   /* 军火商的货架：两个主武器 + 一个副武器，全是崭新的满弹匣；再往下是弹药柜 */
@@ -689,7 +818,10 @@ const Base = {
     const grid = document.getElementById('baseBagGrid');
     if (!grid) return;
     grid.innerHTML = '';
-    for (let i = 0; i < CFG.BAG.SLOTS; i++) {
+    /* 老存档可能带着超过当前容量的东西：多出来的格子照样画出来，
+       让玩家能搬回仓库，别让它们卡在包里看不见 */
+    const cap = Math.max(bagSlots(), Save.bag.length);
+    for (let i = 0; i < cap; i++) {
       const cell = document.createElement('div');
       const e = Save.bag[i];
       const it = e ? stashItem(e) : null;
@@ -715,7 +847,7 @@ const Base = {
 
     const w = Save.bagWeight();
     const meta = document.getElementById('bagMeta');
-    if (meta) meta.textContent = Save.bag.length + ' / ' + CFG.BAG.SLOTS + ' 格 · ' +
+    if (meta) meta.textContent = Save.bag.length + ' / ' + bagSlots() + ' 格 · ' +
       w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
     const bar = document.getElementById('bagBar');
     if (bar && bar.querySelector) {
@@ -737,7 +869,7 @@ const Base = {
       room += Math.max(0, stack - e.n);
     }
     const need = Math.max(0, n - room);
-    if (need > (CFG.BAG.SLOTS - Save.bag.length) * perSlot) return '格子不够';
+    if (need > (bagSlots() - Save.bag.length) * perSlot) return '格子不够';
     return '';
   },
 
@@ -1057,7 +1189,7 @@ const MapSelect = {
     const map=MAP_CATALOG.find(m=>m.id===this.selectedId);
     document.getElementById('mapSelectedName').textContent=map.title;
     const bagN=Save.bag.length, bagW=Save.bagWeight();
-    document.getElementById('mapSupplyCost').textContent='背包 ' + bagN + ' / ' + CFG.BAG.SLOTS +
+    document.getElementById('mapSupplyCost').textContent='背包 ' + bagN + ' / ' + bagSlots() +
       ' 格 · ' + bagW.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
     document.getElementById('mapSelectionHint').textContent=
       '带什么由背包决定：子弹和药物回来还留在包里，其它东西自动入库。';

@@ -1050,6 +1050,39 @@ const BODIES = [
   { lv: 6, name: '攻坚装甲',   short: '攻坚甲', dur: 190, w: 13.0, move: 0.88, price: 650000 }
 ];
 
+/* ------------------------------------------------------------
+   背包：独立的背包槽，只提升携带容量，不加别的属性
+   未装备时是 BASE_BAG_SLOTS 格；装上背包后总容量 = 背包容量，
+   不做「4 + N」的叠加。五档对应白绿蓝紫金。
+   背包不能套娃：塞不进背包格子（Bag.canAdd 会拦），只能回藏身处换。
+   前 3 档护甲商人有售，紫金两档得自己下去找。
+   ------------------------------------------------------------ */
+const BASE_BAG_SLOTS = 4;
+
+const BAGS = [
+  { id: 'bag01', name: '旧帆布挎包',   short: '挎包',  r: 1, slots: 8,  w: 0.7, price: 6000,
+    desc: '翻盖、金属搭扣，肩带磨得发亮。装不下一趟完整的搜刮，但比口袋强。' },
+  { id: 'bag02', name: '民用旅行背包', short: '旅行包', r: 2, slots: 12, w: 1.2, price: 18000,
+    desc: '双肩、分层、拉链没坏。灾前它代表“出门几天”，现在只代表“最好真能带点东西回来”。' },
+  { id: 'bag03', name: '加固登山背包', short: '登山包', r: 3, slots: 16, w: 1.9, price: 45000,
+    desc: '高包体、顶盖、侧袋和束带。它认真考虑过“背着东西走很远会不会累死”。' },
+  { id: 'bag04', name: '战术突击背包', short: '突击包', r: 4, slots: 20, w: 2.8, price: 110000,
+    desc: '满身织带和压缩结构，跑起来不会摇得东倒西歪。多装两盒弹，或者一件能改变下周计划的东西。' },
+  { id: 'bag05', name: '远征模块背包', short: '远征包', r: 5, slots: 24, w: 3.8, price: 260000,
+    desc: '外挂仓、压缩带、金属支撑。宣传语说它“能陪你去地图边缘之外”——现在这句话不太好笑了。' }
+];
+
+const BACKPACK = {
+  list: BAGS,
+  def(id) { return BAGS.find(b => b.id === id) || null; },
+  /* 穿在身上的实例：只留显示与容量要用的字段，没有耐久 */
+  make(id) {
+    const d = this.def(id);
+    if (!d) return null;
+    return { id: d.id, name: d.name, short: d.short, slots: d.slots, w: d.w, price: d.price, r: d.r };
+  }
+};
+
 /* 护甲表的查表工具 */
 const GEAR = {
   helmet: { list: HELMETS, label: '头盔', short: '盔' },
@@ -1138,6 +1171,24 @@ const EQUIP = {
       equip: { kind: 'gun', gun: id, mag: m, ammo: a },
       note: m > 0 ? String(m) : ''
     };
+  },
+
+  /* 背包 id → 伪物品。背包没有耐久，回收价固定半价。
+     容量写在 equip.slots 里，穿回去时直接读它。 */
+  bag(id) {
+    const d = BACKPACK.def(id);
+    if (!d) return null;
+    return {
+      id: 'g_' + d.id,
+      name: d.name, short: d.short,
+      cat: 'gear', r: d.r,
+      w: d.w, price: d.price,
+      sell: this.sellPrice(d.price, 1, 1),
+      stack: 1,
+      icon: d.id,
+      equip: { kind: 'bag', bag: d.id, slots: d.slots },
+      note: d.slots + '格'
+    };
   }
 };
 
@@ -1213,8 +1264,10 @@ const EQUIP = {
 
 
 
-
-
+
+
+
+
 
 /* BEGIN SCENE LIBRARY */
 for(const a of [{"group":"tiles","id":"ground_concrete_plain_01"},{"group":"tiles","id":"ground_concrete_plain_02"},{"group":"tiles","id":"ground_soil_compact_01"},{"group":"tiles","id":"ground_soil_compact_02"},{"group":"props","id":"decal_surface_crack_01"},{"group":"props","id":"decal_surface_damp_01"}]){if(!ART[a.group].includes(a.id))ART[a.group].push(a.id);}

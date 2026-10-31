@@ -18,7 +18,8 @@ const Save = {
   gear: {
     weapons: [EQUIP.gun('rifle', 30), EQUIP.gun('shotgun', 6), EQUIP.gun('pistol', 12)],
     helmet: null,      // { type:'helmet', lv, dur }
-    body: null         // { type:'body',   lv, dur }
+    body: null,        // { type:'body',   lv, dur }
+    back: null         // { id, name, slots, w, price }：决定携带容量，见 bagSlots()
   },
   runs: 0,
   bestHaul: 0,        // 单局带出价值的历史最高（结算页的"新纪录"用）
@@ -65,7 +66,9 @@ const Save = {
       this.gear = {
         weapons: this.migrateWeapons(g.weapons),
         helmet: g.helmet ? GEAR.make('helmet', g.helmet.lv, g.helmet.dur) : null,
-        body: g.body ? GEAR.make('body', g.body.lv, g.body.dur) : null
+        body: g.body ? GEAR.make('body', g.body.lv, g.body.dur) : null,
+        /* 老存档没有背包槽：保持 null，容量回落到基础 4 格 */
+        back: (g.back && BACKPACK.def(g.back.id)) ? BACKPACK.make(g.back.id) : null
       };
 
       this.normalizeStash();
@@ -159,7 +162,8 @@ const Save = {
         // 用当前模板重算价格与回收价，耐久、余弹仍来自旧快照。
         const spec = e.gear.equip;
         const current = spec.kind === 'armor' ? EQUIP.armor(spec.gear)
-          : spec.kind === 'gun' ? EQUIP.gun(spec.gun, spec.mag, spec.ammo) : null;
+          : spec.kind === 'gun' ? EQUIP.gun(spec.gun, spec.mag, spec.ammo)
+          : spec.kind === 'bag' ? EQUIP.bag(spec.bag) : null;
         if (current) gears.push({ id: e.id, n: 1, gear: current });
         continue;
       }

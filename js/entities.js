@@ -72,12 +72,16 @@ class Bag {
 
   canAdd(item, n, cap) {
     n = n || 1;
+    /* 背包不能套背包：容量只由背包槽决定，塞进去也不会变大 */
+    if (item.equip && item.equip.kind === 'bag') {
+      return { ok: false, why: '背包不能塞进背包，回藏身处换装' };
+    }
     // 可堆叠：找同类（容量类物品只和"满的"那堆合并，用过的不并）
     if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
       const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
       if (ex && ex.n + n <= item.stack) return { ok: true, merge: true };
     }
-    if (this.slots.length >= CFG.BAG.SLOTS) return { ok: false, why: '背包满了' };
+    if (this.slots.length >= bagSlots()) return { ok: false, why: '背包满了' };
     if (this.weight() + item.w * n > CFG.BAG.CARRY) return { ok: false, why: '太重了' };
     return { ok: true };
   }
@@ -91,11 +95,12 @@ class Bag {
 
   add(item, n, cap) {
     n = n || 1;
+    if (item.equip && item.equip.kind === 'bag') return false;   // 不套背包
     if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
       const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
       if (ex && ex.n + n <= item.stack) { ex.n += n; return true; }
     }
-    if (this.slots.length >= CFG.BAG.SLOTS) return false;
+    if (this.slots.length >= bagSlots()) return false;
     if (this.weight() + item.w * n > CFG.BAG.CARRY) return false;
     this.slots.push(item.healCap
       ? { item, n, cap: typeof cap === 'number' ? cap : item.healCap }
@@ -153,7 +158,7 @@ class Bag {
       if (left <= 0) return true;
     }
     while (left > 0) {
-      if (this.slots.length >= CFG.BAG.SLOTS) return false;
+      if (this.slots.length >= bagSlots()) return false;
       const put = Math.min(item.stack, left);
       this.slots.push({ item, n: put });
       left -= put;
@@ -177,6 +182,7 @@ class Player {
     this.slot = 0;
     this.helmet = null;
     this.body = null;
+    this.back = null;               // 背包（决定携带容量），startRun 时按配装填
     this.headR = CFG.COMBAT.HEAD_RADIUS;   // 头部判定半径
     this.mag = CFG.WEAPON.mag;
     this.reloadT = 0;
@@ -216,14 +222,18 @@ class Player {
   }
   get ammoId() { const a = this.ammoItem; return a ? a.id : null; }
 
-  /* 总重量 = 背包 + 安全箱 + 身上的武器 + 头盔 + 护甲 */
+  /* 总重量 = 背包里的东西 + 安全箱 + 身上的武器 + 头盔 + 护甲 + 背包自身 */
   get totalWeight() {
     let w = this.bag.weight();
     for (const x of this.weapons) if (x) w += x.w;
     if (this.helmet) w += this.helmet.w;
     if (this.body) w += this.body.w;
+    if (this.back) w += this.back.w;
     return w;
   }
+
+  /* 当前携带容量：装备了背包就用它的格数，否则是基础 4 格（替换，不叠加） */
+  get slots() { return (this.back && this.back.slots) || BASE_BAG_SLOTS; }
 
   get tier() { return weightTier(this.totalWeight); }
 

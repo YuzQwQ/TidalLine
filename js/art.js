@@ -162,6 +162,12 @@ const Art = {
     return this.get('props', key) || this.get('props', base + state);
   },
 
+  doorRect(door, image, x, y, size) {
+    const span=door.cells?door.cells.length:1,lift=image.naturalHeight===48?size/2:0;
+    return {x:(door.cells?door.x:x)*size,y:(door.cells?door.y:y)*size-lift,
+      w:size*(door.axis==='horizontal'?span:1),h:size*(door.axis==='vertical'?span:1)+lift,lift};
+  },
+
   /* 按朝向取角色图，返回 { img, flip, dir, exact } 或 null
      angle 用屏幕坐标系：0 = 朝右(+x)，PI/2 = 朝下(+y)。
      holder 可选，传入实体自身，用于记住上一帧方向做迟滞——

@@ -422,12 +422,13 @@ Object.assign(Game, {
       });
     }
 
-    /* --- 背包（还没开放，占一个位） --- */
+    /* --- 背包：只显示当前容量，局内不能换（回藏身处才能换） --- */
+    const bp = Save.gear.back;
     cells.push({
-      icon: 'bag',
+      icon: bp ? bp.id : 'bag',
       fb: '包',
-      label: '背包',
-      tag: CFG.BAG.SLOTS + '格',
+      label: bp ? bp.short : '背包',
+      tag: bagSlots() + '格',
       click: null
     });
 
@@ -453,7 +454,9 @@ Object.assign(Game, {
     this.renderGearPanel();
     const grid = document.getElementById('bagGrid');
     grid.innerHTML = '';
-    for (let i = 0; i < CFG.BAG.SLOTS; i++) {
+    /* 超容量的老存档也照样画出来，好让玩家搬回仓库 */
+    const bcap = Math.max(bagSlots(), P.bag.slots.length);
+    for (let i = 0; i < bcap; i++) {
       const cell = document.createElement('div');
       const s = P.bag.slots[i];
       if (s) {
@@ -529,7 +532,7 @@ Object.assign(Game, {
             : ' · ' + s.item.w + 'kg') + ' · 左键移回背包 · 右键看详情';
         cell.onclick = () => {
           if (Medical.is(s.item)) { Medical.open(s, 'safe', cell); return; }
-          if (P.bag.slots.length >= CFG.BAG.SLOTS) { this.toast('背包满了'); return; }
+          if (P.bag.slots.length >= bagSlots()) { this.toast('背包满了'); return; }
           P.bag.slots.push(P.bag.safe.splice(i, 1)[0]);
           this.renderBag();
         };

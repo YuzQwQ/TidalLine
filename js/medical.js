@@ -78,7 +78,7 @@ const Medical = {
     }
 
     if (!this.stashLike(where)) {
-      const limit = where === 'safe' ? CFG.BAG.SAFE : CFG.BAG.SLOTS;
+      const limit = where === 'safe' ? CFG.BAG.SAFE : bagSlots();
       if (list.length >= limit) { Game.toast('背包没有空位，先腾一格再拆开用'); return null; }
     }
     entry.n -= 1;
@@ -234,7 +234,7 @@ const Medical = {
       else if (where === 'bag') Game.moveToSafe(Game.player.bag.slots.indexOf(entry));
       else {
         const bag = Game.player.bag;
-        if (bag.slots.length >= CFG.BAG.SLOTS) { Game.toast('背包满了'); return; }
+        if (bag.slots.length >= bagSlots()) { Game.toast('背包满了'); return; }
         this.cancel(); bag.safe.splice(bag.safe.indexOf(entry), 1); bag.slots.push(entry); Game.renderBag();
       }
     });

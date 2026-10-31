@@ -90,6 +90,10 @@ const Tips = {
         }
         rows.push(['余弹', (it.equip.mag || 0) + ' 发']);
       }
+    } else if (it.equip && it.equip.kind === 'bag') {
+      rows.push(['容量', it.equip.slots + ' 格']);
+      rows.push(['装备槽', '背包']);
+      if (Save.gear.back && Save.gear.back.id === it.equip.bag) rows.push(['状态', '当前装备']);
     }
 
     rows.push(['重量', it.w.toFixed(2) + ' kg']);
@@ -238,6 +242,12 @@ function equipDesc(it) {
     return 'Lv' + g.lv + ' 的' + GEAR[g.type].label +
       '。能挡下多少取决于打过来的是几级弹：同级以下基本能挡住，高一级就漏一半，' +
       '高两级往上基本挡不住。耐久磨穿以后就只剩自重。';
+  }
+  if (it.equip.kind === 'bag') {
+    const extra = it.equip.slots - BASE_BAG_SLOTS;
+    return '装上它，携带容量从基础 ' + BASE_BAG_SLOTS + ' 格变成 ' + it.equip.slots +
+      ' 格（多 ' + extra + ' 格，不是叠加）。\n\n' +
+      '背包不能套背包，也不能在局内更换 —— 换了更小的包而身上的东西放不下，会被拦下。';
   }
   const w = WEAPONS[it.equip.gun];
   if (!w) return '';

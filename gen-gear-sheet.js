@@ -14,10 +14,10 @@ vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/config.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/data.js'), 'utf8'), ctx);
 vm.runInContext(
-  'globalThis.WEAPONS=WEAPONS;globalThis.HELMETS=HELMETS;globalThis.BODIES=BODIES;', ctx);
+  'globalThis.WEAPONS=WEAPONS;globalThis.HELMETS=HELMETS;globalThis.BODIES=BODIES;' +
+  'globalThis.BAGS=BAGS;globalThis.BASE_BAG_SLOTS=BASE_BAG_SLOTS;globalThis.RARITY=RARITY;', ctx);
 
-const { WEAPONS, HELMETS, BODIES } = ctx;
-const BAG = vm.runInContext('({ slots: CFG.BAG.SLOTS, carry: CFG.BAG.CARRY })', ctx);
+const { WEAPONS, HELMETS, BODIES, BAGS, BASE_BAG_SLOTS, RARITY } = ctx;
 
 const GEAR_DIR = path.join(dir, 'assets', 'gear');
 const hasIcon = id => fs.existsSync(path.join(GEAR_DIR, id + '.png'));
@@ -48,7 +48,14 @@ const VISUAL = {
   body5: '重型防弹衣，加厚插板 + 立领护颈 + 护裆片 + 一圈口袋。整件变宽、变方、有明显的厚度立面。',
   body6: '攻坚装甲，硬质外骨骼式：分块装甲片、硬领、肩甲、螺栓和液压管。剪影最宽最厚，一眼就是"重装"。',
 
-  bag: '单格帆布/尼龙背包，正面一个翻盖 + 两条压缩带。（暂未开放，可最后再画）'
+  bag: '单格帆布/尼龙背包，正面一个翻盖 + 两条压缩带。（通用占位图）',
+
+  /* 背包五档：剪影要能一眼分出容量大小 —— 从扁平小挎包一路长到带外挂仓的大包 */
+  bag01: '一只旧军绿色或黄褐色帆布单肩挎包，包体偏扁，翻盖结构，正面一枚金属搭扣，肩带较长，边角有轻微磨损和褪色感。',
+  bag02: '一只蓝灰色或深青色尼龙双肩背包，带前置拉链袋、双肩带和顶部提手，轮廓比 bag01 更饱满，结构更现代。',
+  bag03: '一只墨绿色或灰绿色登山背包，包体较高，有顶盖、侧袋、卷带和少量外挂结构，整体更厚实，给人结实耐用的感觉。',
+  bag04: '一只深橄榄绿或深灰绿色战术双肩包，正面横向织带、压缩带、厚实肩带和多个分仓，外形紧凑硬朗。',
+  bag05: '一只大型深石墨色或黑灰色模块化背包，包体厚实，结构分明，带外挂仓、压缩带、金属支撑感和少量深翡翠色识别条，高端但仍在 90 年代科技水平内。'
 };
 
 function esc(s) {
@@ -78,7 +85,23 @@ function weaponCard(key) {
     </div>`;
 }
 
-/* ---- 护甲卡（头盔 / 身体共用） ---- */
+/* ---- 背包卡：一档一张，容量与重量各不同 ---- */
+function bagCard(b) {
+  const id = b.id;
+  const tag = RARITY.find(r => r.k === b.r);
+  const tagName = tag ? tag.name : '寻常';
+  return `
+    <div class="item lv${b.r}">
+      <div class="thumb">${thumb(id)}</div>
+      <div class="meta">
+        <div class="name">${esc(b.name)}<i class="tag">${esc(tagName)} · ${b.slots} 格</i><i class="tag dim">${esc(b.short)}</i></div>
+        <div class="sub"><code>${esc(id)}.png</code> · 携带容量 <b class="dr">${b.slots} 格</b> · ${b.w}kg · ${money(b.price)}</div>
+        <div class="vis"><b>画什么</b>${esc(VISUAL[id] || '')}</div>
+        <div class="vis"><b>说明</b>${esc(b.desc || '')}</div>
+      </div>
+    </div>`;
+}
+
 function armorCard(type, g) {
   const id = type === 'helmet' ? lid(g.lv) : bid(g.lv);
   const tag = type === 'helmet' ? '头盔' : '身体护甲';
@@ -155,16 +178,9 @@ const html = `<!DOCTYPE html>
 </section>
 
 <section class="cat">
-  <h2>背包<em>backpack</em><i>1 张 · 可最后画</i></h2>
+  <h2>背包<em>backpack</em><i>${BAGS.length} 张 · 决定携带容量</i></h2>
   <div class="grid">
-    <div class="item">
-      <div class="thumb">${thumb('bag')}</div>
-      <div class="meta">
-        <div class="name">单格背包<i class="tag dim">暂未开放</i></div>
-        <div class="sub"><code>bag.png</code> · 当前固定 ${BAG.slots} 格 / 负重上限 ${BAG.carry} kg · 功能未接入</div>
-        <div class="vis"><b>画什么</b>${esc(VISUAL.bag)}</div>
-      </div>
-    </div>
+    ${BAGS.map(b => bagCard(b)).join('')}
   </div>
 </section>
 
