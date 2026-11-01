@@ -33,18 +33,18 @@ test('五档背包的容量与稀有度单调递增', () => {
   }
   assert.equal(BAGS[0].slots, 8);
   assert.equal(BAGS[4].slots, 24);
-  assert.equal(BASE_BAG_SLOTS, 4);
+  assert.equal(BASE_BAG_SLOTS, 6);
 });
 
-test('未装备背包时容量是基础 4 格', () => {
+test('未装备背包时容量是基础 6 格', () => {
   fresh();
-  assert.equal(bagSlots(), 4);
+  assert.equal(bagSlots(), 6);
 });
 
 test('装备后的容量就是背包容量，不叠加基础格', () => {
   fresh();
   Save.gear.back = BACKPACK.make('bag03');
-  assert.equal(bagSlots(), 16, '不是 4 + 16');
+  assert.equal(bagSlots(), 16, '不是 6 + 16');
   Save.gear.back = BACKPACK.make('bag05');
   assert.equal(bagSlots(), 24);
 });
@@ -96,20 +96,20 @@ test('东西正好等于新容量时可以换', () => {
 });
 
 /* ---------- 4. 卸下 ---------- */
-test('卸下背包：东西不超过 4 件时成功，容量回到基础值', () => {
+test('卸下背包：东西不超过基础格数时成功，容量回到基础值', () => {
   fresh();
   Save.gear.back = BACKPACK.make('bag02');
   Save.bag = [{ id: 'life01', n: 1 }, { id: 'life06', n: 1 }];
   Base.unequip('back');
   assert.equal(Save.gear.back, null);
-  assert.equal(bagSlots(), 4);
+  assert.equal(bagSlots(), 6);
   assert.equal(Save.stash.filter(e => e.gear && e.gear.equip.kind === 'bag').length, 1, '背包进了仓库');
 });
 
-test('卸下背包：东西超过 4 件时拒绝', () => {
+test('卸下背包：东西超过基础格数时拒绝', () => {
   fresh();
   Save.gear.back = BACKPACK.make('bag02');
-  for (let i = 0; i < 5; i++) Save.bag.push({ id: 'life01', n: 1 });
+  for (let i = 0; i < 7; i++) Save.bag.push({ id: 'life01', n: 1 });
   Base.unequip('back');
   assert.ok(Save.gear.back, '还在身上');
   assert.equal(Save.gear.back.slots, 12);
@@ -155,7 +155,7 @@ test('存档往返保留背包槽', () => {
 test('老存档没有背包槽时回落到基础容量', () => {
   fresh();
   Save.gear.back = null;
-  assert.equal(bagSlots(), 4);
+  assert.equal(bagSlots(), 6);
 });
 
 /* ---------- 8. 商人供货 ---------- */

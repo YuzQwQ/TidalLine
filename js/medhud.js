@@ -195,6 +195,7 @@ const MedWheel = {
     const gs = MedQuick.groups();
     if (!gs.length) { Game.toast('背包里没有可用的医疗品'); return false; }
 
+    if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     this.sectors = gs;
     this.bind();
     this.open_ = true;
@@ -327,10 +328,10 @@ const MedWheel = {
     c.textBaseline = 'middle';
     c.fillStyle = '#dbe5e1';
     c.font = 'bold 14px "Microsoft YaHei", sans-serif';
-    c.fillText('医疗物品', cx, cy - 6);
+    c.fillText(this.title || '医疗物品', cx, cy - 6);
     c.fillStyle = '#6f8a82';
     c.font = '10px "Microsoft YaHei", sans-serif';
-    c.fillText(this.sel >= 0 ? '松开 5 使用' : '移动鼠标选择', cx, cy + 13);
+    c.fillText(this.sel >= 0 ? (this.confirmText || '松开 5 使用') : '移动鼠标选择', cx, cy + 13);
   }
 };
 
@@ -455,13 +456,64 @@ const MedHud = {
     MedBar.refresh();
     HealHud.frame();
     if (MedWheel.isOpen()) MedWheel.draw();
+    if (typeof AmmoWheel !== 'undefined' && AmmoWheel.isOpen()) AmmoWheel.draw();
   },
   reset() {
     MedQuick.reset();
+    if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     MedBar._id = undefined;
   },
   /* 给测试和外部用的一个小入口：模拟一次完整的短按/长按 */
   press() { return MedQuick.press(); },
   release() { return MedQuick.release(); },
   tick(dt) { MedQuick.tick(dt); }
+};
+
+/* 复用医疗轮盘的显示和鼠标命中，弹药选择使用独立状态与画布。 */
+const AmmoWheel = Object.assign(Object.create(MedWheel), {
+  open_: false, sectors: [], sel: -1, _cv: null, _bound: false,
+  title: '优先弹种', confirmText: '松开 R 退弹并装填',
+  cv() {
+    if (!this._cv) {
+      const source = document.getElementById('medWheel');
+      if (!source) return null;
+      const cv = source.cloneNode(false); cv.id = 'ammoWheel';
+      source.parentNode.appendChild(cv); this._cv = cv;
+    }
+    return this._cv;
+  },
+  open() {
+    const p = Game.player;
+    if (Game.state !== 'playing' || !p || p.dead || !p.weapons[p.slot]) return false;
+    const ids = [...new Set([...p.bag.ammoStacks(p.weapon.caliber).map(s => s.item.id), ...p.roundsFor(p.weapon, p.mag)])];
+    if (!ids.length) { Game.toast('背包里没有同口径弹药'); return false; }
+    MedQuick.cancel();
+    this.sectors = ids.map(id => ({id, item: AMMO_BY_ID[id], text: '备弹 ' + p.bag.ammoCount(id) + ' · 匣内 ' + p.weapon.rounds.filter(x=>x===id).length}));
+    this.weapon = p.weapon;
+    this.bind(); this.open_ = true; this.sel = -1;
+    this.cv().style.display = 'block'; Game.input.mouseDown = false;
+    this.sel = this.hitTest(Game.input.mx, Game.input.my); this.draw(); return true;
+  },
+  confirm() {
+    const sec = this.open_ && this.sectors[this.sel], weapon = this.weapon;
+    this.close();
+    return !!(sec && Game.state === 'playing' && Game.player.weapon === weapon && Game.player.loadAmmo(sec.id));
+  }
+});
+const AmmoQuick = {
+  pressing: false, hold: 0, longFired: false,
+  press() { if (this.pressing) return; this.pressing = true; this.hold = 0; this.longFired = false; },
+  release() {
+    if (!this.pressing) return false;
+    const long = this.longFired; this.pressing = false;
+    if (Game.state !== 'playing' || Game.player?.dead) { this.cancel(); return false; }
+    if (long) return AmmoWheel.confirm();
+    return Game.player.tryReload();
+  },
+  tick(dt) {
+    if (Game.state !== 'playing' || Game.player?.dead) { this.cancel(); return; }
+    if (this.pressing && !this.longFired && (this.hold += dt) >= .25) { this.longFired = true; AmmoWheel.open(); }
+  },
+  abortWheel() { if (!AmmoWheel.isOpen()) return false; AmmoWheel.close(); return true; },
+  cancel() { this.pressing = false; this.hold = 0; this.longFired = false; AmmoWheel.close(); }
 };

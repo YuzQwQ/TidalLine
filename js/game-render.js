@@ -30,6 +30,7 @@ Object.assign(Game, {
     this.renderEntities(c, camX, camY);
     this.renderRaisedWalls(c, camX, camY, true);
     this.renderCanopies(c, camX, camY);
+    this.renderFog(c, camX, camY);
     this.renderParticles(c, camX, camY);
     this.renderNoiseEdge(c);
     this.renderHUD(c);
@@ -99,6 +100,20 @@ Object.assign(Game, {
     }
   },
 
+  /* 当前观察决定亮度；不再区分从未到访和曾经探索。 */
+  renderFog(c, camX, camY) {
+    const size=CFG.TILE;
+    c.save();
+    c.fillStyle='rgba(4,8,7,'+(1-CFG.FOV.BRIGHT_FOG)+')';
+    const x0=Math.max(0,Math.floor(camX/size)),y0=Math.max(0,Math.floor(camY/size));
+    const x1=Math.min(M.W,Math.ceil((camX+CFG.VIEW_W)/size));
+    const y1=Math.min(M.H,Math.ceil((camY+CFG.VIEW_H)/size));
+    for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++) {
+      if(!M.visible[M.idx(x,y)])c.fillRect(x*size-camX,y*size-camY,size,size);
+    }
+    c.restore();
+  },
+
   renderTerrain(c, camX, camY) {
     const TS = CFG.TILE;
     const x0 = Math.floor(camX / TS), y0 = Math.floor(camY / TS);
@@ -114,14 +129,8 @@ Object.assign(Game, {
         const sx = x * TS - camX;
         const sy = y * TS - camY;
 
-        // 未探索：统一纯色，不给任何结构信息
-        if (!M.seen[i]) {
-          c.fillStyle = '#0a1210';
-          c.fillRect(sx, sy, TS, TS);
-          continue;
-        }
-
-        let bright = M.visible[i] ? CFG.FOV.BRIGHT_NOW : CFG.FOV.BRIGHT_MEM;
+        // 场景始终绘制，当前未观察区域由统一暗层覆盖。
+        const bright = CFG.FOV.BRIGHT_NOW;
 
         // 底色：墙明显比地板暗，让"能不能走"一眼分得清
         let col;
@@ -171,7 +180,7 @@ Object.assign(Game, {
         // 连续墙网只在暴露边画立面；相邻墙之间不画独立方框。
         // 墙体在地面全部绘完后统一绘制，防止下一格地面擦掉加高部分。
 
-        // 岸线、桥栏、玻璃和断墙端头随所在格一起进入视野/记忆层。
+        // 岸线、桥栏、玻璃和断墙端头与地面共用观察暗层。
         for (const id of t.overlays) {
           const image=Art.get('props',id);
           if(image)c.drawImage(image,sx,sy,TS,TS);
@@ -183,7 +192,7 @@ Object.assign(Game, {
           c.fillRect(sx, sy, TS, TS);
         }
 
-        // 记忆层保留相同立面，只暗化；不逐格描框切碎连续墙顶。
+        // 不逐格描框切碎连续墙顶，亮度交给观察暗层。
       }
     }
     this.renderRaisedWalls(c,camX,camY);
@@ -193,11 +202,10 @@ Object.assign(Game, {
     const size=CFG.TILE;
     for(let y=Math.max(0,Math.floor(camY/size));y<Math.min(M.H,Math.ceil((camY+CFG.VIEW_H)/size)+1);y++)
       for(let x=Math.max(0,Math.floor(camX/size));x<Math.min(M.W,Math.ceil((camX+CFG.VIEW_W)/size));x++){
-        const t=M.at(x,y),i=M.idx(x,y);if(!Art.wallCell(t)||!M.seen[i])continue;
+        const t=M.at(x,y);if(!Art.wallCell(t))continue;
         const edges=Art.wallEdges(x,y),sx=x*size-camX,sy=y*size-camY;
-        if(overhang&&(!edges.north||y===0||M.at(x,y-1).door||M.at(x,y-1).wallCap||M.at(x,y-1).terrainCh==='w'||!M.seen[M.idx(x,y-1)]))continue;
-        const bright=Math.min(M.visible[i]?CFG.FOV.BRIGHT_NOW:CFG.FOV.BRIGHT_MEM,
-          overhang?(M.visible[M.idx(x,y-1)]?CFG.FOV.BRIGHT_NOW:CFG.FOV.BRIGHT_MEM):1);
+        if(overhang&&(!edges.north||y===0||M.at(x,y-1).door||M.at(x,y-1).wallCap||M.at(x,y-1).terrainCh==='w'))continue;
+        const bright=CFG.FOV.BRIGHT_NOW;
         c.save();c.beginPath();c.rect(sx,overhang?sy-size/2:sy,size,overhang?size/2:size);c.clip();
         // 加高区域已为实体，无需再按玩家位置淡化。
         Art.drawWallFaces(c,sx,sy,size,edges);
@@ -225,12 +233,10 @@ Object.assign(Game, {
       if(prop.canopy)continue;
       const tile = M.grid[prop.y] && M.grid[prop.y][prop.x];
       if (!tile || tile.ch === '#') continue;
-      const cells=M.propCells(prop),seen=cells.some(([x,y])=>M.seen[y*M.W+x]);
-      if (!seen) continue;
       const image = Art.prop(prop);
       if (!image) continue;
       c.save();
-      c.globalAlpha = cells.some(([x,y])=>M.visible[y*M.W+x]) ? 0.9 : 0.3;
+      c.globalAlpha = 0.9;
       if (M.waterDepth(prop.x, prop.y) > 1.05) c.globalAlpha *= 0.4;
       const rect=Art.propRect(prop,image,TS);
       c.drawImage(image,rect.sx,rect.sy,rect.sw,rect.sh,rect.x-camX,rect.y-camY,rect.w,rect.h);
@@ -240,9 +246,8 @@ Object.assign(Game, {
     // 撤离点
     for (const ex of M.extracts) {
       const i = ex.y * M.W + ex.x;
-      if (!M.seen[i]) continue;
       const sx = ex.x * TS - camX, sy = ex.y * TS - camY;
-      const a = M.visible[i] ? 0.9 : 0.3;
+      const a = 0.9;
       const pulse = 0.55 + 0.45 * Math.sin(this.time * 3);
       const exImg = Art.get('props', 'exit');
       if (exImg) {
@@ -267,17 +272,8 @@ Object.assign(Game, {
     // 容器
     for (const b of this.boxes) {
       const i = b.ty * M.W + b.tx;
-      if (!M.seen[i]) continue;
       const vis = M.visible[i];
-      if (!vis && !b.searched) {
-        // 记忆里的轮廓
-        const sx = b.tx * TS - camX, sy = b.ty * TS - camY;
-        c.strokeStyle = 'rgba(120,160,148,0.22)';
-        c.lineWidth = 1;
-        c.strokeRect(sx + 8, sy + 8, TS - 16, TS - 16);
-        continue;
-      }
-      if (!vis) continue;
+      if (b.pile && !vis) continue;
 
       const sx = b.tx * TS - camX, sy = b.ty * TS - camY;
 
@@ -381,17 +377,16 @@ Object.assign(Game, {
         const t = M.grid[y][x];
         if (!t.door) continue;
         const i = y * M.W + x;
-        if (!M.seen[i]) continue;
         const sx = x * TS - camX, sy = y * TS - camY;
-        const bright = M.visible[i] ? 1 : 0.4;
+        const bright = 1;
         const safe = t.door.safe;
 
         const dImg = Art.door(t.door);
         if (dImg) {
-          // 共用完整门框，每格单独裁切和暗化，避免另一半门泄漏到未探索区域。
+          // 共用完整门框，每格裁切；观察暗层统一覆盖门与周围地面。
           c.save();
           const rect=Art.doorRect(t.door,dImg,x,y,TS);
-          const top=(t.door.axis==='horizontal'||!t.door.cells||y===t.door.y)&&y>0&&M.seen[M.idx(x,y-1)]?rect.lift:0;
+          const top=(t.door.axis==='horizontal'||!t.door.cells||y===t.door.y)&&y>0?rect.lift:0;
           c.beginPath();c.rect(sx,sy-top,TS,TS+top);c.clip();
           c.globalAlpha = bright;
           c.drawImage(dImg,rect.x-camX,rect.y-camY,rect.w,rect.h);
@@ -428,14 +423,13 @@ Object.assign(Game, {
     const TS=CFG.TILE;
     for(const prop of (M.map?M.map.props:DECOR)){
       if(!prop.canopy)continue;
-      const cells=M.propCells(prop),seen=cells.filter(([x,y])=>M.seen[y*M.W+x]);
-      if(!seen.length)continue;
+      const cells=M.propCells(prop);
       const image=Art.prop(prop);if(!image)continue;
-      const rect=Art.propRect(prop,image,TS),visible=cells.some(([x,y])=>M.visible[y*M.W+x]);
+      const rect=Art.propRect(prop,image,TS);
       c.save();
-      // 不把完整树冠画进未探索的格；树冠在角色之后绘制，透明时可看见树下场景。
-      c.beginPath();for(const [x,y]of seen)c.rect(x*TS-camX,y*TS-camY,TS,TS);c.clip();
-      c.globalAlpha=visible?this.canopyAlpha(prop):0.3;
+      // 树冠在角色之后绘制；视野外与地面共同接受暗层覆盖。
+      c.beginPath();for(const [x,y]of cells)c.rect(x*TS-camX,y*TS-camY,TS,TS);c.clip();
+      c.globalAlpha=this.canopyAlpha(prop);
       c.drawImage(image,rect.sx,rect.sy,rect.sw,rect.sh,rect.x-camX,rect.y-camY,rect.w,rect.h);
       c.restore();
     }
@@ -681,10 +675,18 @@ Object.assign(Game, {
     c.fillStyle = '#dbe5e1';
     c.font = 'bold 22px monospace';
     c.fillText(P.mag + '', 26, CFG.VIEW_H - 44);
+    const ammoX = 30 + c.measureText(P.mag + '').width;
+    const ammoItem = P.ammoItem;
+    if (ammoItem) {
+      c.fillStyle = RARITY[ammoItem.r - 1].color + '66';
+      c.fillRect(ammoX, CFG.VIEW_H - 64, 24, 24);
+      const icon = Icons.get(ammoItem.id);
+      if (icon) { c.imageSmoothingEnabled = false; c.drawImage(icon, ammoX, CFG.VIEW_H - 64, 24, 24); }
+    }
     c.fillStyle = '#6f8a82';
     c.font = '11px monospace';
     /* 备弹只显示当前这一档弹药的存量，别把别的口径算进来 */
-    c.fillText('/ ' + P.bag.ammoCount(P.ammoId), 26 + c.measureText(P.mag + '').width + 26, CFG.VIEW_H - 44);
+    c.fillText('/ ' + P.bag.ammoCount(P.ammoId), ammoX + 28, CFG.VIEW_H - 44);
 
     // 当前武器：名字 + 槽位 + 口径/弹药等级
     c.textAlign = 'right';

@@ -36,7 +36,7 @@ const Save = {
         if (typeof e === 'string') {
           if (WEAPONS[e]) out[i] = EQUIP.gun(e, WEAPONS[e].mag);
         } else if (e.equip && e.equip.kind === 'gun' && WEAPONS[e.equip.gun]) {
-          out[i] = EQUIP.gun(e.equip.gun, e.equip.mag | 0, e.equip.ammo);   // 重新包一遍，字段补齐（含装填弹种）
+          out[i] = EQUIP.gun(e.equip.gun, e.equip.mag | 0, e.equip.ammo, e.equip.rounds);   // 重新包一遍，字段补齐（含装填弹种）
         }
       }
     }
@@ -78,13 +78,14 @@ const Save = {
     }
   },
 
-  /* 第一次玩：三口径各一点、几卷绷带，进图就能打 */
+  /* 第一次玩：三口径各一点、绷带一卷，进图就能打。
+     药品不再叠放，一卷绷带就占一格，所以默认背包正好塞满基础四格。 */
   defaultBag() {
     return [
       { id: 'ammo_556_1', n: 30 },
       { id: 'ammo_9mm_1', n: 20 },
       { id: 'ammo_12g_1', n: 10 },
-      { id: 'heal01', n: 3 }
+      { id: 'heal01', n: 1 }
     ];
   },
 
@@ -131,7 +132,8 @@ const Save = {
       localStorage.setItem(this.key, JSON.stringify({
         v: 3,
         codex: this.codex,
-        stash: this.stash.slice(-300),
+        /* 仓库不再叠放，条目数会变多；整份存，别再截尾丢东西 */
+        stash: this.stash,
         bag: this.bag.slice(-60),
         credits: this.credits,
         hp: this.hp,
@@ -150,21 +152,32 @@ const Save = {
     return id === 'ammo' ? 'ammo_556_1' : id;
   },
 
-  /* 一份条目表 → 规范化条目表。仓库允许一个 id 一条（不分堆），
-     背包要按堆叠上限切开（格子有限，进局时一条就占一格）。 */
+  /* 一份条目表 → 规范化条目表。只有子弹能并成一条（仓库里一条记到底，
+     背包里按堆叠上限切开，格子有限）；其它物品一件一条，不叠。
+     顺序照旧，合并只发生在原来的位置上。 */
   normalizeList(list, splitStacks) {
-    const m = new Map();          // 满容量堆：id → 件数
-    const partials = [];          // 用过的恢复品：一件一条，带 cap
-    const gears = [];
+    const out = [];            // 保序输出
+    const merged = new Map();  // 可堆叠的（子弹）：id → 条目
+    const push = (id, n, item) => {
+      if (stackLimit(item) > 1) {
+        const cur = merged.get(id);
+        if (cur) { cur.n += n; return; }
+        const entry = { id, n };
+        merged.set(id, entry);
+        out.push(entry);
+        return;
+      }
+      for (let k = 0; k < n; k++) out.push({ id, n: 1 });
+    };
     for (const e of list) {
       if (!e) continue;
       if (e.gear && e.gear.equip) {
         // 用当前模板重算价格与回收价，耐久、余弹仍来自旧快照。
         const spec = e.gear.equip;
         const current = spec.kind === 'armor' ? EQUIP.armor(spec.gear)
-          : spec.kind === 'gun' ? EQUIP.gun(spec.gun, spec.mag, spec.ammo)
+          : spec.kind === 'gun' ? EQUIP.gun(spec.gun, spec.mag, spec.ammo, spec.rounds)
           : spec.kind === 'bag' ? EQUIP.bag(spec.bag) : null;
-        if (current) gears.push({ id: e.id, n: 1, gear: current });
+        if (current) out.push({ id: e.id, n: 1, gear: current });
         continue;
       }
       const id = this.migrateAmmoId(Medical.canonicalId(e.id));
@@ -172,32 +185,40 @@ const Save = {
       if (!item) continue;
       const n = Math.max(1, e.n || 1);
       const max = item.healCap || 0;
-      if (!max) { m.set(id, (m.get(id) || 0) + n); continue; }
+      if (!max) { push(id, n, item); continue; }
       /* 恢复品要保留"用了多少"：老存档没写 cap 就按满容量初始化，归零的直接丢掉 */
       const cap = typeof e.cap === 'number' ? U.clamp(e.cap, 0, max) : max;
       if (cap <= 0) continue;
-      if (cap >= max - 1e-6) m.set(id, (m.get(id) || 0) + n);
+      if (cap >= max - 1e-6) push(id, n, item);
       else {
-        partials.push({ id, n: 1, cap });
-        if (n > 1) m.set(id, (m.get(id) || 0) + (n - 1));
+        out.push({ id, n: 1, cap });
+        if (n > 1) push(id, n - 1, item);
       }
     }
-    let main = [...m].map(([id, n]) => ({ id, n }));
-    if (splitStacks) {
-      const cut = [];
-      for (const e of main) {
-        const item = ITEM_BY_ID[e.id];
-        const stack = Math.max(1, (item && item.stack) || 1);
-        let left = e.n;
-        while (left > 0) { const put = Math.min(stack, left); cut.push({ id: e.id, n: put }); left -= put; }
-      }
-      main = cut;
+    if (!splitStacks) return out;
+    /* 背包：可堆叠的按上限切开，位置不变 */
+    const cut = [];
+    for (const e of out) {
+      if (!merged.has(e.id)) { cut.push(e); continue; }
+      const stack = stackLimit(ITEM_BY_ID[e.id]);
+      let left = e.n;
+      while (left > 0) { const put = Math.min(stack, left); cut.push({ id: e.id, n: put }); left -= put; }
     }
-    return main.concat(partials, gears);
+    return cut;
   },
 
   normalizeStash() { this.stash = this.normalizeList(this.stash, false); },
-  normalizeBag() { this.bag = this.normalizeList(this.bag, true); },
+  normalizeBag() {
+    this.bag = this.normalizeList(this.bag, true);
+    /* 老存档里药品是叠着的，拆成一件一条之后可能超出背包容量。
+       放不下的退回仓库——别硬塞，也别把东西弄丢。 */
+    const limit = bagSlots();
+    while (this.bag.length > limit) {
+      const e = this.bag.pop();
+      if (e.gear) this.addGearStash(e.gear);
+      else this.addStash(e.id, e.n, e.cap);
+    }
+  },
 
   /* ---- 背包：数量、重量、整堆合并 ---- */
   bagCount(id) {
@@ -210,7 +231,7 @@ const Save = {
     id = Medical.canonicalId(id);
     const item = ITEM_BY_ID[id];
     if (!item) return false;
-    const stack = Math.max(1, item.stack || 1);
+    const stack = stackLimit(item);
     const max = item.healCap || 0;
     if (max && typeof cap === 'number' && cap < max - 1e-6) {
       this.bag.push({ id, n: 1, cap: U.clamp(cap, 0, max) });
@@ -281,30 +302,18 @@ const Save = {
     id = Medical.canonicalId(id);
     const item = ITEM_BY_ID[id];
     const max = (item && item.healCap) || 0;
-    if (max) {
-      /* 用过的那件单独入库，容量原样保留 */
-      if (typeof cap === 'number' && cap < max - 1e-6) {
-        this.stash.push({ id, n: 1, cap: U.clamp(cap, 0, max) });
-        return;
-      }
-      /* 只往满容量那一堆里并，超过堆叠上限就另起一条 */
-      const stack = Math.max(1, item.stack || 1);
-      let left = n;
-      const full = this.stash.find(e => e.id === id && !e.gear && (e.cap == null || e.cap >= max - 1e-6));
-      if (full) {
-        const take = Math.min(Math.max(0, stack - full.n), left);
-        full.n += take; left -= take;
-      }
-      while (left > 0) {
-        const put = Math.min(stack, left);
-        this.stash.push({ id, n: put });
-        left -= put;
-      }
+    /* 用过的那件单独入库，容量原样保留 */
+    if (max && typeof cap === 'number' && cap < max - 1e-6) {
+      this.stash.push({ id, n: 1, cap: U.clamp(cap, 0, max) });
       return;
     }
-    const e = this.stash.find(x => x.id === id && !x.gear);
-    if (e) e.n += n;
-    else this.stash.push({ id, n });
+    /* 子弹并成一条；其它物品一件一条 */
+    if (item && stackLimit(item) > 1) {
+      const e = this.stash.find(x => x.id === id && !x.gear);
+      if (e) e.n += n; else this.stash.push({ id, n });
+      return;
+    }
+    for (let k = 0; k < Math.max(1, n | 0); k++) this.stash.push({ id, n: 1 });
   },
 
   setHP(hp, immediate = true) {

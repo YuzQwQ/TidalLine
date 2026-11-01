@@ -34,12 +34,14 @@ const counts={collectible:ITEMS.filter(i=>itemGroup(i)==='collectible').length,s
    await page.addInitScript(()=>localStorage.setItem('tideline_save_v1',JSON.stringify({v:2,credits:1500,runs:4,stash:[{id:'life02',n:1},{id:'art03',n:1},{id:'antiq03',n:2},{id:'odd02',n:1},{id:'med01',n:3},{id:'ammo',n:24}],codex:{life02:{count:1},art03:{count:1},antiq03:{count:2},odd02:{count:1},med01:{count:8},ammo:{count:1}},loadout:{ammo:60,bandage:3,stone:3},gear:{weapons:['rifle','shotgun','pistol'],helmet:null,body:null}})));
    await page.goto(pathToFileURL(path.join(root,entry)).href+'#base');
    await page.waitForFunction(()=>Game.state==='base'&&Object.keys(Icons.map).length===ITEMS.length);
-   /* 老存档里的 'ammo' / 'med01' 会迁移到 ammo_556_1 / heal01 */
+   /* 老存档里的 'ammo' / 'med01' 会迁移到 ammo_556_1 / heal01；
+      仓库不再叠放，除子弹外一件一条 */
    const saved=await page.evaluate(()=>({credits:Save.credits,runs:Save.runs,ids:Save.stash.map(e=>e.id),codex:Object.keys(Save.codex),mil:ITEM_BY_ID['ammo_556_1'].cat,gear:EQUIP.gun('rifle',30).cat}));
-   assert.deepEqual(saved.ids,['life02','art03','antiq03','odd02','heal01','ammo_556_1']);assert.equal(saved.credits,1500);assert.equal(saved.runs,4);assert.equal(saved.codex.length,6);assert.equal(saved.mil,'ammo');assert.equal(saved.gear,'gear');
+   assert.deepEqual(saved.ids,['life02','art03','antiq03','antiq03','odd02','heal01','heal01','heal01','ammo_556_1']);assert.equal(saved.credits,1500);assert.equal(saved.runs,4);assert.equal(saved.codex.length,6);assert.equal(saved.mil,'ammo');assert.equal(saved.gear,'gear');
    assert.equal((await page.locator('#bCodex').innerText()).replace(/\s/g,''),'4/'+counts.codex,'旧绷带图鉴记录不计新进度');
-   await page.locator('#stashFilter [data-f="sup"]').click();assert.equal(await page.locator('#stashGrid .scell:not(.empty)').count(),2);
-   await page.locator('#stashFilter [data-f="col"]').click();assert.equal(await page.locator('#stashGrid .scell:not(.empty)').count(),4);
+   await page.locator('#stashFilter [data-f="ammo"]').click();assert.equal(await page.locator('#stashGrid .scell:not(.empty)').count(),1);
+   await page.locator('#stashFilter [data-f="med"]').click();assert.equal(await page.locator('#stashGrid .scell:not(.empty)').count(),3);
+   await page.locator('#stashFilter [data-f="col"]').click();assert.equal(await page.locator('#stashGrid .scell:not(.empty)').count(),5);
    await page.evaluate(()=>{const count=Save.codex.med01.count;Game.registerCodex(ITEM_BY_ID.heal01);if(Save.codex.med01.count!==count)throw Error('物资不应再登记图鉴');});
    for(const [id,cat]of [['life02','收集品 / 情报资料'],['art03','收集品 / 情报资料'],['antiq03','收集品 / 生活用品'],['antiq04','收集品 / 文物藏品'],['odd02','收集品 / 异常遗物'],['ammo_556_1','物资 / 弹药类'],['heal01','物资 / 医疗物品']]){
     await page.evaluate(id=>Tips.show(ITEM_BY_ID[id],{left:100,top:100,right:150,bottom:150,width:50,height:50}),id);

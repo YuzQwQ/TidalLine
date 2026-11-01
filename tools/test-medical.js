@@ -42,12 +42,13 @@ test('159件唯一物品、18医疗品、140图鉴与准确参数',()=>{
   assert.equal(byId.heal01.price,2000);assert.equal(byId.ammo_556_1.stack,120);
 });
 
-test('五件恢复品的启动/速率/容量/堆叠与新需求一致',()=>{
-  const want={heal01:[2,10,20,5],heal02:[1.8,12,60,5],heal03:[1.5,15,120,2],heal04:[1.2,20,200,1],heal05:[.8,25,400,1]};
-  for(const [id,[start,rate,cap,stack]] of Object.entries(want)){
+test('五件恢复品的启动/速率/容量与新需求一致',()=>{
+  const want={heal01:[2,10,20],heal02:[1.8,12,60],heal03:[1.5,15,120],heal04:[1.2,20,200],heal05:[.8,25,400]};
+  for(const [id,[start,rate,cap]] of Object.entries(want)){
     const it=byId[id];
     assert.equal(it.healStart,start,id+' 启动');assert.equal(it.healRate,rate,id+' 速率');
-    assert.equal(it.healCap,cap,id+' 容量');assert.equal(it.stack,stack,id+' 堆叠');
+    assert.equal(it.healCap,cap,id+' 容量');
+    assert.equal(c.stackLimit(it),1,id+' 药品一件一格，不堆叠');
     assert.equal(it.use,true);
   }
 });
@@ -170,7 +171,8 @@ test('老存档迁移：没写 cap 的一律按满容量，归零的丢掉',()=>
 });
 
 test('验收7：背包没空位时，堆叠拆分不丢东西也不改容量',()=>{
-  const e=raid(5,'heal03');                 // 两件装，容量 120
+  const e=raid(5,'heal03');                 // 单件装，容量 120
+  e.n=2;                                    // 人为造一条两件的堆（旧存档遗留）
   const ammo=byId.ammo;
   const cap=c.bagSlots(),fill=[];for(let i=0;i<cap-1;i++)fill.push({item:ammo,n:1});
   Game.player.bag.slots=[e].concat(fill);

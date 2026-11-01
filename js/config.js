@@ -72,8 +72,8 @@ const CFG = {
     NEAR: 3,                // 近身感知半径（不分方向）
     SNEAK_ANGLE: Math.PI * 0.42,
     BRIGHT_NOW: 1.0,        // 当前可见
-    BRIGHT_MEM: 0.44,       // 记忆层
-    BRIGHT_FOG: 0.10        // 未探索的雾（只留极淡的色块，看不出结构）
+    BRIGHT_MEM: 0.40,       // 兼容旧配置；场景统一使用 BRIGHT_FOG
+    BRIGHT_FOG: 0.40        // 当前未观察区域亮度：可辨识场景，不再绘制探索黑块
   },
 
   /* ---------- 噪声半径（格） ---------- */
@@ -286,6 +286,41 @@ function formatMoney(value) { return '¥' + Math.round(Number(value) || 0).toLoc
 function itemCategoryLabel(item) {
   const group=ITEM_GROUPS[itemGroup(item)],cat=CATS[item.cat];
   return (group?group.name+' / ':'')+(cat?cat.name:'装备');
+}
+
+/* ------------------------------------------------------------
+   堆叠规则：全项目只有子弹能叠在一起。
+   药物、收集品、装备一律一件占一格——仓库、背包、安全箱、
+   地面物品堆都按这个来，别处不要自己看 item.stack。
+   ------------------------------------------------------------ */
+function stackLimit(item) {
+  if (!item) return 1;
+  if (item.cat === 'ammo') return Math.max(1, item.stack || 1);
+  return 1;
+}
+function isStackable(item) { return stackLimit(item) > 1; }
+
+/* ------------------------------------------------------------
+   仓库筛选：全部 / 收集品 / 子弹 / 药物 / 枪械 / 护甲
+   ------------------------------------------------------------ */
+const STASH_FILTERS = [
+  { k: 'all',   name: '全部' },
+  { k: 'col',   name: '收集品' },
+  { k: 'ammo',  name: '子弹' },
+  { k: 'med',   name: '药物' },
+  { k: 'gun',   name: '枪械' },
+  { k: 'armor', name: '护甲' }
+];
+function stashFilterMatch(item, f) {
+  if (!item) return false;
+  switch (f) {
+    case 'col':   return itemGroup(item) === 'collectible';
+    case 'ammo':  return item.cat === 'ammo';
+    case 'med':   return item.cat === 'medical';
+    case 'gun':   return !!(item.equip && item.equip.kind === 'gun');
+    case 'armor': return !!(item.equip && item.equip.kind === 'armor');
+    default:      return true;
+  }
 }
 
 /* ------------------------------------------------------------

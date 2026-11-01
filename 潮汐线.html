@@ -572,9 +572,12 @@ window.addEventListener('error', function (e) {
   margin: 0 6px 0 0; padding: 4px 12px; font-size: 10.5px; letter-spacing: 1px;
   background: transparent; color: #5f7a72; border: 1px solid #1e312b;
   border-radius: 11px; cursor: pointer;
+  display: inline-flex; align-items: baseline; gap: 6px;
 }
+.pill-count { font-size: 9px; letter-spacing: 0; color: #456158; }
 .pill:hover { border-color: #2a443d; color: #8ba39b; }
 .pill.on { background: #14685C; color: #eaf4f0; border-color: #14685C; }
+.pill.on .pill-count { color: #9ed0c4; }
 
 .stash-list { flex: 1; overflow-y: auto; padding: 0 20px 10px; }
 .stash-list::-webkit-scrollbar { width: 7px; }
@@ -922,7 +925,7 @@ window.addEventListener('error', function (e) {
 #medBar.empty .mk { color: #5d726b; border-color: #2a3f38; }
 
 /* 轮盘盖住整块画面：既当遮罩，也顺手挡住背包格子的点击 */
-#medWheel {
+#medWheel, #ammoWheel {
   position: absolute; left: 0; top: 0;
   width: 720px; height: 480px;
   display: none; z-index: 66;
@@ -1229,8 +1232,8 @@ const CFG = {
     NEAR: 3,                // 近身感知半径（不分方向）
     SNEAK_ANGLE: Math.PI * 0.42,
     BRIGHT_NOW: 1.0,        // 当前可见
-    BRIGHT_MEM: 0.44,       // 记忆层
-    BRIGHT_FOG: 0.10        // 未探索的雾（只留极淡的色块，看不出结构）
+    BRIGHT_MEM: 0.40,       // 兼容旧配置；场景统一使用 BRIGHT_FOG
+    BRIGHT_FOG: 0.40        // 当前未观察区域亮度：可辨识场景，不再绘制探索黑块
   },
 
   /* ---------- 噪声半径（格） ---------- */
@@ -1443,6 +1446,41 @@ function formatMoney(value) { return '¥' + Math.round(Number(value) || 0).toLoc
 function itemCategoryLabel(item) {
   const group=ITEM_GROUPS[itemGroup(item)],cat=CATS[item.cat];
   return (group?group.name+' / ':'')+(cat?cat.name:'装备');
+}
+
+/* ------------------------------------------------------------
+   堆叠规则：全项目只有子弹能叠在一起。
+   药物、收集品、装备一律一件占一格——仓库、背包、安全箱、
+   地面物品堆都按这个来，别处不要自己看 item.stack。
+   ------------------------------------------------------------ */
+function stackLimit(item) {
+  if (!item) return 1;
+  if (item.cat === 'ammo') return Math.max(1, item.stack || 1);
+  return 1;
+}
+function isStackable(item) { return stackLimit(item) > 1; }
+
+/* ------------------------------------------------------------
+   仓库筛选：全部 / 收集品 / 子弹 / 药物 / 枪械 / 护甲
+   ------------------------------------------------------------ */
+const STASH_FILTERS = [
+  { k: 'all',   name: '全部' },
+  { k: 'col',   name: '收集品' },
+  { k: 'ammo',  name: '子弹' },
+  { k: 'med',   name: '药物' },
+  { k: 'gun',   name: '枪械' },
+  { k: 'armor', name: '护甲' }
+];
+function stashFilterMatch(item, f) {
+  if (!item) return false;
+  switch (f) {
+    case 'col':   return itemGroup(item) === 'collectible';
+    case 'ammo':  return item.cat === 'ammo';
+    case 'med':   return item.cat === 'medical';
+    case 'gun':   return !!(item.equip && item.equip.kind === 'gun');
+    case 'armor': return !!(item.equip && item.equip.kind === 'armor');
+    default:      return true;
+  }
 }
 
 /* ------------------------------------------------------------
@@ -1838,7 +1876,9 @@ const BOX_KIND = Object.fromEntries(Object.entries(CONTAINER_TYPES).map(([ch, ty
 /* ------------------------------------------------------------
    物品表
    cat  类别   r 稀有度(1-6)   w 重量(kg)   price 售价
-   stack 堆叠上限(1=不可堆叠)  use 可使用（消耗品）
+   stack 堆叠上限——只有子弹写这个字段（其它物品一律一件一格，
+         判定统一走 config.js 的 stackLimit()，别处别直接看 item.stack）
+   use 可使用（消耗品）
    ------------------------------------------------------------ */
 /* short：背包格子只有 38px 宽，名字超过四个字的写一个简称（没写就退回全名） */
 /* BEGIN MEDICAL DATA */
@@ -1850,7 +1890,6 @@ const MEDICAL_ITEMS = [
     "r": 1,
     "w": 0.2,
     "price": 2000,
-    "stack": 5,
     "medicalGroup": "recovery",
     "source": "通用医疗耗材",
     "heal": 20,
@@ -1871,7 +1910,6 @@ const MEDICAL_ITEMS = [
     "r": 2,
     "w": 0.15,
     "price": 5000,
-    "stack": 5,
     "medicalGroup": "recovery",
     "source": "安禾制药",
     "heal": 60,
@@ -1892,7 +1930,6 @@ const MEDICAL_ITEMS = [
     "r": 3,
     "w": 0.6,
     "price": 12000,
-    "stack": 2,
     "medicalGroup": "recovery",
     "source": "环礁湾公共卫生署",
     "heal": 120,
@@ -1913,7 +1950,6 @@ const MEDICAL_ITEMS = [
     "r": 4,
     "w": 1.2,
     "price": 35000,
-    "stack": 1,
     "medicalGroup": "recovery",
     "source": "军方制式物资",
     "heal": 200,
@@ -1934,7 +1970,6 @@ const MEDICAL_ITEMS = [
     "r": 5,
     "w": 2.5,
     "price": 95000,
-    "stack": 1,
     "medicalGroup": "recovery",
     "source": "赫尔维恩医疗集团",
     "heal": 400,
@@ -1955,7 +1990,6 @@ const MEDICAL_ITEMS = [
     "r": 1,
     "w": 0.05,
     "price": 2500,
-    "stack": 10,
     "medicalGroup": "painkiller",
     "source": "安禾制药",
     "reservedEffect": "基础镇痛，持续90秒。",
@@ -1974,7 +2008,6 @@ const MEDICAL_ITEMS = [
     "r": 2,
     "w": 0.08,
     "price": 6000,
-    "stack": 8,
     "medicalGroup": "painkiller",
     "source": "广谱仿制药",
     "reservedEffect": "中等镇痛，持续180秒。",
@@ -1993,7 +2026,6 @@ const MEDICAL_ITEMS = [
     "r": 3,
     "w": 0.12,
     "price": 18000,
-    "stack": 5,
     "medicalGroup": "painkiller",
     "source": "医院专供制剂",
     "reservedEffect": "强效镇痛，持续300秒。",
@@ -2011,7 +2043,6 @@ const MEDICAL_ITEMS = [
     "r": 1,
     "w": 0.15,
     "price": 3000,
-    "stack": 5,
     "medicalGroup": "trauma",
     "source": "北辰医械",
     "reservedEffect": "控制严重肢体出血。",
@@ -2029,7 +2060,6 @@ const MEDICAL_ITEMS = [
     "r": 2,
     "w": 0.5,
     "price": 6000,
-    "stack": 3,
     "medicalGroup": "trauma",
     "source": "北辰医械",
     "reservedEffect": "临时固定骨折部位。",
@@ -2048,7 +2078,6 @@ const MEDICAL_ITEMS = [
     "r": 4,
     "w": 0.9,
     "price": 40000,
-    "stack": 2,
     "medicalGroup": "trauma",
     "source": "环礁湾紧急医疗部门",
     "reservedEffect": "综合处理常见创伤，具体适用状态待定。",
@@ -2067,7 +2096,6 @@ const MEDICAL_ITEMS = [
     "r": 5,
     "w": 1.6,
     "price": 110000,
-    "stack": 1,
     "medicalGroup": "trauma",
     "source": "北辰医械专业系列",
     "reservedEffect": "处理严重创伤，可能需要安全环境。",
@@ -2086,7 +2114,6 @@ const MEDICAL_ITEMS = [
     "r": 3,
     "w": 0.15,
     "price": 25000,
-    "stack": 5,
     "medicalGroup": "injection",
     "source": "赫尔维恩医疗集团",
     "reservedEffect": "效果待定。",
@@ -2105,7 +2132,6 @@ const MEDICAL_ITEMS = [
     "r": 4,
     "w": 0.1,
     "price": 65000,
-    "stack": 5,
     "medicalGroup": "injection",
     "source": "赫尔维恩特殊环境医学部门",
     "reservedEffect": "效果待定。",
@@ -2124,7 +2150,6 @@ const MEDICAL_ITEMS = [
     "r": 5,
     "w": 0.12,
     "price": 180000,
-    "stack": 3,
     "medicalGroup": "injection",
     "source": "赫尔维恩授权实验供应",
     "reservedEffect": "效果待定。",
@@ -2142,7 +2167,6 @@ const MEDICAL_ITEMS = [
     "r": 2,
     "w": 0.2,
     "price": 7000,
-    "stack": 5,
     "medicalGroup": "anomaly",
     "source": "百草堂",
     "reservedEffect": "效果待定。",
@@ -2161,7 +2185,6 @@ const MEDICAL_ITEMS = [
     "r": 4,
     "w": 0.1,
     "price": 55000,
-    "stack": 5,
     "medicalGroup": "anomaly",
     "source": "不明研究机构",
     "reservedEffect": "效果待定。",
@@ -2179,7 +2202,6 @@ const MEDICAL_ITEMS = [
     "r": 5,
     "w": 0.25,
     "price": 150000,
-    "stack": 3,
     "medicalGroup": "anomaly",
     "source": "来源不明的神秘学传承",
     "reservedEffect": "效果待定。",
@@ -2820,11 +2842,13 @@ const BODIES = [
 /* ------------------------------------------------------------
    背包：独立的背包槽，只提升携带容量，不加别的属性
    未装备时是 BASE_BAG_SLOTS 格；装上背包后总容量 = 背包容量，
-   不做「4 + N」的叠加。五档对应白绿蓝紫金。
+   不做「基础 + N」的叠加。五档对应白绿蓝紫金。
    背包不能套娃：塞不进背包格子（Bag.canAdd 会拦），只能回藏身处换。
    前 3 档护甲商人有售，紫金两档得自己下去找。
+   基础格数从 4 抬到 6：药品不再叠放，一件一格，
+   三口径弹药 + 两件药就要占 5 格，4 格根本装不下出门的那套。
    ------------------------------------------------------------ */
-const BASE_BAG_SLOTS = 4;
+const BASE_BAG_SLOTS = 6;
 
 const BAGS = [
   { id: 'bag01', name: '旧帆布挎包',   short: '挎包',  r: 1, slots: 8,  w: 0.7, price: 6000,
@@ -2923,7 +2947,7 @@ const EQUIP = {
 
   /* 枪（id + 余弹）→ 伪物品。枪没有耐久，回收价固定半价。
      余弹存在 equip.mag 里，所以换下来的枪不会把子弹丢掉。 */
-  gun(id, mag, ammoId) {
+  gun(id, mag, ammoId, rounds) {
     const w = WEAPONS[id];
     if (!w) return null;
     const m = Math.max(0, mag | 0);
@@ -2938,7 +2962,7 @@ const EQUIP = {
       sell: this.sellPrice(w.price, 1, 1),
       stack: 1,
       icon: id,
-      equip: { kind: 'gun', gun: id, mag: m, ammo: a },
+      equip: { kind: 'gun', gun: id, mag: m, ammo: a, rounds: magazineRounds(w, m, a, rounds) },
       note: m > 0 ? String(m) : ''
     };
   },
@@ -2960,7 +2984,15 @@ const EQUIP = {
       note: d.slots + '格'
     };
   }
-};/* BEGIN SCENE LIBRARY */
+};
+/* 队首是下一发；旧存档按原弹种展开，过滤异口径并补齐缺失记录。 */
+function magazineRounds(w, n, ammo, rounds) {
+  n = Math.max(0, Math.min(w.mag, n|0));
+  const fallback = AMMO_BY_ID[ammo]?.caliber === w.caliber ? ammo : w.ammo;
+  const out = (Array.isArray(rounds) ? rounds : []).filter(id => AMMO_BY_ID[id]?.caliber === w.caliber).slice(0,n);
+  while(out.length < n) out.push(fallback);
+  return out;
+}/* BEGIN SCENE LIBRARY */
 for(const a of [{"group":"tiles","id":"ground_concrete_plain_01"},{"group":"tiles","id":"ground_concrete_plain_02"},{"group":"tiles","id":"ground_soil_compact_01"},{"group":"tiles","id":"ground_soil_compact_02"},{"group":"props","id":"decal_surface_crack_01"},{"group":"props","id":"decal_surface_damp_01"}]){if(!ART[a.group].includes(a.id))ART[a.group].push(a.id);}
 /* END SCENE LIBRARY */
 /* BEGIN PROP BOUNDS */
@@ -3703,17 +3735,20 @@ class Bag {
   tier() { return weightTier(this.weight()); }
 
   canAdd(item, n, cap) {
-    n = n || 1;
+    n = Math.max(1, n | 0);
     /* 背包不能套背包：容量只由背包槽决定，塞进去也不会变大 */
     if (item.equip && item.equip.kind === 'bag') {
       return { ok: false, why: '背包不能塞进背包，回藏身处换装' };
     }
+    const stack = stackLimit(item);
     // 可堆叠：找同类（容量类物品只和"满的"那堆合并，用过的不并）
-    if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
+    if (stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
       const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
-      if (ex && ex.n + n <= item.stack) return { ok: true, merge: true };
+      if (ex && ex.n + n <= stack) return { ok: true, merge: true };
     }
-    if (this.slots.length >= bagSlots()) return { ok: false, why: '背包满了' };
+    /* 不可堆叠的一件一格，要几格就占几格 */
+    const need = stack > 1 ? Math.ceil(n / stack) : n;
+    if (this.slots.length + need > bagSlots()) return { ok: false, why: '背包满了' };
     if (this.weight() + item.w * n > CFG.BAG.CARRY) return { ok: false, why: '太重了' };
     return { ok: true };
   }
@@ -3726,17 +3761,30 @@ class Bag {
   }
 
   add(item, n, cap) {
-    n = n || 1;
+    n = Math.max(1, n | 0);
     if (item.equip && item.equip.kind === 'bag') return false;   // 不套背包
-    if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
-      const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
-      if (ex && ex.n + n <= item.stack) { ex.n += n; return true; }
+    const stack = stackLimit(item);
+    /* 先并进已有的同类堆（只有子弹这类可堆叠的） */
+    if (stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
+      for (const s of this.slots) {
+        if (s.item.id !== item.id || !this.fullCap(s, item)) continue;
+        const put = Math.min(Math.max(0, stack - s.n), n);
+        if (put <= 0) continue;
+        s.n += put; n -= put;
+        if (n <= 0) return true;
+      }
     }
-    if (this.slots.length >= bagSlots()) return false;
+    /* 剩下的新开格：不可堆叠的一件一格 */
+    const need = stack > 1 ? Math.ceil(n / stack) : n;
+    if (this.slots.length + need > bagSlots()) return false;
     if (this.weight() + item.w * n > CFG.BAG.CARRY) return false;
-    this.slots.push(item.healCap
-      ? { item, n, cap: typeof cap === 'number' ? cap : item.healCap }
-      : { item, n });
+    while (n > 0) {
+      const put = Math.min(stack, n);
+      this.slots.push(item.healCap
+        ? { item, n: put, cap: typeof cap === 'number' ? cap : item.healCap }
+        : { item, n: put });
+      n -= put;
+    }
     return true;
   }
 
@@ -3749,8 +3797,7 @@ class Bag {
      弹药按"口径 + 等级"分开存：ammo_556_3 和 ammo_556_1 是两个物品，
      不会合并成一堆；不同口径更不能混。这里只认 id，不认识就返回 0。 */
   ammoCount(id) {
-    const s = this.slots.find(s => s.item.id === id);
-    return s ? s.n : 0;
+    return this.slots.reduce((n,s) => n + (s.item.id === id ? s.n : 0), 0);
   }
   /* 某口径下所有等级的弹药条目（按格子顺序） */
   ammoStacks(caliber) {
@@ -3781,17 +3828,18 @@ class Bag {
   addAmmo(id, n) {
     const item = AMMO_BY_ID[id];
     if (!item || n <= 0) return false;
+    const stack = stackLimit(item);
     let left = n;
     for (const s of this.slots) {
       if (s.item.id !== id) continue;
-      const room = Math.max(0, item.stack - s.n);
+      const room = Math.max(0, stack - s.n);
       const put = Math.min(room, left);
       s.n += put; left -= put;
       if (left <= 0) return true;
     }
     while (left > 0) {
       if (this.slots.length >= bagSlots()) return false;
-      const put = Math.min(item.stack, left);
+      const put = Math.min(stack, left);
       this.slots.push({ item, n: put });
       left -= put;
     }
@@ -3818,6 +3866,8 @@ class Player {
     this.headR = CFG.COMBAT.HEAD_RADIUS;   // 头部判定半径
     this.mag = CFG.WEAPON.mag;
     this.reloadT = 0;
+    this.reloadPending = false;
+    if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     this.fireCd = 0;
     this.recoil = 0;            // 0~1，驱动散布与准星
     this.sinceShot = 99;        // 距上次开火多久
@@ -3848,7 +3898,7 @@ class Player {
      武器上记的是 id；口径对不上（改过存档 / 换了枪）就退回该口径的 Lv1。 */
   get ammoItem() {
     const w = this.weapon;
-    const a = AMMO_BY_ID[w.ammo];
+    const a = AMMO_BY_ID[this.mag > 0 ? this.roundsFor(w, this.mag)[0] : w.ammo];
     if (a && a.caliber === w.caliber) return a;
     return defaultAmmo(w.caliber);
   }
@@ -3881,6 +3931,8 @@ class Player {
     this.weapons[this.slot].magCur = this.mag;
     this.slot = i;
     this.mag = this.weapon.magCur;
+    this.reloadPending = false;
+    if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     this.reloadT = 0;
     this.fireCd = Math.max(this.fireCd, 0.28);   // 换枪有个小硬直
     this.syncSpread();
@@ -3909,7 +3961,7 @@ class Player {
       if (!def) continue;
       const loaded = (e && e.equip && AMMO_BY_ID[e.equip.ammo] && AMMO_BY_ID[e.equip.ammo].caliber === def.caliber)
         ? e.equip.ammo : def.ammo;
-      this.weapons[i] = Object.assign({}, def, { magCur: U.clamp(mag | 0, 0, def.mag), ammo: loaded });
+      this.weapons[i] = Object.assign({}, def, { magCur: U.clamp(mag | 0, 0, def.mag), ammo: loaded, rounds: magazineRounds(def, mag, loaded, e?.equip?.rounds) });
     }
     /* 余弹照存档来 —— 空着就是空着，不白送子弹 */
     this.slot = this.weapons[0] ? 0 : (this.weapons[1] ? 1 : 2);
@@ -4059,7 +4111,10 @@ class Player {
     const W = this.weapon;
     const R = CFG.RECOIL;
     this.fireCd = 60 / W.rpm;
+    const shotAmmo = this.ammoItem;
+    W.rounds = this.roundsFor(W, this.mag).slice(1);
     this.mag--;
+    W.magCur = this.mag;
     this.shotAnimT = PLAYER_ANIMS.shoot.frames / PLAYER_ANIMS.shoot.fps;
 
     // 这一发用「开火前」的散布，后面的累加只影响下一发
@@ -4068,7 +4123,7 @@ class Player {
     const sp = pellets > 1 ? this.spread * 1.7 : this.spread;
     /* 弹药属性一次取好：伤害系数进单颗伤害，穿透等级随子弹走。
        霰弹的六颗弹丸分辨率独立，所以这里每颗都带同一份弹药属性、各自结算。 */
-    const ammo = this.ammoItem;
+    const ammo = shotAmmo;
     const ammoMul = ammo ? ammo.dmgMul : 1;
     const pen = ammo ? ammo.penLevel : 1;
     for (let i = 0; i < pellets; i++) {
@@ -4108,71 +4163,61 @@ class Player {
     this.spread = lo + (hi - lo) * this.recoil;
   }
 
-  tryReload() {
-    Medical.cancel();
-    if (this.reloadT > 0) return;
-    const W = this.weapon;
-    if (this.mag >= W.mag) return;
-    const ammo = this.ammoItem;
-    if (!ammo) { Game.toast('这把枪没有配套弹药'); return; }
-    if (this.bag.ammoCount(ammo.id) <= 0) {
-      /* 换弹只吃当前弹种，绝不会顺手拿别的等级顶上 */
-      const alt = this.bag.ammoStacks(W.caliber).find(s => s.item.id !== ammo.id);
-      Game.toast(alt
-        ? ammo.name + ' 用完了 · 背包里还有 ' + alt.item.name + '，点它换弹种'
-        : '没有 ' + BALLISTICS.caliberName(W.caliber) + ' 弹药了');
-      return;
-    }
-    this.reloadT = CFG.P.RELOAD_TIME;
-    this.reloadPending = true;
-    Noise.emit(this.x, this.y, CFG.NOISE.reload, 'reload');
+  roundsFor(w, n) {
+    w.rounds = magazineRounds(w, n, w.ammo, w.rounds);
+    return w.rounds;
   }
 
-  /* 换弹完成在 update 里结算，避免 setTimeout 带来的时序问题 */
-  finishReloadIfDone() {
-    if (!this.reloadPending) return;
-    if (this.reloadT > 0) return;
-    this.reloadPending = false;
-    const W = this.weapon;
-    const ammo = this.ammoItem;
-    if (!ammo) return;
-    const n = Math.min(W.mag - this.mag, this.bag.ammoCount(ammo.id));
-    if (n <= 0) return;
-    this.bag.useAmmo(ammo.id, n);
-    this.mag += n;
-  }
-
-  /* 切换待装填的弹种（背包里点弹药走这里）。
-     只接受同口径；弹匣里剩的旧弹原样退回背包，数量守恒。
-     退不回去（背包满 / 超重）就整个取消 —— 绝不把子弹吞掉。 */
-  loadAmmo(id) {
-    const w = this.weapons[this.slot];
-    const item = AMMO_BY_ID[id];
-    if (!w || !item) return false;
-    if (item.caliber !== w.caliber) {
-      Game.toast(w.name + ' 只能用 ' + BALLISTICS.caliberName(w.caliber) + '，装不进 ' +
-        BALLISTICS.caliberName(item.caliber));
-      return false;
-    }
-    if (w.ammo === id) {
-      Game.toast('弹匣里已经是 ' + item.name);
-      return false;
-    }
-    if (this.mag > 0) {
-      const old = AMMO_BY_ID[w.ammo];
-      if (old && !this.bag.addAmmo(old.id, this.mag)) {
-        Game.toast('背包放不下退出来的 ' + old.name + '（' + this.mag + ' 发）');
-        return false;
+  unloadWeapon(slot = this.slot) {
+    const w = this.weapons[slot];
+    if (!w) return false;
+    const n = slot === this.slot ? this.mag : w.magCur;
+    const rounds = this.roundsFor(w, n);
+    if (!n) return true;
+    const snapshot = this.bag.slots.map(s => ({...s}));
+    const counts = {};
+    for (const id of rounds) counts[id] = (counts[id] || 0) + 1;
+    for (const [id, count] of Object.entries(counts)) {
+      if (!this.bag.addAmmo(id, count)) {
+        this.bag.slots = snapshot; Game.toast('背包空间不足，退弹已取消'); return false;
       }
     }
-    w.ammo = id;
-    this.mag = 0;
-    w.magCur = 0;
-    this.reloadT = 0;
+    Medical.cancel();
+    w.rounds = []; w.magCur = 0;
+    if (slot === this.slot) { this.mag = 0; this.reloadT = 0; this.reloadPending = false; }
+    Game.syncGear(); Game.renderBag(); return true;
+  }
+
+  tryReload() {
+    Medical.cancel();
+    if (this.dead || !this.weapons[this.slot] || this.reloadT > 0 || this.mag >= this.weapon.mag) return false;
+    if (!this.bag.ammoCountByCaliber(this.weapon.caliber)) { Game.toast('没有同口径备弹'); return false; }
+    this.reloadT = CFG.P.RELOAD_TIME;
+    this.reloadPending = true; this.reloadSlot = this.slot;
+    Noise.emit(this.x, this.y, CFG.NOISE.reload, 'reload'); return true;
+  }
+
+  finishReloadIfDone() {
+    if (!this.reloadPending || this.reloadT > 0) return;
     this.reloadPending = false;
-    Game.syncGear();
-    Game.toast('待装填：' + item.name);
-    return true;
+    if (this.dead || this.reloadSlot !== this.slot) return;
+    const w = this.weapon, rounds = this.roundsFor(w, this.mag);
+    const priority = AMMO_BY_ID[w.ammo]?.caliber === w.caliber ? w.ammo : this.ammoId;
+    const ids = [...new Set([priority, ...this.bag.ammoStacks(w.caliber).map(s => s.item.id)])];
+    for (const id of ids) {
+      const n = Math.min(w.mag - rounds.length, this.bag.ammoCount(id));
+      if (n > 0) { this.bag.useAmmo(id, n); rounds.push(...Array(n).fill(id)); }
+    }
+    this.mag = w.magCur = rounds.length; Game.syncGear();
+    if (Game.bagOpen) Game.renderBag();
+  }
+
+  loadAmmo(id) {
+    const w = this.weapons[this.slot], item = AMMO_BY_ID[id];
+    if (!w || !item || item.caliber !== w.caliber) { Game.toast('只能装填同口径弹药'); return false; }
+    if (!this.unloadWeapon()) return false;
+    w.ammo = id; Game.syncGear(); Game.toast('优先装填：' + item.name);
+    this.tryReload(); return true;
   }
 
   /* base 是「没乘部位倍率、没乘弹药系数」的原始伤害，pen 是弹药穿透等级。
@@ -5776,7 +5821,7 @@ const Save = {
         if (typeof e === 'string') {
           if (WEAPONS[e]) out[i] = EQUIP.gun(e, WEAPONS[e].mag);
         } else if (e.equip && e.equip.kind === 'gun' && WEAPONS[e.equip.gun]) {
-          out[i] = EQUIP.gun(e.equip.gun, e.equip.mag | 0, e.equip.ammo);   // 重新包一遍，字段补齐（含装填弹种）
+          out[i] = EQUIP.gun(e.equip.gun, e.equip.mag | 0, e.equip.ammo, e.equip.rounds);   // 重新包一遍，字段补齐（含装填弹种）
         }
       }
     }
@@ -5818,13 +5863,14 @@ const Save = {
     }
   },
 
-  /* 第一次玩：三口径各一点、几卷绷带，进图就能打 */
+  /* 第一次玩：三口径各一点、绷带一卷，进图就能打。
+     药品不再叠放，一卷绷带就占一格，所以默认背包正好塞满基础四格。 */
   defaultBag() {
     return [
       { id: 'ammo_556_1', n: 30 },
       { id: 'ammo_9mm_1', n: 20 },
       { id: 'ammo_12g_1', n: 10 },
-      { id: 'heal01', n: 3 }
+      { id: 'heal01', n: 1 }
     ];
   },
 
@@ -5871,7 +5917,8 @@ const Save = {
       localStorage.setItem(this.key, JSON.stringify({
         v: 3,
         codex: this.codex,
-        stash: this.stash.slice(-300),
+        /* 仓库不再叠放，条目数会变多；整份存，别再截尾丢东西 */
+        stash: this.stash,
         bag: this.bag.slice(-60),
         credits: this.credits,
         hp: this.hp,
@@ -5890,21 +5937,32 @@ const Save = {
     return id === 'ammo' ? 'ammo_556_1' : id;
   },
 
-  /* 一份条目表 → 规范化条目表。仓库允许一个 id 一条（不分堆），
-     背包要按堆叠上限切开（格子有限，进局时一条就占一格）。 */
+  /* 一份条目表 → 规范化条目表。只有子弹能并成一条（仓库里一条记到底，
+     背包里按堆叠上限切开，格子有限）；其它物品一件一条，不叠。
+     顺序照旧，合并只发生在原来的位置上。 */
   normalizeList(list, splitStacks) {
-    const m = new Map();          // 满容量堆：id → 件数
-    const partials = [];          // 用过的恢复品：一件一条，带 cap
-    const gears = [];
+    const out = [];            // 保序输出
+    const merged = new Map();  // 可堆叠的（子弹）：id → 条目
+    const push = (id, n, item) => {
+      if (stackLimit(item) > 1) {
+        const cur = merged.get(id);
+        if (cur) { cur.n += n; return; }
+        const entry = { id, n };
+        merged.set(id, entry);
+        out.push(entry);
+        return;
+      }
+      for (let k = 0; k < n; k++) out.push({ id, n: 1 });
+    };
     for (const e of list) {
       if (!e) continue;
       if (e.gear && e.gear.equip) {
         // 用当前模板重算价格与回收价，耐久、余弹仍来自旧快照。
         const spec = e.gear.equip;
         const current = spec.kind === 'armor' ? EQUIP.armor(spec.gear)
-          : spec.kind === 'gun' ? EQUIP.gun(spec.gun, spec.mag, spec.ammo)
+          : spec.kind === 'gun' ? EQUIP.gun(spec.gun, spec.mag, spec.ammo, spec.rounds)
           : spec.kind === 'bag' ? EQUIP.bag(spec.bag) : null;
-        if (current) gears.push({ id: e.id, n: 1, gear: current });
+        if (current) out.push({ id: e.id, n: 1, gear: current });
         continue;
       }
       const id = this.migrateAmmoId(Medical.canonicalId(e.id));
@@ -5912,32 +5970,40 @@ const Save = {
       if (!item) continue;
       const n = Math.max(1, e.n || 1);
       const max = item.healCap || 0;
-      if (!max) { m.set(id, (m.get(id) || 0) + n); continue; }
+      if (!max) { push(id, n, item); continue; }
       /* 恢复品要保留"用了多少"：老存档没写 cap 就按满容量初始化，归零的直接丢掉 */
       const cap = typeof e.cap === 'number' ? U.clamp(e.cap, 0, max) : max;
       if (cap <= 0) continue;
-      if (cap >= max - 1e-6) m.set(id, (m.get(id) || 0) + n);
+      if (cap >= max - 1e-6) push(id, n, item);
       else {
-        partials.push({ id, n: 1, cap });
-        if (n > 1) m.set(id, (m.get(id) || 0) + (n - 1));
+        out.push({ id, n: 1, cap });
+        if (n > 1) push(id, n - 1, item);
       }
     }
-    let main = [...m].map(([id, n]) => ({ id, n }));
-    if (splitStacks) {
-      const cut = [];
-      for (const e of main) {
-        const item = ITEM_BY_ID[e.id];
-        const stack = Math.max(1, (item && item.stack) || 1);
-        let left = e.n;
-        while (left > 0) { const put = Math.min(stack, left); cut.push({ id: e.id, n: put }); left -= put; }
-      }
-      main = cut;
+    if (!splitStacks) return out;
+    /* 背包：可堆叠的按上限切开，位置不变 */
+    const cut = [];
+    for (const e of out) {
+      if (!merged.has(e.id)) { cut.push(e); continue; }
+      const stack = stackLimit(ITEM_BY_ID[e.id]);
+      let left = e.n;
+      while (left > 0) { const put = Math.min(stack, left); cut.push({ id: e.id, n: put }); left -= put; }
     }
-    return main.concat(partials, gears);
+    return cut;
   },
 
   normalizeStash() { this.stash = this.normalizeList(this.stash, false); },
-  normalizeBag() { this.bag = this.normalizeList(this.bag, true); },
+  normalizeBag() {
+    this.bag = this.normalizeList(this.bag, true);
+    /* 老存档里药品是叠着的，拆成一件一条之后可能超出背包容量。
+       放不下的退回仓库——别硬塞，也别把东西弄丢。 */
+    const limit = bagSlots();
+    while (this.bag.length > limit) {
+      const e = this.bag.pop();
+      if (e.gear) this.addGearStash(e.gear);
+      else this.addStash(e.id, e.n, e.cap);
+    }
+  },
 
   /* ---- 背包：数量、重量、整堆合并 ---- */
   bagCount(id) {
@@ -5950,7 +6016,7 @@ const Save = {
     id = Medical.canonicalId(id);
     const item = ITEM_BY_ID[id];
     if (!item) return false;
-    const stack = Math.max(1, item.stack || 1);
+    const stack = stackLimit(item);
     const max = item.healCap || 0;
     if (max && typeof cap === 'number' && cap < max - 1e-6) {
       this.bag.push({ id, n: 1, cap: U.clamp(cap, 0, max) });
@@ -6021,30 +6087,18 @@ const Save = {
     id = Medical.canonicalId(id);
     const item = ITEM_BY_ID[id];
     const max = (item && item.healCap) || 0;
-    if (max) {
-      /* 用过的那件单独入库，容量原样保留 */
-      if (typeof cap === 'number' && cap < max - 1e-6) {
-        this.stash.push({ id, n: 1, cap: U.clamp(cap, 0, max) });
-        return;
-      }
-      /* 只往满容量那一堆里并，超过堆叠上限就另起一条 */
-      const stack = Math.max(1, item.stack || 1);
-      let left = n;
-      const full = this.stash.find(e => e.id === id && !e.gear && (e.cap == null || e.cap >= max - 1e-6));
-      if (full) {
-        const take = Math.min(Math.max(0, stack - full.n), left);
-        full.n += take; left -= take;
-      }
-      while (left > 0) {
-        const put = Math.min(stack, left);
-        this.stash.push({ id, n: put });
-        left -= put;
-      }
+    /* 用过的那件单独入库，容量原样保留 */
+    if (max && typeof cap === 'number' && cap < max - 1e-6) {
+      this.stash.push({ id, n: 1, cap: U.clamp(cap, 0, max) });
       return;
     }
-    const e = this.stash.find(x => x.id === id && !x.gear);
-    if (e) e.n += n;
-    else this.stash.push({ id, n });
+    /* 子弹并成一条；其它物品一件一条 */
+    if (item && stackLimit(item) > 1) {
+      const e = this.stash.find(x => x.id === id && !x.gear);
+      if (e) e.n += n; else this.stash.push({ id, n });
+      return;
+    }
+    for (let k = 0; k < Math.max(1, n | 0); k++) this.stash.push({ id, n: 1 });
   },
 
   setHP(hp, immediate = true) {
@@ -6182,6 +6236,10 @@ const Base = {
           act +
         '</span></div>';
       row.onclick = () => this.togglePicker(key, row);
+      if (it) row.oncontextmenu = ev => {
+        ev.preventDefault(); ev.stopPropagation();
+        Ctx.show(ev.clientX, ev.clientY, [{label:'退弹', onClick:() => this.unloadGun(it)}]);
+      };
       el.appendChild(row);
     }
 
@@ -6453,7 +6511,7 @@ const Base = {
       if (!def) return false;
       const want = this.slotIdx(key) < 2 ? 'primary' : 'secondary';
       if (def.slot !== want) return false;                 // 类型不对，别硬塞
-      next = EQUIP.gun(it.equip.gun, it.equip.mag | 0);    // 余弹跟着枪走
+      next = EQUIP.gun(it.equip.gun, it.equip.mag | 0, it.equip.ammo, it.equip.rounds);    // 余弹跟着枪走
       name = def.name; verb = '装上 ';
     } else if (kind === 'bag') {
       if (it.equip.kind !== 'bag') return false;
@@ -6937,8 +6995,7 @@ const Base = {
   bagBlock(it, n) {
     if (!it) return '物品不存在';
     if (Save.bagWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
-    const stack = Math.max(1, it.stack || 1);
-    const perSlot = it.healCap ? 1 : stack;
+    const stack = stackLimit(it);
     let room = 0;
     for (const e of Save.bag) {
       if (e.gear || e.id !== it.id) continue;
@@ -6946,7 +7003,7 @@ const Base = {
       room += Math.max(0, stack - e.n);
     }
     const need = Math.max(0, n - room);
-    if (need > (bagSlots() - Save.bag.length) * perSlot) return '格子不够';
+    if (need > (bagSlots() - Save.bag.length) * stack) return '格子不够';
     return '';
   },
 
@@ -6988,6 +7045,21 @@ const Base = {
 
   /* 仓库 / 背包里点开一件：详情 + 动作。
      仓库那侧多一个「放入背包」，背包那侧多一个「放回仓库」，两边同一个浮窗。 */
+  unloadGun(it) {
+    const eq = it?.equip;
+    if (eq?.kind !== 'gun') return false;
+    const bag = new Bag();
+    bag.slots = Save.bag.map(e => ({item:stashItem(e), n:e.n||1, cap:e.cap}));
+    const rounds = magazineRounds(WEAPONS[eq.gun], eq.mag, eq.ammo, eq.rounds), counts = {};
+    for (const id of rounds) counts[id] = (counts[id]||0)+1;
+    for (const [id,n] of Object.entries(counts)) if (!bag.addAmmo(id,n)) {
+      this.note('背包空间不足，退弹已取消', true); return false;
+    }
+    Save.bag = bag.slots.map(s => s.item.equip ? {id:s.item.id,n:1,gear:s.item} : {id:s.item.id,n:s.n,...(s.cap == null ? {} : {cap:s.cap})});
+    eq.mag = 0; eq.rounds = []; it.note = '';
+    Save.save(); Tips.hide(); this.render(); return true;
+  },
+
   showItem(e, where, node) {
     const it = stashItem(e);
     if (!it || !node || !node.getBoundingClientRect) return;
@@ -6998,6 +7070,7 @@ const Base = {
       where === 'stash' ? '左键放入背包' : '左键放回仓库', extra);
 
     const acts = [];
+    if (it.equip?.kind === 'gun') acts.push({label:'退弹到背包', onClick:() => this.unloadGun(it)});
     const canHeal = Medical.ready(it) && Save.hp < CFG.P.HP;
     if (Medical.ready(it)) {
       acts.push({
@@ -7019,12 +7092,9 @@ const Base = {
   renderFilter() {
     const el = document.getElementById('stashFilter');
     if (el.dataset.built) return;      // 只建一次，之后只切 class
-    const opts = [
-      ['all', '全部'], ['sell', '可出售'],
-      ['sup', '物资'], ['col', '收集品']
-    ];
-    el.innerHTML = opts.map(([k, name]) =>
-      '<button class="pill' + (k === this.filter ? ' on' : '') + '" data-f="' + k + '">' + name + '</button>'
+    el.innerHTML = STASH_FILTERS.map(f =>
+      '<button class="pill' + (f.k === this.filter ? ' on' : '') + '" data-f="' + f.k + '">' +
+      '<span class="pill-name">' + f.name + '</span><span class="pill-count" data-count="' + f.k + '">0</span></button>'
     ).join('');
     el.dataset.built = '1';
     el.querySelectorAll('button').forEach(b => {
@@ -7034,6 +7104,26 @@ const Base = {
         this.renderStash();
       };
     });
+  },
+
+  /* 每个分类标签后面带件数：一眼看出仓库里有什么 */
+  updateFilterCounts() {
+    const el = document.getElementById('stashFilter');
+    if (!el || !el.dataset.built) return;
+    const counts = {};
+    for (const f of STASH_FILTERS) counts[f.k] = 0;
+    for (const e of Save.stash) {
+      const it = stashItem(e);
+      if (!it) continue;
+      for (const f of STASH_FILTERS) {
+        if (f.k !== 'all' && !stashFilterMatch(it, f.k)) continue;
+        counts[f.k] += e.n || 1;
+      }
+    }
+    for (const f of STASH_FILTERS) {
+      const span = el.querySelector('[data-count="' + f.k + '"]');
+      if (span) span.textContent = String(counts[f.k]);
+    }
   },
 
   /* 仓库格子按容器尺寸实时算：正方形、边长 46~78，列数铺满宽度，行数铺满高度。
@@ -7078,15 +7168,13 @@ const Base = {
     const list = Save.stash.filter(e => {
       const it = stashItem(e);
       if (!it) return false;
-      if (this.filter === 'sup') {
-        return itemGroup(it)==='supply';
-      }
-      if (this.filter === 'col') return itemGroup(it)==='collectible';
-      return true;
+      return stashFilterMatch(it, this.filter);
     }).sort((a, b) => {
       const ia = stashItem(a), ib = stashItem(b);
       return (ib.price || 0) - (ia.price || 0);
     });
+
+    this.updateFilterCounts();
 
     document.getElementById('stashCount').textContent =
       Save.stash.length + ' / ' + STASH_SLOTS + ' 格';
@@ -7431,7 +7519,7 @@ const Game = {
 
     /* 医疗层同样按 720×480 布局，跟着一起缩放；
        轮盘的画布后备尺寸由 MedWheel.sync() 按 _rs 自己对齐 */
-    for (const id of ['medBar', 'healHud', 'medWheel']) {
+    for (const id of ['medBar', 'healHud', 'medWheel', 'ammoWheel']) {
       const el = document.getElementById(id);
       if (el) el.style.zoom = String(this._scale);
     }
@@ -7451,7 +7539,7 @@ const Game = {
       if (this.state !== 'playing') return;
 
       if (k === 'e') K.interactPressed = true;
-      if (k === 'r') K.reloadPressed = true;
+      if (k === 'r') AmmoQuick.press();
       if (k === '1' || k === '2' || k === '3') {
         if (this.state === 'playing' && this.player && !this.player.dead) {
           this.player.switchWeapon(parseInt(k, 10) - 1);
@@ -7469,7 +7557,7 @@ const Game = {
       }
       if (k === 'escape') {
         /* 轮盘优先：Esc 只收轮盘，正在进行的治疗不动 */
-        if (MedQuick.abortWheel()) { Tips.hide(); return; }
+        if (AmmoQuick.abortWheel() || MedQuick.abortWheel()) { Tips.hide(); return; }
         if (Medical.cancel()) { Tips.hide(); return; }
         if (this.lootOpen) this.closeLoot();
         else if (this.bagOpen) this.toggleBag();
@@ -7483,6 +7571,7 @@ const Game = {
       /* 松手才判定这次是短按还是长按 —— 所以放在状态判断之前，
          场景切走时也要把轮回状态收干净 */
       if (k === '5') MedQuick.release();
+      if (k === 'r') AmmoQuick.release();
     });
 
     this.canvas.addEventListener('mousemove', e => {
@@ -7506,6 +7595,7 @@ const Game = {
       for (const k in K.keys) K.keys[k] = false;
       K.mouseDown = false;
       MedQuick.cancel();
+      AmmoQuick.cancel();
     });
   },
 
@@ -7685,7 +7775,7 @@ const Game = {
     const P = this.player;
     if (!P) return;
     P.weapons[P.slot] && (P.weapons[P.slot].magCur = P.mag);   // 手上那把的余弹先同步
-    Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo) : null));
+    Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo, w.rounds) : null));
     Save.gear.helmet = P.helmet ? Object.assign({}, P.helmet) : null;
     Save.gear.body = P.body ? Object.assign({}, P.body) : null;
     Save.gear.back = P.back ? Object.assign({}, P.back) : null;
@@ -7841,8 +7931,8 @@ Object.assign(Game, {
     const max = item.healCap || 0;
     const isPartial = max > 0 && typeof cap === 'number' && cap < max - 1e-6;
     const isFull = e => !max || (typeof e.cap === 'number' ? e.cap : max) >= max - 1e-6;
-    const same = (!isPartial && item.stack > 1)
-      ? pile.items.find(e => e && e.item.id === item.id && isFull(e) && e.n + n <= item.stack)
+    const same = (!isPartial && isStackable(item))
+      ? pile.items.find(e => e && e.item.id === item.id && isFull(e) && e.n + n <= stackLimit(item))
       : null;
     if (same) same.n += n;
     else pile.items.push(typeof cap === 'number'
@@ -7888,6 +7978,7 @@ Object.assign(Game, {
     this.updateTide();
     /* 长按 5 的判定：keydown 只立状态，计时在这里走，够 250ms 才开轮盘 */
     if (typeof MedQuick !== 'undefined') MedQuick.tick(dt);
+    AmmoQuick.tick(dt);
 
     const P = this.player;
     const K = this.input;
@@ -7908,7 +7999,7 @@ Object.assign(Game, {
         dodge: K.dodgePressed,
         aimAngle: K.aimAngle
       });
-      if (K.mouseDown) P.tryShoot();
+      if (K.mouseDown && !AmmoWheel.isOpen() && !MedWheel.isOpen()) P.tryShoot();
     } else {
       // 看面板时人站住，但世界继续
       P.update(dt, { mx: 0, my: 0, sneak: false, sprint: false, dodge: false, aimAngle: K.aimAngle });
@@ -8297,6 +8388,7 @@ Object.assign(Game, {
     this.renderEntities(c, camX, camY);
     this.renderRaisedWalls(c, camX, camY, true);
     this.renderCanopies(c, camX, camY);
+    this.renderFog(c, camX, camY);
     this.renderParticles(c, camX, camY);
     this.renderNoiseEdge(c);
     this.renderHUD(c);
@@ -8366,6 +8458,20 @@ Object.assign(Game, {
     }
   },
 
+  /* 当前观察决定亮度；不再区分从未到访和曾经探索。 */
+  renderFog(c, camX, camY) {
+    const size=CFG.TILE;
+    c.save();
+    c.fillStyle='rgba(4,8,7,'+(1-CFG.FOV.BRIGHT_FOG)+')';
+    const x0=Math.max(0,Math.floor(camX/size)),y0=Math.max(0,Math.floor(camY/size));
+    const x1=Math.min(M.W,Math.ceil((camX+CFG.VIEW_W)/size));
+    const y1=Math.min(M.H,Math.ceil((camY+CFG.VIEW_H)/size));
+    for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++) {
+      if(!M.visible[M.idx(x,y)])c.fillRect(x*size-camX,y*size-camY,size,size);
+    }
+    c.restore();
+  },
+
   renderTerrain(c, camX, camY) {
     const TS = CFG.TILE;
     const x0 = Math.floor(camX / TS), y0 = Math.floor(camY / TS);
@@ -8381,14 +8487,8 @@ Object.assign(Game, {
         const sx = x * TS - camX;
         const sy = y * TS - camY;
 
-        // 未探索：统一纯色，不给任何结构信息
-        if (!M.seen[i]) {
-          c.fillStyle = '#0a1210';
-          c.fillRect(sx, sy, TS, TS);
-          continue;
-        }
-
-        let bright = M.visible[i] ? CFG.FOV.BRIGHT_NOW : CFG.FOV.BRIGHT_MEM;
+        // 场景始终绘制，当前未观察区域由统一暗层覆盖。
+        const bright = CFG.FOV.BRIGHT_NOW;
 
         // 底色：墙明显比地板暗，让"能不能走"一眼分得清
         let col;
@@ -8438,7 +8538,7 @@ Object.assign(Game, {
         // 连续墙网只在暴露边画立面；相邻墙之间不画独立方框。
         // 墙体在地面全部绘完后统一绘制，防止下一格地面擦掉加高部分。
 
-        // 岸线、桥栏、玻璃和断墙端头随所在格一起进入视野/记忆层。
+        // 岸线、桥栏、玻璃和断墙端头与地面共用观察暗层。
         for (const id of t.overlays) {
           const image=Art.get('props',id);
           if(image)c.drawImage(image,sx,sy,TS,TS);
@@ -8450,7 +8550,7 @@ Object.assign(Game, {
           c.fillRect(sx, sy, TS, TS);
         }
 
-        // 记忆层保留相同立面，只暗化；不逐格描框切碎连续墙顶。
+        // 不逐格描框切碎连续墙顶，亮度交给观察暗层。
       }
     }
     this.renderRaisedWalls(c,camX,camY);
@@ -8460,11 +8560,10 @@ Object.assign(Game, {
     const size=CFG.TILE;
     for(let y=Math.max(0,Math.floor(camY/size));y<Math.min(M.H,Math.ceil((camY+CFG.VIEW_H)/size)+1);y++)
       for(let x=Math.max(0,Math.floor(camX/size));x<Math.min(M.W,Math.ceil((camX+CFG.VIEW_W)/size));x++){
-        const t=M.at(x,y),i=M.idx(x,y);if(!Art.wallCell(t)||!M.seen[i])continue;
+        const t=M.at(x,y);if(!Art.wallCell(t))continue;
         const edges=Art.wallEdges(x,y),sx=x*size-camX,sy=y*size-camY;
-        if(overhang&&(!edges.north||y===0||M.at(x,y-1).door||M.at(x,y-1).wallCap||M.at(x,y-1).terrainCh==='w'||!M.seen[M.idx(x,y-1)]))continue;
-        const bright=Math.min(M.visible[i]?CFG.FOV.BRIGHT_NOW:CFG.FOV.BRIGHT_MEM,
-          overhang?(M.visible[M.idx(x,y-1)]?CFG.FOV.BRIGHT_NOW:CFG.FOV.BRIGHT_MEM):1);
+        if(overhang&&(!edges.north||y===0||M.at(x,y-1).door||M.at(x,y-1).wallCap||M.at(x,y-1).terrainCh==='w'))continue;
+        const bright=CFG.FOV.BRIGHT_NOW;
         c.save();c.beginPath();c.rect(sx,overhang?sy-size/2:sy,size,overhang?size/2:size);c.clip();
         // 加高区域已为实体，无需再按玩家位置淡化。
         Art.drawWallFaces(c,sx,sy,size,edges);
@@ -8492,12 +8591,10 @@ Object.assign(Game, {
       if(prop.canopy)continue;
       const tile = M.grid[prop.y] && M.grid[prop.y][prop.x];
       if (!tile || tile.ch === '#') continue;
-      const cells=M.propCells(prop),seen=cells.some(([x,y])=>M.seen[y*M.W+x]);
-      if (!seen) continue;
       const image = Art.prop(prop);
       if (!image) continue;
       c.save();
-      c.globalAlpha = cells.some(([x,y])=>M.visible[y*M.W+x]) ? 0.9 : 0.3;
+      c.globalAlpha = 0.9;
       if (M.waterDepth(prop.x, prop.y) > 1.05) c.globalAlpha *= 0.4;
       const rect=Art.propRect(prop,image,TS);
       c.drawImage(image,rect.sx,rect.sy,rect.sw,rect.sh,rect.x-camX,rect.y-camY,rect.w,rect.h);
@@ -8507,9 +8604,8 @@ Object.assign(Game, {
     // 撤离点
     for (const ex of M.extracts) {
       const i = ex.y * M.W + ex.x;
-      if (!M.seen[i]) continue;
       const sx = ex.x * TS - camX, sy = ex.y * TS - camY;
-      const a = M.visible[i] ? 0.9 : 0.3;
+      const a = 0.9;
       const pulse = 0.55 + 0.45 * Math.sin(this.time * 3);
       const exImg = Art.get('props', 'exit');
       if (exImg) {
@@ -8534,17 +8630,8 @@ Object.assign(Game, {
     // 容器
     for (const b of this.boxes) {
       const i = b.ty * M.W + b.tx;
-      if (!M.seen[i]) continue;
       const vis = M.visible[i];
-      if (!vis && !b.searched) {
-        // 记忆里的轮廓
-        const sx = b.tx * TS - camX, sy = b.ty * TS - camY;
-        c.strokeStyle = 'rgba(120,160,148,0.22)';
-        c.lineWidth = 1;
-        c.strokeRect(sx + 8, sy + 8, TS - 16, TS - 16);
-        continue;
-      }
-      if (!vis) continue;
+      if (b.pile && !vis) continue;
 
       const sx = b.tx * TS - camX, sy = b.ty * TS - camY;
 
@@ -8648,17 +8735,16 @@ Object.assign(Game, {
         const t = M.grid[y][x];
         if (!t.door) continue;
         const i = y * M.W + x;
-        if (!M.seen[i]) continue;
         const sx = x * TS - camX, sy = y * TS - camY;
-        const bright = M.visible[i] ? 1 : 0.4;
+        const bright = 1;
         const safe = t.door.safe;
 
         const dImg = Art.door(t.door);
         if (dImg) {
-          // 共用完整门框，每格单独裁切和暗化，避免另一半门泄漏到未探索区域。
+          // 共用完整门框，每格裁切；观察暗层统一覆盖门与周围地面。
           c.save();
           const rect=Art.doorRect(t.door,dImg,x,y,TS);
-          const top=(t.door.axis==='horizontal'||!t.door.cells||y===t.door.y)&&y>0&&M.seen[M.idx(x,y-1)]?rect.lift:0;
+          const top=(t.door.axis==='horizontal'||!t.door.cells||y===t.door.y)&&y>0?rect.lift:0;
           c.beginPath();c.rect(sx,sy-top,TS,TS+top);c.clip();
           c.globalAlpha = bright;
           c.drawImage(dImg,rect.x-camX,rect.y-camY,rect.w,rect.h);
@@ -8695,14 +8781,13 @@ Object.assign(Game, {
     const TS=CFG.TILE;
     for(const prop of (M.map?M.map.props:DECOR)){
       if(!prop.canopy)continue;
-      const cells=M.propCells(prop),seen=cells.filter(([x,y])=>M.seen[y*M.W+x]);
-      if(!seen.length)continue;
+      const cells=M.propCells(prop);
       const image=Art.prop(prop);if(!image)continue;
-      const rect=Art.propRect(prop,image,TS),visible=cells.some(([x,y])=>M.visible[y*M.W+x]);
+      const rect=Art.propRect(prop,image,TS);
       c.save();
-      // 不把完整树冠画进未探索的格；树冠在角色之后绘制，透明时可看见树下场景。
-      c.beginPath();for(const [x,y]of seen)c.rect(x*TS-camX,y*TS-camY,TS,TS);c.clip();
-      c.globalAlpha=visible?this.canopyAlpha(prop):0.3;
+      // 树冠在角色之后绘制；视野外与地面共同接受暗层覆盖。
+      c.beginPath();for(const [x,y]of cells)c.rect(x*TS-camX,y*TS-camY,TS,TS);c.clip();
+      c.globalAlpha=this.canopyAlpha(prop);
       c.drawImage(image,rect.sx,rect.sy,rect.sw,rect.sh,rect.x-camX,rect.y-camY,rect.w,rect.h);
       c.restore();
     }
@@ -8948,10 +9033,18 @@ Object.assign(Game, {
     c.fillStyle = '#dbe5e1';
     c.font = 'bold 22px monospace';
     c.fillText(P.mag + '', 26, CFG.VIEW_H - 44);
+    const ammoX = 30 + c.measureText(P.mag + '').width;
+    const ammoItem = P.ammoItem;
+    if (ammoItem) {
+      c.fillStyle = RARITY[ammoItem.r - 1].color + '66';
+      c.fillRect(ammoX, CFG.VIEW_H - 64, 24, 24);
+      const icon = Icons.get(ammoItem.id);
+      if (icon) { c.imageSmoothingEnabled = false; c.drawImage(icon, ammoX, CFG.VIEW_H - 64, 24, 24); }
+    }
     c.fillStyle = '#6f8a82';
     c.font = '11px monospace';
     /* 备弹只显示当前这一档弹药的存量，别把别的口径算进来 */
-    c.fillText('/ ' + P.bag.ammoCount(P.ammoId), 26 + c.measureText(P.mag + '').width + 26, CFG.VIEW_H - 44);
+    c.fillText('/ ' + P.bag.ammoCount(P.ammoId), ammoX + 28, CFG.VIEW_H - 44);
 
     // 当前武器：名字 + 槽位 + 口径/弹药等级
     c.textAlign = 'right';
@@ -9458,11 +9551,13 @@ Object.assign(Game, {
       const free = range.find(k => !P.weapons[k]);
       const at = (free != null) ? free : P.slot;     // 没有空位就换手上这把
       const cur = P.weapons[at];
-      if (cur) old = EQUIP.gun(cur.id, cur.magCur, cur.ammo);
+      if (cur) old = EQUIP.gun(cur.id, cur.magCur, cur.ammo, cur.rounds);
       P.weapons[at] = Object.assign({}, def, {
         magCur: eq.mag || 0,
+        rounds: magazineRounds(def, eq.mag || 0, eq.ammo, eq.rounds),
         ammo: (AMMO_BY_ID[eq.ammo] && AMMO_BY_ID[eq.ammo].caliber === def.caliber) ? eq.ammo : def.ammo
       });
+      P.reloadT = 0; P.reloadPending = false; AmmoQuick.cancel();
       P.slot = at;
       P.mag = P.weapons[at].magCur;
     } else {
@@ -9560,7 +9655,24 @@ Object.assign(Game, {
     for (let n = 0; n < nodes.length; n++) {
       const c = cells[n];
       if (c && c.click) nodes[n].onclick = c.click;
+      if (n < 3 && P.weapons[n]) nodes[n].oncontextmenu = ev => {
+        ev.preventDefault(); ev.stopPropagation();
+        Ctx.show(ev.clientX, ev.clientY, [{label:'退弹', onClick:() => P.unloadWeapon(n)}]);
+      };
     }
+  },
+
+  unloadLooseGun(it) {
+    const eq = it?.equip, p = this.player;
+    if (!p || eq?.kind !== 'gun') return false;
+    const snapshot = p.bag.slots.map(s => ({...s}));
+    const rounds = magazineRounds(WEAPONS[eq.gun], eq.mag, eq.ammo, eq.rounds);
+    const counts = {}; for (const id of rounds) counts[id] = (counts[id] || 0) + 1;
+    for (const [id,n] of Object.entries(counts)) if (!p.bag.addAmmo(id,n)) {
+      p.bag.slots = snapshot; this.toast('背包空间不足，退弹已取消'); return false;
+    }
+    eq.mag = 0; eq.rounds = []; it.note = '';
+    this.renderBag(); return true;
   },
 
   renderBag() {
@@ -9609,6 +9721,7 @@ Object.assign(Game, {
           ev.preventDefault();
           ev.stopPropagation();
           Ctx.show(ev.clientX, ev.clientY, [
+            ...(it.equip?.kind === 'gun' ? [{label:'退弹', onClick:() => this.unloadLooseGun(it)}] : []),
             {
               label: '查看详情',
               onClick: () => Tips.show(it, cell.getBoundingClientRect(),
@@ -10114,6 +10227,7 @@ const MedWheel = {
     const gs = MedQuick.groups();
     if (!gs.length) { Game.toast('背包里没有可用的医疗品'); return false; }
 
+    if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     this.sectors = gs;
     this.bind();
     this.open_ = true;
@@ -10246,10 +10360,10 @@ const MedWheel = {
     c.textBaseline = 'middle';
     c.fillStyle = '#dbe5e1';
     c.font = 'bold 14px "Microsoft YaHei", sans-serif';
-    c.fillText('医疗物品', cx, cy - 6);
+    c.fillText(this.title || '医疗物品', cx, cy - 6);
     c.fillStyle = '#6f8a82';
     c.font = '10px "Microsoft YaHei", sans-serif';
-    c.fillText(this.sel >= 0 ? '松开 5 使用' : '移动鼠标选择', cx, cy + 13);
+    c.fillText(this.sel >= 0 ? (this.confirmText || '松开 5 使用') : '移动鼠标选择', cx, cy + 13);
   }
 };
 
@@ -10374,15 +10488,66 @@ const MedHud = {
     MedBar.refresh();
     HealHud.frame();
     if (MedWheel.isOpen()) MedWheel.draw();
+    if (typeof AmmoWheel !== 'undefined' && AmmoWheel.isOpen()) AmmoWheel.draw();
   },
   reset() {
     MedQuick.reset();
+    if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     MedBar._id = undefined;
   },
   /* 给测试和外部用的一个小入口：模拟一次完整的短按/长按 */
   press() { return MedQuick.press(); },
   release() { return MedQuick.release(); },
   tick(dt) { MedQuick.tick(dt); }
+};
+
+/* 复用医疗轮盘的显示和鼠标命中，弹药选择使用独立状态与画布。 */
+const AmmoWheel = Object.assign(Object.create(MedWheel), {
+  open_: false, sectors: [], sel: -1, _cv: null, _bound: false,
+  title: '优先弹种', confirmText: '松开 R 退弹并装填',
+  cv() {
+    if (!this._cv) {
+      const source = document.getElementById('medWheel');
+      if (!source) return null;
+      const cv = source.cloneNode(false); cv.id = 'ammoWheel';
+      source.parentNode.appendChild(cv); this._cv = cv;
+    }
+    return this._cv;
+  },
+  open() {
+    const p = Game.player;
+    if (Game.state !== 'playing' || !p || p.dead || !p.weapons[p.slot]) return false;
+    const ids = [...new Set([...p.bag.ammoStacks(p.weapon.caliber).map(s => s.item.id), ...p.roundsFor(p.weapon, p.mag)])];
+    if (!ids.length) { Game.toast('背包里没有同口径弹药'); return false; }
+    MedQuick.cancel();
+    this.sectors = ids.map(id => ({id, item: AMMO_BY_ID[id], text: '备弹 ' + p.bag.ammoCount(id) + ' · 匣内 ' + p.weapon.rounds.filter(x=>x===id).length}));
+    this.weapon = p.weapon;
+    this.bind(); this.open_ = true; this.sel = -1;
+    this.cv().style.display = 'block'; Game.input.mouseDown = false;
+    this.sel = this.hitTest(Game.input.mx, Game.input.my); this.draw(); return true;
+  },
+  confirm() {
+    const sec = this.open_ && this.sectors[this.sel], weapon = this.weapon;
+    this.close();
+    return !!(sec && Game.state === 'playing' && Game.player.weapon === weapon && Game.player.loadAmmo(sec.id));
+  }
+});
+const AmmoQuick = {
+  pressing: false, hold: 0, longFired: false,
+  press() { if (this.pressing) return; this.pressing = true; this.hold = 0; this.longFired = false; },
+  release() {
+    if (!this.pressing) return false;
+    const long = this.longFired; this.pressing = false;
+    if (Game.state !== 'playing' || Game.player?.dead) { this.cancel(); return false; }
+    if (long) return AmmoWheel.confirm();
+    return Game.player.tryReload();
+  },
+  tick(dt) {
+    if (Game.state !== 'playing' || Game.player?.dead) { this.cancel(); return; }
+    if (this.pressing && !this.longFired && (this.hold += dt) >= .25) { this.longFired = true; AmmoWheel.open(); }
+  },
+  abortWheel() { if (!AmmoWheel.isOpen()) return false; AmmoWheel.close(); return true; },
+  cancel() { this.pressing = false; this.hold = 0; this.longFired = false; AmmoWheel.close(); }
 };
 
 </script>

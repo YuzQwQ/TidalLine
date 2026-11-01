@@ -105,6 +105,10 @@ const Base = {
           act +
         '</span></div>';
       row.onclick = () => this.togglePicker(key, row);
+      if (it) row.oncontextmenu = ev => {
+        ev.preventDefault(); ev.stopPropagation();
+        Ctx.show(ev.clientX, ev.clientY, [{label:'退弹', onClick:() => this.unloadGun(it)}]);
+      };
       el.appendChild(row);
     }
 
@@ -376,7 +380,7 @@ const Base = {
       if (!def) return false;
       const want = this.slotIdx(key) < 2 ? 'primary' : 'secondary';
       if (def.slot !== want) return false;                 // 类型不对，别硬塞
-      next = EQUIP.gun(it.equip.gun, it.equip.mag | 0);    // 余弹跟着枪走
+      next = EQUIP.gun(it.equip.gun, it.equip.mag | 0, it.equip.ammo, it.equip.rounds);    // 余弹跟着枪走
       name = def.name; verb = '装上 ';
     } else if (kind === 'bag') {
       if (it.equip.kind !== 'bag') return false;
@@ -860,8 +864,7 @@ const Base = {
   bagBlock(it, n) {
     if (!it) return '物品不存在';
     if (Save.bagWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
-    const stack = Math.max(1, it.stack || 1);
-    const perSlot = it.healCap ? 1 : stack;
+    const stack = stackLimit(it);
     let room = 0;
     for (const e of Save.bag) {
       if (e.gear || e.id !== it.id) continue;
@@ -869,7 +872,7 @@ const Base = {
       room += Math.max(0, stack - e.n);
     }
     const need = Math.max(0, n - room);
-    if (need > (bagSlots() - Save.bag.length) * perSlot) return '格子不够';
+    if (need > (bagSlots() - Save.bag.length) * stack) return '格子不够';
     return '';
   },
 
@@ -911,6 +914,21 @@ const Base = {
 
   /* 仓库 / 背包里点开一件：详情 + 动作。
      仓库那侧多一个「放入背包」，背包那侧多一个「放回仓库」，两边同一个浮窗。 */
+  unloadGun(it) {
+    const eq = it?.equip;
+    if (eq?.kind !== 'gun') return false;
+    const bag = new Bag();
+    bag.slots = Save.bag.map(e => ({item:stashItem(e), n:e.n||1, cap:e.cap}));
+    const rounds = magazineRounds(WEAPONS[eq.gun], eq.mag, eq.ammo, eq.rounds), counts = {};
+    for (const id of rounds) counts[id] = (counts[id]||0)+1;
+    for (const [id,n] of Object.entries(counts)) if (!bag.addAmmo(id,n)) {
+      this.note('背包空间不足，退弹已取消', true); return false;
+    }
+    Save.bag = bag.slots.map(s => s.item.equip ? {id:s.item.id,n:1,gear:s.item} : {id:s.item.id,n:s.n,...(s.cap == null ? {} : {cap:s.cap})});
+    eq.mag = 0; eq.rounds = []; it.note = '';
+    Save.save(); Tips.hide(); this.render(); return true;
+  },
+
   showItem(e, where, node) {
     const it = stashItem(e);
     if (!it || !node || !node.getBoundingClientRect) return;
@@ -921,6 +939,7 @@ const Base = {
       where === 'stash' ? '左键放入背包' : '左键放回仓库', extra);
 
     const acts = [];
+    if (it.equip?.kind === 'gun') acts.push({label:'退弹到背包', onClick:() => this.unloadGun(it)});
     const canHeal = Medical.ready(it) && Save.hp < CFG.P.HP;
     if (Medical.ready(it)) {
       acts.push({
@@ -942,12 +961,9 @@ const Base = {
   renderFilter() {
     const el = document.getElementById('stashFilter');
     if (el.dataset.built) return;      // 只建一次，之后只切 class
-    const opts = [
-      ['all', '全部'], ['sell', '可出售'],
-      ['sup', '物资'], ['col', '收集品']
-    ];
-    el.innerHTML = opts.map(([k, name]) =>
-      '<button class="pill' + (k === this.filter ? ' on' : '') + '" data-f="' + k + '">' + name + '</button>'
+    el.innerHTML = STASH_FILTERS.map(f =>
+      '<button class="pill' + (f.k === this.filter ? ' on' : '') + '" data-f="' + f.k + '">' +
+      '<span class="pill-name">' + f.name + '</span><span class="pill-count" data-count="' + f.k + '">0</span></button>'
     ).join('');
     el.dataset.built = '1';
     el.querySelectorAll('button').forEach(b => {
@@ -957,6 +973,26 @@ const Base = {
         this.renderStash();
       };
     });
+  },
+
+  /* 每个分类标签后面带件数：一眼看出仓库里有什么 */
+  updateFilterCounts() {
+    const el = document.getElementById('stashFilter');
+    if (!el || !el.dataset.built) return;
+    const counts = {};
+    for (const f of STASH_FILTERS) counts[f.k] = 0;
+    for (const e of Save.stash) {
+      const it = stashItem(e);
+      if (!it) continue;
+      for (const f of STASH_FILTERS) {
+        if (f.k !== 'all' && !stashFilterMatch(it, f.k)) continue;
+        counts[f.k] += e.n || 1;
+      }
+    }
+    for (const f of STASH_FILTERS) {
+      const span = el.querySelector('[data-count="' + f.k + '"]');
+      if (span) span.textContent = String(counts[f.k]);
+    }
   },
 
   /* 仓库格子按容器尺寸实时算：正方形、边长 46~78，列数铺满宽度，行数铺满高度。
@@ -1001,15 +1037,13 @@ const Base = {
     const list = Save.stash.filter(e => {
       const it = stashItem(e);
       if (!it) return false;
-      if (this.filter === 'sup') {
-        return itemGroup(it)==='supply';
-      }
-      if (this.filter === 'col') return itemGroup(it)==='collectible';
-      return true;
+      return stashFilterMatch(it, this.filter);
     }).sort((a, b) => {
       const ia = stashItem(a), ib = stashItem(b);
       return (ib.price || 0) - (ia.price || 0);
     });
+
+    this.updateFilterCounts();
 
     document.getElementById('stashCount').textContent =
       Save.stash.length + ' / ' + STASH_SLOTS + ' 格';

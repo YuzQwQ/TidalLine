@@ -101,6 +101,9 @@ vm.runInContext(`
   globalThis.START_CREDITS = START_CREDITS;
   globalThis.MedQuick = MedQuick; globalThis.MedWheel = MedWheel;
   globalThis.MedBar = MedBar; globalThis.HealHud = HealHud; globalThis.MedHud = MedHud;
+  globalThis.stackLimit = stackLimit; globalThis.isStackable = isStackable;
+  globalThis.STASH_FILTERS = STASH_FILTERS; globalThis.stashFilterMatch = stashFilterMatch;
+  globalThis.itemGroup = itemGroup; globalThis.itemCategoryLabel = itemCategoryLabel;
 `, ctx, { filename: 'export' });
 
 let pass = 0, fail = 0;
@@ -898,17 +901,24 @@ Game.player = null;
 noThrow('Base.open()', () => Base.open());
 ok('状态切到 base', Game.state === 'base');
 
-// 入库与合并
+// 入库与分条：只有子弹会并成一条，其它物品一件一条
 Save.addStash('antiq03', 1);
 Save.addStash('antiq03', 2);
 Save.normalizeStash();
-ok('同类合并', Save.stash.length === 1 && Save.stash[0].n === 3,
+ok('同类不合并，一件一条', Save.stash.length === 3 && Save.stash.every(e => e.n === 1),
+   JSON.stringify(Save.stash));
+Save.stash = [];
+Save.addStash('ammo_556_1', 90);
+Save.addStash('ammo_556_1', 60);
+ok('子弹仍然并成一条', Save.stash.length === 1 && Save.stash[0].n === 150,
    JSON.stringify(Save.stash));
 
 // 出售
 const credA = Save.credits;
 const coin = ITEMS.find(i => i.id === 'antiq03');
-Base.sell(Save.stash.find(e => e.id === 'antiq03'), 3);
+Save.stash = [];
+Save.addStash('antiq03', 3);
+for (const e of Save.stash.slice()) Base.sell(e, e.n || 1);
 ok('出售加钱', Save.credits === credA + coin.price * 3,
    credA + ' → ' + Save.credits);
 ok('出售后清空', Save.stashCount('antiq03') === 0);
@@ -930,7 +940,9 @@ Save.addBag('ammo_9mm_1', 20);
 Save.addBag('ammo_12g_1', 10);
 Save.addBag('heal01', 3);
 Save.normalizeBag();
-ok('背包条目各自成条', Save.bag.length === 4, Save.bag.length + ' 条');
+/* 子弹并成一条，绷带一件一格 */
+ok('背包条目各自成条', Save.bag.length === 6, Save.bag.length + ' 条');
+ok('背包里只有子弹是叠着的', Save.bag.filter(e => e.n > 1).length === 3 && Save.bag.filter(e => e.id === 'heal01').length === 3);
 ok('背包能数出某弹种', Save.bagCount('ammo_556_1') === 30);
 ok('背包算得出负重', Save.bagWeight() > 0, Save.bagWeight().toFixed(2) + ' kg');
 

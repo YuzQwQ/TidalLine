@@ -101,8 +101,8 @@ Object.assign(Game, {
     const max = item.healCap || 0;
     const isPartial = max > 0 && typeof cap === 'number' && cap < max - 1e-6;
     const isFull = e => !max || (typeof e.cap === 'number' ? e.cap : max) >= max - 1e-6;
-    const same = (!isPartial && item.stack > 1)
-      ? pile.items.find(e => e && e.item.id === item.id && isFull(e) && e.n + n <= item.stack)
+    const same = (!isPartial && isStackable(item))
+      ? pile.items.find(e => e && e.item.id === item.id && isFull(e) && e.n + n <= stackLimit(item))
       : null;
     if (same) same.n += n;
     else pile.items.push(typeof cap === 'number'
@@ -148,6 +148,7 @@ Object.assign(Game, {
     this.updateTide();
     /* 长按 5 的判定：keydown 只立状态，计时在这里走，够 250ms 才开轮盘 */
     if (typeof MedQuick !== 'undefined') MedQuick.tick(dt);
+    AmmoQuick.tick(dt);
 
     const P = this.player;
     const K = this.input;
@@ -168,7 +169,7 @@ Object.assign(Game, {
         dodge: K.dodgePressed,
         aimAngle: K.aimAngle
       });
-      if (K.mouseDown) P.tryShoot();
+      if (K.mouseDown && !AmmoWheel.isOpen() && !MedWheel.isOpen()) P.tryShoot();
     } else {
       // 看面板时人站住，但世界继续
       P.update(dt, { mx: 0, my: 0, sneak: false, sprint: false, dodge: false, aimAngle: K.aimAngle });

@@ -148,7 +148,7 @@ const Game = {
 
     /* 医疗层同样按 720×480 布局，跟着一起缩放；
        轮盘的画布后备尺寸由 MedWheel.sync() 按 _rs 自己对齐 */
-    for (const id of ['medBar', 'healHud', 'medWheel']) {
+    for (const id of ['medBar', 'healHud', 'medWheel', 'ammoWheel']) {
       const el = document.getElementById(id);
       if (el) el.style.zoom = String(this._scale);
     }
@@ -168,7 +168,7 @@ const Game = {
       if (this.state !== 'playing') return;
 
       if (k === 'e') K.interactPressed = true;
-      if (k === 'r') K.reloadPressed = true;
+      if (k === 'r') AmmoQuick.press();
       if (k === '1' || k === '2' || k === '3') {
         if (this.state === 'playing' && this.player && !this.player.dead) {
           this.player.switchWeapon(parseInt(k, 10) - 1);
@@ -186,7 +186,7 @@ const Game = {
       }
       if (k === 'escape') {
         /* 轮盘优先：Esc 只收轮盘，正在进行的治疗不动 */
-        if (MedQuick.abortWheel()) { Tips.hide(); return; }
+        if (AmmoQuick.abortWheel() || MedQuick.abortWheel()) { Tips.hide(); return; }
         if (Medical.cancel()) { Tips.hide(); return; }
         if (this.lootOpen) this.closeLoot();
         else if (this.bagOpen) this.toggleBag();
@@ -200,6 +200,7 @@ const Game = {
       /* 松手才判定这次是短按还是长按 —— 所以放在状态判断之前，
          场景切走时也要把轮回状态收干净 */
       if (k === '5') MedQuick.release();
+      if (k === 'r') AmmoQuick.release();
     });
 
     this.canvas.addEventListener('mousemove', e => {
@@ -223,6 +224,7 @@ const Game = {
       for (const k in K.keys) K.keys[k] = false;
       K.mouseDown = false;
       MedQuick.cancel();
+      AmmoQuick.cancel();
     });
   },
 
@@ -402,7 +404,7 @@ const Game = {
     const P = this.player;
     if (!P) return;
     P.weapons[P.slot] && (P.weapons[P.slot].magCur = P.mag);   // 手上那把的余弹先同步
-    Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo) : null));
+    Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo, w.rounds) : null));
     Save.gear.helmet = P.helmet ? Object.assign({}, P.helmet) : null;
     Save.gear.body = P.body ? Object.assign({}, P.body) : null;
     Save.gear.back = P.back ? Object.assign({}, P.back) : null;

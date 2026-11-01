@@ -11,7 +11,7 @@ const root=path.resolve(__dirname,'..'),output=path.join(root,'output/map-select
   await page.waitForFunction(()=>typeof Game!=='undefined'&&ART.tiles.every(id=>Art.get('tiles',id)));
   await page.locator('#btnStart').click();assert.equal(await page.locator('#btnDeploy').textContent(),'进入游戏');
   /* 老 id 'ammo' 会在存档归一化时迁到 ammo_556_1，种子直接用新 id 免得快照对不上 */
-  await page.evaluate(()=>{Save.credits=200000;Save.stash=[{id:'ammo_556_1',n:20},{id:'heal01',n:1},{id:'antiq01',n:2}];Save.bag=[{id:'ammo_556_1',n:60},{id:'heal01',n:3}];Base.render();});
+  await page.evaluate(()=>{Save.credits=200000;Save.stash=[{id:'ammo_556_1',n:20},{id:'heal01',n:1},{id:'antiq01',n:1},{id:'antiq01',n:1}];Save.bag=[{id:'ammo_556_1',n:60},{id:'heal01',n:1},{id:'heal01',n:1},{id:'heal01',n:1}];Base.render();});
   const snapshot=()=>page.evaluate(()=>JSON.stringify({credits:Save.credits,stash:Save.stash,gear:Save.gear,runs:Save.runs}));
   const before=await snapshot();
   await page.locator('#btnDeploy').click();await page.waitForFunction(()=>Game.state==='map-select');

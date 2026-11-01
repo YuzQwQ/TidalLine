@@ -71,17 +71,20 @@ class Bag {
   tier() { return weightTier(this.weight()); }
 
   canAdd(item, n, cap) {
-    n = n || 1;
+    n = Math.max(1, n | 0);
     /* 背包不能套背包：容量只由背包槽决定，塞进去也不会变大 */
     if (item.equip && item.equip.kind === 'bag') {
       return { ok: false, why: '背包不能塞进背包，回藏身处换装' };
     }
+    const stack = stackLimit(item);
     // 可堆叠：找同类（容量类物品只和"满的"那堆合并，用过的不并）
-    if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
+    if (stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
       const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
-      if (ex && ex.n + n <= item.stack) return { ok: true, merge: true };
+      if (ex && ex.n + n <= stack) return { ok: true, merge: true };
     }
-    if (this.slots.length >= bagSlots()) return { ok: false, why: '背包满了' };
+    /* 不可堆叠的一件一格，要几格就占几格 */
+    const need = stack > 1 ? Math.ceil(n / stack) : n;
+    if (this.slots.length + need > bagSlots()) return { ok: false, why: '背包满了' };
     if (this.weight() + item.w * n > CFG.BAG.CARRY) return { ok: false, why: '太重了' };
     return { ok: true };
   }
@@ -94,17 +97,30 @@ class Bag {
   }
 
   add(item, n, cap) {
-    n = n || 1;
+    n = Math.max(1, n | 0);
     if (item.equip && item.equip.kind === 'bag') return false;   // 不套背包
-    if (item.stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
-      const ex = this.slots.find(s => s.item.id === item.id && this.fullCap(s, item));
-      if (ex && ex.n + n <= item.stack) { ex.n += n; return true; }
+    const stack = stackLimit(item);
+    /* 先并进已有的同类堆（只有子弹这类可堆叠的） */
+    if (stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
+      for (const s of this.slots) {
+        if (s.item.id !== item.id || !this.fullCap(s, item)) continue;
+        const put = Math.min(Math.max(0, stack - s.n), n);
+        if (put <= 0) continue;
+        s.n += put; n -= put;
+        if (n <= 0) return true;
+      }
     }
-    if (this.slots.length >= bagSlots()) return false;
+    /* 剩下的新开格：不可堆叠的一件一格 */
+    const need = stack > 1 ? Math.ceil(n / stack) : n;
+    if (this.slots.length + need > bagSlots()) return false;
     if (this.weight() + item.w * n > CFG.BAG.CARRY) return false;
-    this.slots.push(item.healCap
-      ? { item, n, cap: typeof cap === 'number' ? cap : item.healCap }
-      : { item, n });
+    while (n > 0) {
+      const put = Math.min(stack, n);
+      this.slots.push(item.healCap
+        ? { item, n: put, cap: typeof cap === 'number' ? cap : item.healCap }
+        : { item, n: put });
+      n -= put;
+    }
     return true;
   }
 
@@ -117,8 +133,7 @@ class Bag {
      弹药按"口径 + 等级"分开存：ammo_556_3 和 ammo_556_1 是两个物品，
      不会合并成一堆；不同口径更不能混。这里只认 id，不认识就返回 0。 */
   ammoCount(id) {
-    const s = this.slots.find(s => s.item.id === id);
-    return s ? s.n : 0;
+    return this.slots.reduce((n,s) => n + (s.item.id === id ? s.n : 0), 0);
   }
   /* 某口径下所有等级的弹药条目（按格子顺序） */
   ammoStacks(caliber) {
@@ -149,17 +164,18 @@ class Bag {
   addAmmo(id, n) {
     const item = AMMO_BY_ID[id];
     if (!item || n <= 0) return false;
+    const stack = stackLimit(item);
     let left = n;
     for (const s of this.slots) {
       if (s.item.id !== id) continue;
-      const room = Math.max(0, item.stack - s.n);
+      const room = Math.max(0, stack - s.n);
       const put = Math.min(room, left);
       s.n += put; left -= put;
       if (left <= 0) return true;
     }
     while (left > 0) {
       if (this.slots.length >= bagSlots()) return false;
-      const put = Math.min(item.stack, left);
+      const put = Math.min(stack, left);
       this.slots.push({ item, n: put });
       left -= put;
     }
@@ -186,6 +202,8 @@ class Player {
     this.headR = CFG.COMBAT.HEAD_RADIUS;   // 头部判定半径
     this.mag = CFG.WEAPON.mag;
     this.reloadT = 0;
+    this.reloadPending = false;
+    if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     this.fireCd = 0;
     this.recoil = 0;            // 0~1，驱动散布与准星
     this.sinceShot = 99;        // 距上次开火多久
@@ -216,7 +234,7 @@ class Player {
      武器上记的是 id；口径对不上（改过存档 / 换了枪）就退回该口径的 Lv1。 */
   get ammoItem() {
     const w = this.weapon;
-    const a = AMMO_BY_ID[w.ammo];
+    const a = AMMO_BY_ID[this.mag > 0 ? this.roundsFor(w, this.mag)[0] : w.ammo];
     if (a && a.caliber === w.caliber) return a;
     return defaultAmmo(w.caliber);
   }
@@ -249,6 +267,8 @@ class Player {
     this.weapons[this.slot].magCur = this.mag;
     this.slot = i;
     this.mag = this.weapon.magCur;
+    this.reloadPending = false;
+    if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     this.reloadT = 0;
     this.fireCd = Math.max(this.fireCd, 0.28);   // 换枪有个小硬直
     this.syncSpread();
@@ -277,7 +297,7 @@ class Player {
       if (!def) continue;
       const loaded = (e && e.equip && AMMO_BY_ID[e.equip.ammo] && AMMO_BY_ID[e.equip.ammo].caliber === def.caliber)
         ? e.equip.ammo : def.ammo;
-      this.weapons[i] = Object.assign({}, def, { magCur: U.clamp(mag | 0, 0, def.mag), ammo: loaded });
+      this.weapons[i] = Object.assign({}, def, { magCur: U.clamp(mag | 0, 0, def.mag), ammo: loaded, rounds: magazineRounds(def, mag, loaded, e?.equip?.rounds) });
     }
     /* 余弹照存档来 —— 空着就是空着，不白送子弹 */
     this.slot = this.weapons[0] ? 0 : (this.weapons[1] ? 1 : 2);
@@ -427,7 +447,10 @@ class Player {
     const W = this.weapon;
     const R = CFG.RECOIL;
     this.fireCd = 60 / W.rpm;
+    const shotAmmo = this.ammoItem;
+    W.rounds = this.roundsFor(W, this.mag).slice(1);
     this.mag--;
+    W.magCur = this.mag;
     this.shotAnimT = PLAYER_ANIMS.shoot.frames / PLAYER_ANIMS.shoot.fps;
 
     // 这一发用「开火前」的散布，后面的累加只影响下一发
@@ -436,7 +459,7 @@ class Player {
     const sp = pellets > 1 ? this.spread * 1.7 : this.spread;
     /* 弹药属性一次取好：伤害系数进单颗伤害，穿透等级随子弹走。
        霰弹的六颗弹丸分辨率独立，所以这里每颗都带同一份弹药属性、各自结算。 */
-    const ammo = this.ammoItem;
+    const ammo = shotAmmo;
     const ammoMul = ammo ? ammo.dmgMul : 1;
     const pen = ammo ? ammo.penLevel : 1;
     for (let i = 0; i < pellets; i++) {
@@ -476,71 +499,61 @@ class Player {
     this.spread = lo + (hi - lo) * this.recoil;
   }
 
-  tryReload() {
-    Medical.cancel();
-    if (this.reloadT > 0) return;
-    const W = this.weapon;
-    if (this.mag >= W.mag) return;
-    const ammo = this.ammoItem;
-    if (!ammo) { Game.toast('这把枪没有配套弹药'); return; }
-    if (this.bag.ammoCount(ammo.id) <= 0) {
-      /* 换弹只吃当前弹种，绝不会顺手拿别的等级顶上 */
-      const alt = this.bag.ammoStacks(W.caliber).find(s => s.item.id !== ammo.id);
-      Game.toast(alt
-        ? ammo.name + ' 用完了 · 背包里还有 ' + alt.item.name + '，点它换弹种'
-        : '没有 ' + BALLISTICS.caliberName(W.caliber) + ' 弹药了');
-      return;
-    }
-    this.reloadT = CFG.P.RELOAD_TIME;
-    this.reloadPending = true;
-    Noise.emit(this.x, this.y, CFG.NOISE.reload, 'reload');
+  roundsFor(w, n) {
+    w.rounds = magazineRounds(w, n, w.ammo, w.rounds);
+    return w.rounds;
   }
 
-  /* 换弹完成在 update 里结算，避免 setTimeout 带来的时序问题 */
-  finishReloadIfDone() {
-    if (!this.reloadPending) return;
-    if (this.reloadT > 0) return;
-    this.reloadPending = false;
-    const W = this.weapon;
-    const ammo = this.ammoItem;
-    if (!ammo) return;
-    const n = Math.min(W.mag - this.mag, this.bag.ammoCount(ammo.id));
-    if (n <= 0) return;
-    this.bag.useAmmo(ammo.id, n);
-    this.mag += n;
-  }
-
-  /* 切换待装填的弹种（背包里点弹药走这里）。
-     只接受同口径；弹匣里剩的旧弹原样退回背包，数量守恒。
-     退不回去（背包满 / 超重）就整个取消 —— 绝不把子弹吞掉。 */
-  loadAmmo(id) {
-    const w = this.weapons[this.slot];
-    const item = AMMO_BY_ID[id];
-    if (!w || !item) return false;
-    if (item.caliber !== w.caliber) {
-      Game.toast(w.name + ' 只能用 ' + BALLISTICS.caliberName(w.caliber) + '，装不进 ' +
-        BALLISTICS.caliberName(item.caliber));
-      return false;
-    }
-    if (w.ammo === id) {
-      Game.toast('弹匣里已经是 ' + item.name);
-      return false;
-    }
-    if (this.mag > 0) {
-      const old = AMMO_BY_ID[w.ammo];
-      if (old && !this.bag.addAmmo(old.id, this.mag)) {
-        Game.toast('背包放不下退出来的 ' + old.name + '（' + this.mag + ' 发）');
-        return false;
+  unloadWeapon(slot = this.slot) {
+    const w = this.weapons[slot];
+    if (!w) return false;
+    const n = slot === this.slot ? this.mag : w.magCur;
+    const rounds = this.roundsFor(w, n);
+    if (!n) return true;
+    const snapshot = this.bag.slots.map(s => ({...s}));
+    const counts = {};
+    for (const id of rounds) counts[id] = (counts[id] || 0) + 1;
+    for (const [id, count] of Object.entries(counts)) {
+      if (!this.bag.addAmmo(id, count)) {
+        this.bag.slots = snapshot; Game.toast('背包空间不足，退弹已取消'); return false;
       }
     }
-    w.ammo = id;
-    this.mag = 0;
-    w.magCur = 0;
-    this.reloadT = 0;
+    Medical.cancel();
+    w.rounds = []; w.magCur = 0;
+    if (slot === this.slot) { this.mag = 0; this.reloadT = 0; this.reloadPending = false; }
+    Game.syncGear(); Game.renderBag(); return true;
+  }
+
+  tryReload() {
+    Medical.cancel();
+    if (this.dead || !this.weapons[this.slot] || this.reloadT > 0 || this.mag >= this.weapon.mag) return false;
+    if (!this.bag.ammoCountByCaliber(this.weapon.caliber)) { Game.toast('没有同口径备弹'); return false; }
+    this.reloadT = CFG.P.RELOAD_TIME;
+    this.reloadPending = true; this.reloadSlot = this.slot;
+    Noise.emit(this.x, this.y, CFG.NOISE.reload, 'reload'); return true;
+  }
+
+  finishReloadIfDone() {
+    if (!this.reloadPending || this.reloadT > 0) return;
     this.reloadPending = false;
-    Game.syncGear();
-    Game.toast('待装填：' + item.name);
-    return true;
+    if (this.dead || this.reloadSlot !== this.slot) return;
+    const w = this.weapon, rounds = this.roundsFor(w, this.mag);
+    const priority = AMMO_BY_ID[w.ammo]?.caliber === w.caliber ? w.ammo : this.ammoId;
+    const ids = [...new Set([priority, ...this.bag.ammoStacks(w.caliber).map(s => s.item.id)])];
+    for (const id of ids) {
+      const n = Math.min(w.mag - rounds.length, this.bag.ammoCount(id));
+      if (n > 0) { this.bag.useAmmo(id, n); rounds.push(...Array(n).fill(id)); }
+    }
+    this.mag = w.magCur = rounds.length; Game.syncGear();
+    if (Game.bagOpen) Game.renderBag();
+  }
+
+  loadAmmo(id) {
+    const w = this.weapons[this.slot], item = AMMO_BY_ID[id];
+    if (!w || !item || item.caliber !== w.caliber) { Game.toast('只能装填同口径弹药'); return false; }
+    if (!this.unloadWeapon()) return false;
+    w.ammo = id; Game.syncGear(); Game.toast('优先装填：' + item.name);
+    this.tryReload(); return true;
   }
 
   /* base 是「没乘部位倍率、没乘弹药系数」的原始伤害，pen 是弹药穿透等级。

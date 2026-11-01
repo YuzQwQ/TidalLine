@@ -235,19 +235,18 @@ test('打空的弹丸不伤人也不磨甲', () => {
 });
 
 console.log('\n=== H. 弹药守恒 ===');
-test('换弹只吃当前弹种，不会顺手拿别的等级顶上', () => {
+test('换弹优先当前弹种，其他同口径等级补满', () => {
   const P = raid('rifle', [['ammo_556_1', 4], ['ammo_556_3', 30]]);
   P.mag = 0;
   P.weapons[0].ammo = 'ammo_556_1';
   P.tryReload();
-  assert(P.reloadT > 0, '有 4 发 556_1，应该开始换弹');
+  assert(P.reloadT > 0);
   P.reloadT = 0; P.finishReloadIfDone();
-  assert.equal(P.mag, 4, '只补 4 发');
+  assert.equal(P.mag, 30);
+  assert.equal(P.weapon.rounds.slice(0,4).every(id=>id==='ammo_556_1'), true);
+  assert.equal(P.weapon.rounds.slice(4).every(id=>id==='ammo_556_3'), true);
   assert.equal(P.bag.ammoCount('ammo_556_1'), 0);
-  assert.equal(P.bag.ammoCount('ammo_556_3'), 30, '别的等级一发都不许动');
-
-  P.tryReload();
-  assert.equal(P.reloadT, 0, 'Lv1 已经空了，不该假装能换弹');
+  assert.equal(P.bag.ammoCount('ammo_556_3'), 4);
 });
 
 test('切换弹种：弹匣里剩余的旧弹原样退回背包，总数不变', () => {

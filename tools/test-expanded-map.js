@@ -11,7 +11,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'output/map/linhai');
   await page.addInitScript(()=>localStorage.setItem('tideline_save_v1',JSON.stringify({v:2,credits:9999,runs:3,stash:[{id:'antiq01',n:2}],codex:{antiq01:true},loadout:{ammo:60,bandage:3,stone:3},gear:{weapons:['rifle','shotgun','pistol'],helmet:{type:'helmet',lv:2,dur:20},body:null}})));
   await page.goto(pathToFileURL(path.join(root,entry)).href);
   await page.waitForFunction(()=>typeof Game!=='undefined'&&ART.props.every(id=>Art.get('props',id))&&ART.tiles.every(id=>Art.get('tiles',id)));
-  assert(await page.evaluate(()=>Save.stash.some(s=>s.id==='antiq01'&&s.n===2)&&Save.runs===3&&Save.gear.helmet.dur===20),'旧档保留');
+  assert(await page.evaluate(()=>Save.stash.filter(s=>s.id==='antiq01').length===2&&Save.stash.every(s=>s.id!=='antiq01'||s.n===1)&&Save.runs===3&&Save.gear.helmet.dur===20),'旧档保留');
   await page.locator('#btnStart').click();await page.locator('#btnDeploy').click();await page.locator('#btnMapStart').click();
   await page.waitForFunction(()=>Game.state==='playing'&&Game.player);
   const result=await page.evaluate(()=>{

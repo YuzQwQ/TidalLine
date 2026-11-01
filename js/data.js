@@ -91,7 +91,9 @@ const BOX_KIND = Object.fromEntries(Object.entries(CONTAINER_TYPES).map(([ch, ty
 /* ------------------------------------------------------------
    物品表
    cat  类别   r 稀有度(1-6)   w 重量(kg)   price 售价
-   stack 堆叠上限(1=不可堆叠)  use 可使用（消耗品）
+   stack 堆叠上限——只有子弹写这个字段（其它物品一律一件一格，
+         判定统一走 config.js 的 stackLimit()，别处别直接看 item.stack）
+   use 可使用（消耗品）
    ------------------------------------------------------------ */
 /* short：背包格子只有 38px 宽，名字超过四个字的写一个简称（没写就退回全名） */
 /* BEGIN MEDICAL DATA */
@@ -103,7 +105,6 @@ const MEDICAL_ITEMS = [
     "r": 1,
     "w": 0.2,
     "price": 2000,
-    "stack": 5,
     "medicalGroup": "recovery",
     "source": "通用医疗耗材",
     "heal": 20,
@@ -124,7 +125,6 @@ const MEDICAL_ITEMS = [
     "r": 2,
     "w": 0.15,
     "price": 5000,
-    "stack": 5,
     "medicalGroup": "recovery",
     "source": "安禾制药",
     "heal": 60,
@@ -145,7 +145,6 @@ const MEDICAL_ITEMS = [
     "r": 3,
     "w": 0.6,
     "price": 12000,
-    "stack": 2,
     "medicalGroup": "recovery",
     "source": "环礁湾公共卫生署",
     "heal": 120,
@@ -166,7 +165,6 @@ const MEDICAL_ITEMS = [
     "r": 4,
     "w": 1.2,
     "price": 35000,
-    "stack": 1,
     "medicalGroup": "recovery",
     "source": "军方制式物资",
     "heal": 200,
@@ -187,7 +185,6 @@ const MEDICAL_ITEMS = [
     "r": 5,
     "w": 2.5,
     "price": 95000,
-    "stack": 1,
     "medicalGroup": "recovery",
     "source": "赫尔维恩医疗集团",
     "heal": 400,
@@ -208,7 +205,6 @@ const MEDICAL_ITEMS = [
     "r": 1,
     "w": 0.05,
     "price": 2500,
-    "stack": 10,
     "medicalGroup": "painkiller",
     "source": "安禾制药",
     "reservedEffect": "基础镇痛，持续90秒。",
@@ -227,7 +223,6 @@ const MEDICAL_ITEMS = [
     "r": 2,
     "w": 0.08,
     "price": 6000,
-    "stack": 8,
     "medicalGroup": "painkiller",
     "source": "广谱仿制药",
     "reservedEffect": "中等镇痛，持续180秒。",
@@ -246,7 +241,6 @@ const MEDICAL_ITEMS = [
     "r": 3,
     "w": 0.12,
     "price": 18000,
-    "stack": 5,
     "medicalGroup": "painkiller",
     "source": "医院专供制剂",
     "reservedEffect": "强效镇痛，持续300秒。",
@@ -264,7 +258,6 @@ const MEDICAL_ITEMS = [
     "r": 1,
     "w": 0.15,
     "price": 3000,
-    "stack": 5,
     "medicalGroup": "trauma",
     "source": "北辰医械",
     "reservedEffect": "控制严重肢体出血。",
@@ -282,7 +275,6 @@ const MEDICAL_ITEMS = [
     "r": 2,
     "w": 0.5,
     "price": 6000,
-    "stack": 3,
     "medicalGroup": "trauma",
     "source": "北辰医械",
     "reservedEffect": "临时固定骨折部位。",
@@ -301,7 +293,6 @@ const MEDICAL_ITEMS = [
     "r": 4,
     "w": 0.9,
     "price": 40000,
-    "stack": 2,
     "medicalGroup": "trauma",
     "source": "环礁湾紧急医疗部门",
     "reservedEffect": "综合处理常见创伤，具体适用状态待定。",
@@ -320,7 +311,6 @@ const MEDICAL_ITEMS = [
     "r": 5,
     "w": 1.6,
     "price": 110000,
-    "stack": 1,
     "medicalGroup": "trauma",
     "source": "北辰医械专业系列",
     "reservedEffect": "处理严重创伤，可能需要安全环境。",
@@ -339,7 +329,6 @@ const MEDICAL_ITEMS = [
     "r": 3,
     "w": 0.15,
     "price": 25000,
-    "stack": 5,
     "medicalGroup": "injection",
     "source": "赫尔维恩医疗集团",
     "reservedEffect": "效果待定。",
@@ -358,7 +347,6 @@ const MEDICAL_ITEMS = [
     "r": 4,
     "w": 0.1,
     "price": 65000,
-    "stack": 5,
     "medicalGroup": "injection",
     "source": "赫尔维恩特殊环境医学部门",
     "reservedEffect": "效果待定。",
@@ -377,7 +365,6 @@ const MEDICAL_ITEMS = [
     "r": 5,
     "w": 0.12,
     "price": 180000,
-    "stack": 3,
     "medicalGroup": "injection",
     "source": "赫尔维恩授权实验供应",
     "reservedEffect": "效果待定。",
@@ -395,7 +382,6 @@ const MEDICAL_ITEMS = [
     "r": 2,
     "w": 0.2,
     "price": 7000,
-    "stack": 5,
     "medicalGroup": "anomaly",
     "source": "百草堂",
     "reservedEffect": "效果待定。",
@@ -414,7 +400,6 @@ const MEDICAL_ITEMS = [
     "r": 4,
     "w": 0.1,
     "price": 55000,
-    "stack": 5,
     "medicalGroup": "anomaly",
     "source": "不明研究机构",
     "reservedEffect": "效果待定。",
@@ -432,7 +417,6 @@ const MEDICAL_ITEMS = [
     "r": 5,
     "w": 0.25,
     "price": 150000,
-    "stack": 3,
     "medicalGroup": "anomaly",
     "source": "来源不明的神秘学传承",
     "reservedEffect": "效果待定。",
@@ -1073,11 +1057,13 @@ const BODIES = [
 /* ------------------------------------------------------------
    背包：独立的背包槽，只提升携带容量，不加别的属性
    未装备时是 BASE_BAG_SLOTS 格；装上背包后总容量 = 背包容量，
-   不做「4 + N」的叠加。五档对应白绿蓝紫金。
+   不做「基础 + N」的叠加。五档对应白绿蓝紫金。
    背包不能套娃：塞不进背包格子（Bag.canAdd 会拦），只能回藏身处换。
    前 3 档护甲商人有售，紫金两档得自己下去找。
+   基础格数从 4 抬到 6：药品不再叠放，一件一格，
+   三口径弹药 + 两件药就要占 5 格，4 格根本装不下出门的那套。
    ------------------------------------------------------------ */
-const BASE_BAG_SLOTS = 4;
+const BASE_BAG_SLOTS = 6;
 
 const BAGS = [
   { id: 'bag01', name: '旧帆布挎包',   short: '挎包',  r: 1, slots: 8,  w: 0.7, price: 6000,
@@ -1176,7 +1162,7 @@ const EQUIP = {
 
   /* 枪（id + 余弹）→ 伪物品。枪没有耐久，回收价固定半价。
      余弹存在 equip.mag 里，所以换下来的枪不会把子弹丢掉。 */
-  gun(id, mag, ammoId) {
+  gun(id, mag, ammoId, rounds) {
     const w = WEAPONS[id];
     if (!w) return null;
     const m = Math.max(0, mag | 0);
@@ -1191,7 +1177,7 @@ const EQUIP = {
       sell: this.sellPrice(w.price, 1, 1),
       stack: 1,
       icon: id,
-      equip: { kind: 'gun', gun: id, mag: m, ammo: a },
+      equip: { kind: 'gun', gun: id, mag: m, ammo: a, rounds: magazineRounds(w, m, a, rounds) },
       note: m > 0 ? String(m) : ''
     };
   },
@@ -1213,7 +1199,15 @@ const EQUIP = {
       note: d.slots + '格'
     };
   }
-};/* BEGIN SCENE LIBRARY */
+};
+/* 队首是下一发；旧存档按原弹种展开，过滤异口径并补齐缺失记录。 */
+function magazineRounds(w, n, ammo, rounds) {
+  n = Math.max(0, Math.min(w.mag, n|0));
+  const fallback = AMMO_BY_ID[ammo]?.caliber === w.caliber ? ammo : w.ammo;
+  const out = (Array.isArray(rounds) ? rounds : []).filter(id => AMMO_BY_ID[id]?.caliber === w.caliber).slice(0,n);
+  while(out.length < n) out.push(fallback);
+  return out;
+}/* BEGIN SCENE LIBRARY */
 for(const a of [{"group":"tiles","id":"ground_concrete_plain_01"},{"group":"tiles","id":"ground_concrete_plain_02"},{"group":"tiles","id":"ground_soil_compact_01"},{"group":"tiles","id":"ground_soil_compact_02"},{"group":"props","id":"decal_surface_crack_01"},{"group":"props","id":"decal_surface_damp_01"}]){if(!ART[a.group].includes(a.id))ART[a.group].push(a.id);}
 /* END SCENE LIBRARY */
 /* BEGIN PROP BOUNDS */

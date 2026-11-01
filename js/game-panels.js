@@ -369,11 +369,13 @@ Object.assign(Game, {
       const free = range.find(k => !P.weapons[k]);
       const at = (free != null) ? free : P.slot;     // 没有空位就换手上这把
       const cur = P.weapons[at];
-      if (cur) old = EQUIP.gun(cur.id, cur.magCur, cur.ammo);
+      if (cur) old = EQUIP.gun(cur.id, cur.magCur, cur.ammo, cur.rounds);
       P.weapons[at] = Object.assign({}, def, {
         magCur: eq.mag || 0,
+        rounds: magazineRounds(def, eq.mag || 0, eq.ammo, eq.rounds),
         ammo: (AMMO_BY_ID[eq.ammo] && AMMO_BY_ID[eq.ammo].caliber === def.caliber) ? eq.ammo : def.ammo
       });
+      P.reloadT = 0; P.reloadPending = false; AmmoQuick.cancel();
       P.slot = at;
       P.mag = P.weapons[at].magCur;
     } else {
@@ -471,7 +473,24 @@ Object.assign(Game, {
     for (let n = 0; n < nodes.length; n++) {
       const c = cells[n];
       if (c && c.click) nodes[n].onclick = c.click;
+      if (n < 3 && P.weapons[n]) nodes[n].oncontextmenu = ev => {
+        ev.preventDefault(); ev.stopPropagation();
+        Ctx.show(ev.clientX, ev.clientY, [{label:'退弹', onClick:() => P.unloadWeapon(n)}]);
+      };
     }
+  },
+
+  unloadLooseGun(it) {
+    const eq = it?.equip, p = this.player;
+    if (!p || eq?.kind !== 'gun') return false;
+    const snapshot = p.bag.slots.map(s => ({...s}));
+    const rounds = magazineRounds(WEAPONS[eq.gun], eq.mag, eq.ammo, eq.rounds);
+    const counts = {}; for (const id of rounds) counts[id] = (counts[id] || 0) + 1;
+    for (const [id,n] of Object.entries(counts)) if (!p.bag.addAmmo(id,n)) {
+      p.bag.slots = snapshot; this.toast('背包空间不足，退弹已取消'); return false;
+    }
+    eq.mag = 0; eq.rounds = []; it.note = '';
+    this.renderBag(); return true;
   },
 
   renderBag() {
@@ -520,6 +539,7 @@ Object.assign(Game, {
           ev.preventDefault();
           ev.stopPropagation();
           Ctx.show(ev.clientX, ev.clientY, [
+            ...(it.equip?.kind === 'gun' ? [{label:'退弹', onClick:() => this.unloadLooseGun(it)}] : []),
             {
               label: '查看详情',
               onClick: () => Tips.show(it, cell.getBoundingClientRect(),
