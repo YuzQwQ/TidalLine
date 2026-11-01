@@ -212,7 +212,7 @@ window.addEventListener('error', function (e) {
      一行 6 格（主1 主2 副手 头盔 护甲 背包），整条 38px 高，
      比原来的两行文字槽省 39px，背包就不爆了。 */
   .eqbar { display: grid; gap: 3px; margin-bottom: 4px; }
-  .eqbar.w6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .eqbar.w6 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
   .eqbar.w3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .eqs {
     position: relative; min-width: 0; box-sizing: border-box;
@@ -1153,6 +1153,7 @@ window.addEventListener('error', function (e) {
 <div class="deal" id="dealBox" style="display:none"></div>
 <!-- 右键菜单：背包物品的「查看详情 / 丢弃」 -->
 <div class="ctxmenu" id="ctxMenu" style="display:none"></div>
+<script src="assets/audio/bundle.js"></script>
 <script src="js/config.js"></script>
 <script src="js/pixfont.js"></script>
 <script src="js/data.js"></script>
@@ -1169,6 +1170,7 @@ window.addEventListener('error', function (e) {
 <script src="js/game-render.js"></script>
 <script src="js/game-panels.js"></script>
 <script src="js/medhud.js"></script>
+<script src="js/melee.js"></script>
 <script src="js/boot.js"></script>
 </body>
 </html>

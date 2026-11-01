@@ -102,7 +102,7 @@ const Game = {
       s = Math.min(this._lockS, s);
     }
 
-    s = Math.max(0.5, Math.min(CFG.MAX_SCALE, s));
+    s = Math.max(Math.min(0.5, iw / CFG.VIEW_W, ih / CFG.VIEW_H), Math.min(CFG.MAX_SCALE, s));
 
     const w = Math.round(CFG.VIEW_W * s);
     const h = Math.round(CFG.VIEW_H * s);
@@ -167,6 +167,8 @@ const Game = {
 
       if (this.state !== 'playing') return;
 
+      if (MeleeSystem.locked() && ['1','2','3','4','5','r','e','tab'].includes(k)) return;
+      if (k === '4') { this.player.switchMelee(); return; }
       if (k === 'e') K.interactPressed = true;
       if (k === 'r') AmmoQuick.press();
       if (k === '1' || k === '2' || k === '3') {
@@ -327,10 +329,7 @@ const Game = {
 
     // 武器与护甲：护甲拷一份实例出来，耐久变化写回 Save.gear
     this.player.fillWeapons(Save.gear.weapons);
-    /* 兜底：万一配装是全空的，至少给一把手枪，绝不空手进图 */
-    if (!this.player.weapons.some(Boolean)) {
-      this.player.fillWeapons([null, null, EQUIP.gun('pistol', WEAPONS.pistol.mag)]);
-    }
+    // Empty gun slots are valid; melee equipment is selected by the melee integration.
     this.player.helmet = Save.gear.helmet ? Object.assign({}, Save.gear.helmet) : null;
     this.player.body = Save.gear.body ? Object.assign({}, Save.gear.body) : null;
     /* 背包：拷一份，它只提供容量，没有耐久所以不会在局内变化 */
@@ -405,6 +404,7 @@ const Game = {
     if (!P) return;
     P.weapons[P.slot] && (P.weapons[P.slot].magCur = P.mag);   // 手上那把的余弹先同步
     Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo, w.rounds) : null));
+    Save.gear.melee = P.melee || null;
     Save.gear.helmet = P.helmet ? Object.assign({}, P.helmet) : null;
     Save.gear.body = P.body ? Object.assign({}, P.body) : null;
     Save.gear.back = P.back ? Object.assign({}, P.back) : null;
@@ -421,7 +421,7 @@ const Game = {
     if (this.toasts.length > 4) this.toasts.shift();
   },
 
-  sfx(name) { SFX.play(name); },
+  sfx(name, opts) { SFX.play(name, opts); },
 
   shake(a) { this.shakeAmt = Math.min(12, this.shakeAmt + a); },
 

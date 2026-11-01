@@ -78,7 +78,8 @@ const Tips = {
       rows.push(['防护等级', 'Lv' + g.lv + (st === 'broken' ? ' · 已失效' : '')]);
       rows.push(['耐久', Math.ceil(g.dur) + ' / ' + g.max]);
     } else if (it.equip && it.equip.kind === 'gun') {
-      const w = WEAPONS[it.equip.gun];
+      if(it.equip.kind === 'melee')return MELEE.find(x=>x.id===it.equip.melee)?.desc || '';
+  const w = WEAPONS[it.equip.gun];
       if (w) {
         const A = AMMO_BY_ID[it.equip.ammo] || defaultAmmo(w.caliber);
         rows.push(['口径', BALLISTICS.caliberName(w.caliber)]);
@@ -90,6 +91,9 @@ const Tips = {
         }
         rows.push(['余弹', (it.equip.mag || 0) + ' 发']);
       }
+    } else if (it.equip?.kind === 'melee') {
+      const d=MELEE.find(x=>x.id===it.equip.melee);
+      rows.push(['真实伤害',d.damage],['攻击间隔 / 前摇',d.interval+' / '+d.windup+'秒'],['扇角 / 半径',d.angle+'° / '+d.radius+'格'],['来源',it.equip.bound?'首次赠送 · 绑定不可出售':d.available?'军火商':'暂不开放获取']);
     } else if (it.equip && it.equip.kind === 'bag') {
       rows.push(['容量', it.equip.slots + ' 格']);
       rows.push(['装备槽', '背包']);
@@ -314,11 +318,38 @@ const Deal = {
   }
 };
 
-/* ---------------- 音效（全程序化，无音频文件） ---------------- */
+/* ---------------- 音效（合成音 + 采样） ----------------
+   合成音还是主力：枪声这类用振荡器和噪声现场做，文件大小为零。
+   采样只补合成做不出来的材质感（枪机金属、换弹、脚步），
+   由 build.js 内联成 window.__AUDIO__（单文件版）；多文件版走 http 时
+   用 fetch 兜底，file:// 打不开就静默退回纯合成。 */
 const SFX = {
   ctx: null,
   noiseBuf: null,
   on: true,
+  samples: {},        // id → AudioBuffer
+  loading: null,
+
+  /* 素材已经归一化到接近满刻度，而合成音的 gain 只有 0.07~0.2，
+     直接播会响一大截，所以这里按用途压回去。脚步要明显让位给枪声。 */
+  MIX: {
+    shot_switch: 0.50,
+    reload_out: 0.55,
+    reload_in: 0.55,
+    reload_rack: 0.60,
+    step_stone_1: 0.24,
+    step_stone_2: 0.24,
+    step_stone_3: 0.24,
+    step_stone_4: 0.24
+  },
+
+  /* 一个游戏音效由多段素材拼成：换弹 1.5 秒里是「退弹匣 → 插弹匣 → 拉套筒」
+     三次动作，原素材整段 3.13 秒塞不进去（硬变速会让金属声变尖叫），
+     所以按游戏节奏重新排时间轴。 */
+  SEQ: {
+    reload: [['reload_out', 0], ['reload_in', 0.55], ['reload_rack', 1.05]]
+  },
+  seqTimers: {},
 
   init() {
     if (this.ctx) return;
@@ -332,6 +363,75 @@ const SFX = {
       for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
       this.noiseBuf = buf;
     } catch (e) { this.on = false; }
+    if (this.on) this.load();
+  },
+
+  /* 解码采样。任何一条失败都不影响其它，也不影响合成音。 */
+  load() {
+    if (this.loading || !this.ctx) return this.loading;
+    const decode = async (id, dataUri) => {
+      const raw = atob(String(dataUri).split(',')[1] || '');
+      const bin = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; i++) bin[i] = raw.charCodeAt(i);
+      this.samples[id] = await this.ctx.decodeAudioData(bin.buffer);
+    };
+    const injected = (typeof window !== 'undefined' && window.__AUDIO__) || null;
+    this.loading = (async () => {
+      let n = 0;
+      if (injected) {
+        for (const id of Object.keys(injected)) {
+          try { await decode(id, injected[id]); n++; } catch (e) {}
+        }
+      } else {
+        /* 多文件版：http 下能读到就加载；file:// 被 CORS 挡住时静默跳过 */
+        try {
+          const man = await fetch('assets/audio/manifest.json').then(r => r.json());
+          for (const a of man.assets || []) {
+            try {
+              const buf = await fetch('assets/audio/' + a.file).then(r => r.arrayBuffer());
+              this.samples[a.id] = await this.ctx.decodeAudioData(buf); n++;
+            } catch (e) {}
+          }
+        } catch (e) {}
+      }
+      return n;
+    })();
+    return this.loading;
+  },
+
+  _playSample(id, opts) {
+    const buf = this.samples[id];
+    if (!buf) return false;
+    const c = this.ctx;
+    const s = c.createBufferSource();
+    s.buffer = buf;
+    /* 音高微扰：同一段素材连播会听出"复读机"，±6% 就能散开 */
+    if (opts && opts.rate) s.playbackRate.value = opts.rate;
+    const g = c.createGain();
+    g.gain.value = (opts && opts.gain != null) ? opts.gain
+      : (this.MIX[id] != null ? this.MIX[id] : 0.4);
+    s.connect(g); g.connect(c.destination);
+    this._autoFree(s, [g]);
+    s.start(c.currentTime);
+    return true;
+  },
+
+  _playSeq(name, seq) {
+    this.stopSeq(name);
+    const timers = [];
+    for (const [id, at] of seq) {
+      if (at <= 0) this._playSample(id);
+      else timers.push(setTimeout(() => this._playSample(id), at * 1000));
+    }
+    this.seqTimers[name] = timers;
+  },
+
+  /* 换弹被打断时要掐掉还没播的那几段 */
+  stopSeq(name) {
+    const timers = this.seqTimers[name];
+    if (!timers) return;
+    for (const t of timers) clearTimeout(t);
+    delete this.seqTimers[name];
   },
 
   /* 用完必须把节点从图里摘掉。stop() 只是停止发声，节点还挂在 destination 上，
@@ -351,8 +451,12 @@ const SFX = {
     return g;
   },
 
-  play(name) {
+  play(name, opts) {
     if (!this.on || !this.ctx) return;
+    /* 有采样就优先用采样；没有（或解码失败）就落到下面的合成音 */
+    if (this.samples[name]) { this._playSample(name, opts); return; }
+    const seq = this.SEQ[name];
+    if (seq && this.samples[seq[0][0]]) { this._playSeq(name, seq); return; }
     const c = this.ctx, t = c.currentTime;
 
     const noiseHit = (dur, freq, gain, type) => {

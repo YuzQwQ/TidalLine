@@ -632,6 +632,49 @@ node tools/cdp-shot.js <url> <out.png> [等待ms] [表达式]   # 用真实浏�
 node tools/cdp-shot.js "file:///D:/develop/project/tide/潮汐线.html#play,13,4" shots/a.png 1800   "JSON.stringify({art: Object.keys(Art.map).filter(k=>Art.map[k]).length})"
 ```
 
+## 音效
+
+分两层，别混着改：
+
+- **合成音**（`js/ui.js` 的 `SFX` 里那一串 `case`）：枪声、命中、爆头、受伤、撤离……用振荡器和噪声现场算。零文件、零体积，改参数立刻见效。
+- **采样**（`assets/audio/*.wav`）：合成做不出来的材质感。目前 8 段——切枪 1、换弹 3、脚步 4。
+
+`SFX.play(name)` 先查有没有同名采样，没有就落到下面的 `switch`。所以**想让某个音效换成采样，把文件按名字放进 `assets/audio/` 就行**，不用改代码。
+
+### 目录与构建
+
+```
+assets/audio/
+├── manifest.json     素材账：来源、授权、切分区间、峰值、哈希
+├── bundle.js         构建产物（不入库）
+├── reload_in.wav     成品，平铺一层，文件名就是音效 id
+└── _source/          原始下载包与切分前素材（不入库，几十 MB）
+```
+
+`node build.js` 会把顶层的 wav 转成 base64：单文件版内联成 `window.__AUDIO__`，多文件版写到 `assets/audio/bundle.js`（`<script src>` 不受 `file://` 的 CORS 限制，所以双击也有声音）。两边数据同源，不会有版本漂移。
+
+**为什么不能用 fetch 加载音频**：单文件版是 `file://` 双击打开的，`fetch()` 会被 CORS 拦死。要么内联成 data URI，要么走 `<script src>`，没有第三条路。解码用 `atob` → `Uint8Array` → `decodeAudioData`，全程不碰网络。
+
+### 切素材
+
+```bash
+node tools/audio-analyze.js <目录>        # 体检：时长/源规格/峰值/头尾静音/削波
+node tools/audio-events.js  <文件> [阈值]  # 找独立事件（脚步、金属撞击分段）
+node tools/audio-slice.js <输入> <输出> <起> <止> [--trim=0.05] [--rms=0.10] [--out=20]
+```
+
+`audio-slice.js` 会降成单声道、归一化、加淡入淡出、写 16bit WAV。`--trim` 自动裁掉头尾静音（低于峰值这个比例就算静音），`--rms` 按响度而不是峰值归一——同一组素材（比如几个脚步）要用 `--rms`，否则闷的那个会显得太轻。
+
+### 两条踩过的坑
+
+**换弹必须分段播**。原素材整段 3.13 秒，而游戏换弹只有 1.5 秒（`CFG.P.RELOAD_TIME`）。硬变速 2 倍会让金属声变尖叫，所以切成「退弹匣 / 插弹匣 / 拉套筒」三段，按 `SFX.SEQ.reload` 的时间轴在 1.5 秒里重排。换枪或卸弹匣打断换弹时，`SFX.stopSeq('reload')` 要掐掉还没播的段，否则会对着空枪响。
+
+**脚步按走过的距离触发，不按时间**。`Player.update` 里累计 `frameTravel`，够一个步幅就响一次：走 60px、冲刺 78px、潜行 42px。用 `this.moving`（有没有移动输入）判断要不要清零——早期版本按 `frameTravel` 清零，顶着墙走时每帧位移接近 0，会把攒的进度反复抹掉，走两步丢一步。音高再随机 ±6%，免得听出复读机。
+
+### 许可证
+
+`manifest.json` 里 `sources[].license` 现在是 `TODO`：素材来自 Freesound，逐条协议不同（CC0 / CC-BY / CC-BY-NC），必须回原页面确认后补上。CC-BY 的还要在游戏里留一个能查到的署名位。
+
 ## 代码结构
 
 `game.js` 曾经是一个 4869 行的文件。分两轮拆成现在这样：先按 `Game` / `Base` / `Save` / 医疗 / 浮窗 这些**已有的注释边界**整段搬运，再把 `Game` 的 68 个方法按职责分到四个文件。两轮都只搬不改，拼回去和原文件去掉注释后逐字（逐方法）一致。

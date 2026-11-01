@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>潮汐线 · 音效试听</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; min-height: 100%; background: #070b09; color: #cfd8d4;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif; font-size: 13px;
+  }
+  header {
+    position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px; background: #0b1210; border-bottom: 1px solid #1e312b;
+  }
+  h1 { margin: 0 12px 0 0; font-size: 13px; font-weight: normal; letter-spacing: 2px; color: #6f8f86; }
+  .btn {
+    padding: 6px 14px; font-size: 12px; letter-spacing: .5px; cursor: pointer;
+    background: #14685c; color: #eaf4f0; border: 0; border-radius: 3px;
+  }
+  .btn:hover { background: #1a7d6e; }
+  .btn.ghost { background: transparent; border: 1px solid #1e312b; color: #8ba39b; }
+  .btn.ghost:hover { border-color: #2a443d; color: #cfd8d4; }
+  main { padding: 14px 18px 40px; max-width: 900px; }
+  .hint { color: #4e6a62; font-size: 11.5px; line-height: 1.9; margin-bottom: 16px; }
+  .hint b { color: #8ba39b; font-weight: normal; }
+  section { margin-bottom: 24px; }
+  h2 {
+    margin: 0 0 8px; font-size: 11px; font-weight: normal; letter-spacing: 2px;
+    color: #4e6a62; text-transform: uppercase;
+  }
+  .row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 12px; border: 1px solid #141f1b; border-radius: 3px;
+    margin-bottom: 6px; cursor: pointer;
+  }
+  .row:hover { border-color: #1e312b; background: #0a1210; }
+  .row.on { border-color: #14685c; background: #0d1b17; }
+  .name { flex: 1; font-size: 12.5px; }
+  .name small { color: #4e6a62; margin-left: 10px; font-size: 11px; }
+  .dur { color: #3d534d; font-size: 11px; font-variant-numeric: tabular-nums; }
+  .play {
+    width: 26px; height: 26px; padding: 0; line-height: 1; font-size: 10px;
+    background: transparent; border: 1px solid #1e312b; border-radius: 50%;
+    color: #6f8f86; cursor: pointer;
+  }
+  .row:hover .play { border-color: #14685c; color: #6fd6ba; }
+  canvas { width: 180px; height: 28px; flex: none; }
+
+  /* 换弹时间轴 */
+  #timeline { position: relative; height: 46px; margin: 10px 0 4px; }
+  #timeline .rule {
+    position: absolute; left: 0; right: 0; top: 30px; height: 1px; background: #1e312b;
+  }
+  #timeline .seg {
+    position: absolute; top: 8px; height: 16px; border-radius: 2px;
+    background: #14685c; opacity: .85;
+  }
+  #timeline .seg span {
+    position: absolute; left: 0; top: 17px; font-size: 10px; color: #4e6a62;
+    white-space: nowrap;
+  }
+  #timeline .limit {
+    position: absolute; top: 0; bottom: 0; width: 1px; background: #8d4040;
+  }
+  #timeline .limit span {
+    position: absolute; right: 4px; top: 0; font-size: 10px; color: #8d4040; white-space: nowrap;
+  }
+  .warn { color: #b0794a; font-size: 11.5px; margin-top: 10px; line-height: 1.8; }
+</style>
+</head>
+<body>
+<header>
+  <h1>音效试听</h1>
+  <button class="btn" id="btnReload">换弹完整流程</button>
+  <button class="btn ghost" id="btnWalk">走路 3 秒</button>
+  <button class="btn ghost" id="btnRun">冲刺 3 秒</button>
+  <button class="btn ghost" id="btnStop">停止</button>
+</header>
+<main>
+  <div class="hint">
+    音量用的是游戏里的 <b>SFX.MIX</b>，听到的就是局内的响度关系。脚步该明显轻于枪机声。<br>
+    换弹三段按 <b>0 / 0.55 / 1.05 秒</b> 排，红线是游戏换弹的 <b>1.5 秒</b> 上限。
+  </div>
+
+  <section>
+    <h2>换弹时间轴</h2>
+    <div id="timeline"><div class="rule"></div></div>
+    <div class="warn" id="tail"></div>
+  </section>
+
+  <section>
+    <h2>采样</h2>
+    <div id="list"></div>
+  </section>
+</main>
+<script src="../assets/audio/bundle.js"></script>
+<script>
+/* 与 js/ui.js 的 SFX.MIX / SFX.SEQ 保持一致 */
+const MIX = {
+  shot_switch: 0.50,
+  reload_out: 0.55, reload_in: 0.55, reload_rack: 0.60,
+  step_stone_1: 0.24, step_stone_2: 0.24, step_stone_3: 0.24, step_stone_4: 0.24
+};
+const SEQ = { reload: [['reload_out', 0], ['reload_in', 0.55], ['reload_rack', 1.05]] };
+const RELOAD_TIME = 1.5;
+
+const LABEL = {
+  shot_switch: '切枪（滑套释放）',
+  reload_out: '换弹 1/3 退弹匣',
+  reload_in: '换弹 2/3 插弹匣',
+  reload_rack: '换弹 3/3 拉套筒',
+  step_stone_1: '脚步 1', step_stone_2: '脚步 2',
+  step_stone_3: '脚步 3', step_stone_4: '脚步 4'
+};
+
+let ac = null;
+const actx = () => (ac = ac || new (window.AudioContext || window.webkitAudioContext)());
+const samples = {};
+const timers = [];
+const nodes = [];
+
+function stopAll() {
+  while (timers.length) clearTimeout(timers.pop());
+  while (nodes.length) { try { nodes.pop().stop(); } catch (e) {} }
+  document.querySelectorAll('.row.on').forEach(r => r.classList.remove('on'));
+}
+
+function play(id, when) {
+  const buf = samples[id];
+  if (!buf) return;
+  if (actx().state === 'suspended') actx().resume();
+  const s = actx().createBufferSource();
+  s.buffer = buf;
+  s.playbackRate.value = 0.94 + Math.random() * 0.12;
+  const g = actx().createGain();
+  g.gain.value = MIX[id] != null ? MIX[id] : 0.4;
+  s.connect(g); g.connect(actx().destination);
+  s.onended = () => { try { s.disconnect(); g.disconnect(); } catch (e) {} };
+  s.start(actx().currentTime + (when || 0));
+  nodes.push(s);
+}
+
+/* ---------- 波形 ---------- */
+function draw(cv, buf) {
+  const g = cv.getContext('2d'), W = cv.width, H = cv.height;
+  g.clearRect(0, 0, W, H);
+  const d = buf.getChannelData(0), step = Math.max(1, Math.floor(d.length / W));
+  g.fillStyle = '#33554d';
+  for (let x = 0; x < W; x++) {
+    let mn = 1, mx = -1;
+    for (let i = x * step; i < Math.min((x + 1) * step, d.length); i++) {
+      const v = d[i];
+      if (v < mn) mn = v;
+      if (v > mx) mx = v;
+    }
+    g.fillRect(x, (1 - mx) * H / 2, 1, Math.max(1, (mx - mn) * H / 2));
+  }
+}
+
+(async () => {
+  const src = window.__AUDIO__ || {};
+  const list = document.getElementById('list');
+  for (const id of Object.keys(MIX)) {
+    const raw = atob(String(src[id] || '').split(',')[1] || '');
+    if (!raw) continue;
+    const bin = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; i++) bin[i] = raw.charCodeAt(i);
+    samples[id] = await actx().decodeAudioData(bin.buffer);
+
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = '<button class="play">▶</button>'
+      + '<span class="name">' + (LABEL[id] || id) + '<small>' + id + '</small></span>'
+      + '<canvas width="360" height="56"></canvas>'
+      + '<span class="dur">' + samples[id].duration.toFixed(2) + 's</span>';
+    row.onclick = () => {
+      stopAll();
+      row.classList.add('on');
+      play(id);
+    };
+    list.append(row);
+    draw(row.querySelector('canvas'), samples[id]);
+  }
+
+  /* ---------- 换弹时间轴 ---------- */
+  const tl = document.getElementById('timeline');
+  const W = 100 / RELOAD_TIME;
+  let end = 0;
+  for (const [id, at] of SEQ.reload) {
+    const d = samples[id] ? samples[id].duration : 0;
+    end = Math.max(end, at + d);
+    const el = document.createElement('div');
+    el.className = 'seg';
+    el.style.left = (at * W) + '%';
+    el.style.width = Math.max(1.2, d * W) + '%';
+    el.title = id + ' ' + d.toFixed(2) + 's';
+    tl.append(el);
+  }
+  const lim = document.createElement('div');
+  lim.className = 'limit';
+  lim.style.left = '100%';
+  lim.innerHTML = '<span>1.5s</span>';
+  tl.append(lim);
+  const tail = RELOAD_TIME - end;
+  document.getElementById('tail').textContent = tail >= 0.08
+    ? '末段收在 ' + end.toFixed(2) + 's，离 1.5 秒还有 ' + (tail * 1000).toFixed(0) + 'ms 余量。'
+    : '⚠ 末段拖到 ' + end.toFixed(2) + 's，超出换弹时间 ' + (-tail * 1000).toFixed(0) + 'ms。';
+
+  /* ---------- 组合播放 ---------- */
+  document.getElementById('btnReload').onclick = () => {
+    stopAll();
+    for (const [id, at] of SEQ.reload) play(id, at);
+  };
+  const walkLoop = (stride, interval) => {
+    stopAll();
+    let dist = 0, n = 0;
+    const t0 = performance.now();
+    const tick = () => {
+      if (performance.now() - t0 > 3000) return;
+      dist += stride;
+      if (dist >= stride) {
+        dist = 0;
+        play('step_stone_' + (1 + Math.floor(Math.random() * 4)));
+        n++;
+      }
+      timers.push(setTimeout(tick, interval));
+    };
+    tick();
+  };
+  /* 120px/s 走、206px/s 冲刺，对应 60 / 78 px 步幅 */
+  document.getElementById('btnWalk').onclick = () => walkLoop(60, 500);
+  document.getElementById('btnRun').onclick = () => walkLoop(78, 378);
+  document.getElementById('btnStop').onclick = stopAll;
+})();
+</script>
+</body>
+</html>

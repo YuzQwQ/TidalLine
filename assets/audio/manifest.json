@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "purpose": "潮汐线的音频素材账。游戏按 id 引用，build.js 把顶层 wav 内联成 data URI。原始下载与切分前素材在 _source/（不入库）。",
+  "created": "2026-11-01",
+  "specification": {
+    "format": "16bit 单声道 WAV，采样率跟随源文件",
+    "norm": "切分时做峰值归一（0.89）或响度归一（RMS 0.10），已加 2~25ms 淡入淡出",
+    "rebuild": "node tools/audio-slice.js <源> assets/audio/<id>.wav <起> <止> [--trim=0.05] [--rms=0.10]",
+    "license": "Freesound 逐条许可证不同，src 待确认后补"
+  },
+  "sources": [
+    {
+      "id": "serutonin-slide",
+      "name": "A small pistol's slide being released, bright sounding",
+      "author": "Serutonin (deprivd)",
+      "site": "Freesound",
+      "sid": 854486,
+      "license": "TODO"
+    },
+    {
+      "id": "serutonin-reload",
+      "name": "A generic 9mm pistol being reloaded once, really bright and trebly sounding",
+      "author": "Serutonin (deprivd)",
+      "site": "Freesound",
+      "sid": 854499,
+      "license": "TODO"
+    },
+    {
+      "id": "securesubset-steps",
+      "name": "Footsteps stone rock concrete cement",
+      "author": "securesubset",
+      "site": "Freesound",
+      "sid": 813622,
+      "license": "TODO"
+    }
+  ],
+  "assets": [
+    {
+      "id": "shot_switch",
+      "file": "shot_switch.wav",
+      "from": "serutonin-slide",
+      "note": "切枪：滑套释放两声，卡在 0.28s 硬直内",
+      "dur": 0.235,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.1725,
+      "bytes": 20750,
+      "sha256_16": "f0ae4a159fa1f592"
+    },
+    {
+      "id": "reload_out",
+      "file": "reload_out.wav",
+      "from": "serutonin-reload",
+      "note": "换弹第一段：退弹匣",
+      "dur": 0.221,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.0886,
+      "bytes": 19572,
+      "sha256_16": "51a0bb6aa69c59a2"
+    },
+    {
+      "id": "reload_in",
+      "file": "reload_in.wav",
+      "from": "serutonin-reload",
+      "note": "换弹第二段：插入新弹匣",
+      "dur": 0.204,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.1594,
+      "bytes": 17994,
+      "sha256_16": "d4dc3d0da81f0816"
+    },
+    {
+      "id": "reload_rack",
+      "file": "reload_rack.wav",
+      "from": "serutonin-reload",
+      "note": "换弹第三段：拉套筒复位",
+      "dur": 0.243,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.202,
+      "bytes": 21480,
+      "sha256_16": "ec19c8c0a3b513f9"
+    },
+    {
+      "id": "step_stone_1",
+      "file": "step_stone_1.wav",
+      "from": "securesubset-steps",
+      "note": "脚步变体 1",
+      "dur": 0.121,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.95,
+      "rms": 0.0943,
+      "bytes": 11700,
+      "sha256_16": "6ea9b6762c57ec62"
+    },
+    {
+      "id": "step_stone_2",
+      "file": "step_stone_2.wav",
+      "from": "securesubset-steps",
+      "note": "脚步变体 2",
+      "dur": 0.161,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.723,
+      "rms": 0.1,
+      "bytes": 15516,
+      "sha256_16": "5c896e8d269021e6"
+    },
+    {
+      "id": "step_stone_3",
+      "file": "step_stone_3.wav",
+      "from": "securesubset-steps",
+      "note": "脚步变体 3",
+      "dur": 0.141,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.799,
+      "rms": 0.0999,
+      "bytes": 13600,
+      "sha256_16": "456e8f88437ed461"
+    },
+    {
+      "id": "step_stone_4",
+      "file": "step_stone_4.wav",
+      "from": "securesubset-steps",
+      "note": "脚步变体 4",
+      "dur": 0.147,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.738,
+      "rms": 0.1,
+      "bytes": 14188,
+      "sha256_16": "7f637c7c87ebac4b"
+    }
+  ]
+}

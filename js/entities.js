@@ -213,6 +213,7 @@ class Player {
     this.dodgeT = 0;
     this.dodgeAngle = 0;
     this.noiseT = 0;
+    this.stepDist = 0;          // 距上一步走过的距离，够了就响一声
     this.waterT = 0;
     this.moving = false;
     this.sneaking = false;
@@ -266,13 +267,15 @@ class Player {
     if (i === this.slot) return false;
     this.weapons[this.slot].magCur = this.mag;
     this.slot = i;
-    this.mag = this.weapon.magCur;
+    this.mag = this.weapon.magCur || 0;
     this.reloadPending = false;
     if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     this.reloadT = 0;
     this.fireCd = Math.max(this.fireCd, 0.28);   // 换枪有个小硬直
     this.syncSpread();
-    Game.sfx('reload');
+    /* 换枪会打断换弹，别让换弹序列的后两段还响在空枪上 */
+    if (typeof SFX !== 'undefined') SFX.stopSeq('reload');
+    Game.sfx('shot_switch');
     return true;
   }
 
@@ -302,7 +305,7 @@ class Player {
     /* 余弹照存档来 —— 空着就是空着，不白送子弹 */
     this.slot = this.weapons[0] ? 0 : (this.weapons[1] ? 1 : 2);
     if (!this.weapons[this.slot]) this.slot = 0;   // 三个都空：别让 slot 指到不存在的枪
-    this.mag = this.weapon.magCur;
+    this.mag = this.weapon.magCur || 0;
   }
 
   tickAnimation(dt, looting) {
@@ -391,6 +394,22 @@ class Player {
     moveEntity(this, this.vx * dt, this.vy * dt);
     this.frameTravel = U.dist(x0, y0, this.x, this.y);
 
+    /* --- 脚步：按走过的距离触发，站住自然就没声了 ---
+       冲刺步幅大、潜行步幅小，所以步频跟着状态走。
+       注意别按 frameTravel 清零：顶着墙走时每帧位移接近 0，
+       那样会把已经攒的进度反复抹掉，走两步丢一步。有输入才累加，松手才清。 */
+    if (this.moving) {
+      this.stepDist += this.frameTravel;
+      const stride = this.sprinting ? 78 : this.sneaking ? 42 : 60;
+      if (this.stepDist >= stride) {
+        this.stepDist -= stride;
+        const n = 1 + ((Math.random() * 4) | 0);
+        Game.sfx('step_stone_' + n, { rate: 0.94 + Math.random() * 0.12 });
+      }
+    } else if (this.stepDist > 0) {
+      this.stepDist = 0;        // 松手就清零，别攒到下次一迈腿连响两下
+    }
+
     /* --- 涉水掉血 --- */
     if (this.inWater) {
       this.waterT += dt;
@@ -438,7 +457,7 @@ class Player {
 
   tryShoot() {
     Medical.cancel();
-    if (this.dead) return false;
+    if (this.dead || !this.weapons[this.slot]) return false;
     if (this.reloadT > 0) return false;
     if (this.fireCd > 0) return false;
     if (this.dodgeT > 0) return false;
@@ -520,7 +539,10 @@ class Player {
     }
     Medical.cancel();
     w.rounds = []; w.magCur = 0;
-    if (slot === this.slot) { this.mag = 0; this.reloadT = 0; this.reloadPending = false; }
+    if (slot === this.slot) {
+      this.mag = 0; this.reloadT = 0; this.reloadPending = false;
+      if (typeof SFX !== 'undefined') SFX.stopSeq('reload');
+    }
     Game.syncGear(); Game.renderBag(); return true;
   }
 
@@ -530,6 +552,7 @@ class Player {
     if (!this.bag.ammoCountByCaliber(this.weapon.caliber)) { Game.toast('没有同口径备弹'); return false; }
     this.reloadT = CFG.P.RELOAD_TIME;
     this.reloadPending = true; this.reloadSlot = this.slot;
+    Game.sfx('reload');
     Noise.emit(this.x, this.y, CFG.NOISE.reload, 'reload'); return true;
   }
 
@@ -931,13 +954,13 @@ class Enemy {
     }
   }
 
-  hurt(d, fromFaction, part, pen) {
+  hurt(d, fromFaction, part, pen, damageType) {
     if (this.dead) return;
     part = part || 'body';
     const head = part === 'head';
     const gear = head ? this.helmet : this.body;
     const pre = d * (head ? CFG.COMBAT.HEAD_MULT : 1);
-    const res = BALLISTICS.hit(pre, pen == null ? CFG.AMMO.UNARMED_PEN : pen, gear);
+    const res = damageType === 'trueDamage' ? {health:d,durabilityLoss:0} : BALLISTICS.hit(pre, pen == null ? CFG.AMMO.UNARMED_PEN : pen, gear);
     this.hp -= res.health;
     /* 敌人穿着护甲时一样会被打穿、掉耐久，尸体上捡到的就是打剩下的那件 */
     if (gear && res.durabilityLoss > 0) {

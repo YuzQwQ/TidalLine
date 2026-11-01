@@ -4,6 +4,12 @@ temp files/
 node_modules/
 *.log
 
+# 音频原始下载包（几十上百个文件、几十 MB）；挑进来的成品在 assets/audio/ 顶层
+assets/audio/_source/
+
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# 音频内联产物，由 node build.js 生成
+assets/audio/bundle.js

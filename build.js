@@ -17,8 +17,8 @@ const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js',
   'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'boot.js'];
-const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear'];
+  'medhud.js', 'melee.js', 'boot.js'];
+const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear', 'effects'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */
 const sprites = {};
@@ -33,10 +33,34 @@ for (const d of SPRITE_DIRS) {
   }
 }
 
-/* ---------- 2. 注入图片表（必须在替换脚本标签之前） ---------- */
-let out = html;
+/* ---------- 1.5 收集音频并转 base64 ----------
+   只收 assets/audio 顶层的 .wav：单文件版走 file:// 打开，WebAudio 的
+   fetch() 会被 CORS 拦死，采样必须像图片一样内联成 data URI 才能解码。
+   .ogg 只给长环境循环用，留在外部，单文件版降级为静音。 */
+const audio = {};
+const AUDIO_DIR = path.join(dir, 'assets', 'audio');
+if (fs.existsSync(AUDIO_DIR)) {
+  for (const f of fs.readdirSync(AUDIO_DIR)) {
+    if (!/\.wav$/i.test(f)) continue;
+    audio[f.replace(/\.wav$/i, '')] = 'data:audio/wav;base64,' +
+      fs.readFileSync(path.join(AUDIO_DIR, f)).toString('base64');
+  }
+}
+
+/* 多文件版（index.html）靠这个文件拿音频：<script src> 不受 file:// 的 CORS 限制，
+   双击就能有声音。单文件版把它删掉，改用下面的内联注入 —— 两边都只有一份数据。
+   这份是构建产物，bundle 里就是 base64，不入库（见 .gitignore）。 */
+const BUNDLE_TAG = '<script src="assets/audio/bundle.js"></script>\n';
+fs.writeFileSync(path.join(AUDIO_DIR, 'bundle.js'),
+  'window.__AUDIO__ = ' + JSON.stringify(audio) + ';\n', 'utf8');
+
+/* ---------- 2. 注入资源表（必须在替换脚本标签之前） ---------- */
+let out = html.replace(BUNDLE_TAG, '');
 const inlineTag = '<script>\nwindow.__SPRITES__ = ' +
-  JSON.stringify(sprites) + ';\n</script>';
+  JSON.stringify(sprites) + ';\n' +
+  (Object.keys(audio).length
+    ? 'window.__AUDIO__ = ' + JSON.stringify(audio) + ';\n'
+    : '') + '</script>';
 const anchor = '<script src="js/config.js"></script>';
 if (!out.includes(anchor)) {
   console.error('找不到锚点: ' + anchor);
@@ -74,6 +98,12 @@ if (count) {
   console.log('内联图片 ' + count + ' 张（' +
     Object.entries(byDir).map(([d, n]) => d + ' ' + n).join(' / ') +
     '），共 ' + kb + ' KB');
+}
+const ac = Object.keys(audio).length;
+if (ac) {
+  const akb = (Object.values(audio)
+    .reduce((a, s) => a + s.length, 0) / 1024).toFixed(0);
+  console.log('内联音频 ' + ac + ' 个，共 ' + akb + ' KB');
 }
 const kb = (Buffer.byteLength(out, 'utf8') / 1024).toFixed(1);
 console.log('已生成 潮汐线.html  ' + kb + ' KB  （内联脚本 ' + (total / 1024).toFixed(1) + ' KB）');
