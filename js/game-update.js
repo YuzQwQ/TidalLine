@@ -86,13 +86,10 @@ Object.assign(Game, {
     this.toast('物品堆空了');
   },
 
-  /* 把背包第 i 格整叠丢下 */
-  dropFromBag(i) {
-    const P = this.player;
-    if (!P) return false;
-    const s = P.bag.slots[i];
-    if (!s || !s.item) return false;
-
+  /* 把一件东西丢在脚下：脚下这格有堆就并进去，没有就新起一个 */
+  dropItem(item, n, cap) {
+    if (!item) return false;
+    n = Math.max(1, n || 1);
     const spot = this.dropSpot();
     if (!spot) { this.toast('这里没有能放东西的空地'); return false; }
 
@@ -101,22 +98,32 @@ Object.assign(Game, {
 
     /* 可堆叠的同种物品并进已有条目，别在一个堆里堆出两条同名；
        用过一半的医疗品不和满的合并，容量一起带进堆里 */
-    const max = s.item.healCap || 0;
-    const isPartial = max > 0 && typeof s.cap === 'number' && s.cap < max - 1e-6;
+    const max = item.healCap || 0;
+    const isPartial = max > 0 && typeof cap === 'number' && cap < max - 1e-6;
     const isFull = e => !max || (typeof e.cap === 'number' ? e.cap : max) >= max - 1e-6;
-    const same = (!isPartial && s.item.stack > 1)
-      ? pile.items.find(e => e && e.item.id === s.item.id && isFull(e) && e.n + s.n <= s.item.stack)
+    const same = (!isPartial && item.stack > 1)
+      ? pile.items.find(e => e && e.item.id === item.id && isFull(e) && e.n + n <= item.stack)
       : null;
-    if (same) same.n += s.n;
-    else pile.items.push(typeof s.cap === 'number'
-      ? { item: s.item, n: s.n, known: true, cap: s.cap }
-      : { item: s.item, n: s.n, known: true });
+    if (same) same.n += n;
+    else pile.items.push(typeof cap === 'number'
+      ? { item, n, known: true, cap }
+      : { item, n, known: true });
 
     pile.opened = false;
+    return true;
+  },
+
+  /* 把背包第 i 格整叠丢下 */
+  dropFromBag(i) {
+    const P = this.player;
+    if (!P) return false;
+    const s = P.bag.slots[i];
+    if (!s || !s.item) return false;
+    if (!this.dropItem(s.item, s.n, s.cap)) return false;
+
     P.bag.slots.splice(i, 1);
 
     this.renderBag();
-    if (this.lootOpen === pile) this.renderLootList();
     SFX.play('drop');
     this.toast('丢下 ' + s.item.name + (s.n > 1 ? ' ×' + s.n : ''));
     return true;

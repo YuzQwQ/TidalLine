@@ -37,10 +37,34 @@ function thumb(id, name) {
     : '<span>待绘制</span><b>32×32</b>';
 }
 
+/* 池子说明按表里的数值拼出来，改了概率这里跟着走 */
+const LEVEL_NAMES = ['寻常', '良品', '上乘', '稀见', '珍罕'];
+const GEAR_KIND_NAMES = { helmet: '头盔', body: '护甲', bag: '背包' };
+function levelDist(q) {
+  const src = quality[q].pct;
+  const pct = src.slice(0, 5);
+  pct[4] += src[5] || 0;
+  return pct.map((p, i) => LEVEL_NAMES[i] + p + '%').join(' / ');
+}
+function poolNote(type) {
+  if (!type.ammoPool && !type.gearPool) return '';
+  const dist = levelDist(type.q);
+  const out = [];
+  if (type.ammoPool) out.push('<b>独立弹药池</b>每次抽取 ' +
+    Math.round(type.ammoPool.chance * 100) + '% 走弹药池，其余沿用原有物品池。等级：' + dist +
+    '（红档份额并入金档）；三种口径等概率，5.56mm 与 9mm 每组 10–20 发，12 号霰弹每组 4–8 发。');
+  if (type.gearPool) out.push('<b>独立装备池</b>每次抽取 ' +
+    Math.round(type.gearPool.chance * 100) + '% 走装备池：' +
+    type.gearPool.kinds.map(k => GEAR_KIND_NAMES[k] || k).join(' / ') +
+    ' 等概率抽一种，等级分布与弹药池一致（' + dist + '）。');
+  return out.map(t => '<div class="vis">' + t + '</div>').join('\n      ');
+}
+
 function card(type) {
   const tier = tiers[type.q];
   const time = quality[type.q].time;
-  const preference = (type.cats ? type.cats.map(cat => cats[cat].name).join(' / ') : '通用物品池') + (type.ammoPool ? ' / 弹药池' : '');
+  const preference = (type.cats ? type.cats.map(cat => cats[cat].name).join(' / ') : '通用物品池')
+    + (type.ammoPool ? ' / 弹药池' : '') + (type.gearPool ? ' / 装备池' : '');
   const visual = artwork.find(a => a.id === type.art);
   return `<article class="item container-card" data-container="${esc(type.ch)}" style="--rc:${tier.color}">
     <div class="thumb container-thumb">${thumb(type.art, type.name)}</div>
@@ -54,7 +78,7 @@ function card(type) {
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
       <div class="desc">${tier.rule}${type.cats ? '偏好类别的抽取权重 ×' + catPref + '，也可能获得其他类别物品。' : ''}</div>
-      ${type.ammoPool ? '<div class="vis"><b>独立弹药池</b>每次抽取25%进入弹药池，75%沿用原有物品池。弹药等级：寻常10% / 良品18% / 上乘32% / 稀见30% / 珍罕10%（红档并入金档）；三种口径等概率。5.56mm与9mm每组10–20发，12号霰弹每组4–8发。</div>' : ''}
+      ${poolNote(type)}
       <details class="container-positions"><summary>当前地图 ${type.positions.length} 个 · 查看位置</summary><p>${type.positions.map(([x, y]) => `<code>(${x}, ${y})</code>`).join(' ') || '当前地图尚未放置'}</p></details>
       ${visual ? `<div class="vis"><b>画什么</b>${esc(visual.subject)}</div>` : ''}
     </div>

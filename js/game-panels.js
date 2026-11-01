@@ -143,7 +143,7 @@ Object.assign(Game, {
       if (!it.noCodex && !known) badges += '<span class="badge">新</span>';
 
       row.innerHTML =
-        Icons.tag(it.id) +
+        (it.equip ? Icons.bagTag(it) : Icons.tag(it.id)) +
         '<span class="nm">' + it.name + badges + '</span>' +
         '<span class="vv">' + it.w.toFixed(2) + 'kg · ' +
         (it.price > 0 ? formatMoney(it.price) : '—') + '</span>';
@@ -151,6 +151,8 @@ Object.assign(Game, {
       row.onclick = () => {
         const cur = this.lootOpen && this.lootOpen.items[i];
         if (!cur) return;
+        /* 装备不占普通格子：能穿就穿上，穿不下才进背包 */
+        if (it.equip) { this.takeGear(cur, i); return; }
         const res = this.player.bag.canAdd(it, cur.n, cur.cap);
         if (!res.ok) { this.toast(res.why); return; }
         this.player.bag.add(it, cur.n, cur.cap);
@@ -169,7 +171,8 @@ Object.assign(Game, {
         ev.preventDefault();
         const cur2 = this.lootOpen && this.lootOpen.items[i];
         if (!cur2) return;
-        Tips.show(it, row.getBoundingClientRect(), '左键装进背包');
+        Tips.show(it, row.getBoundingClientRect(),
+          it.equip ? '左键装备（没有同类就直接穿上）' : '左键装进背包');
       };
       el.appendChild(row);
     });
@@ -284,17 +287,34 @@ Object.assign(Game, {
     return typeof g === 'string' ? g : (g.id || null);
   },
 
+  /* 装备条目有两种形态：尸体身上的是 { gear } / { gun }，
+     容器里掉出来的是 { item:{equip} }。统一成一份规格再走同一套流程。 */
+  gearSpec(entry) {
+    if (!entry) return null;
+    if (entry.gear) return { g: entry.gear, isGun: false, bag: false };
+    if (entry.gun) {
+      const id = this.gunId(entry);
+      return { g: WEAPONS[id] || null, isGun: true, gunId: id, bag: false };
+    }
+    const eq = entry.item && entry.item.equip;
+    if (!eq) return null;
+    if (eq.kind === 'gun') return { g: WEAPONS[eq.gun] || null, isGun: true, gunId: eq.gun, bag: false };
+    if (eq.kind === 'bag') return { g: BACKPACK.make(eq.bag), isGun: false, bag: true };
+    if (eq.kind === 'armor') return { g: eq.gear, isGun: false, bag: false };
+    return null;
+  },
+
   takeGear(entry, idx) {
     const P = this.player;
     if (!P || !entry) return false;
-    const isGun = !!entry.gun;
-    const gunId = this.gunId(entry);
-    const g = isGun ? WEAPONS[gunId] : entry.gear;
-    if (!g) return false;
+    const s = this.gearSpec(entry);
+    if (!s || !s.g) return false;
+    const g = s.g;
 
     let msg = '';
+    let dropOld = null;        // 换下来又塞不进背包的（只有背包会走到这）
 
-    if (isGun) {
+    if (s.isGun) {
       /* 主武器进 0/1，副武器进 2；有空位就先穿上 */
       const range = g.slot === 'primary' ? [0, 1] : [2];
       const free = range.find(k => !P.weapons[k]);
@@ -304,14 +324,19 @@ Object.assign(Game, {
         if (!P.weapons[P.slot]) { P.slot = free; P.mag = got; }
         msg = '换上 ' + g.name + '（' + got + ' 发）';
       }
+    } else if (s.bag) {
+      /* 背包不能塞进背包，换下来那只直接丢在脚边 */
+      if (P.back) dropOld = EQUIP.bag(P.back.id);
+      P.back = BACKPACK.make(g.id);
+      msg = '背上 ' + g.name + (dropOld ? '，' + dropOld.name + ' 丢在脚边' : '');
     } else if (!P[g.type]) {
       P[g.type] = Object.assign({}, g);
       msg = '穿上 ' + g.name;
     }
 
     if (!msg) {
-      const item = isGun
-        ? EQUIP.gun(gunId, Math.max(1, Math.round(g.mag * 0.3)))
+      const item = s.isGun
+        ? EQUIP.gun(s.gunId, Math.max(1, Math.round(g.mag * 0.3)))
         : EQUIP.armor(g);
       const res = P.bag.canAdd(item, 1);
       if (!res.ok) { this.toast(res.why); return false; }
@@ -320,6 +345,7 @@ Object.assign(Game, {
     }
 
     this.lootOpen.items[idx] = null;
+    if (dropOld) this.dropItem(dropOld, 1);
     SFX.play('pickup');
     this.toast(msg);
     this.syncGear();                 // 穿上的东西直接写回存档

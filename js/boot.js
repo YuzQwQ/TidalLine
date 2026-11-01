@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
     Promise.all([Icons.init(sprites), Art.init(sprites)]).then(() => {
       if (Game.bagOpen) Game.renderBag();
       if (Game.lootOpen) Game.renderLootList();
-      if (Game.state === 'base') { Base.renderGear(); Base.renderStash(); }
+      if (Game.state === 'base') Base.render();
     });
     Game.init();
     // 调试入口：index.html#base 打开藏身处；#base,demo 顺便灌一些测试物资

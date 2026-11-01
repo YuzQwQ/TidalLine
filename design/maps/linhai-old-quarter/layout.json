@@ -4871,7 +4871,7 @@
       "type": "desk",
       "name": "办公桌",
       "x": 40,
-      "y": 51,
+      "y": 50,
       "solid": true,
       "footprint": [
         2,

@@ -594,6 +594,19 @@ const Loot = {
     return { item: pool[0], n: 1 };
   },
 
+  /* 一次抽取走哪个池。弹药与装备各判各的，弹药优先；
+     都没中就是原来的通用物品池。没挂池的容器永远是 'item'。 */
+  pickPool(type) {
+    if (!type) return 'item';
+    const a = (type.ammoPool && type.ammoPool.chance) || 0;
+    const g = (type.gearPool && type.gearPool.chance) || 0;
+    let roll = Math.random();
+    if (roll < a) return 'ammo';
+    roll -= a;
+    if (roll < g) return 'gear';
+    return 'item';
+  },
+
   rollAmmo(quality, options) {
     const pct = CONTAINER_QUALITY[quality].pct.slice(0,5);
     pct[4] += CONTAINER_QUALITY[quality].pct[5] || 0;
@@ -603,18 +616,38 @@ const Loot = {
     return {item,n:U.randInt(...options.count[caliber])};
   },
 
+  /* 按容器品质的稀有度曲线掷一件装备，等级分布与同容器的弹药池一致
+     （红档份额并入金档）；种类在 kinds 之间等概率抽。 */
+  rollGear(quality, options) {
+    const src = CONTAINER_QUALITY[quality].pct;
+    const pct = src.slice(0, 5);
+    pct[4] += src[5] || 0;
+    let roll = Math.random() * pct.reduce((a, b) => a + b, 0), lv = 5;
+    for (let i = 0; i < pct.length; i++) { roll -= pct[i]; if (roll < 0) { lv = i + 1; break; } }
+
+    const kinds = (options && options.kinds) || ['helmet', 'body', 'bag'];
+    const kind = U.pick(kinds);
+    /* 背包只有五档，护甲只掷到五级，所以 lv 一定在各自表里 */
+    const item = kind === 'bag' ? EQUIP.bag('bag0' + lv) : EQUIP.armor(GEAR.make(kind, lv));
+    if (!item) return this.roll(quality, null);
+    return { item, n: 1 };
+  },
+
   fill(quality, preferredCats, type) {
     const [a, b] = (type && type.rolls) || BOX_COUNT[quality] || [1, 2];
     const n = U.randInt(a, b);
     const out = [];
     const seen = new Set();
     for (let i = 0; i < n; i++) {
-      /* 同一个容器尽量不出重复条目；重抽几次仍撞上就照收，
-         否则"抽 2–3 件"会被悄悄打折成 1 件。 */
-      const ammo=type&&type.ammoPool&&Math.random()<type.ammoPool.chance;
-      // 先固定本次抽取池；弹药不去重，避免将25%池占比或等级曲线悄悄改变。
-      let r = ammo ? this.rollAmmo(quality,type.ammoPool) : this.roll(quality, preferredCats);
-      for (let k = 0; !ammo && k < 8 && seen.has(r.item.id); k++) r = this.roll(quality, preferredCats);
+      /* 先定这次走哪个池。通用池尽量不出重复条目（重抽几次仍撞上就照收，
+         否则"抽 3–6 件"会被悄悄打折）；弹药与装备不去重，
+         免得把池占比和等级曲线压下去。 */
+      const pool = this.pickPool(type);
+      const special = pool !== 'item';
+      let r = pool === 'ammo' ? this.rollAmmo(quality, type.ammoPool)
+            : pool === 'gear' ? this.rollGear(quality, type.gearPool)
+            : this.roll(quality, preferredCats);
+      for (let k = 0; !special && k < 8 && seen.has(r.item.id); k++) r = this.roll(quality, preferredCats);
       seen.add(r.item.id);
       out.push(r);
     }
