@@ -1,0 +1,250 @@
+{
+  "generator": "Built-in image_gen",
+  "wallReference": "assets/wall-volume",
+  "assets": [
+    {
+      "id": "door",
+      "base": "door",
+      "side": false,
+      "open": false,
+      "prompt": "Use case: stylized-concept. A production architectural DOOR sprite for original pixel-art salvage game 潮汐线. References define CURRENT pale warm limestone wall coping (#b7b29b), dark sage plaster wall face (#56665b), wall height32x48 logical pixels and upper-left lighting. Use these SAME stone and plaster colors for jambs/coping, so the door physically fits those walls. Authentic coarse hand-placed pixel art, 16 restrained colors, hard edges, simplified old industrial materials, no soft rendering or detailed noise, NO diamond isometric perspective, no floor, shadow, scene, characters, text, logos, UI or glow. Camera fixed75degree high-angle ORTHOGRAPHIC, screen north up, east right; world horizontal edges level. Genuine TRANSPARENT background and >=2 logical pixels margin. ONE single complete door, not a sprite sheet. Canvas aspect2:3, logical32x48. Bottom rests at logicaly45. Ordinary old GREY-GREEN WOODEN door leaf, two broad recessed panels, subdued dark brown worn edge, small dull brass handle.EAST-WEST WALL AXIS, NORTH-SOUTH passage. Closed door with a pale limestone lintel and two thick pale stone jambs at LEFT and RIGHT. Broad top coping band about12px tall, visible door panel about28px tall beneath, broad dark south-facing leaf, short top edge. Frame outer width28 logicalpixels and height44 logicalpixels, jambs about4px thick, clear building-height silhouette rather than tiny sticks. CLOSED leaf fills the rectangular opening. No room or floor beyond.",
+      "target": "assets/props/door.png",
+      "source": "sources/door.png",
+      "fit": [
+        28,
+        44
+      ],
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-bba72527-464c-4c89-a751-4d939b1471a7.png",
+      "name": "普通门 · 正向 · 关闭",
+      "canvas": [
+        32,
+        48
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1024,
+        1536
+      ],
+      "spriteSize": [
+        26,
+        44
+      ],
+      "processing": "alpha>=200 crop and binary threshold; native32x48; nearest fit; side-profile width calibrated; foot y45; 16color RGBA"
+    },
+    {
+      "id": "door_side",
+      "base": "door",
+      "side": true,
+      "open": false,
+      "prompt": "Use case: stylized-concept. A production architectural DOOR sprite for original pixel-art salvage game 潮汐线. References define CURRENT pale warm limestone wall coping (#b7b29b), dark sage plaster wall face (#56665b), wall height32x48 logical pixels and upper-left lighting. Use these SAME stone and plaster colors for jambs/coping, so the door physically fits those walls. Authentic coarse hand-placed pixel art, 16 restrained colors, hard edges, simplified old industrial materials, no soft rendering or detailed noise, NO diamond isometric perspective, no floor, shadow, scene, characters, text, logos, UI or glow. Camera fixed75degree high-angle ORTHOGRAPHIC, screen north up, east right; world horizontal edges level. Genuine TRANSPARENT background and >=2 logical pixels margin. ONE single complete door, not a sprite sheet. Canvas aspect2:3, logical32x48. Bottom rests at logicaly45. Ordinary old GREY-GREEN WOODEN door leaf, two broad recessed panels, subdued dark brown worn edge, small dull brass handle.NORTH-SOUTH WALL AXIS, EAST-WEST passage. Draw a true SIDE-ON narrow door system running VERTICALLY down the screen, not a horizontal doorway. The stone end-jamb is at NORTH and another at SOUTH; between them the CLOSED door leaf is viewed almost EDGE-ON as a slender upright vertical slab. Overall silhouette is tall and narrow, only about12-14 logical pixels wide centered in the32px canvas. Top and bottom stone blocks show pale top planes and short dark south faces. Center leaf follows screen north-south axis, a thin dark line of body thickness plus small side hardware. Do NOT depict two left/right doorposts or a broad frontal panel. Do NOT rotate an existing bitmap; light stays upper-left.",
+      "target": "assets/props/door_side.png",
+      "source": "sources/door_side.png",
+      "fit": [
+        14,
+        44
+      ],
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-4f44e7a9-76ca-40bf-a1eb-89441881b9bd.png",
+      "name": "普通门 · 侧向 · 关闭",
+      "canvas": [
+        32,
+        48
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1024,
+        1536
+      ],
+      "spriteSize": [
+        14,
+        44
+      ],
+      "processing": "alpha>=200 crop and binary threshold; native32x48; nearest fit; side-profile width calibrated; foot y45; 16color RGBA"
+    },
+    {
+      "id": "sdoor",
+      "base": "sdoor",
+      "side": false,
+      "open": false,
+      "prompt": "Use case: stylized-concept. A production architectural DOOR sprite for original pixel-art salvage game 潮汐线. References define CURRENT pale warm limestone wall coping (#b7b29b), dark sage plaster wall face (#56665b), wall height32x48 logical pixels and upper-left lighting. Use these SAME stone and plaster colors for jambs/coping, so the door physically fits those walls. Authentic coarse hand-placed pixel art, 16 restrained colors, hard edges, simplified old industrial materials, no soft rendering or detailed noise, NO diamond isometric perspective, no floor, shadow, scene, characters, text, logos, UI or glow. Camera fixed75degree high-angle ORTHOGRAPHIC, screen north up, east right; world horizontal edges level. Genuine TRANSPARENT background and >=2 logical pixels margin. ONE single complete door, not a sprite sheet. Canvas aspect2:3, logical32x48. Bottom rests at logicaly45. Reinforced DARK GREY-GREEN STEEL blast/shelter door leaf, thick steel rim, two small reinforcing ribs, dull metal locking hub and hinges, NO lights or bright warnings.EAST-WEST WALL AXIS, NORTH-SOUTH passage. Closed door with a pale limestone lintel and two thick pale stone jambs at LEFT and RIGHT. Broad top coping band about12px tall, visible door panel about28px tall beneath, broad dark south-facing leaf, short top edge. Frame outer width28 logicalpixels and height44 logicalpixels, jambs about4px thick, clear building-height silhouette rather than tiny sticks. CLOSED leaf fills the rectangular opening. No room or floor beyond.",
+      "target": "assets/props/sdoor.png",
+      "source": "sources/sdoor.png",
+      "fit": [
+        28,
+        44
+      ],
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2d2ead46-523d-40d2-a6cc-7fe571192f30.png",
+      "name": "避难门 · 正向 · 关闭",
+      "canvas": [
+        32,
+        48
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1024,
+        1536
+      ],
+      "spriteSize": [
+        28,
+        40
+      ],
+      "processing": "alpha>=200 crop and binary threshold; native32x48; nearest fit; side-profile width calibrated; foot y45; 16color RGBA"
+    },
+    {
+      "id": "sdoor_side",
+      "base": "sdoor",
+      "side": true,
+      "open": false,
+      "prompt": "Use case: stylized-concept. A production architectural DOOR sprite for original pixel-art salvage game 潮汐线. References define CURRENT pale warm limestone wall coping (#b7b29b), dark sage plaster wall face (#56665b), wall height32x48 logical pixels and upper-left lighting. Use these SAME stone and plaster colors for jambs/coping, so the door physically fits those walls. Authentic coarse hand-placed pixel art, 16 restrained colors, hard edges, simplified old industrial materials, no soft rendering or detailed noise, NO diamond isometric perspective, no floor, shadow, scene, characters, text, logos, UI or glow. Camera fixed75degree high-angle ORTHOGRAPHIC, screen north up, east right; world horizontal edges level. Genuine TRANSPARENT background and >=2 logical pixels margin. ONE single complete door, not a sprite sheet. Canvas aspect2:3, logical32x48. Bottom rests at logicaly45. Reinforced DARK GREY-GREEN STEEL blast/shelter door leaf, thick steel rim, two small reinforcing ribs, dull metal locking hub and hinges, NO lights or bright warnings.NORTH-SOUTH WALL AXIS, EAST-WEST passage. Draw a true SIDE-ON narrow door system running VERTICALLY down the screen, not a horizontal doorway. The stone end-jamb is at NORTH and another at SOUTH; between them the CLOSED door leaf is viewed almost EDGE-ON as a slender upright vertical slab. Overall silhouette is tall and narrow, only about12-14 logical pixels wide centered in the32px canvas. Top and bottom stone blocks show pale top planes and short dark south faces. Center leaf follows screen north-south axis, a thin dark line of body thickness plus small side hardware. Do NOT depict two left/right doorposts or a broad frontal panel. Do NOT rotate an existing bitmap; light stays upper-left.",
+      "target": "assets/props/sdoor_side.png",
+      "source": "sources/sdoor_side.png",
+      "fit": [
+        14,
+        44
+      ],
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-80d239dc-9dd9-41e5-89d0-71ee061341b0.png",
+      "name": "避难门 · 侧向 · 关闭",
+      "canvas": [
+        32,
+        48
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1024,
+        1536
+      ],
+      "spriteSize": [
+        14,
+        44
+      ],
+      "processing": "alpha>=200 crop and binary threshold; native32x48; nearest fit; side-profile width calibrated; foot y45; 16color RGBA"
+    },
+    {
+      "id": "door_open",
+      "base": "door",
+      "side": false,
+      "open": true,
+      "prompt": "Use case: precise-object-edit. Edit the reference CLOSED door into its OPEN state. Preserve exactly the same pale stone door frame, lintel/post positions, colors, width/height, high-angle orthographic camera, upper-left lighting, logical32x48 transparent canvas and foot position. Change ONLY the door leaf pose. This is the broad EAST-WEST door, passage NORTH-SOUTH. Swing leaf fully open and fold it EDGE-ON along LEFT jamb only; the middle of doorway below lintel must be genuinely TRANSPARENT, no closed panel, floor, black fill, threshold, wall or shadow. Keep original RIGHT jamb and top lintel unchanged. Crisp low resolution pixel art, limited palette. No new details, scene, text, glow or cast shadow. One single OPEN door sprite only. Actual transparent hole at center, not a dark painted doorway.",
+      "target": "assets/props/door_open.png",
+      "source": "sources/door_open.png",
+      "fit": [
+        28,
+        44
+      ],
+      "reference": "assets/door-redraw/sources/door.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-79ab0afe-aa91-4a6c-839e-8d16af38db13.png",
+      "name": "普通门 · 正向 · 打开",
+      "canvas": [
+        32,
+        48
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1024,
+        1536
+      ],
+      "spriteSize": [
+        26,
+        44
+      ],
+      "processing": "alpha>=200 crop and binary threshold; native32x48; nearest fit; side-profile width calibrated; foot y45; 16color RGBA"
+    },
+    {
+      "id": "door_side_open",
+      "base": "door",
+      "side": true,
+      "open": true,
+      "prompt": "Use case: precise-object-edit. Edit the reference CLOSED door into its OPEN state. Preserve exactly the same pale stone door frame, lintel/post positions, colors, width/height, high-angle orthographic camera, upper-left lighting, logical32x48 transparent canvas and foot position. Change ONLY the door leaf pose. This is the narrow NORTH-SOUTH side door, passage EAST-WEST. Fold/swing its leaf completely up against the NORTH end post, as a small narrow edge-on slab near the TOP. Keep SOUTH end post identical. The entire central horizontal passage across the middle of the canvas MUST be genuinely TRANSPARENT; no vertical leaf, floor, dark fill, mullion or shadow across center. Crisp low resolution pixel art, limited palette. No new details, scene, text, glow or cast shadow. One single OPEN door sprite only. Actual transparent hole at center, not a dark painted doorway.",
+      "target": "assets/props/door_side_open.png",
+      "source": "sources/door_side_open.png",
+      "fit": [
+        18,
+        44
+      ],
+      "reference": "assets/door-redraw/sources/door_side.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-37337be4-e4b0-4856-8474-5a4ef51b70b7.png",
+      "name": "普通门 · 侧向 · 打开",
+      "canvas": [
+        32,
+        48
+      ],
+      "repair": {
+        "prompt": "Precise object edit: the supplied OPEN SIDE DOOR incorrectly retains TWO LONG VERTICAL RAILS connecting the north and south stone blocks. ERASE BOTH long rails completely. Preserve the TOP stone block and BOTTOM stone block exactly. Fold a very short edge-on wooden leaf against ONLY the TOP block, like the supplied second reference open steel door. Across the middle HALF of the image height there must be ABSOLUTELY NOTHING: entirely genuinely transparent across the FULL canvas width, no vertical line, post, leaf, frame, floor, dark fill, shadow or glow. The north and south blocks are disconnected on transparent background because the door is OPEN for left-right passage. Keep grey-green wood/dull brass and pale limestone, crisp coarse pixel style, exact original32x48 logical canvas, camera and upper-left light. No new elements. Image1 edit target, image2 geometry reference ONLY.",
+        "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-dd3fd3a9-73d1-4f60-ba88-2d289ad03002.png",
+        "references": [
+          "sources/door_side_open-rejected.png",
+          "sources/sdoor_side_open.png"
+        ]
+      },
+      "status": "ready",
+      "sourceSize": [
+        1024,
+        1536
+      ],
+      "spriteSize": [
+        18,
+        44
+      ],
+      "processing": "alpha>=200 crop and binary threshold; native32x48; nearest fit; side-profile width calibrated; foot y45; 16color RGBA"
+    },
+    {
+      "id": "sdoor_open",
+      "base": "sdoor",
+      "side": false,
+      "open": true,
+      "prompt": "Use case: precise-object-edit. Edit the reference CLOSED door into its OPEN state. Preserve exactly the same pale stone door frame, lintel/post positions, colors, width/height, high-angle orthographic camera, upper-left lighting, logical32x48 transparent canvas and foot position. Change ONLY the door leaf pose. This is the broad EAST-WEST door, passage NORTH-SOUTH. Swing leaf fully open and fold it EDGE-ON along LEFT jamb only; the middle of doorway below lintel must be genuinely TRANSPARENT, no closed panel, floor, black fill, threshold, wall or shadow. Keep original RIGHT jamb and top lintel unchanged. Crisp low resolution pixel art, limited palette. No new details, scene, text, glow or cast shadow. One single OPEN door sprite only. Actual transparent hole at center, not a dark painted doorway.",
+      "target": "assets/props/sdoor_open.png",
+      "source": "sources/sdoor_open.png",
+      "fit": [
+        28,
+        44
+      ],
+      "reference": "assets/door-redraw/sources/sdoor.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3624b91e-9d18-44bc-926d-0854231b4ac0.png",
+      "name": "避难门 · 正向 · 打开",
+      "canvas": [
+        32,
+        48
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1024,
+        1536
+      ],
+      "spriteSize": [
+        28,
+        40
+      ],
+      "processing": "alpha>=200 crop and binary threshold; native32x48; nearest fit; side-profile width calibrated; foot y45; 16color RGBA"
+    },
+    {
+      "id": "sdoor_side_open",
+      "base": "sdoor",
+      "side": true,
+      "open": true,
+      "prompt": "Use case: precise-object-edit. Edit the reference CLOSED door into its OPEN state. Preserve exactly the same pale stone door frame, lintel/post positions, colors, width/height, high-angle orthographic camera, upper-left lighting, logical32x48 transparent canvas and foot position. Change ONLY the door leaf pose. This is the narrow NORTH-SOUTH side door, passage EAST-WEST. Fold/swing its leaf completely up against the NORTH end post, as a small narrow edge-on slab near the TOP. Keep SOUTH end post identical. The entire central horizontal passage across the middle of the canvas MUST be genuinely TRANSPARENT; no vertical leaf, floor, dark fill, mullion or shadow across center. Crisp low resolution pixel art, limited palette. No new details, scene, text, glow or cast shadow. One single OPEN door sprite only. Actual transparent hole at center, not a dark painted doorway.",
+      "target": "assets/props/sdoor_side_open.png",
+      "source": "sources/sdoor_side_open.png",
+      "fit": [
+        18,
+        44
+      ],
+      "reference": "assets/door-redraw/sources/sdoor_side.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-64a36163-9320-4aa5-afd9-6fc50cba3e2a.png",
+      "name": "避难门 · 侧向 · 打开",
+      "canvas": [
+        32,
+        48
+      ],
+      "status": "ready",
+      "sourceSize": [
+        1024,
+        1536
+      ],
+      "spriteSize": [
+        18,
+        44
+      ],
+      "processing": "alpha>=200 crop and binary threshold; native32x48; nearest fit; side-profile width calibrated; foot y45; 16color RGBA"
+    }
+  ]
+}

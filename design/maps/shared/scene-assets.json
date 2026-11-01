@@ -706,25 +706,45 @@
       "group": "props",
       "id": "door",
       "name": "门 · 正向（关闭）",
-      "role": "scene-component"
+      "role": "scene-component",
+      "canvas": [
+        32,
+        48
+      ],
+      "generationManifest": "assets/door-redraw/manifest.json"
     },
     {
       "group": "props",
       "id": "door_open",
       "name": "门 · 正向（打开）",
-      "role": "scene-component"
+      "role": "scene-component",
+      "canvas": [
+        32,
+        48
+      ],
+      "generationManifest": "assets/door-redraw/manifest.json"
     },
     {
       "group": "props",
       "id": "door_side",
       "name": "普通门 · 侧向（关闭）",
-      "role": "scene-component"
+      "role": "scene-component",
+      "canvas": [
+        32,
+        48
+      ],
+      "generationManifest": "assets/door-redraw/manifest.json"
     },
     {
       "group": "props",
       "id": "door_side_open",
       "name": "普通门 · 侧向（打开）",
-      "role": "scene-component"
+      "role": "scene-component",
+      "canvas": [
+        32,
+        48
+      ],
+      "generationManifest": "assets/door-redraw/manifest.json"
     },
     {
       "group": "props",
@@ -742,25 +762,45 @@
       "group": "props",
       "id": "sdoor",
       "name": "避难间门 · 正向（关闭）",
-      "role": "scene-component"
+      "role": "scene-component",
+      "canvas": [
+        32,
+        48
+      ],
+      "generationManifest": "assets/door-redraw/manifest.json"
     },
     {
       "group": "props",
       "id": "sdoor_open",
       "name": "避难间门 · 正向（打开）",
-      "role": "scene-component"
+      "role": "scene-component",
+      "canvas": [
+        32,
+        48
+      ],
+      "generationManifest": "assets/door-redraw/manifest.json"
     },
     {
       "group": "props",
       "id": "sdoor_side",
       "name": "避难门 · 侧向（关闭）",
-      "role": "scene-component"
+      "role": "scene-component",
+      "canvas": [
+        32,
+        48
+      ],
+      "generationManifest": "assets/door-redraw/manifest.json"
     },
     {
       "group": "props",
       "id": "sdoor_side_open",
       "name": "避难门 · 侧向（打开）",
-      "role": "scene-component"
+      "role": "scene-component",
+      "canvas": [
+        32,
+        48
+      ],
+      "generationManifest": "assets/door-redraw/manifest.json"
     },
     {
       "group": "props",

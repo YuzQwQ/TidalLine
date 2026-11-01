@@ -270,7 +270,7 @@ test('背包塞不下退回的弹药时，整个换种操作取消（不吞子�
   P.weapons[0].ammo = 'ammo_556_1';
   /* 把背包塞满到只剩 0 格，并且 556_1 那堆已经满到 120，退不进去 */
   P.bag.slots = [{ item: ITEM_BY_ID.ammo_556_1, n: 120 }, { item: ITEM_BY_ID.ammo_556_3, n: 30 }];
-  while (P.bag.slots.length < CFG.BAG.SLOTS) {
+  while (P.bag.slots.length < c.bagSlots()) {
     P.bag.slots.push({ item: ITEM_BY_ID['life01'], n: 1 });
   }
   assert.equal(P.loadAmmo('ammo_556_3'), false, '放不下就该拒绝');

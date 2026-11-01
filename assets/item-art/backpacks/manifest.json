@@ -1,0 +1,155 @@
+{
+  "generator": "Built-in image_gen",
+  "scope": "integrated equipment icons: hideout, stash, picker, merchant, raid and offline",
+  "canvas": [
+    48,
+    48
+  ],
+  "assets": [
+    {
+      "id": "bag01",
+      "name": "旧帆布挎包",
+      "rarity": 1,
+      "rarityName": "寻常",
+      "weight": 0.7,
+      "price": 6000,
+      "slots": 8,
+      "fit": [
+        36,
+        32
+      ],
+      "visual": "黄褐色旧帆布单肩挎包，偏扁的横向包体、翻盖和一枚金属扣，长肩带向一侧弯曲，边缘磨损褪色。",
+      "subject": "A modest SMALL FLAT HORIZONTAL tan khaki CANVAS SINGLE-SHOULDER SATCHEL, NOT a rucksack. Wide simple flap closing with ONE dull metal clasp in the center. A LONG thin dark-brown woven shoulder strap arcs in a loose loop to one side, attached to the side tabs. A little faded canvas, creased fabric and lightly abraded corners, no patches or extra pockets. Humble 1990s civilian everyday bag, lightweight cheap construction. Compact bag body much flatter and smaller than a hiking backpack. Bag and entire strap visible within the canvas.",
+      "prompt": "Use case: stylized-concept. Draw ONE standalone inventory EQUIPMENT ICON for original salvage game 潮汐线. Authentic coarse48x48 logical-pixel art enlarged cleanly, readable hard square pixel clusters, simplified realistic fabric and metal materials, limited16 muted colors. Fixed upper-left lighting, dark colored outline rather than pure black, modest wear, readable light edges on a dark green UI. Inventory front THREE-QUARTER view slightly from above: front, top and a little right side visible, consistent view across this backpack series. Complete isolated bag including straps, centered within logical40x40 safe area on48x48 square, at least4 logicalpx genuinely transparent margin all around. No person, mannequin, scene, floor, cast shadow, UI frame, rarity background, level/price/size badge, words, letters, numbers, brand logo, watermark or glow. Do not draw a sheet or multiple bags. A modest SMALL FLAT HORIZONTAL tan khaki CANVAS SINGLE-SHOULDER SATCHEL, NOT a rucksack. Wide simple flap closing with ONE dull metal clasp in the center. A LONG thin dark-brown woven shoulder strap arcs in a loose loop to one side, attached to the side tabs. A little faded canvas, creased fabric and lightly abraded corners, no patches or extra pockets. Humble 1990s civilian everyday bag, lightweight cheap construction. Compact bag body much flatter and smaller than a hiking backpack. Bag and entire strap visible within the canvas.",
+      "target": "assets/gear/bag01.png",
+      "source": "sources/bag01.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e322dd7a-b670-4f22-b5f0-461f38451354.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "spriteSize": [
+        36,
+        29
+      ],
+      "processing": "alpha crop >=160; nearest-neighbour contain; 16-colour; binary alpha; centered native48px"
+    },
+    {
+      "id": "bag02",
+      "name": "民用旅行背包",
+      "rarity": 2,
+      "rarityName": "良品",
+      "weight": 1.2,
+      "price": 18000,
+      "slots": 12,
+      "fit": [
+        34,
+        36
+      ],
+      "visual": "蓝灰色尼龙双肩旅行包，圆润饱满，前置拉链袋、顶部提手和双肩带清晰。",
+      "subject": "A medium CIVILIAN travel daypack in muted BLUE-GREY/slate teal nylon. Soft rounded fuller silhouette with rounded zip-top main compartment, ONE broad front zippered pocket, small top carry handle, TWO padded shoulder straps peeking from behind/sides. Restrained dark piping, visible simple zipper pulls, slightly worn fabric. 1990s student/commuter/short-trip gear, friendly practical rounded shape. NO military webbing, external frame, tactical patches, dangling gear or oversized expedition features.",
+      "prompt": "Use case: stylized-concept. Draw ONE standalone inventory EQUIPMENT ICON for original salvage game 潮汐线. Authentic coarse48x48 logical-pixel art enlarged cleanly, readable hard square pixel clusters, simplified realistic fabric and metal materials, limited16 muted colors. Fixed upper-left lighting, dark colored outline rather than pure black, modest wear, readable light edges on a dark green UI. Inventory front THREE-QUARTER view slightly from above: front, top and a little right side visible, consistent view across this backpack series. Complete isolated bag including straps, centered within logical40x40 safe area on48x48 square, at least4 logicalpx genuinely transparent margin all around. No person, mannequin, scene, floor, cast shadow, UI frame, rarity background, level/price/size badge, words, letters, numbers, brand logo, watermark or glow. Do not draw a sheet or multiple bags. A medium CIVILIAN travel daypack in muted BLUE-GREY/slate teal nylon. Soft rounded fuller silhouette with rounded zip-top main compartment, ONE broad front zippered pocket, small top carry handle, TWO padded shoulder straps peeking from behind/sides. Restrained dark piping, visible simple zipper pulls, slightly worn fabric. 1990s student/commuter/short-trip gear, friendly practical rounded shape. NO military webbing, external frame, tactical patches, dangling gear or oversized expedition features.",
+      "target": "assets/gear/bag02.png",
+      "source": "sources/bag02.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-a949f6a5-5e02-47cc-89c1-7751efb23175.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "spriteSize": [
+        33,
+        36
+      ],
+      "processing": "alpha crop >=160; nearest-neighbour contain; 16-colour; binary alpha; centered native48px"
+    },
+    {
+      "id": "bag03",
+      "name": "加固登山背包",
+      "rarity": 3,
+      "rarityName": "上乘",
+      "weight": 1.9,
+      "price": 45000,
+      "slots": 16,
+      "fit": [
+        34,
+        40
+      ],
+      "visual": "墨绿色高包体登山包，顶盖、侧袋、卷带和束带构成结实的户外轮廓。",
+      "subject": "A TALL NARROW reinforced hiking rucksack in muted deep FOREST/GREY-GREEN nylon. Distinct elongated high body, rounded TOP FLAP with two buckle straps, bulging SIDE POCKETS, rolled spare fabric straps secured neatly, a simple padded waist belt tucked alongside the bottom and visible robust harness edges. Durable reinforced seams and sensible compression straps, 1990s long-distance hiking/survey equipment. Clearly taller and more cylindrical than a civilian daypack; outdoor utility, NOT a square tactical assault pack. No sleeping mat, weapons, rope pile, text or other gear.",
+      "prompt": "Use case: stylized-concept. Draw ONE standalone inventory EQUIPMENT ICON for original salvage game 潮汐线. Authentic coarse48x48 logical-pixel art enlarged cleanly, readable hard square pixel clusters, simplified realistic fabric and metal materials, limited16 muted colors. Fixed upper-left lighting, dark colored outline rather than pure black, modest wear, readable light edges on a dark green UI. Inventory front THREE-QUARTER view slightly from above: front, top and a little right side visible, consistent view across this backpack series. Complete isolated bag including straps, centered within logical40x40 safe area on48x48 square, at least4 logicalpx genuinely transparent margin all around. No person, mannequin, scene, floor, cast shadow, UI frame, rarity background, level/price/size badge, words, letters, numbers, brand logo, watermark or glow. Do not draw a sheet or multiple bags. A TALL NARROW reinforced hiking rucksack in muted deep FOREST/GREY-GREEN nylon. Distinct elongated high body, rounded TOP FLAP with two buckle straps, bulging SIDE POCKETS, rolled spare fabric straps secured neatly, a simple padded waist belt tucked alongside the bottom and visible robust harness edges. Durable reinforced seams and sensible compression straps, 1990s long-distance hiking/survey equipment. Clearly taller and more cylindrical than a civilian daypack; outdoor utility, NOT a square tactical assault pack. No sleeping mat, weapons, rope pile, text or other gear.",
+      "target": "assets/gear/bag03.png",
+      "source": "sources/bag03.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-060d6c9d-206d-4601-8e02-54dbd364dadc.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "spriteSize": [
+        30,
+        40
+      ],
+      "processing": "alpha crop >=160; nearest-neighbour contain; 16-colour; binary alpha; centered native48px"
+    },
+    {
+      "id": "bag04",
+      "name": "战术突击背包",
+      "rarity": 4,
+      "rarityName": "稀见",
+      "weight": 2.8,
+      "price": 110000,
+      "slots": 20,
+      "fit": [
+        38,
+        38
+      ],
+      "visual": "深橄榄绿紧凑战术双肩包，多分仓、横向织带与压缩带形成硬朗结构。",
+      "subject": "A COMPACT BROAD RECTANGULAR tactical assault backpack in muted DARK OLIVE-GREEN nylon. Firm squared silhouette, distinct stacked front compartments, TWO ROWS of horizontal utility WEBBING strips on front, side compression straps with rectangular buckles, thick padded shoulder harness peeking behind, reinforced bottom. Serious standardized late-20th-century security/military supply look; compact stable form, not a tall hiking cylinder. No camouflage print, logos, flags, weapon, ammo, skull, modern sci-fi electronics or loose accessories. Material and edge planes readable on dark UI.",
+      "prompt": "Use case: stylized-concept. Draw ONE standalone inventory EQUIPMENT ICON for original salvage game 潮汐线. Authentic coarse48x48 logical-pixel art enlarged cleanly, readable hard square pixel clusters, simplified realistic fabric and metal materials, limited16 muted colors. Fixed upper-left lighting, dark colored outline rather than pure black, modest wear, readable light edges on a dark green UI. Inventory front THREE-QUARTER view slightly from above: front, top and a little right side visible, consistent view across this backpack series. Complete isolated bag including straps, centered within logical40x40 safe area on48x48 square, at least4 logicalpx genuinely transparent margin all around. No person, mannequin, scene, floor, cast shadow, UI frame, rarity background, level/price/size badge, words, letters, numbers, brand logo, watermark or glow. Do not draw a sheet or multiple bags. A COMPACT BROAD RECTANGULAR tactical assault backpack in muted DARK OLIVE-GREEN nylon. Firm squared silhouette, distinct stacked front compartments, TWO ROWS of horizontal utility WEBBING strips on front, side compression straps with rectangular buckles, thick padded shoulder harness peeking behind, reinforced bottom. Serious standardized late-20th-century security/military supply look; compact stable form, not a tall hiking cylinder. No camouflage print, logos, flags, weapon, ammo, skull, modern sci-fi electronics or loose accessories. Material and edge planes readable on dark UI.",
+      "target": "assets/gear/bag04.png",
+      "source": "sources/bag04.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-1d623be0-6f79-4e2a-8f5e-c6d3b2f58f45.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "spriteSize": [
+        35,
+        38
+      ],
+      "processing": "alpha crop >=160; nearest-neighbour contain; 16-colour; binary alpha; centered native48px"
+    },
+    {
+      "id": "bag05",
+      "name": "远征模块背包",
+      "rarity": 5,
+      "rarityName": "珍罕",
+      "weight": 3.8,
+      "price": 260000,
+      "slots": 24,
+      "fit": [
+        40,
+        40
+      ],
+      "visual": "深石墨色大型模块包，宽厚主仓、外挂侧仓、金属支撑与少量深翡翠色识别条。",
+      "subject": "A LARGE WIDE THICK high-end modular expedition rucksack in muted DARK GRAPHITE/charcoal grey nylon. Substantial central pack plus TWO ATTACHED OUTRIGGER SIDE POUCHES forming a distinctly wider stepped silhouette. Clear layered compartments, broad compression belts, reinforced carry handle, subtle exposed dull metal SUPPORT FRAME edges behind bag, robust load-bearing harness. Very small deep EMERALD-TEAL identification strips on the upper flap and a side pouch, NOT glowing. Professional expensive equipment believable in near-realistic1990s technology, largest and most capable in this5-pack series. NO glossy hard-shell space suit, luminous parts, screen, brands, logos, text or extra carried objects.",
+      "prompt": "Use case: stylized-concept. Draw ONE standalone inventory EQUIPMENT ICON for original salvage game 潮汐线. Authentic coarse48x48 logical-pixel art enlarged cleanly, readable hard square pixel clusters, simplified realistic fabric and metal materials, limited16 muted colors. Fixed upper-left lighting, dark colored outline rather than pure black, modest wear, readable light edges on a dark green UI. Inventory front THREE-QUARTER view slightly from above: front, top and a little right side visible, consistent view across this backpack series. Complete isolated bag including straps, centered within logical40x40 safe area on48x48 square, at least4 logicalpx genuinely transparent margin all around. No person, mannequin, scene, floor, cast shadow, UI frame, rarity background, level/price/size badge, words, letters, numbers, brand logo, watermark or glow. Do not draw a sheet or multiple bags. A LARGE WIDE THICK high-end modular expedition rucksack in muted DARK GRAPHITE/charcoal grey nylon. Substantial central pack plus TWO ATTACHED OUTRIGGER SIDE POUCHES forming a distinctly wider stepped silhouette. Clear layered compartments, broad compression belts, reinforced carry handle, subtle exposed dull metal SUPPORT FRAME edges behind bag, robust load-bearing harness. Very small deep EMERALD-TEAL identification strips on the upper flap and a side pouch, NOT glowing. Professional expensive equipment believable in near-realistic1990s technology, largest and most capable in this5-pack series. NO glossy hard-shell space suit, luminous parts, screen, brands, logos, text or extra carried objects.",
+      "target": "assets/gear/bag05.png",
+      "source": "sources/bag05.png",
+      "status": "ready",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-bf77d956-6889-4536-9c7c-ee1e19b4a1a3.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "spriteSize": [
+        40,
+        38
+      ],
+      "processing": "alpha crop >=160; nearest-neighbour contain; 16-colour; binary alpha; centered native48px"
+    }
+  ]
+}

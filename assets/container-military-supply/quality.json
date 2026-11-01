@@ -12,11 +12,11 @@
     "12g": 13461,
     "9mm": 13170
   },
-  "ammoPoolPercent": 24.27528214206683,
+  "ammoPoolPercent": 25.187934151679514,
+  "gearPoolPercent": 10.219811590065659,
   "counts": [
-    2,
-    4,
-    3
+    3,
+    4
   ],
   "checks": [
     "48px transparent sprite",

@@ -41,8 +41,11 @@ const server = http.createServer((req, res) => {
       Base.renderStash();
     });
     await page.waitForFunction(() => Object.keys(Icons.map).length === ITEMS.length);
-    await page.waitForFunction(() => document.querySelectorAll('#stashGrid img').length === ITEMS.filter(item=>Icons.get(item.id)).length);
-    assert.equal(await page.locator('#stashGrid img').count(), expectedIconCount);
+    /* 物品表从 158 扩到 173 件，清单/战利品的图标数跟着数据表走 */
+    const expectedIconCount = await page.evaluate(() => ITEMS.length);
+    /* 仓库分页后一页只画几十格，图标覆盖率改成直接查 ITEMS 全表 */
+    await page.waitForFunction(() => document.querySelectorAll('#stashGrid img').length > 0);
+    assert(await page.locator('#stashGrid img').count() > 0, '仓库首页有图标');
     const specs = await page.evaluate(() => ITEMS.filter(item=>Icons.get(item.id)).map(item => {
       const image = Icons.get(item.id);
       const canvas = document.createElement('canvas'); canvas.width = canvas.height = 48;
@@ -57,6 +60,7 @@ const server = http.createServer((req, res) => {
       }
       return { id: item.id, width: image.naturalWidth, height: image.naturalHeight, visible, invalidAlpha, margin };
     }));
+    assert.equal(specs.length, await page.evaluate(() => ITEMS.length), '每件物品都要有图标');
     for (const icon of specs) {
       assert.equal(icon.width, 48, icon.id); assert.equal(icon.height, 48, icon.id);
       assert(icon.visible > 50, icon.id + ' is empty');

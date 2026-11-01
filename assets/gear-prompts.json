@@ -170,12 +170,26 @@
     },
     {
       "id": "bag",
-      "name": "单格背包",
+      "name": "背包空槽图标",
       "type": "bag",
       "subject": "单格帆布/尼龙背包，正面一个翻盖 + 两条压缩带。（暂未开放，可最后再画）",
       "box": 40,
       "source": "exec-c5b1955a-a750-4854-805f-29b0d9a4814d.png",
-      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front three-quarter view of an empty olive canvas/nylon backpack, top flap and two compression straps. 单格帆布/尼龙背包，正面一个翻盖 + 两条压缩带。（暂未开放，可最后再画）"
+      "prompt": "Use case: stylized-concept. Create ONE standalone inventory EQUIPMENT ICON for 潮汐线, a muted post-flood salvage game. Authentic coarse hand-placed 48x48 logical-pixel art, crisp square pixel clusters, no antialiasing, limited 16-colour weathered palette, fixed upper-left light, readable medium-light edges against a dark green UI, no pure black outline. A complete isolated object, centred inside the logical 40x40 safe area with 4 transparent pixels on each edge. Transparent square PNG. NO ground, backdrop, cast shadow, glow, grid, frame, watermark, words, letters, numbers, level badges, human, mannequin or extra objects. This is a readable inventory display view, NOT the overhead world sprite view. The supplied watch icon is ONLY a pixel-style/material rendering reference, do not draw a watch or borrow its shape. Subject: Front three-quarter view of an empty olive canvas/nylon backpack, top flap and two compression straps. 单格帆布/尼龙背包，正面一个翻盖 + 两条压缩带。（暂未开放，可最后再画）",
+      "usage": "仅用于未装备背包时的空槽；实际装备使用bag01–bag05"
     }
-  ]
+  ],
+  "relatedBatches": {
+    "backpacks": {
+      "manifest": "assets/item-art/backpacks/manifest.json",
+      "prepare": "node tools/prepare-backpack-art.js",
+      "ids": [
+        "bag01",
+        "bag02",
+        "bag03",
+        "bag04",
+        "bag05"
+      ]
+    }
+  }
 }

@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "scope": "art-only",
+  "assets": [
+    {
+      "id": "bag01",
+      "canvas": [
+        48,
+        48
+      ],
+      "visibleSize": [
+        36,
+        29
+      ],
+      "colors": 16,
+      "pixels": 636
+    },
+    {
+      "id": "bag02",
+      "canvas": [
+        48,
+        48
+      ],
+      "visibleSize": [
+        33,
+        36
+      ],
+      "colors": 16,
+      "pixels": 856
+    },
+    {
+      "id": "bag03",
+      "canvas": [
+        48,
+        48
+      ],
+      "visibleSize": [
+        30,
+        40
+      ],
+      "colors": 16,
+      "pixels": 853
+    },
+    {
+      "id": "bag04",
+      "canvas": [
+        48,
+        48
+      ],
+      "visibleSize": [
+        35,
+        38
+      ],
+      "colors": 16,
+      "pixels": 1009
+    },
+    {
+      "id": "bag05",
+      "canvas": [
+        48,
+        48
+      ],
+      "visibleSize": [
+        40,
+        38
+      ],
+      "colors": 16,
+      "pixels": 1109
+    }
+  ],
+  "narrowWidths": [
+    320,
+    390
+  ]
+}

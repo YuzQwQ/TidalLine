@@ -18,7 +18,9 @@ const root=path.resolve(__dirname,'..'),review=require('../design/items/rarity.j
   for(const entry of ['index.html','潮汐线.html']){
    await page.goto(pathToFileURL(path.join(root,entry)).href+'#base');await page.waitForFunction(()=>Game.state==='base'&&Object.keys(Icons.map).length===ITEMS.length);
    await page.evaluate(()=>{
-    const reps=['life01','life03','elec01','odd01','lux01','odd02'];
+    /* 稀有度重排过，六档代表件从数据表现挑，保证每档都有格子可查 */
+    const reps=['odd02'];
+    for(let r=1;r<=6;r++){const it=ITEMS.find(i=>i.r===r&&itemGroup&&itemGroup(i)==='collectible'&&!reps.includes(i.id));if(it)reps.push(it.id);}
     const gold=EQUIP.armor(GEAR.make('helmet',5,37)),red=EQUIP.armor(GEAR.make('helmet',6,42));gold.r=4;red.r=5;
     Save.stash=reps.map(id=>({id,n:1})).concat([{id:gold.id,n:1,gear:gold},{id:red.id,n:1,gear:red}]);Save.save();Save.flush();
    });
@@ -31,7 +33,8 @@ const root=path.resolve(__dirname,'..'),review=require('../design/items/rarity.j
    await page.screenshot({path:path.join(output,entry==='index.html'?'source-warehouse.png':'offline-warehouse.png')});
    await page.evaluate(()=>{
     Base.close();Game.startRun();Game.state='ended';Game.enemies=[];
-    const reps=['life01','life03','elec01','odd01','lux01','odd02'].map(id=>ITEM_BY_ID[id]);
+    /* 同样按稀有度各挑一件，六档颜色各查一次，不会因为重排撞档 */
+    const reps=[1,2,3,4,5,6].map(r=>ITEMS.find(i=>i.r===r&&itemGroup(i)==='collectible'));
     Game.player.bag.slots=reps.map(item=>({item,n:1}));Game.player.bag.safe=reps.slice(2).map(item=>({item,n:1}));
     if(!Game.bagOpen)Game.toggleBag();Game.openLoot({kind:'secret',items:reps.map(item=>({item,n:1,known:true}))});
    });

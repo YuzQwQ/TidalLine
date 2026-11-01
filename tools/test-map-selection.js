@@ -10,7 +10,8 @@ const root=path.resolve(__dirname,'..'),output=path.join(root,'output/map-select
   await page.goto(pathToFileURL(path.join(root,entry)).href);
   await page.waitForFunction(()=>typeof Game!=='undefined'&&ART.tiles.every(id=>Art.get('tiles',id)));
   await page.locator('#btnStart').click();assert.equal(await page.locator('#btnDeploy').textContent(),'进入游戏');
-  await page.evaluate(()=>{Save.credits=200000;Save.stash=[{id:'ammo',n:20},{id:'heal01',n:1},{id:'antiq01',n:2}];Save.bag=[{id:'ammo_556_1',n:60},{id:'heal01',n:3}];Base.render();});
+  /* 老 id 'ammo' 会在存档归一化时迁到 ammo_556_1，种子直接用新 id 免得快照对不上 */
+  await page.evaluate(()=>{Save.credits=200000;Save.stash=[{id:'ammo_556_1',n:20},{id:'heal01',n:1},{id:'antiq01',n:2}];Save.bag=[{id:'ammo_556_1',n:60},{id:'heal01',n:3}];Base.render();});
   const snapshot=()=>page.evaluate(()=>JSON.stringify({credits:Save.credits,stash:Save.stash,gear:Save.gear,runs:Save.runs}));
   const before=await snapshot();
   await page.locator('#btnDeploy').click();await page.waitForFunction(()=>Game.state==='map-select');
@@ -40,7 +41,7 @@ const root=path.resolve(__dirname,'..'),output=path.join(root,'output/map-select
   assert.equal(old.id,'fenced-zone');assert.equal(old.title,'围栏区');assert.equal(old.width,64);assert.equal(old.height,44);assert.equal(old.boxes,41);assert.equal(old.enemies,24);assert.equal(old.exits,3);assert.equal(old.props,42);
   assert.equal(old.credits,200000-cost);assert.equal(old.ammo,0);assert(old.safe&&old.stand&&old.tide>1.05&&old.dockBlocked&&old.simulation,'旧地图通路/潮汐/出生碰撞必须保留');
   await page.evaluate(()=>Base.open());await page.locator('#btnDeploy').click();await page.locator('[data-map="linhai-old-quarter"]').click();await page.locator('#btnMapStart').click();await page.waitForFunction(()=>Game.state==='playing');
-  assert(await page.evaluate(()=>{Game.state='ended';return M.W===72&&M.H===56&&M.extracts.length===2&&!M.tideEnabled&&M.map.id==='linhai-old-quarter'&&M.map.props.length===40&&Game.enemies.length===24&&M.at(29,28).art==='canal_steps_w';}),'临海路切换失败');
+  assert(await page.evaluate(()=>{Game.state='ended';return M.W===72&&M.H===56&&M.extracts.length===2&&!M.tideEnabled&&M.map.id==='linhai-old-quarter'&&M.map.props.length===106&&Game.enemies.length===23&&M.at(29,28).art==='canal_steps_w';}),'临海路切换失败');
   await page.evaluate(()=>Base.open());await page.locator('#btnDeploy').click();await page.locator('[data-map="fenced-zone"]').click();await page.locator('#btnMapStart').click();await page.waitForFunction(()=>Game.state==='playing');
   assert(await page.evaluate(()=>{Game.state='ended';return M.W===64&&M.tideEnabled&&M.extracts.length===3&&!M.at(29,28).overlays.length&&canStand(Game.player.x,Game.player.y,7);}), '重新选围栏区残留新图状态');
   await page.evaluate(()=>{Base.open();Save.credits=0;Save.bag=[];Save.stash=[];Base.render();});

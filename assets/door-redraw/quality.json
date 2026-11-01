@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "assets": [
+    {
+      "id": "door",
+      "colors": 16,
+      "pixels": 1122
+    },
+    {
+      "id": "door_side",
+      "colors": 16,
+      "pixels": 484
+    },
+    {
+      "id": "sdoor",
+      "colors": 16,
+      "pixels": 1085
+    },
+    {
+      "id": "sdoor_side",
+      "colors": 16,
+      "pixels": 491
+    },
+    {
+      "id": "door_open",
+      "colors": 16,
+      "pixels": 598
+    },
+    {
+      "id": "door_side_open",
+      "colors": 16,
+      "pixels": 228
+    },
+    {
+      "id": "sdoor_open",
+      "colors": 16,
+      "pixels": 613
+    },
+    {
+      "id": "sdoor_side_open",
+      "colors": 16,
+      "pixels": 294
+    }
+  ],
+  "results": [
+    {
+      "entry": "index.html",
+      "selection": true,
+      "closed": true,
+      "opened": true,
+      "one": {
+        "x": 64,
+        "y": 80,
+        "w": 32,
+        "h": 48,
+        "lift": 16
+      },
+      "two": {
+        "x": 64,
+        "y": 80,
+        "w": 32,
+        "h": 80,
+        "lift": 16
+      },
+      "clipped": null
+    },
+    {
+      "entry": "潮汐线.html",
+      "selection": true,
+      "closed": true,
+      "opened": true,
+      "one": {
+        "x": 64,
+        "y": 80,
+        "w": 32,
+        "h": 48,
+        "lift": 16
+      },
+      "two": {
+        "x": 64,
+        "y": 80,
+        "w": 32,
+        "h": 80,
+        "lift": 16
+      },
+      "clipped": true
+    }
+  ],
+  "editorUndoReopen": true,
+  "narrowWidths": [
+    320,
+    390
+  ]
+}

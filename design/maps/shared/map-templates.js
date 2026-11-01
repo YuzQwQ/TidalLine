@@ -102,7 +102,8 @@
     { type: 'stove', name: '灶台', footprint: [1, 1] },
     { type: 'barrel', name: '杂物桶', footprint: [1, 1] },
     { type: 'display', name: '展柜', footprint: [1, 2] },
-    { type: 'tree', name: '院落树木', footprint: [3, 3] }
+    /* 树只有树干那格挡人，其余是头顶的树冠；少了这两项会变成 3×3 的实心方块 */
+    { type: 'tree', name: '院落树木', footprint: [3, 3], collisionCells: [[1, 2]], canopy: { fadeRows: 2, opacity: 0.3 } }
   ];
 
   const COORD_NOTE = '左上角 (0,0)，x 向东、y 向南；所有 rect 为包含端点的 [x1,y1,x2,y2]。';

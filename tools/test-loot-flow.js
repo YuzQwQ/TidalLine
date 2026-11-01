@@ -2,6 +2,7 @@
    node tools/test-loot-flow.js
    覆盖：右键菜单出现、丢弃生成地面物品堆、同格合并、物品堆搜空消失、容器拿一半还能再开。
    顺带确认 index.html 与 潮汐线.html 两个入口都没有 JS 报错。 */
+const fs = require('fs');
 const path = require('path');
 const { pathToFileURL } = require('url');
 
@@ -28,7 +29,8 @@ async function run(file) {
 
   try {
     await page.goto(pathToFileURL(path.join(ROOT, file)).href);
-    await page.waitForFunction(() => typeof Game !== 'undefined' && !!Game.player);
+    /* Game.player 要等 startRun 之后才有，这里只等脚本就绪 */
+    await page.waitForFunction(() => typeof Game !== 'undefined');
 
     /* 开局并清场：不想要敌人打扰这次验收 */
     await page.evaluate(() => {
@@ -76,7 +78,8 @@ async function run(file) {
 
     /* 物品堆要画出来，不是隐形容器 */
     await page.evaluate(() => { if (Game.bagOpen) Game.toggleBag(); });
-    await page.screenshot({ path: path.join(ROOT, 'temp-pile.png') });
+    fs.mkdirSync(path.join(ROOT, 'output/loot-flow'), { recursive: true });
+    await page.screenshot({ path: path.join(ROOT, 'output/loot-flow/pile.png') });
 
     /* ---- 3. 同格再丢一件 → 并进同一堆 ---- */
     await page.evaluate(() => {
@@ -110,7 +113,7 @@ async function run(file) {
       const b = Game.boxes.find(x => !x.pile && x.items.filter(Boolean).length >= 2);
       if (!b) return { skip: true };
       /* 站到容器旁边，走真实交互流程 */
-      Game.player.x = b.x; Game.player.y = b.y + CFG.TILE;
+      Game.player.x = b.x; Game.player.y = b.y + CFG.INTERACT_RANGE - 4;
       Game.player.vx = 0; Game.player.vy = 0;
       Game.action = null;
       Game.handleInteract();
@@ -121,7 +124,7 @@ async function run(file) {
       Game.closeLoot();
       const interactable = Game.boxHasItems(b) && !b.opened;
       /* 再交互：应该直接开，不重新读条 */
-      Game.player.x = b.x; Game.player.y = b.y + CFG.TILE;
+      Game.player.x = b.x; Game.player.y = b.y + CFG.INTERACT_RANGE - 4;
       Game.handleInteract();
       const reopened = Game.lootOpen === b;
       const noDelay = !Game.action;

@@ -1,8 +1,12 @@
 /* 17种容器：原稿、32px规格、游戏/离线版实际像素与清单共用资源。 */
-const fs=require('fs'),path=require('path'),assert=require('assert/strict'),http=require('http');
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),http=require('http'),vm=require('vm');
 const sharp=require('sharp'),{chromium}=require('playwright');
 const root=path.resolve(__dirname,'..'),manifest=require('../assets/container-redraw/manifest.json');
 const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));if(!file.startsWith(root+path.sep))return res.writeHead(403).end();fs.readFile(file,(e,b)=>{if(e)return res.writeHead(404).end();res.setHeader('Content-Type',file.endsWith('.png')?'image/png':file.endsWith('.js')?'text/javascript':'text/html; charset=utf-8');res.end(b);});});
+/* 容器改名（通讯设备箱 → 军用物资箱）后，crate_comms 不再被任何容器使用，
+   清单页只需要校验"还在服役"的那批贴图。 */
+const types=vm.runInContext('CONTAINER_TYPES',(()=>{const c=vm.createContext({console,performance});for(const f of ['config.js','data.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),c);return c;})());
+const usedAssets=manifest.assets.filter(a=>Object.values(types).some(t=>t.art===a.id));
 async function main(){
  const expected={};assert.equal(manifest.assets.length,17);
  for(const a of manifest.assets){
@@ -27,11 +31,13 @@ async function main(){
    console.log('OK: '+file+' 实际加载17张新贴图，逐像素一致');
   }
   await page.goto(origin+'/wiki.html#containers');await page.waitForFunction(()=>[...document.querySelectorAll('#containers img')].every(i=>i.complete&&i.naturalWidth));
-  for(const a of manifest.assets)assert.equal(await page.locator('#containers img[src="assets/props/'+a.id+'.png"]').count(),1);
+  for(const a of usedAssets)assert.equal(await page.locator('#containers img[src="assets/props/'+a.id+'.png"]').count(),1,a.id+' 未出现在容器清单');
+  assert.equal(usedAssets.length,16,'crate_comms 随通讯设备箱一起退役');
+  for(const t of Object.values(types))assert(await page.locator('#containers img[src="assets/props/'+t.art+'.png"]').count()>=1,t.art+' 缺清单贴图');
   await page.goto(origin+'/assets/container-redraw/index.html');await page.waitForFunction(()=>[...document.images].every(i=>i.complete&&i.naturalWidth));assert.equal(await page.locator('article').count(),17);
   for(const width of [1280,390,320]){await page.setViewportSize({width,height:960});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
   fs.mkdirSync(path.join(root,'output/container-redraw'),{recursive:true});await page.setViewportSize({width:1280,height:960});await page.screenshot({path:path.join(root,'output/container-redraw/comparison.png'),fullPage:true});assert.deepEqual(errors,[]);
-  console.log('OK: Wiki17种共用贴图、对比页全部图片、320/390px布局、浏览器无异常');
+  console.log('OK: Wiki '+usedAssets.length+'种在役贴图、对比页全部图片、320/390px布局、浏览器无异常');
  }finally{await browser.close();}
 }
 main().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.close());

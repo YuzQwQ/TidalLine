@@ -123,9 +123,14 @@
       if (p.kind !== 'door') continue;
       const [x, y] = p.cells[0];
       const art = 'door' + (doorAxis(data, p) === 'vertical' ? '_side' : '');
-      const [sx, sy] = Core.project(x, y, rot, data.width, data.height);
       const im = image('props', Art.rotateArt(art, rot).art);
-      if (usable(im)) g.drawImage(im, sx * TILE, sy * TILE, TILE, TILE);
+      if (usable(im)) {
+        const cells=p.cells.map(([x,y])=>Core.project(x,y,rot,data.width,data.height));
+        const left=Math.min(...cells.map(c=>c[0])),top=Math.min(...cells.map(c=>c[1]));
+        const width=Math.max(...cells.map(c=>c[0]))-left+1,height=Math.max(...cells.map(c=>c[1]))-top+1;
+        const lift=im.naturalHeight===48?TILE/2:0;
+        g.drawImage(im,left*TILE,top*TILE-lift,width*TILE,height*TILE+lift);
+      }
     }
     staticCanvas = c; staticKey = key;
     return c;

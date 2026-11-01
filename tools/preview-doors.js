@@ -11,7 +11,7 @@ const states = [['', '正向 · 关闭'], ['_open', '正向 · 打开'], ['_side
     const x = 20 + col * 160, y = 72 + row * 152, id = base + suffix;
     svg.push(`<rect x="${x}" y="${y}" width="152" height="144" rx="4" fill="#12221a" stroke="#2b4536"/>`);
     svg.push(`<text x="${x + 76}" y="${y + 116}" text-anchor="middle" fill="#c3d6ca" font-size="12">${row ? '避难门' : '普通门'} · ${label}</text><text x="${x + 76}" y="${y + 133}" text-anchor="middle" fill="#6d8c7a" font-family="Consolas" font-size="10">${id}</text>`);
-    layers.push({ input: await sharp(path.join(root, 'assets/props', id + '.png')).resize(96, 96, { kernel: 'nearest' }).png().toBuffer(), left: x + 28, top: y + 3 });
+    layers.push({ input: await sharp(path.join(root, 'assets/props', id + '.png')).resize(96, 96, { kernel: 'nearest', fit:'contain', background:'#00000000' }).png().toBuffer(), left: x + 28, top: y + 3 });
   }
   const folder = path.join(root, 'output/scene-art'); fs.mkdirSync(folder, { recursive: true });
   const file = path.join(folder, 'door-comparison.png');

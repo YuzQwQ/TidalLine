@@ -117,11 +117,11 @@ function armorCard(type, g) {
     </div>`;
 }
 
-const total = Object.keys(WEAPONS).length + HELMETS.length + BODIES.length + 1;
+const total = Object.keys(WEAPONS).length + HELMETS.length + BODIES.length + BAGS.length;
 const done = Object.keys(WEAPONS).filter(k => hasIcon(ICON_ID[k] || k)).length
   + HELMETS.filter(g => hasIcon(lid(g.lv))).length
   + BODIES.filter(g => hasIcon(bid(g.lv))).length
-  + (hasIcon('bag') ? 1 : 0);
+  + BAGS.filter(b => hasIcon(b.id)).length;
 
 const html = `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -136,8 +136,8 @@ const html = `<!DOCTYPE html>
   <h1>装备清单</h1>
   <div class="lede">
     这一批是新加的装备图标：<b>${Object.keys(WEAPONS).length} 把武器</b> + <b>${HELMETS.length} 级头盔</b> +
-    <b>${BODIES.length} 级身体护甲</b>，另加 1 张可选背包。它们<b>不占背包格</b>，只出现在三处：
-    局内背包顶部 6 格装备条、尸体面板顶部 3 格装备区（都是 24px 图标），藏身处装备区（34px 图标）。<br>
+    <b>${BODIES.length} 级身体护甲</b>，另加 <b>${BAGS.length} 款背包</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
+    局内背包顶部 6 格装备条、尸体面板顶部 3 格装备区（都是 24px 图标），藏身处装备区（34px 图标），以及仓库、装备选择与商人交易面板。背包决定携带容量，未装备时为 ${BASE_BAG_SLOTS} 格。<br>
     已完成 <b>${done} / ${total}</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
     <code>node gen-gear-sheet.js</code> 就会更新。
   </div>
@@ -149,7 +149,7 @@ const html = `<!DOCTYPE html>
     <p><b>尺寸</b>　48 × 48 像素，PNG，透明背景。主体占满中央 40 × 40，四周留 4px。</p>
     <p><b>显示尺寸</b>　局内装备条为 24px，藏身处为 34px，细节要粗、要能一眼认出，别画密集细花纹和小字。</p>
     <p><b>画法</b>　物品图标可以用比场景更适合辨识的展示角度，不必受 75° 俯视约束。左上光源，硬边像素，无抗锯齿、无外发光、不画投影。</p>
-    <p><b>命名</b>　<code>rifle.png</code> <code>shotgun.png</code> <code>smg.png</code> <code>pistol.png</code>；<code>helmet1.png</code>～<code>helmet6.png</code>；<code>body1.png</code>～<code>body6.png</code>；<code>bag.png</code>。</p>
+    <p><b>命名</b>　<code>rifle.png</code> <code>shotgun.png</code> <code>smg.png</code> <code>pistol.png</code>；<code>helmet1.png</code>～<code>helmet6.png</code>；<code>body1.png</code>～<code>body6.png</code>；<code>bag01.png</code>～<code>bag05.png</code>（旧 <code>bag.png</code> 仅作空槽图标）。</p>
     <p><b>位置</b>　<code>tide/assets/gear/</code> 目录下。</p>
   </div>
   <div class="panel">
@@ -179,13 +179,14 @@ const html = `<!DOCTYPE html>
 
 <section class="cat">
   <h2>背包<em>backpack</em><i>${BAGS.length} 张 · 决定携带容量</i></h2>
+  <p><a href="assets/item-art/backpacks/index.html">五档图标与原稿记录</a> · 前三档由护甲商人出售。</p>
   <div class="grid">
     ${BAGS.map(b => bagCard(b)).join('')}
   </div>
 </section>
 
 <footer>
-  清单由 <code>gen-gear-sheet.js</code> 生成，数据来自 <code>js/data.js</code> 的 WEAPONS / HELMETS / BODIES。<br>
+  清单由 <code>gen-gear-sheet.js</code> 生成，数据来自 <code>js/data.js</code> 的 WEAPONS / HELMETS / BODIES / BAGS。<br>
   图标共用 <code>assets/gear/</code>，已接入藏身处、局内装备槽和尸体装备区。更新贴图后重跑本脚本刷新进度，
   再执行 <code>node build.js</code> 打包单文件游戏；缺图时仍保留文字占位。
 </footer>

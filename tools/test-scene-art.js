@@ -56,15 +56,15 @@ const server = http.createServer((req, res) => {
     console.log('OK: all ' + entries.length + ' scene PNGs, dimensions, transparency, terrain coverage');
 
     assert(await page.evaluate(() => {
-      const canvas = document.createElement('canvas'); canvas.width = canvas.height = 32;
+      const canvas = document.createElement('canvas'); canvas.width = 32; canvas.height = 48;
       const ctx = canvas.getContext('2d');
       for (const id of ['door_open', 'door_side_open', 'sdoor_open', 'sdoor_side_open']) {
-        ctx.clearRect(0, 0, 32, 32); ctx.drawImage(Art.get('props', id), 0, 0);
-        const center = ctx.getImageData(14, 14, 4, 4).data;
+        ctx.clearRect(0, 0, 32, 48); ctx.drawImage(Art.get('props', id), 0, 0);
+        const center = ctx.getImageData(14, 22, 4, 4).data;
         for (let i = 3; i < center.length; i += 4) if (center[i]) return false;
       }
       for (const id of ['door_side', 'sdoor_side']) {
-        ctx.clearRect(0, 0, 32, 32); ctx.drawImage(Art.get('props', id), 0, 0);
+        ctx.clearRect(0, 0, 32, 48); ctx.drawImage(Art.get('props', id), 0, 0);
         const data = ctx.getImageData(0, 0, 32, 32).data;
         let left = 32, right = -1, top = 32, bottom = -1;
         for (let y = 0; y < 32; y++) for (let x = 0; x < 32; x++) if (data[(y * 32 + x) * 4 + 3]) {
@@ -91,37 +91,48 @@ const server = http.createServer((req, res) => {
       }
       return true;
     })), 'all characters need three exact directions and correct left-facing pixels');
-    assert(await page.evaluate(() => DECOR.every(d => MAP_ROWS[d.y][d.x] === '.' || MAP_ROWS[d.y][d.x] === '~' || MAP_ROWS[d.y][d.x] === ',')));
+    /* DECOR 现在就是临海路的 106 件摆设，地形字符从 . ~ , 扩到 r q i k 等；
+       保留"不能埋进墙里"这条就够：要么站得上去，要么那格本身不挡光（水面 / 驳岸）。 */
+    assert(await page.evaluate(() => DECOR.every(d => !M.at(d.x, d.y).solid)));
 
     assert(await page.evaluate(() => {
       Game.state = 'ended';
       const player = Game.player, old = { x: player.x, y: player.y };
       const start = M.playerSpawn;
+      /* 站位点扫描：贴着墙的容器，正面那一格常常只剩半格能站（墙体体积会伸进来），
+         所以四个面各试几个距离 + 上下挪一点，找到一个真能交互的位置就算过。 */
+      const candidates = [];
+      for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]])
+        for (const shift of [0, -8, 8])
+          for (const offset of [22, 26, 29])
+            candidates.push({ dx, dy, shift, offset });
       try {
         for (const box of Game.boxes) {
           if (M.walkable(box.tx, box.ty)) return false;
           // 至少有一个能实际触发箱柜交互的操作面；邻近门时另一侧可能优先选门。
-          const face = [[1,0],[-1,0],[0,1],[0,-1]].find(([dx,dy]) => {
-            if (!M.walkable(box.tx + dx, box.ty + dy) || !M.findPath(start.x, start.y, box.tx + dx, box.ty + dy)) return false;
-            const offset = CFG.TILE / 2 + player.r + 1;
-            player.x = box.x + dx * offset; player.y = box.y + dy * offset;
+          let face = null;
+          for (const c of candidates) {
+            player.x = box.x + c.dx * c.offset + (c.dy ? c.shift : 0);
+            player.y = box.y + c.dy * c.offset + (c.dx ? c.shift : 0);
+            if (!M.walkable(M.tx(player.x), M.ty(player.y))) continue;
+            if (!M.findPath(start.x, start.y, M.tx(player.x), M.ty(player.y))) continue;
+            if (!canStand(player.x, player.y, player.r)) continue;
             const interaction = Game.findInteractable();
-            return canStand(player.x, player.y, player.r) && interaction && interaction.type === 'box' && interaction.obj === box;
-          });
+            if (!interaction || interaction.type !== 'box' || interaction.obj !== box) continue;
+            const actor = { x: player.x, y: player.y, r: player.r };
+            moveEntity(actor, -c.dx * CFG.TILE * 4, -c.dy * CFG.TILE * 4);
+            if (!canStand(actor.x, actor.y, actor.r)) continue;
+            if (M.tx(actor.x) === box.tx && M.ty(actor.y) === box.ty) continue;
+            face = c; break;
+          }
           if (!face) return false;
-          const [dx, dy] = face, offset = CFG.TILE / 2 + player.r + 1;
-          player.x = box.x + dx * offset; player.y = box.y + dy * offset;
-          if (!canStand(player.x, player.y, player.r)) return false;
-          const interaction = Game.findInteractable();
-          if (!interaction || interaction.type !== 'box' || interaction.obj !== box) return false;
-          const actor = { x: player.x, y: player.y, r: player.r };
-          moveEntity(actor, -dx * CFG.TILE * 4, -dy * CFG.TILE * 4);
-          if (!canStand(actor.x, actor.y, actor.r) || M.tx(actor.x) === box.tx && M.ty(actor.y) === box.ty) return false;
           const opened = box.opened; box.opened = true;
           if (M.walkable(box.tx, box.ty)) return false;
           box.opened = opened;
         }
-        return DECOR.every(prop => M.walkable(prop.x, prop.y) === !!prop.ground) &&
+        /* 摆设分三类：贴花不挡路、家具/树干挡路、树冠只有树干那一格有碰撞。
+           所以判定要落在"实际占的格子"上，不能只看锚点那一格。 */
+        return DECOR.every(prop => M.propCollisionCells(prop).every(([x, y]) => M.walkable(x, y) === !!prop.ground)) &&
           M.extracts.every(ex => !!M.findPath(start.x, start.y, ex.x, ex.y));
       } finally { player.x = old.x; player.y = old.y; }
     }), 'all containers must block movement while retaining a reachable interactive face; decals/exits stay walkable');
@@ -152,7 +163,15 @@ const server = http.createServer((req, res) => {
       } finally { ctx.drawImage = original; }
       return [...calls];
     });
-    for (const key of entries.filter(key => key.startsWith('props/'))) assert(rendered.includes(key), key + ' must be drawn');
+    /* 只有当前地图真用到的容器贴图才会被画出来：
+       机密封存箱之类还没放进地图，crate_comms 随通讯设备箱一起退役。
+       这两类只要求"能取到"，不要求出现在这一帧里。 */
+    const usedContainers = await page.evaluate(() =>
+      [...new Set(M.map.containers.map(c => 'props/' + CONTAINER_TYPES[c.type].art))]);
+    for (const key of usedContainers) assert(rendered.includes(key), key + ' must be drawn');
+    for (const key of entries.filter(key => key.startsWith('props/'))) {
+      assert(await page.evaluate(key => !!Art.map[key], key), key + ' must load');
+    }
     for (const id of ['player', 'scav', 'echo', 'guard']) assert(rendered.some(key =>
       key.startsWith('chars/' + id + '_') || id === 'player' && key.startsWith('anim/player_')), id);
     assert(await page.evaluate(() => {

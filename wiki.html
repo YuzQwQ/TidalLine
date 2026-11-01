@@ -3054,9 +3054,9 @@ M-4。
   <h1>装备清单</h1>
   <div class="lede">
     这一批是新加的装备图标：<b>4 把武器</b> + <b>6 级头盔</b> +
-    <b>6 级身体护甲</b>，另加 1 张可选背包。它们<b>不占背包格</b>，只出现在三处：
-    局内背包顶部 6 格装备条、尸体面板顶部 3 格装备区（都是 24px 图标），藏身处装备区（34px 图标）。<br>
-    已完成 <b>17 / 17</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
+    <b>6 级身体护甲</b>，另加 <b>5 款背包</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
+    局内背包顶部 6 格装备条、尸体面板顶部 3 格装备区（都是 24px 图标），藏身处装备区（34px 图标），以及仓库、装备选择与商人交易面板。背包决定携带容量，未装备时为 4 格。<br>
+    已完成 <b>21 / 21</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
     <code>node gen-gear-sheet.js</code> 就会更新。
   </div>
 </header>
@@ -3067,7 +3067,7 @@ M-4。
     <p><b>尺寸</b>　48 × 48 像素，PNG，透明背景。主体占满中央 40 × 40，四周留 4px。</p>
     <p><b>显示尺寸</b>　局内装备条为 24px，藏身处为 34px，细节要粗、要能一眼认出，别画密集细花纹和小字。</p>
     <p><b>画法</b>　物品图标可以用比场景更适合辨识的展示角度，不必受 75° 俯视约束。左上光源，硬边像素，无抗锯齿、无外发光、不画投影。</p>
-    <p><b>命名</b>　<code>rifle.png</code> <code>shotgun.png</code> <code>smg.png</code> <code>pistol.png</code>；<code>helmet1.png</code>～<code>helmet6.png</code>；<code>body1.png</code>～<code>body6.png</code>；<code>bag.png</code>。</p>
+    <p><b>命名</b>　<code>rifle.png</code> <code>shotgun.png</code> <code>smg.png</code> <code>pistol.png</code>；<code>helmet1.png</code>～<code>helmet6.png</code>；<code>body1.png</code>～<code>body6.png</code>；<code>bag01.png</code>～<code>bag05.png</code>（旧 <code>bag.png</code> 仅作空槽图标）。</p>
     <p><b>位置</b>　<code>tide/assets/gear/</code> 目录下。</p>
   </div>
   <div class="panel">
@@ -3228,21 +3228,60 @@ M-4。
 </section>
 
 <section class="cat">
-  <h2>背包<em>backpack</em><i>1 张 · 可最后画</i></h2>
+  <h2>背包<em>backpack</em><i>5 张 · 决定携带容量</i></h2>
+  <p><a href="assets/item-art/backpacks/index.html">五档图标与原稿记录</a> · 前三档由护甲商人出售。</p>
   <div class="grid">
-    <div class="item">
-      <div class="thumb"><img src="assets/gear/bag.png" width="48" height="48" alt="bag"></div>
+    
+    <div class="item lv1">
+      <div class="thumb"><img src="assets/gear/bag01.png" width="48" height="48" alt="bag01"></div>
       <div class="meta">
-        <div class="name">单格背包<i class="tag dim">暂未开放</i></div>
-        <div class="sub"><code>bag.png</code> · 当前固定 24 格 / 负重上限 45 kg · 功能未接入</div>
-        <div class="vis"><b>画什么</b>单格帆布/尼龙背包，正面一个翻盖 + 两条压缩带。（暂未开放，可最后再画）</div>
+        <div class="name">旧帆布挎包<i class="tag">寻常 · 8 格</i><i class="tag dim">挎包</i></div>
+        <div class="sub"><code>bag01.png</code> · 携带容量 <b class="dr">8 格</b> · 0.7kg · ¥6,000</div>
+        <div class="vis"><b>画什么</b>一只旧军绿色或黄褐色帆布单肩挎包，包体偏扁，翻盖结构，正面一枚金属搭扣，肩带较长，边角有轻微磨损和褪色感。</div>
+        <div class="vis"><b>说明</b>翻盖、金属搭扣，肩带磨得发亮。装不下一趟完整的搜刮，但比口袋强。</div>
+      </div>
+    </div>
+    <div class="item lv2">
+      <div class="thumb"><img src="assets/gear/bag02.png" width="48" height="48" alt="bag02"></div>
+      <div class="meta">
+        <div class="name">民用旅行背包<i class="tag">良品 · 12 格</i><i class="tag dim">旅行包</i></div>
+        <div class="sub"><code>bag02.png</code> · 携带容量 <b class="dr">12 格</b> · 1.2kg · ¥18,000</div>
+        <div class="vis"><b>画什么</b>一只蓝灰色或深青色尼龙双肩背包，带前置拉链袋、双肩带和顶部提手，轮廓比 bag01 更饱满，结构更现代。</div>
+        <div class="vis"><b>说明</b>双肩、分层、拉链没坏。灾前它代表“出门几天”，现在只代表“最好真能带点东西回来”。</div>
+      </div>
+    </div>
+    <div class="item lv3">
+      <div class="thumb"><img src="assets/gear/bag03.png" width="48" height="48" alt="bag03"></div>
+      <div class="meta">
+        <div class="name">加固登山背包<i class="tag">上乘 · 16 格</i><i class="tag dim">登山包</i></div>
+        <div class="sub"><code>bag03.png</code> · 携带容量 <b class="dr">16 格</b> · 1.9kg · ¥45,000</div>
+        <div class="vis"><b>画什么</b>一只墨绿色或灰绿色登山背包，包体较高，有顶盖、侧袋、卷带和少量外挂结构，整体更厚实，给人结实耐用的感觉。</div>
+        <div class="vis"><b>说明</b>高包体、顶盖、侧袋和束带。它认真考虑过“背着东西走很远会不会累死”。</div>
+      </div>
+    </div>
+    <div class="item lv4">
+      <div class="thumb"><img src="assets/gear/bag04.png" width="48" height="48" alt="bag04"></div>
+      <div class="meta">
+        <div class="name">战术突击背包<i class="tag">稀见 · 20 格</i><i class="tag dim">突击包</i></div>
+        <div class="sub"><code>bag04.png</code> · 携带容量 <b class="dr">20 格</b> · 2.8kg · ¥110,000</div>
+        <div class="vis"><b>画什么</b>一只深橄榄绿或深灰绿色战术双肩包，正面横向织带、压缩带、厚实肩带和多个分仓，外形紧凑硬朗。</div>
+        <div class="vis"><b>说明</b>满身织带和压缩结构，跑起来不会摇得东倒西歪。多装两盒弹，或者一件能改变下周计划的东西。</div>
+      </div>
+    </div>
+    <div class="item lv5">
+      <div class="thumb"><img src="assets/gear/bag05.png" width="48" height="48" alt="bag05"></div>
+      <div class="meta">
+        <div class="name">远征模块背包<i class="tag">珍罕 · 24 格</i><i class="tag dim">远征包</i></div>
+        <div class="sub"><code>bag05.png</code> · 携带容量 <b class="dr">24 格</b> · 3.8kg · ¥260,000</div>
+        <div class="vis"><b>画什么</b>一只大型深石墨色或黑灰色模块化背包，包体厚实，结构分明，带外挂仓、压缩带、金属支撑感和少量深翡翠色识别条，高端但仍在 90 年代科技水平内。</div>
+        <div class="vis"><b>说明</b>外挂仓、压缩带、金属支撑。宣传语说它“能陪你去地图边缘之外”——现在这句话不太好笑了。</div>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  清单由 <code>gen-gear-sheet.js</code> 生成，数据来自 <code>js/data.js</code> 的 WEAPONS / HELMETS / BODIES。<br>
+  清单由 <code>gen-gear-sheet.js</code> 生成，数据来自 <code>js/data.js</code> 的 WEAPONS / HELMETS / BODIES / BAGS。<br>
   图标共用 <code>assets/gear/</code>，已接入藏身处、局内装备槽和尸体装备区。更新贴图后重跑本脚本刷新进度，
   再执行 <code>node build.js</code> 打包单文件游戏；缺图时仍保留文字占位。
 </footer>
@@ -3546,12 +3585,13 @@ M-4。
       <div class="sub"><code>crate_military_supply.png</code> · 地图标记 <code>Q</code></div>
       <dl class="container-facts">
         <div><dt>开箱</dt><dd>1.8 秒</dd></div>
-        <div><dt>抽取次数</dt><dd>2–4 次</dd></div>
-        <div><dt>掉落偏好</dt><dd>电子产品 / 军事物资 / 情报资料 / 弹药池</dd></div>
+        <div><dt>抽取次数</dt><dd>3–4 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>电子产品 / 军事物资 / 情报资料 / 弹药池 / 装备池</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
       <div class="desc">1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
-      <div class="vis"><b>独立弹药池</b>每次抽取25%进入弹药池，75%沿用原有物品池。弹药等级：寻常10% / 良品18% / 上乘32% / 稀见30% / 珍罕10%（红档并入金档）；三种口径等概率。5.56mm与9mm每组10–20发，12号霰弹每组4–8发。</div>
+      <div class="vis"><b>独立弹药池</b>每次抽取 25% 走弹药池，其余沿用原有物品池。等级：寻常10% / 良品18% / 上乘32% / 稀见30% / 珍罕10%（红档份额并入金档）；三种口径等概率，5.56mm 与 9mm 每组 10–20 发，12 号霰弹每组 4–8 发。</div>
+      <div class="vis"><b>独立装备池</b>每次抽取 10% 走装备池：头盔 / 护甲 / 背包 等概率抽一种，等级分布与弹药池一致（寻常10% / 良品18% / 上乘32% / 稀见30% / 珍罕10%）。</div>
       <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(55, 5)</code> <code>(54, 11)</code> <code>(45, 52)</code></p></details>
       <div class="vis"><b>画什么</b>深橄榄绿低矮厚重军用储物箱，浅色抽象军需标记、金属护角、双搭扣、帆布束带和提手；75°俯视、左上光源、透明背景。</div>
     </div>
@@ -3597,12 +3637,13 @@ M-4。
       <div class="sub"><code>crate_supply.png</code> · 地图标记 <code>K</code></div>
       <dl class="container-facts">
         <div><dt>开箱</dt><dd>2.6 秒</dd></div>
-        <div><dt>抽取次数</dt><dd>2–3 次</dd></div>
-        <div><dt>掉落偏好</dt><dd>生活用品 / 医疗物资 / 医疗物品 / 工业器材</dd></div>
+        <div><dt>抽取次数</dt><dd>3–6 次</dd></div>
+        <div><dt>掉落偏好</dt><dd>生活用品 / 医疗物资 / 医疗物品 / 工业器材 / 弹药池 / 装备池</dd></div>
         <div><dt>占格</dt><dd>1 格 · 不可穿过</dd></div>
       </dl>
       <div class="desc">2.6 秒，必须站定，读条全程发声。紫金占六成三，值得为它改路线。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
-      
+      <div class="vis"><b>独立弹药池</b>每次抽取 25% 走弹药池，其余沿用原有物品池。等级：寻常4% / 良品9% / 上乘22% / 稀见36% / 珍罕29%（红档份额并入金档）；三种口径等概率，5.56mm 与 9mm 每组 10–20 发，12 号霰弹每组 4–8 发。</div>
+      <div class="vis"><b>独立装备池</b>每次抽取 10% 走装备池：头盔 / 护甲 / 背包 等概率抽一种，等级分布与弹药池一致（寻常4% / 良品9% / 上乘22% / 稀见36% / 珍罕29%）。</div>
       <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(67, 18)</code> <code>(64, 32)</code> <code>(40, 52)</code></p></details>
       <div class="vis"><b>画什么</b>一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。</div>
     </div>

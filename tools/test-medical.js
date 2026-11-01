@@ -172,9 +172,9 @@ test('老存档迁移：没写 cap 的一律按满容量，归零的丢掉',()=>
 test('验收7：背包没空位时，堆叠拆分不丢东西也不改容量',()=>{
   const e=raid(5,'heal03');                 // 两件装，容量 120
   const ammo=byId.ammo;
-  const fill=[];for(let i=0;i<CFG.BAG.SLOTS-1;i++)fill.push({item:ammo,n:1});
+  const cap=c.bagSlots(),fill=[];for(let i=0;i<cap-1;i++)fill.push({item:ammo,n:1});
   Game.player.bag.slots=[e].concat(fill);
-  assert.equal(Game.player.bag.slots.length,CFG.BAG.SLOTS);
+  assert.equal(Game.player.bag.slots.length,cap);
   assert(!Medical.use(e,'bag'),'没有空位应该拒绝使用');
   assert.equal(e.n,2,'原堆不该被扣');
   assert.equal(e.cap,120,'容量不该变');
@@ -183,7 +183,7 @@ test('验收7：背包没空位时，堆叠拆分不丢东西也不改容量',()
   Game.player.bag.slots.pop();
   assert(Medical.use(e,'bag'));
   assert.equal(e.n,1);
-  assert.equal(Game.player.bag.slots.length,CFG.BAG.SLOTS);
+  assert.equal(Game.player.bag.slots.length,cap);
 });
 
 test('验收8：局外立即治疗并按实际回血扣容量',()=>{

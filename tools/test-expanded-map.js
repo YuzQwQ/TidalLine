@@ -20,8 +20,16 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'output/map/linhai');
    Game.state='playing';for(let i=0;i<600;i++){Game.update(1/60);if(i%10===0)Game.render();}Game.state='ended';
    const safe=!Game.player.dead,stand=canStand(Game.player.x,Game.player.y,7)&&Game.enemies.filter(e=>!e.dead).every(e=>canStand(e.x,e.y,e.r));
    for(const ex of M.extracts){
-    const actor={x:M.cx(7),y:M.cy(4),r:7},route=M.findPath(7,4,ex.x,ex.y);if(!route)throw Error('撤离无路径');
-    for(const step of route){const x=M.cx(step.x),y=M.cy(step.y);moveEntity(actor,x-actor.x,y-actor.y);if(Math.hypot(actor.x-x,actor.y-y)>.1||!canStand(actor.x,actor.y,7))throw Error('撤离路径碰撞不一致');}
+    /* 墙体体积会投影进北侧半格，所以"格心"未必站得住，站位一律取 navigationPoint。 */
+    const start=M.navigationPoint(7,4),actor={x:start.x,y:start.y,r:7},route=M.findPath(7,4,ex.x,ex.y);
+    if(!route)throw Error('撤离无路径');
+    for(const step of route){
+     const p=M.navigationPoint(step.x,step.y);
+     if(!canStand(p.x,p.y,7))throw Error('撤离路径落地不可站 '+step.x+','+step.y);
+     /* 和局内一样按帧推进：相邻两格的站位高度可能差半格（墙体投影），一次 moveEntity 未必走满。 */
+     for(let k=0;k<4;k++){const dx=p.x-actor.x,dy=p.y-actor.y;if(Math.hypot(dx,dy)<=2)break;moveEntity(actor,dx,dy);}
+     if(Math.hypot(actor.x-p.x,actor.y-p.y)>2||!canStand(actor.x,actor.y,7))throw Error('撤离路径碰撞不一致 '+step.x+','+step.y);
+    }
    }
    const d=M.at(52,34).door;Game.player.x=M.cx(51);Game.player.y=M.cy(34);Game.player.vx=Game.player.vy=0;
    Game.handleInteract();const closed=!d.open&&d.cells.every(([x,y])=>!M.walkable(x,y));
@@ -29,20 +37,24 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'output/map/linhai');
    Game.player.x=M.cx(52);Game.handleInteract();const cannotCloseOnActor=d.open;
    Game.startRun();Game.state='ended';Game.enemies=[];
    const box=Game.boxes[0];Game.player.x=box.x+24;Game.player.y=box.y;Game.player.vx=Game.player.vy=0;
-   Game.handleInteract();Game.updateAction(1);const loot=Game.lootOpen===box;Game.closeLoot();const occupied=!canStand(box.x,box.y,7);
+   /* boxes[0] 是贵重容器（读条 2.6s），按品质的撬开时长推进，别用固定 1 秒 */
+   Game.handleInteract();Game.updateAction(CONTAINER_QUALITY[box.kind].time+.1);const loot=Game.lootOpen===box;Game.closeLoot();const occupied=!canStand(box.x,box.y,7);
    Game.startRun();Game.state='ended';Game.time=600;Game.updateTide();
    const staticWater=Game.tideLevel===0&&M.extracts.every(ex=>M.findPath(7,4,ex.x,ex.y));
    Game.time=CFG.TIDE.ROUND;Game.updateTide();const timeout=document.getElementById('endVeil').textContent.includes('行动时间已结束');
    return {width:M.W,height:M.H,boxes:Game.boxes.length,enemies:SPAWNS.length,before,safe,stand,closed,opened,cannotCloseOnActor,loot,occupied,staticWater,timeout};
   });
-  assert.equal(result.width,72);assert.equal(result.height,56);assert.equal(result.boxes,41);assert.equal(result.enemies,24);
+  assert.equal(result.width,72);assert.equal(result.height,56);assert.equal(result.boxes,67);assert.equal(result.enemies,23);
   for(const k of ['before','safe','stand','closed','opened','cannotCloseOnActor','loot','occupied','staticWater','timeout'])assert(result[k],entry+' '+k);
   const render=await page.evaluate(()=>{
    const c=document.createElement('canvas').getContext('2d');c.canvas.width=720;c.canvas.height=480;
    const drawn=new Set(),real=c.drawImage.bind(c);c.drawImage=(img,...a)=>{for(const [key,value]of Object.entries(Art.map))if(value===img)drawn.add(key);real(img,...a);};
    M.seen.fill(1);M.visible.fill(1);
    for(const [x,y]of [[16,27],[32,13],[32,41],[32,27],[46,21],[13,39]])Game.renderTerrain(c,U.clamp(M.cx(x)-360,0,M.W*32-720),U.clamp(M.cy(y)-240,0,M.H*32-480));
-   const all=RAID_MAP.overlays.every(o=>drawn.has('props/'+o.art))&&ART.tiles.filter(id=>!['marsh'].includes(id)).every(id=>drawn.has('tiles/'+id));
+   /* 只校验本图真用到的地块：素材库里还有 marsh / 夯实土这类「备着但本图没铺」的图块。 */
+   const usedTiles=[...new Set(RAID_MAP.terrainRows.join('').split('').map(ch=>RAID_MAP.terrain[ch]&&RAID_MAP.terrain[ch].art).filter(Boolean))];
+   const decoTiles=['wall_face_s','wall_face_e','canal_steps_e'];
+   const all=RAID_MAP.overlays.every(o=>drawn.has('props/'+o.art))&&[...usedTiles,...decoTiles].every(id=>drawn.has('tiles/'+id));
    drawn.clear();M.seen.fill(0);M.visible.fill(0);Game.renderTerrain(c,0,0);
    const fog=drawn.size===0;
    c.clearRect(0,0,720,480);c.fillStyle='#112233';c.fillRect(0,0,720,480);
