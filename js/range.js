@@ -239,16 +239,10 @@ const Range = {
 
   /* 靶场靠 URL 直插进来，没经过开始界面那一下点击，音频上下文根本不会建；
      就算建了也是 suspended，听上去跟"没加载音效"一模一样。
-     这里建上下文，并把唤醒挂到第一次点击/按键上（浏览器只认手势）。 */
+     具体逻辑在 SFX.armFirstGesture()：#play 直插也用同一套，别各写一份。 */
   initAudio() {
-    if (typeof SFX === 'undefined' || !SFX || typeof SFX.init !== 'function') return false;
-    SFX.init();
-    if (typeof window !== 'undefined' && !this._audioArmed) {
-      this._audioArmed = true;
-      const wake = () => SFX.unlock();
-      window.addEventListener('pointerdown', wake, true);
-      window.addEventListener('keydown', wake, true);
-    }
+    if (typeof SFX === 'undefined' || !SFX || typeof SFX.armFirstGesture !== 'function') return false;
+    SFX.armFirstGesture();
     return true;
   },
 

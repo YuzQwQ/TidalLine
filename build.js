@@ -48,14 +48,21 @@ if (fs.existsSync(AUDIO_DIR)) {
 }
 
 /* 多文件版（index.html）靠这个文件拿音频：<script src> 不受 file:// 的 CORS 限制，
-   双击就能有声音。单文件版把它删掉，改用下面的内联注入 —— 两边都只有一份数据。
-   这份是构建产物，bundle 里就是 base64，不入库（见 .gitignore）。 */
-const BUNDLE_TAG = /<script src="assets\/audio\/bundle\.js"><\/script>\r?\n?/;
+   双击就能有声音。单文件版把整块条件加载删掉，改用下面的内联注入 —— 两边都只有一份数据。
+   这份是构建产物，bundle 里就是 base64，不入库（见 .gitignore）。
+   index.html 里用 @@AUDIO_BUNDLE_START@@ / @@AUDIO_BUNDLE_END@@ 包住那块条件加载，
+   这里按标记整块摘掉 —— 别再改成匹配具体 <script> 字样，改写法就会漏。 */
+const BUNDLE_BLOCK = /<!-- @@AUDIO_BUNDLE_START@@ -->[\s\S]*?<!-- @@AUDIO_BUNDLE_END@@ -->\r?\n?/;
+const BUNDLE_LEGACY = /<script src="assets\/audio\/bundle\.js"><\/script>\r?\n?/;
 fs.writeFileSync(path.join(AUDIO_DIR, 'bundle.js'),
   'window.__AUDIO__ = ' + JSON.stringify(audio) + ';\n', 'utf8');
 
 /* ---------- 2. 注入资源表（必须在替换脚本标签之前） ---------- */
-let out = html.replace(BUNDLE_TAG, '');
+let out = html.replace(BUNDLE_BLOCK, '').replace(BUNDLE_LEGACY, '');
+if (/assets\/audio\/bundle\.js/.test(out)) {
+  console.error('单文件版仍然引用了外置 audio/bundle.js —— 标记块可能被改坏了');
+  process.exit(1);
+}
 const uiAssets = {};
 for (const [id, file] of Object.entries({room:'room',armor:'merchant_armor',guns:'merchant_guns',doctor:'merchant_doctor'})) {
   uiAssets[id] = 'data:image/webp;base64,' + fs.readFileSync(path.join(dir,'assets/ui/safehouse',file+'.webp')).toString('base64');

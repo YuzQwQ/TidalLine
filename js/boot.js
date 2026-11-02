@@ -42,6 +42,9 @@ window.addEventListener('DOMContentLoaded', () => {
     // 可指定格坐标：index.html#play,4,6
     if (location.hash.startsWith('#play')) {
       document.getElementById('startVeil').classList.add('hidden');
+      /* 直插跳过了开始界面那次点击，音频上下文不会自己建 —— 不这里补一手，
+         整局都是哑的（和靶场同一个坑）。 */
+      if (typeof SFX !== 'undefined' && SFX && SFX.armFirstGesture) SFX.armFirstGesture();
       Game.startRun(null);
       const parts = location.hash.slice(5).split(',').filter(s => s !== '');
       if (parts.length >= 2 && /^\d+$/.test(parts[0])) {

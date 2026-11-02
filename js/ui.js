@@ -483,6 +483,21 @@ const SFX = {
     return this;
   },
 
+  /* 从 URL 直插进游戏（#play / #range）时没经过开始界面那一下点击，
+     音频上下文根本不会建；就算建了也是 suspended，听起来和"没加载音效"
+     一模一样。这里建上下文，并把唤醒挂到第一次手势上 —— 浏览器只认真实手势，
+     早于手势的所有 play() 都是白响。返回 this 方便链式调用。 */
+  armFirstGesture() {
+    if (typeof window === 'undefined') return this;
+    this.unlock();
+    if (this._armed) return this;
+    this._armed = true;
+    const wake = () => { this.unlock(); };
+    window.addEventListener('pointerdown', wake, true);
+    window.addEventListener('keydown', wake, true);
+    return this;
+  },
+
   /* 这一段素材该有多响：按用途查 LOUD 表，查不到就按中等音量处理 */
   _targetFor(id) {
     if (/^step_stone/.test(id)) return this.LOUD.step;

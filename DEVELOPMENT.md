@@ -869,6 +869,10 @@ python -m http.server 8765
 - `index.html#play` —— 跳过开始界面直接进图
 - `index.html#play,4,6` —— 进图并把玩家放到第 4 列第 6 行
 - `index.html#play,4,6,ui` —— 顺便打开背包面板
+
+`#play` / `#range` 这类直插入口跳过了开始界面那一次点击，音频上下文不会自己建，
+整局静音。两处入口都调 `SFX.armFirstGesture()`：先建上下文，再把 `unlock()` 挂到
+第一次 `pointerdown` / `keydown` 上（浏览器只认真实手势，早于手势的 `play()` 都是白响）。
 - `index.html#base` —— 直接打开藏身处
 - `index.html#base,demo` —— 打开藏身处并灌一批测试物资（不写存档，只改内存）
 - `index.html#range` —— 开发者靶场：空房间 + 钢板靶 + 落点墙，左侧面板实时调

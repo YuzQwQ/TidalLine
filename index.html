@@ -1239,7 +1239,16 @@ window.addEventListener('error', function (e) {
 <div class="deal" id="dealBox" style="display:none"></div>
 <!-- 右键菜单：背包物品的「查看详情 / 丢弃」 -->
 <div class="ctxmenu" id="ctxMenu" style="display:none"></div>
-<script src="assets/audio/bundle.js"></script>
+<!-- @@AUDIO_BUNDLE@@ 音频内联包是可选的：build.js 生成、不入库。
+     http 下多文件版走 manifest.json 逐段 fetch（见 SFX.load），根本用不到它；
+     只有直接双击 index.html（file://）时 fetch 被 CORS 拦死，才需要这个包。
+     所以按协议条件插入，避免线上每次加载都白吃一条 404。
+     单文件版由 build.js 把这一整块（含标记）删掉，改注入内联数据。 -->
+<!-- @@AUDIO_BUNDLE_START@@ -->
+<script>
+if (location.protocol === 'file:') document.write('<script src="assets/audio/bundle.js"><\/script>');
+</script>
+<!-- @@AUDIO_BUNDLE_END@@ -->
 <script src="js/config.js"></script>
 <script src="js/pixfont.js"></script>
 <script src="js/data.js"></script>
