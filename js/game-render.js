@@ -49,9 +49,11 @@ Object.assign(Game, {
       const ky = ay + P.crossKick.y;
       const hot = P.recoil;
 
-      /* 鼠标原点：只在被推开时出现，静止时两点重合会闪 */
+      /* 鼠标原点：只在没锁定鼠标时画。
+         锁定之后系统光标已经消失，准星就是唯一的指针 —— 再画一个参考点
+         反而会让人以为"鼠标和准星是两个东西"。 */
       const off = Math.hypot(kx - this.input.mx, ky - this.input.my);
-      if (off > 1.6) {
+      if (!this.pointerLocked && off > 1.6) {
         c.lineWidth = 1;
         c.strokeStyle = 'rgba(152,182,174,0.36)';
         c.beginPath();

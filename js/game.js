@@ -37,6 +37,9 @@ const Game = {
     dodgePressed: false, interactPressed: false,
     reloadPressed: false, bagPressed: false
   },
+  /* 鼠标是否被锁定在画布上。锁定时系统光标消失、位置完全由我们累加，
+     准星就是唯一的指针；后坐力把准星推远时，"鼠标"也跟着一起走。 */
+  pointerLocked: false,
 
 
   init() {
@@ -214,15 +217,25 @@ const Game = {
 
     this.canvas.addEventListener('mousemove', e => {
       const r = this.canvas.getBoundingClientRect();
-      K.mx = (e.clientX - r.left) * (CFG.VIEW_W / r.width);
-      K.my = (e.clientY - r.top) * (CFG.VIEW_H / r.height);
+      const k = CFG.VIEW_W / (r.width || CFG.VIEW_W);
+      if (this.pointerLocked) {
+        /* 锁定后没有绝对位置了，只有增量：累加到虚拟光标上。
+           乘回逻辑像素，屏幕上仍然是 1:1 跟手。 */
+        K.mx += e.movementX * k;
+        K.my += e.movementY * k;
+      } else {
+        K.mx = (e.clientX - r.left) * k;
+        K.my = (e.clientY - r.top) * k;
+      }
     });
 
+    /* 浏览器只允许在用户手势里请求锁定，所以挂在第一次点画布上 */
     this.canvas.addEventListener('mousedown', e => {
       if (this.state !== 'playing') return;
       /* 点回画面就把焦点从调参框上收回来，否则 WASD 还在输入框里 */
       const ae = document.activeElement;
       if (ae && ae.blur && ae.tagName === 'INPUT') ae.blur();
+      if (!this.lootOpen && !this.bagOpen) this.wantLock();
       if (e.button === 0) K.mouseDown = true;
       if (e.button === 2) K.dodgePressed = true;
     });
@@ -231,6 +244,24 @@ const Game = {
     });
     this.canvas.addEventListener('contextmenu', e => e.preventDefault());
 
+    /* 锁定状态变了：Esc 会由浏览器强制解锁，这时候得告诉玩家点一下继续，
+       否则光标回到绝对位置、准星突然跟上鼠标，看起来像"跳"了。 */
+    document.addEventListener('pointerlockchange', () => {
+      const was = this.pointerLocked;
+      this.pointerLocked = (document.pointerLockElement === this.canvas);
+      if (this.canvas && this.canvas.classList) {
+        this.canvas.classList.toggle('cursor-locked', this.pointerLocked);
+      }
+      if (was && !this.pointerLocked && this.state === 'playing' &&
+          !this.lootOpen && !this.bagOpen && !this._lockVoluntary) {
+        this.toast('鼠标已解锁 · 点画面继续');
+      }
+      this._lockVoluntary = false;
+    });
+    document.addEventListener('pointerlockerror', () => {
+      this.pointerLocked = false;
+    });
+
     // 失焦时松开所有键，避免卡住（轮盘也一起收掉，别停在打开状态）
     window.addEventListener('blur', () => {
       for (const k in K.keys) K.keys[k] = false;
@@ -238,6 +269,31 @@ const Game = {
       MedQuick.cancel();
       AmmoQuick.cancel();
     });
+  },
+
+  /* ---------------- 鼠标锁定 ----------------
+     锁定之后系统光标消失，光标位置完全由 mousemove 的增量累加而来。
+     这样后坐力把准星推远时，"鼠标"跟着准星一起走，玩家眼里只有一个指针；
+     虚拟光标还能钳制在玩家外侧，压枪拉过头也不会翻 180°。 */
+  wantLock() {
+    if (typeof document === 'undefined' || !this.canvas) return;
+    if (!this.canvas.requestPointerLock) return;      // 老浏览器：退回绝对坐标
+    if (document.pointerLockElement === this.canvas) return;
+    if (this._lockCooling) return;
+    this._lockCooling = true;
+    /* 请求失败会走 pointerlockerror，冷却一下别每帧重试 */
+    setTimeout(() => { this._lockCooling = false; }, 400);
+    try {
+      const p = this.canvas.requestPointerLock();
+      if (p && p.catch) p.catch(() => {});
+    } catch (e) { this.pointerLocked = false; }
+  },
+
+  releaseLock() {
+    if (typeof document === 'undefined' || !document.exitPointerLock) return;
+    if (!document.pointerLockElement) return;
+    this._lockVoluntary = true;    // 主动放开的不提示"点画面继续"
+    try { document.exitPointerLock(); } catch (e) {}
   },
 
   bindUI() {
@@ -405,6 +461,10 @@ const Game = {
       this.shakeAmt *= 0.9;
       this.flashA *= 0.9;
     }
+
+    /* 兜底：只要不是战斗中，就不该锁着鼠标 ——
+       结算、地图页、藏身处都要能点按钮。 */
+    if (this.pointerLocked && this.state !== 'playing') this.releaseLock();
 
     this.render();
     if (typeof MedHud !== 'undefined') MedHud.frame();

@@ -132,6 +132,7 @@ Object.assign(Game, {
   /* ---------------- 更新 ---------------- */
   update(dt) {
     if (this.state === 'dying') {
+      if (this.pointerLocked) this.releaseLock();   // 死了就把鼠标放出来
       this.deathElapsed += dt;
       this.player.tickAnimation(dt, false);
       this.flashA *= Math.pow(0.004, dt);
@@ -153,9 +154,42 @@ Object.assign(Game, {
     const P = this.player;
     const K = this.input;
 
+    /* 面板一开就把鼠标放出来，否则点不到按钮；轮盘是按住弹的，同理 */
+    if (this.pointerLocked && (this.lootOpen || this.bagOpen ||
+        (typeof AmmoWheel !== 'undefined' && AmmoWheel.isOpen && AmmoWheel.isOpen()) ||
+        (typeof MedWheel !== 'undefined' && MedWheel.isOpen && MedWheel.isOpen()))) {
+      this.releaseLock();
+    }
+
+    /* 锁定后光标是累加出来的，得自己夹在画布内 —— 否则一直往一个方向推就能把它
+       送到几千像素外，准星跟着跑出屏幕。顶到边缘就停住，往回拉立刻响应。 */
+    if (this.pointerLocked) {
+      K.mx = U.clamp(K.mx, 0, CFG.VIEW_W);
+      K.my = U.clamp(K.my, 0, CFG.VIEW_H);
+    }
+
     /* 世界坐标下的鼠标位置 */
     K.wx = K.mx + this.cam.x;
     K.wy = K.my + this.cam.y;
+
+    /* 锁定时虚拟光标不许穿过玩家：这个位置本来就是我们自己累加的，
+       在这里顶住比事后修补准星干净 —— 朝向天然不会翻 180°。
+       非锁定状态不能这么做：系统光标还在屏幕上，改了会"脱节"。 */
+    if (this.pointerLocked) {
+      const keep = (CFG.RECOIL.axis && CFG.RECOIL.axis.keep) || 18;
+      const dx = K.wx - P.x, dy = K.wy - P.y;
+      const d = Math.hypot(dx, dy);
+      if (d < keep) {
+        /* 方向取"上一帧的有效朝向"，不要用当前的 dx/dy：
+           光标贴到玩家身边时，一帧的微小位移就足以让 dx 变号，
+           照当前方向钳会把它甩到背后 —— 正是要避免的那种 180° 翻转。 */
+        const dir = (P.aimDir && (P.aimDir.x || P.aimDir.y)) ? P.aimDir : { x: 1, y: 0 };
+        K.wx = P.x + dir.x * keep;
+        K.wy = P.y + dir.y * keep;
+        K.mx = K.wx - this.cam.x;
+        K.my = K.wy - this.cam.y;
+      }
+    }
     K.aimAngle = Math.atan2(K.wy - P.y, K.wx - P.x);
     if (K.dodgePressed) Medical.cancel();
 
