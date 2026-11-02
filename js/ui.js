@@ -436,6 +436,13 @@ const SFX = {
   },
   shotCursor: {},     // 枪型 → 下一个该用第几条变体
 
+  /* ---------------- 物品交互音 ----------------
+     同一个素材里的四次不同演绎（摸东西、拿装备、用医疗品、仓库里搬货都走这一条）。
+     每次**随机**抽一条：翻一具尸体要连着响五六次，固定一条就是复读机。
+     响度统一由 _addSample 按 LOUD.pickup 对齐，四条听上去一样响。 */
+  PICKUP_SAMPLE: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
+  _lastPickup: null,
+
   /* 一个游戏音效由多段素材拼成：换弹 1.5 秒里是「退弹匣 → 插弹匣 → 拉套筒」
      三次动作，原素材整段 3.13 秒塞不进去（硬变速会让金属声变尖叫），
      所以按游戏节奏重新排时间轴。 */
@@ -512,6 +519,8 @@ const SFX = {
     /* 近战挥砍与出售结算走自己的档，别落进 0.08 的默认值 */
     if (id === 'melee') return this.LOUD.melee;
     if (id === 'sell') return this.LOUD.sell;
+    /* 拾取的四条变体都按拾取档对齐，四条之间响度一致 */
+    if (/^pickup_[1-4]$/.test(id)) return this.LOUD.pickup;
     return 0.08;
   },
 
@@ -616,6 +625,26 @@ const SFX = {
       rate: (p.rate || 1) * (o.rate || 1) * (1 - j + Math.random() * j * 2),
       vol: (p.vol || 1) * (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2),
       lp: o.lp
+    });
+  },
+
+  /* 物品交互：从四条拾取录音里随机抽一条。
+     纯随机会连着抽到同一条，听起来反倒更像复读机 —— 所以随机归随机，
+     只排除"刚刚那条"，剩下的里面再抽；音高也抖 ±3%，连摸五六件不重样。 */
+  _playPickup(opts) {
+    const ready = this.PICKUP_SAMPLE.filter(id => this.samples[id]);
+    if (!ready.length) return false;
+    let n = Math.floor(Math.random() * ready.length);
+    if (ready.length > 1 && ready[n] === this._lastPickup) {
+      n = (n + 1 + Math.floor(Math.random() * (ready.length - 1))) % ready.length;
+    }
+    this._lastPickup = ready[n];
+    const o = opts || {};
+    const j = 0.03;      // 音高抖动
+    const jv = 0.04;     // 音量抖动
+    return this._playSample(ready[n], {
+      rate: (o.rate || 1) * (1 - j + Math.random() * j * 2),
+      vol: (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2)
     });
   },
 
@@ -896,6 +925,9 @@ const SFX = {
     /* 某把枪的专属采样没加载上（旧浏览器 / 文件缺失）时退回通用切枪声，
        别让换枪变成哑的 */
     if (/^shot_switch_/.test(name) && !this.samples[name]) return this.play('shot_switch', opts);
+
+    /* 物品交互：四条拾取录音随机抽一条，素材缺失才落回下面的合成音 */
+    if (name === 'pickup' && this._playPickup(opts)) return;
 
     /* 枪声：真实录音优先，按枪型选；素材缺失才落回下面的合成版 */
     if (name === 'shot') {

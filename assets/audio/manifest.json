@@ -96,6 +96,14 @@
       "site": "Freesound",
       "sid": 810738,
       "license": "TODO"
+    },
+    {
+      "id": "ienba-pickup",
+      "name": "Generic game pick up",
+      "author": "ienba",
+      "site": "Freesound",
+      "sid": 831642,
+      "license": "TODO"
     }
   ],
   "assets": [
@@ -378,6 +386,62 @@
       "rms": 0.1565,
       "bytes": 80684,
       "sha256_16": "5740473b6610e4c3"
+    },
+    {
+      "id": "pickup_1",
+      "file": "pickup_1.wav",
+      "from": "ienba-pickup",
+      "note": "拾取变体 1：源 0.00–0.36s，四条随机抽一条",
+      "dur": 0.241,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.1,
+      "bytes": 21272,
+      "sha256_16": "13092d288c0ce1d2"
+    },
+    {
+      "id": "pickup_2",
+      "file": "pickup_2.wav",
+      "from": "ienba-pickup",
+      "note": "拾取变体 2：源 1.92–2.20s",
+      "dur": 0.184,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.0965,
+      "bytes": 16268,
+      "sha256_16": "3a8b191521c5360e"
+    },
+    {
+      "id": "pickup_3",
+      "file": "pickup_3.wav",
+      "from": "ienba-pickup",
+      "note": "拾取变体 3：源 3.79–4.12s",
+      "dur": 0.225,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.069,
+      "bytes": 19850,
+      "sha256_16": "0ef090aedb979d70"
+    },
+    {
+      "id": "pickup_4",
+      "file": "pickup_4.wav",
+      "from": "ienba-pickup",
+      "note": "拾取变体 4：源 5.80–6.15s",
+      "dur": 0.256,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.0591,
+      "bytes": 22618,
+      "sha256_16": "6a21b11601cab275"
     }
   ],
   "mix": {

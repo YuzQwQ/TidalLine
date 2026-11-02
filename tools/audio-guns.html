@@ -281,6 +281,13 @@
   card(othersHost, '挥刀', '风声从高扫到低', [
     { label: '挥刀', run: () => SFX.play('melee') }
   ]);
+  /* 拾取是"四条随机抽一条"：连点几次听重不重复，
+     连摸 5 件模拟翻一具尸体，用来判断会不会像复读机 */
+  card(othersHost, '物品交互（拾取）', '录音 831642 的四次演绎，每次随机抽一条', [
+    { label: '拾取（随机）', run: () => SFX.play('pickup') },
+    { label: '连摸 5 件', ghost: true, run: () => [0, 220, 440, 660, 880].forEach(t => setTimeout(() => SFX.play('pickup'), t)) },
+    { label: '四条各一遍', ghost: true, run: () => ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'].forEach((id, i) => setTimeout(() => SFX._playSample(id), i * 320)) }
+  ]);
   card(othersHost, '枪 ⇄ 刀', '换枪是清脆滑套，收刀压低一点，霰弹是泵动上膛', [
     { label: '枪 → 刀', run: () => SFX.play('shot_switch', { rate: 0.86 }) },
     { label: '刀 → 枪', ghost: true, run: () => SFX.play('shot_switch') },
@@ -329,6 +336,7 @@
     ['reload', '换弹三段', 'reload'],
     ['shot_switch', '切枪', 'switch'],
     ['step_stone_1', '脚步', 'step'],
+    ['pickup_1', '拾取', 'pickup'],
     ['dodge', '闪避', 'dodge']
   ];
   const tbody = document.querySelector('#levels tbody');

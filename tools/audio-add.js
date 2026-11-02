@@ -66,10 +66,28 @@ const buf = fs.readFileSync(abs);
 const stats = readWav(buf);
 const man = JSON.parse(fs.readFileSync(MAN, 'utf8'));
 
+/* 新素材顺手登记来源：--source=素材id 配合 --name/--author/--sid/--license。
+   已存在就更新那一条（许可证从 TODO 补成实际值时用同一条命令）。 */
+const srcId = opt('source');
+if (srcId) {
+  const one = {
+    id: srcId,
+    name: opt('name') || srcId,
+    author: opt('author') || '',
+    site: opt('site') || 'Freesound',
+    sid: opt('sid') ? parseInt(opt('sid'), 10) : null,
+    license: opt('license') || 'TODO'
+  };
+  man.sources = man.sources || [];
+  const k = man.sources.findIndex(s => s.id === srcId);
+  if (k >= 0) man.sources[k] = Object.assign({}, man.sources[k], one);
+  else man.sources.push(one);
+}
+
 const entry = Object.assign({
   id,
   file: path.basename(abs),
-  from: opt('from') || null,
+  from: opt('from') || srcId || null,
   note: opt('note') || ''
 }, stats);
 
