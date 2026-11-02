@@ -1375,7 +1375,9 @@ class Corpse {
     this.bagName = def ? def.name : '';
     /* 包本身放最前面：它是这具尸体上最值钱的一件，也是"能装几件"的来源 */
     const bagItem = (typeof EQUIP !== 'undefined') ? EQUIP.bag(bagId) : null;
-    if (bagItem) this.loot.push({ item: bagItem, n: 1, corpseBag: true });
+    /* known:true —— 包背在尸体外面一眼就看得见，和头盔护甲一样不用单独搜；
+       要搜的是"包里装了什么"，所以下面那些才是未搜索状态。 */
+    if (bagItem) this.loot.push({ item: bagItem, n: 1, corpseBag: true, known: true });
 
     const cap = (B.itemsByLevel || {})[this.bagLv] || this.bagLv;
     const used = new Set();

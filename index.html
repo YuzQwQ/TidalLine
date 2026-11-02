@@ -221,6 +221,7 @@ window.addEventListener('error', function (e) {
      比原来的两行文字槽省 39px，背包就不爆了。 */
   .eqbar { display: grid; gap: 3px; margin-bottom: 4px; }
   .eqbar.w6 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .eqbar.w4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .eqbar.w3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .eqs {
     position: relative; min-width: 0; box-sizing: border-box;
@@ -1067,7 +1068,7 @@ window.addEventListener('error', function (e) {
   <div class="box" id="lootBox" style="display:none">
     <div class="ttl"><span id="lootTitle">容器</span><span id="lootHint">E 关闭</span></div>
     <div class="loot-sub" id="lootSub" style="display:none"></div>
-    <div class="eqbar w3" id="lootGear" style="display:none"></div>
+    <div class="eqbar w4" id="lootGear" style="display:none"></div>
     <div class="loot-tip" id="lootGearTip" style="display:none">左键拾取 · 没有同类装备就直接穿上</div>
     <div id="lootList"></div>
   </div>

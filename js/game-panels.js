@@ -117,8 +117,9 @@ Object.assign(Game, {
     arr.forEach((entry, i) => {
       if (!entry) return;
 
-      /* ---- 尸体身上的装备：已经画在上面的装备格里，不在下面重复 ---- */
-      if (entry.gear || entry.gun) return;
+      /* ---- 尸体身上的装备：已经画在上面的装备格里，不在下面重复 ----
+         背包同理（corpseBag 是尸体背的那只），只在上方四格里出现 ---- */
+      if (entry.gear || entry.gun || entry.corpseBag) return;
 
       const it = entry.item;
       const row = document.createElement('div');
@@ -192,7 +193,7 @@ Object.assign(Game, {
   },
 
   /* ---------------- 尸体装备：方格布局 ---------------- */
-  /* 和背包顶部同一套方格：头盔 / 护甲 / 武器 三格，左键穿上、右键带回 */
+  /* 和背包顶部同一套方格：头盔 / 护甲 / 背包 / 武器 四格，左键穿上、右键带回 */
   renderLootGear() {
     const bar = document.getElementById('lootGear');
     const tip = document.getElementById('lootGearTip');
@@ -202,9 +203,10 @@ Object.assign(Game, {
     const at = {
       helmet: arr.findIndex(e => e && e.gear && e.gear.type === 'helmet'),
       body: arr.findIndex(e => e && e.gear && e.gear.type === 'body'),
+      bag: arr.findIndex(e => e && e.corpseBag),
       gun: arr.findIndex(e => e && e.gun)
     };
-    const any = at.helmet >= 0 || at.body >= 0 || at.gun >= 0;
+    const any = at.helmet >= 0 || at.body >= 0 || at.bag >= 0 || at.gun >= 0;
 
     if (!this.lootIsCorpse || !any) {
       bar.style.display = 'none';
@@ -249,6 +251,23 @@ Object.assign(Game, {
       });
     }
 
+    /* 背包：尸体背的那只，本身就是战利品，点了直接背走（旧包落地） */
+    {
+      const e = at.bag >= 0 ? arr[at.bag] : null;
+      const it = e ? e.item : null;
+      const eq = it && it.equip;
+      cells.push({
+        idx: at.bag,
+        icon: it ? it.icon : null,
+        fb: it ? '包' : '—',
+        label: it ? it.short : '背包',
+        tag: eq ? eq.slots + '格' : '',
+        isBag: true,
+        own: !!(P && P.back),
+        item: it || null
+      });
+    }
+
     /* 武器 */
     {
       const e = at.gun >= 0 ? arr[at.gun] : null;
@@ -265,11 +284,15 @@ Object.assign(Game, {
       });
     }
 
-    /* 身上已经有同类装备时，这一格点下去是"放进背包"，用角标提示 */
+    /* 身上已经有同类装备时，这一格点下去是"放进背包"，用角标提示；
+       背包例外：只有更大的才换上，小的那只进背包格子（角标同样亮"包"） */
+    const hintOf = c => c.isBag
+      ? (c.own ? ' · 比现在这只大就换上，旧包丢在脚边' : ' · 点击背上')
+      : (c.own ? ' · 已有同类，点击放进背包' : ' · 点击穿上');
     bar.innerHTML = cells.map(c =>
       '<div class="eqs' + (c.icon ? '' : ' empty') + '" title="' +
         esc(c.label) +
-        (c.icon ? (c.own ? ' · 已有同类，点击放进背包' : ' · 点击穿上') + ' · 右键看详情' : '') + '">' +
+        (c.icon ? hintOf(c) + ' · 右键看详情' : '') + '">' +
         (c.icon && c.own ? '<span class="carry">包</span>' : '') +
         '<span class="lbl">' + esc(c.label) + '</span>' +
         '<span class="ic">' + Icons.gearIcon(c.icon, c.fb) + '</span>' +
@@ -286,8 +309,9 @@ Object.assign(Game, {
       if (c.item && node.addEventListener) {
         node.oncontextmenu = (ev) => {
           ev.preventDefault();
-          Tips.show(c.item, node.getBoundingClientRect(),
-            c.own ? '已有同类，左键放进背包' : '左键直接穿上');
+          Tips.show(c.item, node.getBoundingClientRect(), c.isBag
+            ? (c.own ? '左键背上（比现在这只大才换，旧包丢在脚边）' : '左键直接背上')
+            : (c.own ? '已有同类，左键放进背包' : '左键直接穿上'));
         };
       }
     }
@@ -344,10 +368,14 @@ Object.assign(Game, {
         msg = '换上 ' + g.name + '（' + got + ' 发）';
       }
     } else if (s.bag) {
-      /* 背包不能塞进背包，换下来那只直接丢在脚边 */
-      if (P.back) dropOld = EQUIP.bag(P.back.id);
-      P.back = BACKPACK.make(g.id);
-      msg = '背上 ' + g.name + (dropOld ? '，' + dropOld.name + ' 丢在脚边' : '');
+      /* 背包不能塞进背包，换下来那只直接丢在脚边 —— 但只有更大的才值得换，
+         更小的那只走下面的"放进背包"，别把身上好的那只抖到地上 */
+      const cur = P.back;
+      if (!cur || g.slots > cur.slots) {
+        if (cur) dropOld = EQUIP.bag(cur.id);
+        P.back = BACKPACK.make(g.id);
+        msg = '背上 ' + g.name + (dropOld ? '，' + dropOld.name + ' 丢在脚边' : '');
+      }
     } else if (!P[g.type]) {
       P[g.type] = Object.assign({}, g);
       msg = '穿上 ' + g.name;
@@ -356,7 +384,7 @@ Object.assign(Game, {
     if (!msg) {
       const item = s.isGun
         ? s.gunItem
-        : EQUIP.armor(g);
+        : (s.bag ? (entry.item || EQUIP.bag(g.id)) : EQUIP.armor(g));
       const res = P.bag.canAdd(item, 1);
       if (!res.ok) { this.toast(res.why); return false; }
       P.bag.add(item, 1);
