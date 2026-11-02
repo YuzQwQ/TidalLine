@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "status": "design_only",
+  "reference": "temp files/藏身处UI改良参考.png",
+  "newRasterCountRequired": 1,
+  "assets": [
+    {
+      "id": "safehouse_room_overview",
+      "name": "藏身处空间总览",
+      "priority": "P0",
+      "status": "to_draw",
+      "type": "ui_background",
+      "sourceSize": [2560, 1440],
+      "alpha": false,
+      "proposedTarget": "assets/ui/safehouse/room-overview.webp",
+      "variants": [{"size": [1920, 1080], "targetBytes": 1000000}, {"size": [1280, 720], "targetBytes": 500000}],
+      "safeArea": {"x": [0.10, 0.88], "y": [0.15, 0.82]},
+      "hotspotsProvisional": {"traders": [0.20, 0.42], "loadout": [0.48, 0.38], "doctor": [0.78, 0.42], "stash": [0.40, 0.76]},
+      "prompt": "为架空1990年代俯视角搜打撤游戏《潮汐线》绘制藏身处菜单背景，横向16:9，2560x1440。写实偏概念插画，微俯视的正面剖视室内空间，封锁区外围的一间紧凑而可信的旧建筑避难室，冷静、实用、有使用痕迹但保持秩序。低饱和橄榄绿、石墨灰、暖木色、旧黄铜，左上冷天光与局部暖工作灯形成清楚的空间层次。左侧是一张无线电与纸质联络记录的旧通信桌；中部是钢制挂板与装备整理工作台，少量防护背心和工具；右侧是简单医疗用品角、旧药柜与白色敷料；近前景一侧是储物货架与箱柜。各区域主要物体集中在x10-88%、y15-82%内，入口附近留可放小标签的安静区域。显示可辨认的地面与走道，不堆满杂物，不画宏大军事基地。家具尺寸与透视一致，材质明确，背景光照适中，暗部仍能辨认物体。不要人物、文字、logo、UI、按钮、边框或格子，不画现代液晶巨屏、全息投影、科幻设施、霓虹和魔法特效。整体色温与三位商人的成熟职业肖像相容，适合作为静态游戏菜单插画。"
+    },
+    {"id": "merchant_portraits", "priority": "P0", "status": "reuse", "sources": ["assets/npc-art/merchants/merchant_armor.png", "assets/npc-art/merchants/merchant_guns.png", "assets/npc-art/merchants/merchant_doctor.png"], "use": "商人页人物卡，等比显示，原稿不覆盖"},
+    {"id": "inventory_icons", "priority": "P0", "status": "reuse", "sources": ["assets/gear/", "assets/items/"], "use": "装备、货架、库存；稀有度和剩余容量由UI绘制"},
+    {"id": "navigation_glyphs", "priority": "P0", "status": "code_native", "format": "SVG", "names": ["藏身处", "备战", "仓库", "商人", "生命", "负重", "图鉴", "设置"], "use": "24px统一线性矢量图标，2px线宽，非新增PNG"},
+    {"id": "ui_components", "priority": "P0", "status": "code_native", "format": "CSS", "names": ["面板", "主次按钮", "选中标签", "稀有度边框", "物品槽", "进度条", "确认框"], "use": "尺寸自适应，不烘焙文字"},
+    {"id": "loadout_character", "priority": "P2", "status": "optional_deferred", "type": "ui_character", "suggestedSize": [768, 1024], "alpha": true, "use": "可选整备角色立绘；只作展示，不假装支持服装外观换装，不阻塞首版"}
+  ]
+}

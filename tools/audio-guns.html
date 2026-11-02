@@ -52,6 +52,12 @@
 
 <h2>四把枪 · 单发</h2>
 <div class="grid" id="guns"></div>
+<div id="warn" style="display:none;margin-top:14px;padding:10px 12px;border:1px solid #5a2b2b;background:#1a0f0f;color:#e0a3a3;border-radius:4px;font-size:12px">
+  <b>没加载到声音代码。</b>这个页面要用到 <code>js/ui.js</code> 和 <code>assets/audio/bundle.js</code>，
+  如果它被单独拎出来打开（比如嵌在预览面板的沙箱里），同目录关系就断了。<br>
+  正确打开方式：在 <code>tide/</code> 目录下跑 <code>python -m http.server 8765</code>，
+  然后访问 <code>http://127.0.0.1:8765/tools/audio-guns.html</code>；直接双击本地文件也可以。
+</div>
 
 <h2>连发（按各自射速，检查叠加和削波）</h2>
 <div class="row" id="autoRow"></div>
@@ -87,6 +93,14 @@
   const RPM = { rifle: 420, shotgun: 80, smg: 780, pistol: 300 };
   const logEl = document.getElementById('log');
   const say = t => { logEl.textContent = t; };
+
+  /* ui.js / bundle.js 没加载上（被沙箱单独打开）时，先把话说清楚，
+     别让人对着一排点不动的按钮猜 */
+  if (typeof SFX === 'undefined') {
+    document.getElementById('warn').style.display = '';
+    say('声音代码未加载，页面无法工作。');
+    throw new Error('SFX not loaded');
+  }
 
   SFX.init();
   if (window.__AUDIO__) SFX.load();

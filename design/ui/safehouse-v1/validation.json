@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "scope": "design_only",
+  "pages": 4,
+  "viewportWidths": [
+    1440,
+    1280,
+    390,
+    320
+  ],
+  "filters": true,
+  "search": true,
+  "detailsAndEscape": true,
+  "doctorSwitch": true,
+  "mapPreview": true,
+  "resourceErrors": [],
+  "readsGameStorage": false,
+  "shortDesktopActionVisible": true,
+  "localFileCompatible": true
+}
