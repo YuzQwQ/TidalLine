@@ -73,7 +73,8 @@ const man = require('../assets/audio/manifest.json');
     const ent = require('fs').readFileSync(path.join(ROOT, 'js/entities.js'), 'utf8');
     const switchBody = /switchWeapon\(i\)\s*\{([\s\S]*?)\n  \}/.exec(ent);
     assert(switchBody, '找得到 switchWeapon');
-    assert(/sfx\('shot_switch'\)/.test(switchBody[1]), '换枪播 shot_switch');
+    /* 换枪音可以按枪型覆盖（霰弹有专属泵动声），但必须回落到 shot_switch */
+    assert(/sfx\([^)]*'shot_switch'\)/.test(switchBody[1]), '换枪播 shot_switch 或其变体');
     assert(!/sfx\('reload'\)/.test(switchBody[1]), '换枪不再误播换弹声');
     assert(/SFX\.stopSeq\('reload'\)/.test(switchBody[1]), '换枪掐掉换弹序列');
     const reloadBody = /tryReload\(\)\s*\{([\s\S]*?)\n  \}/.exec(ent);
@@ -113,7 +114,7 @@ const man = require('../assets/audio/manifest.json');
 
     assert.deepEqual(errs, [], '单文件版无脚本错误');
     assert.deepEqual(perr, [], '多文件版无脚本错误');
-    console.log('OK: 8 段采样内联解码、时长对齐 manifest、换弹三段序列收在 1.5s、' +
+    console.log('OK: ' + man.assets.length + ' 段采样内联解码、时长对齐 manifest、换弹三段序列收在 1.5s、' +
       '有采样时优先采样、删掉 __AUDIO__ 后静默退回合成音');
   } finally {
     await browser.close();

@@ -1295,6 +1295,18 @@ sfxLog.length = 0;
 swapper.switchWeapon(0);
 ok('刀 → 枪有声', sfxLog.filter(c => c.name === 'shot_switch').length === 1);
 
+/* 切枪音按枪型走：霰弹枪是泵动上膛，其余沿用通用滑套 */
+const sw2 = new ctx.Player(M.cx(7), M.cy(4));
+sw2.fillWeapons([EQUIP.gun('rifle', 5), EQUIP.gun('shotgun', 6), null]);
+sfxLog.length = 0;
+sw2.switchWeapon(1);
+ok('霰弹枪切枪走专属泵动音', sfxLog.some(c => c.name === 'shot_switch_shotgun'),
+  sfxLog.map(c => c.name).join(','));
+sfxLog.length = 0;
+sw2.switchWeapon(0);
+ok('步枪切枪仍走通用滑套音', sfxLog.some(c => c.name === 'shot_switch'),
+  sfxLog.map(c => c.name).join(','));
+
 console.log('\n=== 长时间稳定性 ===');
 Game.state = 'playing';
 Game.startRun();

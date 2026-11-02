@@ -3,6 +3,12 @@
    玩家 / 敌人 / 子弹 / 投掷物 / 尸体
    ============================================================ */
 
+/* 换枪音：有专属采样的枪单独列出来，其余沿用通用滑套声。
+   霰弹枪用的是泵动前推上膛（Freesound 858509），比"啪嗒"一声更重。 */
+const SWITCH_SFX = {
+  shotgun: 'shot_switch_shotgun'
+};
+
 /* ---------------- 碰撞 ---------------- */
 function canStand(x, y, r) {
   const size = CFG.TILE;
@@ -275,7 +281,7 @@ class Player {
     this.syncSpread();
     /* 换枪会打断换弹，别让换弹序列的后两段还响在空枪上 */
     if (typeof SFX !== 'undefined') SFX.stopSeq('reload');
-    Game.sfx('shot_switch');
+    Game.sfx(SWITCH_SFX[this.weapon.id] || 'shot_switch');
     return true;
   }
 

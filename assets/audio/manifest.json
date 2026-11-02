@@ -32,6 +32,14 @@
       "site": "Freesound",
       "sid": 813622,
       "license": "TODO"
+    },
+    {
+      "id": "smillandwelson-pump",
+      "name": "Maverick 88 pump forward",
+      "author": "smillandwelson",
+      "site": "Freesound",
+      "sid": 858509,
+      "license": "TODO"
     }
   ],
   "assets": [
@@ -146,6 +154,20 @@
       "rms": 0.1,
       "bytes": 14188,
       "sha256_16": "7f637c7c87ebac4b"
+    },
+    {
+      "id": "shot_switch_shotgun",
+      "file": "shot_switch_shotgun.wav",
+      "from": "smillandwelson-pump",
+      "note": "切枪：霰弹枪专属，泵动前推上膛（0.02–0.175s 切出，源峰值 1.105 已归一）",
+      "dur": 0.131,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.1353,
+      "bytes": 12658,
+      "sha256_16": "e3f7242425beb68c"
     }
   ],
   "mix": {

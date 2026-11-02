@@ -454,7 +454,8 @@ const SFX = {
   /* 这一段素材该有多响：按用途查 LOUD 表，查不到就按中等音量处理 */
   _targetFor(id) {
     if (/^step_stone/.test(id)) return this.LOUD.step;
-    if (id === 'shot_switch') return this.LOUD.switch;
+    /* shot_switch 与各枪专属的 shot_switch_* 都算"切枪"，响度一视同仁 */
+    if (/^shot_switch/.test(id)) return this.LOUD.switch;
     if (/^reload_/.test(id)) return this.LOUD.reload;
     return 0.08;
   },
@@ -798,6 +799,10 @@ const SFX = {
     if (this.samples[name]) { this._playSample(name, opts); return; }
     const seq = this.SEQ[name];
     if (seq && this.samples[seq[0][0]]) { this._playSeq(name, seq); return; }
+
+    /* 某把枪的专属采样没加载上（旧浏览器 / 文件缺失）时退回通用切枪声，
+       别让换枪变成哑的 */
+    if (/^shot_switch_/.test(name) && !this.samples[name]) return this.play('shot_switch', opts);
 
     /* 枪声按枪型分支：四把枪各有各的音色，不再是同一个"啪" */
     if (name === 'shot') {

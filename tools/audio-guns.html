@@ -258,9 +258,10 @@
   card(othersHost, '挥刀', '风声从高扫到低', [
     { label: '挥刀', run: () => SFX.play('melee') }
   ]);
-  card(othersHost, '枪 ⇄ 刀', '换枪是清脆滑套，收刀压低一点', [
+  card(othersHost, '枪 ⇄ 刀', '换枪是清脆滑套，收刀压低一点，霰弹是泵动上膛', [
     { label: '枪 → 刀', run: () => SFX.play('shot_switch', { rate: 0.86 }) },
-    { label: '刀 → 枪', ghost: true, run: () => SFX.play('shot_switch') }
+    { label: '刀 → 枪', ghost: true, run: () => SFX.play('shot_switch') },
+    { label: '霰弹泵动', ghost: true, run: () => SFX.play('shot_switch_shotgun') }
   ]);
   card(othersHost, '脚步', '步频跟速度走：走 2.0 / 快跑 2.8 步每秒', [
     { label: '走', run: () => walk(120, 1600) },
