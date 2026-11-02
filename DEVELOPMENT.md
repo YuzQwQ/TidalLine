@@ -799,10 +799,32 @@ python -m http.server 8765
 - `index.html#base` —— 直接打开藏身处
 - `index.html#base,demo` —— 打开藏身处并灌一批测试物资（不写存档，只改内存）
 - `index.html#range` —— 开发者靶场：空房间 + 钢板靶 + 落点墙，左侧面板实时调
-  射速 / 击发延迟 / 后坐力 / 回正 / 散布 / 准星 / 弹速 / 射程 / 弹丸数。
+  射速 / 击发延迟 / 后坐力 / 回正 / 散布 / 准星 / 弹速 / 射程 / 弹丸数 / 双轴后坐力。
   `F2` 收起面板，`F3` 清弹孔，`F4` 复位靶子；「复制 JSON」导出与默认值的差异，
   调参数据存 localStorage（`tide.range.tune.v1`），靶场内不写游戏存档。
   实现见 `js/range.js`，地图是代码生成的（`RANGE_MAP`），不进选图页。
+  双击 `range.html` 可免去打 `#range`（它只是 `location.replace` 到 `index.html#range`）。
+
+**靶场数值怎么落进正式游戏**（重要）：面板上的调参只进 localStorage，**不会改任何源文件**，
+所以靶场外开局用的仍是 `config.js` / `data.js` 里的原值。要真正生效：
+
+```bash
+# 1. 靶场里点「导出 .json」，得到 tide-tune.json（浏览器下载目录）
+# 2. 先看会改什么
+node tools/apply-tune.js tide-tune.json --dry
+# 3. 写回 js/data.js 与 js/config.js，顺便跑回归
+node tools/apply-tune.js tide-tune.json --test
+```
+
+脚本只替换数字字面量（注释、字段顺序、同行排布全部保留），改完 `git diff`
+只会有那几个数字的变化。几个注意点：
+
+- 分成 `weapons`（每把枪自己的字段，写进 `js/data.js` 的 `WEAPONS`）和
+  `recoil`（全局，写进 `js/config.js` 的 `RECOIL`）
+- `RECOIL` 顶层的 `max / decay / decayDelay` 和 `RECOIL.axis` 里的同名字段重名，
+  脚本会先把 axis 整块摘出来再改顶层，不会串味
+- `anim`（开火动作速度）是运行时字段，没有配置项，脚本会提示并忽略
+- localStorage 按地址隔离：`127.0.0.1:8123` 和双击本地文件各存一份，互不相通
 
 ## 测试
 

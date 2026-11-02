@@ -173,7 +173,7 @@ console.log('\n=== 后坐力 ===');
 Game.startRun({ ammo: 60, bandage: 0, stone: 0 });
 Game.enemies.length = 0;
 const PR = Game.player;
-PR.recoil = 0; PR.sinceShot = 99; PR.aimRemaining=0; PR.syncSpread(); // isolate recoil after aiming has settled
+PR.recoil = 0; PR.sinceShot = 99; PR.checkAimProfile(); PR.aimRemaining=0; PR.syncSpread(); // isolate recoil after aiming has settled
 Game.shakeAmt = 0;
 PR.mag = 30; PR.fireCd = 0;
 
@@ -235,7 +235,11 @@ ok('移动时恢复更慢', moveRec > stillRec,
 // 命中测试：把敌人放到正前方（先清场，避免子弹打到路过的其他敌人）
 Game.startRun();
 const P3 = Game.player;
-P3.x = M.cx(23); P3.y = M.cy(13);
+// Find a clear 120px lane rather than depending on an editable map coordinate.
+shotLane: for(let y=2;y<M.H-2;y++)for(let x=2;x<M.W-5;x++){
+  const px=M.cx(x),py=M.cy(y);
+  if(Array.from({length:61},(_,i)=>px+i*2).every(q=>!M.blocksShot(M.tx(q),M.ty(py),q,py))){P3.x=px;P3.y=py;break shotLane;}
+}
 Game.enemies.forEach((e, i) => { if (i > 0) e.dead = true; });
 const dummy = Game.enemies[0];
 dummy.x = P3.x + 120; dummy.y = P3.y;
@@ -249,7 +253,7 @@ P3.updateAimPoint(P3.x + 200, P3.y);
 Game.bullets.length = 0;
 P3.mag = 30;
 P3.recoil = 0; P3.aimRemaining=0; P3.syncSpread();
-P3.tryShoot();
+const shotRand=U.rand;U.rand=(a,b)=>(a+b)/2;P3.tryShoot();U.rand=shotRand;
 for (let i = 0; i < 20; i++) Game.update(1 / 60);
 ok('子弹命中敌人', dummy.hp < hpBefore, 'hp ' + hpBefore + ' → ' + dummy.hp.toFixed(1));
 
@@ -1387,7 +1391,12 @@ ok('弹孔统计给出极值散布', gs && gs.es > 0, gs && gs.es.toFixed(2));
 Range.setDisp(RANGE_PARAMS.find(p => p.key === 'rpm'), 600);
 Range.apply();
 const exp = Range.exportJson();
-ok('导出 JSON 只列改动项', exp.weapon === 'rifle' && exp.weaponDiff.rpm === 600, JSON.stringify(exp.weaponDiff));
+ok('导出 JSON 只列改动项',
+   !!exp.weapons && !!exp.weapons.rifle && exp.weapons.rifle.rpm === 600 &&
+   !exp.weapons.smg,
+   JSON.stringify(exp.weapons));
+ok('导出结构能被写回脚本识别', exp.version === 1 && !('weaponDiff' in exp),
+   Object.keys(exp).join(','));
 
 /* 退出后还原后坐力配置 */
 Range.exit();

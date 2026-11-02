@@ -505,6 +505,7 @@ const Range = {
       '  <button data-act="reset">重置本枪</button>',
       '  <button data-act="defaults">全部重置</button>',
       '  <button data-act="copy">复制 JSON</button>',
+      '  <button data-act="export" title="下载 tide-tune.json，可用 tools/apply-tune.js 写回配置">导出 .json</button>',
       '</div>',
       '<pre class="rg-json hidden"></pre>'
     ].join('\n');
@@ -666,21 +667,44 @@ const Range = {
       Game.toast('全部参数已回到默认值');
     }
     if (act === 'copy') this.copyJson();
+    if (act === 'export') this.exportFile();
   },
 
-  /* 只导出和默认值不一样的部分，贴回去就是一处改动 */
+  /* 只导出和默认值不一样的部分 —— 全枪 + 全局，贴回去就是几处改动。
+     格式给 tools/apply-tune.js 用，它按字段名直接改 data.js / config.js。 */
   exportJson() {
-    const id = this.curId;
-    const w = this.w[id], dw = RANGE_DEF_W[id];
-    const wd = {}, gd = {};
     const r4 = v => Math.round(v * 10000) / 10000;
-    for (const k in w) if (Math.abs(w[k] - dw[k]) > 1e-9) wd[k] = r4(w[k]);
-    for (const k in this.g) if (Math.abs(this.g[k] - RANGE_DEF_G[k]) > 1e-9) gd[k] = r4(this.g[k]);
-    return {
-      weapon: id,
-      weaponDiff: wd,
-      recoil: gd
-    };
+    const weapons = {};
+    for (const id in this.w) {
+      const w = this.w[id], dw = RANGE_DEF_W[id];
+      if (!dw) continue;
+      const diff = {};
+      for (const k in w) if (Math.abs(w[k] - dw[k]) > 1e-9) diff[k] = r4(w[k]);
+      if (Object.keys(diff).length) weapons[id] = diff;
+    }
+    const recoil = {};
+    for (const k in this.g) if (Math.abs(this.g[k] - RANGE_DEF_G[k]) > 1e-9) recoil[k] = r4(this.g[k]);
+    return { version: 1, weapons: weapons, recoil: recoil };
+  },
+
+  /* 下载成 .json：双击入口是 file://，fetch 不了本地文件，
+     所以走 Blob + a[download]，浏览器直接落到下载目录。 */
+  exportFile() {
+    const txt = JSON.stringify(this.exportJson(), null, 2);
+    try {
+      const a = document.createElement('a');
+      const url = URL.createObjectURL(new Blob([txt], { type: 'application/json' }));
+      a.href = url;
+      a.download = 'tide-tune.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      Game.toast('已导出 tide-tune.json（tools/apply-tune.js 可直接写回）');
+    } catch (e) {
+      /* 有些环境禁下载，退回复制文本 */
+      this.copyJson();
+    }
   },
 
   copyJson() {
