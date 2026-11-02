@@ -23,12 +23,13 @@ Object.assign(Game, {
       ? (obj.enemy ? obj.enemy.t.name + '的尸体' : '尸体')
       : (obj.name || '容器');
 
-    /* 人型尸体的容器带随机等级背包：等级 = 能翻出几件普通物品（子弹与身上装备不算）。
+    /* 人类尸体的容器带随机等级背包：这只包本身也是战利品，摸出来能背；
+       它的等级同时决定能翻出几件普通物品（子弹与身上装备不算）。
        放在标题下面单独一行 —— 塞进标题会被右边的状态文字挤成省略号。 */
     const sub = document.getElementById('lootSub');
     if (isCorpse && obj.bagLv > 0) {
       const n = ((CFG.CORPSE_BAG || {}).itemsByLevel || {})[obj.bagLv] || obj.bagLv;
-      sub.textContent = obj.bagName + ' · 能翻出 ' + n + ' 件物品（子弹与装备不计）';
+      sub.textContent = obj.bagName + ' · 可翻 ' + n + ' 件物品';
       sub.style.display = '';
     } else {
       sub.textContent = '';

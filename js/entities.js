@@ -1351,10 +1351,10 @@ class Corpse {
     }
   }
 
-  /* 掷一个背包等级，往里塞对应件数的普通物品。
-     同一具尸体里不抽重复的（三件都是同一罐石头的观感太差），
-     池子抽干就少放，绝不补别的类别。
-     不在 factions 名单里的敌人（目前只有配置里被排除的）仍旧只掉一件，不吃改动的亏。 */
+  /* 掷一个背包等级，把那只包塞进战利品，再按等级塞对应件数的普通物品。
+     包是"容器"也是"战利品"：摸出来能直接背，容量比身上那只大就换掉。
+     同一具尸体里不抽重复物品（三件都是同一罐石头的观感太差），池子抽干就少放。
+     不在 factions 名单里的敌人（机械守卫）仍旧只掉一件，不吃改动的亏。 */
   fillBag(pool) {
     const B = CFG.CORPSE_BAG || {};
     const on = !Array.isArray(B.factions) || B.factions.indexOf(this.key) >= 0;
@@ -1364,7 +1364,12 @@ class Corpse {
       return 1;
     }
     this.bagLv = Loot.rollBagLevel();
-    this.bagName = (B.names || {})[this.bagLv] || '';
+    const bagId = 'bag0' + this.bagLv;
+    const def = (typeof BACKPACK !== 'undefined' && BACKPACK.def(bagId)) || null;
+    this.bagName = def ? def.name : '';
+    /* 包本身放最前面：它是这具尸体上最值钱的一件，也是"能装几件"的来源 */
+    const bagItem = (typeof EQUIP !== 'undefined') ? EQUIP.bag(bagId) : null;
+    if (bagItem) this.loot.push({ item: bagItem, n: 1, corpseBag: true });
     const cap = (B.itemsByLevel || {})[this.bagLv] || this.bagLv;
     const used = new Set();
     for (let i = 0; i < cap; i++) {
