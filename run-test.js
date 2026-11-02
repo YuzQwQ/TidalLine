@@ -1562,6 +1562,43 @@ console.log('\n=== 双轴后坐力 ===');
        '实际 ' + ((PR.shootAngle - a0) * 180 / Math.PI).toFixed(3) + '° / 理论 ' +
        (want * 180 / Math.PI).toFixed(3) + '°');
   }
+
+  /* 压枪：鼠标往玩家身上拉、甚至拉过头，准星不能甩到身后 */
+  {
+    aimAt(0, 200);
+    PR.rV = AX.v.max; PR.rH = 0;
+    PR.updateAimPoint(PR.aimMouse.x, PR.aimMouse.y);
+
+    let prev = null, maxJump = 0, crossed = false, minDist = 1e9;
+    /* 从玩家右侧 40px 一路拉到左侧 10px：压枪最容易踩到的那一段 */
+    for (let dx = 40; dx >= -10; dx -= 1) {
+      PR.updateAimPoint(PR.x + dx, PR.y);
+      const R = PR.aimPoint;
+      if (prev) maxJump = Math.max(maxJump, Math.hypot(R.x - prev.x, R.y - prev.y));
+      prev = { x: R.x, y: R.y };
+      if (R.x < PR.x) crossed = true;
+      minDist = Math.min(minDist, Math.hypot(R.x - PR.x, R.y - PR.y));
+    }
+    ok('压枪拉过玩家时准星不翻到身后', !crossed,
+       '最后停在玩家右侧 ' + (PR.aimPoint.x - PR.x).toFixed(1) + 'px');
+    ok('准星逐像素移动时保持连续（无瞬移）', maxJump < 3.5,
+       '单步最大跳变 ' + maxJump.toFixed(2) + 'px');
+    ok('准星与玩家保持最小距离', minDist >= (AX.keep || 18) - 1e-6,
+       '最近 ' + minDist.toFixed(2) + 'px / 下限 ' + (AX.keep || 18));
+    /* 鼠标确实移到另一侧足够远时才应该转身 */
+    PR.updateAimPoint(PR.x - 60, PR.y);
+    ok('明确移到另一侧后才转身', PR.aimPoint.x < PR.x,
+       'R 在玩家左侧 ' + (PR.x - PR.aimPoint.x).toFixed(1) + 'px');
+  }
+
+  /* 鼠标贴着玩家时朝向锁定，不会因为手抖/拉过头翻 180° */
+  {
+    PR.angle = 1.0;
+    PR.update(1 / 60, { mx: 0, my: 0, aimAngle: Math.PI, aimX: PR.x + 6, aimY: PR.y });
+    ok('鼠标在死区内不改朝向', Math.abs(PR.angle - 1.0) < 1e-9, PR.angle.toFixed(4));
+    PR.update(1 / 60, { mx: 0, my: 0, aimAngle: Math.PI, aimX: PR.x + 60, aimY: PR.y });
+    ok('鼠标离开死区才改朝向', Math.abs(PR.angle - Math.PI) < 1e-9, PR.angle.toFixed(4));
+  }
 }
 
 console.log('\n---------------------------------------');

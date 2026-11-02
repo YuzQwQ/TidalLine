@@ -137,6 +137,8 @@ const RANGE_PARAMS = [
   { group: '双轴后坐力', key: 'vMax',        label: '垂直上限',     unit: 'px',  where: 'g', min: 1,   max: 120,  step: 1,    digits: 0 },
   { group: '双轴后坐力', key: 'vDecayDelay', label: '垂直回正延迟', unit: 's',   where: 'g', min: 0,   max: 1,    step: 0.01, digits: 2 },
   { group: '双轴后坐力', key: 'vDecay',      label: '垂直回正速度', unit: '/s',  where: 'g', min: 0.5, max: 30,   step: 0.1,  digits: 1 },
+  { group: '双轴后坐力', key: 'keep',        label: '准星距玩家下限', unit: 'px', where: 'g', min: 8,  max: 80,   step: 1,    digits: 0 },
+  { group: '双轴后坐力', key: 'aimDead',     label: '朝向死区',     unit: 'px',  where: 'g', min: 2,   max: 40,   step: 1,    digits: 0 },
 
   // 散布与准星
   { group: '散布与准星', key: 'spreadBase',     label: '基础散布',     unit: '°',   where: 'w', min: 0,   max: 15,   step: 0.1,  digits: 2, mul: 180 / Math.PI },
@@ -170,6 +172,8 @@ const RANGE_DEF_G = {
   moveMult: CFG.RECOIL.moveMult, sprintMult: CFG.RECOIL.sprintMult, sneakMult: CFG.RECOIL.sneakMult,
   kickMin: CFG.RECOIL.kickMin, kickScale: CFG.RECOIL.kickScale, kickDecay: CFG.RECOIL.kickDecay,
   /* 双轴后坐力（像素）。h = 水平（垂线方向），v = 垂直（沿瞄准线推远） */
+  keep: CFG.RECOIL.axis.keep,
+  aimDead: CFG.P.AIM_DEAD,
   hKick: CFG.RECOIL.axis.h.kick, hRand: CFG.RECOIL.axis.h.rand, hMax: CFG.RECOIL.axis.h.max,
   hDecayDelay: CFG.RECOIL.axis.h.decayDelay, hDecay: CFG.RECOIL.axis.h.decay,
   vKick: CFG.RECOIL.axis.v.kick, vMax: CFG.RECOIL.axis.v.max,
@@ -255,6 +259,11 @@ const Range = {
       Object.assign(CFG.RECOIL, this.savedG);
       this.savedG = null;
     }
+    /* 朝向死区在 CFG.P 上，不在 RECOIL 里，单独还原 */
+    if (this.savedDead != null) {
+      CFG.P.AIM_DEAD = this.savedDead;
+      this.savedDead = null;
+    }
     if (this.panel) this.panel.classList.add('hidden');
     this.targets = [];
     Game.targets = [];
@@ -333,9 +342,15 @@ const Range = {
     const g = this.g, R = CFG.RECOIL;
     /* 快照要连 axis 一起深拷：只 Object.assign 顶层的话 axis 还是同一个对象，
        调完参数退出靶场就还原不回去了。 */
-    if (!this.savedG) this.savedG = Object.assign({}, R, {
-      axis: { h: Object.assign({}, R.axis.h), v: Object.assign({}, R.axis.v) }
-    });
+    if (!this.savedG) {
+      this.savedG = Object.assign({}, R, {
+        axis: {
+          keep: R.axis.keep,
+          h: Object.assign({}, R.axis.h), v: Object.assign({}, R.axis.v)
+        }
+      });
+      this.savedDead = CFG.P.AIM_DEAD;
+    }
     R.max = g.max;
     R.decayDelay = g.decayDelay;
     R.decay = g.decay;
@@ -347,6 +362,8 @@ const Range = {
     R.kickDecay = g.kickDecay;
     /* 双轴后坐力 */
     const AX = R.axis;
+    AX.keep = g.keep;
+    CFG.P.AIM_DEAD = g.aimDead;
     AX.h.kick = g.hKick;   AX.h.rand = g.hRand;   AX.h.max = g.hMax;
     AX.h.decayDelay = g.hDecayDelay;  AX.h.decay = g.hDecay;
     AX.v.kick = g.vKick;   AX.v.max = g.vMax;

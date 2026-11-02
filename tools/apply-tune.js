@@ -167,6 +167,30 @@ function patchConfig(src, tune, changes, warn) {
   const recoil = tune.recoil || {};
   if (!Object.keys(recoil).length) return src;
 
+  /* 朝向死区在 CFG.P 上，不属于 RECOIL，先单独处理 */
+  if ('aimDead' in recoil) {
+    const pHead = src.indexOf('  P: {');
+    if (pHead < 0) {
+      warn('js/config.js 里找不到 CFG.P，aimDead 无法写回');
+    } else {
+      const pOpen = src.indexOf('{', pHead);
+      const pEnd = matchBrace(src, pOpen);
+      if (pEnd < 0) {
+        warn('CFG.P 的花括号不配对，aimDead 跳过');
+      } else {
+        const r = setField(src.slice(pOpen, pEnd + 1), 'AIM_DEAD', recoil.aimDead);
+        if (!r.replaced) {
+          warn('CFG.P 里没有 AIM_DEAD 字段，跳过');
+        } else {
+          if (r.from !== Number(recoil.aimDead)) {
+            changes.push({ file: 'js/config.js', where: 'P.AIM_DEAD', from: r.from, to: Number(recoil.aimDead) });
+          }
+          src = src.slice(0, pOpen) + r.text + src.slice(pEnd + 1);
+        }
+      }
+    }
+  }
+
   const head = src.indexOf('RECOIL: {');
   if (head < 0) throw new Error('js/config.js 里找不到 `RECOIL: {`');
   const open = src.indexOf('{', head);
@@ -184,6 +208,18 @@ function patchConfig(src, tune, changes, warn) {
     const aOpen = am.index + am[0].length - 1;
     const aEnd = matchBrace(block, aOpen);
     let ax = block.slice(aOpen, aEnd + 1);
+    /* keep 在 axis 顶层（不在 h/v 里），单独处理 */
+    if ('keep' in recoil) {
+      const r = setField(ax, 'keep', recoil.keep);
+      if (r.replaced) {
+        ax = r.text;
+        if (r.from !== Number(recoil.keep)) {
+          changes.push({ file: 'js/config.js', where: 'RECOIL.axis.keep', from: r.from, to: Number(recoil.keep) });
+        }
+      } else {
+        warn('js/config.js 的 RECOIL.axis 里没有 keep 字段，跳过');
+      }
+    }
     for (const key in AXIS_MAP) {
       if (!(key in recoil)) continue;
       const which = AXIS_MAP[key][0], field = AXIS_MAP[key][1];

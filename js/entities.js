@@ -288,11 +288,30 @@ class Player {
     if (typeof mx !== 'number' || typeof my !== 'number' || !isFinite(mx) || !isFinite(my)) return;
     const dx = mx - this.x, dy = my - this.y;
     const d = Math.hypot(dx, dy);
-    if (d > 2) { this.aimDir.x = dx / d; this.aimDir.y = dy / d; }
+    /* 死区内不更新方向：鼠标压在角色身上时方向没有意义，
+       而且压枪把鼠标往回拉、一不小心跨过去就会翻转 180°。 */
+    const dead = CFG.P.AIM_DEAD || 12;
+    if (d > dead) { this.aimDir.x = dx / d; this.aimDir.y = dy / d; }
     const Dx = this.aimDir.x, Dy = this.aimDir.y;
     const Nx = -Dy, Ny = Dx;
-    this.aimPoint.x = mx + Dx * this.rV + Nx * this.rH;
-    this.aimPoint.y = my + Dy * this.rV + Ny * this.rH;
+    /* 偏移量受"鼠标离玩家还剩多少"限制：
+       准星本来就被推向鼠标外侧，鼠标一贴近玩家，推远就会把准星甩到身后。
+       留 keep 的余量（默认 18px），保证准星永远停在玩家前方、不会越过去。 */
+    const keep = CFG.RECOIL.axis.keep || 18;
+    const room = Math.max(0, d - keep);
+    const offLen = Math.hypot(this.rV, this.rH);
+    const k = (offLen > 1e-9 && offLen > room) ? room / offLen : 1;
+    this.aimPoint.x = mx + (Dx * this.rV + Nx * this.rH) * k;
+    this.aimPoint.y = my + (Dy * this.rV + Ny * this.rH) * k;
+
+    /* 鼠标贴到（或跨过）玩家时，准星不能跟着钻进去：
+       按最后一次有效方向把它顶到 keep 远处。这一条是"压枪拉过头就转身"的关键 ——
+       死区里方向不变，准星就稳稳停在身前，不会跳到身后去。 */
+    const rd = Math.hypot(this.aimPoint.x - this.x, this.aimPoint.y - this.y);
+    if (rd < keep) {
+      this.aimPoint.x = this.x + Dx * keep;
+      this.aimPoint.y = this.y + Dy * keep;
+    }
     /* 记住鼠标点：开火累加后要立刻按新位移重算一次，不然这一帧画的还是旧位置 */
     this.aimMouse.x = mx;
     this.aimMouse.y = my;
@@ -310,9 +329,12 @@ class Player {
     return Math.atan2(dy, dx);
   }
 
-  updateAim(dt) {
+  checkAimProfile() {
     const profile=this.slot+':'+this.weapon.id+':'+(this.body?.id||'none')+':'+(this.body?.aimPenaltyPct||0)+':'+!!this.meleeActive;
     if(this.aimProfile!==profile){this.aimProfile=profile;this.resetAim();}
+  }
+  updateAim(dt) {
+    this.checkAimProfile();
     if(this.moving||this.sprinting||this.dodgeT>0||this.reloadT>0||this.meleeActive)this.resetAim();
     else this.aimRemaining=Math.max(0,this.aimRemaining-dt);
     this.syncSpread();
@@ -399,10 +421,18 @@ class Player {
     this.sinceShot += dt;
     this.finishReloadIfDone();
 
-    this.angle = input.aimAngle;
-    /* 准星落点按鼠标世界坐标算（Game.update 每帧塞进 input.aimX/aimY）；
-       没有坐标的调用方（测试、AI）保持旧行为，不影响弹道。 */
-    if (input.aimX != null && input.aimY != null) this.updateAimPoint(input.aimX, input.aimY);
+    /* 朝向：鼠标贴着角色时 atan2 会剧烈抖动；更麻烦的是双轴后坐力把准星推远后，
+       玩家为了压枪会把鼠标往自己身上拉，拉过头就翻 180°。所以给一个死区：
+       鼠标离玩家超过 AIM_DEAD 才改朝向，要转身就得明确移到另一侧。 */
+    if (input.aimX != null && input.aimY != null) {
+      const adx = input.aimX - this.x, ady = input.aimY - this.y;
+      if (Math.hypot(adx, ady) > (CFG.P.AIM_DEAD || 12)) this.angle = input.aimAngle;
+      /* 准星落点按鼠标世界坐标算（Game.update 每帧塞进 input.aimX/aimY） */
+      this.updateAimPoint(input.aimX, input.aimY);
+    } else {
+      /* 没有坐标的调用方（测试、AI）保持旧行为 */
+      this.angle = input.aimAngle;
+    }
     this.sneaking = input.sneak;
     this.sprinting = input.sprint && !input.sneak;
     /* 治疗期间可以走，但不能冲刺——冲刺直接打断 */
@@ -557,6 +587,7 @@ class Player {
   tryShoot() {
     Medical.cancel();
     if (this.dead || !this.weapons[this.slot]) return false;
+    this.checkAimProfile();
     if (this.reloadT > 0) return false;
     if (this.fireCd > 0) return false;
     if (this.dodgeT > 0) return false;
