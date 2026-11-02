@@ -526,6 +526,21 @@ function rarityCounts(list) {
 
 /* ---------------- 掉落表 ---------------- */
 const Loot = {
+  /* 尸体背包等级：1~3，权重在 CFG.CORPSE_BAG.levelWeights。
+     等级 = 这个容器能搜出几件普通物品（子弹与身上装备不算）。 */
+  rollBagLevel() {
+    const B = CFG.CORPSE_BAG || {};
+    const w = B.levelWeights || [1, 0, 0];
+    const total = w.reduce((s, v) => s + (v > 0 ? v : 0), 0);
+    if (!(total > 0)) return 1;
+    let roll = Math.random() * total;
+    for (let i = 0; i < w.length; i++) {
+      if (!(w[i] > 0)) continue;
+      roll -= w[i];
+      if (roll <= 0) return i + 1;
+    }
+    return w.length;
+  },
   /* 指定物品池也按稀有度加权，尸体不能绕过新等级规则等概率产出孤品。 */
   pickFromPool(pool) {
     const available=pool.filter(item=>!item.noLoot&&RARITY_WEIGHT[item.r]>0);
@@ -628,7 +643,7 @@ const Loot = {
     const kinds = (options && options.kinds) || ['helmet', 'body', 'bag'];
     const kind = U.pick(kinds);
     /* 背包只有五档，护甲只掷到五级，所以 lv 一定在各自表里 */
-    const item = kind === 'bag' ? EQUIP.bag('bag0' + lv) : EQUIP.armor(GEAR.make(kind, lv));
+    const item = kind === 'bag' ? EQUIP.bag('bag0' + lv) : EQUIP.armor(GEAR.random(kind, lv));
     if (!item) return this.roll(quality, null);
     return { item, n: 1 };
   },

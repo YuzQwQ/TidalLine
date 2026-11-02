@@ -157,6 +157,11 @@ window.addEventListener('error', function (e) {
   #lootBox .ttl > span:last-child {
     flex: 0 0 auto; font-size: 10.5px; letter-spacing: 0; color: #55736a;
   }
+  /* 尸体容器：背包等级与可翻出的件数。放不下标题里，单独一行更清楚 */
+  #lootBox .loot-sub {
+    font-size: 10.5px; letter-spacing: 0.4px; color: #55736a;
+    margin: -6px 0 9px;
+  }
   .row {
     display: flex; align-items: center; gap: 8px;
     padding: 6px 7px; margin-bottom: 3px;
@@ -1061,6 +1066,7 @@ window.addEventListener('error', function (e) {
     <div id="hudPanel">
   <div class="box" id="lootBox" style="display:none">
     <div class="ttl"><span id="lootTitle">容器</span><span id="lootHint">E 关闭</span></div>
+    <div class="loot-sub" id="lootSub" style="display:none"></div>
     <div class="eqbar w3" id="lootGear" style="display:none"></div>
     <div class="loot-tip" id="lootGearTip" style="display:none">左键拾取 · 没有同类装备就直接穿上</div>
     <div id="lootList"></div>

@@ -1303,16 +1303,20 @@ class Corpse {
     this.rot = U.pick([0, Math.PI / 2, Math.PI, -Math.PI / 2]);
     this.opened = false;
     this.loot = [];
+    this.bagLv = 0;        // 人型敌人的背包等级（1~3）；0 = 没有背包（回响体）
+    this.bagName = '';
     // 拾荒者身上有他的装备与战利品；回响体留下结晶
     if (enemy.t.faction === 'echo') {
       const od = ITEMS.filter(i => i.cat === 'odd');
       this.loot.push({ item: Loot.pickFromPool(od), n: 1 });
       if (Math.random() < 0.5) this.loot.push({ item: ITEMS.find(i => i.id === 'heal01'), n: 1 });
     } else if (enemy.t.faction === 'guard') {
-      this.loot.push({ item: Loot.pickFromPool(ITEMS.filter(i => i.cat === 'ind' || i.cat === 'elec')), n: 1 });
+      /* 人型：随机等级的背包，等级 = 这具尸体能搜出几件普通物品。
+         子弹和身上穿的枪/头/甲不占这几格 —— 那是他带的东西，不是包里翻出来的。 */
+      this.fillBag(ITEMS.filter(i => i.cat === 'ind' || i.cat === 'elec'));
       this.loot.push({ item: defaultAmmo('556'), n: 12 });
     } else {
-      this.loot.push({ item: Loot.pickFromPool(ITEMS.filter(i => i.r <= 2)), n: 1 });
+      this.fillBag(ITEMS.filter(i => i.r <= 2));
       /* 他包里的弹：等级和自己身上的头甲一致，10~30 发 */
       const lv = enemy.gearLv || 1;
       const caliber = (WEAPONS[enemy.weaponId] || {}).caliber || '9mm';
@@ -1323,5 +1327,30 @@ class Corpse {
       if (enemy.body) this.loot.push({ gear: enemy.body });
       if (enemy.weaponId) this.loot.push({ gun: enemy.weaponId });
     }
+  }
+
+  /* 掷一个背包等级，往里塞对应件数的普通物品。
+     同一具尸体里不抽重复的（三件都是同一罐石头的观感太差），
+     池子抽干就少放，绝不补别的类别。
+     不在 factions 名单里的敌人（目前只有配置里被排除的）仍旧只掉一件，不吃改动的亏。 */
+  fillBag(pool) {
+    const B = CFG.CORPSE_BAG || {};
+    const on = !Array.isArray(B.factions) || B.factions.indexOf(this.key) >= 0;
+    if (!on) {
+      const it = Loot.pickFromPool(pool);
+      if (it) this.loot.push({ item: it, n: 1 });
+      return 1;
+    }
+    this.bagLv = Loot.rollBagLevel();
+    this.bagName = (B.names || {})[this.bagLv] || '';
+    const cap = (B.itemsByLevel || {})[this.bagLv] || this.bagLv;
+    const used = new Set();
+    for (let i = 0; i < cap; i++) {
+      const it = Loot.pickFromPool(pool.filter(x => !used.has(x.id)));
+      if (!it) break;
+      used.add(it.id);
+      this.loot.push({ item: it, n: 1, fromBag: true });
+    }
+    return this.bagLv;
   }
 }

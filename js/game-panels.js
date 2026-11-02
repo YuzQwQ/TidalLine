@@ -23,6 +23,18 @@ Object.assign(Game, {
       ? (obj.enemy ? obj.enemy.t.name + '的尸体' : '尸体')
       : (obj.name || '容器');
 
+    /* 人型尸体的容器带随机等级背包：等级 = 能翻出几件普通物品（子弹与身上装备不算）。
+       放在标题下面单独一行 —— 塞进标题会被右边的状态文字挤成省略号。 */
+    const sub = document.getElementById('lootSub');
+    if (isCorpse && obj.bagLv > 0) {
+      const n = ((CFG.CORPSE_BAG || {}).itemsByLevel || {})[obj.bagLv] || obj.bagLv;
+      sub.textContent = obj.bagName + ' · 能翻出 ' + n + ' 件物品（子弹与装备不计）';
+      sub.style.display = '';
+    } else {
+      sub.textContent = '';
+      sub.style.display = 'none';
+    }
+
     this.search = null;
     this._searchBar = null;
     this.autoSearch = true;      // 打开就一件件往下搜，点某一件才转成目标搜索
@@ -210,7 +222,7 @@ Object.assign(Game, {
       const g = e && e.gear;
       cells.push({
         idx: at.helmet,
-        icon: g ? 'helmet' + g.lv : null,
+        icon: GEAR.icon(g),
         fb: g ? '盔' : '—',
         label: g ? g.short : '头盔',
         tag: g ? Math.ceil(g.dur) + '/' + g.max : '',
@@ -226,7 +238,7 @@ Object.assign(Game, {
       const g = e && e.gear;
       cells.push({
         idx: at.body,
-        icon: g ? 'body' + g.lv : null,
+        icon: GEAR.icon(g),
         fb: g ? '甲' : '—',
         label: g ? g.short : '护甲',
         tag: g ? Math.ceil(g.dur) + '/' + g.max : '',
@@ -386,6 +398,7 @@ Object.assign(Game, {
       P[g.type] = Object.assign({}, g);
     }
 
+    P.resetAim(); // also applies when replacing a weapon with the same model
     if (old) P.bag.slots[i] = { item: old, n: 1 };
     else P.bag.slots.splice(i, 1);
 
@@ -442,7 +455,7 @@ Object.assign(Game, {
       const g = P[type];
       const st = g ? GEAR.state(g) : '';
       cells.push({
-        icon: g ? type + g.lv : null,
+        icon: GEAR.icon(g),
         fb: g ? (type === 'helmet' ? '盔' : '甲') : '',
         label: g ? g.short : (type === 'helmet' ? '头盔' : '护甲'),
         tag: g ? 'Lv' + g.lv : '',

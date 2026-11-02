@@ -894,6 +894,42 @@ ok('尸体记住敌人种类',
 ok('尸体落地朝向取四向之一',
    corpses.every(c => [0, Math.PI / 2, Math.PI, -Math.PI / 2].indexOf(c.rot) >= 0));
 
+// 人型尸体的容器：随机等级背包，等级 = 这个容器能搜出几件普通物品
+{
+  const mk = k => new ctx.Corpse(0, 0, Game.enemies.filter(x => x.key === k)[0]);
+  const many = [];
+  for (let i = 0; i < 300; i++) many.push(mk(i % 2 ? 'guard' : 'scav'));
+  const bagOf = c => c.loot.filter(e => e.fromBag);
+  ok('人型尸体带 1~3 级背包', many.every(c => c.bagLv >= 1 && c.bagLv <= 3),
+     '等级 ' + [...new Set(many.map(c => c.bagLv))].sort().join('/'));
+  ok('三档背包都抽得到', [1, 2, 3].every(l => many.some(c => c.bagLv === l)),
+     [1, 2, 3].map(l => l + '级 ' + many.filter(c => c.bagLv === l).length).join(' / '));
+  ok('搜出的普通物品件数 = 背包等级', many.every(c => bagOf(c).length === c.bagLv),
+     many.map(c => c.bagLv + '→' + bagOf(c).length).slice(0, 6).join(' '));
+  ok('子弹照掉、而且不占背包格',
+     many.every(c => c.loot.some(e => e.item && e.item.cat === 'ammo') && bagOf(c).every(e => e.item.cat !== 'ammo')));
+  ok('同一具尸体的背包里不重复', many.every(c => {
+    const ids = bagOf(c).map(e => e.item.id);
+    return new Set(ids).size === ids.length;
+  }));
+  ok('回响体没有背包（不是人型）',
+     corpses[1].bagLv === 0 && corpses[1].loot.every(e => !e.fromBag),
+     'Lv' + corpses[1].bagLv);
+  /* 名单是配置项：移出去就退回"只掉一件"，不会白给 */
+  {
+    const saveF = CFG.CORPSE_BAG.factions;
+    CFG.CORPSE_BAG.factions = ['scav'];
+    const g2 = mk('guard');
+    ok('背包名单外的敌人不背背包（仍旧掉一件）',
+       g2.bagLv === 0 && g2.loot.filter(e => e.item && e.item.cat !== 'ammo').length === 1,
+       'Lv' + g2.bagLv + ' / 非弹物品 ' + g2.loot.filter(e => e.item && e.item.cat !== 'ammo').length);
+    CFG.CORPSE_BAG.factions = saveF;
+  }
+  ok('尸体默认都还带着自己的枪/甲（不占背包格）',
+     many.filter(c => c.key === 'scav').every(c => c.loot.some(e => e.gun)),
+     '拾荒者样本 ' + many.filter(c => c.key === 'scav').length);
+}
+
 // 图片解析的降级顺序
 Art.map['props/corpse_scav'] = 'scav图像';
 ok('有专属图时用专属图', Art.corpse('scav') === 'scav图像');
