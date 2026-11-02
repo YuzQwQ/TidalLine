@@ -25,6 +25,7 @@ let html = fs.readFileSync(SRC, 'utf8');
 /* bundle.js 可能是构建产物，没跑过 build.js 时不存在：那就只内联 ui.js，
    页面里的采样部分会自动退化成合成音，脚本本身照样能跑 */
 const audioTag = inline('assets/audio/bundle.js');
+const variantTag = inline('tools/rifle-variants.js');
 const uiTag = inline('js/ui.js');
 
 const audioRe = /<script src="\.\.\/assets\/audio\/bundle\.js"><\/script>/;
@@ -33,6 +34,8 @@ if (audioTag) {
 } else {
   html = html.replace(audioRe, '<!-- 没有 assets/audio/bundle.js：采样部分退化为合成音 -->');
 }
+const variantRe = /<script src="rifle-variants\.js"><\/script>/;
+html = html.replace(variantRe, () => variantTag || '<!-- 缺少 tools/rifle-variants.js -->');
 html = html.replace(
   /<script src="\.\.\/js\/ui\.js"><\/script>/,
   () => uiTag || '<!-- 缺少 js/ui.js -->'

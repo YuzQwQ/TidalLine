@@ -673,20 +673,33 @@ const SFX = {
     if (P.crack && on('crack')) {
       const g = amt('crack', P.crack.gain);
       this._noise({
-        t, out, rate, attack: 0.001, dur: P.crack.dur, type: 'highpass',
+        t, out, rate, attack: 0.001, dur: P.crack.dur, type: P.crack.type || 'highpass',
         freq: P.crack.freq, q: P.crack.q, gain: g
       });
+      /* 3ms 的主瞬态之后可以挂一段很弱的噪声残余：
+         纯 3ms 是"咔"，加上残余才像空气被推开之后还没散干净 */
+      if (P.crack.resid) {
+        const r = amt('crack', P.crack.resid.gain);
+        this._noise({
+          t: t + (P.crack.resid.at || 0), out, rate, attack: 0.002,
+          dur: P.crack.resid.dur, type: P.crack.resid.type || 'highpass',
+          freq: P.crack.resid.freq, q: P.crack.resid.q || 0.8, gain: r
+        });
+      }
       made.push({ name: 'crack', at: 0, dur: P.crack.dur, gain: g,
-        filter: 'highpass ' + P.crack.freq + 'Hz' });
+        filter: (P.crack.type || 'highpass') + ' ' + P.crack.freq + 'Hz' +
+          (P.crack.resid ? ' + 残余 ' + Math.round(P.crack.resid.dur * 1000) + 'ms@' +
+            P.crack.resid.gain.toFixed(2) : '') });
     }
     if (P.body && on('body')) {
       const g = amt('body', P.body.gain);
       this._noise({
-        t, out, rate, attack: 0.002, dur: P.body.dur, type: 'lowpass',
-        freq: P.body.from, to: P.body.to, q: 0.9, gain: g
+        t, out, rate, attack: P.body.attack || 0.002, dur: P.body.dur,
+        type: P.body.type || 'lowpass',
+        freq: P.body.from, to: P.body.to, q: P.body.q || 0.9, gain: g
       });
       made.push({ name: 'body', at: 0, dur: P.body.dur, gain: g,
-        filter: 'lowpass ' + P.body.from + '→' + P.body.to + 'Hz' });
+        filter: (P.body.type || 'lowpass') + ' ' + P.body.from + '→' + P.body.to + 'Hz' });
     }
     if (P.sub && on('sub')) {
       const g = amt('sub', P.sub.gain);
@@ -747,7 +760,9 @@ const SFX = {
     for (let i = 0; i < d.length; i++) d[i] = this._rand() * 2 - 1;
     this.noiseBuf = nb;
     try {
-      this._shot(this.GUN[gunId] || this.GUN.rifle, o, gunId);
+      /* opts.profile 可以整份替换枪型参数（诊断用的 A/B/C 变体就这么走），
+         不传就用 GUN 表里的原参数 */
+      this._shot(o.profile || this.GUN[gunId] || this.GUN.rifle, o, gunId);
     } finally {
       this.ctx = old.ctx;
       this.master = old.master;
@@ -757,9 +772,11 @@ const SFX = {
     return off.startRendering();
   },
 
-  /* AudioBuffer → 16bit 单声道 WAV */
-  toWav(buf) {
-    const len = buf.length, rate = buf.sampleRate;
+  /* AudioBuffer → 16bit 单声道 WAV。from/to 是采样下标，用来裁掉尾部静音 */
+  toWav(buf, from, to) {
+    const a = Math.max(0, from || 0);
+    const b = Math.min(buf.length, to == null ? buf.length : to);
+    const len = Math.max(0, b - a), rate = buf.sampleRate;
     const data = buf.getChannelData(0);
     const out = new DataView(new ArrayBuffer(44 + len * 2));
     const str = (o, s) => { for (let i = 0; i < s.length; i++) out.setUint8(o + i, s.charCodeAt(i)); };
@@ -769,7 +786,7 @@ const SFX = {
     out.setUint32(28, rate * 2, true); out.setUint16(32, 2, true); out.setUint16(34, 16, true);
     str(36, 'data'); out.setUint32(40, len * 2, true);
     for (let i = 0; i < len; i++) {
-      const v = Math.max(-1, Math.min(1, data[i]));
+      const v = Math.max(-1, Math.min(1, data[a + i]));
       out.setInt16(44 + i * 2, v < 0 ? v * 0x8000 : v * 0x7FFF, true);
     }
     return out.buffer;

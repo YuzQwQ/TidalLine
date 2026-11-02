@@ -106,6 +106,18 @@
   <tbody></tbody>
 </table>
 
+<h2>步枪诊断 A / B / C</h2>
+<div class="sub" style="margin:-4px 0 10px">
+  同一随机种子，按起音后 120ms 窗口把响度对齐（A/B/C 都是同一水平），峰值都在 -1dBFS 以下。
+  导出的 WAV 在 <code>output/audio-rifle-diag/</code>，含 Crack / Body / Sub 分层文件。
+</div>
+<div class="grid" id="rvGrid"></div>
+<div class="row" style="margin-top:10px">
+  <button id="rvSeq">依次播放 A → B → C</button>
+  <button id="rvLayers" class="ghost">依次播放 A 的三层</button>
+</div>
+<div id="rvNote" class="sub" style="margin-top:8px"></div>
+
 <h2>连发（按各自射速，检查叠加和削波）</h2>
 <div class="row" id="autoRow"></div>
 
@@ -129,6 +141,8 @@
 </script>
 <!-- 采样（脚步 / 换弹 / 切枪）由构建产物内联，file:// 下也能解码 -->
 <script src="../assets/audio/bundle.js"></script>
+<!-- 步枪 A/B/C 变体定义，和导出脚本共用同一份 -->
+<script src="rifle-variants.js"></script>
 <script src="../js/ui.js"></script>
 <script>
   const GUNS = [
@@ -535,6 +549,136 @@
   drawGunRow();
   drawLayers();
   showRecord(null);
+
+  /* ---------------- 步枪诊断 A/B/C ----------------
+     定义在 tools/rifle-variants.js，导出脚本与这个页面共用同一份参数。
+     响度对齐的口径也一致：起音后 120ms 窗口的 RMS。 */
+  const RV = window.RIFLE_VARIANTS || null;
+  const rvCache = { vols: {}, bufs: {} };
+
+  const rvBase = () => JSON.parse(JSON.stringify(SFX.GUN.rifle));
+  const rvProfile = key => {
+    const v = RV.versions[key];
+    return v.patch ? v.patch(rvBase()) : rvBase();
+  };
+
+  /* 同口径的测量：120ms 窗口 RMS + 峰值 + 有声段 */
+  const rvMeasure = buf => {
+    const d = buf.getChannelData(0);
+    let first = -1, last = -1, peak = 0;
+    for (let i = 0; i < d.length; i++) {
+      const a = Math.abs(d[i]);
+      if (a > peak) peak = a;
+      if (a > 0.0005) { if (first < 0) first = i; last = i; }
+    }
+    if (first < 0) return { rms120: 0, peak: 0, dur: 0 };
+    const wEnd = Math.min(last, first + Math.round(0.12 * buf.sampleRate));
+    let s = 0;
+    for (let i = first; i <= wEnd; i++) s += d[i] * d[i];
+    return {
+      rms120: Math.sqrt(s / Math.max(1, wEnd - first + 1)),
+      peak, dur: (last - first + 1) / buf.sampleRate
+    };
+  };
+
+  async function rvSolve(key) {
+    if (rvCache.vols[key] != null) return rvCache.vols[key];
+    const prof = rvProfile(key), layers = RV.versions[key].layers;
+    let vol = 1, best = null, bestScore = Infinity;
+    for (let i = 0; i < 8; i++) {
+      SFX.setSeed(RV.seed);
+      const buf = await SFX.renderShot('rifle', { profile: prof, layers, vol }, 1.0);
+      const m = rvMeasure(buf);
+      const ok = m.peak <= RV.maxPeak;
+      const score = ok ? Math.abs(Math.log(m.rms120 / RV.targetRms)) : 100 + m.peak;
+      if (score < bestScore) { bestScore = score; best = { buf, m, vol }; }
+      if (ok && score < 0.02) break;
+      vol *= ok ? RV.targetRms / m.rms120 : (RV.maxPeak / m.peak) * 0.92;
+    }
+    rvCache.vols[key] = best.vol;
+    rvCache.bufs[key] = best.buf;
+    rvCache.m = Object.assign(rvCache.m || {}, { [key]: best.m });
+    return best.vol;
+  }
+
+  function rvCard(host, title, note, play, extra) {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = '<h3>' + title + '</h3><div class="meta">' + note + '</div>';
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.style.marginTop = '8px';
+    play.forEach(p => {
+      const b = document.createElement('button');
+      b.textContent = p.label;
+      if (p.ghost) b.className = 'ghost';
+      b.onclick = p.run;
+      row.appendChild(b);
+    });
+    el.appendChild(row);
+    if (extra) {
+      const m = document.createElement('div');
+      m.className = 'meta';
+      m.textContent = extra;
+      el.appendChild(m);
+    }
+    host.appendChild(el);
+    return el;
+  }
+
+  async function rvPlay(key) {
+    const vol = await rvSolve(key);
+    playBuffer(rvCache.bufs[key]);
+    const m = rvMeasure(rvCache.bufs[key]);
+    say(key + '：' + RV.versions[key].label + ' · vol ' + vol.toFixed(3) +
+      ' · RMS120 ' + m.rms120.toFixed(3) + ' · 峰值 ' + db(m.peak) + 'dBFS · ' + m.dur.toFixed(3) + 's');
+  }
+
+  async function rvPlayLayer(key, layer) {
+    const prof = rvProfile(key);
+    const vol = await rvSolve(key);
+    SFX.setSeed(RV.seed);
+    const buf = await SFX.renderShot('rifle', { profile: prof, layers: [layer], vol }, 1.0);
+    playBuffer(buf);
+    const m = rvMeasure(buf);
+    say(key + ' 的 ' + layer + ' 单层：RMS120 ' + m.rms120.toFixed(3) +
+      ' · 峰值 ' + db(m.peak) + 'dBFS · ' + m.dur.toFixed(3) + 's（用同一 vol 与种子）');
+  }
+
+  if (RV) {
+    const host = $('rvGrid');
+    Object.keys(RV.versions).forEach(key => {
+      const v = RV.versions[key];
+      rvCard(host, key + ' · ' + v.label, v.note, [
+        { label: '试听', run: () => rvPlay(key) }
+      ]);
+    });
+    const layerHost = document.createElement('div');
+    layerHost.className = 'grid';
+    layerHost.style.marginTop = '10px';
+    $('rvGrid').after(layerHost);
+    [['A', 'crack'], ['A', 'body'], ['A', 'sub'], ['C', 'crack'], ['C', 'body']].forEach(([k, l]) => {
+      rvCard(layerHost, k + ' 的 ' + LAYER_LABEL[l] + ' · ' + l, '单独一层，同一 vol 与种子', [
+        { label: '试听', ghost: true, run: () => rvPlayLayer(k, l) }
+      ]);
+    });
+    $('rvSeq').onclick = async () => {
+      for (const k of Object.keys(RV.versions)) {
+        await rvPlay(k);
+        await new Promise(r => setTimeout(r, 900));
+      }
+    };
+    $('rvLayers').onclick = async () => {
+      for (const l of ['crack', 'body', 'sub']) {
+        await rvPlayLayer('A', l);
+        await new Promise(r => setTimeout(r, 700));
+      }
+    };
+    $('rvNote').textContent = '种子 ' + RV.seed + ' · 响度目标 RMS120 ' + RV.targetRms +
+      ' · 峰值上限 ' + RV.maxPeak;
+  } else {
+    $('rvNote').textContent = '没找到 tools/rifle-variants.js，诊断区已跳过';
+  }
 </script>
 </body>
 </html>
