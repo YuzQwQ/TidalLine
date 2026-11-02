@@ -1,0 +1,1955 @@
+{
+  "version": "1.0",
+  "status": "design_only_not_runtime",
+  "approvedScope": "设计包与三张立绘；信任门槛、任务分支、商品解锁后续实装",
+  "source": "BRIEF_V1.md",
+  "characters": [
+    {
+      "id": "merchant_armor",
+      "name": "玛拉·维恩",
+      "englishName": "Mara Vane",
+      "age": 48,
+      "gender": "女",
+      "role": "护甲、头盔、背包与防护用品",
+      "alignment": "守序中立，偏守序邪恶（作者定位，不向玩家显示）",
+      "publicIdentity": "原环礁湾港务体系防护物资采购负责人，现经营防护装备生意。",
+      "theme": "秩序高于公平。",
+      "biography": "玛拉曾管理港区的防护物资采购。第一次潮汐恶化时，她参与装备调配、运输资源分配与撤离名额审核。她保留了部分账册和供货关系，灾后重新经营防护装备生意。她守合同，也相信稀缺资源应该优先分给能够维持秩序的人；其中一些决定让她获利，另一些决定至今仍有人追问。",
+      "appearance": "48岁，宽肩、结实，短而微卷的深色头发，面部线条清晰，眼神冷静审视。赭黄工作衫、耐磨帆布马甲，旧软尺、钥匙和标签夹。一手扶护甲样品，另一手压住账册。暖棕、橄榄绿，衣着整洁而有磨损。",
+      "traits": [
+        "礼貌稳重，善于判断履约能力",
+        "利用信息差，但不以假货牟利",
+        "把资源分配视为职责，很少接受纯粹感情上的请求"
+      ],
+      "concealment": "保存的撤离记录能证明她并非随意调配，也能显示她曾优先保护有权势或有交易价值的人。",
+      "principle": "已经答应的交付必须落实，商品状态必须说清。",
+      "risk": "她可能把合同和名额置于个体处境之上。",
+      "preference": "履约、秩序与可靠交付",
+      "trustMeaning": "愿意动用供货关系、为玩家承担调货和周转成本，把稀缺名额留给玩家。",
+      "tradeThresholds": [
+        0,
+        300000,
+        1200000,
+        3000000
+      ],
+      "dialogue": {
+        "initial": "柜台上的都是公开货。价钱写着，规矩也写着。",
+        "purchase": "数量对过了，交付也记上。",
+        "lowTrust": "先把这一笔做完，再谈下一批。",
+        "midTrust": "你交回来的东西和清单相符。以后可以提前问货。",
+        "highTrust": "这批有你的份。留货的条件，我们按上次说的办。",
+        "questAccept": "清单上每一项都写了。交不齐，就先告诉我。",
+        "questComplete": "东西收到了。你守约，我也会记着。",
+        "keyStory": "当时谁都想上车。可车位不是祈祷出来的。"
+      },
+      "quests": [
+        "mara_01",
+        "mara_02",
+        "mara_03",
+        "mara_04",
+        "mara_05",
+        "mara_06"
+      ],
+      "branch": {
+        "cooperate": "将完整原件交给她内部存档，接受她对保密的要求。",
+        "alternative": "拒绝封存争议记录，保留经核对副本；另做一次独立验货，证明仍能可靠合作。",
+        "cooperateBonus": "防护装备额外1%采购折扣；获取内部调度用语。",
+        "alternativeBonus": "一份不同视角的核对材料与一次防护样品奖励；同样获得最高常规货架权限。"
+      },
+      "portrait": "assets/npc-art/merchants/merchant_armor.png",
+      "levels": [
+        {
+          "level": 1,
+          "name": "初识",
+          "minReputation": 0,
+          "minTrade": 0,
+          "requiredFlags": [],
+          "priceMultiplier": 1
+        },
+        {
+          "level": 2,
+          "name": "熟客",
+          "minReputation": 25,
+          "minTrade": 300000,
+          "requiredFlags": [
+            "mara_02_resolved"
+          ],
+          "priceMultiplier": 1
+        },
+        {
+          "level": 3,
+          "name": "合作者",
+          "minReputation": 60,
+          "minTrade": 1200000,
+          "requiredFlags": [
+            "mara_03_resolved"
+          ],
+          "priceMultiplier": 0.98
+        },
+        {
+          "level": 4,
+          "name": "核心关系",
+          "minReputation": 85,
+          "minTrade": 3000000,
+          "requiredFlags": [
+            "mara_05_resolved"
+          ],
+          "priceMultiplier": 0.96
+        }
+      ]
+    },
+    {
+      "id": "merchant_guns",
+      "name": "埃德加·洛克",
+      "englishName": "Edgar Locke",
+      "age": 55,
+      "gender": "男",
+      "role": "枪械、弹药，后续配件与改装",
+      "alignment": "混沌中立，偏中立邪恶（作者定位）",
+      "publicIdentity": "退役军械技术员，兼营灰色渠道武器供应和维护。",
+      "theme": "结果比代价更重要。",
+      "biography": "埃德加曾向安保承包商、地下武装和特殊护送队提供军械与维护支持。潮汐之后，他开始收集异常环境中的故障、穿透和射击反馈。他提供可靠的武器，也会提出危险的测试委托。比起亲自验证，他更愿意付钱给能把记录带回来的探索者。",
+      "appearance": "55岁，干瘦略高，灰白寸发、矩形眼镜、敏锐而带疲态的目光。钢蓝工装、灰黑马甲或旧工业夹克，工具摆放整齐。手持卸下的弹匣与小型工具，台上有维护布、零件和出入库簿。精明克制，偶有干涩的幽默。",
+      "traits": [
+        "关注结果与数据，愿意解释技术",
+        "对来源谨慎，对品质有职业洁癖",
+        "珍惜自己的性命，容易把别人的风险当作测试成本"
+      ],
+      "concealment": "他知道部分试验委托的风险高于委托说明所透露的程度，保留着更完整的失败记录。",
+      "principle": "不把自己知道有品质问题的武器当好货出售。",
+      "risk": "会把测试对象和执行者的生命过度工具化。",
+      "preference": "结果、可靠数据和保密",
+      "trustMeaning": "愿意提供高级货源与完整一些的测试记录，让玩家参与重要的采购和反馈。",
+      "tradeThresholds": [
+        0,
+        400000,
+        1500000,
+        4000000
+      ],
+      "dialogue": {
+        "initial": "口径、用途、预算。按这个顺序说。",
+        "purchase": "交付前查过了。回来时告诉我它表现怎么样。",
+        "lowTrust": "先给我一个能核对的结果。",
+        "midTrust": "这份记录有用。比一句“打得不错”有用得多。",
+        "highTrust": "这次把完整的测试说明也给你。看完再决定。",
+        "questAccept": "条件写在纸上。哪一条不能接受，现在说。",
+        "questComplete": "样品和记录都在，省了我不少猜测。",
+        "keyStory": "我没骗他们安全。我只是没替他们问第二遍。"
+      },
+      "quests": [
+        "edgar_01",
+        "edgar_02",
+        "edgar_03",
+        "edgar_04",
+        "edgar_05",
+        "edgar_06"
+      ],
+      "branch": {
+        "cooperate": "接受他的保密测试条件，亲自执行已告知危险的采样；不安排无辜者充当目标。",
+        "alternative": "拒绝他原先隐去风险的安排，改用充分告知的对照试验或独立故障日志完成核验。",
+        "cooperateBonus": "高级弹药额外1%采购折扣；取得他的私人技术批注。",
+        "alternativeBonus": "取得执行者一侧的完整日志与一份普通弹药奖励；同样获得最高常规货架权限。"
+      },
+      "portrait": "assets/npc-art/merchants/merchant_guns.png",
+      "levels": [
+        {
+          "level": 1,
+          "name": "初识",
+          "minReputation": 0,
+          "minTrade": 0,
+          "requiredFlags": [],
+          "priceMultiplier": 1
+        },
+        {
+          "level": 2,
+          "name": "熟客",
+          "minReputation": 25,
+          "minTrade": 400000,
+          "requiredFlags": [
+            "edgar_02_resolved"
+          ],
+          "priceMultiplier": 1
+        },
+        {
+          "level": 3,
+          "name": "合作者",
+          "minReputation": 60,
+          "minTrade": 1500000,
+          "requiredFlags": [
+            "edgar_03_resolved"
+          ],
+          "priceMultiplier": 0.98
+        },
+        {
+          "level": 4,
+          "name": "核心关系",
+          "minReputation": 85,
+          "minTrade": 4000000,
+          "requiredFlags": [
+            "edgar_05_resolved"
+          ],
+          "priceMultiplier": 0.96
+        }
+      ]
+    },
+    {
+      "id": "merchant_doctor",
+      "name": "林岑",
+      "englishName": "Lin Cen",
+      "age": 41,
+      "gender": "女",
+      "role": "医疗品、针剂与后续损伤及异常处理",
+      "alignment": "守序善良，后期可向混沌善良偏移（作者定位）",
+      "publicIdentity": "原环礁湾市立医院急诊医生，现经营临时诊台与医疗供应点。",
+      "theme": "只要还有可能，就不该放弃。",
+      "biography": "林岑参与过首次潮汐中的急救、医疗分流与一项保密的异常患者观察计划。她见过仍有反应的患者被长期维持，也见过救治逐渐变成观察。撤离时，她带走部分病例资料。如今她在相对安全的落脚点行医，继续寻找那些记录的后续；她的善意真实存在，也让她越来越难接受救治必须停止的可能。",
+      "appearance": "41岁，黑发盘起，面容克制温和，眼下有疲态，目光平静专注。实用的旧象牙白医疗外套，内搭灰绿衬衣，手持纸质病历夹，口袋有笔和手电。桌面仅有少量绷带、药瓶与记录本。成熟、可靠，带压抑的忧虑。",
+      "traits": [
+        "愿意听完，重视病例与隐私",
+        "对普通患者有明确同情心",
+        "一旦涉及可能仍有意识的患者，会对资源和他人风险失去分寸"
+      ],
+      "concealment": "她保留着异常患者观察资料，也隐瞒了自己持续追查和投入资源的程度。",
+      "principle": "患者不是仅供获得结论的材料；但她也必须面对自己是否仍尊重患者意愿。",
+      "risk": "为了不放弃一个人，可能要求别人承担不合理的风险。",
+      "preference": "坦诚、可靠病例与救助",
+      "trustMeaning": "愿意提供贵重医疗物资、分享病例与研究疑问，让玩家参与她不愿独自作出的判断。",
+      "tradeThresholds": [
+        0,
+        100000,
+        450000,
+        1200000
+      ],
+      "dialogue": {
+        "initial": "哪里受伤、接触过什么，慢慢说，不用急。",
+        "purchase": "药盒上的说明留着。有不清楚的先问。",
+        "lowTrust": "缺的那一段接触史，我暂时记作未知。",
+        "midTrust": "这次的记录完整，我可以据此安排下一步。",
+        "highTrust": "有一份病历，我希望你看过再回答我。",
+        "questAccept": "先保证你能回来。记录不全可以补，人回不来就没有下一次。",
+        "questComplete": "这些情况很重要。我会把来源一并记下。",
+        "keyStory": "我不是想证明自己是对的。我只是……不想再那么轻易放弃任何一个人。"
+      },
+      "quests": [
+        "lin_01",
+        "lin_02",
+        "lin_03",
+        "lin_04",
+        "lin_05",
+        "lin_06"
+      ],
+      "branch": {
+        "cooperate": "在充分告知、有退出条件的前提下，支持一轮有明确上限的救治尝试。",
+        "alternative": "拒绝持续扩大风险，提交患者意愿与独立病例核验，要求她接受资源和救治边界。",
+        "cooperateBonus": "一次限量常规医疗补给；看到她后续观察记录。",
+        "alternativeBonus": "一份完整病例副本与等值常规医疗补给；同样获得最高常规货架权限。"
+      },
+      "portrait": "assets/npc-art/merchants/merchant_doctor.png",
+      "levels": [
+        {
+          "level": 1,
+          "name": "初识",
+          "minReputation": 0,
+          "minTrade": 0,
+          "requiredFlags": [],
+          "priceMultiplier": 1
+        },
+        {
+          "level": 2,
+          "name": "熟客",
+          "minReputation": 25,
+          "minTrade": 100000,
+          "requiredFlags": [
+            "lin_02_resolved"
+          ],
+          "priceMultiplier": 1
+        },
+        {
+          "level": 3,
+          "name": "合作者",
+          "minReputation": 60,
+          "minTrade": 450000,
+          "requiredFlags": [
+            "lin_03_resolved"
+          ],
+          "priceMultiplier": 0.98
+        },
+        {
+          "level": 4,
+          "name": "核心关系",
+          "minReputation": 85,
+          "minTrade": 1200000,
+          "requiredFlags": [
+            "lin_05_resolved"
+          ],
+          "priceMultiplier": 0.96
+        }
+      ]
+    }
+  ],
+  "quests": [
+    {
+      "id": "mara_01",
+      "merchantId": "merchant_armor",
+      "title": "遗失货单",
+      "phase": "基础回收",
+      "objective": "在临海路仓库回收一份护具验货单并撤离交付。",
+      "location": "仓库（拟新增任务交互点）",
+      "requiresFeature": "quest_interaction",
+      "story": "她先确认玩家能否按清单办事。",
+      "status": "design_only",
+      "minTrust": 1,
+      "prerequisites": [],
+      "rewards": {
+        "reputation": 10,
+        "credits": 20000
+      },
+      "branch": null
+    },
+    {
+      "id": "mara_02",
+      "merchantId": "merchant_armor",
+      "title": "完好的扣具",
+      "phase": "基础回收",
+      "objective": "回收指定封装的背带扣具，保持封装可辨并交付。",
+      "location": "工具铺／仓库（拟）",
+      "requiresFeature": "quest_items",
+      "story": "用可核对的包装状态表达保护物资，不新增耐久系统。",
+      "status": "design_only",
+      "minTrust": 1,
+      "prerequisites": [
+        "mara_01"
+      ],
+      "rewards": {
+        "reputation": 15,
+        "credits": 35000
+      },
+      "branch": null
+    },
+    {
+      "id": "mara_03",
+      "merchantId": "merchant_armor",
+      "title": "封存仓单",
+      "phase": "中期调查",
+      "objective": "比对旧仓单与银行保存的调拨副本，交回不一致之处。",
+      "location": "仓库、银行办公室（拟）",
+      "requiresFeature": "document_comparison",
+      "story": "玩家发现名单修改可能影响当年的撤离顺序。",
+      "status": "design_only",
+      "minTrust": 2,
+      "prerequisites": [
+        "mara_02"
+      ],
+      "rewards": {
+        "reputation": 35,
+        "credits": 60000
+      },
+      "branch": null
+    },
+    {
+      "id": "mara_04",
+      "merchantId": "merchant_armor",
+      "title": "封条之内",
+      "phase": "中期风险",
+      "objective": "取回一箱指定防护样品和外部编号记录，不要求打开箱体。",
+      "location": "后续受损仓储区（待设计）",
+      "requiresFeature": "quest_items",
+      "story": "她对封条与交接链的重视逐渐超过对物资本身的重视。",
+      "status": "design_only",
+      "minTrust": 3,
+      "prerequisites": [
+        "mara_03"
+      ],
+      "rewards": {
+        "reputation": 10,
+        "credits": 90000
+      },
+      "branch": null
+    },
+    {
+      "id": "mara_05",
+      "merchantId": "merchant_armor",
+      "title": "最后一班运输车",
+      "phase": "关键剧情",
+      "objective": "调查曾被取消通行资格的运输安排，取得名额修改记录。",
+      "location": "运输记录调查点（待设计）",
+      "requiresFeature": "branch_dialogue",
+      "story": "她的职责、收益和对个体的冷酷同时进入视野。",
+      "status": "design_only",
+      "minTrust": 3,
+      "prerequisites": [
+        "mara_04"
+      ],
+      "rewards": {
+        "reputation": 15,
+        "credits": 140000
+      },
+      "branch": {
+        "cooperate": {
+          "id": "mara_05_cooperate",
+          "description": "将完整原件交给她内部存档，接受她对保密的要求。",
+          "bonus": "防护装备额外1%采购折扣；获取内部调度用语。",
+          "completionFlag": "mara_05_resolved"
+        },
+        "alternative": {
+          "id": "mara_05_alternative",
+          "description": "拒绝封存争议记录，保留经核对副本；另做一次独立验货，证明仍能可靠合作。",
+          "bonus": "一份不同视角的核对材料与一次防护样品奖励；同样获得最高常规货架权限。",
+          "completionFlag": "mara_05_resolved"
+        },
+        "sameCoreRewards": true,
+        "repeatableRecoveryAvailable": true
+      }
+    },
+    {
+      "id": "mara_06",
+      "merchantId": "merchant_armor",
+      "title": "账本之外",
+      "phase": "高信任揭示",
+      "objective": "阅读她保留的原始调度页，区分制度要求与她个人作出的选择。",
+      "location": "玛拉柜台对话",
+      "requiresFeature": "story_documents",
+      "story": "不替她开脱，也不以单个真相推翻全部记录。",
+      "status": "design_only",
+      "minTrust": 4,
+      "prerequisites": [
+        "mara_05"
+      ],
+      "rewards": {
+        "reputation": 5,
+        "credits": 200000
+      },
+      "branch": null
+    },
+    {
+      "id": "edgar_01",
+      "merchantId": "merchant_guns",
+      "title": "失踪枪箱",
+      "phase": "基础回收",
+      "objective": "找回指定枪箱的封存样件及交接凭据。",
+      "location": "临海路仓库（拟）",
+      "requiresFeature": "quest_items",
+      "story": "玩家接触他对来源和品质的要求。",
+      "status": "design_only",
+      "minTrust": 1,
+      "prerequisites": [],
+      "rewards": {
+        "reputation": 10,
+        "credits": 20000
+      },
+      "branch": null
+    },
+    {
+      "id": "edgar_02",
+      "merchantId": "merchant_guns",
+      "title": "回收弹壳",
+      "phase": "基础回收",
+      "objective": "接受委托后在指定区域完成一次射击采样，带回记录。",
+      "location": "现有地图测试区域（待划定）",
+      "requiresFeature": "combat_telemetry",
+      "story": "不能用购买的普通弹药冒充采样证据。",
+      "status": "design_only",
+      "minTrust": 1,
+      "prerequisites": [
+        "edgar_01"
+      ],
+      "rewards": {
+        "reputation": 15,
+        "credits": 35000
+      },
+      "branch": null
+    },
+    {
+      "id": "edgar_03",
+      "merchantId": "merchant_guns",
+      "title": "第十七次试射",
+      "phase": "中期调查",
+      "objective": "回收一场失败试射留下的样枪与故障日志。",
+      "location": "试射遗址（待设计）",
+      "requiresFeature": "quest_items",
+      "story": "他此前提供的风险说明与实测结果不完全一致。",
+      "status": "design_only",
+      "minTrust": 2,
+      "prerequisites": [
+        "edgar_02"
+      ],
+      "rewards": {
+        "reputation": 35,
+        "credits": 60000
+      },
+      "branch": null
+    },
+    {
+      "id": "edgar_04",
+      "merchantId": "merchant_guns",
+      "title": "对照记录",
+      "phase": "中期风险",
+      "objective": "在明确告知风险的条件下取得对照数据，或回收另一组已记录的数据。",
+      "location": "异常环境调查点（待设计）",
+      "requiresFeature": "combat_telemetry",
+      "story": "主动试验与资料回收都能交付有效数据。",
+      "status": "design_only",
+      "minTrust": 3,
+      "prerequisites": [
+        "edgar_03"
+      ],
+      "rewards": {
+        "reputation": 10,
+        "credits": 90000
+      },
+      "branch": null
+    },
+    {
+      "id": "edgar_05",
+      "merchantId": "merchant_guns",
+      "title": "试射条款",
+      "phase": "关键剧情",
+      "objective": "查清委托说明中被省略的风险，并决定如何完成最后的验证。",
+      "location": "柜台对话及试验记录点（待设计）",
+      "requiresFeature": "branch_dialogue",
+      "story": "拒绝隐瞒风险的试验，仍能通过透明测试或独立资料核验晋级。",
+      "status": "design_only",
+      "minTrust": 3,
+      "prerequisites": [
+        "edgar_04"
+      ],
+      "rewards": {
+        "reputation": 15,
+        "credits": 140000
+      },
+      "branch": {
+        "cooperate": {
+          "id": "edgar_05_cooperate",
+          "description": "接受他的保密测试条件，亲自执行已告知危险的采样；不安排无辜者充当目标。",
+          "bonus": "高级弹药额外1%采购折扣；取得他的私人技术批注。",
+          "completionFlag": "edgar_05_resolved"
+        },
+        "alternative": {
+          "id": "edgar_05_alternative",
+          "description": "拒绝他原先隐去风险的安排，改用充分告知的对照试验或独立故障日志完成核验。",
+          "bonus": "取得执行者一侧的完整日志与一份普通弹药奖励；同样获得最高常规货架权限。",
+          "completionFlag": "edgar_05_resolved"
+        },
+        "sameCoreRewards": true,
+        "repeatableRecoveryAvailable": true
+      }
+    },
+    {
+      "id": "edgar_06",
+      "merchantId": "merchant_guns",
+      "title": "枪口之后",
+      "phase": "高信任揭示",
+      "objective": "查看完整的招募与试验记录，追问他如何计算执行者的代价。",
+      "location": "埃德加柜台对话",
+      "requiresFeature": "story_documents",
+      "story": "保留他对品质的责任感，也明确他对人的冷漠。",
+      "status": "design_only",
+      "minTrust": 4,
+      "prerequisites": [
+        "edgar_05"
+      ],
+      "rewards": {
+        "reputation": 5,
+        "credits": 200000
+      },
+      "branch": null
+    },
+    {
+      "id": "lin_01",
+      "merchantId": "merchant_doctor",
+      "title": "失踪病历",
+      "phase": "基础回收",
+      "objective": "从诊所转存点取回一份旧医院病历夹。",
+      "location": "临海路诊所（拟转存点）",
+      "requiresFeature": "quest_items",
+      "story": "不把现有诊所直接改名为市立医院。",
+      "status": "design_only",
+      "minTrust": 1,
+      "prerequisites": [],
+      "rewards": {
+        "reputation": 10,
+        "credits": 20000
+      },
+      "branch": null
+    },
+    {
+      "id": "lin_02",
+      "merchantId": "merchant_doctor",
+      "title": "接触记录",
+      "phase": "基础回收",
+      "objective": "回收并整理一组撤离时期的接触登记和随访条目。",
+      "location": "诊所／住宅（拟）",
+      "requiresFeature": "document_comparison",
+      "story": "如实标注缺失信息，不要求玩家已有异常状态。",
+      "status": "design_only",
+      "minTrust": 1,
+      "prerequisites": [
+        "lin_01"
+      ],
+      "rewards": {
+        "reputation": 15,
+        "credits": 35000
+      },
+      "branch": null
+    },
+    {
+      "id": "lin_03",
+      "merchantId": "merchant_doctor",
+      "title": "隔离区样本",
+      "phase": "中期调查",
+      "objective": "获取一份有明确来源的封装样本或等价病例记录。",
+      "location": "后续隔离区（待设计）",
+      "requiresFeature": "quest_items",
+      "story": "样本不能从普通医疗收藏或商店购买替代。",
+      "status": "design_only",
+      "minTrust": 2,
+      "prerequisites": [
+        "lin_02"
+      ],
+      "rewards": {
+        "reputation": 35,
+        "credits": 60000
+      },
+      "branch": null
+    },
+    {
+      "id": "lin_04",
+      "merchantId": "merchant_doctor",
+      "title": "仍有生命体征",
+      "phase": "中期风险",
+      "objective": "调查持续运转的生命支持系统，带回读数与设备记录。",
+      "location": "生命支持设施（待设计）",
+      "requiresFeature": "medical_site_interaction",
+      "story": "设备在运转不等于患者仍可恢复，调查只提供证据。",
+      "status": "design_only",
+      "minTrust": 3,
+      "prerequisites": [
+        "lin_03"
+      ],
+      "rewards": {
+        "reputation": 10,
+        "credits": 90000
+      },
+      "branch": null
+    },
+    {
+      "id": "lin_05",
+      "merchantId": "merchant_doctor",
+      "title": "不被允许结束的救治",
+      "phase": "关键剧情",
+      "objective": "核对患者意愿、原始病例和维持记录，决定是否支持继续投入。",
+      "location": "医疗记录点与柜台对话（待设计）",
+      "requiresFeature": "branch_dialogue",
+      "story": "支持有限救治或拒绝无限维持，都能完成关键任务。",
+      "status": "design_only",
+      "minTrust": 3,
+      "prerequisites": [
+        "lin_04"
+      ],
+      "rewards": {
+        "reputation": 15,
+        "credits": 140000
+      },
+      "branch": {
+        "cooperate": {
+          "id": "lin_05_cooperate",
+          "description": "在充分告知、有退出条件的前提下，支持一轮有明确上限的救治尝试。",
+          "bonus": "一次限量常规医疗补给；看到她后续观察记录。",
+          "completionFlag": "lin_05_resolved"
+        },
+        "alternative": {
+          "id": "lin_05_alternative",
+          "description": "拒绝持续扩大风险，提交患者意愿与独立病例核验，要求她接受资源和救治边界。",
+          "bonus": "一份完整病例副本与等值常规医疗补给；同样获得最高常规货架权限。",
+          "completionFlag": "lin_05_resolved"
+        },
+        "sameCoreRewards": true,
+        "repeatableRecoveryAvailable": true
+      }
+    },
+    {
+      "id": "lin_06",
+      "merchantId": "merchant_doctor",
+      "title": "病历的最后一页",
+      "phase": "高信任揭示",
+      "objective": "与她一起确认记录中被省略的判断，讨论救治与研究的边界。",
+      "location": "林岑柜台对话",
+      "requiresFeature": "story_documents",
+      "story": "不规定患者最终生死，也不把一次选择写成通用医学结论。",
+      "status": "design_only",
+      "minTrust": 4,
+      "prerequisites": [
+        "lin_05"
+      ],
+      "rewards": {
+        "reputation": 5,
+        "credits": 200000
+      },
+      "branch": null
+    }
+  ],
+  "products": [
+    {
+      "id": "merchant_armor:helmet1",
+      "merchantId": "merchant_armor",
+      "name": "头盔 I",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "helmet",
+        "level": 1
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:body1",
+      "merchantId": "merchant_armor",
+      "name": "护甲 I",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "body",
+        "level": 1
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:helmet2",
+      "merchantId": "merchant_armor",
+      "name": "头盔 II",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "helmet",
+        "level": 2
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:body2",
+      "merchantId": "merchant_armor",
+      "name": "护甲 II",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "body",
+        "level": 2
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:helmet3",
+      "merchantId": "merchant_armor",
+      "name": "头盔 III",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "helmet",
+        "level": 3
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:body3",
+      "merchantId": "merchant_armor",
+      "name": "护甲 III",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "body",
+        "level": 3
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:helmet4",
+      "merchantId": "merchant_armor",
+      "name": "头盔 IV",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "helmet",
+        "level": 4
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:body4",
+      "merchantId": "merchant_armor",
+      "name": "护甲 IV",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "body",
+        "level": 4
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:helmet5",
+      "merchantId": "merchant_armor",
+      "name": "头盔 V",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "helmet",
+        "level": 5
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:body5",
+      "merchantId": "merchant_armor",
+      "name": "护甲 V",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "body",
+        "level": 5
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:helmet6",
+      "merchantId": "merchant_armor",
+      "name": "头盔 VI",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "helmet",
+        "level": 6
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_armor:body6",
+      "merchantId": "merchant_armor",
+      "name": "护甲 VI",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "body",
+        "level": 6
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_armor:bag01",
+      "merchantId": "merchant_armor",
+      "name": "旧帆布挎包",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "bag",
+        "id": "bag01"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:bag02",
+      "merchantId": "merchant_armor",
+      "name": "民用旅行背包",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "bag",
+        "id": "bag02"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:bag03",
+      "merchantId": "merchant_armor",
+      "name": "加固登山背包",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "bag",
+        "id": "bag03"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:bag04",
+      "merchantId": "merchant_armor",
+      "name": "战术突击背包",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "bag",
+        "id": "bag04"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_armor:bag05",
+      "merchantId": "merchant_armor",
+      "name": "远征模块背包",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "bag",
+        "id": "bag05"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_guns:rifle",
+      "merchantId": "merchant_guns",
+      "name": "制式步枪",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "rifle"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:shotgun",
+      "merchantId": "merchant_guns",
+      "name": "短管霰弹枪",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "gun",
+        "id": "shotgun"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:smg",
+      "merchantId": "merchant_guns",
+      "name": "冲锋枪",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "smg"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:pistol",
+      "merchantId": "merchant_guns",
+      "name": "手枪",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "gun",
+        "id": "pistol"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_556_1",
+      "merchantId": "merchant_guns",
+      "name": "5.56mm普通弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_556_1"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_556_2",
+      "merchantId": "merchant_guns",
+      "name": "5.56mm改良弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_556_2"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_556_3",
+      "merchantId": "merchant_guns",
+      "name": "5.56mm钢芯弹",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_556_3"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_556_4",
+      "merchantId": "merchant_guns",
+      "name": "5.56mm硬芯穿甲弹",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_556_4"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_556_5",
+      "merchantId": "merchant_guns",
+      "name": "5.56mm特种穿甲弹",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_556_5"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_guns:ammo_9mm_1",
+      "merchantId": "merchant_guns",
+      "name": "9mm普通弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_9mm_1"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_9mm_2",
+      "merchantId": "merchant_guns",
+      "name": "9mm强化弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_9mm_2"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_9mm_3",
+      "merchantId": "merchant_guns",
+      "name": "9mm钢芯弹",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_9mm_3"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_9mm_4",
+      "merchantId": "merchant_guns",
+      "name": "9mm穿甲弹",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_9mm_4"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_9mm_5",
+      "merchantId": "merchant_guns",
+      "name": "9mm特种穿甲弹",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_9mm_5"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_guns:ammo_12g_1",
+      "merchantId": "merchant_guns",
+      "name": "普通鹿弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_12g_1"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_12g_2",
+      "merchantId": "merchant_guns",
+      "name": "强化鹿弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_12g_2"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_12g_3",
+      "merchantId": "merchant_guns",
+      "name": "硬质鹿弹",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_12g_3"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_12g_4",
+      "merchantId": "merchant_guns",
+      "name": "穿甲霰弹",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_12g_4"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_12g_5",
+      "merchantId": "merchant_guns",
+      "name": "特种穿甲霰弹",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_12g_5"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_guns:melee01",
+      "merchantId": "merchant_guns",
+      "name": "旧式折叠刀",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "melee",
+        "id": "melee01"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:melee02",
+      "merchantId": "merchant_guns",
+      "name": "M-9 制式战斗刀",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "melee",
+        "id": "melee02"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:melee03",
+      "merchantId": "merchant_guns",
+      "name": "重型丛林砍刀",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "melee",
+        "id": "melee03"
+      },
+      "status": "existing_but_currently_unavailable",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal01",
+      "merchantId": "merchant_doctor",
+      "name": "绷带",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "medical",
+        "id": "heal01"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal02",
+      "merchantId": "merchant_doctor",
+      "name": "安禾无菌敷料",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "medical",
+        "id": "heal02"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal06",
+      "merchantId": "merchant_doctor",
+      "name": "安禾止痛片",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "medical",
+        "id": "heal06"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal09",
+      "merchantId": "merchant_doctor",
+      "name": "止血带",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "medical",
+        "id": "heal09"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal03",
+      "merchantId": "merchant_doctor",
+      "name": "家庭急救包",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "medical",
+        "id": "heal03"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal07",
+      "merchantId": "merchant_doctor",
+      "name": "复方镇痛胶囊",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "medical",
+        "id": "heal07"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal10",
+      "merchantId": "merchant_doctor",
+      "name": "医用夹板",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "medical",
+        "id": "heal10"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal13",
+      "merchantId": "merchant_doctor",
+      "name": "H-7 应急医疗针",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "medical",
+        "id": "heal13"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal04",
+      "merchantId": "merchant_doctor",
+      "name": "制式野战医疗包",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "medical",
+        "id": "heal04"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal08",
+      "merchantId": "merchant_doctor",
+      "name": "强效镇痛剂",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "medical",
+        "id": "heal08"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal11",
+      "merchantId": "merchant_doctor",
+      "name": "创伤处理包",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "medical",
+        "id": "heal11"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal12",
+      "merchantId": "merchant_doctor",
+      "name": "外科手术包",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "medical",
+        "id": "heal12"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal16",
+      "merchantId": "merchant_doctor",
+      "name": "镇静香膏",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "medical",
+        "id": "heal16"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal17",
+      "merchantId": "merchant_doctor",
+      "name": "认知稳定剂",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "medical",
+        "id": "heal17"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_doctor:heal05",
+      "merchantId": "merchant_doctor",
+      "name": "HV-300 精密医疗箱",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "medical",
+        "id": "heal05"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_doctor:heal14",
+      "merchantId": "merchant_doctor",
+      "name": "M-4 代谢激活剂",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "medical",
+        "id": "heal14"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_doctor:heal15",
+      "merchantId": "merchant_doctor",
+      "name": "R-9 再生试验剂",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "medical",
+        "id": "heal15"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_doctor:heal18",
+      "merchantId": "merchant_doctor",
+      "name": "祛咒圣露",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "medical",
+        "id": "heal18"
+      },
+      "status": "existing",
+      "requiresFeature": "reserved_medical_effect",
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "piece",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    }
+  ],
+  "placeholders": [
+    {
+      "id": "planned_category_0",
+      "merchantId": "merchant_armor",
+      "trustLevel": 2,
+      "category": "基础功能防护组件",
+      "requiresFeature": "functional_protection_equipment",
+      "status": "concept_only",
+      "purchaseEnabled": false,
+      "basePrice": null
+    },
+    {
+      "id": "planned_category_1",
+      "merchantId": "merchant_armor",
+      "trustLevel": 4,
+      "category": "特殊防护用品",
+      "requiresFeature": "functional_protection_equipment",
+      "status": "concept_only",
+      "purchaseEnabled": false,
+      "basePrice": null
+    },
+    {
+      "id": "planned_category_2",
+      "merchantId": "merchant_guns",
+      "trustLevel": 1,
+      "category": "简易配件",
+      "requiresFeature": "weapon_attachments",
+      "status": "concept_only",
+      "purchaseEnabled": false,
+      "basePrice": null
+    },
+    {
+      "id": "planned_category_3",
+      "merchantId": "merchant_guns",
+      "trustLevel": 2,
+      "category": "常规改件",
+      "requiresFeature": "weapon_attachments",
+      "status": "concept_only",
+      "purchaseEnabled": false,
+      "basePrice": null
+    },
+    {
+      "id": "planned_category_4",
+      "merchantId": "merchant_guns",
+      "trustLevel": 3,
+      "category": "高阶枪械与高级改装",
+      "requiresFeature": "future_guns_and_modding",
+      "status": "concept_only",
+      "purchaseEnabled": false,
+      "basePrice": null
+    },
+    {
+      "id": "planned_category_5",
+      "merchantId": "merchant_guns",
+      "trustLevel": 4,
+      "category": "稀有枪械、特殊改装与实验弹药",
+      "requiresFeature": "future_guns_and_modding",
+      "status": "concept_only",
+      "purchaseEnabled": false,
+      "basePrice": null
+    },
+    {
+      "id": "planned_category_6",
+      "merchantId": "merchant_doctor",
+      "trustLevel": 3,
+      "category": "损伤与异常处理服务",
+      "requiresFeature": "injury_and_anomaly_states",
+      "status": "concept_only",
+      "purchaseEnabled": false,
+      "basePrice": null
+    }
+  ],
+  "progression": {
+    "reputationRange": [
+      0,
+      100
+    ],
+    "levelPolicy": "all_three_requirements_AND; earned_standard_access_never_revoked",
+    "tradeReputation": {
+      "perCredits": 100000,
+      "reputation": 1,
+      "lifetimeCapPerMerchant": 10
+    },
+    "preferredActions": "only_explicit_quest_or_contract_outcomes; never_infer_morality_from_ordinary_combat",
+    "levelUp": "derived when requirements satisfied, UI explains each missing condition",
+    "failure": "ordinary_death_or_retry_does_not_reduce_reputation; intentional_contract_breach_may_cost_up_to_5_with_recovery_path",
+    "recovery": "repeatable ordinary supply/record task +5 reputation, once per successful extraction, cannot bypass key quest flags",
+    "discount": "goods only; level4 4%, optional branch <=2% extra in one category, total <=6%; medical service pricing unchanged"
+  },
+  "inventory": {
+    "stockPolicy": "low tiers unlimited initially; tier3 quota2, tier4 quota1; no real-time restock timers",
+    "quotaCycle": "successful extraction only; reload, map selection and failed runs never refresh",
+    "ammoQuota": "one full stack is 20/60/90 rounds for 12g/556/9mm",
+    "reservation": "Lv4 may reserve one unlocked defined item per merchant; shares quota, no advance payment, pay on pickup; expires at next successful extraction; cancellation refunds only same-cycle quota",
+    "legacyOverflow": "never discard existing equipment or inventory"
+  },
+  "migration": {
+    "preserveItems": true,
+    "preserveCredits": true,
+    "initialReputation": 0,
+    "inheritCurrentShelfAccess": true,
+    "note": "existing visible products may be grandfathered for old saves; new items follow trust; do not synthesize historical trade amount from balance"
+  },
+  "futurePlayerStateTemplate": {
+    "version": 1,
+    "merchants": {
+      "merchant_armor": {
+        "reputation": 0,
+        "tradeCredits": 0,
+        "earnedLevel": 1,
+        "quests": {},
+        "choices": {},
+        "storyFlags": [],
+        "quotaCycleId": 0,
+        "purchased": {},
+        "reservation": null,
+        "legacyUnlockedProducts": []
+      }
+    }
+  },
+  "sharedStory": {
+    "workingTitle": "夜间转运（工作名）",
+    "status": "new_story_proposal_not_confirmed_world_history",
+    "roles": {
+      "merchant_armor": "防护物资和通行名额调配",
+      "merchant_guns": "行动武器与弹药供应",
+      "merchant_doctor": "人员筛查与异常患者医疗判断"
+    },
+    "evidence": "三套记录的时间、批次和人数存在可核对联系；每人的记录都省略了最不利于自己的部分。",
+    "unresolved": [
+      "完整运输路线与是否抵达",
+      "最终改动名单的授权者",
+      "运送人员与物资的完整构成"
+    ],
+    "constraint": "不设定三人共同操纵潮汐，不规定他们知道灾害真实起源；共享线不阻塞独立商店毕业。"
+  }
+}

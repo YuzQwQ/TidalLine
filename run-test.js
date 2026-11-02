@@ -81,7 +81,7 @@ vm.createContext(ctx);
 for (const f of ['config.js', 'data.js', 'core.js', 'entities.js',
   'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'boot.js']) {
+  'medhud.js', 'melee.js', 'boot.js']) {
   try {
     vm.runInContext(fs.readFileSync(path.join(dir, 'js', f), 'utf8'), ctx, { filename: f });
   } catch (e) {
@@ -910,7 +910,7 @@ ok('同类不合并，一件一条', Save.stash.length === 3 && Save.stash.every
 Save.stash = [];
 Save.addStash('ammo_556_1', 90);
 Save.addStash('ammo_556_1', 60);
-ok('子弹仍然并成一条', Save.stash.length === 1 && Save.stash[0].n === 150,
+ok('仓库弹药按每格上限分堆', Save.stash.length === 3 && Save.stashCount('ammo_556_1') === 150 && Save.stash.every(e=>e.n<=60),
    JSON.stringify(Save.stash));
 
 // 出售
@@ -1118,17 +1118,16 @@ Base.unequip('w1');
 ok('主武器能卸下', Save.gear.weapons[1] === null);
 ok('卸下的枪回仓库', Save.stash.some(e => e.gear && e.gear.equip.gun === 'shotgun'));
 
-// 副武器不能卸
+// 副武器现在允许卸下，死亡后也不补发
 const sideBefore = Save.gear.weapons[SIDEARM_SLOT];
 Base.unequip('w2');
-ok('副武器卸不掉', Save.gear.weapons[SIDEARM_SLOT] === sideBefore);
-ok('副武器不给"卸下"入口', Base.canUnequip('w2') === false);
+ok('副武器可卸下且回到仓库', Save.gear.weapons[SIDEARM_SLOT] === null && Save.stash.some(e=>e.gear===sideBefore));
+ok('副武器提供卸下入口', Base.canUnequip('w2') === true);
 ok('主武器/护甲可以卸', Base.canUnequip('w0') && Base.canUnequip('helmet'));
 
 Save.gear.weapons[SIDEARM_SLOT] = null;
 Base.ensureSidearm();
-ok('副武器空着会自动补一把', !!Save.gear.weapons[SIDEARM_SLOT] &&
-  Save.gear.weapons[SIDEARM_SLOT].equip.gun === 'pistol');
+ok('副武器空着不会自动补发', Save.gear.weapons[SIDEARM_SLOT] === null);
 
 // 余弹一路带进带出
 Save.gear.weapons = [EQUIP.gun('rifle', 18), null, EQUIP.gun('pistol', 3)];
@@ -1150,7 +1149,7 @@ ok('未打空的枪余弹写回存档',
 const migrated = Save.migrateWeapons(['smg', null, 'pistol']);
 ok('老存档的 id 能迁成物品', migrated[0] && migrated[0].equip.gun === 'smg');
 ok('老存档迁移后弹匣是满的', migrated[0].equip.mag === WEAPONS.smg.mag);
-ok('迁移时副武器空着会补手枪', migrated[2].equip.gun === 'pistol');
+ok('迁移保留已有副武器', migrated[2].equip.gun === 'pistol');
 
 console.log('\n=== 撤离 ===');
 Game.startRun();
@@ -1205,6 +1204,7 @@ ok('顶住实体时停止迈步', animator.anim.state === 'idle');
 animator.mag = 0; animator.fireCd = 0; animator.tryShoot(); animator.tickAnimation(0, false);
 ok('空枪不触发射击动画', animator.anim.state !== 'shoot');
 animator.mag = 30; animator.reloadT = 0; animator.fireCd = 0;
+animator.fillWeapons([EQUIP.gun('rifle',10),null,null]);
 animator.tryShoot(); animator.tickAnimation(0, false);
 ok('真实开火触发射击动画', animator.anim.state === 'shoot' && animator.anim.time === 0);
 animator.tickAnimation(0.08, false); animator.fireCd = 0;

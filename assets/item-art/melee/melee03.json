@@ -1,0 +1,9 @@
+{
+  "id": "melee03",
+  "type": "icon",
+  "subject": "a broad heavy jungle machete, long dark silver steel blade widening at the tip, dark worn wood grip with lanyard hole, much broader blade than a combat knife",
+  "prompt": "Use case: stylized-concept. ONE inventory icon, coarse hand-placed 48x48 logical pixel art. a broad heavy jungle machete, long dark silver steel blade widening at the tip, dark worn wood grip with lanyard hole, much broader blade than a combat knife. Full isolated item diagonally bottom-left to top-right, centered 40x40 safe area, 4 transparent pixels margin. Muted weathered 1990s materials, upper-left light, 16 colours. Transparent background. No logo, text, numbers, border, rarity background, hand, scene, glow or shadow.",
+  "source": "sources/melee03.png",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-fe421290-b3a7-4c15-a5e8-c7a607b3ea2d.png",
+  "frames": 1
+}

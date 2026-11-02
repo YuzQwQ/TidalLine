@@ -20,7 +20,7 @@ const Base = {
     Game.state = 'base';
     Save.normalizeStash();
     Save.normalizeBag();
-    this.ensureSidearm();     // 副武器永远不能空着
+    this.ensureSidearm();     // 不自动补发死亡损失
     this.render();
   },
 
@@ -94,13 +94,13 @@ const Base = {
       const act = this.picker === key
         ? '<b class="price">↓ 正在挑选</b>'
         : (own ? '点击从仓库挑选（' + own + ' 把）'
-               : '点击挑选 · 仓库里没有' + (i === SIDEARM_SLOT ? '（副武器必带）' : ''));
+               : '点击挑选 · 仓库里没有');
 
       const row = document.createElement('div');
       row.className = 'slot' + (w ? '' : ' empty') + (this.picker === key ? ' open' : '');
       row.innerHTML =
         '<div class="slot-ico">' + Icons.gearIcon(w ? w.id : null, i < 2 ? '主' : '副') + '</div>' +
-        '<div class="slot-txt"><b>' + (w ? w.name + (i === SIDEARM_SLOT ? '（必带）' : '') : '空') + '</b><span>' +
+        '<div class="slot-txt"><b>' + (w ? w.name : '空') + '</b><span>' +
           (w ? w.dmgMin + '–' + w.dmgMax + ' 伤害 · 弹匣 ' + ammo + '/' + w.mag + ' · ' : '') +
           act +
         '</span></div>';
@@ -187,15 +187,13 @@ const Base = {
   /* 老名字还留着，测试和别处都按这个找护甲 */
   stashArmor(type) { return this.stashEquip(type); },
 
-  /* 这一位能不能空着：副武器不行，其它都行 */
-  canUnequip(key) { return key !== 'w' + SIDEARM_SLOT; },
+  /* 所有装备槽均允许卸下 */
+  canUnequip(key) { return true; },
 
-  /* 副武器不能空着 —— 没有手枪就发一把，保证永远能空手不进去 */
+  /* 允许空副武器槽 —— 没有手枪就发一把，保证永远能空手不进去 */
   ensureSidearm() {
-    if (Save.gear.weapons[SIDEARM_SLOT]) return false;
-    Save.gear.weapons[SIDEARM_SLOT] = EQUIP.gun('pistol', WEAPONS.pistol.mag);
-    Save.save();
-    return true;
+    // Compatibility entry point: death losses must never generate a free replacement.
+    return false;
   },
 
   /* 悬浮窗跟着被点的那个槽位走：先记下它的位置，renderGear 会把行重建掉 */
@@ -411,7 +409,7 @@ const Base = {
     return true;
   },
 
-  /* 卸下：放回仓库，不是销毁。副武器不能卸 */
+  /* 卸下：放回仓库，不是销毁。所有槽位均可卸下 */
   unequip(key) {
     if (!this.canUnequip(key)) {
       this.note('副武器必须带一把手枪 —— 空手进去没法打', true);
@@ -677,7 +675,7 @@ const Base = {
       short: it.short,
       sub: '穿透 Lv' + it.penLevel + ' · 一盒 ' + pack + ' 发',
       price: it.price * pack,
-      can: Save.credits >= it.price * pack,
+      can: Save.credits >= it.price * pack && Save.canAddStash(id,pack),
       onGo: () => this.buyAmmo(id, pack)
     }, cell.getBoundingClientRect());
   },
@@ -685,6 +683,8 @@ const Base = {
   buyAmmo(id, pack) {
     const it = ITEM_BY_ID[id];
     if (!it || it.cat !== 'ammo' || it.level > this.SHOP_AMMO_MAX_LV) return false;
+    if(!Number.isInteger(pack)||pack<=0)return false;
+    if(!Save.canAddStash(id,pack)){this.note('仓库空间不足，无法放入这批弹药',true);return false;}
     const price = it.price * pack;
     if (Save.credits < price) { this.note('信用点不够', true); return false; }
     Save.credits -= price;
@@ -896,6 +896,7 @@ const Base = {
     const it = stashItem(e);
     if (!it) return false;
     const n = (e.gear || it.healCap) ? 1 : Math.max(1, e.n || 1);
+    if(it.cat==='ammo'&&!Save.canAddStash(it.id,n)){this.note('仓库空间不足',true);return false;}
     if (e.gear) Save.addGearStash(it);
     else Save.addStash(it.id, n, e.cap);
     this.dropFrom(Save.bag, e, n);
@@ -1175,10 +1176,10 @@ const Base = {
   deploy(mapId) {
     const map = MAP_CATALOG.find(m => m.id === (mapId || RAID_MAP.id));
     if (!map) return;
-    /* 空手不准下海：没有副武器就发一把，有主武器就照常带 */
+    /* 至少携带一把枪或近战武器，不再免费补发手枪 */
     this.ensureSidearm();
-    if (!Save.gear.weapons[SIDEARM_SLOT]) {
-      this.note('副武器必须带一把手枪 —— 先去军火商买一把', true);
+    if (!Save.gear.weapons.some(Boolean) && !Save.gear.melee) {
+      this.note('请先装备一把枪械或近战武器', true);
       return;
     }
     Save.normalizeBag();

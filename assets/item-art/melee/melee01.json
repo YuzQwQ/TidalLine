@@ -1,0 +1,8 @@
+{
+  "id": "melee01",
+  "type": "icon",
+  "source": "sources/melee01.png",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-03524355-1523-44b5-8550-45b127582b60.png",
+  "prompt": "Use case: stylized-concept. ONE inventory icon for TidalLine, authentic coarse 48x48 logical-pixel art, muted 16-colour weathered 1990s palette, upper-left light, crisp pixel clusters. An OPEN short folding pocket knife with short silver steel blade, worn dark brown wooden handle, distinct pivot and locking joint. Entire knife diagonal lower-left to upper-right, centered within 40x40 safe area, 4px transparent margins. Transparent background. No text, logo, rarity colour, border, glow, shadow, scene or hand.",
+  "frames": 1
+}

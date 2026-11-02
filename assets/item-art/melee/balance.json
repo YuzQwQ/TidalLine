@@ -1,0 +1,113 @@
+{
+  "scenario": "120Hz, open flat ground, unarmoured player, real echo AI (22HP), eight-second cap; no balance changes",
+  "results": [
+    {
+      "weapon": "melee01",
+      "mode": "stationary",
+      "seconds": 0.683,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 2,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee01",
+      "mode": "backpedal",
+      "seconds": 5.317,
+      "hpLost": 100,
+      "kills": 0,
+      "attackStarts": 10,
+      "playerDead": true
+    },
+    {
+      "weapon": "melee01",
+      "mode": "circle",
+      "seconds": 8,
+      "hpLost": 28,
+      "kills": 0,
+      "attackStarts": 15,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee01",
+      "mode": "group",
+      "seconds": 3.808,
+      "hpLost": 100,
+      "kills": 2,
+      "attackStarts": 7,
+      "playerDead": true
+    },
+    {
+      "weapon": "melee02",
+      "mode": "stationary",
+      "seconds": 1.058,
+      "hpLost": 28,
+      "kills": 1,
+      "attackStarts": 2,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee02",
+      "mode": "backpedal",
+      "seconds": 1.908,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 3,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee02",
+      "mode": "circle",
+      "seconds": 1.058,
+      "hpLost": 28,
+      "kills": 1,
+      "attackStarts": 2,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee02",
+      "mode": "group",
+      "seconds": 1.058,
+      "hpLost": 84,
+      "kills": 3,
+      "attackStarts": 2,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee03",
+      "mode": "stationary",
+      "seconds": 0.358,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee03",
+      "mode": "backpedal",
+      "seconds": 0.358,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee03",
+      "mode": "circle",
+      "seconds": 0.358,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee03",
+      "mode": "group",
+      "seconds": 0.358,
+      "hpLost": 42,
+      "kills": 3,
+      "attackStarts": 1,
+      "playerDead": false
+    }
+  ]
+}

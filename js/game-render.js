@@ -668,6 +668,10 @@ Object.assign(Game, {
     this.gearBar(c, 24, ay0 + 8, 156, '头盔', P.helmet);
     this.gearBar(c, 24, ay0 + 24, 156, '护甲', P.body);
 
+    if (P.meleeActive) { MeleeSystem.drawHUD(c,P); } else if (!P.weapons[P.slot]) {
+      c.fillStyle='rgba(8,14,12,.78)';c.fillRect(14,CFG.VIEW_H-74,176,60);
+      c.fillStyle='#8fa8a0';c.font='12px monospace';c.fillText('未装备武器',26,CFG.VIEW_H-44);
+    } else {
     /* --- 左下：弹药 --- */
     c.fillStyle = 'rgba(8,14,12,0.78)';
     c.fillRect(14, CFG.VIEW_H - 74, 176, 60);
@@ -708,6 +712,7 @@ Object.assign(Game, {
       c.fillText('按 R 装填', 26, CFG.VIEW_H - 26);
     }
 
+    }
     /* --- 右上：潮汐 --- */
     const TW = 190, TH = 66;
     const tx0 = CFG.VIEW_W - TW - 14;

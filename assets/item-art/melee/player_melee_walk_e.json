@@ -1,0 +1,10 @@
+{
+  "id": "player_melee_walk_e",
+  "type": "sheet",
+  "state": "walk",
+  "dir": "e",
+  "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing east, rightward profile. four sequential walking-cycle poses, alternating feet and arm swing while holding a short knife, NO gun. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+  "source": "sources/player_melee_walk_e.png",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-710bed1e-2a4e-438a-9214-75cc48952b9b.png",
+  "frames": 4
+}

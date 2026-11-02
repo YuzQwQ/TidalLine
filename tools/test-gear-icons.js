@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
       Base.tab = 'shop'; Base.render();
     });
     await page.waitForFunction(() => ART.gear.every(id => Icons.gear[id]));
-    await page.waitForFunction(() => document.querySelectorAll('#baseGear img').length === 6);
+    await page.waitForFunction(() => document.querySelectorAll('#baseGear img').length === 7);
     const specs = await page.evaluate(() => ART.gear.map(id => {
       const image = Icons.gear[id], canvas = document.createElement('canvas'); canvas.width = canvas.height = 48;
       const ctx = canvas.getContext('2d'); ctx.drawImage(image, 0, 0);
@@ -45,14 +45,14 @@ const server = http.createServer((req, res) => {
       }
       return { id, width: image.naturalWidth, height: image.naturalHeight, opaque, partial, padding };
     }));
-    assert.equal(specs.length, 22);
+    assert.equal(specs.length, 25);
     for (const s of specs) {
       assert.equal(s.width, 48, s.id); assert.equal(s.height, 48, s.id);
       assert(s.opaque > 60, s.id); assert.equal(s.partial, 0, s.id); assert.equal(s.padding, 0, s.id);
     }
     assert.equal(await page.locator('#shopGrid img[src*="/bag0"]').count(), 3);
     await page.evaluate(() => { Base.tab = 'stash'; Base.render(); });
-    console.log('OK: 22 icons, dimensions, hard transparency, 4px margins, first-load base/shop refresh');
+    console.log('OK: 25 icons, dimensions, hard transparency, 4px margins, first-load base/shop refresh');
 
     // Run real equipment swaps: warehouse, picker, merchant and raid share each stable icon ID.
     await page.evaluate(() => {
@@ -61,7 +61,7 @@ const server = http.createServer((req, res) => {
       Base.render();
     });
     assert.equal(await page.locator('#stashGrid img[src*="/bag0"]').count(), 5);
-    await page.locator('#baseGear .slot').last().click();
+    await page.locator('#baseGear .slot').nth(5).click();
     assert.equal(await page.locator('#gearPicker img[src*="/bag0"]').count(), 5);
     await page.evaluate(() => Base.closePicker());
     for (let n = 1; n <= 5; n++) {
@@ -120,14 +120,14 @@ const server = http.createServer((req, res) => {
         { gun: 'rifle' }, { gear: GEAR.make('helmet', 4) }, { gear: GEAR.make('body', 5) }
       ] }, true);
     });
-    assert.equal(await page.locator('#eqStrip img').count(), 6);
+    assert.equal(await page.locator('#eqStrip img').count(), 7);
     assert.equal(await page.locator('#lootGear img').count(), 3);
     await page.screenshot({ path: path.join(output, 'inventory-loot.png') });
     console.log('OK: inventory equipment strip and corpse equipment icons');
 
     await page.goto(origin + '/' + encodeURIComponent('装备清单.html'));
     await page.waitForFunction(() => [...document.images].every(image => image.complete && image.naturalWidth === 48));
-    assert.equal(await page.locator('.thumb img').count(), 21);
+    assert.equal(await page.locator('.thumb img').count(), 24);
     await page.screenshot({ path: path.join(output, 'gear-sheet.png'), fullPage: true });
 
     const offline = await browser.newPage(); const external = [];
@@ -135,15 +135,15 @@ const server = http.createServer((req, res) => {
     offline.on('request', req => { if (req.url().includes('/assets/')) external.push(req.url()); });
     await offline.goto(pathToFileURL(path.join(root, '潮汐线.html')).href + '#base');
     await offline.waitForFunction(() => ART.gear.every(id => Icons.gear[id]));
-    assert.equal(await offline.evaluate(() => Object.keys(window.__SPRITES__).filter(key => key.startsWith('gear/')).length), 22);
+    assert.equal(await offline.evaluate(() => Object.keys(window.__SPRITES__).filter(key => key.startsWith('gear/')).length), 25);
     for (let n = 1; n <= 5; n++) {
       const id = 'bag0' + n;
       assert(await offline.evaluate(id => {
         Save.gear.back = BACKPACK.make(id);
         Game.startRun(null); Base.open(); Game.renderGearPanel();
         return Icons.gear[id].src.startsWith('data:image/png;base64,') &&
-          document.querySelector('#baseGear .slot:last-child img').src === Icons.gear[id].src &&
-          document.querySelector('#eqStrip .eqs:last-child img').src === Icons.gear[id].src;
+          document.querySelector('#baseGear .slot:nth-child(6) img').src === Icons.gear[id].src &&
+          document.querySelector('#eqStrip .eqs:nth-child(6) img').src === Icons.gear[id].src;
       }, id));
     }
     assert.equal(external.length, 0);

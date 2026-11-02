@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "scope": "design_only",
+  "portraits": 3,
+  "size": [
+    768,
+    960
+  ],
+  "navigation": "all_three_filters_passed",
+  "browserErrors": [],
+  "failedResources": [],
+  "responsiveChecks": [
+    {
+      "page": "/design/merchants/index.html",
+      "width": 390,
+      "noHorizontalOverflow": true
+    },
+    {
+      "page": "/design/merchants/index.html",
+      "width": 320,
+      "noHorizontalOverflow": true
+    },
+    {
+      "page": "/assets/npc-art/merchants/index.html",
+      "width": 390,
+      "noHorizontalOverflow": true
+    },
+    {
+      "page": "/assets/npc-art/merchants/index.html",
+      "width": 320,
+      "noHorizontalOverflow": true
+    }
+  ]
+}

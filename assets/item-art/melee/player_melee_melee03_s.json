@@ -1,0 +1,10 @@
+{
+  "id": "player_melee_melee03_s",
+  "type": "sheet",
+  "state": "melee03",
+  "dir": "s",
+  "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing south, toward viewer. four sequential wide horizontal heavy slash poses with a broad machete: 1 readying, 2 long windup arm back, 3 sweeping slash impact, 4 recovery. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+  "source": "sources/player_melee_melee03_s.png",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0e6b8695-7c18-4023-bb3c-8d035ba619cf.png",
+  "frames": 4
+}

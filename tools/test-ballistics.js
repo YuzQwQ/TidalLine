@@ -108,7 +108,7 @@ test('15 种弹药的 id、等级、价格与需求一致', () => {
     assert.equal(item.dmgMul, t.dmgMul, item.id + ' 伤害系数应来自统一表');
     assert.equal(item.penLevel, t.pen, item.id + ' 穿透等级应来自统一表');
     assert(item.noLoot && item.noCodex, item.id + ' 不该进掉落/图鉴');
-    assert.equal(item.stack, 120);
+    assert.equal(item.stack, { '12g':20, '556':60, '9mm':90 }[item.caliber]);
   }
   assert.equal(ITEMS.filter(i => i.id === 'ammo').length, 0, '老的通用弹药应该已经去掉');
 });
@@ -267,14 +267,14 @@ test('背包塞不下退回的弹药时，整个换种操作取消（不吞子�
   const P = raid('rifle', [['ammo_556_1', 30], ['ammo_556_3', 30]]);
   P.mag = 5;
   P.weapons[0].ammo = 'ammo_556_1';
-  /* 把背包塞满到只剩 0 格，并且 556_1 那堆已经满到 120，退不进去 */
-  P.bag.slots = [{ item: ITEM_BY_ID.ammo_556_1, n: 120 }, { item: ITEM_BY_ID.ammo_556_3, n: 30 }];
+  /* 把背包塞满到只剩 0 格，并且 556_1 那堆已经满到 60，退不进去 */
+  P.bag.slots = [{ item: ITEM_BY_ID.ammo_556_1, n: 60 }, { item: ITEM_BY_ID.ammo_556_3, n: 30 }];
   while (P.bag.slots.length < c.bagSlots()) {
     P.bag.slots.push({ item: ITEM_BY_ID['life01'], n: 1 });
   }
   assert.equal(P.loadAmmo('ammo_556_3'), false, '放不下就该拒绝');
   assert.equal(P.mag, 5, '弹匣没被动过');
-  assert.equal(P.bag.ammoCount('ammo_556_1'), 120, '一发都没丢');
+  assert.equal(P.bag.ammoCount('ammo_556_1'), 60, '一发都没丢');
 });
 
 test('空弹匣且没有匹配弹药时打不出去', () => {

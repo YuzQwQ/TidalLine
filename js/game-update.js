@@ -506,6 +506,7 @@ Object.assign(Game, {
     if (this.state !== 'playing') return;
     this.state = 'dying';
     Save.setHP(1);
+    this.applyEquipmentLoss();
     this.deathElapsed = 0;
     this._deathSoundPlayed = true;
     this.action = null;

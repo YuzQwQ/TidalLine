@@ -362,6 +362,7 @@ Object.assign(Game, {
     const eq = s.item.equip;
     let old = null;
 
+    if (eq.kind === 'melee') return MeleeSystem.equipBag(i);
     if (eq.kind === 'gun') {
       const def = WEAPONS[eq.gun];
       if (!def) return false;
@@ -620,6 +621,22 @@ Object.assign(Game, {
   },
 
   /* ---------------- 结算 ---------------- */
+  applyEquipmentLoss() {
+    const P=this.player;
+    if(!P)return [];
+    if(P._equipmentLoss)return P._equipmentLoss;
+    const lost=[];
+    P.weapons.forEach((w,i)=>{if(w)lost.push(EQUIP.gun(w.id,i===P.slot?P.mag:w.magCur,w.ammo,w.rounds));});
+    if(P.helmet)lost.push(EQUIP.armor(P.helmet));
+    if(P.body)lost.push(EQUIP.armor(P.body));
+    if(P.back)lost.push(EQUIP.bag(P.back.id));
+    P._equipmentLoss=lost;
+    P.weapons=[null,null,null];P.mag=0;P.slot=0;P.helmet=null;P.body=null;P.back=null;
+    P.reloadPending=false;P.reloadT=0;P.meleeAttack=null;
+    this.syncGear();Save.flush();
+    return lost;
+  },
+
   showEnd(success, reason) {
     this.action = null;
     this.closeLoot();
@@ -629,6 +646,7 @@ Object.assign(Game, {
 
     const P = this.player;
     Save.setHP(success ? P.hp : 1);
+    const lostEquipment=success?[]:this.applyEquipmentLoss();
     const carried = P.bag.slots.slice();
     const safe = P.bag.safe.slice();
     const kept = success ? carried.concat(safe) : safe;
@@ -671,6 +689,7 @@ Object.assign(Game, {
       name: s.item.name + (s.n > 1 ? ' ×' + s.n : ''),
       price: (unitPrice(s.item) || 0) * s.n
     }));
+    for(const item of lostEquipment)lost.push({it:item,name:item.name+'（已装备）',price:unitPrice(item)||0});
     const lostValue = success ? 0 : lost.reduce((a, b) => a + b.price, 0);
     const prevBest = Save.bestHaul || 0;
     const isRecord = success && total > prevBest && total > 0;
@@ -814,7 +833,7 @@ Object.assign(Game, {
       for (const l of d.lost) {
         html += '<div class="settle-row"><span>' + esc(l.name) + '</span><b class="dim">' + formatMoney(l.price) + '</b></div>';
       }
-      html += '<div class="tip">安全箱里的东西不会掉。这就是它存在的理由。</div>';
+      html += '<div class="tip">死亡或行动失败会失去已装备的枪械、头盔、护甲和背包；近战槽与安全箱保留。</div>';
     }
 
     if (d.lines.length) {

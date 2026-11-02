@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "icons": 3,
+  "strips": 15,
+  "nativeFrame": [
+    64,
+    64
+  ],
+  "feet": [
+    32,
+    46
+  ],
+  "development": true,
+  "offline": true,
+  "narrow": [
+    320,
+    390
+  ]
+}

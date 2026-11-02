@@ -1,0 +1,1022 @@
+{
+  "generator": "Built-in image_gen",
+  "processing": "alpha >=160, nearest neighbour, binary alpha; body normalized by blue hood to foot, feet anchor 32/46",
+  "assets": [
+    {
+      "id": "melee01",
+      "type": "icon",
+      "source": "sources/melee01.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-03524355-1523-44b5-8550-45b127582b60.png",
+      "prompt": "Use case: stylized-concept. ONE inventory icon for TidalLine, authentic coarse 48x48 logical-pixel art, muted 16-colour weathered 1990s palette, upper-left light, crisp pixel clusters. An OPEN short folding pocket knife with short silver steel blade, worn dark brown wooden handle, distinct pivot and locking joint. Entire knife diagonal lower-left to upper-right, centered within 40x40 safe area, 4px transparent margins. Transparent background. No text, logo, rarity colour, border, glow, shadow, scene or hand.",
+      "frames": 1,
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "target": "assets/gear/melee01.png",
+      "status": "ready"
+    },
+    {
+      "id": "melee02",
+      "type": "icon",
+      "subject": "a fixed-blade military combat knife, straight long silver steel blade, black ribbed grip, small metal guard, noticeably longer and straighter than a pocket knife",
+      "prompt": "Use case: stylized-concept. ONE inventory icon, coarse hand-placed 48x48 logical pixel art. a fixed-blade military combat knife, straight long silver steel blade, black ribbed grip, small metal guard, noticeably longer and straighter than a pocket knife. Full isolated item diagonally bottom-left to top-right, centered 40x40 safe area, 4 transparent pixels margin. Muted weathered 1990s materials, upper-left light, 16 colours. Transparent background. No logo, text, numbers, border, rarity background, hand, scene, glow or shadow.",
+      "source": "sources/melee02.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-6dfa7a01-d598-4ab1-ae65-8c304ee124d6.png",
+      "frames": 1,
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "target": "assets/gear/melee02.png",
+      "status": "ready"
+    },
+    {
+      "id": "melee03",
+      "type": "icon",
+      "subject": "a broad heavy jungle machete, long dark silver steel blade widening at the tip, dark worn wood grip with lanyard hole, much broader blade than a combat knife",
+      "prompt": "Use case: stylized-concept. ONE inventory icon, coarse hand-placed 48x48 logical pixel art. a broad heavy jungle machete, long dark silver steel blade widening at the tip, dark worn wood grip with lanyard hole, much broader blade than a combat knife. Full isolated item diagonally bottom-left to top-right, centered 40x40 safe area, 4 transparent pixels margin. Muted weathered 1990s materials, upper-left light, 16 colours. Transparent background. No logo, text, numbers, border, rarity background, hand, scene, glow or shadow.",
+      "source": "sources/melee03.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-fe421290-b3a7-4c15-a5e8-c7a607b3ea2d.png",
+      "frames": 1,
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "target": "assets/gear/melee03.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_idle_e",
+      "type": "sheet",
+      "state": "idle",
+      "dir": "e",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 2 equally sized square cells, aspect ratio 2:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing east, rightward profile. two near-identical idle breathing poses, knife held lowered safely, NO gun. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_idle_e.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2d37286d-aa8c-4ae0-91e1-6704056f3127.png",
+      "frames": 2,
+      "sourceSize": [
+        1774,
+        887
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            16,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            16,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_idle_e.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_idle_n",
+      "type": "sheet",
+      "state": "idle",
+      "dir": "n",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 2 equally sized square cells, aspect ratio 2:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing north, back to viewer. two near-identical idle breathing poses, knife held lowered safely, NO gun. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_idle_n.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-10f77f2b-8596-4747-81d0-9c06556aa2f2.png",
+      "frames": 2,
+      "sourceSize": [
+        1774,
+        887
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            17,
+            18,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            19,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_idle_n.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_idle_s",
+      "type": "sheet",
+      "state": "idle",
+      "dir": "s",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 2 equally sized square cells, aspect ratio 2:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing south, toward viewer. two near-identical idle breathing poses, knife held lowered safely, NO gun. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_idle_s.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-50ff4309-21e9-4e4b-92fb-fd3d4581e575.png",
+      "frames": 2,
+      "sourceSize": [
+        1774,
+        887
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            18,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            18,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_idle_s.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee01_e",
+      "type": "sheet",
+      "state": "melee01",
+      "dir": "e",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing east, rightward profile. four sequential quick short thrust poses with a small folding knife: 1 preparing, 2 drawing arm back, 3 thrust impact, 4 recovering. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_melee01_e.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-552ab55b-c0ac-4921-832a-b4d0d345b679.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            18,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            15,
+            18,
+            26,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            18,
+            28,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            19,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee01_e.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee01_n",
+      "type": "sheet",
+      "state": "melee01",
+      "dir": "n",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing north, back to viewer. four sequential quick short thrust poses with a small folding knife: 1 preparing, 2 drawing arm back, 3 thrust impact, 4 recovering. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_melee01_n.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-19228f77-64e3-4656-b4d7-0659adae24b1.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            20,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            17,
+            25,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            17,
+            25,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            21,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee01_n.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee01_s",
+      "type": "sheet",
+      "state": "melee01",
+      "dir": "s",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing south, toward viewer. four sequential quick short thrust poses with a small folding knife: 1 preparing, 2 drawing arm back, 3 thrust impact, 4 recovering. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_melee01_s.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7f82759d-3c99-498d-9ffb-6b318cdf5cca.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            17,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            19,
+            18,
+            21,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            15,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            17,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee01_s.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee02_e",
+      "type": "sheet",
+      "state": "melee02",
+      "dir": "e",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing east, rightward profile. four sequential diagonal slash poses with a straight combat knife: 1 readying, 2 raised arm windup, 3 diagonal slash impact, 4 recovery. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_melee02_e.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-8c751941-9eee-48f7-b4e6-cba861e00a2c.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            20,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            26,
+            17,
+            14,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            18,
+            25,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            19,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee02_e.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee02_n",
+      "type": "sheet",
+      "state": "melee02",
+      "dir": "n",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing north, back to viewer. four sequential diagonal slash poses with a straight combat knife: 1 readying, 2 raised arm windup, 3 diagonal slash impact, 4 recovery. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_melee02_n.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-ddfcce1d-e375-4528-88a3-8aad7b5f9d79.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            17,
+            24,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            17,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            32,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            17,
+            24,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee02_n.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee02_s",
+      "type": "sheet",
+      "state": "melee02",
+      "dir": "s",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing south, toward viewer. four sequential diagonal slash poses with a straight combat knife: 1 readying, 2 raised arm windup, 3 diagonal slash impact, 4 recovery. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_melee02_s.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e3c859d1-8d23-4030-ba7a-7ee487f7aa95.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            18,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            25,
+            18,
+            18,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            21,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            18,
+            19,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee02_s.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee03_e",
+      "type": "sheet",
+      "state": "melee03",
+      "dir": "e",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing east, rightward profile. four sequential wide horizontal heavy slash poses with a broad machete: 1 readying, 2 long windup arm back, 3 sweeping slash impact, 4 recovery. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_melee03_e.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-f7a06818-8e21-45e8-afe7-5158ea752cbb.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            18,
+            23,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            15,
+            15,
+            28,
+            31
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            17,
+            18,
+            38,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            5,
+            18,
+            41,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee03_e.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee03_n",
+      "type": "sheet",
+      "state": "melee03",
+      "dir": "n",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing north, back to viewer. four sequential wide horizontal heavy slash poses with a broad machete: 1 readying, 2 long windup arm back, 3 sweeping slash impact, 4 recovery. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_melee03_n.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-72ce2df9-fdac-435f-9b02-3cae9146aec5.png",
+      "frames": 4,
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            24,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            17,
+            21,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            18,
+            18,
+            41,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            8,
+            18,
+            40,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee03_n.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee03_s",
+      "type": "sheet",
+      "state": "melee03",
+      "dir": "s",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing south, toward viewer. four sequential wide horizontal heavy slash poses with a broad machete: 1 readying, 2 long windup arm back, 3 sweeping slash impact, 4 recovery. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_melee03_s.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0e6b8695-7c18-4023-bb3c-8d035ba619cf.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            18,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            11,
+            13,
+            29,
+            33
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            35,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            18,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee03_s.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_walk_e",
+      "type": "sheet",
+      "state": "walk",
+      "dir": "e",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing east, rightward profile. four sequential walking-cycle poses, alternating feet and arm swing while holding a short knife, NO gun. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_walk_e.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-710bed1e-2a4e-438a-9214-75cc48952b9b.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            17,
+            20,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            18,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            17,
+            20,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            18,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_walk_e.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_walk_n",
+      "type": "sheet",
+      "state": "walk",
+      "dir": "n",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing north, back to viewer. four sequential walking-cycle poses, alternating feet and arm swing while holding a short knife, NO gun. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_walk_n.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3597aa2b-dd4f-467f-95fb-03947204d764.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            19,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            17,
+            18,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            19,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            18,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_walk_n.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_walk_s",
+      "type": "sheet",
+      "state": "walk",
+      "dir": "s",
+      "prompt": "Use case: stylized-concept. Game animation SPRITE STRIP for TidalLine. Reference image is the exact character identity and body proportions, NOT an edit target. ONE horizontal row of 4 equally sized square cells, aspect ratio 4:1. Transparent background with NO checkerboard, labels, guides or scene. Each cell is a 64x64 LOGICAL PIXEL canvas, character occupies about 20x28 pixels centered with feet consistently at (32,46); large empty margin is ESSENTIAL, do NOT fill cell with character. Match reference's coarse pixel clusters, blue-grey hood/helmet, dark olive coat, tan straps, slate pants and boots, upper-left light, muted 1990s post-flood scavenger. Top-down 75-degree game camera, facing south, toward viewer. four sequential walking-cycle poses, alternating feet and arm swing while holding a short knife, NO gun. IDENTICAL body scale, head size and fixed foot anchor across all frames; knife stays inside each cell. Hard pixel edges, limited palette. NO rifle, pistol, gun, sword glow, blade trail, shadow, text or duplicated extra frames.",
+      "source": "sources/player_melee_walk_s.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-53eb1c99-79b2-4fea-91e5-259fa5b3dcf0.png",
+      "frames": 4,
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            18,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            17,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            18,
+            18,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            18,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_walk_s.png",
+      "status": "ready"
+    }
+  ]
+}

@@ -190,6 +190,15 @@
         "bag04",
         "bag05"
       ]
+    },
+    "melee": {
+      "manifest": "assets/item-art/melee/manifest.json",
+      "prepare": "node tools/prepare-melee-art.js",
+      "ids": [
+        "melee01",
+        "melee02",
+        "melee03"
+      ]
     }
   }
 }

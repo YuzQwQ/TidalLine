@@ -807,6 +807,7 @@ const AMMO_TABLE = [
   ['12g', 5, '特种穿甲霰弹',    2200]
 ];
 
+const AMMO_STACK_LIMITS = { '12g': 20, '556': 60, '9mm': 90 };
 const AMMO_ITEMS = AMMO_TABLE.map(([caliber, level, name, price]) => {
   const t = BALLISTICS.tier(level);
   const cal = BALLISTICS.caliber(caliber);
@@ -814,7 +815,7 @@ const AMMO_ITEMS = AMMO_TABLE.map(([caliber, level, name, price]) => {
     id: BALLISTICS.ammoId(caliber, level),
     iconId: 'ammo_' + caliber,
     name, short: cal.short + '·' + level,
-    cat: 'ammo', r: level, w: 0.012, price, stack: 120,
+    cat: 'ammo', r: level, w: 0.012, price, stack: AMMO_STACK_LIMITS[caliber],
     noCodex: true, noLoot: true,
     caliber, level, penLevel: t.pen, dmgMul: t.dmgMul,
     desc: cal.name + ' 制式弹药，' + t.name + '级。\n\n' +
@@ -1028,6 +1029,12 @@ const WEAPONS = {
 /* 三个武器位：0/1 主武器，2 副武器（副武器必须一直有枪，见 Base.ensureSidearm） */
 const DEFAULT_WEAPONS = ['rifle', 'shotgun', 'pistol'];
 const SIDEARM_SLOT = 2;
+const MELEE = [
+ {id:'melee01',name:'旧式折叠刀',short:'折叠刀',r:1,w:.15,price:3000,damage:12,interval:.55,windup:.12,angle:55,radius:.65,available:true,desc:"一种带锁定机构的普通折叠刀，刀身不长，折叠后能够轻松放进衣袋。\n\n事故发生后，环礁湾的五金店曾出现过短暂的折叠刀抢购潮。店主们最初以为人们需要它来割断绳索、拆开包装，或者处理其他生活琐事。\n\n直到有人开始询问，刀刃究竟能不能刺穿厚重的冬季外套。"},
+ {id:'melee02',name:'M-9 制式战斗刀',short:'战斗刀',r:3,w:.35,price:18000,damage:18,interval:.85,windup:.20,angle:75,radius:.80,available:true,desc:"军用标准固定刃刀具，采用一体式刀身与防滑握柄，配有可固定在腰带上的硬质刀鞘。\n\nM-9 的采购报告曾将其定义为「具备多功能野外作业能力的辅助工具」，并特别强调其不应被视作步兵的主要作战武器。\n\n但军需部门始终没有明确解释，为什么这把辅助工具需要在每批产品出厂前接受穿刺性能检验。"},
+ {id:'melee03',name:'重型丛林砍刀',short:'砍刀',r:4,w:.85,price:45000,damage:26,interval:1.40,windup:.35,angle:100,radius:.95,available:false,desc:"面向热带林地清障与野外作业设计的大型砍刀，采用加厚刀背与宽幅刀身，能够有效处理藤蔓、灌木及较粗的木质枝条。\n\n环礁湾沿海植被在灾害发生后出现过几轮异常生长，部分原本需要数月才能恢复的灌木，在短短几周内便重新覆盖了清理过的道路。\n\n林业部门因此采购了一批加重型砍刀。\n\n采购记录显示，最后一批货物的收货单位并非林业部门，而是环礁湾特别治安署。"}
+];
+ART.gear.push(...MELEE.map(m=>m.id));
 
 /* ------------------------------------------------------------
    护甲：六级头盔 / 六级身体护甲
@@ -1184,6 +1191,12 @@ const EQUIP = {
 
   /* 背包 id → 伪物品。背包没有耐久，回收价固定半价。
      容量写在 equip.slots 里，穿回去时直接读它。 */
+  melee(id, bound=false) {
+    const d=MELEE.find(x=>x.id===id); if(!d)return null;
+    return {id:'g_'+id,name:d.name,short:d.short,cat:'gear',r:d.r,w:d.w,price:d.price,
+      sell:bound?0:Math.floor(d.price/2),stack:1,icon:id,noCodex:true,
+      equip:{kind:'melee',melee:id,bound:!!bound},note:bound?'绑定':''};
+  },
   bag(id) {
     const d = BACKPACK.def(id);
     if (!d) return null;

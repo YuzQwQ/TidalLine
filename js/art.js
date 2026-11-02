@@ -105,6 +105,7 @@ const Art = {
     for (const g of ['props', 'tiles']) {
       for (const id of ART[g]) load(g + '/' + id);
     }
+    for (const id of (ART.effects || [])) load('effects/' + id);
     // 角色：每个角色按三个方向各加载一张
     for (const id of ART.chars) {
       for (const d of ART.charDirs) load('chars/' + id + '_' + d);

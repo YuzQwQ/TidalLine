@@ -1,0 +1,9 @@
+{
+  "id": "melee02",
+  "type": "icon",
+  "subject": "a fixed-blade military combat knife, straight long silver steel blade, black ribbed grip, small metal guard, noticeably longer and straighter than a pocket knife",
+  "prompt": "Use case: stylized-concept. ONE inventory icon, coarse hand-placed 48x48 logical pixel art. a fixed-blade military combat knife, straight long silver steel blade, black ribbed grip, small metal guard, noticeably longer and straighter than a pocket knife. Full isolated item diagonally bottom-left to top-right, centered 40x40 safe area, 4 transparent pixels margin. Muted weathered 1990s materials, upper-left light, 16 colours. Transparent background. No logo, text, numbers, border, rarity background, hand, scene, glow or shadow.",
+  "source": "sources/melee02.png",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-6dfa7a01-d598-4ab1-ae65-8c304ee124d6.png",
+  "frames": 1
+}

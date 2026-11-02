@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>潮汐线 · 音效试听</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; height: 100%;
+    background: #070b09; color: #cfd8d4;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    font-size: 13px; overflow: hidden;
+  }
+  header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-bottom: 1px solid #1e312b; background: #0b1210;
+  }
+  .btn {
+    padding: 5px 13px; font-size: 11.5px; letter-spacing: .5px;
+    background: #14685c; color: #eaf4f0; border: 0; border-radius: 3px; cursor: pointer;
+  }
+  .btn:hover { background: #1a7d6e; }
+  .btn.ghost { background: transparent; border: 1px solid #1e312b; color: #8ba39b; }
+  .btn.ghost:hover { border-color: #2a443d; color: #cfd8d4; }
+  .btn.ghost.on { border-color: #14685c; color: #6fd6ba; }
+  input[type=search] {
+    width: 220px; padding: 5px 9px; font-size: 12px;
+    background: #0f1714; border: 1px solid #1e312b; border-radius: 3px;
+    color: #cfd8d4; outline: none;
+  }
+  input[type=search]:focus { border-color: #2a443d; }
+  #stat { margin-left: auto; color: #5f7a72; font-size: 11.5px; }
+  main { height: calc(100% - 49px); overflow-y: auto; }
+  .row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 5px 14px; border-bottom: 1px solid #101a16; cursor: pointer;
+  }
+  .row:hover { background: #0c1411; }
+  .row.cur { background: #0e1b17; box-shadow: inset 2px 0 0 #14685c; }
+  .row.picked { background: #0d1a16; }
+  .row.picked .name { color: #6fd6ba; }
+  .row.err { opacity: .45; }
+  .idx { width: 30px; color: #3d534d; font-size: 10.5px; text-align: right; font-variant-numeric: tabular-nums; }
+  canvas.wave { width: 200px; height: 30px; flex: none; }
+  .meta { flex: 1; min-width: 0; }
+  .name { font-size: 12.5px; color: #b9c8c3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sub { font-size: 10.5px; color: #4e6a62; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .row.picked .sub { color: #52806f; }
+  .pick { flex: none; }
+  .pick input { width: 15px; height: 15px; accent-color: #14685c; cursor: pointer; }
+  .acts { display: flex; align-items: center; gap: 10px; flex: none; }
+  .play {
+    width: 24px; height: 24px; line-height: 1; padding: 0;
+    background: transparent; border: 1px solid #1e312b; border-radius: 50%;
+    color: #6f8f86; font-size: 10px; cursor: pointer;
+  }
+  .play:hover { border-color: #14685c; color: #6fd6ba; }
+  .empty { padding: 60px; text-align: center; color: #3d534d; line-height: 2; }
+  .empty b { color: #6f8f86; font-weight: normal; }
+  footer {
+    position: fixed; left: 0; right: 0; bottom: 0; padding: 6px 14px;
+    background: #0b1210; border-top: 1px solid #1e312b;
+    color: #4e6a62; font-size: 11px;
+  }
+  kbd {
+    padding: 1px 5px; border: 1px solid #1e312b; border-radius: 3px;
+    font-family: inherit; font-size: 10.5px; color: #8ba39b;
+  }
+</style>
+</head>
+<body>
+<header>
+  <label class="btn" for="dir">选择文件夹</label>
+  <input id="dir" type="file" webkitdirectory multiple hidden>
+  <input id="q" type="search" placeholder="过滤文件名…">
+  <button class="btn ghost" id="loop">循环重播</button>
+  <button class="btn ghost" id="copy">复制选中清单</button>
+  <span id="stat">还没载入素材</span>
+</header>
+<main id="list">
+  <div class="empty">
+    <b>选择 Kenney 包里解压出来的 Audio 文件夹</b><br>
+    单击一行试听，勾选留下，最后复制清单<br>
+    文件不进服务器、不上传，只在本地解码
+  </div>
+</main>
+<footer>
+  <kbd>↑</kbd> <kbd>↓</kbd> 切换 &nbsp;·&nbsp; <kbd>空格</kbd> 重播 &nbsp;·&nbsp;
+  <kbd>Enter</kbd> 勾选 &nbsp;·&nbsp; 勾了才能进清单
+</footer>
+<script>
+const AC = window.AudioContext || window.webkitAudioContext;
+let ac = null;
+const ctx = () => (ac = ac || new AC());
+
+const state = { files: [], picked: new Set(), loop: false, cur: -1, node: null, visible: [] };
+const EXT = /\.(wav|ogg|mp3|m4a|flac|aif|aiff)$/i;
+const $ = id => document.getElementById(id);
+
+/* ---------- 载入 ---------- */
+$('dir').addEventListener('change', e => {
+  const list = [...e.target.files].filter(f => EXT.test(f.name));
+  if (!list.length) return;
+  list.sort((a, b) => a.name.localeCompare(b.name, 'en'));
+  state.files = list.map((file, i) => ({ i, file, name: file.name, size: file.size }));
+  state.picked.clear();
+  state.cur = -1;
+  render();
+  decodeAll();
+});
+
+/* ---------- 建列表 ---------- */
+function render() {
+  const q = $('q').value.trim().toLowerCase();
+  const box = $('list');
+  box.textContent = '';
+  const frag = document.createDocumentFragment();
+  state.visible = [];
+  for (const f of state.files) {
+    if (q && !f.name.toLowerCase().includes(q)) continue;
+    f.row = null;
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.dataset.i = f.i;
+
+    const idx = document.createElement('div');
+    idx.className = 'idx';
+    idx.textContent = String(f.i + 1).padStart(2, '0');
+
+    const cv = document.createElement('canvas');
+    cv.className = 'wave';
+    cv.width = 400; cv.height = 60;
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    const nm = document.createElement('div');
+    nm.className = 'name';
+    nm.textContent = f.name;
+    const sub = document.createElement('div');
+    sub.className = 'sub';
+    sub.textContent = fmtSize(f.size);
+    meta.append(nm, sub);
+
+    const acts = document.createElement('div');
+    acts.className = 'acts';
+    const play = document.createElement('button');
+    play.className = 'play';
+    play.textContent = '▶';
+    const pick = document.createElement('label');
+    pick.className = 'pick';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = state.picked.has(f.i);
+    pick.append(cb);
+    acts.append(play, pick);
+
+    row.append(idx, cv, meta, acts);
+    row.addEventListener('click', e => {
+      if (e.target.closest('.pick')) return;
+      state.cur = f.i;
+      highlight();
+      playFile(f);
+    });
+    cb.addEventListener('change', () => {
+      if (cb.checked) state.picked.add(f.i); else state.picked.delete(f.i);
+      row.classList.toggle('picked', cb.checked);
+      if (f.buf) drawWave(f);
+      stat();
+    });
+
+    f.row = row; f.cv = cv; f.sub = sub; f.cb = cb;
+    if (state.picked.has(f.i)) row.classList.add('picked');
+    if (f.buf) { sub.textContent = fmtMeta(f); drawWave(f); }
+    if (f.err) row.classList.add('err');
+    state.visible.push(f);
+    frag.append(row);
+  }
+  if (!state.visible.length) {
+    const d = document.createElement('div');
+    d.className = 'empty';
+    d.textContent = '没有匹配的文件';
+    frag.append(d);
+  }
+  box.append(frag);
+  highlight();
+  stat();
+}
+
+function highlight() {
+  for (const f of state.files) if (f.row) f.row.classList.toggle('cur', f.i === state.cur);
+  const cur = state.files[state.cur];
+  if (cur && cur.row) cur.row.scrollIntoView({ block: 'nearest' });
+}
+
+function stat() {
+  const n = state.files.length;
+  const p = state.picked.size;
+  $('stat').textContent = n
+    ? n + ' 个文件 · 选中 ' + p + (p ? ' · 约 ' + fmtSize(selSize()) : '')
+    : '还没载入素材';
+}
+const selSize = () => [...state.picked].reduce((a, i) => a + state.files[i].size, 0);
+
+/* ---------- 解码 ---------- */
+/* 只读 WAV 头：源文件真实采样率/位深/声道。decodeAudioData 会按当前声卡
+   重采样（本机 48kHz 时所有文件都显示 48kHz），拿它记素材账是错的。 */
+function parseWavHead(buf) {
+  const v = new DataView(buf);
+  if (buf.byteLength < 44) return null;
+  const tag = (o) => String.fromCharCode(v.getUint8(o), v.getUint8(o + 1), v.getUint8(o + 2), v.getUint8(o + 3));
+  if (tag(0) !== 'RIFF' || tag(8) !== 'WAVE') return null;
+  let o = 12, fmt = null, dataLen = null;
+  while (o + 8 <= buf.byteLength) {
+    const id = tag(o), size = v.getUint32(o + 4, true);
+    if (id === 'fmt ') {
+      fmt = {
+        codec: v.getUint16(o + 8, true),
+        channels: v.getUint16(o + 10, true),
+        sampleRate: v.getUint32(o + 12, true),
+        bits: v.getUint16(o + 22, true)
+      };
+    } else if (id === 'data') {
+      dataLen = size;
+    }
+    o += 8 + size + (size % 2);
+    if (fmt && dataLen != null) break;
+  }
+  if (!fmt || dataLen == null || !fmt.sampleRate) return null;
+  const bytesPer = (fmt.bits / 8) * fmt.channels;
+  if (!bytesPer) return null;
+  return { ...fmt, duration: dataLen / (bytesPer * fmt.sampleRate) };
+}
+
+async function decodeAll() {
+  for (const f of state.files) {
+    try {
+      const raw = await f.file.arrayBuffer();
+      f.src = parseWavHead(raw);        // WAV 才有，其它格式为 null
+      const ab = await ctx().decodeAudioData(raw);
+      f.buf = ab;
+      f.dur = f.src ? f.src.duration : ab.duration;
+      if (f.sub) f.sub.textContent = fmtMeta(f);
+      if (f.cv) drawWave(f);
+    } catch (err) {
+      f.err = String((err && err.message) || err);
+      if (f.row) { f.row.classList.add('err'); if (f.sub) f.sub.textContent = '解码失败 ' + f.err; }
+    }
+    if (f.i % 3 === 0) await new Promise(r => setTimeout(r, 0));
+  }
+  stat();
+}
+
+/* ---------- 波形 ---------- */
+function drawWave(f) {
+  if (!f.cv || !f.buf) return;
+  const g = f.cv.getContext('2d');
+  const W = f.cv.width, H = f.cv.height;
+  g.clearRect(0, 0, W, H);
+  const data = f.buf.getChannelData(0);
+  const picked = state.picked.has(f.i);
+  const step = Math.max(1, Math.floor(data.length / W));
+  let peak = 0;
+  g.fillStyle = picked ? '#3fbf9f' : '#33554d';
+  for (let x = 0; x < W; x++) {
+    let mn = 1, mx = -1;
+    const end = Math.min((x + 1) * step, data.length);
+    for (let i = x * step; i < end; i++) {
+      const v = data[i];
+      if (v < mn) mn = v;
+      if (v > mx) mx = v;
+    }
+    if (mx > peak) peak = mx;
+    if (mn < -peak) peak = -mn;
+    const y0 = (1 - mx) * H / 2;
+    const y1 = (1 - mn) * H / 2;
+    g.fillRect(x, y0, 1, Math.max(1, y1 - y0));
+  }
+  // 过载提醒：峰值贴顶说明素材本身削波，混音时得压
+  if (peak > 0.98) {
+    g.fillStyle = '#8d4040';
+    g.fillRect(0, 0, W, 2);
+  }
+}
+
+/* ---------- 播放 ---------- */
+function playFile(f) {
+  if (!f.buf) return;
+  if (ctx().state === 'suspended') ctx().resume();   // file:// 下有时停在 suspended
+  stop();
+  const src = ctx().createBufferSource();
+  src.buffer = f.buf;
+  const gain = ctx().createGain();
+  gain.gain.value = 0.85;
+  src.connect(gain).connect(ctx().destination);
+  src.onended = () => {
+    if (state.loop && state.cur === f.i && state.node === src) playFile(f);
+  };
+  src.start();
+  state.node = src;
+}
+function stop() {
+  if (state.node) {
+    const n = state.node;
+    state.node = null;
+    try { n.stop(); } catch (e) {}
+  }
+}
+
+/* ---------- 键盘 ---------- */
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' && e.target.type === 'search') {
+    if (e.key === 'Escape') { e.target.value = ''; render(); }
+    return;
+  }
+  const vis = state.visible;
+  if (!vis.length) return;
+  let at = vis.findIndex(f => f.i === state.cur);
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    state.cur = vis[Math.min(vis.length - 1, at + 1)].i;
+    highlight(); playFile(state.files[state.cur]);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    state.cur = vis[Math.max(0, at - 1)].i;
+    highlight(); playFile(state.files[state.cur]);
+  } else if (e.key === ' ') {
+    e.preventDefault();
+    playFile(state.files[state.cur < 0 ? vis[0].i : state.cur]);
+    if (state.cur < 0) { state.cur = vis[0].i; highlight(); }
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    const f = state.files[state.cur < 0 ? vis[0].i : state.cur];
+    if (!f) return;
+    if (state.picked.has(f.i)) state.picked.delete(f.i); else state.picked.add(f.i);
+    f.cb.checked = state.picked.has(f.i);
+    f.row.classList.toggle('picked', f.cb.checked);
+    if (f.buf) drawWave(f);
+    stat();
+  }
+});
+
+/* ---------- 过滤 / 循环 / 导出 ---------- */
+$('q').addEventListener('input', render);
+$('loop').addEventListener('click', e => {
+  state.loop = !state.loop;
+  e.target.classList.toggle('on', state.loop);
+});
+$('copy').addEventListener('click', async () => {
+  const rows = [...state.picked].sort((a, b) => a - b).map(i => {
+    const f = state.files[i];
+    const s = f.src || {};
+    return {
+      file: f.name,
+      bytes: f.size,
+      duration: f.dur ? +f.dur.toFixed(3) : null,
+      sampleRate: s.sampleRate || null,
+      bitDepth: s.bits || null,
+      channels: s.channels || null
+    };
+  });
+  if (!rows.length) { $('copy').textContent = '还没勾选'; setTimeout(() => $('copy').textContent = '复制选中清单', 1200); return; }
+  const txt = JSON.stringify(rows, null, 2);
+  try { await navigator.clipboard.writeText(txt); $('copy').textContent = '已复制 ' + rows.length + ' 条'; }
+  catch (e) { $('copy').textContent = '复制失败，见控制台'; console.log(txt); }
+  setTimeout(() => $('copy').textContent = '复制选中清单', 1500);
+});
+
+/* ---------- 工具 ---------- */
+function fmtSize(n) {
+  if (n < 1024) return n + ' B';
+  if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+  return (n / 1024 / 1024).toFixed(2) + ' MB';
+}
+/* 调试用：控制台里 __audition 能直接看解析结果 */
+window.__audition = state;
+function fmtMeta(f) {
+  const bits = [];
+  if (f.dur != null) bits.push(f.dur.toFixed(2) + 's');
+  const s = f.src;
+  if (s) {
+    bits.push((s.sampleRate / 1000).toFixed(s.sampleRate % 1000 ? 1 : 0) + 'kHz');
+    if (s.bits) bits.push(s.bits + 'bit');
+    bits.push(s.channels === 1 ? '单声道' : s.channels + '声道');
+  } else {
+    bits.push('非 WAV');
+  }
+  bits.push(fmtSize(f.size));
+  return bits.join(' · ');
+}
+</script>
+</body>
+</html>
