@@ -39,6 +39,21 @@ const man = require('../assets/audio/manifest.json');
       assert.equal(loaded[a.id].ch, 1, a.id + ' 是单声道');
     }
 
+    /* ---------- 1.5 近战 / 出售：新素材按各自的响度档对齐，不落进默认值 ---------- */
+    const extra = await page.evaluate(() => ({
+      melee: SFX.gainOf.melee, sell: SFX.gainOf.sell,
+      loudMelee: SFX.LOUD.melee, loudSell: SFX.LOUD.sell,
+      durMelee: SFX.samples.melee && SFX.samples.melee.duration,
+      durSell: SFX.samples.sell && SFX.samples.sell.duration,
+      durShotgun: SFX.samples.shot_shotgun && SFX.samples.shot_shotgun.duration
+    }));
+    assert(extra.melee > 0 && extra.sell > 0, '近战 / 出售采样有各自的播放增益');
+    const rms = id => man.assets.find(a => a.id === id).rms;
+    assert(Math.abs(extra.melee * rms('melee') - extra.loudMelee) < 0.02, '近战对齐到 LOUD.melee');
+    assert(Math.abs(extra.sell * rms('sell') - extra.loudSell) < 0.02, '出售对齐到 LOUD.sell');
+    assert(extra.durMelee < 0.55, '近战挥砍短于折叠刀 0.55s 攻击间隔');
+    assert(Math.abs(extra.durShotgun - 0.70) < 0.02, '霰弹 0.70s：留得住衰减尾音');
+
     /* ---------- 2. 换弹序列：三段按 0 / 0.55 / 1.05 排，长度落在 1.5s 内 ---------- */
     const seq = await page.evaluate(() => SFX.SEQ.reload);
     assert.equal(seq.length, 3, '换弹分三段');

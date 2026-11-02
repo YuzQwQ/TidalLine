@@ -80,6 +80,22 @@
       "site": "Freesound",
       "sid": 380886,
       "license": "TODO"
+    },
+    {
+      "id": "nomagician-swing",
+      "name": "Sword swing 3",
+      "author": "Nomagician",
+      "site": "Freesound",
+      "sid": 840717,
+      "license": "TODO"
+    },
+    {
+      "id": "mokasza-register",
+      "name": "Old fashioned cash register",
+      "author": "Mokasza",
+      "site": "Freesound",
+      "sid": 810738,
+      "license": "TODO"
     }
   ],
   "assets": [
@@ -241,15 +257,15 @@
       "id": "shot_shotgun",
       "file": "shot_shotgun.wav",
       "from": "morganpurkis-doom-shotgun",
-      "note": "霰弹开火：源 0–0.46s，砍掉后半段的上膛声",
-      "dur": 0.46,
+      "note": "霰弹开火：0→0.70s，带完整衰减尾音（原来切在 0.46s，尾巴被砍断）",
+      "dur": 0.7,
       "sampleRate": 44100,
       "channels": 1,
       "bits": 16,
       "peak": 0.89,
-      "rms": 0.5251,
-      "bytes": 40616,
-      "sha256_16": "03bf4e91dbb4e4ee"
+      "rms": 0.4372,
+      "bytes": 61784,
+      "sha256_16": "d000d8ab978fb86d"
     },
     {
       "id": "shot_shotgun_pump",
@@ -334,6 +350,34 @@
       "rms": 0.1688,
       "bytes": 13980,
       "sha256_16": "ce8fd77a62f88bd3"
+    },
+    {
+      "id": "melee",
+      "file": "melee.wav",
+      "from": "nomagician-swing",
+      "note": "近战挥砍：0.45s，卡在折叠刀 0.55s 攻击间隔内",
+      "dur": 0.45,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.1047,
+      "bytes": 43244,
+      "sha256_16": "50f58438e811325d"
+    },
+    {
+      "id": "sell",
+      "file": "sell.wav",
+      "from": "mokasza-register",
+      "note": "出售结算：老式收银机，0.84s",
+      "dur": 0.84,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.1565,
+      "bytes": 80684,
+      "sha256_16": "5740473b6610e4c3"
     }
   ],
   "mix": {

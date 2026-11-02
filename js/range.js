@@ -513,6 +513,8 @@ const Range = {
       '      <button data-sfx="headshot">爆头</button>',
       '      <button data-sfx="hurt">受伤</button>',
       '      <button data-sfx="dodge">闪避</button>',
+      '      <button data-sfx="melee">近战</button>',
+      '      <button data-sfx="sell">出售</button>',
       '    </div>',
       '    <div class="rg-sfx-tip">枪声走真实采样轮换，与游戏内同一条链路</div>',
       '  </div>',

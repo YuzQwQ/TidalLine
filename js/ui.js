@@ -354,6 +354,7 @@ const SFX = {
     step: 0.05,        // 脚步垫底，靠频率和音色存在
     dodge: 0.09,
     pickup: 0.06,
+    sell: 0.07,        // 出售结算：收银机，比拾取稍重一点，别盖过操作反馈
     door: 0.08,
     search: 0.055,
     drop: 0.055,
@@ -496,6 +497,9 @@ const SFX = {
     if (/^shot_(rifle|smg|shotgun|pistol_[123]|ak47)$/.test(id)) return this.LOUD.shot;
     if (id === 'shot_pistol_silent') return this.LOUD.shot * 0.55;
     if (id === 'shot_shotgun_pump') return this.LOUD.switch;
+    /* 近战挥砍与出售结算走自己的档，别落进 0.08 的默认值 */
+    if (id === 'melee') return this.LOUD.melee;
+    if (id === 'sell') return this.LOUD.sell;
     return 0.08;
   },
 

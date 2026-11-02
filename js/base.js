@@ -1151,7 +1151,7 @@ const Base = {
     }
     Save.credits += gain;
     Save.save();
-    Game.sfx('pickup');
+    Game.sfx('sell');      // 收银机响一声，和拾取区分开
     this.render();
     this.note('卖出 ' + it.name + ' ×' + take + '，+' + gain + ' 信用点');
   },
@@ -1168,6 +1168,7 @@ const Base = {
     Save.stash = keep;
     Save.credits += gain;
     Save.save();
+    Game.sfx('sell');
     this.render();
     this.note('清掉 ' + count + ' 件寻常物，+' + gain + ' 信用点');
   },
