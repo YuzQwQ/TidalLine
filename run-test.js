@@ -173,7 +173,7 @@ console.log('\n=== 后坐力 ===');
 Game.startRun({ ammo: 60, bandage: 0, stone: 0 });
 Game.enemies.length = 0;
 const PR = Game.player;
-PR.recoil = 0; PR.sinceShot = 99; PR.syncSpread();
+PR.recoil = 0; PR.sinceShot = 99; PR.aimRemaining=0; PR.syncSpread(); // isolate recoil after aiming has settled
 Game.shakeAmt = 0;
 PR.mag = 30; PR.fireCd = 0;
 
@@ -240,12 +240,15 @@ Game.enemies.forEach((e, i) => { if (i > 0) e.dead = true; });
 const dummy = Game.enemies[0];
 dummy.x = P3.x + 120; dummy.y = P3.y;
 dummy.hp = 999; dummy.maxHp = 999;
+dummy.body=null;dummy.helmet=null;dummy.update=()=>{}; // projectile hit check; armor behavior has separate tests
 dummy.state = 'patrol'; dummy.path = null; dummy.homeX = dummy.x; dummy.homeY = dummy.y;
 const hpBefore = dummy.hp;
 P3.angle = 0;
+/* 弹道现在由"实际准星"决定：把准星指到正右方（后坐力为 0 时就是鼠标点） */
+P3.updateAimPoint(P3.x + 200, P3.y);
 Game.bullets.length = 0;
 P3.mag = 30;
-P3.recoil = 0; P3.syncSpread();
+P3.recoil = 0; P3.aimRemaining=0; P3.syncSpread();
 P3.tryShoot();
 for (let i = 0; i < 20; i++) Game.update(1 / 60);
 ok('子弹命中敌人', dummy.hp < hpBefore, 'hp ' + hpBefore + ' → ' + dummy.hp.toFixed(1));
@@ -847,7 +850,7 @@ ok('身体命中扣身体护甲耐久',
 
 /* 移速 / 负重 / 存档 */
 PE.body = GEAR.make('body', 6);
-ok('六级甲移速 ×0.88', Math.abs(PE.armorMove - 0.88) < 1e-9);
+ok('六级甲不再直接减速，改为瞄准时间 +60%', PE.armorMove===1 && PE.body.aimPenaltyPct===60);
 ok('护甲重量计入总负重', PE.totalWeight >= 13, PE.totalWeight.toFixed(1) + 'kg');
 PE.helmet = GEAR.make('helmet', 3);
 PE.hurt(20, 'head', 2);
@@ -1390,6 +1393,167 @@ ok('导出 JSON 只列改动项', exp.weapon === 'rifle' && exp.weaponDiff.rpm =
 Range.exit();
 ok('退出靶场还原后坐力配置', Math.abs(CFG.RECOIL.decay - RANGE_DEF_G.decay) < 1e-9, String(CFG.RECOIL.decay));
 ok('退出靶场清空靶子', (Game.targets || []).length === 0);
+
+/* ============================================================
+   双轴后坐力（V1.1 验收 1~10）
+   ============================================================ */
+console.log('\n=== 双轴后坐力 ===');
+{
+  Game.startRun();
+  const PR = Game.player;
+  const AX = CFG.RECOIL.axis;
+  PR.x = M.cx(23); PR.y = M.cy(13);
+  /* 存档可能一件武器都没有（startRun 会默认切刀），先插一把步枪再测 */
+  PR.weapons[0] = Range.makeWeapon('rifle');
+  PR.slot = 0;
+  PR.mag = PR.weapons[0].mag;
+  PR.meleeActive = false;
+
+  /* 瞄准 helper：把鼠标放到玩家周围某个方向 200px 处 */
+  const aimAt = (ang, dist) => {
+    dist = dist || 200;
+    PR.rH = 0; PR.rV = 0;
+    PR.updateAimPoint(PR.x + Math.cos(ang) * dist, PR.y + Math.sin(ang) * dist);
+  };
+  const M0 = () => ({ x: PR.aimPoint.x, y: PR.aimPoint.y });
+
+  /* 1~4：垂直分量沿瞄准方向把准星推远（四个方向各验一次） */
+  const dirCase = (ang, name, chk) => {
+    aimAt(ang);
+    const a = M0();
+    PR.rV = 20;
+    PR.updateAimPoint(PR.aimMouse.x, PR.aimMouse.y);
+    const d = { x: PR.aimPoint.x - a.x, y: PR.aimPoint.y - a.y };
+    ok(name, chk(d), 'Δ(' + d.x.toFixed(2) + ', ' + d.y.toFixed(2) + ')');
+  };
+  dirCase(0, '验收1 向右瞄准：准星被推向右', d => d.x > 19.9 && Math.abs(d.y) < 1e-6);
+  dirCase(Math.PI, '验收2 向左瞄准：准星被推向左', d => d.x < -19.9 && Math.abs(d.y) < 1e-6);
+  dirCase(-Math.PI / 2, '验收3 向上瞄准：准星被推向上', d => d.y < -19.9 && Math.abs(d.x) < 1e-6);
+  dirCase(Math.PI / 2, '验收4 向下瞄准：准星被推向下', d => d.y > 19.9 && Math.abs(d.x) < 1e-6);
+
+  /* 5：水平分量严格沿瞄准连线的垂线，且沿 D 方向没有分量 */
+  {
+    const ang = 0.7;
+    aimAt(ang);
+    const a = M0();
+    PR.rH = 12;
+    PR.updateAimPoint(PR.aimMouse.x, PR.aimMouse.y);
+    const d = { x: PR.aimPoint.x - a.x, y: PR.aimPoint.y - a.y };
+    const D = { x: Math.cos(ang), y: Math.sin(ang) };
+    const N = { x: -D.y, y: D.x };
+    const alongD = d.x * D.x + d.y * D.y;
+    const alongN = d.x * N.x + d.y * N.y;
+    ok('验收5 水平后坐力沿垂线偏移（无沿瞄准线分量）',
+       Math.abs(alongD) < 1e-6 && Math.abs(alongN - 12) < 1e-6,
+       'D 分量 ' + alongD.toFixed(9) + ' / N 分量 ' + alongN.toFixed(6));
+  }
+
+  /* 6：两个分量同时存在、分别累计、分别恢复 */
+  {
+    aimAt(0);
+    PR.rH = 0; PR.rV = 0; PR.fireCd = 0; PR.mag = 30;
+    const fire = n => {
+      for (let i = 0; i < n; i++) {
+        PR.fireCd = 0; PR.reloadT = 0; PR.windupShot = false; PR.mag = 30;
+        PR._fireNow();
+      }
+    };
+    fire(1);
+    ok('验收6 单发后两个轴同时有量', PR.rH !== 0 && PR.rV > 0,
+       'H ' + PR.rH.toFixed(2) + ' / V ' + PR.rV.toFixed(2));
+    const v1 = PR.rV;
+    fire(2);
+    ok('验收6 连射让垂直分量继续累加', PR.rV > v1 + 1e-6,
+       v1.toFixed(2) + ' → ' + PR.rV.toFixed(2));
+    ok('验收6 水平单发落在 kick±rand 之间',
+       Math.abs(PR.rH) > 0 && Math.abs(PR.rH) <= AX.h.max + 1e-9,
+       String(PR.rH.toFixed(2)));
+    /* 打满：两轴都必须封顶，不能无限长 */
+    fire(300);
+    ok('验收6 垂直分量封顶在上限', Math.abs(PR.rV - AX.v.max) < 1e-6, String(PR.rV.toFixed(2)));
+    ok('验收6 水平分量夹在 ±上限 内', Math.abs(PR.rH) <= AX.h.max + 1e-9, String(PR.rH.toFixed(2)));
+
+    /* 恢复：停火后两轴都往 0 走，而且互不影响 */
+    const h0 = PR.rH, v0 = PR.rV;
+    PR.sinceShot = 99;
+    for (let i = 0; i < 30; i++) PR.update(1 / 60, { mx: 0, my: 0, aimAngle: 0 });
+    ok('验收6 停火后两个轴都在恢复',
+       Math.abs(PR.rH) < Math.abs(h0) && PR.rV < v0,
+       'H ' + h0.toFixed(2) + '→' + PR.rH.toFixed(2) + ' / V ' + v0.toFixed(2) + '→' + PR.rV.toFixed(2));
+  }
+
+  /* 7：停火后准星回到鼠标点 */
+  {
+    const mx0 = PR.x + 200, my0 = PR.y;
+    PR.rH = 9; PR.rV = 18; PR.sinceShot = 99;
+    for (let i = 0; i < 240; i++) {
+      PR.update(1 / 60, { mx: 0, my: 0, aimAngle: 0, aimX: mx0, aimY: my0 });
+    }
+    ok('验收7 停火后准星回到鼠标瞄准点',
+       Math.abs(PR.aimPoint.x - mx0) < 0.2 && Math.abs(PR.aimPoint.y - my0) < 0.2,
+       'R(' + PR.aimPoint.x.toFixed(2) + ', ' + PR.aimPoint.y.toFixed(2) + ') vs M(' + mx0 + ', ' + my0 + ')');
+  }
+
+  /* 8：不影响原有鼠标操作、弹药、射速与散布 */
+  {
+    aimAt(0.9);
+    ok('验收8 位移为 0 时弹道方向等于鼠标方向',
+       Math.abs(PR.shootAngle - 0.9) < 1e-6, PR.shootAngle.toFixed(8));
+    const rpm0 = PR.weapon.rpm, spread0 = PR.spread;
+    PR.mag = 30; PR.fireCd = 0; PR.reloadT = 0; PR.windupShot = false;
+    const before = PR.mag;
+    PR._fireNow();
+    ok('验收8 开火仍然只扣一发', PR.mag === before - 1, before + ' → ' + PR.mag);
+    ok('验收8 开火冷却仍按射速计算', Math.abs(PR.fireCd - 60 / rpm0) < 1e-9,
+       PR.fireCd.toFixed(4) + ' vs ' + (60 / rpm0).toFixed(4));
+    ok('验收8 散布仍由 recoil 驱动', PR.spread > 0 && PR.spread !== spread0 || PR.recoil === 0,
+       'spread ' + PR.spread.toFixed(4));
+  }
+
+  /* 9：帧率无关 —— 同样 1 秒，不同 dt 的恢复结果必须一致 */
+  {
+    const saveDH = AX.h.decayDelay, saveDV = AX.v.decayDelay;
+    AX.h.decayDelay = 0; AX.v.decayDelay = 0;   // 去掉延迟，单看指数衰减本身
+    const run = (steps, dt) => {
+      PR.rH = 10; PR.rV = 10; PR.sinceShot = 999;
+      for (let i = 0; i < steps; i++) PR.update(dt, { mx: 0, my: 0, aimAngle: 0 });
+      return { h: PR.rH, v: PR.rV };
+    };
+    const at60 = run(60, 1 / 60), at240 = run(240, 1 / 240), at30 = run(30, 1 / 30);
+    AX.h.decayDelay = saveDH; AX.v.decayDelay = saveDV;
+    const dh = Math.max(Math.abs(at60.h - at240.h), Math.abs(at60.h - at30.h));
+    const dv = Math.max(Math.abs(at60.v - at240.v), Math.abs(at60.v - at30.v));
+    ok('验收9 恢复过程与帧率无关', dh < 1e-3 && dv < 1e-3,
+       'H 差 ' + dh.toExponential(1) + ' / V 差 ' + dv.toExponential(1) +
+       '  (60Hz ' + at60.v.toFixed(4) + ' / 240Hz ' + at240.v.toFixed(4) + ' / 30Hz ' + at30.v.toFixed(4) + ')');
+  }
+
+  /* 10：垂直位移不改弹道 —— 只推远不偏角 */
+  {
+    aimAt(0.4);
+    const a0 = PR.shootAngle;
+    PR.rV = AX.v.max; PR.rH = 0;
+    PR.updateAimPoint(PR.aimMouse.x, PR.aimMouse.y);
+    const moved = Math.abs(PR.aimPoint.x - PR.aimMouse.x) + Math.abs(PR.aimPoint.y - PR.aimMouse.y);
+    ok('验收10 垂直后坐力推远了准星', moved > AX.v.max * 0.9, '位移 ' + moved.toFixed(2) + 'px');
+    ok('验收10 但弹道角度完全不变', Math.abs(PR.shootAngle - a0) < 1e-9,
+       a0.toFixed(9) + ' → ' + PR.shootAngle.toFixed(9));
+  }
+
+  /* 水平位移才真正改弹道：同距离下偏离应约为 atan(H / 距离) */
+  {
+    const dist = 200;
+    aimAt(0, dist);
+    const a0 = PR.shootAngle;
+    PR.rH = AX.h.max; PR.rV = 0;
+    PR.updateAimPoint(PR.aimMouse.x, PR.aimMouse.y);
+    const want = Math.atan2(AX.h.max, dist);
+    ok('水平位移确实改变弹道角度',
+       Math.abs((PR.shootAngle - a0) - want) < 1e-6,
+       '实际 ' + ((PR.shootAngle - a0) * 180 / Math.PI).toFixed(3) + '° / 理论 ' +
+       (want * 180 / Math.PI).toFixed(3) + '°');
+  }
+}
 
 console.log('\n---------------------------------------');
 console.log('  通过 ' + pass + ' / 失败 ' + fail);

@@ -37,13 +37,33 @@ Object.assign(Game, {
     this.renderNoiseEdge(c);
     this.renderHUD(c);
 
-    /* 准星：张开幅度 = 当前散布，位置带开火抖动，颜色随后坐力变暖 */
+    /* 准星：张开幅度 = 当前散布，位置带开火抖动，颜色随后坐力变暖。
+       位置取的是"实际准星 R" —— 被双轴后坐力推离鼠标点之后的位置。
+       鼠标原点单独留个淡色小圈，不然玩家会以为自己瞄歪了。 */
     if (this.state === 'playing' && !this.lootOpen && this.player && !this.player.dead) {
       const P = this.player;
       const R = CFG.RECOIL;
-      const kx = this.input.mx + P.crossKick.x;
-      const ky = this.input.my + P.crossKick.y;
+      const ax = P._aimValid ? P.aimPoint.x - camX : this.input.mx;
+      const ay = P._aimValid ? P.aimPoint.y - camY : this.input.my;
+      const kx = ax + P.crossKick.x;
+      const ky = ay + P.crossKick.y;
       const hot = P.recoil;
+
+      /* 鼠标原点：只在被推开时出现，静止时两点重合会闪 */
+      const off = Math.hypot(kx - this.input.mx, ky - this.input.my);
+      if (off > 1.6) {
+        c.lineWidth = 1;
+        c.strokeStyle = 'rgba(152,182,174,0.36)';
+        c.beginPath();
+        c.arc(this.input.mx, this.input.my, 2.8, 0, 6.29);
+        c.stroke();
+        /* 一条极淡的连线：说明准星是"被推过去"的，不是鼠标自己跑了 */
+        c.strokeStyle = 'rgba(152,182,174,0.13)';
+        c.beginPath();
+        c.moveTo(this.input.mx, this.input.my);
+        c.lineTo(kx, ky);
+        c.stroke();
+      }
 
       const cr = Math.round(200 + 55 * hot);
       const cg = Math.round(235 - 60 * hot);
@@ -86,6 +106,10 @@ Object.assign(Game, {
       c.beginPath();
       c.arc(kx, ky, 1.3, 0, 6.29);
       c.fill();
+      if(!P.meleeActive && P.weapons[P.slot] && P.aimRemaining>0){
+        c.save();c.font='9px monospace';c.textAlign='center';c.fillStyle='#d6c58f';
+        c.fillText('瞄准准备 '+P.aimRemaining.toFixed(1)+'s',kx,Math.min(H-8,ky+armIn+armLen+16));c.restore();
+      }
     }
 
     // 受伤闪红

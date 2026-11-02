@@ -127,6 +127,17 @@ const RANGE_PARAMS = [
   { group: '后坐力',     key: 'sprintMult',     label: '冲刺倍率',     unit: '×',   where: 'g', min: 0.5, max: 5,    step: 0.05, digits: 2 },
   { group: '后坐力',     key: 'sneakMult',      label: '潜行倍率',     unit: '×',   where: 'g', min: 0,   max: 2,    step: 0.05, digits: 2 },
 
+  // 双轴后坐力：准星被推离鼠标点的距离（像素），h = 垂线方向，v = 沿瞄准线推远
+  { group: '双轴后坐力', key: 'hKick',       label: '水平单发',     unit: 'px',  where: 'g', min: 0,   max: 12,   step: 0.1,  digits: 2 },
+  { group: '双轴后坐力', key: 'hRand',       label: '水平随机',     unit: 'px',  where: 'g', min: 0,   max: 8,    step: 0.05, digits: 2 },
+  { group: '双轴后坐力', key: 'hMax',        label: '水平上限',     unit: 'px',  where: 'g', min: 1,   max: 80,   step: 1,    digits: 0 },
+  { group: '双轴后坐力', key: 'hDecayDelay', label: '水平回正延迟', unit: 's',   where: 'g', min: 0,   max: 1,    step: 0.01, digits: 2 },
+  { group: '双轴后坐力', key: 'hDecay',      label: '水平回正速度', unit: '/s',  where: 'g', min: 0.5, max: 30,   step: 0.1,  digits: 1 },
+  { group: '双轴后坐力', key: 'vKick',       label: '垂直单发',     unit: 'px',  where: 'g', min: 0,   max: 16,   step: 0.1,  digits: 2 },
+  { group: '双轴后坐力', key: 'vMax',        label: '垂直上限',     unit: 'px',  where: 'g', min: 1,   max: 120,  step: 1,    digits: 0 },
+  { group: '双轴后坐力', key: 'vDecayDelay', label: '垂直回正延迟', unit: 's',   where: 'g', min: 0,   max: 1,    step: 0.01, digits: 2 },
+  { group: '双轴后坐力', key: 'vDecay',      label: '垂直回正速度', unit: '/s',  where: 'g', min: 0.5, max: 30,   step: 0.1,  digits: 1 },
+
   // 散布与准星
   { group: '散布与准星', key: 'spreadBase',     label: '基础散布',     unit: '°',   where: 'w', min: 0,   max: 15,   step: 0.1,  digits: 2, mul: 180 / Math.PI },
   { group: '散布与准星', key: 'spreadMax',      label: '满后坐散布',   unit: '°',   where: 'w', min: 0,   max: 25,   step: 0.1,  digits: 2, mul: 180 / Math.PI },
@@ -158,6 +169,11 @@ const RANGE_DEF_G = {
   max: CFG.RECOIL.max, decayDelay: CFG.RECOIL.decayDelay, decay: CFG.RECOIL.decay,
   moveMult: CFG.RECOIL.moveMult, sprintMult: CFG.RECOIL.sprintMult, sneakMult: CFG.RECOIL.sneakMult,
   kickMin: CFG.RECOIL.kickMin, kickScale: CFG.RECOIL.kickScale, kickDecay: CFG.RECOIL.kickDecay,
+  /* 双轴后坐力（像素）。h = 水平（垂线方向），v = 垂直（沿瞄准线推远） */
+  hKick: CFG.RECOIL.axis.h.kick, hRand: CFG.RECOIL.axis.h.rand, hMax: CFG.RECOIL.axis.h.max,
+  hDecayDelay: CFG.RECOIL.axis.h.decayDelay, hDecay: CFG.RECOIL.axis.h.decay,
+  vKick: CFG.RECOIL.axis.v.kick, vMax: CFG.RECOIL.axis.v.max,
+  vDecayDelay: CFG.RECOIL.axis.v.decayDelay, vDecay: CFG.RECOIL.axis.v.decay,
   anim: 1
 };
 
@@ -315,7 +331,11 @@ const Range = {
       W.pellets = w.pellets;
     }
     const g = this.g, R = CFG.RECOIL;
-    if (!this.savedG) this.savedG = Object.assign({}, R);
+    /* 快照要连 axis 一起深拷：只 Object.assign 顶层的话 axis 还是同一个对象，
+       调完参数退出靶场就还原不回去了。 */
+    if (!this.savedG) this.savedG = Object.assign({}, R, {
+      axis: { h: Object.assign({}, R.axis.h), v: Object.assign({}, R.axis.v) }
+    });
     R.max = g.max;
     R.decayDelay = g.decayDelay;
     R.decay = g.decay;
@@ -325,6 +345,12 @@ const Range = {
     R.kickMin = g.kickMin;
     R.kickScale = g.kickScale;
     R.kickDecay = g.kickDecay;
+    /* 双轴后坐力 */
+    const AX = R.axis;
+    AX.h.kick = g.hKick;   AX.h.rand = g.hRand;   AX.h.max = g.hMax;
+    AX.h.decayDelay = g.hDecayDelay;  AX.h.decay = g.hDecay;
+    AX.v.kick = g.vKick;   AX.v.max = g.vMax;
+    AX.v.decayDelay = g.vDecayDelay;  AX.v.decay = g.vDecay;
     P.animSpeed = g.anim;
     P.syncSpread();
   },
@@ -503,6 +529,7 @@ const Range = {
       this._peakEl = el.querySelector('[data-out="peak"]');
       this._clearEl = el.querySelector('[data-out="clear"]');
       this._groupEl = el.querySelector('[data-out="group"]');
+      this._axesEl = el.querySelector('[data-out="axes"]');
       this._sfxEl = el.querySelector('[data-out="sfx"]');
       this._barEl = el.querySelector('.rg-bar > i');
     }
@@ -531,6 +558,7 @@ const Range = {
       '<div class="rg-r"><span>实测射速</span><b data-out="rpm">—</b></div>',
       '<div class="rg-r"><span>后坐力峰值</span><b data-out="clear">—</b></div>',
       '<div class="rg-bar"><i></i></div>',
+      '<div class="rg-r"><span>准星偏移</span><b data-out="axes">—</b></div>',
       '<div class="rg-r"><span>落点 / 散布</span><b data-out="group">—</b></div>'
     ].join('');
   },
@@ -741,6 +769,13 @@ const Range = {
       this._groupEl.textContent = g
         ? g.n + ' 发 · 极值 ' + g.es.toFixed(0) + 'px · RMS ' + g.rms.toFixed(1) + 'px'
         : '—';
+    }
+
+    /* 双轴后坐力的实时位移：H 是垂线方向（会真的改变弹道），V 是沿瞄准线推远 */
+    if (this._axesEl) {
+      const h = P.rH || 0, v = P.rV || 0;
+      this._axesEl.textContent = 'H ' + (h >= 0 ? '+' : '') + h.toFixed(1) +
+        ' / V ' + v.toFixed(1) + ' px';
     }
 
     if (this._sfxEl) this._sfxEl.textContent = this.sfxStatus();

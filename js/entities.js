@@ -217,7 +217,17 @@ class Player {
     this.recoil = 0;            // 0~1，驱动散布与准星
     this.sinceShot = 99;        // 距上次开火多久
     this.crossKick = { x: 0, y: 0 };  // 准星抖动偏移（纯视觉）
+    /* 双轴后坐力：以鼠标瞄准点为原点的位移量（像素），见 CFG.RECOIL.axis。
+       rV 沿瞄准方向把准星推远（≥0），rH 沿垂线侧移（可正可负）。 */
+    this.rH = 0;
+    this.rV = 0;
+    this.aimDir = { x: 1, y: 0 };     // 最后一次有效的瞄准方向（鼠标压在身上时沿用）
+    this.aimPoint = { x: 0, y: 0 };   // 实际准星世界坐标 R
+    this.aimMouse = { x: 0, y: 0 };   // 最近一次鼠标世界坐标（重算 R 用）
+    this._aimValid = false;           // R 是否已经算过（没有鼠标数据时为 false）
     this.spread = CFG.RECOIL.spreadBase;
+    this.aimRemaining = 0;
+    this.aimProfile = null;
     this.dodgeCd = 0;
     this.dodgeT = 0;
     this.dodgeAngle = 0;
@@ -265,8 +275,48 @@ class Player {
 
   get tier() { return weightTier(this.totalWeight); }
 
-  /* 身体护甲的移速惩罚（头盔没有） */
-  get armorMove() { return this.body ? this.body.move : 1; }
+  /* 旧移速字段兼容；负重分档仍生效，护甲只增加瞄准准备时间。 */
+  get armorMove() { return 1; } // legacy API; armor no longer directly slows movement
+  get aimTime() { return (this.weapon.aimTime ?? 0.4) * (1+(this.body?.aimPenaltyPct||0)/100); }
+  get aimProgress() { return U.clamp(1-this.aimRemaining/Math.max(.001,this.aimTime),0,1); }
+  resetAim() { this.aimRemaining=Math.max(this.aimRemaining||0,this.aimTime); this.syncSpread(); }
+
+  /* 实际准星落点 R = M + D*rV + N*rH。
+     M 是鼠标的世界坐标；D 退化（鼠标压在玩家身上）时沿用上一次有效方向，
+     否则 atan2 会在玩家中心附近跳来跳去。 */
+  updateAimPoint(mx, my) {
+    if (typeof mx !== 'number' || typeof my !== 'number' || !isFinite(mx) || !isFinite(my)) return;
+    const dx = mx - this.x, dy = my - this.y;
+    const d = Math.hypot(dx, dy);
+    if (d > 2) { this.aimDir.x = dx / d; this.aimDir.y = dy / d; }
+    const Dx = this.aimDir.x, Dy = this.aimDir.y;
+    const Nx = -Dy, Ny = Dx;
+    this.aimPoint.x = mx + Dx * this.rV + Nx * this.rH;
+    this.aimPoint.y = my + Dy * this.rV + Ny * this.rH;
+    /* 记住鼠标点：开火累加后要立刻按新位移重算一次，不然这一帧画的还是旧位置 */
+    this.aimMouse.x = mx;
+    this.aimMouse.y = my;
+    this._aimValid = true;
+  }
+
+  /* 这一发该往哪打：玩家 → 实际准星。
+     rV 沿 D 推远，方向不变；rH 侧移才会改变角度 ——
+     这就是"垂直后坐力看着飘、但不会把子弹打高"的来源。 */
+  get shootAngle() {
+    const p = this.aimPoint;
+    if (!this._aimValid) return this.angle;
+    const dx = p.x - this.x, dy = p.y - this.y;
+    if (Math.abs(dx) < 1e-4 && Math.abs(dy) < 1e-4) return this.angle;
+    return Math.atan2(dy, dx);
+  }
+
+  updateAim(dt) {
+    const profile=this.slot+':'+this.weapon.id+':'+(this.body?.id||'none')+':'+(this.body?.aimPenaltyPct||0)+':'+!!this.meleeActive;
+    if(this.aimProfile!==profile){this.aimProfile=profile;this.resetAim();}
+    if(this.moving||this.sprinting||this.dodgeT>0||this.reloadT>0||this.meleeActive)this.resetAim();
+    else this.aimRemaining=Math.max(0,this.aimRemaining-dt);
+    this.syncSpread();
+  }
 
   /* 换成第 i 个武器槽。每个槽的弹匣各自记忆。 */
   switchWeapon(i) {
@@ -282,6 +332,7 @@ class Player {
     this.reloadT = 0;
     this.windupShot = false;      // 换枪打断还没出膛的那一发
     this.fireCd = Math.max(this.fireCd, 0.28);   // 换枪有个小硬直
+    this.resetAim();
     this.syncSpread();
     /* 换枪会打断换弹，别让换弹序列的后两段还响在空枪上 */
     if (typeof SFX !== 'undefined') SFX.stopSeq('reload');
@@ -349,6 +400,9 @@ class Player {
     this.finishReloadIfDone();
 
     this.angle = input.aimAngle;
+    /* 准星落点按鼠标世界坐标算（Game.update 每帧塞进 input.aimX/aimY）；
+       没有坐标的调用方（测试、AI）保持旧行为，不影响弹道。 */
+    if (input.aimX != null && input.aimY != null) this.updateAimPoint(input.aimX, input.aimY);
     this.sneaking = input.sneak;
     this.sprinting = input.sprint && !input.sneak;
     /* 治疗期间可以走，但不能冲刺——冲刺直接打断 */
@@ -360,6 +414,7 @@ class Player {
 
     /* --- 闪避 --- */
     if (this.dodgeT > 0) {
+      this.resetAim();
       this.dodgeT -= dt;
       const sp = CFG.P.DODGE_SPEED * (this.dodgeT > 0 ? 1 : 0);
       this.vx = Math.cos(this.dodgeAngle) * sp;
@@ -376,6 +431,7 @@ class Player {
       return;   // 闪避期间不响应移动输入
     }
     if (input.dodge && this.dodgeCd <= 0) {
+      this.resetAim();
       this.dodgeCd = CFG.P.DODGE_CD;
       this.dodgeT = CFG.P.DODGE_TIME;
       this.dodgeAngle = this.angle;
@@ -400,7 +456,6 @@ class Player {
     if (this.sneaking) speed *= CFG.P.SNEAK;
     else if (this.sprinting) speed *= CFG.P.SPRINT;
     speed *= this.tier.move;
-    speed *= this.armorMove;          // 身体护甲的移速惩罚
     if (this.inWater) speed *= CFG.P.WATER_SLOW;
     /* 边打药边走：正常步行的 30% */
     if (Game.action && Game.action.type === 'heal') speed *= 0.3;
@@ -414,6 +469,8 @@ class Player {
     const x0 = this.x, y0 = this.y;
     moveEntity(this, this.vx * dt, this.vy * dt);
     this.frameTravel = U.dist(x0, y0, this.x, this.y);
+
+    this.updateAim(dt);
 
     /* --- 脚步：按走过的距离触发，站住自然就没声了 ---
        步频跟"实际速度"走：stride = 60 * (v / 步行速度)^0.4。
@@ -457,6 +514,22 @@ class Player {
       if (this.sneaking) rate *= R.decaySneakMult;
       this.recoil = Math.max(0, this.recoil - rate * dt);
       this.syncSpread();
+    }
+
+    /* --- 双轴后坐力恢复 ---
+       指数衰减：每帧乘 exp(-k*dt)，所以任何帧率下同样时间恢复的比例都相同；
+       天然"先快后慢"，有惯性而不会过冲，也不需要额外做回弹。
+       停火超过各自的 decayDelay 才开始，移动中回正慢一点。 */
+    const AX = R.axis;
+    if (this.rH !== 0 && this.sinceShot > AX.h.decayDelay) {
+      const k = AX.h.decay * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
+      this.rH *= Math.exp(-k * dt);
+      if (Math.abs(this.rH) < 0.05) this.rH = 0;
+    }
+    if (this.rV !== 0 && this.sinceShot > AX.v.decayDelay) {
+      const k = AX.v.decay * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
+      this.rV *= Math.exp(-k * dt);
+      if (this.rV < 0.05) this.rV = 0;
     }
 
     /* --- 准星抖动回弹 --- */
@@ -519,6 +592,11 @@ class Player {
     this.shotAnimT = PLAYER_ANIMS.shoot.frames / PLAYER_ANIMS.shoot.fps / (this.animSpeed || 1);
 
     // 这一发用「开火前」的散布，后面的累加只影响下一发
+    /* 弹道方向取"开火前的实际准星"：双轴后坐力已经把准星推离鼠标点，
+       但这一发仍按推之前的位置打出去，累加只影响后续几发。
+       玩家可能刚被瞬移过（调试入口、测试），所以先按当前坐标重算一次准星。 */
+    if (this._aimValid) this.updateAimPoint(this.aimMouse.x, this.aimMouse.y);
+    const aimA = this.shootAngle;
     const pellets = W.pellets || 1;
     // 霰弹的每颗弹丸再额外散开一点，否则六颗会叠成一束
     const sp = pellets > 1 ? this.spread * 1.7 : this.spread;
@@ -528,7 +606,7 @@ class Player {
     const ammoMul = ammo ? ammo.dmgMul : 1;
     const pen = ammo ? ammo.penLevel : 1;
     for (let i = 0; i < pellets; i++) {
-      const a = this.angle + U.rand(-sp, sp);
+      const a = aimA + U.rand(-sp, sp);
       const mx = this.x + Math.cos(a) * 14;
       const my = this.y + Math.sin(a) * 14;
       Game.bullets.push(new Bullet(mx, my, a, W.speed, 'player',
@@ -544,6 +622,27 @@ class Player {
     this.sinceShot = 0;
     this.syncSpread();
 
+    /* --- 双轴后坐力 ---
+       垂直只加不减：绝不会反向把准星往玩家身上拉。
+       水平每发随机左右，但幅度收敛、且有累计上限，连射会形成稳定的"晃动区间"
+       而不是一路飞走；bias 可以让某把枪固定偏向一侧（枪口上跳的偏斜）。 */
+    const AX = R.axis;
+    let mulH = 1, mulV = 1;
+    if (this.sprinting) { mulH = AX.h.sprintMult; mulV = AX.v.sprintMult; }
+    else if (this.moving) { mulH = AX.h.moveMult; mulV = AX.v.moveMult; }
+    else if (this.sneaking) { mulH = AX.h.sneakMult; mulV = AX.v.sneakMult; }
+
+    this.rV = Math.min(AX.v.max, this.rV + AX.v.kick * mulV);
+
+    /* 方向：bias 不为 0 固定偏向一侧，否则对半随机。
+       扰动取两次均匀分布的均值（近似三角分布），小扰动更常见，偶尔才来一下大的。 */
+    const sign = AX.h.bias > 0 ? 1 : (AX.h.bias < 0 ? -1 : (Math.random() < 0.5 ? -1 : 1));
+    const jitter = (Math.random() + Math.random() - 1) * AX.h.rand;
+    this.rH = U.clamp(this.rH + (AX.h.kick + jitter) * mulH * sign, -AX.h.max, AX.h.max);
+
+    /* 位移变了就立刻重算准星，别等下一帧 update */
+    if (this._aimValid) this.updateAimPoint(this.aimMouse.x, this.aimMouse.y);
+
     // 准星抖一下（纯视觉反馈，不改弹道）
     // 加个位移上限，免得连射时准星被推出屏幕
     const kick = R.kickMin + this.recoil * R.kickScale;
@@ -557,12 +656,14 @@ class Player {
     return true;
   }
 
-  /* 散布完全由后坐力决定 */
+  /* 后坐力与准备散布取较大值，不重复乘算；稳定精度不变。 */
   syncSpread() {
     const W = this.weapon, R = CFG.RECOIL;
     const lo = W.spreadBase != null ? W.spreadBase : R.spreadBase;
     const hi = W.spreadMax != null ? W.spreadMax : R.spreadMax;
-    this.spread = lo + (hi - lo) * this.recoil;
+    const recoilSpread=lo+(hi-lo)*this.recoil;
+    const preparationSpread=lo+(hi-lo)*0.35*(1-this.aimProgress);
+    this.spread = this.meleeActive ? recoilSpread : Math.max(recoilSpread,preparationSpread);
   }
 
   roundsFor(w, n) {
@@ -683,8 +784,8 @@ class Enemy {
     if (t.human) {
       const lv = ENEMY_LOADOUT.rollLevel();
       this.gearLv = lv;
-      this.helmet = Math.random() < ENEMY_LOADOUT.helmetChance ? GEAR.make('helmet', lv) : null;
-      this.body = Math.random() < ENEMY_LOADOUT.bodyChance ? GEAR.make('body', lv) : null;
+      this.helmet = Math.random() < ENEMY_LOADOUT.helmetChance ? GEAR.random('helmet', lv) : null;
+      this.body = Math.random() < ENEMY_LOADOUT.bodyChance ? GEAR.random('body', lv) : null;
       // 手里那把枪：决定尸体上掉哪种口径的弹，也决定自己打出去的弹
       this.weaponId = U.pick(['pistol', 'pistol', 'smg', 'shotgun']);
       this.ammoId = BALLISTICS.ammoId((WEAPONS[this.weaponId] || {}).caliber || '9mm', lv);

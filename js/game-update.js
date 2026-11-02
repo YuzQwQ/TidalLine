@@ -167,7 +167,9 @@ Object.assign(Game, {
         sneak: !!K.keys.shift,
         sprint: !!K.keys[' '],
         dodge: K.dodgePressed,
-        aimAngle: K.aimAngle
+        aimAngle: K.aimAngle,
+        /* 鼠标世界坐标：双轴后坐力要用它当局部坐标系原点（P.aimPoint） */
+        aimX: K.wx, aimY: K.wy
       });
       if (K.mouseDown && !AmmoWheel.isOpen() && !MedWheel.isOpen()) P.tryShoot();
     } else {
