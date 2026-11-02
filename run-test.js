@@ -81,7 +81,7 @@ vm.createContext(ctx);
 for (const f of ['config.js', 'data.js', 'core.js', 'entities.js',
   'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'melee.js', 'boot.js']) {
+  'medhud.js', 'melee.js', 'range.js', 'boot.js']) {
   try {
     vm.runInContext(fs.readFileSync(path.join(dir, 'js', f), 'utf8'), ctx, { filename: f });
   } catch (e) {
@@ -104,6 +104,9 @@ vm.runInContext(`
   globalThis.stackLimit = stackLimit; globalThis.isStackable = isStackable;
   globalThis.STASH_FILTERS = STASH_FILTERS; globalThis.stashFilterMatch = stashFilterMatch;
   globalThis.itemGroup = itemGroup; globalThis.itemCategoryLabel = itemCategoryLabel;
+  globalThis.Range = Range; globalThis.RANGE_MAP = RANGE_MAP; globalThis.RANGE_GEO = RANGE_GEO;
+  globalThis.RANGE_PARAMS = RANGE_PARAMS; globalThis.RANGE_DEF_G = RANGE_DEF_G;
+  globalThis.magazineRounds = magazineRounds;
 `, ctx, { filename: 'export' });
 
 let pass = 0, fail = 0;
@@ -116,7 +119,8 @@ function noThrow(name, fn) {
   catch (e) { fail++; console.log('  FAIL ' + name + '  →  ' + e.message + '\n       ' + (e.stack || '').split('\n')[1]); }
 }
 
-const { Game, M, CFG, U, Save, ITEMS, Noise, Quiet, Base, Art, ART, GEAR, WEAPONS, HELMETS, BODIES, EQUIP, SIDEARM_SLOT } = ctx;
+const { Game, M, CFG, U, Save, ITEMS, Noise, Quiet, Base, Art, ART, GEAR, WEAPONS, HELMETS, BODIES, EQUIP, SIDEARM_SLOT,
+  Range, RANGE_MAP, RANGE_GEO, RANGE_PARAMS, RANGE_DEF_G } = ctx;
 
 console.log('\n=== 启动 ===');
 noThrow('Save.load()', () => Save.load());
@@ -1323,6 +1327,69 @@ noThrow('跑 1800 帧（30 秒）不崩', () => {
 Game.input.keys.d = false;
 Game.input.mouseDown = false;
 console.log('    （结束时 state=' + Game.state + '，t=' + Game.time.toFixed(1) + 's）');
+
+console.log('\n=== 开发者靶场 ===');
+Range.start();
+ok('靶场地图尺寸正确', M.W === RANGE_MAP.width && M.H === RANGE_MAP.height, M.W + '×' + M.H);
+ok('玩家在射击线上出生', Math.abs(Game.player.x - RANGE_GEO.spawn.x) < 1 && Math.abs(Game.player.y - RANGE_GEO.spawn.y) < 1,
+  Game.player.x + ',' + Game.player.y);
+ok('靶场里没有敌人', Game.enemies.length === 0);
+ok('钢板靶已生成', Game.targets.length === 7, String(Game.targets.length));
+ok('靶场模式不计时', (() => { Game.time = 9999; Game.updateTide(); return Game.state === 'playing'; })(), Game.state);
+
+/* 击发延迟：扣扳机后先不出弹，延迟到点才出膛 */
+const P0 = Game.player;
+P0.weapons[P0.slot].windup = 0.12;
+P0.fireCd = 0; P0.windupShot = false; P0.mag = P0.weapon.mag;
+const b0 = Game.bullets.length;
+ok('击发延迟：扣扳机当帧不出弹', P0.tryShoot() === false && Game.bullets.length === b0);
+noThrow('击发延迟：延迟到点才出膛', () => {
+  for (let i = 0; i < 12; i++) P0.update(1 / 60, { mx: 0, my: 0, aimAngle: 0 });
+});
+ok('击发延迟：延迟后子弹已发射', Game.bullets.length > b0, String(Game.bullets.length - b0));
+
+/* 调参即时生效：射速 / 后坐力 / 回正 */
+Range.equip('rifle');
+Range.setDisp(RANGE_PARAMS.find(p => p.key === 'rpm'), 900);
+Range.setDisp(RANGE_PARAMS.find(p => p.key === 'recoilPerShot'), 0.2);
+Range.setDisp(RANGE_PARAMS.find(p => p.key === 'decay'), 1.5);
+Range.apply();
+ok('调参写进当前武器', Math.abs(Game.player.weapon.rpm - 900) < 1e-6 && Math.abs(Game.player.weapon.recoilPerShot - 0.2) < 1e-6,
+  Game.player.weapon.rpm + ' / ' + Game.player.weapon.recoilPerShot);
+ok('调参写进后坐力配置', Math.abs(CFG.RECOIL.decay - 1.5) < 1e-6, String(CFG.RECOIL.decay));
+Game.player.fireCd = 0; Game.player.windupShot = false; Game.player.mag = Game.player.weapon.mag;
+Game.player.tryShoot();
+ok('射速参与开火冷却', Math.abs(Game.player.fireCd - 60 / 900) < 1e-6, String(Game.player.fireCd));
+
+/* 面板按钮与重置 */
+Range.clearMarks();
+ok('清弹孔后统计为空', Range.groupStats() === null);
+Range.onClick({ target: { dataset: { act: 'reset' } } });
+ok('重置本枪回到默认射速', Math.abs(Game.player.weapon.rpm - WEAPONS.rifle.rpm) < 1e-6, String(Game.player.weapon.rpm));
+
+/* 换枪：四把枪都能在靶场里上膛 */
+for (const id of ['shotgun', 'smg', 'pistol', 'rifle']) {
+  noThrow('靶场换枪 ' + id, () => Range.equip(id));
+  ok('靶场当前枪是 ' + id, Game.player.weapon.id === id, Game.player.weapon.id);
+}
+
+/* 弹孔与散布统计 */
+Range.clearMarks();
+Range.hole(800, 270); Range.hole(802, 274); Range.hole(798, 268);
+const gs = Range.groupStats();
+ok('弹孔统计数量正确', gs && gs.n === 3, String(gs && gs.n));
+ok('弹孔统计给出极值散布', gs && gs.es > 0, gs && gs.es.toFixed(2));
+
+/* 导出只包含差异 */
+Range.setDisp(RANGE_PARAMS.find(p => p.key === 'rpm'), 600);
+Range.apply();
+const exp = Range.exportJson();
+ok('导出 JSON 只列改动项', exp.weapon === 'rifle' && exp.weaponDiff.rpm === 600, JSON.stringify(exp.weaponDiff));
+
+/* 退出后还原后坐力配置 */
+Range.exit();
+ok('退出靶场还原后坐力配置', Math.abs(CFG.RECOIL.decay - RANGE_DEF_G.decay) < 1e-9, String(CFG.RECOIL.decay));
+ok('退出靶场清空靶子', (Game.targets || []).length === 0);
 
 console.log('\n---------------------------------------');
 console.log('  通过 ' + pass + ' / 失败 ' + fail);

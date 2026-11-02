@@ -9,6 +9,8 @@ const Game = {
   state: 'menu',
   player: null,
   enemies: [], bullets: [], corpses: [], boxes: [],
+  targets: [],           // 靶场的钢板靶（不是敌人，只吃伤害）
+  rangeMode: false,      // 开发靶场：不计时、不淹水、不结算
   particles: [], toasts: [],
   cam: { x: 0, y: 0 },
   time: 0,
@@ -160,6 +162,11 @@ const Game = {
     const K = this.input;
     window.addEventListener('keydown', e => {
       if (this.state === 'map-select') return; // 地图页使用原生 Tab / 空格 / Enter 操作
+      /* 正在输入框（含靶场滑杆）里打字时，别把按键当成操作。
+         否则在数值框里敲 w/a/s/d 会顺手把人走起来。 */
+      const ae = document.activeElement;
+      if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.isContentEditable)
+        && e.key !== 'Escape') return;
       const k = e.key.toLowerCase();
       if (['tab', ' ', 'w', 'a', 's', 'd'].includes(k)) e.preventDefault();
       if (K.keys[k]) return;   // 忽略自动重复
@@ -213,6 +220,9 @@ const Game = {
 
     this.canvas.addEventListener('mousedown', e => {
       if (this.state !== 'playing') return;
+      /* 点回画面就把焦点从调参框上收回来，否则 WASD 还在输入框里 */
+      const ae = document.activeElement;
+      if (ae && ae.blur && ae.tagName === 'INPUT') ae.blur();
       if (e.button === 0) K.mouseDown = true;
       if (e.button === 2) K.dodgePressed = true;
     });
@@ -284,7 +294,10 @@ const Game = {
   },
 
   startRun(loadout, mapId) {
-    const map=MAP_CATALOG.find(m=>m.id===(mapId||RAID_MAP.id));
+    /* 靶场地图是代码生成的，不进 MAP_CATALOG（选图页不该看到它） */
+    const map = (typeof RANGE_MAP !== 'undefined' && mapId === RANGE_MAP.id)
+      ? RANGE_MAP
+      : MAP_CATALOG.find(m=>m.id===(mapId||RAID_MAP.id));
     if(!map)throw new Error('未知地图：'+mapId);
     this.mapId=map.id;
     this.state = 'playing';
@@ -296,6 +309,7 @@ const Game = {
     this.enemies = [];
     this.bullets = [];
     this.corpses = [];
+    this.targets = [];
     this.particles = [];
     this.toasts = [];
     this.pileSeq = 0;
@@ -402,6 +416,8 @@ const Game = {
   syncGear() {
     const P = this.player;
     if (!P) return;
+    /* 靶场里换枪、清弹匣都不该污染存档 */
+    if (this.rangeMode) return;
     P.weapons[P.slot] && (P.weapons[P.slot].magCur = P.mag);   // 手上那把的余弹先同步
     Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo, w.rounds) : null));
     Save.gear.melee = P.melee || null;
@@ -439,6 +455,8 @@ const Game = {
   },
 
   impact(x, y, angle, blood, head) {
+    /* 靶场：墙上的落点是要拿来量散布的，先记一笔再喷碎屑 */
+    if (!blood && typeof Range !== 'undefined' && Range.active) Range.hole(x, y);
     const n = head ? 12 : (blood ? 7 : 4);
     for (let i = 0; i < n; i++) {
       const a = angle + Math.PI + U.rand(-0.9, 0.9);

@@ -272,11 +272,16 @@ Object.assign(Game, {
     /* 死亡 / 淹死 */
     if (P.dead) this.beginDying();
     else P.tickAnimation(dt, !!this.lootOpen || !!(this.action && ['search', 'corpse'].includes(this.action.type)));
+
+    /* 靶场：满视野、无限弹匣、弹孔与读数。放在最后，读完这一帧的状态再采样 */
+    if (typeof Range !== 'undefined' && Range.active) Range.tick(dt);
   },
 
   updateTide() {
     const T = CFG.TIDE;
     const t = this.time;
+    /* 靶场不计时：没有涨潮，也没有 12 分钟的强制收场 */
+    if (this.rangeMode) { this.tideLevel = M.tideLevel = 0; this.tidePhase = 0; return; }
     if (!M.tideEnabled) {
       this.tideLevel = M.tideLevel = 0;
       this.tidePhase = 0;

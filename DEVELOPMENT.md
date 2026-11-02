@@ -754,6 +754,11 @@ python -m http.server 8765
 - `index.html#play,4,6,ui` —— 顺便打开背包面板
 - `index.html#base` —— 直接打开藏身处
 - `index.html#base,demo` —— 打开藏身处并灌一批测试物资（不写存档，只改内存）
+- `index.html#range` —— 开发者靶场：空房间 + 钢板靶 + 落点墙，左侧面板实时调
+  射速 / 击发延迟 / 后坐力 / 回正 / 散布 / 准星 / 弹速 / 射程 / 弹丸数。
+  `F2` 收起面板，`F3` 清弹孔，`F4` 复位靶子；「复制 JSON」导出与默认值的差异，
+  调参数据存 localStorage（`tide.range.tune.v1`），靶场内不写游戏存档。
+  实现见 `js/range.js`，地图是代码生成的（`RANGE_MAP`），不进选图页。
 
 ## 测试
 

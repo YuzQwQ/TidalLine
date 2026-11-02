@@ -32,6 +32,8 @@ Object.assign(Game, {
     this.renderCanopies(c, camX, camY);
     this.renderFog(c, camX, camY);
     this.renderParticles(c, camX, camY);
+    /* 靶场的靶子、弹孔、射程尽头都盖在雾之后画，读数才不会被压暗 */
+    if (typeof Range !== 'undefined' && Range.active) Range.render(c, camX, camY);
     this.renderNoiseEdge(c);
     this.renderHUD(c);
 
@@ -713,18 +715,19 @@ Object.assign(Game, {
     }
 
     }
-    /* --- 右上：潮汐 --- */
+    /* --- 右上：潮汐（靶场换成在场时长，没有倒计时） --- */
     const TW = 190, TH = 66;
     const tx0 = CFG.VIEW_W - TW - 14;
     c.fillStyle = 'rgba(8,14,12,0.78)';
     c.fillRect(tx0, 14, TW, TH);
 
     const left = Math.max(0, CFG.TIDE.ROUND - this.time);
-    const phaseName = M.tideEnabled ? ['退潮', '平潮', '涨潮', '已满'][this.tidePhase] : '临海路 · 稳定水位';
+    const phaseName = this.rangeMode ? (M.map ? M.map.title : '靶场')
+      : M.tideEnabled ? ['退潮', '平潮', '涨潮', '已满'][this.tidePhase] : '临海路 · 稳定水位';
     c.fillStyle = this.tidePhase === 2 ? '#c98a5e' : '#9fb5ae';
     c.font = 'bold 17px monospace';
     c.textAlign = 'right';
-    c.fillText(this.fmtTime(left), tx0 + TW - 14, 40);
+    c.fillText(this.rangeMode ? this.fmtTime(this.time) : this.fmtTime(left), tx0 + TW - 14, 40);
 
     c.font = '11px monospace';
     c.fillStyle = '#6f8a82';

@@ -31,6 +31,13 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    // 调试入口：index.html#range 进开发者靶场（F2 调参、F3 清弹孔）
+    if (location.hash.startsWith('#range')) {
+      document.getElementById('startVeil').classList.add('hidden');
+      Range.start();
+      return;
+    }
+
     // 调试入口：打开 index.html#play 直接进图，跳过开始界面
     // 可指定格坐标：index.html#play,4,6
     if (location.hash.startsWith('#play')) {

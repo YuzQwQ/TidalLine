@@ -17,7 +17,7 @@ const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js',
   'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'melee.js', 'boot.js'];
+  'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'merchant-ui.js', 'storage-config.js', 'storage-ui.js', 'boot.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear', 'effects'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */
@@ -56,7 +56,14 @@ fs.writeFileSync(path.join(AUDIO_DIR, 'bundle.js'),
 
 /* ---------- 2. 注入资源表（必须在替换脚本标签之前） ---------- */
 let out = html.replace(BUNDLE_TAG, '');
-const inlineTag = '<script>\nwindow.__SPRITES__ = ' +
+const uiAssets = {};
+for (const [id, file] of Object.entries({room:'room',armor:'merchant_armor',guns:'merchant_guns',doctor:'merchant_doctor'})) {
+  uiAssets[id] = 'data:image/webp;base64,' + fs.readFileSync(path.join(dir,'assets/ui/safehouse',file+'.webp')).toString('base64');
+}
+out = out.replace('<link rel="stylesheet" href="assets/ui/safehouse.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/safehouse.css'),'utf8')+'\n</style>');
+out = out.replace('<link rel="stylesheet" href="assets/ui/merchant.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/merchant.css'),'utf8')+'\n</style>');
+out = out.replace('<link rel="stylesheet" href="assets/ui/storage.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/storage.css'),'utf8')+'\n</style>');
+const inlineTag = '<script>\nwindow.__UI_ASSETS__ = '+JSON.stringify(uiAssets)+';\nwindow.__SPRITES__ = ' +
   JSON.stringify(sprites) + ';\n' +
   (Object.keys(audio).length
     ? 'window.__AUDIO__ = ' + JSON.stringify(audio) + ';\n'

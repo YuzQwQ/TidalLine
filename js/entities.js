@@ -211,6 +211,9 @@ class Player {
     this.reloadPending = false;
     if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     this.fireCd = 0;
+    this.windupT = 0;           // 击发延迟剩余时间（W.windup > 0 时才有意义）
+    this.windupShot = false;    // 扳机已扣、子弹还没出膛
+    this.animSpeed = 1;         // 开火动作速率倍率（靶场可调）
     this.recoil = 0;            // 0~1，驱动散布与准星
     this.sinceShot = 99;        // 距上次开火多久
     this.crossKick = { x: 0, y: 0 };  // 准星抖动偏移（纯视觉）
@@ -277,6 +280,7 @@ class Player {
     this.reloadPending = false;
     if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     this.reloadT = 0;
+    this.windupShot = false;      // 换枪打断还没出膛的那一发
     this.fireCd = Math.max(this.fireCd, 0.28);   // 换枪有个小硬直
     this.syncSpread();
     /* 换枪会打断换弹，别让换弹序列的后两段还响在空枪上 */
@@ -333,6 +337,12 @@ class Player {
     if (this.dead) return;
 
     this.fireCd = Math.max(0, this.fireCd - dt);
+    /* 击发延迟到点就出膛。扣扳机后即使松手也照打——
+       扳机已经压下去，这一发是承诺过的。 */
+    if (this.windupShot) {
+      this.windupT -= dt;
+      if (this.windupT <= 0) { this.windupT = 0; this._fireNow(); }
+    }
     this.dodgeCd = Math.max(0, this.dodgeCd - dt);
     this.reloadT = Math.max(0, this.reloadT - dt);
     this.sinceShot += dt;
@@ -369,6 +379,7 @@ class Player {
       this.dodgeCd = CFG.P.DODGE_CD;
       this.dodgeT = CFG.P.DODGE_TIME;
       this.dodgeAngle = this.angle;
+      this.windupShot = false;      // 闪避会把还没出膛的那一发收掉
       Noise.emit(this.x, this.y, CFG.NOISE.dodge, 'dodge');
       Game.sfx('dodge');
       return;
@@ -477,15 +488,35 @@ class Player {
     if (this.fireCd > 0) return false;
     if (this.dodgeT > 0) return false;
     if (this.mag <= 0) { this.tryReload(); return false; }
+    if (this.windupShot) return false;              // 扳机已经扣下去，正在等击发
+
+    /* 击发延迟：扣扳机到子弹出膛之间的空档（W.windup，秒）。
+       默认 0 —— 只有靶场或以后改数值时才会走到这里。 */
+    const W = this.weapon;
+    if (W.windup > 0) {
+      this.windupT = W.windup;
+      this.windupShot = true;
+      this.sinceShot = 0;
+      return false;
+    }
+    return this._fireNow();
+  }
+
+  /* 真正的开火：扣弹、撒弹丸、累加后坐力、出声 */
+  _fireNow() {
+    if (this.dead || !this.weapons[this.slot]) return false;
+    if (this.reloadT > 0 || this.dodgeT > 0) return false;
+    if (this.mag <= 0) { this.windupShot = false; return false; }
 
     const W = this.weapon;
     const R = CFG.RECOIL;
+    this.windupShot = false;
     this.fireCd = 60 / W.rpm;
     const shotAmmo = this.ammoItem;
     W.rounds = this.roundsFor(W, this.mag).slice(1);
     this.mag--;
     W.magCur = this.mag;
-    this.shotAnimT = PLAYER_ANIMS.shoot.frames / PLAYER_ANIMS.shoot.fps;
+    this.shotAnimT = PLAYER_ANIMS.shoot.frames / PLAYER_ANIMS.shoot.fps / (this.animSpeed || 1);
 
     // 这一发用「开火前」的散布，后面的累加只影响下一发
     const pellets = W.pellets || 1;
@@ -1034,6 +1065,10 @@ class Bullet {
       if (this.hitSegment(ax, ay, this.x, this.y)) return;
 
       if (U.dist(this.sx, this.sy, this.x, this.y) > this.range) {
+        /* 靶场：把「飞不到」的位置也标出来，一眼看出射程够不够得着靶墙 */
+        if (this.faction === 'player' && typeof Range !== 'undefined' && Range.active) {
+          Range.trailEnd(this.x, this.y);
+        }
         this.dead = true;
         return;
       }
@@ -1085,6 +1120,8 @@ class Bullet {
     const out = [];
     if (this.faction === 'player') {
       for (const e of Game.enemies) if (!e.dead) out.push(e);
+      /* 靶场的钢板靶：不是敌人，但结算路径一样走 hurt() */
+      if (Game.targets) for (const t of Game.targets) if (!t.dead) out.push(t);
     } else {
       const P = Game.player;
       if (P && !P.dead) out.push(P);
@@ -1107,10 +1144,12 @@ class Bullet {
       return;
     }
 
-    /* 敌人：部位倍率与护甲穿透都在 hurt 里统一算 */
+    /* 敌人：部位倍率与护甲穿透都在 hurt 里统一算；
+       钢板靶只吃伤害数字，不喷血也算命中音 */
+    const dummy = !!actor.isRangeTarget;
     actor.hurt(base, this.faction, part, this.pen);
-    Game.impact(actor.x, actor.y, this.angle, true, part === 'head');
-    Game.sfx(part === 'head' ? 'headshot' : 'hit');
+    Game.impact(actor.x, actor.y, this.angle, !dummy, part === 'head');
+    Game.sfx(dummy ? 'hit' : (part === 'head' ? 'headshot' : 'hit'));
   }
 
   falloff() {
