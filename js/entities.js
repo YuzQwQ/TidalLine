@@ -856,6 +856,22 @@ class Enemy {
     return 1 - q * (1 - CFG.QUIET_SENSE);
   }
 
+  /* 察觉到玩家了吗？
+     有视觉的走 canSee（射程 + 视野角 + 遮挡）；全盲的（回响体 sight=0）
+     本来就没有"看见"这回事，用它自己的近身存在感代替，否则它永远进不了 chase、
+     也就永远不会攻击 —— 只会在噪声点原地打转。 */
+  sensePlayer(P) {
+    if (!P || P.dead) return false;
+    if (this.t.sight > 0) return this.canSee(P.x, P.y);
+    const d = U.dist(this.x, this.y, P.x, P.y);
+    const r = (CFG.ENEMY.BLIND_SENSE || 3.0) * CFG.TILE * this.senseMult() *
+      (P.sneaking ? 0.55 : 1);
+    if (d > r) return false;
+    /* 贴身（1.2 格）隔着墙角也能感到；远一点就要视线通 */
+    if (d <= CFG.TILE * 1.2) return true;
+    return M.lineOfSight(M.tx(this.x), M.ty(this.y), M.tx(P.x), M.ty(P.y));
+  }
+
   canSee(wx, wy) {
     const s = this.t.sight;
     if (s <= 0) return false;
@@ -946,7 +962,7 @@ class Enemy {
     this.stateT += dt;
 
     const P = Game.player;
-    const canSeePlayer = !P.dead && this.canSee(P.x, P.y);
+    const canSeePlayer = this.sensePlayer(P);
     const heard = this.hearNoises(dt);
 
     /* ---------- 感知 → 状态 ---------- */
@@ -1050,8 +1066,14 @@ class Enemy {
 
         const d = U.dist(this.x, this.y, tgt.x, tgt.y);
 
-        // 在射程内且能看见 → 停下射击
-        if (d < this.t.range && this.canSee(tgt.x, tgt.y)) {
+        /* 能不能打：有视觉的要求真的看见（射程 + 朝向 + 遮挡）；
+           全盲的近战只要够近、视线没被墙挡住就行 —— 它本来就不看朝向。 */
+        const reachable = this.t.sight > 0
+          ? this.canSee(tgt.x, tgt.y)
+          : M.lineOfSight(M.tx(this.x), M.ty(this.y), M.tx(tgt.x), M.ty(tgt.y));
+
+        // 在射程内且够得着 → 停下攻击
+        if (d < this.t.range && reachable) {
           this.angle = Math.atan2(tgt.y - this.y, tgt.x - this.x);
           if (this.atkCd <= 0) this.attack(tgt);
           // 略微保持距离

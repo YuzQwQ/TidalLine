@@ -560,6 +560,46 @@ for (let i = 0; i < 120; i++) {
 }
 ok('回响体被噪声吸引', echoSuspect, 'state=' + echo.state);
 
+/* 回响体是全盲的（sight=0），以前只会在噪声点原地打转：
+   进不了 chase，也就永远攻击不了 —— 贴到脸上都不动手。 */
+{
+  Game.startRun();
+  const P9 = Game.player;
+  P9.x = M.cx(23); P9.y = M.cy(13);
+  P9.hp = 999; P9.maxHp = 999;
+  const ec = Game.enemies.find(e => e.key === 'echo');
+  for (const e of Game.enemies) if (e !== ec) e.dead = true;
+  ec.x = P9.x + 64; ec.y = P9.y;
+  ec.state = 'patrol'; ec.path = null; ec.atkCd = 0;
+  const hp0 = P9.hp;
+  let chased = false, close = 1e9;
+  for (let i = 0; i < 180; i++) {
+    Game.update(1 / 60);
+    if (ec.state === 'chase') chased = true;
+    close = Math.min(close, U.dist(ec.x, ec.y, P9.x, P9.y));
+  }
+  ok('回响体贴到近前会扑上来', chased, 'state=' + ec.state);
+  ok('回响体近身能造成伤害', hp0 - P9.hp > 0, '扣血 ' + (hp0 - P9.hp).toFixed(1));
+  ok('回响体会逼到近战距离', close < 45, '最近 ' + close.toFixed(0) + 'px');
+
+  /* 反过来：离得远、又没声音，不许凭空察觉 */
+  Game.startRun();
+  const PA = Game.player;
+  PA.x = M.cx(23); PA.y = M.cy(13);
+  const far = Game.enemies.find(e => e.key === 'echo');
+  for (const e of Game.enemies) if (e !== far) e.dead = true;
+  far.x = PA.x + 420; far.y = PA.y;
+  far.state = 'patrol'; far.path = null;
+  Noise.events.length = 0;
+  let chasedFar = false;
+  for (let i = 0; i < 120; i++) {
+    if (Noise.events.length) Noise.events.length = 0;
+    Game.update(1 / 60);
+    if (far.state === 'chase') chasedFar = true;
+  }
+  ok('回响体不会隔着老远察觉玩家', !chasedFar, 'state=' + far.state);
+}
+
 console.log('\n=== 门 ===');
 Game.startRun();
 const doorTile = (() => {
