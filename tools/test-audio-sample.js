@@ -98,6 +98,54 @@ const man = require('../assets/audio/manifest.json');
     assert.equal(multi.n, man.assets.length, '多文件版靠 bundle.js 也拿到全部采样');
     assert.deepEqual(multi.ids, man.assets.map(a => a.id).sort());
 
+    /* 开火路由：四把枪各自指向自己的录音、手枪三条轮换、素材缺失才落回合成 */
+    const routing = await plain.evaluate(async () => {
+      const hits = [];
+      let synth = 0;
+      const realSample = SFX._playSample.bind(SFX);
+      const realShot = SFX._shot.bind(SFX);
+      SFX._playSample = (id, o) => { hits.push({ id, rate: o && o.rate, lp: o && o.lp }); return true; };
+      SFX._shot = (...a) => { synth++; return realShot(...a); };
+
+      const table = {};
+      for (const [gun, p] of Object.entries(SFX.SHOT_SAMPLE)) {
+        table[gun] = p.ids.every(id => !!SFX.samples[id]);
+      }
+
+      for (let i = 0; i < 4; i++) SFX.play('shot', { gun: 'pistol' });
+      const pistol = hits.map(h => h.id);
+
+      hits.length = 0;
+      for (const g of ['rifle', 'smg', 'shotgun']) SFX.play('shot', { gun: g });
+      const others = hits.map(h => h.id);
+      const rates = hits.map(h => +h.rate.toFixed(2));
+
+      hits.length = 0;
+      SFX.play('enemyShot');
+      const enemy = hits[0] || null;
+
+      /* 把采样清空：必须落回合成音，不能变成哑的 */
+      const kept = SFX.samples;
+      SFX.samples = {};
+      hits.length = 0;
+      SFX.play('shot', { gun: 'rifle' });
+      const fellBack = synth === 1 && hits.length === 0;
+      SFX.samples = kept;
+
+      SFX._playSample = realSample;
+      SFX._shot = realShot;
+      return { table, pistol, others, rates, enemy, fellBack };
+    });
+    assert(Object.values(routing.table).every(Boolean), '四把枪的录音都齐全');
+    assert.deepEqual(routing.pistol,
+      ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3', 'shot_pistol_1'],
+      '手枪三条独立录音按顺序轮换，不重复同一发');
+    assert.deepEqual(routing.others, ['shot_rifle', 'shot_smg', 'shot_shotgun'],
+      '其余三把各走自己的录音');
+    assert(routing.rates[1] > routing.rates[0], '冲锋枪是升调播放（' + routing.rates[1] + ' > ' + routing.rates[0] + '）');
+    assert(routing.enemy && routing.enemy.lp > 0, '敌人枪声走同一批录音并低通处理');
+    assert(routing.fellBack, '采样缺失时落回合成音，不会变哑');
+
     /* 模拟没有内联数据（旧浏览器 / 文件缺失）：不崩，退回合成音 */
     const fallback = await plain.evaluate(async () => {
       delete window.__AUDIO__;
@@ -115,7 +163,8 @@ const man = require('../assets/audio/manifest.json');
     assert.deepEqual(errs, [], '单文件版无脚本错误');
     assert.deepEqual(perr, [], '多文件版无脚本错误');
     console.log('OK: ' + man.assets.length + ' 段采样内联解码、时长对齐 manifest、换弹三段序列收在 1.5s、' +
-      '有采样时优先采样、删掉 __AUDIO__ 后静默退回合成音');
+      '四把枪走实弹录音（手枪三发轮换、冲锋枪升调）、敌人枪声低通、\n' +
+      '素材缺失落回合成音、删掉 __AUDIO__ 后静默降级');
   } finally {
     await browser.close();
   }

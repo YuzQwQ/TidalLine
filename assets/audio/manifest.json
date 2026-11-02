@@ -40,6 +40,46 @@
       "site": "Freesound",
       "sid": 858509,
       "license": "TODO"
+    },
+    {
+      "id": "serutonin-auto-rifle",
+      "name": "An automatic rifle being shot once, punchy sounding",
+      "author": "Serutonin (deprivd)",
+      "site": "Freesound",
+      "sid": 855654,
+      "license": "TODO"
+    },
+    {
+      "id": "serutonin-ak47",
+      "name": "An AK-47 being shot, distinctive metallic Kalashnikov-esque report",
+      "author": "Serutonin (deprivd)",
+      "site": "Freesound",
+      "sid": 855843,
+      "license": "TODO"
+    },
+    {
+      "id": "serutonin-silenced",
+      "name": "A silenced/suppressed handgun being shot once, metallic phaser-like trail",
+      "author": "Serutonin (deprivd)",
+      "site": "Freesound",
+      "sid": 855656,
+      "license": "TODO"
+    },
+    {
+      "id": "serutonin-glock",
+      "name": "A Glock handgun being shot 3x, punchy Hollywood-esque, airy forest reverb",
+      "author": "Serutonin (deprivd)",
+      "site": "Freesound",
+      "sid": 855652,
+      "license": "TODO"
+    },
+    {
+      "id": "morganpurkis-doom-shotgun",
+      "name": "Doom shotgun 2017 (shot + pump)",
+      "author": "morganpurkis",
+      "site": "Freesound",
+      "sid": 380886,
+      "license": "TODO"
     }
   ],
   "assets": [
@@ -168,6 +208,132 @@
       "rms": 0.1353,
       "bytes": 12658,
       "sha256_16": "e3f7242425beb68c"
+    },
+    {
+      "id": "shot_rifle",
+      "file": "shot_rifle.wav",
+      "from": "serutonin-auto-rifle",
+      "note": "制式步枪开火：源 0.028–0.255s（0.03s 前是房间预衰），保留中频爆裂与短尾",
+      "dur": 0.227,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.2706,
+      "bytes": 20068,
+      "sha256_16": "5309963d92032436"
+    },
+    {
+      "id": "shot_smg",
+      "file": "shot_smg.wav",
+      "from": "serutonin-auto-rifle",
+      "note": "冲锋枪开火：同一素材的短切版（0.028–0.175s），播放时升调 1.10 倍，780RPM 下不糊",
+      "dur": 0.147,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.3313,
+      "bytes": 13012,
+      "sha256_16": "ad152f9a9b233ba7"
+    },
+    {
+      "id": "shot_shotgun",
+      "file": "shot_shotgun.wav",
+      "from": "morganpurkis-doom-shotgun",
+      "note": "霰弹开火：源 0–0.46s，砍掉后半段的上膛声",
+      "dur": 0.46,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.5251,
+      "bytes": 40616,
+      "sha256_16": "03bf4e91dbb4e4ee"
+    },
+    {
+      "id": "shot_shotgun_pump",
+      "file": "shot_shotgun_pump.wav",
+      "from": "morganpurkis-doom-shotgun",
+      "note": "霰弹上膛：源 0.72–0.905s，暂未接线，备用",
+      "dur": 0.185,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.1354,
+      "bytes": 16362,
+      "sha256_16": "b92b53ca3eda7b45"
+    },
+    {
+      "id": "shot_pistol_1",
+      "file": "shot_pistol_1.wav",
+      "from": "serutonin-glock",
+      "note": "手枪开火变体 1：源第一发 0.012–0.30s",
+      "dur": 0.288,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.2536,
+      "bytes": 25446,
+      "sha256_16": "e57ec8f11309d44b"
+    },
+    {
+      "id": "shot_pistol_2",
+      "file": "shot_pistol_2.wav",
+      "from": "serutonin-glock",
+      "note": "手枪开火变体 2：源第二发 1.615–1.90s",
+      "dur": 0.285,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.28,
+      "bytes": 25182,
+      "sha256_16": "18b64aaf1d11b17b"
+    },
+    {
+      "id": "shot_pistol_3",
+      "file": "shot_pistol_3.wav",
+      "from": "serutonin-glock",
+      "note": "手枪开火变体 3：源第三发 3.195–3.49s",
+      "dur": 0.295,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.2673,
+      "bytes": 26064,
+      "sha256_16": "07a711c25faedea4"
+    },
+    {
+      "id": "shot_ak47",
+      "file": "shot_ak47.wav",
+      "from": "serutonin-ak47",
+      "note": "AK47 开火：预留，尚未有对应武器",
+      "dur": 0.5,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.2849,
+      "bytes": 44144,
+      "sha256_16": "29e3c353bc2d7f18"
+    },
+    {
+      "id": "shot_pistol_silent",
+      "file": "shot_pistol_silent.wav",
+      "from": "serutonin-silenced",
+      "note": "消音手枪开火：预留，等做多手枪",
+      "dur": 0.158,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.1688,
+      "bytes": 13980,
+      "sha256_16": "ce8fd77a62f88bd3"
     }
   ],
   "mix": {

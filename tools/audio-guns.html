@@ -65,7 +65,8 @@
 <body>
 <h1>潮汐线 · 枪声与音量试听</h1>
 <div class="sub">
-  直接调游戏里同一份 SFX 代码（js/ui.js）。枪声全部现场合成，不带采样。
+  直接调游戏里同一份 SFX 代码（js/ui.js）。四把枪的开火声已换成实弹录音，
+  合成器保留为素材缺失时的兜底；每张枪卡上的「合成版对比」可以听出差别。
   改动参数后刷新本页即可，不必重开游戏。
 </div>
 
@@ -78,8 +79,10 @@
   然后访问 <code>http://127.0.0.1:8765/tools/audio-guns.html</code>；直接双击本地文件也可以。
 </div>
 
-<h2>分层试听与导出</h2>
+<h2>分层试听与导出（合成器，游戏内已不再使用）</h2>
 <div class="sub" style="margin:-4px 0 10px">
+  这一区是<b>合成器</b>五层结构的诊断台。四把枪的游戏内开火声已经换成上面的实弹录音，
+  合成版只作为素材缺失时的兜底，所以这里听到的是"备用方案"。
   勾选要合成的层：单听、任意组合、整体都走同一条信号链。<b>导出的是干声</b>（不经总线压缩器），
   这样同一随机种子两次导出可以逐采样对齐；播放也直接放这份渲染结果，保证"听到的 = 导出的"。
 </div>
@@ -124,6 +127,9 @@
 <h2>其它改动：闪避 / 挥刀 / 切枪 / 脚步</h2>
 <div class="grid" id="others"></div>
 
+<h2>预留素材（已切好，还没有对应武器）</h2>
+<div class="grid" id="reserve"></div>
+
 <h2>音量标尺（按游戏内实际播放顺序，听一遍就知道谁盖住谁）</h2>
 <div class="row">
   <button id="ladder">依次播放：枪声 → 换弹 → 切枪 → 脚步 → 闪避</button>
@@ -146,10 +152,10 @@
 <script src="../js/ui.js"></script>
 <script>
   const GUNS = [
-    { id: 'rifle', name: '制式步枪 5.56', tag: '脆、快、尾音短 · 中高频最亮' },
-    { id: 'shotgun', name: '短管霰弹 12g', tag: '低频最重、尾音最长 · 几乎没有脆响' },
-    { id: 'smg', name: '冲锋枪 9mm', tag: '又薄又急 · 高频多、低频少' },
-    { id: 'pistol', name: '手枪 9mm', tag: '比冲锋枪沉 · 套筒动作明显' }
+    { id: 'rifle', name: '制式步枪 5.56', tag: '实弹录音 855654 · 脆、快、尾音短', src: 'shot_rifle' },
+    { id: 'shotgun', name: '短管霰弹 12g', tag: '实弹录音 380886 · 最沉、尾巴最长', src: 'shot_shotgun' },
+    { id: 'smg', name: '冲锋枪 9mm', tag: '步枪录音升调 1.10 · 又薄又急', src: 'shot_smg' },
+    { id: 'pistol', name: '手枪 9mm', tag: '格洛克 855652 · 三条独立录音轮换', src: 'shot_pistol_1/2/3' }
   ];
   const RPM = { rifle: 420, shotgun: 80, smg: 780, pistol: 300 };
   const logEl = document.getElementById('log');
@@ -219,10 +225,27 @@
   /* ---- 四把枪 ---- */
   const gunsHost = document.getElementById('guns');
   GUNS.forEach(g => {
-    card(gunsHost, g.name, g.tag, [
-      { label: '单发', run: () => SFX.play('shot', { gun: g.id }), say: g.name + ' 单发' },
-      { label: '三连', ghost: true, run: () => [0, 150, 300].forEach(t => setTimeout(() => SFX.play('shot', { gun: g.id }), t)) }
+    const el = card(gunsHost, g.name, g.tag, [
+      { label: '单发', run: () => SFX.play('shot', { gun: g.id }), say: g.name + ' 单发（实弹录音）' },
+      { label: '三连', ghost: true, run: () => [0, 150, 300].forEach(t => setTimeout(() => SFX.play('shot', { gun: g.id }), t)) },
+      {
+        label: '合成版对比', ghost: true,
+        run: () => { SFX._shot(SFX.GUN[g.id], {}, g.id); say(g.name + ' 合成版（游戏内已不用，仅作对比）'); }
+      }
     ]);
+    /* 手枪有 3 条独立录音，单独给一排，能听出连射时是否真的在换 */
+    if (g.id === 'pistol') {
+      const row = document.createElement('div');
+      row.className = 'row';
+      ['1', '2', '3'].forEach(n => {
+        const b = document.createElement('button');
+        b.className = 'ghost';
+        b.textContent = '变体 ' + n;
+        b.onclick = () => { if (SFX.ctx.state === 'suspended') SFX.ctx.resume(); SFX._playSample('shot_pistol_' + n); say('手枪变体 ' + n); };
+        row.appendChild(b);
+      });
+      el.appendChild(row);
+    }
   });
 
   /* ---- 连发 ---- */
@@ -267,6 +290,19 @@
     { label: '走', run: () => walk(120, 1600) },
     { label: '跑', ghost: true, run: () => walk(206, 1600) },
     { label: '潜行', ghost: true, run: () => walk(53, 1600) }
+  ]);
+
+  /* ---- 已切好、但还没有对应武器的素材 ---- */
+  const reserveHost = document.getElementById('reserve');
+  card(reserveHost, 'AK-47 开火', '录音 855843 · 预留：等做 AK 系武器时接上', [
+    { label: 'AK 单发', run: () => SFX._playSample('shot_ak47'), say: 'AK-47（预留素材，尚未接入任何枪）' },
+    { label: '连打 8 发', ghost: true, run: () => [0, 110, 220, 330, 440, 550, 660, 770].forEach(t => setTimeout(() => SFX._playSample('shot_ak47', { rate: 0.97 + Math.random() * 0.06 }), t)) }
+  ]);
+  card(reserveHost, '消音手枪开火', '录音 855656 · 预留：等做多手枪', [
+    { label: '消音单发', run: () => SFX._playSample('shot_pistol_silent'), say: '消音手枪（预留素材）' }
+  ]);
+  card(reserveHost, '霰弹上膛', '录音 380886 后半段 · 预留：可做逐发上膛', [
+    { label: '上膛', run: () => SFX._playSample('shot_shotgun_pump') }
   ]);
 
   /* 用玩家那套公式模拟脚步：stride = 60 * (v/120)^0.4 */

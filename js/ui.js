@@ -418,6 +418,26 @@ const SFX = {
   /* 开火的五层，顺序固定。试听页的单听/组合听/导出都按这套名字走 */
   SHOT_LAYERS: ['crack', 'body', 'sub', 'tail', 'mech'],
 
+  /* ---------------- 真实录音优先 ----------------
+     上面 GUN 那套合成参数还在，但它现在是兜底：采样加载失败（旧浏览器、
+     文件缺失、解码报错）时才会用到。实弹录音里的金属共鸣、空气非线性、
+     房间反射，合成器很难还原，这也是之前"像电子鼓"的根本原因。
+       ids   候选采样，多条就轮换（手枪那 3 条是同一把枪的三次独立录音，
+             连射时轮着用，听不出复读）
+       rate  播放基准速度：冲锋枪用步枪素材升调 1.10，更急更薄
+       jitter 每发音高抖动幅度，散开同一段素材的重复感
+       vol   枪型之间的相对音量（整体响度仍由 LOUD.shot 统一对齐） */
+  SHOT_SAMPLE: {
+    rifle: { ids: ['shot_rifle'], rate: 1.00, jitter: 0.045, vol: 1.00 },
+    smg: { ids: ['shot_smg'], rate: 1.10, jitter: 0.045, vol: 0.95 },
+    shotgun: { ids: ['shot_shotgun'], rate: 1.00, jitter: 0.030, vol: 1.05 },
+    pistol: {
+      ids: ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
+      rate: 1.00, jitter: 0.020, vol: 1.00
+    }
+  },
+  shotCursor: {},     // 枪型 → 下一个该用第几条变体
+
   /* 一个游戏音效由多段素材拼成：换弹 1.5 秒里是「退弹匣 → 插弹匣 → 拉套筒」
      三次动作，原素材整段 3.13 秒塞不进去（硬变速会让金属声变尖叫），
      所以按游戏节奏重新排时间轴。 */
@@ -457,6 +477,11 @@ const SFX = {
     /* shot_switch 与各枪专属的 shot_switch_* 都算"切枪"，响度一视同仁 */
     if (/^shot_switch/.test(id)) return this.LOUD.switch;
     if (/^reload_/.test(id)) return this.LOUD.reload;
+    /* 开火采样：四把枪（含手枪的三个变体）和预留的 AK 都按枪声档对齐。
+       这样换哪把枪、换哪段录音，最终 RMS 都一样，不会出现某把枪特别响。 */
+    if (/^shot_(rifle|smg|shotgun|pistol_[123]|ak47)$/.test(id)) return this.LOUD.shot;
+    if (id === 'shot_pistol_silent') return this.LOUD.shot * 0.55;
+    if (id === 'shot_shotgun_pump') return this.LOUD.switch;
     return 0.08;
   },
 
@@ -525,10 +550,40 @@ const SFX = {
     /* 基准增益来自解码时的响度对齐；vol 只做场合性的微调（潜行脚步、落步） */
     const base = this.gainOf[id] != null ? this.gainOf[id] : 0.4;
     g.gain.value = base * ((opts && opts.vol != null) ? opts.vol : 1);
-    s.connect(g); g.connect(this.master || c.destination);
-    this._autoFree(s, [g]);
+    s.connect(g);
+    const chain = [g];
+    let tail = g;
+    /* 远处的枪声要在同一条录音上"闷掉"，而不是另换一个音色 */
+    if (opts && opts.lp) {
+      const lp = c.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.value = opts.lp;
+      g.connect(lp); tail = lp; chain.push(lp);
+    }
+    tail.connect(this.master || c.destination);
+    this._autoFree(s, chain);
     s.start(c.currentTime);
     return true;
+  },
+
+  /* 开火：有录音就放录音，没有就让调用方落回合成音。
+     变体按游标轮换（手枪三条是同一把枪的三次录音），
+     再叠一点音高和音量抖动，连射才不像在循环播同一段。 */
+  _playGun(gunId, opts) {
+    const p = this.SHOT_SAMPLE[gunId];
+    if (!p) return false;
+    const ready = p.ids.filter(id => this.samples[id]);
+    if (!ready.length) return false;
+    const n = this.shotCursor[gunId] || 0;
+    this.shotCursor[gunId] = (n + 1) % ready.length;
+    const o = opts || {};
+    const j = p.jitter || 0;
+    const jv = 0.04;         // 音量抖动 ±4%：同一段录音连播时，"每发都一样响"比音高更像复读机
+    return this._playSample(ready[n % ready.length], {
+      rate: (p.rate || 1) * (o.rate || 1) * (1 - j + Math.random() * j * 2),
+      vol: (p.vol || 1) * (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2),
+      lp: o.lp
+    });
   },
 
   _playSeq(name, seq) {
@@ -804,13 +859,19 @@ const SFX = {
        别让换枪变成哑的 */
     if (/^shot_switch_/.test(name) && !this.samples[name]) return this.play('shot_switch', opts);
 
-    /* 枪声按枪型分支：四把枪各有各的音色，不再是同一个"啪" */
+    /* 枪声：真实录音优先，按枪型选；素材缺失才落回下面的合成版 */
     if (name === 'shot') {
-      const gun = this.GUN[(opts && opts.gun) || 'rifle'] || this.GUN.rifle;
-      return this._shot(gun, opts, (opts && opts.gun) || 'rifle');
+      const gunId = (opts && opts.gun) || 'rifle';
+      if (this._playGun(gunId, opts)) return;
+      const gun = this.GUN[gunId] || this.GUN.rifle;
+      return this._shot(gun, opts, gunId);
     }
-    /* 敌人的枪声：同一套音色压低 + 闷掉高频，听得出是别人在打 */
-    if (name === 'enemyShot') return this._shot(this.GUN.pistol, { vol: 0.42, lp: 1300 }, 'pistol');
+    /* 敌人的枪声：用同一批手枪录音压低 + 低通，听得出是别人在打，
+       而不是换了一个音色；同样在素材缺失时落回合成版 */
+    if (name === 'enemyShot') {
+      if (this._playGun('pistol', { lp: 1200, vol: this.LOUD.enemyShot / this.LOUD.shot * 1.15 })) return;
+      return this._shot(this.GUN.pistol, { vol: 0.42, lp: 1300 }, 'pistol');
+    }
 
     const c = this.ctx, t = c.currentTime;
     /* 一条总线收所有层：音量标准在这一处乘完，下面只管音色 */
