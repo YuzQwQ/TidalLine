@@ -1039,6 +1039,12 @@ window.addEventListener('error', function (e) {
   color: #a9c6bc; font-size: 10px; line-height: 1.45;
 }
 .rg-json.hidden { display: none; }
+
+/* 音效试听：4 列小按键，比两列紧凑，一屏能放下八种 */
+.rg-sfx { padding: 2px 0 4px; }
+.rg-sfx-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin: 5px 0 4px; }
+.rg-sfx-btns button { padding: 3px 0; font-size: 10px; }
+.rg-sfx-tip { color: #4c665e; font-size: 9.5px; line-height: 1.5; }
 </style>
 <link rel="stylesheet" href="assets/ui/safehouse.css">
 <link rel="stylesheet" href="assets/ui/merchant.css"><link rel="stylesheet" href="assets/ui/storage.css"></head>

@@ -471,6 +471,20 @@ const SFX = {
     if (this.on) this.load();
   },
 
+  /* 浏览器不允许在用户手势之前出声。正常流程里 init() 就发生在点「开始」
+     的那次点击里，本来就是醒的；靶场、#play 这类靠 URL 直插的入口没有这
+     道手势，上下文会一直 suspended —— 听上去就是"音效没加载"。
+     这里补一个显式唤醒，真正发声前调用一次即可。 */
+  unlock() {
+    if (this.on === false) return this;   // 环境不支持音频（无 WebAudio），别再反复建
+    if (!this.ctx) this.init();
+    if (!this.ctx) return this;
+    if (this.ctx.state === 'suspended' && this.ctx.resume) {
+      try { const p = this.ctx.resume(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+    }
+    return this;
+  },
+
   /* 这一段素材该有多响：按用途查 LOUD 表，查不到就按中等音量处理 */
   _targetFor(id) {
     if (/^step_stone/.test(id)) return this.LOUD.step;
@@ -518,6 +532,8 @@ const SFX = {
     this.loading = (async () => {
       let n = 0;
       if (injected) {
+        /* 记下"本应加载多少段"，面板好显示 12/18 这样的进度 */
+        this.wantCount = Object.keys(injected).length;
         for (const id of Object.keys(injected)) {
           try { await decode(id, injected[id]); n++; } catch (e) {}
         }
@@ -525,6 +541,7 @@ const SFX = {
         /* 多文件版：http 下能读到就加载；file:// 被 CORS 挡住时静默跳过 */
         try {
           const man = await fetch('assets/audio/manifest.json').then(r => r.json());
+          this.wantCount = (man.assets || []).length;
           for (const a of man.assets || []) {
             try {
               const buf = await fetch('assets/audio/' + a.file).then(r => r.arrayBuffer());
@@ -850,6 +867,11 @@ const SFX = {
 
   play(name, opts) {
     if (!this.on || !this.ctx) return;
+    /* 切标签页回来、或刚进靶场还没点过鼠标时上下文是 suspended，
+       直接播会静音；顺手叫醒，下一次触发就正常了。 */
+    if (this.ctx.state === 'suspended' && this.ctx.resume) {
+      try { const p = this.ctx.resume(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+    }
     /* 有采样就优先用采样；没有（或解码失败）就落到下面的合成音 */
     if (this.samples[name]) { this._playSample(name, opts); return; }
     const seq = this.SEQ[name];

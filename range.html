@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>开发者靶场 · 入口</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #070d0b; color: #7f958d;
+    font: 13px/1.7 Consolas, "Microsoft YaHei", monospace; }
+  .box { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    text-align: center; }
+  a { color: #c98a5e; text-decoration: none; border-bottom: 1px solid #4a3324; }
+  a:hover { color: #e8ac7c; }
+  .dim { color: #4c5f59; font-size: 11px; margin-top: 10px; }
+</style>
+<script>
+  /* 纯粹是个跳板：把 #range 带进 index.html，省得手打 hash。
+     用 replace 让后退键不会卡在这一页。 */
+  location.replace('index.html#range');
+</script>
+</head>
+<body>
+  <div class="box">
+    <div>正在进入开发者靶场…</div>
+    <div class="dim">没自动跳转？点 <a href="index.html#range">这里</a></div>
+  </div>
+</body>
+</html>

@@ -210,10 +210,26 @@ const Range = {
     this.equip(this.w[this.curId] ? this.curId : 'rifle');
     this.refreshPanel();
     this.showPanel(true);
+    this.initAudio();
 
     Game.toast('靶场：F2 面板 / F3 清弹孔');
     Game.update(1 / 60);
     Game.render();
+  },
+
+  /* 靶场靠 URL 直插进来，没经过开始界面那一下点击，音频上下文根本不会建；
+     就算建了也是 suspended，听上去跟"没加载音效"一模一样。
+     这里建上下文，并把唤醒挂到第一次点击/按键上（浏览器只认手势）。 */
+  initAudio() {
+    if (typeof SFX === 'undefined' || !SFX || typeof SFX.init !== 'function') return false;
+    SFX.init();
+    if (typeof window !== 'undefined' && !this._audioArmed) {
+      this._audioArmed = true;
+      const wake = () => SFX.unlock();
+      window.addEventListener('pointerdown', wake, true);
+      window.addEventListener('keydown', wake, true);
+    }
+    return true;
   },
 
   exit() {
@@ -442,6 +458,22 @@ const Range = {
       '<div class="rg-guns"></div>',
       '<div class="rg-read"></div>',
       '<div class="rg-params"></div>',
+      '<details class="rg-grp" open><summary>音效试听</summary>',
+      '  <div class="rg-sfx">',
+      '    <div class="rg-r"><span>采样</span><b data-out="sfx">—</b></div>',
+      '    <div class="rg-sfx-btns">',
+      '      <button data-sfx="gunshot">枪声</button>',
+      '      <button data-sfx="switch">切枪</button>',
+      '      <button data-sfx="reload">换弹</button>',
+      '      <button data-sfx="step">脚步</button>',
+      '      <button data-sfx="hit">命中</button>',
+      '      <button data-sfx="headshot">爆头</button>',
+      '      <button data-sfx="hurt">受伤</button>',
+      '      <button data-sfx="dodge">闪避</button>',
+      '    </div>',
+      '    <div class="rg-sfx-tip">枪声走真实采样轮换，与游戏内同一条链路</div>',
+      '  </div>',
+      '</details>',
       '<div class="rg-actions">',
       '  <button data-act="clear">清弹孔</button>',
       '  <button data-act="reset">重置本枪</button>',
@@ -471,6 +503,7 @@ const Range = {
       this._peakEl = el.querySelector('[data-out="peak"]');
       this._clearEl = el.querySelector('[data-out="clear"]');
       this._groupEl = el.querySelector('[data-out="group"]');
+      this._sfxEl = el.querySelector('[data-out="sfx"]');
       this._barEl = el.querySelector('.rg-bar > i');
     }
     this.syncGunButtons();
@@ -584,6 +617,7 @@ const Range = {
     const t = e.target;
     if (!t || !t.dataset) return;
     if (t.dataset.gun) { this.equip(t.dataset.gun); return; }
+    if (t.dataset.sfx) { this.previewSfx(t.dataset.sfx); return; }
     const act = t.dataset.act;
     if (!act) return;
     if (act === 'close') this.showPanel(false);
@@ -650,6 +684,35 @@ const Range = {
     Game.toast(copied ? '参数已复制' : '复制失败，参数见面板底部');
   },
 
+  /* 面板上的音效试听：一律走 Game.sfx，跟游戏里是同一套播放链路，
+     听到什么就是实装后的什么（不是另一条简化通道）。 */
+  previewSfx(name) {
+    if (typeof SFX === 'undefined' || !SFX) { Game.toast('音效系统未加载'); return; }
+    SFX.unlock();
+    if (name === 'gunshot') {
+      /* 采样轮换、音高抖动、敌人低通都一样会走 */
+      Game.sfx('shot', { gun: this.curId });
+    } else if (name === 'step') {
+      Game.sfx('step_stone_' + (1 + Math.floor(Math.random() * 4)), { rate: 1, vol: 1 });
+    } else if (name === 'switch') {
+      /* 有专属切枪音的枪（霰弹）会命中采样，其余自动回落通用音 */
+      Game.sfx('shot_switch_' + this.curId);
+    } else {
+      Game.sfx(name);
+    }
+    this.updateReadouts();
+  },
+
+  /* 音效就绪情况：解码是异步的，进靶场头 200ms 内可能还是 0 段 */
+  sfxStatus() {
+    if (typeof SFX === 'undefined' || !SFX || !SFX.samples) return '不可用';
+    const n = Object.keys(SFX.samples).length;
+    const want = SFX.wantCount || n;
+    if (!n) return '解码中…';
+    const st = SFX.ctx && SFX.ctx.state === 'suspended' ? '待唤醒' : '就绪';
+    return n + '/' + want + ' · ' + st;
+  },
+
   /* 面板读数：10Hz 刷新，别每帧改 DOM */
   updateReadouts() {
     if (!this.panel || !this.visible) return;
@@ -679,6 +742,8 @@ const Range = {
         ? g.n + ' 发 · 极值 ' + g.es.toFixed(0) + 'px · RMS ' + g.rms.toFixed(1) + 'px'
         : '—';
     }
+
+    if (this._sfxEl) this._sfxEl.textContent = this.sfxStatus();
   },
 
   /* 一组弹孔的统计：中心、RMS 半径、极值散布（最远两孔距离） */
