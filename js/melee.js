@@ -174,13 +174,26 @@ Object.defineProperty(Player.prototype,'totalWeight',{get(){return originalWeigh
 Player.prototype.switchMelee=function(){
   if(MeleeSystem.locked())return false;
   if(!this.melee){Game.toast('近战槽是空的');return false;}
+  const wasActive=this.meleeActive;
   Medical.cancel();AmmoQuick.cancel();MedQuick.cancel();this.reloadT=0;this.reloadPending=false;this.meleeActive=true;
-  MeleeSystem.cancel(this);Game.renderGearPanel();return true;
+  MeleeSystem.cancel(this);Game.renderGearPanel();
+  /* 枪 → 刀：金属滑出的声音，压低一点，和换枪的清脆滑套分开 */
+  if(!wasActive)Game.sfx('shot_switch',{rate:0.86});
+  return true;
 };
 meleeWrap(Player.prototype,'switchWeapon',function(original,i){
   if(MeleeSystem.locked())return false;
   const active=this.meleeActive,r=original.call(this,i);
-  if((r || i===this.slot)&&this.weapons[i]){this.meleeActive=false;MeleeSystem.cancel(this);if(active)this.fireCd=Math.max(this.fireCd,.28);return true;}
+  if((r || i===this.slot)&&this.weapons[i]){
+    this.meleeActive=false;MeleeSystem.cancel(this);
+    if(active){
+      this.fireCd=Math.max(this.fireCd,.28);
+      /* 刀 → 枪：按的是当前枪的槽位时 switchWeapon 会提前返回、什么都不播，
+         这个方向以前是全程无声的，这里补上 */
+      if(!r)Game.sfx('shot_switch');
+    }
+    return true;
+  }
   return r;
 });
 meleeWrap(Player.prototype,'tryShoot',function(original){return this.meleeActive?MeleeSystem.attack(this):original.call(this);});

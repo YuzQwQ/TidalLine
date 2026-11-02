@@ -147,5 +147,22 @@
       "bytes": 14188,
       "sha256_16": "7f637c7c87ebac4b"
     }
-  ]
+  ],
+  "mix": {
+    "note": "响度标准：所有声音（合成音 + 采样）对齐同一张目标 RMS 表，表在 js/ui.js 的 SFX.LOUD。采样解码后现算 RMS，gain = 目标/实测（SFX._addSample）；合成音靠 SFX.CAL 校准。",
+    "targets": {
+      "shot": 0.14,
+      "enemyShot": 0.075,
+      "melee": 0.1,
+      "hit": 0.085,
+      "headshot": 0.085,
+      "break": 0.1,
+      "reload": 0.075,
+      "switch": 0.08,
+      "step": 0.05,
+      "dodge": 0.09
+    },
+    "check": "node tools/audio-levels.js",
+    "audition": "tools/audio-guns.html"
+  }
 }

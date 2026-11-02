@@ -353,6 +353,9 @@ class Player {
       this.frameTravel = U.dist(x0, y0, this.x, this.y);
       if (this.dodgeT <= 0) {
         this.vx *= 0.3; this.vy *= 0.3;
+        /* 收尾踩实一步：闪避才不是"飘"过去的 */
+        const n = 1 + ((Math.random() * 4) | 0);
+        Game.sfx('step_stone_' + n, { rate: 1.06, vol: 1.1 });
       }
       return;   // 闪避期间不响应移动输入
     }
@@ -361,6 +364,7 @@ class Player {
       this.dodgeT = CFG.P.DODGE_TIME;
       this.dodgeAngle = this.angle;
       Noise.emit(this.x, this.y, CFG.NOISE.dodge, 'dodge');
+      Game.sfx('dodge');
       return;
     }
 
@@ -395,16 +399,21 @@ class Player {
     this.frameTravel = U.dist(x0, y0, this.x, this.y);
 
     /* --- 脚步：按走过的距离触发，站住自然就没声了 ---
-       冲刺步幅大、潜行步幅小，所以步频跟着状态走。
+       步频跟"实际速度"走：stride = 60 * (v / 步行速度)^0.4。
+       走 120 → 60px 一步；冲刺 206 → 74px，每秒约 2.8 步；潜行 53 → 43px。
+       负重、护甲、涉水、边打药走都会自己变密或变疏，不用再按状态列举。
        注意别按 frameTravel 清零：顶着墙走时每帧位移接近 0，
        那样会把已经攒的进度反复抹掉，走两步丢一步。有输入才累加，松手才清。 */
     if (this.moving) {
       this.stepDist += this.frameTravel;
-      const stride = this.sprinting ? 78 : this.sneaking ? 42 : 60;
+      const spd = Math.hypot(this.vx, this.vy);
+      const stride = U.clamp(60 * Math.pow(spd / CFG.P.SPEED, 0.4), 26, 120);
       if (this.stepDist >= stride) {
         this.stepDist -= stride;
         const n = 1 + ((Math.random() * 4) | 0);
-        Game.sfx('step_stone_' + n, { rate: 0.94 + Math.random() * 0.12 });
+        /* 越快步子越沉；潜行压到七成，但别让人听不见自己 */
+        const vol = U.clamp(0.55 + 0.45 * (spd / CFG.P.SPEED), 0.5, 1.2);
+        Game.sfx('step_stone_' + n, { rate: 0.94 + Math.random() * 0.12, vol });
       }
     } else if (this.stepDist > 0) {
       this.stepDist = 0;        // 松手就清零，别攒到下次一迈腿连响两下
@@ -506,7 +515,8 @@ class Player {
 
     Noise.emit(this.x, this.y, CFG.NOISE.shoot, 'shot');
     Game.muzzle(this.x + Math.cos(this.angle) * 16, this.y + Math.sin(this.angle) * 16);
-    Game.sfx('shot');
+    /* 枪型参数交给音效层：四把枪的开火声从同一套合成参数里分化出来 */
+    Game.sfx('shot', { gun: W.id });
     return true;
   }
 

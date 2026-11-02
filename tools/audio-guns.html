@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>潮汐线 · 枪声与音量试听</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 22px 26px 40px; background: #070b09; color: #cfd8d4;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif; font-size: 13px;
+  }
+  h1 { font-size: 15px; font-weight: 600; letter-spacing: 1px; margin: 0 0 4px; color: #e6efeb; }
+  .sub { color: #5f7a72; font-size: 11.5px; margin-bottom: 18px; }
+  h2 {
+    font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #6fd6ba;
+    margin: 26px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #16241f;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 10px; }
+  .card {
+    background: #0b1210; border: 1px solid #182822; border-radius: 4px; padding: 12px 13px;
+  }
+  .card h3 { margin: 0 0 3px; font-size: 13px; font-weight: 600; color: #dce8e3; }
+  .card .tag { font-size: 10.5px; color: #5f7a72; letter-spacing: .5px; margin-bottom: 8px; }
+  .card .tag b { color: #8ba39b; font-weight: 400; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; }
+  button {
+    padding: 5px 12px; font-size: 11.5px; letter-spacing: .4px; cursor: pointer;
+    background: #14685c; color: #eaf4f0; border: 0; border-radius: 3px; font-family: inherit;
+  }
+  button:hover { background: #1a7d6e; }
+  button.ghost { background: transparent; border: 1px solid #22352e; color: #8ba39b; }
+  button.ghost:hover { border-color: #2f4a41; color: #cfd8d4; }
+  .meter {
+    height: 5px; margin-top: 9px; background: #0f1a16; border-radius: 3px; overflow: hidden;
+  }
+  .meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg,#14685c,#6fd6ba); }
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 4px; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid #101a16; }
+  th { color: #5f7a72; font-weight: 400; }
+  td.n { color: #8ba39b; font-variant-numeric: tabular-nums; }
+  tr.hit { background: #0e1b17; }
+  #log { margin-top: 10px; color: #5f7a72; font-size: 11px; min-height: 16px; }
+</style>
+</head>
+<body>
+<h1>潮汐线 · 枪声与音量试听</h1>
+<div class="sub">
+  直接调游戏里同一份 SFX 代码（js/ui.js）。枪声全部现场合成，不带采样。
+  改动参数后刷新本页即可，不必重开游戏。
+</div>
+
+<h2>四把枪 · 单发</h2>
+<div class="grid" id="guns"></div>
+
+<h2>连发（按各自射速，检查叠加和削波）</h2>
+<div class="row" id="autoRow"></div>
+
+<h2>其它改动：闪避 / 挥刀 / 切枪 / 脚步</h2>
+<div class="grid" id="others"></div>
+
+<h2>音量标尺（按游戏内实际播放顺序，听一遍就知道谁盖住谁）</h2>
+<div class="row">
+  <button id="ladder">依次播放：枪声 → 换弹 → 切枪 → 脚步 → 闪避</button>
+  <button class="ghost" id="loop">循环</button>
+</div>
+<table id="levels">
+  <thead><tr><th>声音</th><th>用途</th><th>目标 RMS</th><th>等效响度</th></tr></thead>
+  <tbody></tbody>
+</table>
+<div id="log"></div>
+
+<script>
+  /* 试听页只要 SFX，不需要整个游戏：给 ui.js 一个最小 U 壳子即可 */
+  window.U = { clamp: (v, a, b) => v < a ? a : (v > b ? b : v) };
+</script>
+<!-- 采样（脚步 / 换弹 / 切枪）由构建产物内联，file:// 下也能解码 -->
+<script src="../assets/audio/bundle.js"></script>
+<script src="../js/ui.js"></script>
+<script>
+  const GUNS = [
+    { id: 'rifle', name: '制式步枪 5.56', tag: '脆、快、尾音短 · 中高频最亮' },
+    { id: 'shotgun', name: '短管霰弹 12g', tag: '低频最重、尾音最长 · 几乎没有脆响' },
+    { id: 'smg', name: '冲锋枪 9mm', tag: '又薄又急 · 高频多、低频少' },
+    { id: 'pistol', name: '手枪 9mm', tag: '比冲锋枪沉 · 套筒动作明显' }
+  ];
+  const RPM = { rifle: 420, shotgun: 80, smg: 780, pistol: 300 };
+  const logEl = document.getElementById('log');
+  const say = t => { logEl.textContent = t; };
+
+  SFX.init();
+  if (window.__AUDIO__) SFX.load();
+
+  /* 简单的电平显示：挂一个 analyser，弹一下就知道这条有多响 */
+  let analyser = null, meterRaf = 0;
+  function meter(bar) {
+    if (!SFX.ctx) return;
+    if (!analyser) {
+      analyser = SFX.ctx.createAnalyser();
+      analyser.fftSize = 2048;
+      SFX.master.connect(analyser);
+    }
+    cancelAnimationFrame(meterRaf);
+    const buf = new Float32Array(analyser.fftSize);
+    const tick = () => {
+      analyser.getFloatTimeDomainData(buf);
+      let s = 0;
+      for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i];
+      const rms = Math.sqrt(s / buf.length);
+      bar.style.width = Math.min(100, rms * 340) + '%';
+      meterRaf = requestAnimationFrame(tick);
+    };
+    tick();
+  }
+
+  function card(host, title, tag, buttons) {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = '<h3>' + title + '</h3><div class="tag">' + tag + '</div>';
+    const row = document.createElement('div');
+    row.className = 'row';
+    const bar = document.createElement('div');
+    bar.className = 'meter';
+    bar.appendChild(document.createElement('i'));
+    const fill = bar.firstChild;
+    buttons.forEach(b => {
+      const btn = document.createElement('button');
+      btn.textContent = b.label;
+      if (b.ghost) btn.className = 'ghost';
+      btn.onclick = () => {
+        if (SFX.ctx.state === 'suspended') SFX.ctx.resume();
+        meter(fill);
+        b.run();
+        if (b.say) say(b.say);
+      };
+      row.appendChild(btn);
+    });
+    el.appendChild(row);
+    el.appendChild(bar);
+    host.appendChild(el);
+    return el;
+  }
+
+  /* ---- 四把枪 ---- */
+  const gunsHost = document.getElementById('guns');
+  GUNS.forEach(g => {
+    card(gunsHost, g.name, g.tag, [
+      { label: '单发', run: () => SFX.play('shot', { gun: g.id }), say: g.name + ' 单发' },
+      { label: '三连', ghost: true, run: () => [0, 150, 300].forEach(t => setTimeout(() => SFX.play('shot', { gun: g.id }), t)) }
+    ]);
+  });
+
+  /* ---- 连发 ---- */
+  const autoRow = document.getElementById('autoRow');
+  let autoTimer = 0, autoOn = null;
+  GUNS.forEach(g => {
+    const b = document.createElement('button');
+    b.className = 'ghost';
+    b.textContent = g.name.split(' ')[0] + ' ' + RPM[g.id] + 'rpm';
+    b.onclick = () => {
+      if (autoOn === g.id) { clearInterval(autoTimer); autoOn = null; b.classList.remove('on'); return; }
+      clearInterval(autoTimer);
+      autoRow.querySelectorAll('button').forEach(x => x.style.background = '');
+      autoOn = g.id;
+      if (SFX.ctx.state === 'suspended') SFX.ctx.resume();
+      SFX.play('shot', { gun: g.id });
+      autoTimer = setInterval(() => SFX.play('shot', { gun: g.id }), 60000 / RPM[g.id]);
+      say(g.name + ' 连发中，再点一次停');
+    };
+    autoRow.appendChild(b);
+  });
+  const stopAuto = document.createElement('button');
+  stopAuto.className = 'ghost';
+  stopAuto.textContent = '全部停止';
+  stopAuto.onclick = () => { clearInterval(autoTimer); autoOn = null; say('已停止'); };
+  autoRow.appendChild(stopAuto);
+
+  /* ---- 其它改动 ---- */
+  const othersHost = document.getElementById('others');
+  card(othersHost, '闪避（右键）', '破风声 + 收尾踩实一步', [
+    { label: '闪避音', run: () => { SFX.play('dodge'); setTimeout(() => SFX.play('step_stone_2', { rate: 1.06, vol: 1.1 }), 170); } }
+  ]);
+  card(othersHost, '挥刀', '风声从高扫到低', [
+    { label: '挥刀', run: () => SFX.play('melee') }
+  ]);
+  card(othersHost, '枪 ⇄ 刀', '换枪是清脆滑套，收刀压低一点', [
+    { label: '枪 → 刀', run: () => SFX.play('shot_switch', { rate: 0.86 }) },
+    { label: '刀 → 枪', ghost: true, run: () => SFX.play('shot_switch') }
+  ]);
+  card(othersHost, '脚步', '步频跟速度走：走 2.0 / 快跑 2.8 步每秒', [
+    { label: '走', run: () => walk(120, 1600) },
+    { label: '跑', ghost: true, run: () => walk(206, 1600) },
+    { label: '潜行', ghost: true, run: () => walk(53, 1600) }
+  ]);
+
+  /* 用玩家那套公式模拟脚步：stride = 60 * (v/120)^0.4 */
+  function walk(speed, ms) {
+    const t0 = performance.now();
+    let dist = 0, last = t0;
+    const timer = setInterval(() => {
+      const now = performance.now(), dt = (now - last) / 1000; last = now;
+      if (now - t0 > ms) { clearInterval(timer); return; }
+      dist += speed * dt;
+      const stride = U.clamp(60 * Math.pow(speed / 120, 0.4), 26, 120);
+      if (dist >= stride) {
+        dist -= stride;
+        const n = 1 + ((Math.random() * 4) | 0);
+        const vol = U.clamp(0.55 + 0.45 * (speed / 120), 0.5, 1.2);
+        SFX.play('step_stone_' + n, { rate: 0.94 + Math.random() * 0.12, vol });
+      }
+    }, 16);
+  }
+
+  /* ---- 音量标尺 ---- */
+  const LADDER = [
+    ['shot', '开火', 'shot'],
+    ['reload', '换弹三段', 'reload'],
+    ['shot_switch', '切枪', 'switch'],
+    ['step_stone_1', '脚步', 'step'],
+    ['dodge', '闪避', 'dodge']
+  ];
+  const tbody = document.querySelector('#levels tbody');
+  const dbfs = r => (20 * Math.log10(Math.max(r, 1e-6))).toFixed(1);
+  LADDER.forEach(([id, label, key]) => {
+    const rms = SFX.LOUD[key];
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + label + '</td><td class="n">' + id + '</td>' +
+      '<td class="n">' + rms.toFixed(3) + '</td><td class="n">' + dbfs(rms) + ' dBFS</td>';
+    tbody.appendChild(tr);
+  });
+
+  let loopOn = false;
+  const playLadder = () => {
+    SFX.play('shot', { gun: 'rifle' });
+    setTimeout(() => SFX.play('reload'), 500);
+    setTimeout(() => SFX.play('shot_switch'), 2300);
+    setTimeout(() => SFX.play('step_stone_1'), 2800);
+    setTimeout(() => SFX.play('step_stone_3'), 3100);
+    setTimeout(() => SFX.play('dodge'), 3500);
+    say('依次播放中… 注意枪声应该明显压过其余所有声音');
+  };
+  document.getElementById('ladder').onclick = () => {
+    if (SFX.ctx.state === 'suspended') SFX.ctx.resume();
+    playLadder();
+  };
+  document.getElementById('loop').onclick = e => {
+    loopOn = !loopOn;
+    e.target.classList.toggle('on', loopOn);
+    if (loopOn) { playLadder(); setInterval(() => { if (loopOn) playLadder(); }, 4400); }
+  };
+</script>
+</body>
+</html>

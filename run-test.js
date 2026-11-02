@@ -94,7 +94,7 @@ vm.runInContext(`
   globalThis.CFG = CFG; globalThis.M = M; globalThis.U = U;
   globalThis.ITEMS = ITEMS; globalThis.Game = Game; globalThis.Save = Save;
   globalThis.Player = Player; globalThis.Enemy = Enemy; globalThis.Noise = Noise;
-  globalThis.Quiet = Quiet; globalThis.SFX = SFX;
+  globalThis.Quiet = Quiet; globalThis.SFX = SFX; globalThis.MeleeSystem = MeleeSystem;
   globalThis.Base = Base; globalThis.Art = Art; globalThis.ART = ART;
   globalThis.Corpse = Corpse; globalThis.Bullet = Bullet;
   globalThis.GEAR = GEAR; globalThis.WEAPONS = WEAPONS; globalThis.EQUIP = EQUIP; globalThis.HELMETS = HELMETS; globalThis.BODIES = BODIES; globalThis.SIDEARM_SLOT = SIDEARM_SLOT;
@@ -1220,6 +1220,80 @@ animator.tickAnimation(0, true);
 ok('搜刮上下文触发搜刮动作', animator.anim.state === 'loot');
 animator.dead = true; animator.tickAnimation(0, true);
 ok('死亡覆盖其他动画', animator.anim.state === 'death');
+
+console.log('\n=== 音效 ===');
+/* 把 Game.sfx 换成记录器：node 里本来就没有 AudioContext，
+   这样既不会真发声，又能断言"什么时候该响什么" */
+const sfxLog = [];
+Game.sfx = (name, opts) => { sfxLog.push({ name, opts }); };
+
+ok('四把枪都有独立参数', ['rifle', 'shotgun', 'smg', 'pistol']
+  .every(id => ctx.SFX.GUN[id] && ctx.SFX.GUN[id].body && ctx.SFX.GUN[id].sub));
+ok('枪声参数各不相同', new Set(['rifle', 'shotgun', 'smg', 'pistol']
+  .map(id => JSON.stringify(ctx.SFX.GUN[id]))).size === 4);
+ok('响度表覆盖每条合成音', ['shot', 'enemyShot', 'melee', 'hit', 'headshot', 'break',
+  'reload', 'switch', 'step', 'dodge', 'pickup', 'door', 'search', 'drop', 'hurt',
+  'extract', 'death'].every(k => typeof ctx.SFX.LOUD[k] === 'number'));
+
+/* ---- 开火：每把枪带上自己的 id ---- */
+const gunner = new ctx.Player(M.cx(7), M.cy(4));
+for (const id of ['rifle', 'shotgun', 'smg', 'pistol']) {
+  gunner.fillWeapons([EQUIP.gun(id, 5), null, null]);
+  gunner.fireCd = 0; gunner.reloadT = 0; gunner.fireCd = 0;
+  sfxLog.length = 0;
+  gunner.tryShoot();
+  const call = sfxLog.find(c => c.name === 'shot');
+  ok('开火带枪型：' + id, !!call && call.opts && call.opts.gun === id);
+}
+
+/* ---- 脚步：同样的时间，越快步子越密 ---- */
+const stepCount = (speedInput, seconds, sprint) => {
+  const w = new ctx.Player(M.cx(7), M.cy(4));
+  const x0 = w.x, y0 = w.y;
+  sfxLog.length = 0;
+  for (let i = 0; i < Math.round(seconds * 60); i++) {
+    w.update(1 / 60, { ...inpStill, ...speedInput, sprint: !!sprint });
+    w.x = x0; w.y = y0;          // 原地循环，别撞墙
+  }
+  return sfxLog.filter(c => /^step_stone_/.test(c.name)).length;
+};
+const walkSteps = stepCount({ mx: 1, my: 0 }, 3);
+const runSteps = stepCount({ mx: 1, my: 0 }, 3, true);
+const sneakSteps = stepCount({ mx: 1, my: 0, sneak: true }, 3);
+ok('走路 3 秒约 6 步（每步 60px）', walkSteps >= 5 && walkSteps <= 7, walkSteps + ' 步');
+ok('冲刺比走路密', runSteps > walkSteps, runSteps + ' vs ' + walkSteps);
+ok('潜行比走路稀', sneakSteps < walkSteps, sneakSteps + ' vs ' + walkSteps);
+
+/* 脚步音量跟速度挂钩：冲刺那一步更沉 */
+const volOf = log => (log.find(c => /^step_stone_/.test(c.name)) || {}).opts?.vol;
+const walkVol = (() => { const w = new ctx.Player(M.cx(7), M.cy(4)); const x0 = w.x, y0 = w.y;
+  sfxLog.length = 0;
+  for (let i = 0; i < 120; i++) { w.update(1 / 60, { ...inpStill, mx: 1, my: 0 }); w.x = x0; w.y = y0; }
+  return volOf(sfxLog); })();
+const runVol = (() => { const w = new ctx.Player(M.cx(7), M.cy(4)); const x0 = w.x, y0 = w.y;
+  sfxLog.length = 0;
+  for (let i = 0; i < 120; i++) { w.update(1 / 60, { ...inpStill, mx: 1, my: 0, sprint: true }); w.x = x0; w.y = y0; }
+  return volOf(sfxLog); })();
+ok('冲刺脚步比走路脚步响', runVol > walkVol, walkVol + ' → ' + runVol);
+
+/* ---- 闪避：起步一声破风，收尾一下落步 ---- */
+const dodger = new ctx.Player(M.cx(7), M.cy(4));
+sfxLog.length = 0;
+dodger.update(1 / 60, { ...inpStill, dodge: true });
+ok('闪避触发破风声', sfxLog.some(c => c.name === 'dodge'));
+for (let i = 0; i < 20; i++) dodger.update(1 / 60, inpStill);
+ok('闪避收尾有落步声', sfxLog.some(c => /^step_stone_/.test(c.name)));
+
+/* ---- 切枪：枪⇄刀两个方向都要有声 ---- */
+const swapper = new ctx.Player(M.cx(7), M.cy(4));
+swapper.fillWeapons([EQUIP.gun('rifle', 5), null, null]);
+swapper.melee = ctx.MeleeSystem.normalize(EQUIP.melee('melee01'));
+sfxLog.length = 0;
+swapper.switchMelee();
+ok('枪 → 刀有声', sfxLog.some(c => c.name === 'shot_switch'));
+sfxLog.length = 0;
+swapper.switchWeapon(0);
+ok('刀 → 枪有声', sfxLog.filter(c => c.name === 'shot_switch').length === 1);
 
 console.log('\n=== 长时间稳定性 ===');
 Game.state = 'playing';

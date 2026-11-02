@@ -4031,6 +4031,9 @@ class Player {
       this.frameTravel = U.dist(x0, y0, this.x, this.y);
       if (this.dodgeT <= 0) {
         this.vx *= 0.3; this.vy *= 0.3;
+        /* 收尾踩实一步：闪避才不是"飘"过去的 */
+        const n = 1 + ((Math.random() * 4) | 0);
+        Game.sfx('step_stone_' + n, { rate: 1.06, vol: 1.1 });
       }
       return;   // 闪避期间不响应移动输入
     }
@@ -4039,6 +4042,7 @@ class Player {
       this.dodgeT = CFG.P.DODGE_TIME;
       this.dodgeAngle = this.angle;
       Noise.emit(this.x, this.y, CFG.NOISE.dodge, 'dodge');
+      Game.sfx('dodge');
       return;
     }
 
@@ -4073,16 +4077,21 @@ class Player {
     this.frameTravel = U.dist(x0, y0, this.x, this.y);
 
     /* --- 脚步：按走过的距离触发，站住自然就没声了 ---
-       冲刺步幅大、潜行步幅小，所以步频跟着状态走。
+       步频跟"实际速度"走：stride = 60 * (v / 步行速度)^0.4。
+       走 120 → 60px 一步；冲刺 206 → 74px，每秒约 2.8 步；潜行 53 → 43px。
+       负重、护甲、涉水、边打药走都会自己变密或变疏，不用再按状态列举。
        注意别按 frameTravel 清零：顶着墙走时每帧位移接近 0，
        那样会把已经攒的进度反复抹掉，走两步丢一步。有输入才累加，松手才清。 */
     if (this.moving) {
       this.stepDist += this.frameTravel;
-      const stride = this.sprinting ? 78 : this.sneaking ? 42 : 60;
+      const spd = Math.hypot(this.vx, this.vy);
+      const stride = U.clamp(60 * Math.pow(spd / CFG.P.SPEED, 0.4), 26, 120);
       if (this.stepDist >= stride) {
         this.stepDist -= stride;
         const n = 1 + ((Math.random() * 4) | 0);
-        Game.sfx('step_stone_' + n, { rate: 0.94 + Math.random() * 0.12 });
+        /* 越快步子越沉；潜行压到七成，但别让人听不见自己 */
+        const vol = U.clamp(0.55 + 0.45 * (spd / CFG.P.SPEED), 0.5, 1.2);
+        Game.sfx('step_stone_' + n, { rate: 0.94 + Math.random() * 0.12, vol });
       }
     } else if (this.stepDist > 0) {
       this.stepDist = 0;        // 松手就清零，别攒到下次一迈腿连响两下
@@ -4184,7 +4193,8 @@ class Player {
 
     Noise.emit(this.x, this.y, CFG.NOISE.shoot, 'shot');
     Game.muzzle(this.x + Math.cos(this.angle) * 16, this.y + Math.sin(this.angle) * 16);
-    Game.sfx('shot');
+    /* 枪型参数交给音效层：四把枪的开火声从同一套合成参数里分化出来 */
+    Game.sfx('shot', { gun: W.id });
     return true;
   }
 
@@ -5713,19 +5723,88 @@ const SFX = {
   noiseBuf: null,
   on: true,
   samples: {},        // id → AudioBuffer
+  gainOf: {},         // id → 按目标响度算好的播放增益
   loading: null,
 
-  /* 素材已经归一化到接近满刻度，而合成音的 gain 只有 0.07~0.2，
-     直接播会响一大截，所以这里按用途压回去。脚步要明显让位给枪声。 */
-  MIX: {
-    shot_switch: 0.50,
-    reload_out: 0.55,
-    reload_in: 0.55,
-    reload_rack: 0.60,
-    step_stone_1: 0.24,
-    step_stone_2: 0.24,
-    step_stone_3: 0.24,
-    step_stone_4: 0.24
+  /* ---------------- 音量标准 ----------------
+     所有声音都对齐到同一张目标 RMS 表。采样解码后现算 RMS，
+     播放增益 = 目标 / 实测 —— 换素材不用重新调音量，天然不会出现
+     "这条特别响、那条听不见"。合成音靠下面的 CAL 校准到同一水平。
+     数值是 0~1 满刻度的 RMS，不是 dB：枪声 0.20 大约比脚步 0.05 响 12dB。 */
+  LOUD: {
+    /* 枪声是全场最响的，其余都得让位。
+       0.15 是实测值：再往上峰值就顶到 0dBFS 开始削波，所以这里是上限，
+       由 CAL.shot 统一压住，各枪的 vol 只在组内做相对高低。 */
+    shot: 0.14,
+    enemyShot: 0.075,  // 敌人枪声要能听出方位，但不能盖过自己的枪
+    melee: 0.10,       // 挥刀的风声
+    hit: 0.085,
+    headshot: 0.085,
+    break: 0.10,
+    reload: 0.075,
+    switch: 0.08,
+    step: 0.05,        // 脚步垫底，靠频率和音色存在
+    dodge: 0.09,
+    pickup: 0.06,
+    door: 0.08,
+    search: 0.055,
+    drop: 0.055,
+    hurt: 0.11,
+    extract: 0.09,
+    death: 0.13
+  },
+
+  /* 合成音的实测校准系数（tools/audio-levels.js 输出，改参数后重跑一遍）。
+     play() 里统一乘在每条合成音的总线上，所以改一层音色不用重调音量。 */
+  CAL: {
+    shot: 0.62, enemyShot: 1, hit: 1.06, headshot: 1.10, break: 1.74, reload: 1.07,
+    melee: 3.10, door: 6.10, pickup: 0.88, search: 6.60, drop: 5.00, hurt: 2.65,
+    extract: 1.80, death: 3.00, dodge: 3.10
+  },
+
+  /* ---------------- 枪声 ----------------
+     每把枪都是同一套"世界观"里的五层叠出来的：
+       crack 起音脆响（枪口爆音的高频）  body 中频爆裂（低频下扫的噪声）
+       sub   低频冲击（膛压的"咚"）      tail 尾音（远处反射）
+       mech  枪机动作（套筒/枪机复位）
+     只改参数，所以四把枪既分得开，又不会像四套不同的素材拼起来。
+     vol 是各枪之间的相对音量，整体再由 LOUD.shot / CAL.shot 对齐。 */
+  GUN: {
+    /* 5.56：脆、快、尾音短，中高频最亮 */
+    rifle: {
+      vol: 1.0, drive: 2.0,
+      crack: { freq: 3400, q: 1.1, gain: 0.55, dur: 0.030 },
+      body: { from: 5200, to: 520, gain: 0.95, dur: 0.170 },
+      sub: { from: 150, to: 46, gain: 0.70, dur: 0.200 },
+      tail: { freq: 1000, gain: 0.16, dur: 0.320, at: 0.02 },
+      mech: { freq: 2400, q: 5, gain: 0.07, dur: 0.020, at: 0.008 }
+    },
+    /* 12g：低频最重、尾音最长、几乎没有脆响 —— 一枪就知道是霰弹 */
+    shotgun: {
+      vol: 0.82, drive: 2.6,
+      crack: { freq: 2200, q: 0.9, gain: 0.30, dur: 0.050 },
+      body: { from: 3600, to: 260, gain: 1.00, dur: 0.240 },
+      sub: { from: 95, to: 32, gain: 0.95, dur: 0.300 },
+      tail: { freq: 800, gain: 0.22, dur: 0.420, at: 0.03 }
+    },
+    /* 9mm 冲锋枪：又薄又急，高频多、低频少、尾音几乎没有 */
+    smg: {
+      vol: 0.95, drive: 1.6,
+      crack: { freq: 4600, q: 1.3, gain: 0.50, dur: 0.022 },
+      body: { from: 6000, to: 1100, gain: 0.85, dur: 0.100 },
+      sub: { from: 190, to: 70, gain: 0.55, dur: 0.120 },
+      tail: { freq: 1500, gain: 0.10, dur: 0.180, at: 0.015 },
+      mech: { freq: 3200, q: 6, gain: 0.05, dur: 0.015, at: 0.010 }
+    },
+    /* 9mm 手枪：比冲锋枪沉一点，套筒动作明显，一枪一个"啪嗒" */
+    pistol: {
+      vol: 1.0, drive: 1.8,
+      crack: { freq: 4000, q: 1.2, gain: 0.50, dur: 0.026 },
+      body: { from: 4600, to: 700, gain: 0.90, dur: 0.130 },
+      sub: { from: 160, to: 55, gain: 0.70, dur: 0.160 },
+      tail: { freq: 1300, gain: 0.12, dur: 0.220, at: 0.02 },
+      mech: { freq: 2800, q: 6, gain: 0.10, dur: 0.022, at: 0.055 }
+    }
   },
 
   /* 一个游戏音效由多段素材拼成：换弹 1.5 秒里是「退弹匣 → 插弹匣 → 拉套筒」
@@ -5741,7 +5820,17 @@ const SFX = {
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
       this.ctx = new AC();
-      // 预生成 1 秒噪声
+      /* 总线：压缩器兜住连发叠加。冲锋枪 780 RPM 是每秒 13 发，
+         不加压缩器几发叠在一起就会顶到削波，"噼里啪啦"糊成一片。 */
+      const comp = this.ctx.createDynamicsCompressor();
+      comp.threshold.value = -8;
+      comp.knee.value = 10;
+      comp.ratio.value = 3;
+      comp.attack.value = 0.003;
+      comp.release.value = 0.15;
+      comp.connect(this.ctx.destination);
+      this.master = comp;
+      // 预生成 1 秒噪声，所有噪声层都从这里随机取段
       const len = this.ctx.sampleRate * 1;
       const buf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
       const d = buf.getChannelData(0);
@@ -5751,6 +5840,34 @@ const SFX = {
     if (this.on) this.load();
   },
 
+  /* 这一段素材该有多响：按用途查 LOUD 表，查不到就按中等音量处理 */
+  _targetFor(id) {
+    if (/^step_stone/.test(id)) return this.LOUD.step;
+    if (id === 'shot_switch') return this.LOUD.switch;
+    if (/^reload_/.test(id)) return this.LOUD.reload;
+    return 0.08;
+  },
+
+  /* 采样实际有多响（整段的 RMS） */
+  _measure(buf) {
+    let sum = 0, n = 0;
+    for (let ch = 0; ch < buf.numberOfChannels; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < d.length; i++) { sum += d[i] * d[i]; n++; }
+    }
+    return Math.sqrt(sum / Math.max(1, n));
+  },
+
+  /* 收一段解码好的采样：顺手把"要播多响"算出来。
+     上限 3 倍，免得某段特别安静的环境音被拉出底噪。 */
+  _addSample(id, buf) {
+    this.samples[id] = buf;
+    const rms = this._measure(buf);
+    const gain = rms > 1e-5 ? this._targetFor(id) / rms : 0.4;
+    this.gainOf[id] = U.clamp(gain, 0.15, 3);
+    return buf;
+  },
+
   /* 解码采样。任何一条失败都不影响其它，也不影响合成音。 */
   load() {
     if (this.loading || !this.ctx) return this.loading;
@@ -5758,7 +5875,7 @@ const SFX = {
       const raw = atob(String(dataUri).split(',')[1] || '');
       const bin = new Uint8Array(raw.length);
       for (let i = 0; i < raw.length; i++) bin[i] = raw.charCodeAt(i);
-      this.samples[id] = await this.ctx.decodeAudioData(bin.buffer);
+      this._addSample(id, await this.ctx.decodeAudioData(bin.buffer));
     };
     const injected = (typeof window !== 'undefined' && window.__AUDIO__) || null;
     this.loading = (async () => {
@@ -5774,7 +5891,7 @@ const SFX = {
           for (const a of man.assets || []) {
             try {
               const buf = await fetch('assets/audio/' + a.file).then(r => r.arrayBuffer());
-              this.samples[a.id] = await this.ctx.decodeAudioData(buf); n++;
+              this._addSample(a.id, await this.ctx.decodeAudioData(buf)); n++;
             } catch (e) {}
           }
         } catch (e) {}
@@ -5793,9 +5910,10 @@ const SFX = {
     /* 音高微扰：同一段素材连播会听出"复读机"，±6% 就能散开 */
     if (opts && opts.rate) s.playbackRate.value = opts.rate;
     const g = c.createGain();
-    g.gain.value = (opts && opts.gain != null) ? opts.gain
-      : (this.MIX[id] != null ? this.MIX[id] : 0.4);
-    s.connect(g); g.connect(c.destination);
+    /* 基准增益来自解码时的响度对齐；vol 只做场合性的微调（潜行脚步、落步） */
+    const base = this.gainOf[id] != null ? this.gainOf[id] : 0.4;
+    g.gain.value = base * ((opts && opts.vol != null) ? opts.vol : 1);
+    s.connect(g); g.connect(this.master || c.destination);
     this._autoFree(s, [g]);
     s.start(c.currentTime);
     return true;
@@ -5828,12 +5946,103 @@ const SFX = {
     };
   },
 
-  _env(gain, dur) {
-    const g = this.ctx.createGain();
-    const t = this.ctx.currentTime;
-    g.gain.setValueAtTime(gain, t);
+  /* ---------------- 合成音零件 ----------------
+     每个零件都是"滤波器 + 包络 + 自动摘节点"这一套，差别只在参数。
+     t 是绝对起音时刻，out 是这条声音的总线，所有层都汇到那里。 */
+  _noise(opts) {
+    const c = this.ctx, t = opts.t, dur = opts.dur;
+    const s = c.createBufferSource();
+    s.buffer = this.noiseBuf;
+    s.playbackRate.value = opts.rate || 1;
+    const f = c.createBiquadFilter();
+    f.type = opts.type || 'lowpass';
+    f.Q.value = opts.q || 1;
+    f.frequency.setValueAtTime(opts.freq, t);
+    if (opts.to) f.frequency.exponentialRampToValueAtTime(Math.max(20, opts.to), t + dur);
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, opts.gain), t + (opts.attack || 0.002));
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    return g;
+    s.connect(f); f.connect(g); g.connect(opts.out);
+    this._autoFree(s, [f, g]);
+    /* 从噪声里随机位置读：连打几十发也不会一模一样 */
+    s.start(t, Math.random() * Math.max(0, 0.9 - dur), dur + 0.02);
+  },
+
+  _tone(opts) {
+    const c = this.ctx, t = opts.t, dur = opts.dur;
+    const o = c.createOscillator();
+    o.type = opts.type || 'sine';
+    o.frequency.setValueAtTime(Math.max(1, opts.from), t);
+    o.frequency.exponentialRampToValueAtTime(Math.max(1, opts.to), t + dur);
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, opts.gain), t + (opts.attack || 0.003));
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(opts.out);
+    this._autoFree(o, [g]);
+    o.start(t); o.stop(t + dur + 0.02);
+  },
+
+  /* 软削波曲线：把尖头压圆，枪声才像"炸"而不是"滋" */
+  _clipCurve() {
+    if (this._curve) return this._curve;
+    const n = 1024, curve = new Float32Array(n), k = 2.2;
+    for (let i = 0; i < n; i++) {
+      const x = i * 2 / (n - 1) - 1;
+      curve[i] = 0.95 * Math.tanh(x * k) / Math.tanh(k);
+    }
+    return (this._curve = curve);
+  },
+
+  /* 开火：五层叠一次，参数全部来自 GUN 表。
+     crack 脆响 → body 爆裂 → sub 冲击 → tail 尾音 → mech 枪机。 */
+  _shot(prof, opts) {
+    const c = this.ctx, t = c.currentTime + 0.002, o = opts || {};
+    const out = c.createGain();
+    out.gain.value = (prof.vol || 1) * (o.vol != null ? o.vol : 1) * this.CAL.shot;
+
+    /* 后级：先过削波（要的就是"炸"），再按需低通（敌人的枪声隔着一段距离） */
+    const extra = [out];
+    let tail = out;
+    if (prof.drive && c.createWaveShaper) {
+      const ws = c.createWaveShaper();
+      ws.curve = this._clipCurve();
+      ws.oversample = '2x';
+      tail.connect(ws); tail = ws; extra.push(ws);
+    }
+    if (o.lp) {
+      const lp = c.createBiquadFilter();
+      lp.type = 'lowpass'; lp.frequency.value = o.lp;
+      tail.connect(lp); tail = lp; extra.push(lp);
+    }
+    tail.connect(this.master || c.destination);
+    /* 这些节点没有音源可以挂 onended，只能过一会儿自己摘 */
+    setTimeout(() => { for (const nd of extra) { try { nd.disconnect(); } catch (e) {} } }, 1600);
+
+    /* 每发都有 ±4% 的音高和 ±6% 的音量抖动，连射才不会像循环播放 */
+    const rate = (o.rate || 1) * (0.96 + Math.random() * 0.08);
+    const P = prof;
+    if (P.crack) this._noise({
+      t, out, rate, attack: 0.001, dur: P.crack.dur, type: 'highpass',
+      freq: P.crack.freq, q: P.crack.q, gain: P.crack.gain
+    });
+    if (P.body) this._noise({
+      t, out, rate, attack: 0.002, dur: P.body.dur, type: 'lowpass',
+      freq: P.body.from, to: P.body.to, q: 0.9, gain: P.body.gain
+    });
+    if (P.sub) this._tone({
+      t, out, attack: 0.004, dur: P.sub.dur, type: 'sine',
+      from: P.sub.from * rate, to: P.sub.to, gain: P.sub.gain
+    });
+    if (P.tail) this._noise({
+      t: t + P.tail.at, out, rate, attack: 0.01, dur: P.tail.dur, type: 'lowpass',
+      freq: P.tail.freq, q: 0.7, gain: P.tail.gain
+    });
+    if (P.mech) this._noise({
+      t: t + P.mech.at, out, rate, attack: 0.001, dur: P.mech.dur, type: 'bandpass',
+      freq: P.mech.freq, q: P.mech.q || 4, gain: P.mech.gain
+    });
   },
 
   play(name, opts) {
@@ -5842,81 +6051,75 @@ const SFX = {
     if (this.samples[name]) { this._playSample(name, opts); return; }
     const seq = this.SEQ[name];
     if (seq && this.samples[seq[0][0]]) { this._playSeq(name, seq); return; }
+
+    /* 枪声按枪型分支：四把枪各有各的音色，不再是同一个"啪" */
+    if (name === 'shot') {
+      const gun = this.GUN[(opts && opts.gun) || 'rifle'] || this.GUN.rifle;
+      return this._shot(gun, opts);
+    }
+    /* 敌人的枪声：同一套音色压低 + 闷掉高频，听得出是别人在打 */
+    if (name === 'enemyShot') return this._shot(this.GUN.pistol, { vol: 0.42, lp: 1300 });
+
     const c = this.ctx, t = c.currentTime;
+    /* 一条总线收所有层：音量标准在这一处乘完，下面只管音色 */
+    const out = c.createGain();
+    out.gain.value = (this.CAL[name] != null ? this.CAL[name] : 1) * ((opts && opts.vol) || 1);
+    out.connect(this.master || c.destination);
+    setTimeout(() => { try { out.disconnect(); } catch (e) {} }, 2000);
 
-    const noiseHit = (dur, freq, gain, type) => {
-      const s = c.createBufferSource();
-      s.buffer = this.noiseBuf;
-      s.playbackRate.value = 1;
-      const f = c.createBiquadFilter();
-      f.type = type || 'lowpass';
-      f.frequency.value = freq;
-      const g = this._env(gain, dur);
-      s.connect(f); f.connect(g); g.connect(c.destination);
-      this._autoFree(s, [f, g]);
-      s.start(t); s.stop(t + dur + 0.02);
-    };
-
-    const tone = (dur, f0, f1, gain, type) => {
-      const o = c.createOscillator();
-      o.type = type || 'square';
-      o.frequency.setValueAtTime(f0, t);
-      o.frequency.exponentialRampToValueAtTime(f1, t + dur);
-      const g = this._env(gain, dur);
-      o.connect(g); g.connect(c.destination);
-      this._autoFree(o, [g]);
-      o.start(t); o.stop(t + dur + 0.02);
-    };
+    const hit = (dur, freq, gain, type) => this._noise({ t, out, dur, freq, gain, type });
+    const tone = (dur, f0, f1, gain, type) => this._tone({ t, out, dur, from: f0, to: f1, gain, type });
 
     switch (name) {
-      case 'shot':
-        noiseHit(0.16, 1800, 0.20);
-        tone(0.09, 140, 50, 0.13, 'sawtooth');
-        break;
-      case 'enemyShot':
-        noiseHit(0.12, 1200, 0.10);
-        break;
       case 'hit':
-        noiseHit(0.07, 2600, 0.14, 'highpass');
+        hit(0.06, 2600, 0.50, 'highpass');
         break;
       case 'headshot':
         // 爆头：高频脆响 + 一点下沉，和普通命中区分开
-        noiseHit(0.05, 4200, 0.16, 'highpass');
-        tone(0.12, 900, 320, 0.10, 'triangle');
+        hit(0.045, 4200, 0.55, 'highpass');
+        tone(0.12, 900, 320, 0.30, 'triangle');
         break;
       case 'break':
         // 护甲破裂：闷响 + 金属裂开
-        noiseHit(0.20, 700, 0.12);
-        tone(0.10, 300, 120, 0.09, 'square');
+        hit(0.20, 700, 0.50);
+        tone(0.10, 300, 120, 0.30, 'square');
         break;
       case 'reload':
-        noiseHit(0.08, 900, 0.08);
-        tone(0.06, 420, 220, 0.06, 'square');
+        // 没有采样时的兜底（正常走三段序列）
+        hit(0.08, 900, 0.40);
+        tone(0.06, 420, 220, 0.25, 'square');
         break;
       case 'melee':
-        tone(0.13, 220, 70, 0.16, 'sawtooth');
+        // 挥刀：风声从高扫到低，不是"嗡"的一声
+        this._noise({ t, out, dur: 0.16, type: 'bandpass', freq: 1200, to: 350, q: 1.4, gain: 0.50 });
+        tone(0.12, 220, 70, 0.20, 'sawtooth');
+        break;
+      case 'dodge':
+        // 闪避：短促的破风声，比挥刀更干、更短，收在 0.18 秒内
+        this._noise({ t, out, dur: 0.18, type: 'bandpass', freq: 600, to: 2600, q: 1.1, gain: 0.45, attack: 0.02 });
+        tone(0.09, 130, 70, 0.18, 'sine');
         break;
       case 'door':
-        noiseHit(0.16, 420, 0.11);
+        hit(0.16, 420, 0.50);
         break;
       case 'pickup':
-        tone(0.07, 660, 900, 0.07, 'sine');
+        tone(0.07, 660, 900, 0.35, 'sine');
         break;
       case 'search':
-        noiseHit(0.22, 620, 0.07);
+        hit(0.22, 620, 0.30);
         break;
       case 'drop':
         // 丢东西：一声闷响，别太响，丢东西本来就该低调
-        noiseHit(0.12, 380, 0.08);
+        hit(0.12, 380, 0.40);
         break;
       case 'hurt':
-        tone(0.16, 180, 90, 0.12, 'sawtooth');
+        tone(0.16, 180, 90, 0.30, 'sawtooth');
         break;
       case 'extract':
-        tone(0.5, 320, 640, 0.09, 'sine');
+        tone(0.5, 320, 640, 0.25, 'sine');
         break;
       case 'death':
-        tone(0.8, 200, 40, 0.16, 'sawtooth');
+        tone(0.8, 200, 40, 0.30, 'sawtooth');
         break;
     }
   }
@@ -10914,13 +11117,26 @@ Object.defineProperty(Player.prototype,'totalWeight',{get(){return originalWeigh
 Player.prototype.switchMelee=function(){
   if(MeleeSystem.locked())return false;
   if(!this.melee){Game.toast('近战槽是空的');return false;}
+  const wasActive=this.meleeActive;
   Medical.cancel();AmmoQuick.cancel();MedQuick.cancel();this.reloadT=0;this.reloadPending=false;this.meleeActive=true;
-  MeleeSystem.cancel(this);Game.renderGearPanel();return true;
+  MeleeSystem.cancel(this);Game.renderGearPanel();
+  /* 枪 → 刀：金属滑出的声音，压低一点，和换枪的清脆滑套分开 */
+  if(!wasActive)Game.sfx('shot_switch',{rate:0.86});
+  return true;
 };
 meleeWrap(Player.prototype,'switchWeapon',function(original,i){
   if(MeleeSystem.locked())return false;
   const active=this.meleeActive,r=original.call(this,i);
-  if((r || i===this.slot)&&this.weapons[i]){this.meleeActive=false;MeleeSystem.cancel(this);if(active)this.fireCd=Math.max(this.fireCd,.28);return true;}
+  if((r || i===this.slot)&&this.weapons[i]){
+    this.meleeActive=false;MeleeSystem.cancel(this);
+    if(active){
+      this.fireCd=Math.max(this.fireCd,.28);
+      /* 刀 → 枪：按的是当前枪的槽位时 switchWeapon 会提前返回、什么都不播，
+         这个方向以前是全程无声的，这里补上 */
+      if(!r)Game.sfx('shot_switch');
+    }
+    return true;
+  }
   return r;
 });
 meleeWrap(Player.prototype,'tryShoot',function(original){return this.meleeActive?MeleeSystem.attack(this):original.call(this);});
