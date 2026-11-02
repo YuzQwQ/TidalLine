@@ -31,6 +31,7 @@
   button:hover { background: #1a7d6e; }
   button.ghost { background: transparent; border: 1px solid #22352e; color: #8ba39b; }
   button.ghost:hover { border-color: #2f4a41; color: #cfd8d4; }
+  button.on { background: #14685c; border-color: #14685c; color: #eaf4f0; }
   .meter {
     height: 5px; margin-top: 9px; background: #0f1a16; border-radius: 3px; overflow: hidden;
   }
@@ -41,6 +42,24 @@
   td.n { color: #8ba39b; font-variant-numeric: tabular-nums; }
   tr.hit { background: #0e1b17; }
   #log { margin-top: 10px; color: #5f7a72; font-size: 11px; min-height: 16px; }
+  .chk { display: flex; align-items: center; gap: 6px; color: #8ba39b; font-size: 11.5px; }
+  .chk input[type=number] {
+    width: 74px; padding: 3px 6px; background: #0f1714; color: #cfd8d4;
+    border: 1px solid #1e312b; border-radius: 3px; font-family: inherit;
+  }
+  .card.toggle { cursor: pointer; user-select: none; }
+  .card.toggle.on { border-color: #14685c; background: #0d1a16; }
+  .card.toggle.off { opacity: .5; }
+  .card.toggle.na { opacity: .3; cursor: not-allowed; }
+  .card .meta { font-size: 10.5px; color: #5f7a72; margin-top: 6px; line-height: 1.5; }
+  .card .solo {
+    display: inline-block; margin-top: 8px; padding: 2px 8px; font-size: 10.5px;
+    border: 1px solid #22352e; border-radius: 3px; color: #8ba39b;
+  }
+  .card .solo:hover { border-color: #14685c; color: #6fd6ba; }
+  #lgRecord { margin-top: 12px; }
+  #lgRecord td:first-child { color: #8ba39b; }
+  #lgRecord td { font-variant-numeric: tabular-nums; }
 </style>
 </head>
 <body>
@@ -58,6 +77,34 @@
   正确打开方式：在 <code>tide/</code> 目录下跑 <code>python -m http.server 8765</code>，
   然后访问 <code>http://127.0.0.1:8765/tools/audio-guns.html</code>；直接双击本地文件也可以。
 </div>
+
+<h2>分层试听与导出</h2>
+<div class="sub" style="margin:-4px 0 10px">
+  勾选要合成的层：单听、任意组合、整体都走同一条信号链。<b>导出的是干声</b>（不经总线压缩器），
+  这样同一随机种子两次导出可以逐采样对齐；播放也直接放这份渲染结果，保证"听到的 = 导出的"。
+</div>
+
+<div class="row" id="lgGun" style="margin-bottom:10px"></div>
+
+<div class="grid" id="lgLayers" style="grid-template-columns:repeat(auto-fill,minmax(196px,1fr))"></div>
+
+<div class="row" style="margin-top:12px;align-items:center">
+  <button id="lgPlay">试听当前组合</button>
+  <button id="lgAll" class="ghost">整体听（全部层）</button>
+  <button id="lgExport" class="ghost">导出 WAV</button>
+  <button id="lgVerify" class="ghost">复现校验</button>
+  <label class="chk">随机种子
+    <input id="lgSeed" type="number" value="1" min="0" step="1">
+  </label>
+  <label class="chk">
+    <input id="lgNorm" type="checkbox"> 单层归一（每层拉到同一 RMS，只比音色不比音量）
+  </label>
+</div>
+
+<table id="lgRecord">
+  <thead><tr><th style="width:130px">项目</th><th>值</th></tr></thead>
+  <tbody></tbody>
+</table>
 
 <h2>连发（按各自射速，检查叠加和削波）</h2>
 <div class="row" id="autoRow"></div>
@@ -262,6 +309,232 @@
     e.target.classList.toggle('on', loopOn);
     if (loopOn) { playLadder(); setInterval(() => { if (loopOn) playLadder(); }, 4400); }
   };
+
+  /* ================= 分层试听与导出 =================
+     全部走 SFX.renderShot：一是"听到的 = 导出的"，二是同种子可复现。
+     导出的干声不过总线压缩器——压缩器会随同时发声的数量变化，
+     放进导出里就没法逐采样对比了。 */
+  const LG = {
+    gun: 'rifle',
+    on: new Set(['crack', 'body', 'sub', 'tail', 'mech']),
+    seed: 1
+  };
+  const LAYER_LABEL = { crack: '脆响', body: '爆裂', sub: '冲击', tail: '尾音', mech: '枪机' };
+  const LAYER_TYPE = { crack: 'highpass', body: 'lowpass 下扫', sub: '正弦', tail: 'lowpass', mech: 'bandpass' };
+  const lgRmsCache = {};
+  let lgSrc = null;
+
+  const $ = id => document.getElementById(id);
+  const seedNow = () => {
+    const v = parseInt($('lgSeed').value, 10);
+    return Number.isFinite(v) ? v : 1;
+  };
+  const db = x => (20 * Math.log10(Math.max(x, 1e-9))).toFixed(1);
+
+  /* 只算有声段：合成音尾巴挂着一大段静音，整段平均会把 RMS 拉低 */
+  const activeRms = buf => {
+    const d = buf.getChannelData(0);
+    let first = -1, last = -1, peak = 0;
+    for (let i = 0; i < d.length; i++) {
+      const a = Math.abs(d[i]);
+      if (a > peak) peak = a;
+      if (a > 0.0005) { if (first < 0) first = i; last = i; }
+    }
+    if (first < 0) return { rms: 0, peak: 0, dur: 0 };
+    let s = 0;
+    for (let i = first; i <= last; i++) s += d[i] * d[i];
+    return {
+      rms: Math.sqrt(s / (last - first + 1)),
+      peak,
+      dur: (last - first + 1) / buf.sampleRate
+    };
+  };
+
+  async function renderLayers(layers, opts) {
+    SFX.setSeed(seedNow());
+    return SFX.renderShot(LG.gun, Object.assign({ layers }, opts || {}), 0.9);
+  }
+
+  async function layerRms(layer) {
+    const key = LG.gun + '|' + layer;
+    if (lgRmsCache[key] == null) {
+      lgRmsCache[key] = activeRms(await renderLayers([layer])).rms || 1e-4;
+    }
+    return lgRmsCache[key];
+  }
+
+  /* 归一模式：把每层都拉到同一 RMS，这样听到的差别只来自音色。
+     削波是 tanh（非线性），一次线性换算到不了目标值，所以迭代几次收敛。
+     乘子上限 20 倍，免得尾音这种很轻的层被拉出底噪。 */
+  const NORM_TARGET = 0.05;
+  const normCache = {};
+  async function normVol(layer) {
+    const key = LG.gun + '|' + layer;
+    if (normCache[key] != null) return normCache[key];
+    let mul = 1;
+    for (let i = 0; i < 4; i++) {
+      const r = activeRms(await renderLayers([layer], { layerVol: { [layer]: mul } })).rms || 1e-4;
+      if (Math.abs(r - NORM_TARGET) / NORM_TARGET < 0.01) break;
+      const next = Math.min(20, Math.max(0.02, mul * (NORM_TARGET / r)));
+      if (next === mul) break;          // 已经卡在上下限，再迭代也没用
+      mul = next;
+    }
+    return (normCache[key] = mul);
+  }
+
+  async function normVols(layers) {
+    const out = {};
+    for (const l of layers) out[l] = await normVol(l);
+    return out;
+  }
+
+  function playBuffer(buf) {
+    if (lgSrc) { try { lgSrc.stop(); } catch (e) {} }
+    if (SFX.ctx.state === 'suspended') SFX.ctx.resume();
+    const s = SFX.ctx.createBufferSource();
+    s.buffer = buf;
+    s.connect(SFX.ctx.destination);
+    s.start();
+    lgSrc = s;
+  }
+
+  function drawGunRow() {
+    const row = $('lgGun');
+    row.innerHTML = '';
+    GUNS.forEach(g => {
+      const b = document.createElement('button');
+      b.className = 'ghost' + (g.id === LG.gun ? ' on' : '');
+      b.textContent = g.name;
+      b.onclick = () => { LG.gun = g.id; drawGunRow(); drawLayers(); showRecord(null); };
+      row.appendChild(b);
+    });
+  }
+
+  function drawLayers() {
+    const host = $('lgLayers');
+    host.innerHTML = '';
+    const prof = SFX.GUN[LG.gun];
+    SFX.SHOT_LAYERS.forEach(name => {
+      const p = prof[name];
+      const el = document.createElement('div');
+      el.className = 'card toggle ' + (p ? (LG.on.has(name) ? 'on' : 'off') : 'na');
+      let desc = '这把枪没有这一层';
+      if (p) {
+        const band = p.from ? (p.from + '→' + p.to + 'Hz') : (p.freq + 'Hz');
+        desc = LAYER_TYPE[name] + ' ' + band;
+        desc += ' · ' + Math.round(p.dur * 1000) + 'ms';
+        if (p.at) desc += ' · 延后 ' + Math.round(p.at * 1000) + 'ms';
+        desc += '<br>层内增益 ' + p.gain.toFixed(2);
+      }
+      el.innerHTML = '<h3>' + LAYER_LABEL[name] + ' · ' + name + '</h3><div class="meta">' + desc + '</div>' +
+        (p ? '<span class="solo">单听这一层</span>' : '');
+      if (p) {
+        el.onclick = () => { LG.on.has(name) ? LG.on.delete(name) : LG.on.add(name); drawLayers(); };
+        el.querySelector('.solo').onclick = e => {
+          e.stopPropagation();
+          LG.on = new Set([name]);
+          drawLayers();
+          audition([name], '单听 ' + name);
+        };
+      }
+      host.appendChild(el);
+    });
+  }
+
+  function showRecord(buf, layers, opts, title) {
+    const tb = document.querySelector('#lgRecord tbody');
+    tb.innerHTML = '';
+    const row = (k, v) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + k + '</td><td>' + v + '</td>';
+      tb.appendChild(tr);
+    };
+    row('枪 / 种子', LG.gun + ' / ' + seedNow());
+    if (!buf) {
+      row('状态', '选好层以后点「试听当前组合」');
+      return;
+    }
+    const shot = SFX.lastShot || { layers: [] };
+    row('本次合成层', shot.layers.length
+      ? shot.layers.map(l => l.name + '(' + l.gain.toFixed(2) + ')').join(' + ')
+      : '（空）');
+    if (shot.omitted && shot.omitted.length) row('未启用层', shot.omitted.join('、'));
+    if (opts && opts.layerVol) {
+      row('归一乘子', Object.entries(opts.layerVol)
+        .map(([k, v]) => k + '×' + v.toFixed(2)).join(' · ') + '（目标 RMS ' + NORM_TARGET + '）');
+    }
+    row('总线增益', 'vol ' + shot.vol.toFixed(3) +
+      ' = 枪型 ' + shot.profileVol + ' × CAL.shot ' + shot.cal +
+      (opts && opts.vol != null ? ' × 场景 ' + opts.vol : ''));
+    row('后级处理', shot.chain);
+    const m = activeRms(buf);
+    row('渲染结果', '44.1kHz 单声道 · 有声段 ' + m.dur.toFixed(3) + 's · 峰值 ' + db(m.peak) +
+      'dBFS · RMS ' + m.rms.toFixed(4) + '（' + db(m.rms) + 'dBFS）');
+    row('说明', title ? title + '：干声，未过总线压缩器' : '干声，未过总线压缩器');
+  }
+
+  async function audition(layers, label) {
+    const opts = {};
+    if ($('lgNorm').checked) opts.layerVol = await normVols(layers);
+    const buf = await renderLayers(layers, opts);
+    playBuffer(buf);
+    showRecord(buf, layers, opts, label);
+    say((label || '试听') + '：' + layers.join(' + ') +
+      ($('lgNorm').checked ? '（归一模式，每层 RMS 对齐到 ' + NORM_TARGET + '）' : '（原增益）'));
+    return buf;
+  }
+
+  $('lgPlay').onclick = () => {
+    const layers = [...LG.on];
+    if (!layers.length) { say('至少选一层'); return; }
+    audition(layers, '试听 ' + layers.join('+'));
+  };
+  $('lgAll').onclick = () => {
+    LG.on = new Set(SFX.SHOT_LAYERS.filter(n => SFX.GUN[LG.gun][n]));
+    drawLayers();
+    audition([...LG.on], '整体试听');
+  };
+  $('lgExport').onclick = async () => {
+    const layers = [...LG.on];
+    if (!layers.length) { say('至少选一层'); return; }
+    const opts = {};
+    if ($('lgNorm').checked) opts.layerVol = await normVols(layers);
+    const buf = await renderLayers(layers, opts);
+    const name = 'shot_' + LG.gun + '_' + layers.join('-') +
+      '_seed' + seedNow() + ($('lgNorm').checked ? '_norm' : '') + '.wav';
+    const url = URL.createObjectURL(new Blob([SFX.toWav(buf)], { type: 'audio/wav' }));
+    const a = document.createElement('a');
+    a.href = url; a.download = name; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+    showRecord(buf, layers, opts, '已导出 ' + name);
+    say('已导出 ' + name);
+  };
+  $('lgVerify').onclick = async () => {
+    const layers = [...LG.on];
+    if (!layers.length) { say('至少选一层'); return; }
+    const a = await renderLayers(layers);
+    const b = await renderLayers(layers);
+    const wa = new Uint8Array(SFX.toWav(a)), wb = new Uint8Array(SFX.toWav(b));
+    let bytes = 0;
+    for (let i = 44; i < wa.length; i++) if (wa[i] !== wb[i]) bytes++;
+    const da = a.getChannelData(0), dd = b.getChannelData(0);
+    let maxf = 0;
+    for (let i = 0; i < da.length; i++) maxf = Math.max(maxf, Math.abs(da[i] - dd[i]));
+    const samples = (wa.length - 44) / 2;
+    say(bytes === 0
+      ? '复现校验：同种子两次导出逐字节一致（' + samples + ' 采样）'
+      : '复现校验：' + samples + ' 个采样里 ' + (bytes / 2) + ' 个差 1 LSB（浮点差 ' +
+        maxf.toExponential(1) + '，约 -' + Math.abs(20 * Math.log10(maxf || 1)).toFixed(0) +
+        'dB，听不出）。单层不会出现这种情况');
+    showRecord(a, layers, {}, '复现校验（同种子渲染两次）');
+  };
+  $('lgNorm').onchange = () => say($('lgNorm').checked
+    ? '已切到归一模式：每层拉到同一 RMS，差异只剩音色'
+    : '已切回原增益模式：听到的比例就是游戏里的比例');
+
+  drawGunRow();
+  drawLayers();
+  showRecord(null);
 </script>
 </body>
 </html>

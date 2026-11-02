@@ -330,6 +330,9 @@ const SFX = {
   samples: {},        // id → AudioBuffer
   gainOf: {},         // id → 按目标响度算好的播放增益
   loading: null,
+  seed: null,         // 固定随机种子（试听/导出用）；null = 走 Math.random，游戏内保持原样
+  _rng: null,
+  lastShot: null,     // 上一次开火实际合成出来的层与增益，供试听页核对
 
   /* ---------------- 音量标准 ----------------
      所有声音都对齐到同一张目标 RMS 表。采样解码后现算 RMS，
@@ -411,6 +414,9 @@ const SFX = {
       mech: { freq: 2800, q: 6, gain: 0.10, dur: 0.022, at: 0.055 }
     }
   },
+
+  /* 开火的五层，顺序固定。试听页的单听/组合听/导出都按这套名字走 */
+  SHOT_LAYERS: ['crack', 'body', 'sub', 'tail', 'mech'],
 
   /* 一个游戏音效由多段素材拼成：换弹 1.5 秒里是「退弹匣 → 插弹匣 → 拉套筒」
      三次动作，原素材整段 3.13 秒塞不进去（硬变速会让金属声变尖叫），
@@ -570,8 +576,9 @@ const SFX = {
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     s.connect(f); f.connect(g); g.connect(opts.out);
     this._autoFree(s, [f, g]);
-    /* 从噪声里随机位置读：连打几十发也不会一模一样 */
-    s.start(t, Math.random() * Math.max(0, 0.9 - dur), dur + 0.02);
+    /* 从噪声里随机位置读：连打几十发也不会一模一样。
+       给了种子（试听/导出用）就走固定序列，同一组参数能复现同一段波形。 */
+    s.start(t, this._rand() * Math.max(0, 0.9 - dur), dur + 0.02);
   },
 
   _tone(opts) {
@@ -600,12 +607,43 @@ const SFX = {
     return (this._curve = curve);
   },
 
+  /* 固定随机种子：同一个种子 + 同一组参数 = 逐采样一致的波形，
+     试听对比和导出都靠它。传 null 恢复成游戏的随机抖动。 */
+  setSeed(seed) {
+    this.seed = (seed == null ? null : (seed >>> 0));
+    this._rng = this.seed == null ? null : this._makeRng(this.seed);
+    return this.seed;
+  },
+
+  /* mulberry32：短、够用、同种子同序列 */
+  _makeRng(seed) {
+    let a = seed >>> 0;
+    return () => {
+      a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  },
+
+  _rand() { return this._rng ? this._rng() : Math.random(); },
+
   /* 开火：五层叠一次，参数全部来自 GUN 表。
-     crack 脆响 → body 爆裂 → sub 冲击 → tail 尾音 → mech 枪机。 */
-  _shot(prof, opts) {
+     crack 脆响 → body 爆裂 → sub 冲击 → tail 尾音 → mech 枪机。
+
+     opts.layers   只合成列出的层（单听 / 任意组合听），不传就是全部
+     opts.layerVol 单层音量乘子，用来把某一层单独拉响，只听音色不比音量
+     实际合成的层、各自的增益、后级处理都记进 lastShot，
+     这样"听起来不一样"到底是参数差异还是音量差异，可以直接查。 */
+  _shot(prof, opts, gunId) {
     const c = this.ctx, t = c.currentTime + 0.002, o = opts || {};
+    const only = o.layers ? new Set(o.layers) : null;
+    const lv = o.layerVol || null;
+    const on = name => !only || only.has(name);
+
     const out = c.createGain();
-    out.gain.value = (prof.vol || 1) * (o.vol != null ? o.vol : 1) * this.CAL.shot;
+    const vol = (prof.vol || 1) * (o.vol != null ? o.vol : 1) * this.CAL.shot;
+    out.gain.value = vol;
 
     /* 后级：先过削波（要的就是"炸"），再按需低通（敌人的枪声隔着一段距离） */
     const extra = [out];
@@ -626,28 +664,115 @@ const SFX = {
     setTimeout(() => { for (const nd of extra) { try { nd.disconnect(); } catch (e) {} } }, 1600);
 
     /* 每发都有 ±4% 的音高和 ±6% 的音量抖动，连射才不会像循环播放 */
-    const rate = (o.rate || 1) * (0.96 + Math.random() * 0.08);
+    const rate = (o.rate || 1) * (0.96 + this._rand() * 0.08);
     const P = prof;
-    if (P.crack) this._noise({
-      t, out, rate, attack: 0.001, dur: P.crack.dur, type: 'highpass',
-      freq: P.crack.freq, q: P.crack.q, gain: P.crack.gain
-    });
-    if (P.body) this._noise({
-      t, out, rate, attack: 0.002, dur: P.body.dur, type: 'lowpass',
-      freq: P.body.from, to: P.body.to, q: 0.9, gain: P.body.gain
-    });
-    if (P.sub) this._tone({
-      t, out, attack: 0.004, dur: P.sub.dur, type: 'sine',
-      from: P.sub.from * rate, to: P.sub.to, gain: P.sub.gain
-    });
-    if (P.tail) this._noise({
-      t: t + P.tail.at, out, rate, attack: 0.01, dur: P.tail.dur, type: 'lowpass',
-      freq: P.tail.freq, q: 0.7, gain: P.tail.gain
-    });
-    if (P.mech) this._noise({
-      t: t + P.mech.at, out, rate, attack: 0.001, dur: P.mech.dur, type: 'bandpass',
-      freq: P.mech.freq, q: P.mech.q || 4, gain: P.mech.gain
-    });
+    const made = [];
+    /* 单层音量乘子：不放大的话，尾音这种层单独听几乎听不见 */
+    const amt = (name, g) => (lv && lv[name] != null ? g * lv[name] : g);
+
+    if (P.crack && on('crack')) {
+      const g = amt('crack', P.crack.gain);
+      this._noise({
+        t, out, rate, attack: 0.001, dur: P.crack.dur, type: 'highpass',
+        freq: P.crack.freq, q: P.crack.q, gain: g
+      });
+      made.push({ name: 'crack', at: 0, dur: P.crack.dur, gain: g,
+        filter: 'highpass ' + P.crack.freq + 'Hz' });
+    }
+    if (P.body && on('body')) {
+      const g = amt('body', P.body.gain);
+      this._noise({
+        t, out, rate, attack: 0.002, dur: P.body.dur, type: 'lowpass',
+        freq: P.body.from, to: P.body.to, q: 0.9, gain: g
+      });
+      made.push({ name: 'body', at: 0, dur: P.body.dur, gain: g,
+        filter: 'lowpass ' + P.body.from + '→' + P.body.to + 'Hz' });
+    }
+    if (P.sub && on('sub')) {
+      const g = amt('sub', P.sub.gain);
+      this._tone({
+        t, out, attack: 0.004, dur: P.sub.dur, type: 'sine',
+        from: P.sub.from * rate, to: P.sub.to, gain: g
+      });
+      made.push({ name: 'sub', at: 0, dur: P.sub.dur, gain: g,
+        filter: 'sine ' + P.sub.from + '→' + P.sub.to + 'Hz' });
+    }
+    if (P.tail && on('tail')) {
+      const g = amt('tail', P.tail.gain);
+      this._noise({
+        t: t + P.tail.at, out, rate, attack: 0.01, dur: P.tail.dur, type: 'lowpass',
+        freq: P.tail.freq, q: 0.7, gain: g
+      });
+      made.push({ name: 'tail', at: P.tail.at, dur: P.tail.dur, gain: g,
+        filter: 'lowpass ' + P.tail.freq + 'Hz' });
+    }
+    if (P.mech && on('mech')) {
+      const g = amt('mech', P.mech.gain);
+      this._noise({
+        t: t + P.mech.at, out, rate, attack: 0.001, dur: P.mech.dur, type: 'bandpass',
+        freq: P.mech.freq, q: P.mech.q || 4, gain: g
+      });
+      made.push({ name: 'mech', at: P.mech.at, dur: P.mech.dur, gain: g,
+        filter: 'bandpass ' + P.mech.freq + 'Hz Q' + (P.mech.q || 4) });
+    }
+
+    this.lastShot = {
+      gun: gunId || null,
+      layers: made,
+      omitted: this.SHOT_LAYERS.filter(n => !made.some(m => m.name === n)),
+      vol, cal: this.CAL.shot, profileVol: prof.vol || 1,
+      drive: prof.drive || 0, lp: o.lp || 0, rate,
+      seed: this.seed,
+      chain: (prof.drive ? 'tanh软削波' : '直通') + (o.lp ? ' → 低通 ' + o.lp + 'Hz' : '') + ' → 导出/试听为干声'
+        + '（游戏内还会再过一层总线压缩）'
+    };
+    return this.lastShot;
+  },
+
+  /* 离线渲染一次开火，返回 AudioBuffer。
+     口径和响度体检一致：不含最终总线压缩器（压缩器会随同时发声的数量变化，
+     放进导出里就没法逐采样对比了）。种子固定时两次渲染完全一致。 */
+  async renderShot(gunId, opts, seconds) {
+    const o = Object.assign({}, opts || {});
+    const rate = o.sampleRate || 44100;
+    const dur = seconds || 0.9;
+    if (this.seed != null) this._rng = this._makeRng(this.seed);
+    const off = new OfflineAudioContext(1, Math.round(rate * dur), rate);
+    const old = { ctx: this.ctx, master: this.master, noise: this.noiseBuf, rng: this._rng };
+    this.ctx = off;
+    this.master = off.destination;
+    const nb = off.createBuffer(1, off.sampleRate, off.sampleRate);
+    const d = nb.getChannelData(0);
+    /* 噪声底噪也走同一个随机源，否则同种子两次导出的噪声段不一样 */
+    for (let i = 0; i < d.length; i++) d[i] = this._rand() * 2 - 1;
+    this.noiseBuf = nb;
+    try {
+      this._shot(this.GUN[gunId] || this.GUN.rifle, o, gunId);
+    } finally {
+      this.ctx = old.ctx;
+      this.master = old.master;
+      this.noiseBuf = old.noise;
+      this._rng = old.rng;
+    }
+    return off.startRendering();
+  },
+
+  /* AudioBuffer → 16bit 单声道 WAV */
+  toWav(buf) {
+    const len = buf.length, rate = buf.sampleRate;
+    const data = buf.getChannelData(0);
+    const out = new DataView(new ArrayBuffer(44 + len * 2));
+    const str = (o, s) => { for (let i = 0; i < s.length; i++) out.setUint8(o + i, s.charCodeAt(i)); };
+    str(0, 'RIFF'); out.setUint32(4, 36 + len * 2, true); str(8, 'WAVE');
+    str(12, 'fmt '); out.setUint32(16, 16, true); out.setUint16(20, 1, true);
+    out.setUint16(22, 1, true); out.setUint32(24, rate, true);
+    out.setUint32(28, rate * 2, true); out.setUint16(32, 2, true); out.setUint16(34, 16, true);
+    str(36, 'data'); out.setUint32(40, len * 2, true);
+    for (let i = 0; i < len; i++) {
+      const v = Math.max(-1, Math.min(1, data[i]));
+      out.setInt16(44 + i * 2, v < 0 ? v * 0x8000 : v * 0x7FFF, true);
+    }
+    return out.buffer;
   },
 
   play(name, opts) {
@@ -660,10 +785,10 @@ const SFX = {
     /* 枪声按枪型分支：四把枪各有各的音色，不再是同一个"啪" */
     if (name === 'shot') {
       const gun = this.GUN[(opts && opts.gun) || 'rifle'] || this.GUN.rifle;
-      return this._shot(gun, opts);
+      return this._shot(gun, opts, (opts && opts.gun) || 'rifle');
     }
     /* 敌人的枪声：同一套音色压低 + 闷掉高频，听得出是别人在打 */
-    if (name === 'enemyShot') return this._shot(this.GUN.pistol, { vol: 0.42, lp: 1300 });
+    if (name === 'enemyShot') return this._shot(this.GUN.pistol, { vol: 0.42, lp: 1300 }, 'pistol');
 
     const c = this.ctx, t = c.currentTime;
     /* 一条总线收所有层：音量标准在这一处乘完，下面只管音色 */
