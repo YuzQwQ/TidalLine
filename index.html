@@ -1175,7 +1175,7 @@ window.addEventListener('error', function (e) {
           <div class="bar bag-bar" id="bagBar"><i></i></div>
           <p class="bag-note">子弹和药物回来还留在包里，其它东西自动入库。点物品可以把仓库里的放进背包，也可以把包里的放回仓库。</p>
 
-          <button id="btnDeploy">进入游戏</button>
+          <button id="btnDeploy" data-sfx="confirm">进入游戏</button>
           <div class="deploy-hint" id="deployHint"></div>
         </div>
 
@@ -1221,7 +1221,7 @@ window.addEventListener('error', function (e) {
     <div class="map-choices" id="mapChoices" role="group" aria-label="可选地图"></div>
     <footer class="map-footer">
       <div aria-live="polite"><b id="mapSelectedName"></b><small id="mapSupplyCost"></small><p id="mapSelectionHint"></p></div>
-      <button type="button" id="btnMapStart">出发</button>
+      <button type="button" id="btnMapStart" data-sfx="confirm">出发</button>
     </footer>
   </main>
 </div>

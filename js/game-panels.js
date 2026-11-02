@@ -449,7 +449,7 @@ Object.assign(Game, {
     if (!Save.codex[it.id]) {
       Save.codex[it.id] = { first: Date.now(), count: 0 };
       this.stats.newItems.push(it);
-      this.toast('新收录：' + it.name);
+      this.toast('新收录：' + it.name, 'good');
     }
     Save.codex[it.id].count++;
     Save.save();

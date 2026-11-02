@@ -838,7 +838,8 @@ Object.assign(Game, {
     c.font = '12px monospace';
     this.toasts.forEach((t, i) => {
       c.globalAlpha = U.clamp(t.t, 0, 1);
-      c.fillStyle = '#9fb5ae';
+      /* 好消息（新收录这类）换成青绿色，顺便和"背包满了"这种警告区分开 */
+      c.fillStyle = t.good ? '#7fd6b0' : '#9fb5ae';
       c.fillText(t.msg, CFG.VIEW_W / 2, 96 + i * 17);
     });
     c.globalAlpha = 1;

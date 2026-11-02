@@ -352,6 +352,12 @@ const SFX = {
     dodge: 0.09,
     pickup: 0.06,
     sell: 0.07,        // 出售结算：收银机，比拾取稍重一点，别盖过操作反馈
+    /* 界面音是背景层：四处都在响，必须压在拾取之下，
+       否则翻一下仓库就盖住了局内的脚步。悬停最轻，确认最重。 */
+    uiClick: 0.05,
+    uiTap: 0.028,      // 悬停：只给一点"这里有东西"的触感
+    uiConfirm: 0.085,  // 出发这类一次性大动作，可以抬头一点
+    uiNotify: 0.07,
     door: 0.08,
     search: 0.055,
     drop: 0.055,
@@ -443,6 +449,25 @@ const SFX = {
   PICKUP_SAMPLE: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
   _lastPickup: null,
 
+  /* ---------------- 界面音效 ----------------
+     菜单和面板以前全是哑的，反馈只能靠"画面变了"。四条录音分工：
+       click   清脆一声（0.068s）—— 所有按钮的默认点击音
+       tap     短提示（0.127s）  —— 鼠标经过按钮时响，最轻
+       confirm 高调一句（0.453s）—— 出发 / 进入游戏这类一次性大动作
+                                    （HTML 上标 data-sfx="confirm"）
+       notify  明朗一句（0.865s）—— 通知类好消息：新收录、治疗完成
+     都是一次性短音，不需要变体池；抖动只用来散开连点的复读感。 */
+  UI_SAMPLE: { click: 'ui_click', tap: 'ui_tap', confirm: 'ui_confirm', notify: 'ui_notify' },
+  /* 采样没加载上时的合成兜底：from / to / 时长 */
+  UI_SYNTH: {
+    click: [1500, 900, 0.045, 0.55],
+    tap: [1200, 1200, 0.050, 0.35],
+    confirm: [820, 1340, 0.180, 0.45],
+    notify: [520, 800, 0.260, 0.40]
+  },
+  _uiHoverAt: 0,
+  _uiHoverEl: null,
+
   /* 一个游戏音效由多段素材拼成：换弹 1.5 秒里是「退弹匣 → 插弹匣 → 拉套筒」
      三次动作，原素材整段 3.13 秒塞不进去（硬变速会让金属声变尖叫），
      所以按游戏节奏重新排时间轴。 */
@@ -473,7 +498,7 @@ const SFX = {
       for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
       this.noiseBuf = buf;
     } catch (e) { this.on = false; }
-    if (this.on) this.load();
+    if (this.on) { this.load(); this.bindUI(); }
   },
 
   /* 浏览器不允许在用户手势之前出声。正常流程里 init() 就发生在点「开始」
@@ -521,6 +546,11 @@ const SFX = {
     if (id === 'sell') return this.LOUD.sell;
     /* 拾取的四条变体都按拾取档对齐，四条之间响度一致 */
     if (/^pickup_[1-4]$/.test(id)) return this.LOUD.pickup;
+    /* 界面音：四条各一档，UI 是背景层，都压在拾取之下 */
+    if (id === 'ui_click') return this.LOUD.uiClick;
+    if (id === 'ui_tap') return this.LOUD.uiTap;
+    if (id === 'ui_confirm') return this.LOUD.uiConfirm;
+    if (id === 'ui_notify') return this.LOUD.uiNotify;
     return 0.08;
   },
 
@@ -646,6 +676,56 @@ const SFX = {
       rate: (o.rate || 1) * (1 - j + Math.random() * j * 2),
       vol: (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2)
     });
+  },
+
+  /* 界面音：有采样播采样，没有就落回合成的一声短音 ——
+     UI 反馈不该因为少个文件就整个消失。 */
+  ui(kind, opts) {
+    if (!this.on || !this.ctx) return false;
+    if (this.ctx.state === 'suspended' && this.ctx.resume) {
+      try { const p = this.ctx.resume(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+    }
+    const o = opts || {};
+    const id = this.UI_SAMPLE[kind];
+    if (id && this.samples[id]) {
+      return this._playSample(id, {
+        rate: (o.rate || 1) * (0.98 + Math.random() * 0.04),
+        vol: (o.vol != null ? o.vol : 1) * (0.94 + Math.random() * 0.12)
+      });
+    }
+    const s = this.UI_SYNTH[kind] || this.UI_SYNTH.click;
+    const c = this.ctx;
+    const out = c.createGain();
+    out.gain.value = (this.LOUD[this.UI_LOUD[kind]] || 0.05) * (o.vol != null ? o.vol : 1);
+    out.connect(this.master || c.destination);
+    setTimeout(() => { try { out.disconnect(); } catch (e) {} }, 1500);
+    this._tone({ t: c.currentTime, out, dur: s[2], from: s[0], to: s[1], gain: s[3], type: 'sine' });
+    return true;
+  },
+  UI_LOUD: { click: 'uiClick', tap: 'uiTap', confirm: 'uiConfirm', notify: 'uiNotify' },
+
+  /* 按钮的点击 / 悬停音：挂一次全局委托就行，不用给每个按钮写一行。
+     出发这类一次性大动作在标签上写 data-sfx="confirm"，走更长的确认音。 */
+  bindUI() {
+    if (this._uiBound || typeof document === 'undefined') return;
+    this._uiBound = true;
+    const hit = el => (el && el.closest) ? el.closest('button, [data-sfx]') : null;
+    /* 捕获阶段：有人的 handler 会 stopPropagation，声音不该跟着一起没 */
+    document.addEventListener('click', ev => {
+      const el = hit(ev.target);
+      if (!el || el.disabled) return;
+      this.ui(el.getAttribute('data-sfx') || 'click');
+    }, true);
+    document.addEventListener('mouseover', ev => {
+      const el = hit(ev.target);
+      if (!el || el.disabled || el === this._uiHoverEl) return;
+      this._uiHoverEl = el;
+      /* 一排按钮扫过去会响成一片：同一个元素只响一次，整体再节流 90ms */
+      const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+      if (now - this._uiHoverAt < 90) return;
+      this._uiHoverAt = now;
+      this.ui('tap');
+    }, true);
   },
 
   _playSeq(name, seq) {

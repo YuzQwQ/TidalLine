@@ -493,9 +493,13 @@ const Game = {
     this.headT = 0.45;
   },
 
-  toast(msg) {
-    this.toasts.push({ msg, t: 2.2 });
+  /* kind='good' 是好消息通知（新收录之类）：画成青绿色，并额外响一声通知音。
+     普通的警告和错误保持安静 —— 满屏"背包满了"都在响的话会烦死。 */
+  toast(msg, kind) {
+    const good = kind === 'good';
+    this.toasts.push({ msg, t: 2.2, good });
     if (this.toasts.length > 4) this.toasts.shift();
+    if (good && typeof SFX !== 'undefined' && SFX.ui) SFX.ui('notify');
   },
 
   sfx(name, opts) { SFX.play(name, opts); },

@@ -281,6 +281,12 @@
   card(othersHost, '挥刀', '风声从高扫到低', [
     { label: '挥刀', run: () => SFX.play('melee') }
   ]);
+  card(othersHost, '界面音（菜单 / 面板）', '按钮点击、悬停、出发确认、好消息通知', [
+    { label: '点击', run: () => SFX.ui('click') },
+    { label: '悬停', ghost: true, run: () => SFX.ui('tap') },
+    { label: '出发确认', ghost: true, run: () => SFX.ui('confirm') },
+    { label: '通知', ghost: true, run: () => SFX.ui('notify') }
+  ]);
   /* 拾取是"四条随机抽一条"：连点几次听重不重复，
      连摸 5 件模拟翻一具尸体，用来判断会不会像复读机 */
   card(othersHost, '物品交互（拾取）', '录音 831642 的四次演绎，每次随机抽一条', [
@@ -337,6 +343,10 @@
     ['shot_switch', '切枪', 'switch'],
     ['step_stone_1', '脚步', 'step'],
     ['pickup_1', '拾取', 'pickup'],
+    ['ui_click', '界面点击', 'uiClick'],
+    ['ui_tap', '界面悬停', 'uiTap'],
+    ['ui_confirm', '出发确认', 'uiConfirm'],
+    ['ui_notify', '通知', 'uiNotify'],
     ['dodge', '闪避', 'dodge']
   ];
   const tbody = document.querySelector('#levels tbody');

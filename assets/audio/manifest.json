@@ -104,6 +104,38 @@
       "site": "Freesound",
       "sid": 831642,
       "license": "TODO"
+    },
+    {
+      "id": "avaol-click",
+      "name": "Menu or UI click",
+      "author": "avaol",
+      "site": "Freesound",
+      "sid": 862451,
+      "license": "TODO"
+    },
+    {
+      "id": "yuugfr1a-hover",
+      "name": "Modern UI hover",
+      "author": "yuugfr1a",
+      "site": "Freesound",
+      "sid": 770203,
+      "license": "TODO"
+    },
+    {
+      "id": "sabacky-confirm",
+      "name": "UI open select confirm",
+      "author": "sabacky",
+      "site": "Freesound",
+      "sid": 769643,
+      "license": "TODO"
+    },
+    {
+      "id": "tommasomotteran-stinger",
+      "name": "Magical UI selection stinger",
+      "author": "tommasomotteran",
+      "site": "Freesound",
+      "sid": 875968,
+      "license": "TODO"
     }
   ],
   "assets": [
@@ -442,6 +474,62 @@
       "rms": 0.0591,
       "bytes": 22618,
       "sha256_16": "6a21b11601cab275"
+    },
+    {
+      "id": "ui_click",
+      "file": "ui_click.wav",
+      "from": "avaol-click",
+      "note": "界面点击：0.068s 清脆一声，所有按钮的默认点击音",
+      "dur": 0.068,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.0849,
+      "bytes": 6072,
+      "sha256_16": "c1be73ab8e0b3ee3"
+    },
+    {
+      "id": "ui_tap",
+      "file": "ui_tap.wav",
+      "from": "yuugfr1a-hover",
+      "note": "悬停/轻交互：0.127s 短提示，鼠标经过按钮时响（素材 RMS 0.44 太高，按 0.09 归一，否则增益被下限钳住反而更响）",
+      "dur": 0.127,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.183,
+      "rms": 0.0899,
+      "bytes": 11284,
+      "sha256_16": "810dcce0c9c72ac7"
+    },
+    {
+      "id": "ui_confirm",
+      "file": "ui_confirm.wav",
+      "from": "sabacky-confirm",
+      "note": "出发确认：0.453s 高调提示音，出发/进入游戏这类一次性大动作",
+      "dur": 0.453,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.0954,
+      "bytes": 43508,
+      "sha256_16": "4c1ba37f0401b276"
+    },
+    {
+      "id": "ui_notify",
+      "file": "ui_notify.wav",
+      "from": "tommasomotteran-stinger",
+      "note": "通知提示：0.865s 明朗的一句，新收录、治疗完成这类好消息",
+      "dur": 0.865,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.89,
+      "rms": 0.135,
+      "bytes": 76312,
+      "sha256_16": "7f65bf723708fd81"
     }
   ],
   "mix": {
