@@ -29,7 +29,7 @@ const server = http.createServer((req, res) => {
     await page.goto(origin + '/index.html#base', { waitUntil: 'domcontentloaded' });
     await page.evaluate(() => {
       Save.gear.helmet = GEAR.make('helmet', 1); Save.gear.body = GEAR.make('body', 1);
-      Base.tab = 'shop'; Base.render();
+      Safehouse.route('traders'); MerchantUI.open('shop');
     });
     await page.waitForFunction(() => ART.gear.every(id => Icons.gear[id]));
     await page.waitForFunction(() => document.querySelectorAll('#baseGear img').length === 7);
@@ -45,14 +45,14 @@ const server = http.createServer((req, res) => {
       }
       return { id, width: image.naturalWidth, height: image.naturalHeight, opaque, partial, padding };
     }));
-    assert.equal(specs.length, 25);
+    assert.equal(specs.length, 33);
     for (const s of specs) {
       assert.equal(s.width, 48, s.id); assert.equal(s.height, 48, s.id);
       assert(s.opaque > 60, s.id); assert.equal(s.partial, 0, s.id); assert.equal(s.padding, 0, s.id);
     }
     assert.equal(await page.locator('#shopGrid img[src*="/bag0"]').count(), 3);
-    await page.evaluate(() => { Base.tab = 'stash'; Base.render(); });
-    console.log('OK: 25 icons, dimensions, hard transparency, 4px margins, first-load base/shop refresh');
+    await page.evaluate(() => { Safehouse.route('loadout'); });
+    console.log('OK: 33 icons, dimensions, hard transparency, 4px margins, first-load base/shop refresh');
 
     // Run real equipment swaps: warehouse, picker, merchant and raid share each stable icon ID.
     await page.evaluate(() => {
@@ -78,10 +78,11 @@ const server = http.createServer((req, res) => {
       assert.equal(await page.locator('#baseGear img[src$="/' + id + '.png"]').count(), 1);
       assert.equal(await page.locator('#eqStrip img[src$="/' + id + '.png"]').count(), 1);
     }
-    await page.evaluate(() => { Base.tab = 'shop'; Base.render(); });
+    await page.evaluate(() => { Safehouse.route('traders'); MerchantUI.open('shop'); });
     const shopBags = page.locator('#shopGrid .scell').filter({ has: page.locator('img[src*="/bag0"]') });
     assert.equal(await shopBags.count(), 3);
     await shopBags.first().click();
+    await page.locator('[data-mb-confirm]').click();
     assert.equal(await page.locator('#dealBox img[src$="/bag01.png"]').count(), 1);
     await page.locator('#dealBox .go').click();
     assert(await page.evaluate(() => Save.stash.some(e => e.gear?.equip?.bag === 'bag01')));
@@ -94,7 +95,7 @@ const server = http.createServer((req, res) => {
       })));
     }
     await page.setViewportSize({ width: 1480, height: 1000 });
-    await page.evaluate(() => { Base.tab = 'stash'; Base.render(); });
+    await page.evaluate(() => { Safehouse.route('loadout'); });
     console.log('OK: five backpack swaps and raid icons, picker, shop purchase/confirmation, narrow screens');
 
     for (let lv = 1; lv <= 6; lv++) {
@@ -127,7 +128,7 @@ const server = http.createServer((req, res) => {
 
     await page.goto(origin + '/' + encodeURIComponent('装备清单.html'));
     await page.waitForFunction(() => [...document.images].every(image => image.complete && image.naturalWidth === 48));
-    assert.equal(await page.locator('.thumb img').count(), 24);
+    assert.equal(await page.locator('.thumb img').count(), 32);
     await page.screenshot({ path: path.join(output, 'gear-sheet.png'), fullPage: true });
 
     const offline = await browser.newPage(); const external = [];
@@ -135,7 +136,7 @@ const server = http.createServer((req, res) => {
     offline.on('request', req => { if (req.url().includes('/assets/')) external.push(req.url()); });
     await offline.goto(pathToFileURL(path.join(root, '潮汐线.html')).href + '#base');
     await offline.waitForFunction(() => ART.gear.every(id => Icons.gear[id]));
-    assert.equal(await offline.evaluate(() => Object.keys(window.__SPRITES__).filter(key => key.startsWith('gear/')).length), 25);
+    assert.equal(await offline.evaluate(() => Object.keys(window.__SPRITES__).filter(key => key.startsWith('gear/')).length), 33);
     for (let n = 1; n <= 5; n++) {
       const id = 'bag0' + n;
       assert(await offline.evaluate(id => {

@@ -207,8 +207,20 @@
     /* ---------- G7 敌人布防 ---------- */
     const space = rules.enemySpacing;
     const reserve = data.bridgeHeadReserve;
+    const humanSquads=new Map();
     for (let i = 0; i < data.enemies.length; i++) {
       const e = data.enemies[i];
+      if(!['scav','echo','guard','holdout','retriever'].includes(e.type))err('G7',`未知敌人类型 ${e.type}`,{entityId:e.id});
+      if(e.facing!==undefined&&!['s','n','e','w'].includes(e.facing))err('G7',`敌人初始朝向非法 ${e.id}`,{entityId:e.id});
+      if(e.guardAnchor!==undefined){
+        const p=e.guardAnchor;
+        if(e.type!=='holdout'||!Array.isArray(p)||p.length!==2||!p.every(Number.isInteger))err('G7',`看守锚点配置非法 ${e.id}`,{entityId:e.id});
+        else if(!walkable(p[0],p[1])||Math.hypot(p[0]-e.x,p[1]-e.y)>6||!findPath([e.x,e.y],p))err('G7',`看守锚点不可达或距离超过6格 ${e.id}`,{entityId:e.id,cells:[p]});
+      }
+      if(e.squadId!==undefined){
+        if(e.type!=='retriever'||typeof e.squadId!=='string'||e.squadId.length>64||e.squadId!==e.squadId.trim())err('G7',`回收小组编号非法 ${e.id}`,{entityId:e.id});
+        else if(e.squadId){const n=(humanSquads.get(e.squadId)||0)+1;humanSquads.set(e.squadId,n);if(n>2)err('G7',`回收小组 ${e.squadId} 超过2人`,{entityId:e.id});}
+      }
       if (!walkable(e.x, e.y)) err('G7', `敌人出生格非法 ${e.id}`, { cells: [[e.x, e.y]], entityId: e.id });
       if (Math.hypot(e.x - spawn[0], e.y - spawn[1]) < space.fromSpawn) {
         err('G7', `出生点附近有敌人 ${e.id}`, { cells: [[e.x, e.y]], entityId: e.id });

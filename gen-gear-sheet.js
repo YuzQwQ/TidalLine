@@ -103,24 +103,25 @@ function bagCard(b) {
 }
 
 function armorCard(type, g) {
-  const id = type === 'helmet' ? lid(g.lv) : bid(g.lv);
+  const id = g.id || (type === 'helmet' ? lid(g.lv) : bid(g.lv));
   const tag = type === 'helmet' ? '头盔' : '身体护甲';
-  const move = type === 'body' ? ' · 移速 ×' + g.move.toFixed(2) : '';
+  const rarity = ctx.gearRarity(g.lv);
+  const move = type === 'body' ? ' · 瞄准时间 +' + (g.aimPenaltyPct||0) + '%' : '';
   return `
-    <div class="item lv${g.lv}">
+    <div class="item lv${rarity}">
       <div class="thumb">${thumb(id)}</div>
       <div class="meta">
-        <div class="name">${esc(g.name)}<i class="tag">Lv${g.lv} ${tag}</i><i class="tag dim">${esc(g.short)}</i></div>
+        <div class="name">${esc(g.name)}<i class="tag">Lv${g.lv} ${tag} · ${esc(RARITY[rarity-1].name)}</i><i class="tag dim">${esc(g.short)}</i></div>
         <div class="sub"><code>${esc(id)}.png</code> · 防护 <b class="dr">Lv${g.lv}</b> · 耐久 ${g.dur} · ${g.w}kg${move} · ${money(g.price)}</div>
-        <div class="vis"><b>画什么</b>${esc(VISUAL[id] || '')}</div>
+        <div class="vis"><b>画什么</b>${esc(g.visual || VISUAL[id] || '')}</div><div class="desc">${esc(g.desc || '')}</div>
       </div>
     </div>`;
 }
 
 const total = Object.keys(WEAPONS).length + HELMETS.length + BODIES.length + BAGS.length + MELEE.length;
 const done = Object.keys(WEAPONS).filter(k => hasIcon(ICON_ID[k] || k)).length
-  + HELMETS.filter(g => hasIcon(lid(g.lv))).length
-  + BODIES.filter(g => hasIcon(bid(g.lv))).length
+  + HELMETS.filter(g => hasIcon(g.id || lid(g.lv))).length
+  + BODIES.filter(g => hasIcon(g.id || bid(g.lv))).length
   + BAGS.filter(b => hasIcon(b.id)).length + MELEE.filter(d=>hasIcon(d.id)).length;
 
 const html = `<!DOCTYPE html>
@@ -135,8 +136,8 @@ const html = `<!DOCTYPE html>
   <div class="kicker">TIDELINE · GEAR SHEET</div>
   <h1>装备清单</h1>
   <div class="lede">
-    这一批是新加的装备图标：<b>${Object.keys(WEAPONS).length} 把武器</b> + <b>${HELMETS.length} 级头盔</b> +
-    <b>${BODIES.length} 级身体护甲</b>，另加 <b>${BAGS.length} 款背包</b> 和 <b>${MELEE.length} 种近战武器</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
+    这一批是新加的装备图标：<b>${Object.keys(WEAPONS).length} 把武器</b> + <b>${HELMETS.length} 款头盔</b> +
+    <b>${BODIES.length} 款身体护甲</b>，另加 <b>${BAGS.length} 款背包</b> 和 <b>${MELEE.length} 种近战武器</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
     局内背包顶部 7 格装备条、尸体面板顶部 3 格装备区（都是 24px 图标），藏身处装备区（34px 图标），以及仓库、装备选择与商人交易面板。背包决定携带容量，未装备时为 ${BASE_BAG_SLOTS} 格。<br>
     已完成 <b>${done} / ${total}</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
     <code>node gen-gear-sheet.js</code> 就会更新。
@@ -173,7 +174,7 @@ const html = `<!DOCTYPE html>
 </section>
 
 <section class="cat">
-  <h2>身体护甲<em>body armor</em><i>${BODIES.length} 张 · Lv1–Lv6</i></h2>
+  <p><a href="assets/item-art/armor-variants/index.html">新增8款图标与缩小预览</a> · 同级装备通过耐久、重量与瞄准准备时间取舍；不再直接降低移速，负重分档仍有效。</p><h2>身体护甲<em>body armor</em><i>${BODIES.length} 张 · Lv1–Lv6</i></h2>
   <div class="grid">${BODIES.map(g => armorCard('body', g)).join('')}</div>
 </section>
 

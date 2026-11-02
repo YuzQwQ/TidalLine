@@ -803,7 +803,7 @@ class Player {
 
 /* ---------------- 敌人 ---------------- */
 class Enemy {
-  constructor(typeKey, x, y, patrolRadius = 4) {
+  constructor(typeKey, x, y, patrolRadius, spawnConfig = {}) {
     const t = ENEMY_TYPES[typeKey];
     this.key = typeKey;
     this.t = t;
@@ -812,7 +812,7 @@ class Enemy {
     this.headR = CFG.COMBAT.HEAD_RADIUS;
     /* 人（拾荒者）：先掷一个 1~4 的等级，头、甲、身上带的弹全按这个等级走，
        "子弹和头甲等级一致"就是在这里保证的。机械体不穿戴，走原来的空手路线。 */
-    if (t.human) {
+    if (t.human && !t.tactical) {
       const lv = ENEMY_LOADOUT.rollLevel();
       this.gearLv = lv;
       this.helmet = Math.random() < ENEMY_LOADOUT.helmetChance ? GEAR.random('helmet', lv) : null;
@@ -841,13 +841,14 @@ class Enemy {
     this.chaseT = 0;
     this.noiseScanT = Math.random() * 0.1;
     this.homeX = x; this.homeY = y;
-    this.patrolRadius = patrolRadius;
+    this.patrolRadius = patrolRadius ?? (t.tactical ? 2 : 4);
     this.patrolPt = null;
     this.dead = false;
     this.hurtFlash = 0;
     this.seenPlayerT = 0;
     this.alarmPlayed = false;
     this.patrolCd = 0;
+    if (t.tactical) HumanAI.init(this,spawnConfig);
   }
 
   /* 感知倍率（安静区会削弱） */
@@ -956,6 +957,7 @@ class Enemy {
 
   update(dt) {
     if (this.dead) return;
+    if (this.t.tactical) return HumanAI.update(this,dt);
     this.atkCd = Math.max(0, this.atkCd - dt);
     this.hurtFlash = Math.max(0, this.hurtFlash - dt);
     this.patrolCd = Math.max(0, this.patrolCd - dt);
@@ -1169,7 +1171,8 @@ class Enemy {
     }
     this.hurtFlash = 0.12;
     // 被打会立刻警觉
-    if (this.state === 'patrol' || this.state === 'suspect') {
+    if (this.t.tactical) HumanAI.hurt(this,fromFaction);
+    if (!this.t.tactical && (this.state === 'patrol' || this.state === 'suspect')) {
       this.state = 'chase';
       this.stateT = 0;
       this.chaseT = 0;
@@ -1179,6 +1182,7 @@ class Enemy {
     if (this.hp <= 0) {
       this.hp = 0;
       this.dead = true;
+      if(this.ai){this.ai.phase=null;this.ai.burstLeft=0;}
       Game.onEnemyKilled(this);
     }
   }
@@ -1328,7 +1332,9 @@ class Corpse {
     this.bagLv = 0;        // 人型敌人的背包等级（1~3）；0 = 没有背包（回响体）
     this.bagName = '';
     // 拾荒者身上有他的装备与战利品；回响体留下结晶
-    if (enemy.t.faction === 'echo') {
+    if (enemy.t.tactical) {
+      HumanAI.corpse(enemy,this);
+    } else if (enemy.t.faction === 'echo') {
       const od = ITEMS.filter(i => i.cat === 'odd');
       this.loot.push({ item: Loot.pickFromPool(od), n: 1 });
       if (Math.random() < 0.5) this.loot.push({ item: ITEMS.find(i => i.id === 'heal01'), n: 1 });
@@ -1370,6 +1376,7 @@ class Corpse {
     /* 包本身放最前面：它是这具尸体上最值钱的一件，也是"能装几件"的来源 */
     const bagItem = (typeof EQUIP !== 'undefined') ? EQUIP.bag(bagId) : null;
     if (bagItem) this.loot.push({ item: bagItem, n: 1, corpseBag: true });
+
     const cap = (B.itemsByLevel || {})[this.bagLv] || this.bagLv;
     const used = new Set();
     for (let i = 0; i < cap; i++) {

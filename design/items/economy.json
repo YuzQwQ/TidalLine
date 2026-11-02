@@ -3303,5 +3303,15 @@
     },
     "startCredits": 600,
     "brokeLine": 200
+  },
+  "armorVariants": {
+    "helmet1_motorcycle": 2400,
+    "body1_leather": 3600,
+    "helmet2_rescue": 7200,
+    "body2_concealed": 10800,
+    "helmet3_riot": 18000,
+    "body3_fragmentation": 33600,
+    "helmet4_light": 57600,
+    "body4_lightplate": 102000
   }
 }

@@ -103,10 +103,7 @@ const Tips = {
     rows.push(['重量', it.w.toFixed(2) + ' kg']);
     if (it.equip && it.equip.kind === 'armor') {
       const g = it.equip.gear;
-      /* move 是移速倍率：1 = 没有惩罚，0.88 = 慢 12% */
-      if (g.move != null && g.move < 1) {
-        rows.push(['移速', '−' + Math.round((1 - g.move) * 100) + '%']);
-      }
+      if(g.type==='body') rows.push(['瞄准时间','+'+(g.aimPenaltyPct||0)+'%']);
     }
     rows.push(['单价', formatMoney(price)]);
     if (it.sell != null) rows.push(['回收价', formatMoney(it.sell)]);
@@ -243,7 +240,7 @@ function equipDesc(it) {
   if (!it.equip) return '';
   if (it.equip.kind === 'armor') {
     const g = it.equip.gear;
-    return 'Lv' + g.lv + ' 的' + GEAR[g.type].label +
+    return (it.desc ? it.desc+'\n\n' : '')+'Lv' + g.lv + ' 的' + GEAR[g.type].label +
       '。能挡下多少取决于打过来的是几级弹：同级以下基本能挡住，高一级就漏一半，' +
       '高两级往上基本挡不住。耐久磨穿以后就只剩自重。';
   }

@@ -1,0 +1,9 @@
+{
+  "id": "corpse_holdout",
+  "unit": "holdout",
+  "type": "corpse",
+  "frames": 1,
+  "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+  "prompt": "Edit the reference to ONE non-graphic fallen body sprite for a 75 degree overhead pixel game. Same stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch, now lying on side on the ground, knees slightly bent, gun resting adjacent within compact silhouette. Full body overhead view, helmet and clothing recognizable; no blood, no wounds, no gore. Sharp low resolution pixel clusters, restrained colors, generous transparent margin. Truly transparent background, no ground tile, no shadow scene, no text. One corpse only.",
+  "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b6ff1d02-d516-4061-ab1c-9ad3b5426e5f.png"
+}

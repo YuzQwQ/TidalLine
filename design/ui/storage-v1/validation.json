@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "reports": [
+    {
+      "file": "index.html",
+      "errors": [],
+      "filtersBeforePagination": true,
+      "realMedicalTransfer": true,
+      "boundProtected": true,
+      "bulkConfirmed": true,
+      "staleQuoteRejected": true,
+      "nodeOwnership": true,
+      "widths": [
+        1440,
+        1280,
+        390,
+        320
+      ]
+    },
+    {
+      "file": "潮汐线.html",
+      "errors": [],
+      "filtersBeforePagination": true,
+      "realMedicalTransfer": true,
+      "boundProtected": true,
+      "bulkConfirmed": true,
+      "staleQuoteRejected": true,
+      "nodeOwnership": true,
+      "widths": [
+        1440,
+        1280,
+        390,
+        320
+      ]
+    }
+  ],
+  "demoIsolated": true
+}

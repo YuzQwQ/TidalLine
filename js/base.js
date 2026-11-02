@@ -122,7 +122,7 @@ const Base = {
       const row = document.createElement('div');
       row.className = 'slot' + (g ? '' : ' empty') + (this.picker === type ? ' open' : '');
       row.innerHTML =
-        '<div class="slot-ico">' + Icons.gearIcon(g ? type + g.lv : null, GEAR[type].short) + '</div>' +
+        '<div class="slot-ico">' + Icons.gearIcon(GEAR.icon(g), GEAR[type].short) + '</div>' +
         '<div class="slot-txt"><b>' + (g ? g.name + ' Lv' + g.lv : '未装备' + GEAR[type].label) + '</b><span>' +
           (g ? '防护 Lv' + g.lv + ' · 耐久 ' +
                Math.ceil(g.dur) + '/' + g.max + ' · ' : '') +
@@ -394,7 +394,7 @@ const Base = {
     } else {
       const g = it.equip.gear;
       if (!g || it.equip.kind !== 'armor') return false;
-      next = GEAR.make(key, g.lv, g.dur);                   // 拷一份，仓库那件要移除
+      next = GEAR.make(key, g.id || g.lv, g.dur);                   // 拷一份，仓库那件要移除
       name = g.name; verb = '穿上 ';
     }
 
@@ -494,29 +494,30 @@ const Base = {
 
     const note = document.getElementById('shopNote');
     if (note) {
-      note.innerHTML = '只进<b>崭新</b>的一~三级货。更高级的东西他也弄不到，那得你自己下去找。';
+      note.innerHTML = '当前公开货架：<b>全新一至三级</b>防护装备。高级防护与背包供应预留后续合作渠道，尚未开放。';
     }
     const hint = document.getElementById('shopHint');
     if (hint) hint.textContent = '买下的东西直接进右边的仓库';
 
     for (const type of ['helmet', 'body']) {
-      for (let lv = 1; lv <= this.SHOP_MAX_LV; lv++) {
-        const d = GEAR.def(type, lv);
+      for (const d of GEAR[type].list.filter(x=>x.lv<=this.SHOP_MAX_LV)) {
+        const lv=d.lv;
         if (!d) continue;
         const cell = document.createElement('div');
         cell.className = 'scell r' + gearRarity(lv);
-        const ico = Icons.gear[type + lv]
-          ? '<img src="' + Icons.gear[type + lv].src + '" alt="">'
+        cell.dataset.offer = JSON.stringify({kind:'armor',type,lv,id:d.id});
+        const ico = Icons.gear[d.id]
+          ? '<img src="' + Icons.gear[d.id].src + '" alt="">'
           : '<span class="gl">' + esc(GEAR[type].short) + '</span>';
         cell.innerHTML = ico +
           '<span class="cn">' + esc(d.short || d.name) + '</span>' +
           '<span class="pr">' + formatMoney(d.price) + '</span>';
         cell.title = d.name + ' · 防护 Lv' + lv +
           ' · 耐久 ' + d.dur + ' · ' + d.w + 'kg · 右键看详情';
-        cell.onclick = () => this.askBuy(type, lv, cell);
+        cell.onclick = () => this.askBuy(type, d.id, cell);
         cell.oncontextmenu = (ev) => {
           ev.preventDefault();
-          Tips.show(EQUIP.armor(GEAR.make(type, lv)), cell.getBoundingClientRect(), '左键买下');
+          Tips.show(EQUIP.armor(GEAR.make(type, d.id)), cell.getBoundingClientRect(), '左键买下');
         };
         el.appendChild(cell);
       }
@@ -533,6 +534,7 @@ const Base = {
       const item = EQUIP.bag(d.id);
       const cell = document.createElement('div');
       cell.className = 'scell r' + d.r;
+      cell.dataset.offer = JSON.stringify({kind:'bag',id:d.id});
       const ico = Icons.gear[d.id]
         ? '<img src="' + Icons.gear[d.id].src + '" alt="">'
         : '<span class="gl">包</span>';
@@ -582,7 +584,7 @@ const Base = {
     Save.save();
     Game.sfx('pickup');
     this.render();
-    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），在仓库里，回左边背上');
+    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），已入仓库，可在备战页背上');
     return true;
   },
 
@@ -590,8 +592,8 @@ const Base = {
   renderGunShop(el) {
     const note = document.getElementById('shopNote');
     if (note) {
-      note.innerHTML = '全新枪械，<b>满弹匣</b>出手。弹药只进<b>一级、二级</b>——' +
-        '三级以上得从人身上拿。';
+      note.innerHTML = '全新枪械，<b>满弹匣</b>出手。当前出售<b>一级、二级</b>弹药；' +
+        '高阶货物与配件渠道预留后续合作，尚未开放。';
     }
     const hint = document.getElementById('shopHint');
     if (hint) hint.textContent = '买下的东西直接进右边的仓库，回左边装进背包';
@@ -608,6 +610,7 @@ const Base = {
         const item = EQUIP.gun(id, d.mag);          // 崭新：满弹匣
         const cell = document.createElement('div');
         cell.className = 'scell r' + item.r;
+        cell.dataset.offer = JSON.stringify({kind:'gun',id});
         const ico = Icons.gear[id]
           ? '<img src="' + Icons.gear[id].src + '" alt="">'
           : '<span class="gl">' + esc(d.short) + '</span>';
@@ -646,6 +649,7 @@ const Base = {
         if (!it) continue;
         const cell = document.createElement('div');
         cell.className = 'scell r' + it.r;
+        cell.dataset.offer = JSON.stringify({kind:'ammo',id:it.id,quantity:pack});
         const ico = Icons.get(it.id)
           ? '<img src="' + Icons.get(it.id).src + '" alt="">'
           : '<span class="gl">Lv' + it.level + '</span>';
@@ -716,7 +720,7 @@ const Base = {
     for (const [group, label] of Object.entries(MEDICAL_GROUPS)) {
       const title = document.createElement('div'); title.className = 'shop-cat'; title.textContent = label; el.appendChild(title);
       for (const item of MEDICAL_ITEMS.filter(i => i.medicalGroup === group && i.r <= 3)) {
-        const cell = document.createElement('div'); cell.className = 'scell r' + item.r; cell.dataset.medical = item.id;
+        const cell = document.createElement('div'); cell.className = 'scell r' + item.r; cell.dataset.medical = item.id; cell.dataset.offer = JSON.stringify({kind:'medical',id:item.id});
         cell.innerHTML = Icons.bagTag(item, '') + '<span class="cn">' + esc(item.short || item.name) + '</span>' +
           '<span class="pr">' + formatMoney(item.price) + '</span>' + (!Medical.ready(item) ? '<span class="pending-mark">效果待开放</span>' : '');
         cell.title = item.name + ' · ' + Medical.summary(item) + ' · ' + formatMoney(item.price);
@@ -756,8 +760,8 @@ const Base = {
       kind: 'buy',
       title: '买入',
       name: d.name,
-      sub: '防护 Lv' + lv + ' · 耐久 ' + d.dur,
-      icon: type + lv,
+      sub: '防护 Lv' + d.lv + ' · 耐久 ' + d.dur + (type==='body'?' · 瞄准时间 +'+d.aimPenaltyPct+'%':''),
+      icon: d.id,
       short: d.short,
       price: d.price,
       can: Save.credits >= d.price && Save.stash.length < STASH_SLOTS,
@@ -795,13 +799,13 @@ const Base = {
     Save.save();
     Game.sfx('pickup');
     this.render();
-    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），在仓库里，回左边装上');
+    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），已入仓库，可在备战页装备');
   },
 
   buyArmor(type, lv) {
     const d = GEAR.def(type, lv);
     if (!d) return;
-    if (lv > this.SHOP_MAX_LV) return;                 // 商人进不到更高级的货
+    if (d.lv > this.SHOP_MAX_LV) return;                 // 商人进不到更高级的货
     if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return; }
     if (Save.credits < d.price) {
       this.note('买 ' + d.name + ' 还差 ' + formatMoney(d.price - Save.credits), true);
@@ -812,7 +816,7 @@ const Base = {
     Save.save();
     Game.sfx('pickup');
     this.render();
-    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），在仓库里，回左边换上');
+    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），已入仓库，可在备战页装备');
   },
 
   /* ---- 背包：和局内背包同一套格子 UI ----
@@ -1031,11 +1035,8 @@ const Base = {
 
   page: 0,
 
-  renderStash() {
-    const grid = document.getElementById('stashGrid');
-    if (!grid) return;
-
-    const list = Save.stash.filter(e => {
+  stashList() {
+    return Save.stash.filter(e => {
       const it = stashItem(e);
       if (!it) return false;
       return stashFilterMatch(it, this.filter);
@@ -1044,6 +1045,12 @@ const Base = {
       return (ib.price || 0) - (ia.price || 0);
     });
 
+  },
+
+  renderStash() {
+    const grid = document.getElementById('stashGrid');
+    if (!grid) return;
+    const list = this.stashList();
     this.updateFilterCounts();
 
     document.getElementById('stashCount').textContent =
@@ -1103,7 +1110,7 @@ const Base = {
     const el = document.getElementById('stashPager');
     if (!el) return;
     if (pages <= 1) {
-      el.innerHTML = '<span>共 ' + total + ' 种</span>';
+      el.innerHTML = '<span>共 ' + total + ' 格</span>';
       return;
     }
     el.innerHTML =
@@ -1206,7 +1213,7 @@ const MapSelect = {
   },
   back() {
     if(Game.state!=='map-select')return;
-    Base.open();document.getElementById('btnDeploy').focus();
+    Base.open();(document.querySelector('.sh-deploy') || document.getElementById('btnDeploy')).focus();
   },
   render() {
     const choices=document.getElementById('mapChoices');

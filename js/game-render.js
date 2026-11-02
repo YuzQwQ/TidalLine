@@ -530,6 +530,7 @@ Object.assign(Game, {
       }
 
       // 状态标记
+      if(e.ai)HumanAI.drawStatus(c,e,sx,sy);
       if (this.debug) {
         c.fillStyle = '#9fb';
         c.font = '10px monospace';

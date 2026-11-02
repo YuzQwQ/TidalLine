@@ -113,6 +113,10 @@ const Art = {
     for (const state of Object.keys(PLAYER_ANIMS)) {
       for (const dir of ART.charDirs) load('anim/player_' + state + '_' + dir);
     }
+    if(typeof HUMAN_ANIMS!=='undefined')for(const id of ['holdout','retriever'])for(const state of Object.keys(HUMAN_ANIMS)){
+      if(id==='retriever'&&state==='pump')continue;
+      for(const dir of ART.charDirs)load('anim/'+id+'_'+state+'_'+dir);
+    }
     return Promise.all(jobs);
   },
 
@@ -207,6 +211,7 @@ const Art = {
     const sp = this.char(id, facing, holder);
     if (!sp) return null;
     let frame = 0, animated = null;
+    let frameSize=32;
     if (id === 'player' && holder && holder.anim) {
       const clip = PLAYER_ANIMS[holder.anim.state];
       const sheet = this.map['anim/player_' + holder.anim.state + '_' + sp.dir];
@@ -215,6 +220,14 @@ const Art = {
         const step = Math.max(0, Math.floor(holder.anim.time * clip.fps));
         frame = clip.loop ? step % clip.frames : Math.min(clip.frames - 1, step);
         animated = sheet;
+        frameSize=size;
+      }
+    }
+    if(holder?.ai&&holder.anim&&typeof HUMAN_ANIMS!=='undefined'){
+      const clip=HUMAN_ANIMS[holder.anim.state],sheet=this.map['anim/'+id+'_'+holder.anim.state+'_'+sp.dir];
+      if(clip&&sheet&&sheet.naturalWidth===clip.frames*64&&sheet.naturalHeight===64){
+        frame=clip.loop?Math.floor(holder.anim.time*clip.fps)%clip.frames:Math.min(clip.frames-1,Math.floor(holder.anim.progress*clip.frames));
+        animated=sheet;frameSize=64;
       }
     }
     c.save();
@@ -222,10 +235,13 @@ const Art = {
     c.translate(sx, sy);
     if (sp.flip) c.scale(-1, 1);
     if (animated) {
-      const size = PLAYER_ANIMS[holder.anim.state].size || 32;
+      const size = frameSize;
       c.drawImage(animated, frame * size, 0, size, size, -size / 2, -size / 2, size, size);
     }
-    else c.drawImage(sp.img, -16, -16, 32, 32);
+    else {
+      const anchor=typeof HUMAN_ART_STATIC!=='undefined'?HUMAN_ART_STATIC[id+'_'+sp.dir]:null;
+      c.drawImage(sp.img, -(anchor?.[0]??16), -16, 32, 32);
+    }
     c.restore();
     return Object.assign(sp, { animated: !!animated, frame, sheet: animated });
   },

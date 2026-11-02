@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "file": "index.html",
+      "errors": [],
+      "realTransactions": true,
+      "viewports": [
+        1440,
+        1280,
+        390
+      ],
+      "baseReturn": true,
+      "timerLifecycle": true
+    },
+    {
+      "file": "潮汐线.html",
+      "errors": [],
+      "realTransactions": true,
+      "viewports": [
+        1440,
+        1280,
+        390
+      ],
+      "baseReturn": true,
+      "timerLifecycle": true
+    }
+  ],
+  "demoIsolated": true
+}

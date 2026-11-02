@@ -1,0 +1,8 @@
+{
+  "id": "helmet4_light",
+  "name": "短沿轻型防弹盔",
+  "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 短沿轻型防弹盔. Detailed visual brief: 砂灰色紧凑圆壳，极短前檐、较低耳侧轮廓、黑色窄包边与细下颚带，侧面露出一颗小固定螺钉；没有导轨、前挂点、耳机和护颈。靠简洁剪影与浅砂色区别原厚重军绿防弹盔。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty helmet in a slightly elevated front-three-quarter product view, no head or person. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+  "source": "sources/helmet4_light.png",
+  "target": "assets/gear/helmet4_light.png",
+  "generator": "image_gen"
+}

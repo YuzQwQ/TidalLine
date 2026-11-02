@@ -14,7 +14,7 @@ if (!process.argv.includes('--assets-only')) require('./tools/build-linhai-map.j
 require('./tools/build-prop-bounds.js').build();
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
-const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js',
+const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js', 'human-ai.js',
   'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
   'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'merchant-ui.js', 'storage-config.js', 'storage-ui.js', 'boot.js'];
@@ -50,7 +50,7 @@ if (fs.existsSync(AUDIO_DIR)) {
 /* 多文件版（index.html）靠这个文件拿音频：<script src> 不受 file:// 的 CORS 限制，
    双击就能有声音。单文件版把它删掉，改用下面的内联注入 —— 两边都只有一份数据。
    这份是构建产物，bundle 里就是 base64，不入库（见 .gitignore）。 */
-const BUNDLE_TAG = '<script src="assets/audio/bundle.js"></script>\n';
+const BUNDLE_TAG = /<script src="assets\/audio\/bundle\.js"><\/script>\r?\n?/;
 fs.writeFileSync(path.join(AUDIO_DIR, 'bundle.js'),
   'window.__AUDIO__ = ' + JSON.stringify(audio) + ';\n', 'utf8');
 

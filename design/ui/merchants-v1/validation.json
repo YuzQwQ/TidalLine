@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "reports": [
+    {
+      "file": "index.html",
+      "errors": [],
+      "realBuySellTreatment": true,
+      "filtersSearchSort": true,
+      "nodeRestoration": true,
+      "viewports": [
+        1440,
+        1280,
+        390,
+        320
+      ]
+    },
+    {
+      "file": "潮汐线.html",
+      "errors": [],
+      "realBuySellTreatment": true,
+      "filtersSearchSort": true,
+      "nodeRestoration": true,
+      "viewports": [
+        1440,
+        1280,
+        390,
+        320
+      ]
+    }
+  ],
+  "demoIsolated": true
+}

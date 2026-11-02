@@ -3053,10 +3053,10 @@ M-4。
   <div class="kicker">TIDELINE · GEAR SHEET</div>
   <h1>装备清单</h1>
   <div class="lede">
-    这一批是新加的装备图标：<b>4 把武器</b> + <b>6 级头盔</b> +
-    <b>6 级身体护甲</b>，另加 <b>5 款背包</b> 和 <b>3 种近战武器</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
+    这一批是新加的装备图标：<b>4 把武器</b> + <b>10 款头盔</b> +
+    <b>10 款身体护甲</b>，另加 <b>5 款背包</b> 和 <b>3 种近战武器</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
     局内背包顶部 7 格装备条、尸体面板顶部 3 格装备区（都是 24px 图标），藏身处装备区（34px 图标），以及仓库、装备选择与商人交易面板。背包决定携带容量，未装备时为 6 格。<br>
-    已完成 <b>24 / 24</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
+    已完成 <b>32 / 32</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
     <code>node gen-gear-sheet.js</code> 就会更新。
   </div>
 </header>
@@ -3122,107 +3122,187 @@ M-4。
 </section>
 
 <section class="cat">
-  <h2>头盔<em>helmet</em><i>6 张 · Lv1–Lv6</i></h2>
+  <h2>头盔<em>helmet</em><i>10 张 · Lv1–Lv6</i></h2>
   <div class="grid">
     <div class="item lv1">
       <div class="thumb"><img src="assets/gear/helmet1.png" width="48" height="48" alt="helmet1"></div>
       <div class="meta">
-        <div class="name">布面工帽<i class="tag">Lv1 头盔</i><i class="tag dim">工帽</i></div>
+        <div class="name">布面工帽<i class="tag">Lv1 头盔 · 寻常</i><i class="tag dim">工帽</i></div>
         <div class="sub"><code>helmet1.png</code> · 防护 <b class="dr">Lv1</b> · 耐久 20 · 0.5kg · ¥2,000</div>
-        <div class="vis"><b>画什么</b>软塌的深绿布帽，帽顶有压痕，短软檐，侧面缝过徽章的痕迹。完全没有硬壳的亮面——这是 Lv1 的辨识点。</div>
+        <div class="vis"><b>画什么</b>软塌的深绿布帽，帽顶有压痕，短软檐，侧面缝过徽章的痕迹。完全没有硬壳的亮面——这是 Lv1 的辨识点。</div><div class="desc"></div>
       </div>
     </div>
     <div class="item lv2">
       <div class="thumb"><img src="assets/gear/helmet2.png" width="48" height="48" alt="helmet2"></div>
       <div class="meta">
-        <div class="name">工程安全帽<i class="tag">Lv2 头盔</i><i class="tag dim">安全帽</i></div>
+        <div class="name">工程安全帽<i class="tag">Lv2 头盔 · 良品</i><i class="tag dim">安全帽</i></div>
         <div class="sub"><code>helmet2.png</code> · 防护 <b class="dr">Lv2</b> · 耐久 30 · 0.8kg · ¥6,000</div>
-        <div class="vis"><b>画什么</b>亮黄硬塑安全帽，顶部两道加强筋，小前檐，两侧透气孔，表面有划痕和褪色。</div>
+        <div class="vis"><b>画什么</b>亮黄硬塑安全帽，顶部两道加强筋，小前檐，两侧透气孔，表面有划痕和褪色。</div><div class="desc"></div>
       </div>
     </div>
     <div class="item lv3">
       <div class="thumb"><img src="assets/gear/helmet3.png" width="48" height="48" alt="helmet3"></div>
       <div class="meta">
-        <div class="name">防撞头盔<i class="tag">Lv3 头盔</i><i class="tag dim">防撞盔</i></div>
+        <div class="name">防撞头盔<i class="tag">Lv3 头盔 · 上乘</i><i class="tag dim">防撞盔</i></div>
         <div class="sub"><code>helmet3.png</code> · 防护 <b class="dr">Lv3</b> · 耐久 45 · 1.2kg · ¥15,000</div>
-        <div class="vis"><b>画什么</b>深灰军绿硬壳，比安全帽厚，带侧护耳片和下颚带，没有面罩。轮廓开始往"圆壳"走。</div>
+        <div class="vis"><b>画什么</b>深灰军绿硬壳，比安全帽厚，带侧护耳片和下颚带，没有面罩。轮廓开始往"圆壳"走。</div><div class="desc"></div>
       </div>
     </div>
-    <div class="item lv4">
+    <div class="item lv3">
       <div class="thumb"><img src="assets/gear/helmet4.png" width="48" height="48" alt="helmet4"></div>
       <div class="meta">
-        <div class="name">防弹头盔<i class="tag">Lv4 头盔</i><i class="tag dim">防弹盔</i></div>
+        <div class="name">防弹头盔<i class="tag">Lv4 头盔 · 上乘</i><i class="tag dim">防弹盔</i></div>
         <div class="sub"><code>helmet4.png</code> · 防护 <b class="dr">Lv4</b> · 耐久 65 · 1.8kg · ¥48,000</div>
-        <div class="vis"><b>画什么</b>圆润厚壳防弹盔，哑光涂层，侧导轨 + 前挂点，边缘包胶。壳厚明显大于 Lv3。</div>
+        <div class="vis"><b>画什么</b>圆润厚壳防弹盔，哑光涂层，侧导轨 + 前挂点，边缘包胶。壳厚明显大于 Lv3。</div><div class="desc"></div>
       </div>
     </div>
     <div class="item lv5">
       <div class="thumb"><img src="assets/gear/helmet5.png" width="48" height="48" alt="helmet5"></div>
       <div class="meta">
-        <div class="name">重型防弹盔<i class="tag">Lv5 头盔</i><i class="tag dim">重盔</i></div>
+        <div class="name">重型防弹盔<i class="tag">Lv5 头盔 · 珍罕</i><i class="tag dim">重盔</i></div>
         <div class="sub"><code>helmet5.png</code> · 防护 <b class="dr">Lv5</b> · 耐久 85 · 2.5kg · ¥120,000</div>
-        <div class="vis"><b>画什么</b>在 Lv4 基础上加厚：后颈护片、侧面配重/耳麦座、加宽前檐。整体轮廓变宽变沉。</div>
+        <div class="vis"><b>画什么</b>在 Lv4 基础上加厚：后颈护片、侧面配重/耳麦座、加宽前檐。整体轮廓变宽变沉。</div><div class="desc"></div>
       </div>
     </div>
     <div class="item lv6">
       <div class="thumb"><img src="assets/gear/helmet6.png" width="48" height="48" alt="helmet6"></div>
       <div class="meta">
-        <div class="name">攻坚头盔<i class="tag">Lv6 头盔</i><i class="tag dim">攻坚盔</i></div>
+        <div class="name">攻坚头盔<i class="tag">Lv6 头盔 · 孤品</i><i class="tag dim">攻坚盔</i></div>
         <div class="sub"><code>helmet6.png</code> · 防护 <b class="dr">Lv6</b> · 耐久 110 · 3.5kg · ¥350,000</div>
-        <div class="vis"><b>画什么</b>全罩式：正面一整块略带反光的防弹面罩，两侧螺栓和配重块，下颌包住。剪影最高最重。</div>
+        <div class="vis"><b>画什么</b>全罩式：正面一整块略带反光的防弹面罩，两侧螺栓和配重块，下颌包住。剪影最高最重。</div><div class="desc"></div>
+      </div>
+    </div>
+    <div class="item lv1">
+      <div class="thumb"><img src="assets/gear/helmet1_motorcycle.png" width="48" height="48" alt="helmet1_motorcycle"></div>
+      <div class="meta">
+        <div class="name">旧式摩托盔<i class="tag">Lv1 头盔 · 寻常</i><i class="tag dim">摩托盔</i></div>
+        <div class="sub"><code>helmet1_motorcycle.png</code> · 防护 <b class="dr">Lv1</b> · 耐久 28 · 0.85kg · ¥2,400</div>
+        <div class="vis"><b>画什么</b>米白色圆鼓硬壳，宽阔的开放面部缺口，短小黑色前檐，耳侧棕色软垫和垂下的下颚带；一道褪色橙条，漆面少量磕碰。没有面罩、导轨或军用附件。与原软布工帽形成圆硬壳／软帽的剪影差别。</div><div class="desc">早年常见的开放式摩托车头盔，硬壳下面填着已经变硬的泡棉，耳侧的衬布还能拆下来清洗。
+
+内衬上印着一排尺码，原主人把其中两个划掉，旁边补了一句：戴围巾时用大的。</div>
+      </div>
+    </div>
+    <div class="item lv2">
+      <div class="thumb"><img src="assets/gear/helmet2_rescue.png" width="48" height="48" alt="helmet2_rescue"></div>
+      <div class="meta">
+        <div class="name">轻型救援盔<i class="tag">Lv2 头盔 · 良品</i><i class="tag dim">救援盔</i></div>
+        <div class="sub"><code>helmet2_rescue.png</code> · 防护 <b class="dr">Lv2</b> · 耐久 24 · 0.6kg · ¥7,200</div>
+        <div class="vis"><b>画什么</b>褪色暗橙色低矮硬壳，短檐、两道宽散热槽，细黑色四点下颚带，后缘小块米白反光贴。没有医疗十字、不配置现代灯具导轨。比黄色工程帽更贴头、轮廓更低。</div><div class="desc">面向狭窄空间作业的轻型头盔，采用短檐外壳与四点式固定带，蹲下或低头时不容易从头上滑落。
+
+培训说明要求每次使用前检查扣具。实际留在盔上的检查贴纸，已经把能填写的地方全部用完了。</div>
+      </div>
+    </div>
+    <div class="item lv3">
+      <div class="thumb"><img src="assets/gear/helmet3_riot.png" width="48" height="48" alt="helmet3_riot"></div>
+      <div class="meta">
+        <div class="name">治安防暴盔<i class="tag">Lv3 头盔 · 上乘</i><i class="tag dim">防暴盔</i></div>
+        <div class="sub"><code>helmet3_riot.png</code> · 防护 <b class="dr">Lv3</b> · 耐久 60 · 1.7kg · ¥18,000</div>
+        <div class="vis"><b>画什么</b>深海军蓝厚圆壳，两侧大圆转轴，透明烟灰面罩抬到额头前上方，后缘短黑色护颈。用粗轮廓与两道冷灰反光表现透明面罩，不把整张脸涂成白块。没有未来电子装备。</div><div class="desc">深色防暴头盔，面罩由两侧转轴固定，后方缝着一片可折起的护颈。面罩上的擦痕比盔壳上的多得多。
+
+储藏室的交接表将面罩列作可更换耗材。最后几次记录里，这一栏都写着：缺货，保留旧件。</div>
+      </div>
+    </div>
+    <div class="item lv3">
+      <div class="thumb"><img src="assets/gear/helmet4_light.png" width="48" height="48" alt="helmet4_light"></div>
+      <div class="meta">
+        <div class="name">短沿轻型防弹盔<i class="tag">Lv4 头盔 · 上乘</i><i class="tag dim">轻型弹盔</i></div>
+        <div class="sub"><code>helmet4_light.png</code> · 防护 <b class="dr">Lv4</b> · 耐久 50 · 1.35kg · ¥57,600</div>
+        <div class="vis"><b>画什么</b>砂灰色紧凑圆壳，极短前檐、较低耳侧轮廓、黑色窄包边与细下颚带，侧面露出一颗小固定螺钉；没有导轨、前挂点、耳机和护颈。靠简洁剪影与浅砂色区别原厚重军绿防弹盔。</div><div class="desc">采用较薄壳体与简化悬挂系统的防弹盔，取消了不必要的外部安装座，主要面向需要长时间佩戴的人员。
+
+采购目录将它称作轻型。包装箱的搬运提示却没有随之修改，仍然要求两人共同抬运。</div>
       </div>
     </div></div>
 </section>
 
 <section class="cat">
-  <h2>身体护甲<em>body armor</em><i>6 张 · Lv1–Lv6</i></h2>
+  <p><a href="assets/item-art/armor-variants/index.html">新增8款图标与缩小预览</a> · 同级装备通过耐久、重量与瞄准准备时间取舍；不再直接降低移速，负重分档仍有效。</p><h2>身体护甲<em>body armor</em><i>10 张 · Lv1–Lv6</i></h2>
   <div class="grid">
     <div class="item lv1">
       <div class="thumb"><img src="assets/gear/body1.png" width="48" height="48" alt="body1"></div>
       <div class="meta">
-        <div class="name">帆布护胸<i class="tag">Lv1 身体护甲</i><i class="tag dim">护胸</i></div>
-        <div class="sub"><code>body1.png</code> · 防护 <b class="dr">Lv1</b> · 耐久 40 · 1.5kg · 移速 ×1.00 · ¥3,000</div>
-        <div class="vis"><b>画什么</b>厚帆布护胸，土黄色，前面两块方块补丁、粗缝线，肩是布带。软材质，没有插板轮廓。</div>
+        <div class="name">帆布护胸<i class="tag">Lv1 身体护甲 · 寻常</i><i class="tag dim">护胸</i></div>
+        <div class="sub"><code>body1.png</code> · 防护 <b class="dr">Lv1</b> · 耐久 40 · 1.5kg · 瞄准时间 +0% · ¥3,000</div>
+        <div class="vis"><b>画什么</b>厚帆布护胸，土黄色，前面两块方块补丁、粗缝线，肩是布带。软材质，没有插板轮廓。</div><div class="desc"></div>
       </div>
     </div>
     <div class="item lv2">
       <div class="thumb"><img src="assets/gear/body2.png" width="48" height="48" alt="body2"></div>
       <div class="meta">
-        <div class="name">防刺背心<i class="tag">Lv2 身体护甲</i><i class="tag dim">防刺</i></div>
-        <div class="sub"><code>body2.png</code> · 防护 <b class="dr">Lv2</b> · 耐久 60 · 2.5kg · 移速 ×0.98 · ¥9,000</div>
-        <div class="vis"><b>画什么</b>黑色多层纤维防刺背心，表面能看出层压纹路和缝线，肩部与侧面有绑带。比帆布硬，但仍软塌。</div>
+        <div class="name">防刺背心<i class="tag">Lv2 身体护甲 · 良品</i><i class="tag dim">防刺</i></div>
+        <div class="sub"><code>body2.png</code> · 防护 <b class="dr">Lv2</b> · 耐久 60 · 2.5kg · 瞄准时间 +10% · ¥9,000</div>
+        <div class="vis"><b>画什么</b>黑色多层纤维防刺背心，表面能看出层压纹路和缝线，肩部与侧面有绑带。比帆布硬，但仍软塌。</div><div class="desc"></div>
       </div>
     </div>
     <div class="item lv3">
       <div class="thumb"><img src="assets/gear/body3.png" width="48" height="48" alt="body3"></div>
       <div class="meta">
-        <div class="name">轻型战术背心<i class="tag">Lv3 身体护甲</i><i class="tag dim">轻甲</i></div>
-        <div class="sub"><code>body3.png</code> · 防护 <b class="dr">Lv3</b> · 耐久 85 · 4kg · 移速 ×0.96 · ¥28,000</div>
-        <div class="vis"><b>画什么</b>军绿战术背心，织带系统 + 竖排三个弹匣袋 + 一块魔术贴，里面是空的。整体贴身、窄。</div>
+        <div class="name">轻型战术背心<i class="tag">Lv3 身体护甲 · 上乘</i><i class="tag dim">轻甲</i></div>
+        <div class="sub"><code>body3.png</code> · 防护 <b class="dr">Lv3</b> · 耐久 85 · 4kg · 瞄准时间 +20% · ¥28,000</div>
+        <div class="vis"><b>画什么</b>军绿战术背心，织带系统 + 竖排三个弹匣袋 + 一块魔术贴，里面是空的。整体贴身、窄。</div><div class="desc"></div>
       </div>
     </div>
-    <div class="item lv4">
+    <div class="item lv3">
       <div class="thumb"><img src="assets/gear/body4.png" width="48" height="48" alt="body4"></div>
       <div class="meta">
-        <div class="name">战术防弹衣<i class="tag">Lv4 身体护甲</i><i class="tag dim">战术甲</i></div>
-        <div class="sub"><code>body4.png</code> · 防护 <b class="dr">Lv4</b> · 耐久 115 · 6kg · 移速 ×0.94 · ¥85,000</div>
-        <div class="vis"><b>画什么</b>战术防弹衣，能看出前后插板的硬边轮廓，侧腰收紧带，肩部有软垫。比上一级厚一格，肩线变方。</div>
+        <div class="name">战术防弹衣<i class="tag">Lv4 身体护甲 · 上乘</i><i class="tag dim">战术甲</i></div>
+        <div class="sub"><code>body4.png</code> · 防护 <b class="dr">Lv4</b> · 耐久 115 · 6kg · 瞄准时间 +30% · ¥85,000</div>
+        <div class="vis"><b>画什么</b>战术防弹衣，能看出前后插板的硬边轮廓，侧腰收紧带，肩部有软垫。比上一级厚一格，肩线变方。</div><div class="desc"></div>
       </div>
     </div>
     <div class="item lv5">
       <div class="thumb"><img src="assets/gear/body5.png" width="48" height="48" alt="body5"></div>
       <div class="meta">
-        <div class="name">重型防弹衣<i class="tag">Lv5 身体护甲</i><i class="tag dim">重甲</i></div>
-        <div class="sub"><code>body5.png</code> · 防护 <b class="dr">Lv5</b> · 耐久 150 · 9kg · 移速 ×0.91 · ¥220,000</div>
-        <div class="vis"><b>画什么</b>重型防弹衣，加厚插板 + 立领护颈 + 护裆片 + 一圈口袋。整件变宽、变方、有明显的厚度立面。</div>
+        <div class="name">重型防弹衣<i class="tag">Lv5 身体护甲 · 珍罕</i><i class="tag dim">重甲</i></div>
+        <div class="sub"><code>body5.png</code> · 防护 <b class="dr">Lv5</b> · 耐久 150 · 9kg · 瞄准时间 +45% · ¥220,000</div>
+        <div class="vis"><b>画什么</b>重型防弹衣，加厚插板 + 立领护颈 + 护裆片 + 一圈口袋。整件变宽、变方、有明显的厚度立面。</div><div class="desc"></div>
       </div>
     </div>
     <div class="item lv6">
       <div class="thumb"><img src="assets/gear/body6.png" width="48" height="48" alt="body6"></div>
       <div class="meta">
-        <div class="name">攻坚装甲<i class="tag">Lv6 身体护甲</i><i class="tag dim">攻坚甲</i></div>
-        <div class="sub"><code>body6.png</code> · 防护 <b class="dr">Lv6</b> · 耐久 190 · 13kg · 移速 ×0.88 · ¥650,000</div>
-        <div class="vis"><b>画什么</b>攻坚装甲，硬质外骨骼式：分块装甲片、硬领、肩甲、螺栓和液压管。剪影最宽最厚，一眼就是"重装"。</div>
+        <div class="name">攻坚装甲<i class="tag">Lv6 身体护甲 · 孤品</i><i class="tag dim">攻坚甲</i></div>
+        <div class="sub"><code>body6.png</code> · 防护 <b class="dr">Lv6</b> · 耐久 190 · 13kg · 瞄准时间 +60% · ¥650,000</div>
+        <div class="vis"><b>画什么</b>攻坚装甲，硬质外骨骼式：分块装甲片、硬领、肩甲、螺栓和液压管。剪影最宽最厚，一眼就是"重装"。</div><div class="desc"></div>
+      </div>
+    </div>
+    <div class="item lv1">
+      <div class="thumb"><img src="assets/gear/body1_leather.png" width="48" height="48" alt="body1_leather"></div>
+      <div class="meta">
+        <div class="name">皮革作业背心<i class="tag">Lv1 身体护甲 · 寻常</i><i class="tag dim">皮革背心</i></div>
+        <div class="sub"><code>body1_leather.png</code> · 防护 <b class="dr">Lv1</b> · 耐久 55 · 2kg · 瞄准时间 +4% · ¥3,600</div>
+        <div class="vis"><b>画什么</b>深红棕皮革，宽肩、深V领、三枚粗金属扣，胸前大块叠皮，腰侧一只扁工具袋；轮廓上宽下直，皮面有折痕与浅色擦伤。区别原土黄帆布护胸，不画成带钢板的重甲。</div><div class="desc">用厚皮革和帆布衬里缝成的作业背心，胸前有两片重叠的护片。扣具很大，戴着手套也能解开。
+
+左下角的工具袋被补了三次。最后一次修补的人没有再缝袋口，而是把整只袋子封死了。</div>
+      </div>
+    </div>
+    <div class="item lv2">
+      <div class="thumb"><img src="assets/gear/body2_concealed.png" width="48" height="48" alt="body2_concealed"></div>
+      <div class="meta">
+        <div class="name">隐蔽式软甲<i class="tag">Lv2 身体护甲 · 良品</i><i class="tag dim">隐蔽软甲</i></div>
+        <div class="sub"><code>body2_concealed.png</code> · 防护 <b class="dr">Lv2</b> · 耐久 45 · 1.8kg · 瞄准时间 +4% · ¥10,800</div>
+        <div class="vis"><b>画什么</b>灰白或浅米色薄软甲，圆领、窄肩、两侧宽粘扣片，胸前平整只有一条浅缝；没有外挂袋和硬插板轮廓。紧凑、贴身、短下摆，与黑色厚层防刺背心分开。</div><div class="desc">可以穿在衬衣下面的薄型防护背心，肩部和侧腰采用宽幅粘扣，外层布套允许单独拆洗。
+
+销售手册特意展示了它藏在西装下面的照片。照片中的人把外套扣得很紧，双臂始终没有放下来。</div>
+      </div>
+    </div>
+    <div class="item lv3">
+      <div class="thumb"><img src="assets/gear/body3_fragmentation.png" width="48" height="48" alt="body3_fragmentation"></div>
+      <div class="meta">
+        <div class="name">旧式军用防片衣<i class="tag">Lv3 身体护甲 · 上乘</i><i class="tag dim">防片衣</i></div>
+        <div class="sub"><code>body3_fragmentation.png</code> · 防护 <b class="dr">Lv3</b> · 耐久 110 · 5.2kg · 瞄准时间 +30% · ¥33,600</div>
+        <div class="vis"><b>画什么</b>褪色灰橄榄绿厚布衣，短立领、宽肩、分段绗缝与下腹软护片，胸部仅两个扁平斜袋；整体宽厚、长下摆，不画现代织带矩阵或成排弹匣袋，与原窄身战术背心明显区分。</div><div class="desc">上一代军用防护服，厚实的纤维填充层分成数个独立区域，衣领和腹部留有柔软的延伸护片。体积不小，口袋却只有两个。
+
+内侧标签要求在干燥通风处悬挂存放。它被找到时，恰好挂在一间已经没有屋顶的库房里。</div>
+      </div>
+    </div>
+    <div class="item lv3">
+      <div class="thumb"><img src="assets/gear/body4_lightplate.png" width="48" height="48" alt="body4_lightplate"></div>
+      <div class="meta">
+        <div class="name">轻型插板背心<i class="tag">Lv4 身体护甲 · 上乘</i><i class="tag dim">轻型板甲</i></div>
+        <div class="sub"><code>body4_lightplate.png</code> · 防护 <b class="dr">Lv4</b> · 耐久 90 · 4.7kg · 瞄准时间 +14% · ¥102,000</div>
+        <div class="vis"><b>画什么</b>深石墨灰窄身板袋，前部一块清晰的切角矩形插板轮廓，两条宽肩带和侧腰开放式织带扣；短下摆、无腹甲、无护颈、没有密集外挂袋。局部旧卡其色缝线，不与浅砂色头盔做成同色套装。</div><div class="desc">围绕前后防护板设计的简化载具，只保留必要的固定带和调节扣。侧腰没有厚软垫，活动时会露出里面的衬衣。
+
+卖方附送了一张可另行订购的附件清单。清单上的配件全部装齐以后，它就不再比普通型号轻了。</div>
       </div>
     </div></div>
 </section>

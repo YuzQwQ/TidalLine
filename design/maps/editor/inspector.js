@@ -11,6 +11,7 @@
     row.className = 'field';
     const k = document.createElement('label');
     k.textContent = label;
+    if(node.setAttribute)node.setAttribute('aria-label',label);
     row.appendChild(k);
     row.appendChild(node);
     if (hint) {
@@ -142,8 +143,14 @@
     } else if (sel.kind === 'enemy') {
       const opts2 = Object.entries(root.EditorPalette.ENEMY).map(([k, v]) => [k, v.name]);
       host.appendChild(field('类型', selectInput(opts2, ref.type, v => commit('改敌人类型', d => {
-        const e = T.resolve(d, sel); if (e) e.type = v;
+        const e = T.resolve(d, sel); if (e) {e.type=v;delete e.guardAnchor;delete e.squadId;if(['holdout','retriever'].includes(v))e.facing=e.facing||'s';else delete e.facing;}
       }))));
+      if(['holdout','retriever'].includes(ref.type))host.appendChild(field('初始朝向',selectInput([['s','南'],['n','北'],['e','东'],['w','西']],ref.facing||'s',v=>commit('改初始朝向',d=>{T.resolve(d,sel).facing=v;}))));
+      if(ref.type==='holdout'){
+        for(const [i,label]of [[0,'看守锚点 X'],[1,'看守锚点 Y']])host.appendChild(field(label,numberInput((ref.guardAnchor||[ref.x,ref.y])[i],v=>commit('改看守锚点',d=>{const e=T.resolve(d,sel);const p=e.guardAnchor?[...e.guardAnchor]:[e.x,e.y];p[i]=v;e.guardAnchor=p;}),0,i===0?data.width-1:data.height-1),'警戒半径3格；锚点距出生点最多6格'));
+        const reset=document.createElement('button');reset.textContent='锚点使用出生点';reset.onclick=()=>commit('重置看守锚点',d=>{delete T.resolve(d,sel).guardAnchor;});host.appendChild(reset);
+      }
+      if(ref.type==='retriever')host.appendChild(field('回收小组编号',textInput(ref.squadId||'',v=>commit('改回收小组',d=>{const e=T.resolve(d,sel),id=v.trim();if(id)e.squadId=id;else delete e.squadId;})),'留空为单人；相同编号最多2人，10格内可联络'));
       host.appendChild(field('巡逻半径', numberInput(ref.patrolRadius || 0, v => commit('改巡逻半径', d => {
         const e = T.resolve(d, sel); if (e) e.patrolRadius = v;
       }), 0, 12), '格；与出生点 12 格、撤离点 6 格内不能有敌人'));

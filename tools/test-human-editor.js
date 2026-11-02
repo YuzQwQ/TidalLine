@@ -1,0 +1,14 @@
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict');
+const root=path.resolve(__dirname,'..'),Core=require('../design/maps/shared/map-core'),Tpl=require('../design/maps/shared/map-templates'),V=require('../design/maps/shared/map-validator');
+const c=vm.createContext({console,MapCore:Core,MapTemplates:Tpl,SceneLibrary:require('../design/maps/shared/scene-library'),MapArtMap:require('../design/maps/shared/map-art-map')});c.window=c;for(const f of ['palette','tools'])vm.runInContext(fs.readFileSync(path.join(root,'design/maps/editor/'+f+'.js'),'utf8'),c);
+const d=Tpl.create({id:'human-editor-test',width:50,height:36,template:'blank'}).data,T=c.EditorTools;
+for(const [type,x,y]of[['holdout',20,15],['retriever',25,15],['retriever',30,15]])assert(T.place(d,{kind:'enemy',type},x,y).ok);
+const [a,b,e]=d.enemies;a.facing='w';a.guardAnchor=[21,15];b.squadId=e.squadId='recovery';const rules={specialChecks:[],checkQuotas:false};
+const normal=Core.parse(Core.serialize(d));assert.deepEqual(normal.enemies,JSON.parse(JSON.stringify(d.enemies)));assert(c.EditorPalette.ENEMY.holdout);assert(c.EditorPalette.ENEMY.retriever);
+const errs=x=>V.validateMap(x,rules).issues.filter(i=>i.level==='error'&&i.rule==='G7');
+assert.equal(errs(normal).length,0,JSON.stringify(errs(normal)));
+const bad=Core.clone(normal);bad.enemies[0].guardAnchor=[40,15];assert(errs(bad).some(x=>x.message.includes('锚点')));
+const three=Core.clone(normal);three.enemies.push({id:'extra',type:'retriever',x:35,y:15,patrolRadius:2,squadId:'recovery'});assert(errs(three).some(x=>x.message.includes('超过2人')));
+const invalid=Core.clone(normal);invalid.enemies[0].facing='bad';assert(errs(invalid).some(x=>x.message.includes('朝向')));
+const legacy=JSON.parse(fs.readFileSync(path.join(root,'design/maps/linhai-old-quarter/layout.json')));assert.equal(V.validateMap(legacy,require('../design/maps/linhai-old-quarter/rules.json')).issues.filter(i=>i.level==='error').length,0);
+const forCompile=Core.clone(legacy);for(let i=0;i<3;i++){Object.assign(forCompile.enemies[i],{type:normal.enemies[i].type,facing:normal.enemies[i].facing});if(i===0)forCompile.enemies[i].guardAnchor=[forCompile.enemies[i].x,forCompile.enemies[i].y];else forCompile.enemies[i].squadId='recovery';}const runtime=require('./build-linhai-map').compile(forCompile);assert.deepEqual(runtime.enemies,forCompile.enemies);fs.writeFileSync(path.join(root,'design/enemies/human-units-v1/editor-validation.json'),JSON.stringify({status:'passed',newTypes:2,roundtrip:true,compile:true,anchorValidation:true,squadLimit:true,legacyMap:true},null,2)+'\n');console.log('PASS: new editor types, fields, roundtrip, compiled spawn config, invalid anchor/facing, two-member squads and old map validation');

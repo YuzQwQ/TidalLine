@@ -259,9 +259,9 @@ Object.assign(Game, {
         icon: id,
         fb: w ? w.short.charAt(0) : '—',
         label: w ? w.short : '武器',
-        tag: w ? w.mag + '发' : '',
+        tag: w ? (e.gun.magCur!=null?e.gun.magCur+'/'+w.mag:w.mag)+'发' : '',
         own: !!(P && w && (w.slot === 'primary' ? (P.weapons[0] && P.weapons[1]) : P.weapons[2])),
-        item: w ? EQUIP.gun(id, 0) : null
+        item: w ? this.corpseGun(e) : null
       });
     }
 
@@ -300,6 +300,12 @@ Object.assign(Game, {
     return typeof g === 'string' ? g : (g.id || null);
   },
 
+  corpseGun(entry){
+    const id=this.gunId(entry),w=WEAPONS[id];if(!w)return null;
+    const g=entry.gun;
+    return g.magCur!=null?EQUIP.gun(id,g.magCur,g.ammo,g.rounds):EQUIP.gun(id,Math.max(1,Math.round(w.mag*.3)));
+  },
+
   /* 装备条目有两种形态：尸体身上的是 { gear } / { gun }，
      容器里掉出来的是 { item:{equip} }。统一成一份规格再走同一套流程。 */
   gearSpec(entry) {
@@ -307,11 +313,11 @@ Object.assign(Game, {
     if (entry.gear) return { g: entry.gear, isGun: false, bag: false };
     if (entry.gun) {
       const id = this.gunId(entry);
-      return { g: WEAPONS[id] || null, isGun: true, gunId: id, bag: false };
+      return { g: WEAPONS[id] || null, isGun: true, gunId: id, gunItem:this.corpseGun(entry), bag: false };
     }
     const eq = entry.item && entry.item.equip;
     if (!eq) return null;
-    if (eq.kind === 'gun') return { g: WEAPONS[eq.gun] || null, isGun: true, gunId: eq.gun, bag: false };
+    if (eq.kind === 'gun') return { g: WEAPONS[eq.gun] || null, isGun: true, gunId: eq.gun, gunItem:EQUIP.gun(eq.gun,eq.mag,eq.ammo,eq.rounds),bag: false };
     if (eq.kind === 'bag') return { g: BACKPACK.make(eq.bag), isGun: false, bag: true };
     if (eq.kind === 'armor') return { g: eq.gear, isGun: false, bag: false };
     return null;
@@ -332,9 +338,9 @@ Object.assign(Game, {
       const range = g.slot === 'primary' ? [0, 1] : [2];
       const free = range.find(k => !P.weapons[k]);
       if (free != null) {
-        const got = Math.max(1, Math.round(g.mag * 0.3));
-        P.weapons[free] = Object.assign({}, g, { magCur: got });
-        if (!P.weapons[P.slot]) { P.slot = free; P.mag = got; }
+        const snap=s.gunItem.equip,got=snap.mag;
+        P.weapons[free] = Object.assign({}, g, { magCur: got,ammo:snap.ammo,rounds:[...snap.rounds] });
+        if (!P.weapons[P.slot] || P.slot===free) { P.slot = free; P.mag = got; }
         msg = '换上 ' + g.name + '（' + got + ' 发）';
       }
     } else if (s.bag) {
@@ -349,7 +355,7 @@ Object.assign(Game, {
 
     if (!msg) {
       const item = s.isGun
-        ? EQUIP.gun(s.gunId, Math.max(1, Math.round(g.mag * 0.3)))
+        ? s.gunItem
         : EQUIP.armor(g);
       const res = P.bag.canAdd(item, 1);
       if (!res.ok) { this.toast(res.why); return false; }

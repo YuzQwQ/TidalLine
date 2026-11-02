@@ -1,0 +1,849 @@
+{
+  "status": "passed",
+  "groups": 10,
+  "models": 20,
+  "variants": 8,
+  "aimTiming": [
+    {
+      "weapon": "rifle",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.4,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "rifle",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.4,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "rifle",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.4,
+      "elapsed": 0.4027777777777778
+    },
+    {
+      "weapon": "rifle",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.44000000000000006,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "rifle",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.44000000000000006,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "rifle",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.44000000000000006,
+      "elapsed": 0.4444444444444444
+    },
+    {
+      "weapon": "rifle",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.48,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "rifle",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.48,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "rifle",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.48,
+      "elapsed": 0.4861111111111111
+    },
+    {
+      "weapon": "rifle",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.52,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "rifle",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.52,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "rifle",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.52,
+      "elapsed": 0.5208333333333334
+    },
+    {
+      "weapon": "rifle",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.58,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "rifle",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.58,
+      "elapsed": 0.5833333333333334
+    },
+    {
+      "weapon": "rifle",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.58,
+      "elapsed": 0.5833333333333334
+    },
+    {
+      "weapon": "rifle",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.6400000000000001,
+      "elapsed": 0.6666666666666666
+    },
+    {
+      "weapon": "rifle",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.6400000000000001,
+      "elapsed": 0.65
+    },
+    {
+      "weapon": "rifle",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.6400000000000001,
+      "elapsed": 0.6458333333333334
+    },
+    {
+      "weapon": "rifle",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "rifle",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "rifle",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "rifle",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "rifle",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "rifle",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "rifle",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.52,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "rifle",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.52,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "rifle",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.52,
+      "elapsed": 0.5208333333333334
+    },
+    {
+      "weapon": "rifle",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.45600000000000007,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "rifle",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.45600000000000007,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "rifle",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.45600000000000007,
+      "elapsed": 0.4583333333333333
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.45,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.45,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.45,
+      "elapsed": 0.4513888888888889
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.49500000000000005,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.49500000000000005,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.49500000000000005,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.54,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.54,
+      "elapsed": 0.55
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.54,
+      "elapsed": 0.5416666666666666
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.5850000000000001,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.5850000000000001,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.5850000000000001,
+      "elapsed": 0.5902777777777778
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.6525,
+      "elapsed": 0.6666666666666666
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.6525,
+      "elapsed": 0.6666666666666666
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.6525,
+      "elapsed": 0.6527777777777778
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.7200000000000001,
+      "elapsed": 0.7333333333333333
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.7200000000000001,
+      "elapsed": 0.7333333333333333
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.7200000000000001,
+      "elapsed": 0.7222222222222222
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.468,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.468,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.468,
+      "elapsed": 0.4722222222222222
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.468,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.468,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.468,
+      "elapsed": 0.4722222222222222
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.5850000000000001,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.5850000000000001,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.5850000000000001,
+      "elapsed": 0.5902777777777778
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.5130000000000001,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.5130000000000001,
+      "elapsed": 0.5166666666666667
+    },
+    {
+      "weapon": "shotgun",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.5130000000000001,
+      "elapsed": 0.5138888888888888
+    },
+    {
+      "weapon": "smg",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.3,
+      "elapsed": 0.3
+    },
+    {
+      "weapon": "smg",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.3,
+      "elapsed": 0.3
+    },
+    {
+      "weapon": "smg",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.3,
+      "elapsed": 0.3055555555555556
+    },
+    {
+      "weapon": "smg",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.33,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "smg",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.33,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "smg",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.33,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "smg",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.36,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "smg",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.36,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "smg",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.36,
+      "elapsed": 0.3611111111111111
+    },
+    {
+      "weapon": "smg",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.39,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "smg",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.39,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "smg",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.39,
+      "elapsed": 0.3958333333333333
+    },
+    {
+      "weapon": "smg",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.435,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "smg",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.435,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "smg",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.435,
+      "elapsed": 0.4375
+    },
+    {
+      "weapon": "smg",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.48,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "smg",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.48,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "smg",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.48,
+      "elapsed": 0.4861111111111111
+    },
+    {
+      "weapon": "smg",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.312,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "smg",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.312,
+      "elapsed": 0.31666666666666665
+    },
+    {
+      "weapon": "smg",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.312,
+      "elapsed": 0.3125
+    },
+    {
+      "weapon": "smg",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.312,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "smg",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.312,
+      "elapsed": 0.31666666666666665
+    },
+    {
+      "weapon": "smg",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.312,
+      "elapsed": 0.3125
+    },
+    {
+      "weapon": "smg",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.39,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "smg",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.39,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "smg",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.39,
+      "elapsed": 0.3958333333333333
+    },
+    {
+      "weapon": "smg",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.342,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "smg",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.342,
+      "elapsed": 0.35
+    },
+    {
+      "weapon": "smg",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.342,
+      "elapsed": 0.3472222222222222
+    },
+    {
+      "weapon": "pistol",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.2,
+      "elapsed": 0.2
+    },
+    {
+      "weapon": "pistol",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.2,
+      "elapsed": 0.2
+    },
+    {
+      "weapon": "pistol",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.2,
+      "elapsed": 0.2013888888888889
+    },
+    {
+      "weapon": "pistol",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.22000000000000003,
+      "elapsed": 0.23333333333333334
+    },
+    {
+      "weapon": "pistol",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.22000000000000003,
+      "elapsed": 0.23333333333333334
+    },
+    {
+      "weapon": "pistol",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.22000000000000003,
+      "elapsed": 0.2222222222222222
+    },
+    {
+      "weapon": "pistol",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.24,
+      "elapsed": 0.26666666666666666
+    },
+    {
+      "weapon": "pistol",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.24,
+      "elapsed": 0.25
+    },
+    {
+      "weapon": "pistol",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.24,
+      "elapsed": 0.24305555555555555
+    },
+    {
+      "weapon": "pistol",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.26,
+      "elapsed": 0.26666666666666666
+    },
+    {
+      "weapon": "pistol",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.26,
+      "elapsed": 0.26666666666666666
+    },
+    {
+      "weapon": "pistol",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.26,
+      "elapsed": 0.2638888888888889
+    },
+    {
+      "weapon": "pistol",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.29,
+      "elapsed": 0.3
+    },
+    {
+      "weapon": "pistol",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.29,
+      "elapsed": 0.3
+    },
+    {
+      "weapon": "pistol",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.29,
+      "elapsed": 0.2916666666666667
+    },
+    {
+      "weapon": "pistol",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.32000000000000006,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "pistol",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.32000000000000006,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "pistol",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.32000000000000006,
+      "elapsed": 0.3263888888888889
+    },
+    {
+      "weapon": "pistol",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.20800000000000002,
+      "elapsed": 0.23333333333333334
+    },
+    {
+      "weapon": "pistol",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.20800000000000002,
+      "elapsed": 0.21666666666666667
+    },
+    {
+      "weapon": "pistol",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.20800000000000002,
+      "elapsed": 0.20833333333333334
+    },
+    {
+      "weapon": "pistol",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.20800000000000002,
+      "elapsed": 0.23333333333333334
+    },
+    {
+      "weapon": "pistol",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.20800000000000002,
+      "elapsed": 0.21666666666666667
+    },
+    {
+      "weapon": "pistol",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.20800000000000002,
+      "elapsed": 0.20833333333333334
+    },
+    {
+      "weapon": "pistol",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.26,
+      "elapsed": 0.26666666666666666
+    },
+    {
+      "weapon": "pistol",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.26,
+      "elapsed": 0.26666666666666666
+    },
+    {
+      "weapon": "pistol",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.26,
+      "elapsed": 0.2638888888888889
+    },
+    {
+      "weapon": "pistol",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.22800000000000004,
+      "elapsed": 0.23333333333333334
+    },
+    {
+      "weapon": "pistol",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.22800000000000004,
+      "elapsed": 0.23333333333333334
+    },
+    {
+      "weapon": "pistol",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.22800000000000004,
+      "elapsed": 0.22916666666666666
+    }
+  ],
+  "limits": "Unit/engine checks, not a substitute for the paired combat probe or manual playtesting."
+}

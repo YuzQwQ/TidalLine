@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "editor": {
+    "placement": true,
+    "configuration": true,
+    "undoRedo": true,
+    "reopen": true,
+    "typeCleanup": true,
+    "errors": []
+  },
+  "reports": [
+    {
+      "entry": "development_test_page",
+      "clips": 27,
+      "privateMaps": 4,
+      "formalCatalogUnchanged": true,
+      "hiddenStatusNotDrawn": true,
+      "zeroMagazineLoot": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    },
+    {
+      "entry": "offline_file",
+      "clips": 27,
+      "privateMaps": 4,
+      "formalCatalogUnchanged": true,
+      "hiddenStatusNotDrawn": true,
+      "zeroMagazineLoot": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    }
+  ]
+}

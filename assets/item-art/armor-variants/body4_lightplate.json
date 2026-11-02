@@ -1,0 +1,8 @@
+{
+  "id": "body4_lightplate",
+  "name": "轻型插板背心",
+  "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 轻型插板背心. Detailed visual brief: 深石墨灰窄身板袋，前部一块清晰的切角矩形插板轮廓，两条宽肩带和侧腰开放式织带扣；短下摆、无腹甲、无护颈、没有密集外挂袋。局部旧卡其色缝线，不与浅砂色头盔做成同色套装。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty wearable torso vest in a frontal slight-three-quarter product view, no body, head or mannequin. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+  "source": "sources/body4_lightplate.png",
+  "target": "assets/gear/body4_lightplate.png",
+  "generator": "image_gen"
+}

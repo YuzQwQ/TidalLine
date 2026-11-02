@@ -1,0 +1,8 @@
+{
+  "id": "helmet1_motorcycle",
+  "name": "旧式摩托盔",
+  "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 旧式摩托盔. Detailed visual brief: 米白色圆鼓硬壳，宽阔的开放面部缺口，短小黑色前檐，耳侧棕色软垫和垂下的下颚带；一道褪色橙条，漆面少量磕碰。没有面罩、导轨或军用附件。与原软布工帽形成圆硬壳／软帽的剪影差别。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty helmet in a slightly elevated front-three-quarter product view, no head or person. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+  "source": "sources/helmet1_motorcycle.png",
+  "target": "assets/gear/helmet1_motorcycle.png",
+  "generator": "image_gen"
+}

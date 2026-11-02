@@ -524,24 +524,6 @@ function rarityCounts(list) {
   return c;
 }
 
-/* ---------- 兼容垫片 ----------
-   新一版 data.js（等级制护甲/武器）给 GEAR 加了 random() 和 icon()，
-   仓库里这一版 js/data.js 还没有；这里补上，两版都能跑。
-   data.js 落地以后这两个判断不再生效，可以整块删掉。 */
-if (typeof GEAR === 'object' && GEAR) {
-  if (typeof GEAR.random !== 'function') {
-    GEAR.random = function (type, lv) {
-      const list = (((this[type] || {}).list) || []).filter(d => d.lv === lv);
-      const pick = list.length ? list[Math.floor(Math.random() * list.length)] : null;
-      /* 新版 make(type, 型号id)，旧版 make(type, 等级)：先按型号试，失败退回等级 */
-      return (pick && this.make(type, pick.id)) || this.make(type, lv);
-    };
-  }
-  if (typeof GEAR.icon !== 'function') {
-    GEAR.icon = function (g) { return g ? (g.id || (g.type + g.lv)) : null; };
-  }
-}
-
 /* ---------------- 掉落表 ---------------- */
 const Loot = {
   /* 尸体背包等级：1~3，权重在 CFG.CORPSE_BAG.levelWeights。

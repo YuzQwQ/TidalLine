@@ -963,6 +963,20 @@
         1,
         1
       ]
+    },
+    {
+      "group": "props",
+      "id": "corpse_holdout",
+      "name": "尸体 · 据点看守（人类）",
+      "role": "scene-component",
+      "usage": "运行时死亡尸体；无实体碰撞，不作为编辑器独立放置物块"
+    },
+    {
+      "group": "props",
+      "id": "corpse_retriever",
+      "name": "尸体 · 受雇回收员（人类）",
+      "role": "scene-component",
+      "usage": "运行时死亡尸体；无实体碰撞，不作为编辑器独立放置物块"
     }
   ]
 }

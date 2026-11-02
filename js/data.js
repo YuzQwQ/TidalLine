@@ -1039,7 +1039,7 @@ ART.gear.push(...MELEE.map(m=>m.id));
 /* ------------------------------------------------------------
    护甲：六级头盔 / 六级身体护甲
    lv = 防护等级（对应 BALLISTICS.MATRIX 的列），dur = 最大耐久，
-   move = 移速倍率（只有身体护甲有）。
+   aimPenaltyPct = 身体护甲的瞄准准备时间惩罚；move仅保留为1的兼容字段。
    已经没有"固定减伤率"这回事：挡多少只看弹药穿透等级 × 护甲等级 × 剩余耐久。
    价格采用 economy.json 中六级代表价；同级变体后续可围绕代表价浮动。
    ------------------------------------------------------------ */
@@ -1070,6 +1070,129 @@ const BODIES = [
    基础格数从 4 抬到 6：药品不再叠放，一件一格，
    三口径弹药 + 两件药就要占 5 格，4 格根本装不下出门的那套。
    ------------------------------------------------------------ */
+/* BEGIN ARMOR VARIANTS */
+const ARMOR_VARIANTS = [
+  {
+    "id": "helmet1_motorcycle",
+    "type": "helmet",
+    "lv": 1,
+    "name": "旧式摩托盔",
+    "short": "摩托盔",
+    "dur": 28,
+    "w": 0.85,
+    "price": 2400,
+    "aimPenaltyPct": 0,
+    "desc": "早年常见的开放式摩托车头盔，硬壳下面填着已经变硬的泡棉，耳侧的衬布还能拆下来清洗。\n\n内衬上印着一排尺码，原主人把其中两个划掉，旁边补了一句：戴围巾时用大的。",
+    "visual": "米白色圆鼓硬壳，宽阔的开放面部缺口，短小黑色前檐，耳侧棕色软垫和垂下的下颚带；一道褪色橙条，漆面少量磕碰。没有面罩、导轨或军用附件。与原软布工帽形成圆硬壳／软帽的剪影差别。",
+    "source": "民用骑行用品"
+  },
+  {
+    "id": "body1_leather",
+    "type": "body",
+    "lv": 1,
+    "name": "皮革作业背心",
+    "short": "皮革背心",
+    "dur": 55,
+    "w": 2,
+    "price": 3600,
+    "aimPenaltyPct": 4,
+    "desc": "用厚皮革和帆布衬里缝成的作业背心，胸前有两片重叠的护片。扣具很大，戴着手套也能解开。\n\n左下角的工具袋被补了三次。最后一次修补的人没有再缝袋口，而是把整只袋子封死了。",
+    "visual": "深红棕皮革，宽肩、深V领、三枚粗金属扣，胸前大块叠皮，腰侧一只扁工具袋；轮廓上宽下直，皮面有折痕与浅色擦伤。区别原土黄帆布护胸，不画成带钢板的重甲。",
+    "source": "船厂、机械维修作业用品"
+  },
+  {
+    "id": "helmet2_rescue",
+    "type": "helmet",
+    "lv": 2,
+    "name": "轻型救援盔",
+    "short": "救援盔",
+    "dur": 24,
+    "w": 0.6,
+    "price": 7200,
+    "aimPenaltyPct": 0,
+    "desc": "面向狭窄空间作业的轻型头盔，采用短檐外壳与四点式固定带，蹲下或低头时不容易从头上滑落。\n\n培训说明要求每次使用前检查扣具。实际留在盔上的检查贴纸，已经把能填写的地方全部用完了。",
+    "visual": "褪色暗橙色低矮硬壳，短檐、两道宽散热槽，细黑色四点下颚带，后缘小块米白反光贴。没有医疗十字、不配置现代灯具导轨。比黄色工程帽更贴头、轮廓更低。",
+    "source": "城市救援与检修作业用品"
+  },
+  {
+    "id": "body2_concealed",
+    "type": "body",
+    "lv": 2,
+    "name": "隐蔽式软甲",
+    "short": "隐蔽软甲",
+    "dur": 45,
+    "w": 1.8,
+    "price": 10800,
+    "aimPenaltyPct": 4,
+    "desc": "可以穿在衬衣下面的薄型防护背心，肩部和侧腰采用宽幅粘扣，外层布套允许单独拆洗。\n\n销售手册特意展示了它藏在西装下面的照片。照片中的人把外套扣得很紧，双臂始终没有放下来。",
+    "visual": "灰白或浅米色薄软甲，圆领、窄肩、两侧宽粘扣片，胸前平整只有一条浅缝；没有外挂袋和硬插板轮廓。紧凑、贴身、短下摆，与黑色厚层防刺背心分开。",
+    "source": "民用安保与通勤防护用品"
+  },
+  {
+    "id": "helmet3_riot",
+    "type": "helmet",
+    "lv": 3,
+    "name": "治安防暴盔",
+    "short": "防暴盔",
+    "dur": 60,
+    "w": 1.7,
+    "price": 18000,
+    "aimPenaltyPct": 0,
+    "desc": "深色防暴头盔，面罩由两侧转轴固定，后方缝着一片可折起的护颈。面罩上的擦痕比盔壳上的多得多。\n\n储藏室的交接表将面罩列作可更换耗材。最后几次记录里，这一栏都写着：缺货，保留旧件。",
+    "visual": "深海军蓝厚圆壳，两侧大圆转轴，透明烟灰面罩抬到额头前上方，后缘短黑色护颈。用粗轮廓与两道冷灰反光表现透明面罩，不把整张脸涂成白块。没有未来电子装备。",
+    "source": "旧公共安全装备库存"
+  },
+  {
+    "id": "body3_fragmentation",
+    "type": "body",
+    "lv": 3,
+    "name": "旧式军用防片衣",
+    "short": "防片衣",
+    "dur": 110,
+    "w": 5.2,
+    "price": 33600,
+    "aimPenaltyPct": 30,
+    "desc": "上一代军用防护服，厚实的纤维填充层分成数个独立区域，衣领和腹部留有柔软的延伸护片。体积不小，口袋却只有两个。\n\n内侧标签要求在干燥通风处悬挂存放。它被找到时，恰好挂在一间已经没有屋顶的库房里。",
+    "visual": "褪色灰橄榄绿厚布衣，短立领、宽肩、分段绗缝与下腹软护片，胸部仅两个扁平斜袋；整体宽厚、长下摆，不画现代织带矩阵或成排弹匣袋，与原窄身战术背心明显区分。",
+    "source": "退役军用库存与旧式护送装备"
+  },
+  {
+    "id": "helmet4_light",
+    "type": "helmet",
+    "lv": 4,
+    "name": "短沿轻型防弹盔",
+    "short": "轻型弹盔",
+    "dur": 50,
+    "w": 1.35,
+    "price": 57600,
+    "aimPenaltyPct": 0,
+    "desc": "采用较薄壳体与简化悬挂系统的防弹盔，取消了不必要的外部安装座，主要面向需要长时间佩戴的人员。\n\n采购目录将它称作轻型。包装箱的搬运提示却没有随之修改，仍然要求两人共同抬运。",
+    "visual": "砂灰色紧凑圆壳，极短前檐、较低耳侧轮廓、黑色窄包边与细下颚带，侧面露出一颗小固定螺钉；没有导轨、前挂点、耳机和护颈。靠简洁剪影与浅砂色区别原厚重军绿防弹盔。",
+    "source": "专业安保采购与轻装护送装备"
+  },
+  {
+    "id": "body4_lightplate",
+    "type": "body",
+    "lv": 4,
+    "name": "轻型插板背心",
+    "short": "轻型板甲",
+    "dur": 90,
+    "w": 4.7,
+    "price": 102000,
+    "aimPenaltyPct": 14,
+    "desc": "围绕前后防护板设计的简化载具，只保留必要的固定带和调节扣。侧腰没有厚软垫，活动时会露出里面的衬衣。\n\n卖方附送了一张可另行订购的附件清单。清单上的配件全部装齐以后，它就不再比普通型号轻了。",
+    "visual": "深石墨灰窄身板袋，前部一块清晰的切角矩形插板轮廓，两条宽肩带和侧腰开放式织带扣；短下摆、无腹甲、无护颈、没有密集外挂袋。局部旧卡其色缝线，不与浅砂色头盔做成同色套装。",
+    "source": "专业承包队与高端安保装备"
+  }
+];
+for (const [type,list] of [['helmet',HELMETS],['body',BODIES]]) {
+  list.forEach(d=>{d.id=type+d.lv;d.icon=d.id;d.type=type;d.move=1;d.aimPenaltyPct=type==='body'?[0,0,10,20,30,45,60][d.lv]:0;});
+  list.push(...ARMOR_VARIANTS.filter(d=>d.type===type).map(d=>({...d,icon:d.id,move:1})));
+}
+for(const w of Object.values(WEAPONS))w.aimTime??={rifle:.40,shotgun:.45,smg:.30,pistol:.20}[w.id]??.4;
+ART.gear=[...new Set([...ART.gear,...ARMOR_VARIANTS.map(d=>d.id)])];
+/* END ARMOR VARIANTS */
+
 const BASE_BAG_SLOTS = 6;
 
 const BAGS = [
@@ -1104,21 +1227,26 @@ const GEAR = {
   helmet: { list: HELMETS, label: '头盔', short: '盔' },
   body:   { list: BODIES,  label: '护甲', short: '甲' },
 
-  /* 按类型和等级取模板 */
+  /* 按稳定型号ID取模板；旧数字等级继续解析为该级原款。 */
   def(type, lv) {
     const g = this[type];
     if (!g) return null;
-    return g.list.find(x => x.lv === lv) || null;
+    if(lv&&typeof lv==='object')lv=lv.id||lv.lv;
+    return g.list.find(x => typeof lv==='string' ? x.id===lv : x.lv===lv) || null;
   },
+
+  icon(g) { return g ? (g.id || g.type+g.lv) : null; },
+  atLevel(type,lv) { return (this[type]?.list||[]).filter(d=>d.lv===lv); },
+  random(type,lv) { const list=this.atLevel(type,lv);return list.length?this.make(type,list[Math.floor(Math.random()*list.length)].id):null; },
 
   /* 造一个实例：装备要记住自己的耐久，不能和模板共用 */
   make(type, lv, dur) {
     const d = this.def(type, lv);
     if (!d) return null;
     return {
-      type, lv: d.lv, name: d.name, short: d.short,
+      id:d.id||type+d.lv, icon:d.icon||d.id||type+d.lv, type, lv: d.lv, name: d.name, short: d.short,
       max: d.dur, dur: (dur == null ? d.dur : U.clamp(dur, 0, d.dur)),
-      w: d.w, move: d.move, price: d.price
+      w: d.w, move: 1, aimPenaltyPct:d.aimPenaltyPct||0, price: d.price, desc:d.desc||''
     };
   },
 
@@ -1140,7 +1268,7 @@ const GEAR = {
      sell       能卖多少钱 —— 不超过买价，并按剩余耐久打折
    ------------------------------------------------------------ */
 function gearRarity(lv) {
-  return [1, 1, 2, 2, 3, 5, 6][U.clamp(lv, 0, 6)] || 1;
+  return [1, 1, 2, 3, 3, 5, 6][Math.max(0, Math.min(6, lv))] || 1;
 }
 
 const EQUIP = {
@@ -1153,16 +1281,16 @@ const EQUIP = {
   /* 头盔 / 护甲实例 → 伪物品 */
   armor(g) {
     if (!g) return null;
-    g = GEAR.make(g.type, g.lv, g.dur);
+    g = GEAR.make(g.type, g.id || g.lv, g.dur);
     if (!g) return null;
     return {
-      id: 'g_' + g.type + g.lv,
+      id: 'g_' + g.id,
       name: g.name, short: g.short,
       cat: 'gear', r: gearRarity(g.lv),
       w: g.w, price: g.price,
       sell: this.sellPrice(g.price, g.dur, g.max),
       stack: 1,
-      icon: g.type + g.lv,
+      icon: GEAR.icon(g), desc:g.desc,
       equip: { kind: 'armor', gear: Object.assign({}, g) }
     };
   },
@@ -1220,7 +1348,7 @@ function magazineRounds(w, n, ammo, rounds) {
   const out = (Array.isArray(rounds) ? rounds : []).filter(id => AMMO_BY_ID[id]?.caliber === w.caliber).slice(0,n);
   while(out.length < n) out.push(fallback);
   return out;
-}/* BEGIN SCENE LIBRARY */
+}/* BEGIN SCENE LIBRARY */
 for(const a of [{"group":"tiles","id":"ground_concrete_plain_01"},{"group":"tiles","id":"ground_concrete_plain_02"},{"group":"tiles","id":"ground_soil_compact_01"},{"group":"tiles","id":"ground_soil_compact_02"},{"group":"props","id":"decal_surface_crack_01"},{"group":"props","id":"decal_surface_damp_01"}]){if(!ART[a.group].includes(a.id))ART[a.group].push(a.id);}
 /* END SCENE LIBRARY */
 /* BEGIN PROP BOUNDS */

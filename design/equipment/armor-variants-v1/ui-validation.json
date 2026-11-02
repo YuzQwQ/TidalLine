@@ -1,0 +1,185 @@
+{
+  "status": "passed",
+  "reports": [
+    {
+      "entry": "development_http",
+      "icons": [
+        {
+          "id": "helmet1_motorcycle",
+          "width": 48,
+          "height": 48,
+          "opaque": 894,
+          "partial": 0,
+          "edge": 0,
+          "embedded": false
+        },
+        {
+          "id": "body1_leather",
+          "width": 48,
+          "height": 48,
+          "opaque": 1104,
+          "partial": 0,
+          "edge": 0,
+          "embedded": false
+        },
+        {
+          "id": "helmet2_rescue",
+          "width": 48,
+          "height": 48,
+          "opaque": 852,
+          "partial": 0,
+          "edge": 0,
+          "embedded": false
+        },
+        {
+          "id": "body2_concealed",
+          "width": 48,
+          "height": 48,
+          "opaque": 1108,
+          "partial": 0,
+          "edge": 0,
+          "embedded": false
+        },
+        {
+          "id": "helmet3_riot",
+          "width": 48,
+          "height": 48,
+          "opaque": 1096,
+          "partial": 0,
+          "edge": 0,
+          "embedded": false
+        },
+        {
+          "id": "body3_fragmentation",
+          "width": 48,
+          "height": 48,
+          "opaque": 933,
+          "partial": 0,
+          "edge": 0,
+          "embedded": false
+        },
+        {
+          "id": "helmet4_light",
+          "width": 48,
+          "height": 48,
+          "opaque": 953,
+          "partial": 0,
+          "edge": 0,
+          "embedded": false
+        },
+        {
+          "id": "body4_lightplate",
+          "width": 48,
+          "height": 48,
+          "opaque": 1165,
+          "partial": 0,
+          "edge": 0,
+          "embedded": false
+        }
+      ],
+      "shop": 15,
+      "publicVariants": 6,
+      "lockedVariants": 2,
+      "storageAndSaveModels": 8,
+      "raidAndLootIcons": true,
+      "aimPreparationHUD": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    },
+    {
+      "entry": "offline_file",
+      "icons": [
+        {
+          "id": "helmet1_motorcycle",
+          "width": 48,
+          "height": 48,
+          "opaque": 894,
+          "partial": 0,
+          "edge": 0,
+          "embedded": true
+        },
+        {
+          "id": "body1_leather",
+          "width": 48,
+          "height": 48,
+          "opaque": 1104,
+          "partial": 0,
+          "edge": 0,
+          "embedded": true
+        },
+        {
+          "id": "helmet2_rescue",
+          "width": 48,
+          "height": 48,
+          "opaque": 852,
+          "partial": 0,
+          "edge": 0,
+          "embedded": true
+        },
+        {
+          "id": "body2_concealed",
+          "width": 48,
+          "height": 48,
+          "opaque": 1108,
+          "partial": 0,
+          "edge": 0,
+          "embedded": true
+        },
+        {
+          "id": "helmet3_riot",
+          "width": 48,
+          "height": 48,
+          "opaque": 1096,
+          "partial": 0,
+          "edge": 0,
+          "embedded": true
+        },
+        {
+          "id": "body3_fragmentation",
+          "width": 48,
+          "height": 48,
+          "opaque": 933,
+          "partial": 0,
+          "edge": 0,
+          "embedded": true
+        },
+        {
+          "id": "helmet4_light",
+          "width": 48,
+          "height": 48,
+          "opaque": 953,
+          "partial": 0,
+          "edge": 0,
+          "embedded": true
+        },
+        {
+          "id": "body4_lightplate",
+          "width": 48,
+          "height": 48,
+          "opaque": 1165,
+          "partial": 0,
+          "edge": 0,
+          "embedded": true
+        }
+      ],
+      "shop": 15,
+      "publicVariants": 6,
+      "lockedVariants": 2,
+      "storageAndSaveModels": 8,
+      "raidAndLootIcons": true,
+      "aimPreparationHUD": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    }
+  ],
+  "gearSheet": 32,
+  "visorBackgrounds": 5
+}

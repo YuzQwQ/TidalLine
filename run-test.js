@@ -78,7 +78,7 @@ const ctx = {
 ctx.globalThis = ctx;
 vm.createContext(ctx);
 
-for (const f of ['config.js', 'data.js', 'core.js', 'entities.js',
+for (const f of ['config.js', 'data.js', 'core.js', 'entities.js', 'human-ai.js',
   'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
   'medhud.js', 'melee.js', 'range.js', 'boot.js']) {
@@ -730,7 +730,7 @@ ok('迟滞：侧面不会在边界抖动', dirAt(Math.PI / 4 + 0.05, hys) === 'e
 
 // 没有贴图时必须返回 null（渲染层据此退回圆点）
 ok('无贴图时返回 null', Art.char('player', 0) === null);
-ok('角色三向共 12 个资源槽', ART.chars.length * ART.charDirs.length === 12,
+ok('角色三向共 18 个资源槽', ART.chars.length * ART.charDirs.length === 18,
    ART.chars.length + ' 角色 × ' + ART.charDirs.length + ' 方向');
 
 console.log('\n=== 物品简称 ===');

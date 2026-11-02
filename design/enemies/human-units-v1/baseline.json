@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-02",
+  "regression": {
+    "passed": 367,
+    "failed": 0
+  },
+  "maps": [
+    {
+      "id": "linhai-old-quarter",
+      "enemies": 23,
+      "sha256": "8f1b5cf2facc9b363c949412e3207c8a4119ec2630a67855d91ad05d7cf5a86a"
+    },
+    {
+      "id": "fenced-zone",
+      "enemies": 24,
+      "sha256": "3005b92662fb02ba6b152c26b79402b4db1c7db1a8932c7bfec1b3de9ec3c778"
+    }
+  ],
+  "files": {
+    "design/maps/linhai-old-quarter/layout.json": "c397b562967dfffa6ff9343ad3882702b01ba68879077441accaf29df8b4d2b0",
+    "design/maps/fenced-zone/runtime.json": "7dbfc7b03949c9198de91e01056b29e7762bb06d567cfa7d7d9c000f62b053b2"
+  }
+}

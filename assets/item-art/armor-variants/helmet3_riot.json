@@ -1,0 +1,8 @@
+{
+  "id": "helmet3_riot",
+  "name": "治安防暴盔",
+  "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 治安防暴盔. Detailed visual brief: 深海军蓝厚圆壳，两侧大圆转轴，透明烟灰面罩抬到额头前上方，后缘短黑色护颈。用粗轮廓与两道冷灰反光表现透明面罩，不把整张脸涂成白块。没有未来电子装备。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty helmet in a slightly elevated front-three-quarter product view, no head or person. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+  "source": "sources/helmet3_riot.png",
+  "target": "assets/gear/helmet3_riot.png",
+  "generator": "image_gen"
+}

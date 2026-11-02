@@ -1,0 +1,8 @@
+{
+  "id": "body2_concealed",
+  "name": "隐蔽式软甲",
+  "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 隐蔽式软甲. Detailed visual brief: 灰白或浅米色薄软甲，圆领、窄肩、两侧宽粘扣片，胸前平整只有一条浅缝；没有外挂袋和硬插板轮廓。紧凑、贴身、短下摆，与黑色厚层防刺背心分开。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty wearable torso vest in a frontal slight-three-quarter product view, no body, head or mannequin. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+  "source": "sources/body2_concealed.png",
+  "target": "assets/gear/body2_concealed.png",
+  "generator": "image_gen"
+}

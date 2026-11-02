@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "newTypes": 2,
+  "roundtrip": true,
+  "compile": true,
+  "anchorValidation": true,
+  "squadLimit": true,
+  "legacyMap": true
+}

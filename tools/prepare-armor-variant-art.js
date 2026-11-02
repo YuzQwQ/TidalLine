@@ -1,0 +1,20 @@
+const fs=require('fs'),path=require('path'),sharp=require('sharp');
+const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/item-art/armor-variants');
+const spec=JSON.parse(fs.readFileSync(path.join(root,'design/equipment/armor-variants-v1/design.json')));
+(async()=>{
+ const assets=[],composites=[];
+ for(const [i,v]of spec.variants.entries()){
+  const a=JSON.parse(fs.readFileSync(path.join(folder,v.id+'.json'))),source=path.join(folder,a.source);
+  const trimmed=await sharp(source).ensureAlpha().trim({threshold:8}).resize(40,40,{fit:'inside',kernel:'nearest'}).raw().toBuffer({resolveWithObject:true});
+  for(let k=0;k<trimmed.data.length;k+=4){const alpha=trimmed.data[k+3];trimmed.data[k+3]=alpha>=128?255:0;if(!trimmed.data[k+3])trimmed.data.fill(0,k,k+3);}
+  const {width,height}=trimmed.info;
+  const png=await sharp({create:{width:48,height:48,channels:4,background:{r:0,g:0,b:0,alpha:0}}}).composite([{input:trimmed.data,raw:{width,height,channels:4},left:Math.floor((48-width)/2),top:Math.floor((48-height)/2)}]).png().toBuffer();
+  await sharp(png).png({palette:true,colours:64,dither:0}).toFile(path.join(root,a.target));
+  assets.push({...a,size:[48,48],safeMargin:4,level:v.level,type:v.type});
+  composites.push({input:await sharp(path.join(root,a.target)).resize(144,144,{kernel:'nearest'}).png().toBuffer(),left:(i%4)*192+24,top:Math.floor(i/4)*192+24});
+ }
+ await sharp({create:{width:768,height:384,channels:4,background:'#17231c'}}).composite(composites).png().toFile(path.join(folder,'preview.png'));
+ fs.writeFileSync(path.join(folder,'manifest.json'),JSON.stringify({status:'integrated',generator:'image_gen',assets},null,2)+'\n');
+ fs.writeFileSync(path.join(folder,'index.html'),`<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>8件护甲变体 · 图标</title><style>*{box-sizing:border-box}body{margin:0;background:#111c16;color:#d7e0c9;font:15px/1.8 system-ui}main{max-width:1200px;margin:auto;padding:26px}a{color:#d9be81}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}article{background:#213222;padding:18px;min-width:0}h2{font-size:18px}img{image-rendering:pixelated;object-fit:contain}.large{display:block;width:144px;height:144px;margin:auto;background:#17241a}.sizes{display:flex;align-items:center;gap:12px;margin:16px 0}.sizes img{width:var(--size);height:var(--size)}.sizes span{background:#3e4641;display:grid;place-items:center;min-width:48px;min-height:48px}.sizes span:nth-child(2){background:#244a3d}.sizes span:nth-child(3){background:#493758}small{font-size:11px;color:#9eaf8e}code{font-size:10px;overflow-wrap:anywhere}.visor{display:flex;gap:12px;flex-wrap:wrap}.visor span{display:flex;align-items:center;gap:8px;padding:12px}.visor img{width:24px;height:24px}@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.large{width:120px;height:120px}main{padding:16px}}@media(max-width:450px){.grid{grid-template-columns:1fr}}</style><main><h1>I–IV级护甲变体 · 8张图标</h1><p>透明PNG，48×48，4px安全边。48／34／24px对照；原稿与提示词保留，运行时只加载整理后的装备图标。</p><p><a href="../../../design/equipment/armor-variants-v1/index.html">装备设计与接入报告</a> · <a href="manifest.json">提示词与原稿记录</a></p><div class="grid">${spec.variants.map(v=>`<article><img class="large" src="../../gear/${v.id}.png" alt="${v.name}"><h2>${v.name}</h2><small>Lv${v.level} · ${v.type==='helmet'?'头盔':'身体护甲'}</small><div class="sizes">${[48,34,24].map(n=>`<span><img style="--size:${n}px" src="../../gear/${v.id}.png" alt="${n}px"></span>`).join('')}</div><code>${v.id}.png</code><p><a href="sources/${v.id}.png">原稿</a></p></article>`).join('')}</div><h2>防暴盔面罩 · 24px底色检查</h2><div class="visor">${['#b2b5b0','#17231c','#493758','#5b4a24','#572e2e'].map(bg=>`<span style="background:${bg}"><img src="../../gear/helmet3_riot.png" alt="24px面罩"><img style="width:34px;height:34px" src="../../gear/helmet3_riot.png" alt="34px面罩"></span>`).join('')}</div></main></html>`);
+ console.log('Prepared eight 48px transparent icons and 48/34/24px review gallery');
+})().catch(e=>{console.error(e);process.exitCode=1;});

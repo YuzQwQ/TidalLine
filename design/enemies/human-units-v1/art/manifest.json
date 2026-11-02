@@ -1,0 +1,1063 @@
+{
+  "generator": "image_gen",
+  "status": "ready",
+  "static": 6,
+  "strips": 27,
+  "corpses": 2,
+  "assets": [
+    {
+      "id": "holdout_e",
+      "unit": "holdout",
+      "dir": "e",
+      "type": "static",
+      "frames": 1,
+      "prompt": "Use case: stylized-concept. Production pixel sprite for TidalLine top-down 75 degree overhead survival shooter. ONE single full body human, stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Facing EAST to the right, rightward profile, shotgun/rifle points right. Ready idle pose with weapon at low ready. True low resolution pixel art, visible square pixels, only about 26 pixels tall body on a 32 by32 logical grid, strongly foreshortened consistent with high overhead camera, large visible helmet top, short visible front surfaces, compact proportions matching top down 1990s pixel game. Enlarge logical pixels for export, sharp clean pixel clusters, restrained 24 color palette, light upper left. Whole figure and weapon complete, centered, transparent background, generous clear margins. No scene, no text, no labels, no logos, no shadow floor, no isometric floor tile, no photorealism.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-670a1a3d-ac14-42bb-b053-f2f66761a3a1.png",
+      "target": "assets/chars/holdout_e.png",
+      "size": 32,
+      "bodyHeight": 26,
+      "anchor": [
+        15.64,
+        28
+      ]
+    },
+    {
+      "id": "holdout_n",
+      "unit": "holdout",
+      "dir": "n",
+      "type": "static",
+      "frames": 1,
+      "prompt": "Use case: stylized-concept. Production pixel sprite for TidalLine top-down 75 degree overhead survival shooter. ONE single full body human, stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Facing NORTH up toward the top of the image, back of helmet and back visible. Ready idle pose with weapon at low ready. True low resolution pixel art, visible square pixels, only about 26 pixels tall body on a 32 by32 logical grid, strongly foreshortened consistent with high overhead camera, large visible helmet top, short visible front surfaces, compact proportions matching top down 1990s pixel game. Enlarge logical pixels for export, sharp clean pixel clusters, restrained 24 color palette, light upper left. Whole figure and weapon complete, centered, transparent background, generous clear margins. No scene, no text, no labels, no logos, no shadow floor, no isometric floor tile, no photorealism.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-725fb464-a9aa-4c8e-bbab-48b720746b43.png",
+      "target": "assets/chars/holdout_n.png",
+      "size": 32,
+      "bodyHeight": 26,
+      "anchor": [
+        15.54,
+        28
+      ]
+    },
+    {
+      "id": "holdout_s",
+      "unit": "holdout",
+      "dir": "s",
+      "type": "static",
+      "frames": 1,
+      "prompt": "Use case: stylized-concept. Production pixel sprite for TidalLine top-down 75 degree overhead survival shooter. ONE single full body human, stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Facing SOUTH down toward the bottom of the image, front of helmet and chest visible. Ready idle pose with weapon at low ready. True low resolution pixel art, visible square pixels, only about 26 pixels tall body on a 32 by32 logical grid, strongly foreshortened consistent with high overhead camera, large visible helmet top, short visible front surfaces, compact proportions matching top down 1990s pixel game. Enlarge logical pixels for export, sharp clean pixel clusters, restrained 24 color palette, light upper left. Whole figure and weapon complete, centered, transparent background, generous clear margins. No scene, no text, no labels, no logos, no shadow floor, no isometric floor tile, no photorealism.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-53add707-1396-4070-a19e-a4bba4ada0a3.png",
+      "target": "assets/chars/holdout_s.png",
+      "size": 32,
+      "bodyHeight": 26,
+      "anchor": [
+        15.82,
+        28
+      ]
+    },
+    {
+      "id": "retriever_e",
+      "unit": "retriever",
+      "dir": "e",
+      "type": "static",
+      "frames": 1,
+      "prompt": "Use case: stylized-concept. Production pixel sprite for TidalLine top-down 75 degree overhead survival shooter. ONE single full body human, professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Facing EAST to the right, rightward profile, shotgun/rifle points right. Ready idle pose with weapon at low ready. True low resolution pixel art, visible square pixels, only about 26 pixels tall body on a 32 by32 logical grid, strongly foreshortened consistent with high overhead camera, large visible helmet top, short visible front surfaces, compact proportions matching top down 1990s pixel game. Enlarge logical pixels for export, sharp clean pixel clusters, restrained 24 color palette, light upper left. Whole figure and weapon complete, centered, transparent background, generous clear margins. No scene, no text, no labels, no logos, no shadow floor, no isometric floor tile, no photorealism.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3b2408c7-6d02-4d28-b607-db3e6cd5a21c.png",
+      "target": "assets/chars/retriever_e.png",
+      "size": 32,
+      "bodyHeight": 26,
+      "anchor": [
+        14.64,
+        28
+      ]
+    },
+    {
+      "id": "retriever_n",
+      "unit": "retriever",
+      "dir": "n",
+      "type": "static",
+      "frames": 1,
+      "prompt": "Use case: stylized-concept. Production pixel sprite for TidalLine top-down 75 degree overhead survival shooter. ONE single full body human, professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Facing NORTH up toward the top of the image, back of helmet and back visible. Ready idle pose with weapon at low ready. True low resolution pixel art, visible square pixels, only about 26 pixels tall body on a 32 by32 logical grid, strongly foreshortened consistent with high overhead camera, large visible helmet top, short visible front surfaces, compact proportions matching top down 1990s pixel game. Enlarge logical pixels for export, sharp clean pixel clusters, restrained 24 color palette, light upper left. Whole figure and weapon complete, centered, transparent background, generous clear margins. No scene, no text, no labels, no logos, no shadow floor, no isometric floor tile, no photorealism.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-606dfe96-6639-42e4-a5e4-35f22be16a41.png",
+      "target": "assets/chars/retriever_n.png",
+      "size": 32,
+      "bodyHeight": 26,
+      "anchor": [
+        16.25,
+        28
+      ]
+    },
+    {
+      "id": "retriever_s",
+      "unit": "retriever",
+      "dir": "s",
+      "type": "static",
+      "frames": 1,
+      "prompt": "Use case: stylized-concept. Production pixel sprite for TidalLine top-down 75 degree overhead survival shooter. ONE single full body human, professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Facing SOUTH down toward the bottom of the image, front of helmet and chest visible. Ready idle pose with weapon at low ready. True low resolution pixel art, visible square pixels, only about 26 pixels tall body on a 32 by32 logical grid, strongly foreshortened consistent with high overhead camera, large visible helmet top, short visible front surfaces, compact proportions matching top down 1990s pixel game. Enlarge logical pixels for export, sharp clean pixel clusters, restrained 24 color palette, light upper left. Whole figure and weapon complete, centered, transparent background, generous clear margins. No scene, no text, no labels, no logos, no shadow floor, no isometric floor tile, no photorealism.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-713c54de-3270-45ae-80c7-b3c021ecbae6.png",
+      "target": "assets/chars/retriever_s.png",
+      "size": 32,
+      "bodyHeight": 26,
+      "anchor": [
+        15.89,
+        28
+      ]
+    },
+    {
+      "id": "holdout_aim_e",
+      "unit": "holdout",
+      "dir": "e",
+      "state": "aim",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: two phases of raising the gun from ready to aimed, first settling arms and second fully aimed. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3faf5a87-56cb-47ec-8536-4a73f1cc0267.png",
+      "target": "assets/anim/holdout_aim_e.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        }
+      ]
+    },
+    {
+      "id": "holdout_aim_n",
+      "unit": "holdout",
+      "dir": "n",
+      "state": "aim",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: two phases of raising the gun from ready to aimed, first settling arms and second fully aimed. ALL frames face NORTH, up toward top, showing BACK of helmet and backpack or jacket. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3c519711-b1f2-43ed-b37b-aa99030ee5ac.png",
+      "target": "assets/anim/holdout_aim_n.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 24
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_aim_s",
+      "unit": "holdout",
+      "dir": "s",
+      "state": "aim",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: two phases of raising the gun from ready to aimed, first settling arms and second fully aimed. ALL frames face SOUTH, down towards bottom, face and chest visible. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-3f6de60e-bd30-41b1-b2c7-b7edafd66fd3.png",
+      "target": "assets/anim/holdout_aim_s.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_pump_e",
+      "unit": "holdout",
+      "dir": "e",
+      "state": "pump",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: two phases operating pump shotgun fore-end back then forward, stock stays against shoulder. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-869be729-96ea-4144-97a4-baa3ffde98c5.png",
+      "target": "assets/anim/holdout_pump_e.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        }
+      ]
+    },
+    {
+      "id": "holdout_pump_n",
+      "unit": "holdout",
+      "dir": "n",
+      "state": "pump",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: two phases operating pump shotgun fore-end back then forward, stock stays against shoulder. ALL frames face NORTH, up toward top, showing BACK of helmet and backpack or jacket. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-4516d40c-5df7-41d1-ae1c-18b7d289f1e8.png",
+      "target": "assets/anim/holdout_pump_n.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_pump_s",
+      "unit": "holdout",
+      "dir": "s",
+      "state": "pump",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: two phases operating pump shotgun fore-end back then forward, stock stays against shoulder. ALL frames face SOUTH, down towards bottom, face and chest visible. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-76004ef3-90d1-4a79-b406-4c89ae61f62c.png",
+      "target": "assets/anim/holdout_pump_s.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_reload_e",
+      "unit": "holdout",
+      "dir": "e",
+      "state": "reload",
+      "type": "sheet",
+      "frames": 3,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 3 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: three phases of reloading the gun, opening/handling ammunition, inserting ammunition, and returning hands to ready. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 3 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-a0315d30-5b44-45e3-8a71-94bab3bb6b85.png",
+      "target": "assets/anim/holdout_reload_e.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_reload_n",
+      "unit": "holdout",
+      "dir": "n",
+      "state": "reload",
+      "type": "sheet",
+      "frames": 3,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 3 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: three phases of reloading the gun, opening/handling ammunition, inserting ammunition, and returning hands to ready. ALL frames face NORTH, up toward top, showing BACK of helmet and backpack or jacket. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 3 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b652b266-bfa3-4e9c-9ded-ff3f01dc1dcf.png",
+      "target": "assets/anim/holdout_reload_n.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 28
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        }
+      ]
+    },
+    {
+      "id": "holdout_reload_s",
+      "unit": "holdout",
+      "dir": "s",
+      "state": "reload",
+      "type": "sheet",
+      "frames": 3,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 3 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: three phases of reloading the gun, opening/handling ammunition, inserting ammunition, and returning hands to ready. ALL frames face SOUTH, down towards bottom, face and chest visible. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 3 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2d0b30ec-4e5b-4f95-85d6-2453ac165366.png",
+      "target": "assets/anim/holdout_reload_s.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_shoot_e",
+      "unit": "holdout",
+      "dir": "e",
+      "state": "shoot",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: two phases of firing, first a tiny warm muzzle flash and slight recoil, second returning gun to aim. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-296d6fe0-fb39-4127-adfc-eacd143780e2.png",
+      "target": "assets/anim/holdout_shoot_e.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_shoot_n",
+      "unit": "holdout",
+      "dir": "n",
+      "state": "shoot",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: two phases of firing, first a tiny warm muzzle flash and slight recoil, second returning gun to aim. ALL frames face NORTH, up toward top, showing BACK of helmet and backpack or jacket. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-571581f4-d832-4dbc-b277-e0a02100c031.png",
+      "target": "assets/anim/holdout_shoot_n.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 24
+        }
+      ]
+    },
+    {
+      "id": "holdout_shoot_s",
+      "unit": "holdout",
+      "dir": "s",
+      "state": "shoot",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: two phases of firing, first a tiny warm muzzle flash and slight recoil, second returning gun to aim. ALL frames face SOUTH, down towards bottom, face and chest visible. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-40007217-a8e7-4fee-9bef-a5af2d8b0e9d.png",
+      "target": "assets/anim/holdout_shoot_s.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_walk_e",
+      "unit": "holdout",
+      "dir": "e",
+      "state": "walk",
+      "type": "sheet",
+      "frames": 4,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 4 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: four phases of walking, alternating legs and arms while retaining two-handed low-ready gun grip. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 4 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-ba8fab86-73d8-4385-b10d-43ef97449649.png",
+      "target": "assets/anim/holdout_walk_e.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_walk_n",
+      "unit": "holdout",
+      "dir": "n",
+      "state": "walk",
+      "type": "sheet",
+      "frames": 4,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 4 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: four phases of walking, alternating legs and arms while retaining two-handed low-ready gun grip. ALL frames face NORTH, up toward top, showing BACK of helmet and backpack or jacket. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 4 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-593f040e-5247-4f7e-861b-4fdb4fcd1fe4.png",
+      "target": "assets/anim/holdout_walk_n.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "holdout_walk_s",
+      "unit": "holdout",
+      "dir": "s",
+      "state": "walk",
+      "type": "sheet",
+      "frames": 4,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 4 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Action: four phases of walking, alternating legs and arms while retaining two-handed low-ready gun grip. ALL frames face SOUTH, down towards bottom, face and chest visible. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 4 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-398477eb-7e9d-482f-8861-17c8630d177b.png",
+      "target": "assets/anim/holdout_walk_s.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        }
+      ]
+    },
+    {
+      "id": "retriever_aim_e",
+      "unit": "retriever",
+      "dir": "e",
+      "state": "aim",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: two phases of raising the gun from ready to aimed, first settling arms and second fully aimed. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e25d7341-a5b7-424c-a18c-3f4931862fd8.png",
+      "target": "assets/anim/retriever_aim_e.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 24
+        }
+      ]
+    },
+    {
+      "id": "retriever_aim_n",
+      "unit": "retriever",
+      "dir": "n",
+      "state": "aim",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: two phases of raising the gun from ready to aimed, first settling arms and second fully aimed. ALL frames face NORTH, up toward top, showing BACK of helmet and backpack or jacket. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-1dacf81f-0a8d-445d-99f2-773d5f7745ae.png",
+      "target": "assets/anim/retriever_aim_n.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "retriever_aim_s",
+      "unit": "retriever",
+      "dir": "s",
+      "state": "aim",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: two phases of raising the gun from ready to aimed, first settling arms and second fully aimed. ALL frames face SOUTH, down towards bottom, face and chest visible. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-c14ef75d-1ba2-4aa5-9a13-b7e630b7beb9.png",
+      "target": "assets/anim/retriever_aim_s.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "retriever_reload_e",
+      "unit": "retriever",
+      "dir": "e",
+      "state": "reload",
+      "type": "sheet",
+      "frames": 3,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 3 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: three phases of reloading the gun, opening/handling ammunition, inserting ammunition, and returning hands to ready. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 3 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-ebd0d99b-498d-4d25-9320-55d2b59d750b.png",
+      "target": "assets/anim/retriever_reload_e.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        }
+      ]
+    },
+    {
+      "id": "retriever_reload_n",
+      "unit": "retriever",
+      "dir": "n",
+      "state": "reload",
+      "type": "sheet",
+      "frames": 3,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 3 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: three phases of reloading the gun, opening/handling ammunition, inserting ammunition, and returning hands to ready. ALL frames face NORTH, up toward top, showing BACK of helmet and backpack or jacket. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 3 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-4a558c03-8a7d-4bcf-9fc3-ffe4762beb2f.png",
+      "target": "assets/anim/retriever_reload_n.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        }
+      ]
+    },
+    {
+      "id": "retriever_reload_s",
+      "unit": "retriever",
+      "dir": "s",
+      "state": "reload",
+      "type": "sheet",
+      "frames": 3,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 3 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: three phases of reloading the gun, opening/handling ammunition, inserting ammunition, and returning hands to ready. ALL frames face SOUTH, down towards bottom, face and chest visible. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 3 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-c9133737-ec8a-4cf3-8cf7-4c9dda07e6d8.png",
+      "target": "assets/anim/retriever_reload_s.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "retriever_shoot_e",
+      "unit": "retriever",
+      "dir": "e",
+      "state": "shoot",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: two phases of firing, first a tiny warm muzzle flash and slight recoil, second returning gun to aim. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-dbb4e40a-8cfa-4205-9ae7-53d398dca30f.png",
+      "target": "assets/anim/retriever_shoot_e.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "retriever_shoot_n",
+      "unit": "retriever",
+      "dir": "n",
+      "state": "shoot",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: two phases of firing, first a tiny warm muzzle flash and slight recoil, second returning gun to aim. ALL frames face NORTH, up toward top, showing BACK of helmet and backpack or jacket. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0e7f1e28-6ca4-43f0-9419-4f8748cde2de.png",
+      "target": "assets/anim/retriever_shoot_n.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "retriever_shoot_s",
+      "unit": "retriever",
+      "dir": "s",
+      "state": "shoot",
+      "type": "sheet",
+      "frames": 2,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: two phases of firing, first a tiny warm muzzle flash and slight recoil, second returning gun to aim. ALL frames face SOUTH, down towards bottom, face and chest visible. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2f2db823-60a3-48de-9af0-ecfb618fbd8a.png",
+      "target": "assets/anim/retriever_shoot_s.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "retriever_walk_e",
+      "unit": "retriever",
+      "dir": "e",
+      "state": "walk",
+      "type": "sheet",
+      "frames": 4,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 4 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: four phases of walking, alternating legs and arms while retaining two-handed low-ready gun grip. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 4 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-47008a9f-7096-4e31-b790-b164b67e3051.png",
+      "target": "assets/anim/retriever_walk_e.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "retriever_walk_n",
+      "unit": "retriever",
+      "dir": "n",
+      "state": "walk",
+      "type": "sheet",
+      "frames": 4,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 4 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: four phases of walking, alternating legs and arms while retaining two-handed low-ready gun grip. ALL frames face NORTH, up toward top, showing BACK of helmet and backpack or jacket. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 4 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-752ffe08-3618-443d-89b9-34f8628556d9.png",
+      "target": "assets/anim/retriever_walk_n.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        }
+      ]
+    },
+    {
+      "id": "retriever_walk_s",
+      "unit": "retriever",
+      "dir": "s",
+      "state": "walk",
+      "type": "sheet",
+      "frames": 4,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 4 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: four phases of walking, alternating legs and arms while retaining two-handed low-ready gun grip. ALL frames face SOUTH, down towards bottom, face and chest visible. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 4 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-6f0a2ebb-5b44-4900-ade0-74be9baeff2f.png",
+      "target": "assets/anim/retriever_walk_s.png",
+      "size": 64,
+      "normalization": "one scale per strip from median head-to-foot body height, excluding narrow weapon pixels; no per-frame resizing",
+      "anchors": [
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 26
+        },
+        {
+          "foot": [
+            32,
+            44
+          ],
+          "bodyHeight": 25
+        }
+      ]
+    },
+    {
+      "id": "corpse_holdout",
+      "unit": "holdout",
+      "type": "corpse",
+      "frames": 1,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/holdout_s.png",
+      "prompt": "Edit the reference to ONE non-graphic fallen body sprite for a 75 degree overhead pixel game. Same stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch, now lying on side on the ground, knees slightly bent, gun resting adjacent within compact silhouette. Full body overhead view, helmet and clothing recognizable; no blood, no wounds, no gore. Sharp low resolution pixel clusters, restrained colors, generous transparent margin. Truly transparent background, no ground tile, no shadow scene, no text. One corpse only.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b6ff1d02-d516-4061-ab1c-9ad3b5426e5f.png",
+      "target": "assets/props/corpse_holdout.png",
+      "size": 32
+    },
+    {
+      "id": "corpse_retriever",
+      "unit": "retriever",
+      "type": "corpse",
+      "frames": 1,
+      "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+      "prompt": "Edit the reference to ONE non-graphic fallen body sprite for a 75 degree overhead pixel game. Same professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles, now lying on side on the ground, knees slightly bent, gun resting adjacent within compact silhouette. Full body overhead view, helmet and clothing recognizable; no blood, no wounds, no gore. Sharp low resolution pixel clusters, restrained colors, generous transparent margin. Truly transparent background, no ground tile, no shadow scene, no text. One corpse only.",
+      "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-5306e564-6116-49fb-b87f-adb5f725fd2d.png",
+      "target": "assets/props/corpse_retriever.png",
+      "size": 32
+    }
+  ]
+}

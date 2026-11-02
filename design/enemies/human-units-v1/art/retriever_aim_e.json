@@ -1,0 +1,11 @@
+{
+  "id": "retriever_aim_e",
+  "unit": "retriever",
+  "dir": "e",
+  "state": "aim",
+  "type": "sheet",
+  "frames": 2,
+  "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+  "prompt": "Edit the reference character into a PRODUCTION GAME ANIMATION SPRITE STRIP, one horizontal row of exactly 2 full body frames. Maintain the exact helmet, outfit, body proportions, palette and gun from reference: professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles. Action: two phases of raising the gun from ready to aimed, first settling arms and second fully aimed. ALL frames face EAST, to the RIGHT, in right-facing profile. High overhead 75 degree top-down camera, large visible helmet top and compact foreshortened body. Each frame has identical scale and an equally sized cell; fixed head centerline and feet baseline, at least 20% transparent cell margin around entire gun and body. Separate the 2 frames into equal non-overlapping horizontal cells across the image. Strong square pixel clusters, simplified 24 color 1990s pixel-game style, light from upper left. Do NOT draw axes, grids, dividers, captions or text. Truly transparent background, no ground, no floor shadow, no scene, no modern technology. Do not change costume between frames. Do not change camera angle between frames. Keep feet and gun complete and away from image edges.",
+  "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e25d7341-a5b7-424c-a18c-3f4931862fd8.png"
+}

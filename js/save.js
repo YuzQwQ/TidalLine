@@ -68,8 +68,8 @@ const Save = {
       this.gear = {
         weapons: this.migrateWeapons(g.weapons),
         melee: g.melee?.equip?.kind === 'melee' ? EQUIP.melee(g.melee.equip.melee,g.melee.equip.bound) : null,
-        helmet: g.helmet ? GEAR.make('helmet', g.helmet.lv, g.helmet.dur) : null,
-        body: g.body ? GEAR.make('body', g.body.lv, g.body.dur) : null,
+        helmet: g.helmet ? GEAR.make('helmet', g.helmet.id || g.helmet.lv, g.helmet.dur) : null,
+        body: g.body ? GEAR.make('body', g.body.id || g.body.lv, g.body.dur) : null,
         /* 老存档没有背包槽：保持 null，容量回落到基础 4 格 */
         back: (g.back && BACKPACK.def(g.back.id)) ? BACKPACK.make(g.back.id) : null
       };
@@ -181,7 +181,7 @@ const Save = {
         const current = spec.kind === 'melee' ? EQUIP.melee(spec.melee,spec.bound) : spec.kind === 'armor' ? EQUIP.armor(spec.gear)
           : spec.kind === 'gun' ? EQUIP.gun(spec.gun, spec.mag, spec.ammo, spec.rounds)
           : spec.kind === 'bag' ? EQUIP.bag(spec.bag) : null;
-        if (current) out.push({ id: e.id, n: 1, gear: current });
+        if (current) out.push({ id: current.id, n: 1, gear: current });
         continue;
       }
       const id = this.migrateAmmoId(Medical.canonicalId(e.id));

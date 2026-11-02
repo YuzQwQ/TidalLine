@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "png": 35,
+  "static": 6,
+  "strips": 27,
+  "corpses": 2,
+  "frames": 80,
+  "binaryAlpha": true,
+  "animatedBodyHeight": [
+    24,
+    28
+  ],
+  "feet": [
+    32,
+    44
+  ],
+  "officialMapsAndLayoutsSHA256Unchanged": true
+}

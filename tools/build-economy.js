@@ -4,6 +4,7 @@ const root=path.resolve(__dirname,'..');
 function build(){
  const spec=JSON.parse(fs.readFileSync(path.join(root,'design/items/economy.json'),'utf8'));
  require('./build-medical-data.js').build();
+ require('./build-armor-variants.js').build();
  const file=path.join(root,'js/data.js');let src=fs.readFileSync(file,'utf8');
  const change=(pattern,value)=>{assert(pattern.test(src),'找不到价格锚点 '+pattern);src=src.replace(pattern,(_m,prefix)=>prefix+value);};
  for(const row of spec.items){

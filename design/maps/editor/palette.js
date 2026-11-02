@@ -17,7 +17,9 @@
   const ENEMY = {
     scav: { name: '拾荒者', color: '#b96a36', glyph: 'S' },
     echo: { name: '回响体', color: '#855da3', glyph: 'E' },
-    guard: { name: '潮汐守卫', color: '#3e789c', glyph: 'G' }
+    guard: { name: '潮汐守卫', color: '#3e789c', glyph: 'G' },
+    holdout: { name: '据点看守', color: '#b8a26b', glyph: 'H' },
+    retriever: { name: '受雇回收员', color: '#7c9684', glyph: 'R' }
   };
   const ITEM_COLOR = {
     ground: '#7aa38a', structure: '#6b7f8a', container: '#a07a4a',

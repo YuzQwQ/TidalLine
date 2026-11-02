@@ -326,6 +326,7 @@
         x, y,
         patrolRadius: 2
       };
+      if(['holdout','retriever'].includes(material.type))rec.facing='s';
       d.enemies.push(rec);
       return { ok: true, id: rec.id, label: material.type };
     }

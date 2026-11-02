@@ -406,9 +406,10 @@ const Game = {
     this.player.back = Save.gear.back ? Object.assign({}, Save.gear.back) : null;
 
     // 敌人
+    if(typeof HumanAI!=='undefined')HumanAI.sequence=0;
     for (const s of map.enemies) {
       const point=M.navigationPoint(s.x,s.y);
-      this.enemies.push(new Enemy(s.type||s.t, point.x,point.y, s.patrolRadius));
+      this.enemies.push(new Enemy(s.type||s.t, point.x,point.y, s.patrolRadius,s));
     }
 
     Noise.clear();

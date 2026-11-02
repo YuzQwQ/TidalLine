@@ -322,6 +322,11 @@
       for (const e of data.enemies) {
         const info = Pal.ENEMY[e.type] || { color: '#b04f3a', glyph: '?' };
         const [sx, sy] = px(e.x, e.y);
+        if(e.type==='holdout'){
+          const anchor=e.guardAnchor||[e.x,e.y],[ax,ay]=px(anchor[0],anchor[1]);ctx.save();ctx.setLineDash([5,4]);ctx.strokeStyle='#d9b76c88';ctx.beginPath();ctx.arc(ax+tile/2,ay+tile/2,3*tile,0,Math.PI*2);ctx.stroke();ctx.restore();
+        }
+        if(e.facing){const a=({e:0,s:Math.PI/2,w:Math.PI,n:-Math.PI/2})[e.facing]+state.rot*Math.PI/180;ctx.save();ctx.strokeStyle=info.color;ctx.beginPath();ctx.moveTo(sx+tile/2,sy+tile/2);ctx.lineTo(sx+tile/2+Math.cos(a)*tile*.65,sy+tile/2+Math.sin(a)*tile*.65);ctx.stroke();ctx.restore();}
+        if(e.type==='retriever'&&e.squadId&&tile>=14){ctx.save();ctx.fillStyle='#b7c7bd';ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText(e.squadId,sx+tile/2,sy-3);ctx.restore();}
         if (state.layers.patrol && e.patrolRadius) {
           ctx.beginPath();
           ctx.arc(sx + tile / 2, sy + tile / 2, (e.patrolRadius + 0.5) * tile, 0, Math.PI * 2);

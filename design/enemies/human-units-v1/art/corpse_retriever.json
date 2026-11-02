@@ -1,0 +1,9 @@
+{
+  "id": "corpse_retriever",
+  "unit": "retriever",
+  "type": "corpse",
+  "frames": 1,
+  "reference": "D:/develop/project/tide/design/enemies/human-units-v1/art/sources/retriever_s.png",
+  "prompt": "Edit the reference to ONE non-graphic fallen body sprite for a 75 degree overhead pixel game. Same professional hired salvage operator, gray green work suit, compact charcoal protective vest, muted gray green ballistic helmet, long olive gray assault rifle held in both hands, compact dark gray backpack with rolled beige specimen bags, no modern rails or goggles, now lying on side on the ground, knees slightly bent, gun resting adjacent within compact silhouette. Full body overhead view, helmet and clothing recognizable; no blood, no wounds, no gore. Sharp low resolution pixel clusters, restrained colors, generous transparent margin. Truly transparent background, no ground tile, no shadow scene, no text. One corpse only.",
+  "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-5306e564-6116-49fb-b87f-adb5f725fd2d.png"
+}

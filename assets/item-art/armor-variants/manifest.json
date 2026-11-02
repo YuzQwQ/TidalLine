@@ -1,0 +1,126 @@
+{
+  "status": "integrated",
+  "generator": "image_gen",
+  "assets": [
+    {
+      "id": "helmet1_motorcycle",
+      "name": "旧式摩托盔",
+      "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 旧式摩托盔. Detailed visual brief: 米白色圆鼓硬壳，宽阔的开放面部缺口，短小黑色前檐，耳侧棕色软垫和垂下的下颚带；一道褪色橙条，漆面少量磕碰。没有面罩、导轨或军用附件。与原软布工帽形成圆硬壳／软帽的剪影差别。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty helmet in a slightly elevated front-three-quarter product view, no head or person. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+      "source": "sources/helmet1_motorcycle.png",
+      "target": "assets/gear/helmet1_motorcycle.png",
+      "generator": "image_gen",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "level": 1,
+      "type": "helmet"
+    },
+    {
+      "id": "body1_leather",
+      "name": "皮革作业背心",
+      "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 皮革作业背心. Detailed visual brief: 深红棕皮革，宽肩、深V领、三枚粗金属扣，胸前大块叠皮，腰侧一只扁工具袋；轮廓上宽下直，皮面有折痕与浅色擦伤。区别原土黄帆布护胸，不画成带钢板的重甲。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty wearable torso vest in a frontal slight-three-quarter product view, no body, head or mannequin. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+      "source": "sources/body1_leather.png",
+      "target": "assets/gear/body1_leather.png",
+      "generator": "image_gen",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "level": 1,
+      "type": "body"
+    },
+    {
+      "id": "helmet2_rescue",
+      "name": "轻型救援盔",
+      "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 轻型救援盔. Detailed visual brief: 褪色暗橙色低矮硬壳，短檐、两道宽散热槽，细黑色四点下颚带，后缘小块米白反光贴。没有医疗十字、不配置现代灯具导轨。比黄色工程帽更贴头、轮廓更低。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty helmet in a slightly elevated front-three-quarter product view, no head or person. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+      "source": "sources/helmet2_rescue.png",
+      "target": "assets/gear/helmet2_rescue.png",
+      "generator": "image_gen",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "level": 2,
+      "type": "helmet"
+    },
+    {
+      "id": "body2_concealed",
+      "name": "隐蔽式软甲",
+      "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 隐蔽式软甲. Detailed visual brief: 灰白或浅米色薄软甲，圆领、窄肩、两侧宽粘扣片，胸前平整只有一条浅缝；没有外挂袋和硬插板轮廓。紧凑、贴身、短下摆，与黑色厚层防刺背心分开。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty wearable torso vest in a frontal slight-three-quarter product view, no body, head or mannequin. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+      "source": "sources/body2_concealed.png",
+      "target": "assets/gear/body2_concealed.png",
+      "generator": "image_gen",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "level": 2,
+      "type": "body"
+    },
+    {
+      "id": "helmet3_riot",
+      "name": "治安防暴盔",
+      "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 治安防暴盔. Detailed visual brief: 深海军蓝厚圆壳，两侧大圆转轴，透明烟灰面罩抬到额头前上方，后缘短黑色护颈。用粗轮廓与两道冷灰反光表现透明面罩，不把整张脸涂成白块。没有未来电子装备。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty helmet in a slightly elevated front-three-quarter product view, no head or person. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+      "source": "sources/helmet3_riot.png",
+      "target": "assets/gear/helmet3_riot.png",
+      "generator": "image_gen",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "level": 3,
+      "type": "helmet"
+    },
+    {
+      "id": "body3_fragmentation",
+      "name": "旧式军用防片衣",
+      "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 旧式军用防片衣. Detailed visual brief: 褪色灰橄榄绿厚布衣，短立领、宽肩、分段绗缝与下腹软护片，胸部仅两个扁平斜袋；整体宽厚、长下摆，不画现代织带矩阵或成排弹匣袋，与原窄身战术背心明显区分。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty wearable torso vest in a frontal slight-three-quarter product view, no body, head or mannequin. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+      "source": "sources/body3_fragmentation.png",
+      "target": "assets/gear/body3_fragmentation.png",
+      "generator": "image_gen",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "level": 3,
+      "type": "body"
+    },
+    {
+      "id": "helmet4_light",
+      "name": "短沿轻型防弹盔",
+      "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 短沿轻型防弹盔. Detailed visual brief: 砂灰色紧凑圆壳，极短前檐、较低耳侧轮廓、黑色窄包边与细下颚带，侧面露出一颗小固定螺钉；没有导轨、前挂点、耳机和护颈。靠简洁剪影与浅砂色区别原厚重军绿防弹盔。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty helmet in a slightly elevated front-three-quarter product view, no head or person. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+      "source": "sources/helmet4_light.png",
+      "target": "assets/gear/helmet4_light.png",
+      "generator": "image_gen",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "level": 4,
+      "type": "helmet"
+    },
+    {
+      "id": "body4_lightplate",
+      "name": "轻型插板背心",
+      "prompt": "Draw ONE standalone equipment inventory icon for the pixel art extraction game TidalLine, fictional realistic 1990s industrial setting. Subject: 轻型插板背心. Detailed visual brief: 深石墨灰窄身板袋，前部一块清晰的切角矩形插板轮廓，两条宽肩带和侧腰开放式织带扣；短下摆、无腹甲、无护颈、没有密集外挂袋。局部旧卡其色缝线，不与浅砂色头盔做成同色套装。 Strict artwork: low resolution pixel art, deliberately chunky crisp pixel clusters, simplified readable silhouette and clear materials. Render as if authored at 48x48 pixels with the complete object fitting the central 40x40 and 4-pixel transparent safety margins. You may output larger but retain genuinely coarse pixel shapes suitable for downscaling. Show an empty wearable torso vest in a frontal slight-three-quarter product view, no body, head or mannequin. Fully transparent background, isolated object only. Upper-left light, restrained realistic desaturated palette. No background scene, no floor, no text, no numbers, no UI border, no rarity colored backdrop, no ground shadow, no glow, no photorealism, no modern futuristic accessories. Important: do not crop any straps or object edges. A clear recognizable single game icon, consistent with retro 1990s pixel inventory equipment.",
+      "source": "sources/body4_lightplate.png",
+      "target": "assets/gear/body4_lightplate.png",
+      "generator": "image_gen",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "level": 4,
+      "type": "body"
+    }
+  ]
+}

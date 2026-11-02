@@ -1,0 +1,9 @@
+{
+  "id": "holdout_e",
+  "unit": "holdout",
+  "dir": "e",
+  "type": "static",
+  "frames": 1,
+  "prompt": "Use case: stylized-concept. Production pixel sprite for TidalLine top-down 75 degree overhead survival shooter. ONE single full body human, stocky local warehouse watchman, dark slate blue patched industrial jacket, worn ochre brown protective vest, old muted yellow rescue helmet, short pump shotgun held in both hands, brown trousers black work boots, small beige waist pouch. Facing EAST to the right, rightward profile, shotgun/rifle points right. Ready idle pose with weapon at low ready. True low resolution pixel art, visible square pixels, only about 26 pixels tall body on a 32 by32 logical grid, strongly foreshortened consistent with high overhead camera, large visible helmet top, short visible front surfaces, compact proportions matching top down 1990s pixel game. Enlarge logical pixels for export, sharp clean pixel clusters, restrained 24 color palette, light upper left. Whole figure and weapon complete, centered, transparent background, generous clear margins. No scene, no text, no labels, no logos, no shadow floor, no isometric floor tile, no photorealism.",
+  "path": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-670a1a3d-ac14-42bb-b053-f2f66761a3a1.png"
+}
