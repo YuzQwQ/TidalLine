@@ -1599,6 +1599,44 @@ console.log('\n=== 双轴后坐力 ===');
     PR.update(1 / 60, { mx: 0, my: 0, aimAngle: Math.PI, aimX: PR.x + 60, aimY: PR.y });
     ok('鼠标离开死区才改朝向', Math.abs(PR.angle - Math.PI) < 1e-9, PR.angle.toFixed(4));
   }
+
+  /* 锁定鼠标后停火：准星就地停住，位移转存到光标，不再退回鼠标点 */
+  {
+    const mx0 = PR.x + 220, my0 = PR.y;
+    PR.rH = 0; PR.rV = AX.v.max; PR.sinceShot = 99;
+    PR.updateAimPoint(mx0, my0);
+    const R0 = { x: PR.aimPoint.x, y: PR.aimPoint.y };
+    ok('锁定前准星被推在鼠标点外侧', R0.x - mx0 > AX.v.max * 0.9,
+       'R 比 M 远 ' + (R0.x - mx0).toFixed(1) + 'px');
+
+    Game.pointerLocked = true;
+    Game.input.mx = 520; Game.input.my = 300;
+    const c0 = Game.input.mx;
+    let drift = 0;
+    for (let i = 0; i < 200; i++) {
+      PR.update(1 / 60, { mx: 0, my: 0, aimAngle: 0 });
+      drift = Math.max(drift, Math.hypot(PR.aimPoint.x - R0.x, PR.aimPoint.y - R0.y));
+    }
+    ok('锁定鼠标时停火后准星就地停住（不往回飘）', drift < 0.5,
+       '最大漂移 ' + drift.toFixed(3) + 'px');
+    ok('这段位移转存到了光标上', Math.abs((Game.input.mx - c0) - AX.v.max) < 1.5,
+       '光标 x ' + c0 + ' → ' + Game.input.mx.toFixed(2) + '（应 +' + AX.v.max + '）');
+    ok('两轴状态量照样归零', PR.rH === 0 && PR.rV === 0,
+       'H ' + PR.rH + ' / V ' + PR.rV);
+
+    /* 关掉开关退回旧行为，方便对比手感 */
+    Game.pointerLocked = false;
+    CFG.RECOIL.holdAim = false;
+    PR.rV = 12; PR.sinceShot = 99;
+    for (let i = 0; i < 200; i++) {
+      PR.update(1 / 60, { mx: 0, my: 0, aimAngle: 0, aimX: mx0, aimY: my0 });
+    }
+    ok('关掉 holdAim 后准星退回鼠标点',
+       Math.hypot(PR.aimPoint.x - mx0, PR.aimPoint.y - my0) < 0.3,
+       'R(' + PR.aimPoint.x.toFixed(2) + ', ' + PR.aimPoint.y.toFixed(2) + ')');
+    CFG.RECOIL.holdAim = true;
+    PR.rH = 0; PR.rV = 0;
+  }
 }
 
 console.log('\n---------------------------------------');

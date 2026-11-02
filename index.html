@@ -7,6 +7,9 @@
 <script>
 /* 早期错误捕获：任何脚本错误都直接显示在页面上，方便排查 */
 window.addEventListener('error', function (e) {
+  /* 资源加载失败（图片/音频 404、连不上）也会冒到这里，但 message 是空的、
+     没有堆栈 —— 报成"脚本错误: undefined（无堆栈）"纯属误导。真正的脚本错误必带 message。 */
+  if (!e || !e.message) return;
   var d = document.createElement('div');
   d.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#8d2020;color:#fff;' +
     'padding:16px;font:13px monospace;z-index:99999;white-space:pre-wrap;line-height:1.6';

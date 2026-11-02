@@ -551,15 +551,41 @@ class Player {
        天然"先快后慢"，有惯性而不会过冲，也不需要额外做回弹。
        停火超过各自的 decayDelay 才开始，移动中回正慢一点。 */
     const AX = R.axis;
+    /* 「就地停住」：先记住恢复前的准星位置，衰减完再把差值转存到虚拟光标上，
+       于是 R 一个像素都不动，挪动的是"鼠标点"—— 这才是锁定鼠标后该有的手感：
+       准星不会自己往回飘，要收就自己把枪压回来。
+       只在锁定状态下这么做：没锁定时系统光标还在屏幕上，挪虚拟光标会让两者脱节。 */
+    const hold = R.holdAim !== false && Game.pointerLocked && this._aimValid;
+    const holdX = this.aimPoint.x, holdY = this.aimPoint.y;
+    let settled = false;
     if (this.rH !== 0 && this.sinceShot > AX.h.decayDelay) {
       const k = AX.h.decay * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
       this.rH *= Math.exp(-k * dt);
       if (Math.abs(this.rH) < 0.05) this.rH = 0;
+      settled = true;
     }
     if (this.rV !== 0 && this.sinceShot > AX.v.decayDelay) {
       const k = AX.v.decay * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
       this.rV *= Math.exp(-k * dt);
       if (this.rV < 0.05) this.rV = 0;
+      settled = true;
+    }
+    if (hold && settled) {
+      /* 同一个鼠标点重算一次：差多少，就把鼠标点补多少 */
+      this.updateAimPoint(this.aimMouse.x, this.aimMouse.y);
+      const ex = holdX - this.aimPoint.x, ey = holdY - this.aimPoint.y;
+      if (ex !== 0 || ey !== 0) {
+        this.aimMouse.x += ex;
+        this.aimMouse.y += ey;
+        this.aimPoint.x = holdX;
+        this.aimPoint.y = holdY;
+        const K = Game.input;
+        if (K && typeof K.mx === 'number') {
+          K.mx += ex;
+          K.my += ey;
+          if (typeof K.wx === 'number') { K.wx += ex; K.wy += ey; }
+        }
+      }
     }
 
     /* --- 准星抖动回弹 --- */
