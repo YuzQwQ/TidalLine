@@ -1405,60 +1405,78 @@ const DeployGuard = {
 
 /* ============================================================
    快速治疗：备战页的结账页（Clinic）
-   结构照改枪台那套「清单 → 总价 → 余额 → 确定支付 / 取消」走：
-   左边把可买的治疗档列出来，右边（footer）总价与余额，确认才扣钱。
+   版式照改枪台那套购买确认页走：商人身份块（头像 / 名字 / 身份）
+   → 明细清单 → 总计与余额 → 确定支付 / 取消。
 
-   价目**不另立一套**：直接从 Medical.quote() 推导。
-   quote(hp) 本来就等于"从 hp 治到满血要多少钱"，所以
-   从 A 治到 B 的价钱 = quote(A) - quote(B)，跟医生那页永远一致。
+   **只卖一档：恢复到完全健康。** 不做分段治疗 ——
+   医生是"缺多少补多少"报价，分几次付在账面上没有区别，
+   却要额外处理"先付一半、回头补差价"的边界，不如就一条。
+
+   价目**不另立一套**：Medical.quote(hp) 本来就等于
+   "从 hp 治到满血要多少钱"，把它的明细（材料费 / 诊疗费）
+   原样拆开展示，和医生页永远对得上。
    ============================================================ */
 const Clinic = {
   el: null,
-  pick: 'quick',
 
-  /* 三档：应急包扎 / 现场急救 / 全面治疗。
-     治不了（已经满血或这一档不加血）的选项直接不列出来。 */
-  options() {
-    const max = CFG.P.HP, hp = Save.hp;
-    const base = Medical.quote(hp).total;
-    const mk = (id, name, desc, target) => {
-      const to = Math.min(max, Math.max(hp, target));
-      const heal = to - hp;
-      /* quote 是"治到满"的价钱，两档相减就是这一段的价钱；四舍五入到整数信用点 */
-      const price = Math.max(0, Math.round(base - Medical.quote(to).total));
-      return { id: id, name: name, desc: desc, target: to, heal: heal, price: price };
+  /* 唯一的一档：治到满血，带明细。
+     材料费 = 缺口 ÷ 绷带单次恢复量（向上取整）× 绷带售价；
+     诊疗费 = max(材料费 × 服务费率, 一剂绷带的半价)，是 doctors.json 里那套规则。 */
+  plan() {
+    const max = CFG.P.HP;
+    const hp = Math.max(0, Math.min(max, Save.hp));
+    const q = Medical.quote(hp);                // { missing, medicine, service, total }
+    const bandage = ITEM_BY_ID.heal01;
+    const packs = q.missing > 0 ? Math.ceil(q.missing / bandage.healCap) : 0;
+    const rate = Math.round(ECONOMY.doctor.serviceRate * 100);
+    const floor = Math.ceil(bandage.price * ECONOMY.doctor.minimumBandageFraction);
+    return {
+      hp: hp, max: max, target: max,
+      missing: q.missing,
+      packs: packs,
+      bandage: bandage,
+      medicine: q.medicine,
+      service: q.service,
+      total: q.total,
+      heal: Math.max(0, max - hp),
+      rate: rate,
+      floor: floor
     };
-    const list = [
-      mk('quick', '应急包扎', '现场处理伤口，恢复 25 点生命', hp + 25),
-      mk('field', '现场急救', '急救包处理，恢复 60 点生命', hp + 60),
-      mk('full', '全面治疗', '医生接手，恢复到完全健康', max)
-    ].filter(o => o.heal > 0.01);
-    /* 伤势较轻时高档会撞到满血：42 HP 的「急救」和「全面治疗」都是治满、同价，
-       列两行一模一样的没有意义。按目标血量去重，保留更靠后（更明确）的那档。 */
-    const seen = new Set();
-    const out = [];
-    for (let i = list.length - 1; i >= 0; i--) {
-      const key = Math.round(list[i].target * 10) / 10;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      out.unshift(list[i]);
-    }
-    return out;
+  },
+
+  /* 接诊的医生。身份取短标签（MERCHANT_UI_CONFIG 里的 tag =「医生」），
+     短标签缺席才退回 merchants 里的长描述。 */
+  merchant() {
+    const m = (typeof SAFEHOUSE_CONFIG !== 'undefined' && SAFEHOUSE_CONFIG.merchants
+      && SAFEHOUSE_CONFIG.merchants.doctor) || null;
+    const ui = (typeof MERCHANT_UI_CONFIG !== 'undefined' && MERCHANT_UI_CONFIG.doctor) || null;
+    return {
+      name: (m && m.name) || '值班医生',
+      tag: (ui && ui.tag) || '医生',
+      role: (m && m.role) || '',
+      asset: (m && m.asset) || 'doctor'
+    };
+  },
+
+  /* 头像走藏身处那套资源解析；资源没就位就退回占位方框，不让布局塌 */
+  photo(asset) {
+    try {
+      if (typeof Safehouse !== 'undefined' && Safehouse.asset) return Safehouse.asset(asset);
+    } catch (e) { /* 忽略：没有图也能用 */ }
+    return '';
   },
 
   open() {
     if (Game.state !== 'base') return false;
     if (Save.hp >= CFG.P.HP - 1e-6) { Base.note('生命值已满，不需要治疗'); return false; }
-    const opts = this.options();
-    if (!opts.length) { Base.note('当前没有可用的治疗项目'); return false; }
     this.close();
-    this.pick = opts[0].id;
 
     const dlg = document.createElement('dialog');
     dlg.className = 'clinic-checkout';
     dlg.setAttribute('aria-label', '快速治疗');
     document.body.appendChild(dlg);
     this.el = dlg;
+    /* Esc 等同取消：只关窗，不扣款 */
     dlg.addEventListener('cancel', ev => { ev.preventDefault(); this.close(); });
     this.render();
     dlg.showModal();
@@ -1469,79 +1487,83 @@ const Clinic = {
   render() {
     const dlg = this.el;
     if (!dlg) return;
-    const opts = this.options();
-    if (!opts.length) { this.close(); return; }
-    if (!opts.some(o => o.id === this.pick)) this.pick = opts[0].id;
-    const sel = opts.find(o => o.id === this.pick);
+    const pl = this.plan();
+    const doc = this.merchant();
     const st = Base.healthState();
-    const max = CFG.P.HP;
-    const hp = Math.round(Save.hp * 10) / 10;
-    const doc = (typeof SAFEHOUSE_CONFIG !== 'undefined' && SAFEHOUSE_CONFIG.merchants
-      && SAFEHOUSE_CONFIG.merchants.doctor) || null;
-    const poor = Save.credits < sel.price;
+    const src = this.photo(doc.asset);
+    const poor = Save.credits < pl.total;
+    const identity = doc.role && doc.role !== doc.tag ? doc.tag + ' · ' + doc.role : doc.tag;
 
     dlg.innerHTML =
       '<header>' +
-        '<small>QUICK TREATMENT / 快速治疗</small>' +
-        '<h2>先处理伤势，再谈出发</h2>' +
-        '<p>' + (doc && doc.name ? esc(doc.name) + '接手。' : '') +
-          '只对当前伤势收费，取消不扣款。</p>' +
+        '<small>QUICK TREATMENT / 治疗结算</small>' +
+        '<h2>恢复到完全健康</h2>' +
+        '<p>医生按当前伤势一次性处理完。取消不扣款，伤势原样保留。</p>' +
       '</header>' +
-      '<div class="clinic-vitals"><b>' + hp + '</b><small>/ ' + max + ' HP</small><em>' + st.label + '</em></div>' +
-      '<div class="clinic-options">' +
-        opts.map(o =>
-          '<button type="button" class="clinic-option' + (o.id === this.pick ? ' on' : '') +
-            '" data-clinic-opt="' + o.id + '"' + (Save.credits < o.price ? ' disabled' : '') + '>' +
-            '<span class="co-name"><b>' + o.name + '</b><small>' + o.desc +
-              ' · 恢复 ' + Math.round(o.heal) + ' HP</small></span>' +
-            '<span class="co-price">' + formatMoney(o.price) + '</span>' +
-          '</button>'
-        ).join('') +
+
+      '<section class="clinic-vendor">' +
+        '<div class="clinic-vendor-identity">' +
+          (src ? '<img src="' + esc(src) + '" alt="' + esc(doc.name) + '">'
+               : '<span class="clinic-vendor-photo" aria-hidden="true"></span>') +
+          '<div><h3>' + esc(doc.name) + '</h3><small>' + esc(identity) + '</small></div>' +
+        '</div>' +
+      '</section>' +
+
+      '<div class="clinic-vitals">' +
+        '<b>' + Math.round(pl.hp) + '</b><small>/ ' + pl.max + ' HP</small>' +
+        '<em>' + st.label + '</em>' +
+        '<i class="clinic-arrow" aria-hidden="true">→ ' + pl.max + '</i>' +
       '</div>' +
+
+      '<section class="clinic-bill">' +
+        '<h4>治疗明细</h4>' +
+        '<ul>' +
+          '<li><span>药品材料 · ' + esc(pl.bandage.name) + ' ×' + pl.packs +
+            '<small>补足 ' + Math.round(pl.missing) + ' 点生命，每剂 ' + pl.bandage.healCap + ' 点</small></span>' +
+            '<b>' + formatMoney(pl.medicine) + '</b></li>' +
+          '<li><span>诊疗服务费' +
+            '<small>按材料费 ' + pl.rate + '% 计，最低 ' + formatMoney(pl.floor) + '</small></span>' +
+            '<b>' + formatMoney(pl.service) + '</b></li>' +
+        '</ul>' +
+        /* 不写「小计」：这一页只有一位收款人、一项服务，小计和下面的总计永远是同一个数，
+           连着显示两遍只会让人怀疑自己看错了。改枪台那边有小计是因为可能跨多个商人。 */
+      '</section>' +
+
       '<footer>' +
-        '<div class="clinic-total"><span>' + sel.name + ' · ' + Math.round(sel.heal) + ' HP</span>' +
-          '<strong>' + formatMoney(sel.price) + '</strong></div>' +
+        '<div class="clinic-total"><span>总计</span><strong>' + formatMoney(pl.total) + '</strong></div>' +
         '<p class="clinic-wallet">当前余额 ' + formatMoney(Save.credits) +
-          ' · 治疗后 ' + Math.round(sel.target) + ' / ' + max + ' HP，余额 ' +
-          formatMoney(Save.credits - sel.price) + '</p>' +
-        '<p class="clinic-error" role="status">' + (poor ? '信用点不足，换一档或先去赚钱。' : '') + '</p>' +
+          ' · 支付后 ' + Math.round(pl.target) + ' / ' + pl.max + ' HP，余额 ' +
+          formatMoney(Save.credits - pl.total) + '</p>' +
+        '<p class="clinic-error" role="status">' + (poor ? '信用点不足，先去凑钱。' : '') + '</p>' +
         '<div class="clinic-acts">' +
           '<button type="button" data-clinic-pay' + (poor ? ' disabled' : '') + '>确定支付</button>' +
           '<button type="button" data-clinic-cancel>取消</button>' +
         '</div>' +
       '</footer>';
 
-    dlg.querySelectorAll('[data-clinic-opt]').forEach(b => {
-      b.onclick = () => {
-        this.pick = b.dataset.clinicOpt;
-        if (SFX.ui) SFX.ui('click');
-        this.render();
-      };
-    });
     dlg.querySelector('[data-clinic-cancel]').onclick = () => this.close();
     const pay = dlg.querySelector('[data-clinic-pay]');
     if (pay) pay.onclick = () => this.pay();
   },
 
   /* 支付：以此刻重新报价为准 —— 从开窗到点确认之间血量理论上不会变，
-     但报价函数是纯的，重算一次比信任缓存的 sel 更稳。 */
+     但报价函数是纯的，重算一次比信缓存的更稳。 */
   pay() {
-    const opts = this.options();
-    const sel = opts.find(o => o.id === this.pick);
-    if (!sel) { this.close(); return false; }
-    if (Save.credits < sel.price) {
+    const pl = this.plan();
+    if (!(pl.total >= 0) || pl.missing <= 0) { this.close(); return false; }
+    if (Save.credits < pl.total) {
       const err = this.el && this.el.querySelector('.clinic-error');
-      if (err) err.textContent = '信用点不足，换一档或先去赚钱。';
+      if (err) err.textContent = '信用点不足，先去凑钱。';
       return false;
     }
     const before = Save.hp;
-    Save.credits -= sel.price;
-    Save.setHP(sel.target);
+    Save.credits -= pl.total;
+    Save.setHP(pl.target);
     Save.save(); Save.flush();
     this.close();
     Game.sfx('sell');
     Base.render();
-    Base.note('治疗完成：+' + Math.round(sel.target - before) + ' HP（-' + formatMoney(sel.price) + '）');
+    Base.note('治疗完成：+' + Math.round(pl.target - before) + ' HP（-' + formatMoney(pl.total) + '）');
     return true;
   },
 

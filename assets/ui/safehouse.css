@@ -39,28 +39,40 @@
 .loadout-health .lh-treat:hover{background:#dfbf7d}
 .loadout-health .lh-treat:disabled{color:#5f7a72;background:#1b2a24;cursor:not-allowed}
 
-/* 结账框 */
+/* 结账框 —— 版式对齐改枪台的购买确认页（商人身份块 / 明细 / 总计） */
 .clinic-checkout{width:min(560px,calc(100vw - 28px));max-height:calc(100dvh - 32px);overflow:auto;padding:22px 24px;color:#e4e0d5;background:linear-gradient(140deg,#252d24,#0f1713);border:1px solid #c1a46c;box-shadow:0 20px 90px #000b;font:13px/1.65 system-ui,"Microsoft YaHei",sans-serif}
 .clinic-checkout::backdrop{background:#080b09ad;backdrop-filter:blur(6px)}
 .clinic-checkout header>small{display:block;font-size:10px;letter-spacing:2px;color:#d0bc92}
 .clinic-checkout h2{margin:4px 0 6px;font-size:21px;font-weight:600;color:#e6c78e}
 .clinic-checkout header>p{margin:0 0 14px;font-size:11.5px;line-height:1.7;color:#b8bdaa}
-.clinic-checkout .clinic-vitals{display:flex;align-items:center;gap:10px;padding:9px 11px;margin-bottom:12px;border:1px solid #3a4a3f;background:#0e1713}
-.clinic-checkout .clinic-vitals b{font-size:19px;font-variant-numeric:tabular-nums;color:#eaf4f0}
-.clinic-checkout .clinic-vitals small{font-size:11px;color:#8fa79b}
-.clinic-checkout .clinic-vitals em{margin-left:auto;font-style:normal;font-size:10.5px;letter-spacing:1px;padding:1px 8px;border:1px solid #5c4c2a;color:#d9b45f}
-.clinic-options{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
-.clinic-option{display:flex;align-items:center;gap:10px;padding:9px 11px;text-align:left;cursor:pointer;color:#cfd8d4;background:#111b16;border:1px solid #2b3f36;font-family:inherit}
-.clinic-option:hover{border-color:#4a6a58}
-.clinic-option.on{border-color:#c1a46c;background:#1a2118}
-.clinic-option:disabled{opacity:.45;cursor:not-allowed}
-.clinic-option .co-name{flex:1;min-width:0}
-.clinic-option .co-name b{display:block;font-size:12.5px;font-weight:600;color:#e6efeb}
-.clinic-option .co-name small{display:block;font-size:10.5px;color:#83998f;margin-top:1px}
-.clinic-option .co-price{font-size:12px;font-variant-numeric:tabular-nums;color:#d9b45f;white-space:nowrap}
-.clinic-checkout footer{border-top:1px solid #33443a;padding-top:11px}
+
+/* 商人身份：头像 58×72、名字、身份，和改枪台的 .mod-vendor-identity 同一套比例 */
+.clinic-vendor{padding:0 0 12px;border-bottom:1px solid #a9997044}
+.clinic-vendor-identity{display:flex;gap:14px;align-items:center}
+.clinic-vendor-identity img,.clinic-vendor-photo{width:58px;height:72px;object-fit:cover;object-position:top;border:1px solid #bb9e64}
+.clinic-vendor-photo{display:block;background:linear-gradient(160deg,#233029,#141d18)}
+.clinic-vendor-identity h3{margin:0;font-size:18px;font-weight:600;color:#e6efeb}
+.clinic-vendor-identity small{color:#c0aa79;font-size:11.5px}
+
+.clinic-vitals{display:flex;align-items:center;gap:10px;padding:9px 11px;margin:12px 0;border:1px solid #3a4a3f;background:#0e1713}
+.clinic-vitals b{font-size:19px;font-variant-numeric:tabular-nums;color:#eaf4f0}
+.clinic-vitals small{font-size:11px;color:#8fa79b}
+.clinic-vitals em{font-style:normal;font-size:10.5px;letter-spacing:1px;padding:1px 8px;border:1px solid #5c4c2a;color:#d9b45f}
+.clinic-vitals .clinic-arrow{margin-left:auto;font-style:normal;font-size:12px;letter-spacing:1px;color:#7fd6b4;font-variant-numeric:tabular-nums}
+
+/* 费用明细：一行一项，右侧价格不换行 */
+.clinic-bill{padding:12px 14px;border:1px solid #a9997066;background:#09130d66}
+.clinic-bill h4{margin:0 0 8px;font-size:11px;font-weight:600;letter-spacing:2px;color:#d0bc92}
+.clinic-bill ul{margin:0;padding:0;list-style:none}
+.clinic-bill li{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px solid #8a987322;font-size:12.5px;color:#cfd8d4}
+.clinic-bill li:last-child{border-bottom:0}
+.clinic-bill li span{min-width:0}
+.clinic-bill li small{display:block;margin-top:2px;font-size:10.5px;color:#83998f}
+.clinic-bill li b{white-space:nowrap;color:#dec38b;font-variant-numeric:tabular-nums}
+
+.clinic-checkout footer{border-top:1px solid #33443a;margin-top:12px;padding-top:11px}
 .clinic-total{display:flex;align-items:baseline;justify-content:space-between;font-size:12px;color:#b8bdaa}
-.clinic-total strong{font-size:19px;color:#e6c78e;font-variant-numeric:tabular-nums}
+.clinic-total strong{font-size:22px;color:#e6c78e;font-variant-numeric:tabular-nums}
 .clinic-wallet{margin:3px 0 9px;font-size:10.5px;color:#83998f}
 .clinic-error{margin:0 0 8px;font-size:11px;color:#e08a7a;min-height:15px}
 .clinic-acts{display:flex;gap:8px}
@@ -69,4 +81,4 @@
 .clinic-acts button[data-clinic-pay]{background:#c9a86a;border-color:#c9a86a;color:#0f1a16}
 .clinic-acts button[data-clinic-pay]:hover{background:#dfbf7d}
 .clinic-acts button[data-clinic-pay]:disabled{background:#1b2a24;border-color:#2b3a32;color:#5f7a72;cursor:not-allowed}
-@media(max-width:640px){.clinic-checkout{padding:16px}.clinic-option{padding:8px}.clinic-acts button{padding:9px 8px;font-size:12px}}
+@media(max-width:640px){.clinic-checkout{padding:16px}.clinic-vendor{padding-bottom:10px}.clinic-bill{padding:10px}.clinic-acts button{padding:9px 8px;font-size:12px}}
