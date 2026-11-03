@@ -1,0 +1,267 @@
+{
+  "standard": "three-quarter front slight top; front left foreground, rear right background; grips and magazines upright; other parts SW-NE; never mirror/flip",
+  "retained": [
+    "att_muzzle01",
+    "att_muzzle02",
+    "att_stock02",
+    "att_grip01",
+    "att_grip02",
+    "att_grip03",
+    "att_grip04",
+    "att_mag_556_ext",
+    "att_mag_556_quick",
+    "att_mag_556_quick_ext",
+    "att_mag_762x39_ext",
+    "att_mag_762x39_quick",
+    "att_mag_762x39_quick_ext",
+    "att_mag_9mm_ext",
+    "att_mag_9mm_quick",
+    "att_mag_9mm_quick_ext",
+    "att_mag_45acp_ext",
+    "att_mag_45acp_quick"
+  ],
+  "pending": [],
+  "reviewed": [
+    {
+      "id": "att_optic01",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_optic02",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_optic03",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_optic04",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_grip01",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_grip02",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_grip03",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_grip04",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_stock01",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_stock02",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_stock03",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_muzzle01",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_muzzle02",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_muzzle03",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_muzzle04",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_muzzle05",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_muzzle06",
+      "placement": "front-left lower foreground, rear-right upper background",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_mag_556_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_556_quick",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_556_quick_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_762x39_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_762x39_quick",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_762x39_quick_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_9mm_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_9mm_quick",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_9mm_quick_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_45acp_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_45acp_quick",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": true
+    },
+    {
+      "id": "att_mag_45acp_quick_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_mag_12g_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_mag_12g_quick",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_mag_12g_quick_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    }
+  ],
+  "redrawn": [
+    "att_optic01",
+    "att_optic02",
+    "att_optic03",
+    "att_optic04",
+    "att_stock01",
+    "att_stock03",
+    "att_muzzle03",
+    "att_muzzle04",
+    "att_muzzle05",
+    "att_muzzle06",
+    "att_mag_45acp_quick_ext",
+    "att_mag_12g_ext",
+    "att_mag_12g_quick",
+    "att_mag_12g_quick_ext"
+  ],
+  "processing": "trim and resize only; no mirrored or rotated images"
+}

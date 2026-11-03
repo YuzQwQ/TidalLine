@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "core": {
+    "main": {
+      "passed": 402,
+      "failed": 0
+    },
+    "attachments": {
+      "groups": 19,
+      "compatibilityPairs": 384
+    },
+    "arsenal": 16,
+    "ballistics": 23,
+    "reloading": 4,
+    "humanAI": 16,
+    "armor": 10,
+    "medical": 24,
+    "melee": 11,
+    "ammoStacks": 7,
+    "containerPools": 11
+  },
+  "art": {
+    "icons": 32,
+    "canvas": [
+      48,
+      48
+    ],
+    "safeMargin": 4,
+    "unique": true,
+    "originalsMapped": 32,
+    "vertical": [
+      "grip",
+      "magazine"
+    ],
+    "orientationReview": "art/orientation-review.json"
+  },
+  "browser": {
+    "development": true,
+    "offline": true,
+    "widths": [
+      1440,
+      390,
+      320
+    ],
+    "checks": [
+      "attachments",
+      "gear-icons",
+      "arsenal",
+      "merchants",
+      "detail-art",
+      "wiki",
+      "human-units"
+    ]
+  },
+  "maps": {
+    "snapshotsUnchanged": true,
+    "placementUnchanged": true
+  },
+  "testMaintenance": [
+    "gear/wiki/public stock counts include 32 attachments",
+    "container-pool checks updated from historical three calibers to current five; firearm pool and attachment branch counted separately"
+  ],
+  "notes": "No game balance changed to satisfy historical test assertions."
+}

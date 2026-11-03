@@ -34,12 +34,12 @@ function advance(sec,step=0.05){
   return t;
 }
 
-test('159件唯一物品、18医疗品、140图鉴与准确参数',()=>{
-  assert.equal(ITEMS.length,173);assert.equal(new Set(ITEMS.map(i=>i.id)).size,173);assert(!byId.med01);
+test('183件唯一物品、18医疗品、140图鉴与准确参数',()=>{
+  assert.equal(ITEMS.length,183);assert.equal(new Set(ITEMS.map(i=>i.id)).size,183);assert(!byId.med01);
   assert.equal(ITEMS.filter(i=>!i.noCodex).length,140);
   const spec=require('../design/items/medical.json');assert.equal(spec.items.length,18);
   for(const item of spec.items){const actual=byId[item.id];for(const key of ['name','r','w','price','stack','desc','visual'])assert.equal(actual[key],item[key]);assert(actual.noCodex);assert.equal(actual.cat,'medical');assert.equal(!!actual.noLoot,!actual.heal);}
-  assert.equal(byId.heal01.price,2000);assert.equal(byId.ammo_556_1.stack,120);
+  assert.equal(byId.heal01.price,2000);assert.equal(byId.ammo_556_1.stack,60);
 });
 
 test('五件恢复品的启动/速率/容量与新需求一致',()=>{

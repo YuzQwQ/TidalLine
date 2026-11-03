@@ -187,7 +187,7 @@ const Range = {
   active: false,
   panel: null,
   visible: true,
-  curId: 'rifle',
+  curId: 'm4a1',
 
   w: {},          // 每把枪的调参值
   g: {},          // 全局调参值
@@ -227,7 +227,7 @@ const Range = {
     Game.targets = this.targets;
 
     this.initPanel();
-    this.equip(this.w[this.curId] ? this.curId : 'rifle');
+    this.equip(this.w[this.curId] ? this.curId : 'm4a1');
     this.refreshPanel();
     this.showPanel(true);
     this.initAudio();
@@ -297,7 +297,7 @@ const Range = {
     this.w = {};
     for (const id in RANGE_DEF_W) {
       const base = Object.assign({}, RANGE_DEF_W[id]);
-      const s = saved && saved.w && saved.w[id];
+      const s = saved && saved.w && (saved.w[id]||saved.w[Object.keys(WEAPON_ALIASES).find(k=>WEAPON_ALIASES[k]===id)]);
       if (s) for (const k in base) if (typeof s[k] === 'number' && isFinite(s[k])) base[k] = s[k];
       this.w[id] = base;
     }
@@ -307,7 +307,7 @@ const Range = {
         if (typeof saved.g[k] === 'number' && isFinite(saved.g[k])) this.g[k] = saved.g[k];
       }
     }
-    if (saved && typeof saved.cur === 'string' && this.w[saved.cur]) this.curId = saved.cur;
+    if (saved && typeof saved.cur === 'string' && this.w[canonicalWeaponId(saved.cur)]) this.curId = canonicalWeaponId(saved.cur);
   },
 
   save() {
@@ -377,6 +377,7 @@ const Range = {
 
   /* 换上一把枪；已经在枪位上的直接切过去 */
   equip(id) {
+    id=canonicalWeaponId(id);
     const P = Game.player;
     if (!P || !WEAPONS[id]) return;
     let idx = -1;
@@ -761,7 +762,7 @@ const Range = {
       Game.sfx('step_stone_' + (1 + Math.floor(Math.random() * 4)), { rate: 1, vol: 1 });
     } else if (name === 'switch') {
       /* 有专属切枪音的枪（霰弹）会命中采样，其余自动回落通用音 */
-      Game.sfx('shot_switch_' + this.curId);
+      Game.sfx('shot_switch_' + WEAPONS[this.curId].category);
     } else {
       Game.sfx(name);
     }

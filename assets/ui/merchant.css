@@ -9,3 +9,6 @@
 .mb-inspector{display:flex;flex-direction:column;overflow:hidden}.mb-inspector-body{flex:1;min-height:0;overflow:auto}.mb-inspector-body>small{font:9px Consolas,monospace;color:#adba94;letter-spacing:1px}.mb-inspector-body>p{font-size:11px;line-height:1.9;color:#a9b99a;white-space:pre-line}.mb-inspector>.mb-price,.mb-inspector>.mb-gold,.mb-inspector>.mb-reason,.mb-inspector>.mb-item-actions{flex-shrink:0}@media(max-width:799px){.mb-inspector{overflow:visible}.mb-inspector-body{overflow:visible;flex:none}}
 
 .mb-feedback{flex-shrink:0;margin:0;padding:10px 16px;border-top:1px solid #8d9d5d88;background:#344b2470;color:#d3dcae;font-size:11px}.mb-feedback.bad{color:#f2c0a2;background:#6b392777}
+
+/* Full-resolution inspector art uses normal downsampling; inventory tiles remain pixelated. */
+.mb-item-preview img.item-detail-original{image-rendering:auto}

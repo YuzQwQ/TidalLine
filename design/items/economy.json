@@ -3009,25 +3009,53 @@
     }
   ],
   "weapons": {
-    "rifle": {
-      "price": 45000,
-      "rarity": 5,
-      "previousPrice": 520
+    "m4a1": {
+      "price": 168000,
+      "rarity": 5
     },
-    "shotgun": {
-      "price": 24000,
-      "rarity": 3,
-      "previousPrice": 480
+    "akm": {
+      "price": 125000,
+      "rarity": 4
     },
-    "smg": {
-      "price": 38000,
-      "rarity": 3,
-      "previousPrice": 420
+    "famas_f1": {
+      "price": 215000,
+      "rarity": 5
     },
-    "pistol": {
-      "price": 5000,
-      "rarity": 2,
-      "previousPrice": 260
+    "pp19_01": {
+      "price": 72000,
+      "rarity": 3
+    },
+    "mp5a3": {
+      "price": 115000,
+      "rarity": 4
+    },
+    "ump45": {
+      "price": 108000,
+      "rarity": 4
+    },
+    "mp155": {
+      "price": 78000,
+      "rarity": 3
+    },
+    "rem870": {
+      "price": 58000,
+      "rarity": 3
+    },
+    "saiga12": {
+      "price": 175000,
+      "rarity": 5
+    },
+    "glock17": {
+      "price": 32000,
+      "rarity": 2
+    },
+    "m1911a1": {
+      "price": 37000,
+      "rarity": 3
+    },
+    "beretta92": {
+      "price": 44000,
+      "rarity": 3
     }
   },
   "armor": {
@@ -3154,7 +3182,11 @@
         "dur": 20,
         "w": 0.5,
         "move": 1,
-        "price": 120
+        "price": 120,
+        "id": "helmet1",
+        "icon": "helmet1",
+        "type": "helmet",
+        "aimPenaltyPct": 0
       },
       {
         "lv": 2,
@@ -3164,7 +3196,11 @@
         "dur": 30,
         "w": 0.8,
         "move": 1,
-        "price": 216
+        "price": 216,
+        "id": "helmet2",
+        "icon": "helmet2",
+        "type": "helmet",
+        "aimPenaltyPct": 0
       },
       {
         "lv": 3,
@@ -3174,7 +3210,11 @@
         "dur": 45,
         "w": 1.2,
         "move": 1,
-        "price": 360
+        "price": 360,
+        "id": "helmet3",
+        "icon": "helmet3",
+        "type": "helmet",
+        "aimPenaltyPct": 0
       },
       {
         "lv": 4,
@@ -3184,7 +3224,11 @@
         "dur": 65,
         "w": 1.8,
         "move": 1,
-        "price": 600
+        "price": 600,
+        "id": "helmet4",
+        "icon": "helmet4",
+        "type": "helmet",
+        "aimPenaltyPct": 0
       },
       {
         "lv": 5,
@@ -3194,7 +3238,11 @@
         "dur": 85,
         "w": 2.5,
         "move": 1,
-        "price": 1080
+        "price": 1080,
+        "id": "helmet5",
+        "icon": "helmet5",
+        "type": "helmet",
+        "aimPenaltyPct": 0
       },
       {
         "lv": 6,
@@ -3204,7 +3252,11 @@
         "dur": 110,
         "w": 3.5,
         "move": 1,
-        "price": 1920
+        "price": 1920,
+        "id": "helmet6",
+        "icon": "helmet6",
+        "type": "helmet",
+        "aimPenaltyPct": 0
       }
     ],
     "bodies": [
@@ -3216,7 +3268,11 @@
         "dur": 40,
         "w": 1.5,
         "move": 1,
-        "price": 200
+        "price": 200,
+        "id": "body1",
+        "icon": "body1",
+        "type": "body",
+        "aimPenaltyPct": 0
       },
       {
         "lv": 2,
@@ -3225,8 +3281,12 @@
         "dr": 0.2,
         "dur": 60,
         "w": 2.5,
-        "move": 0.98,
-        "price": 360
+        "move": 1,
+        "price": 360,
+        "id": "body2",
+        "icon": "body2",
+        "type": "body",
+        "aimPenaltyPct": 10
       },
       {
         "lv": 3,
@@ -3235,8 +3295,12 @@
         "dr": 0.3,
         "dur": 85,
         "w": 4,
-        "move": 0.96,
-        "price": 600
+        "move": 1,
+        "price": 600,
+        "id": "body3",
+        "icon": "body3",
+        "type": "body",
+        "aimPenaltyPct": 20
       },
       {
         "lv": 4,
@@ -3245,8 +3309,12 @@
         "dr": 0.4,
         "dur": 115,
         "w": 6,
-        "move": 0.94,
-        "price": 1000
+        "move": 1,
+        "price": 1000,
+        "id": "body4",
+        "icon": "body4",
+        "type": "body",
+        "aimPenaltyPct": 30
       },
       {
         "lv": 5,
@@ -3255,8 +3323,12 @@
         "dr": 0.5,
         "dur": 150,
         "w": 9,
-        "move": 0.91,
-        "price": 1800
+        "move": 1,
+        "price": 1800,
+        "id": "body5",
+        "icon": "body5",
+        "type": "body",
+        "aimPenaltyPct": 45
       },
       {
         "lv": 6,
@@ -3265,8 +3337,12 @@
         "dr": 0.6,
         "dur": 190,
         "w": 13,
-        "move": 0.88,
-        "price": 3200
+        "move": 1,
+        "price": 3200,
+        "id": "body6",
+        "icon": "body6",
+        "type": "body",
+        "aimPenaltyPct": 60
       }
     ],
     "supply": {

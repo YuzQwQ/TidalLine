@@ -43,6 +43,30 @@ const Icons = {
 
   get(id) { return this.map[id] || null; },
 
+  /* Inspectors use native-size originals. Grid icons and scene preloads stay small. */
+  detailSource(item) {
+    if (!item) return null;
+    const key=item.icon?'gear/'+canonicalWeaponId(item.icon):'items/'+(item.iconId||item.id);
+    return (typeof DETAIL_ART!=='undefined'&&DETAIL_ART[key])||null;
+  },
+  detailTag(item,cls) {
+    const src=this.detailSource(item);
+    /* 单文件分发版（潮汐线.html）是把所有资源内联的一个 HTML，身边没有 assets/ 目录：
+       原图必然 404 再回落到 48px 图。干脆一开始就不发这个请求，省掉一屏失败记录。 */
+    const solo = typeof window!=='undefined' && window.__SELF_CONTAINED__===true;
+    if(!src||solo)return item&&!item.id&&!item.icon?'<span>'+esc((item.short||item.name||'·').charAt(0))+'</span>':this.bagTag(item,cls);
+    const fallback=item.icon?this.gear[item.icon]?.src:this.get(item.id)?.src;
+    return '<img class="'+esc((cls||'')+' item-detail-original')+'" src="'+esc(src)+'" alt="'+esc(item.name||item.short||'物品')+'" loading="lazy" decoding="async" data-detail-image data-detail-fallback="'+esc(fallback||'')+'">';
+  },
+  bindDetailImages(root) {
+    if(!root?.querySelectorAll)return;
+    for(const img of root.querySelectorAll('img[data-detail-image]'))img.onerror=()=>{
+      img.onerror=null;img.classList.remove('item-detail-original');
+      if(img.dataset.detailFallback)img.src=img.dataset.detailFallback;
+      else img.replaceWith(document.createTextNode(img.alt||'·'));
+    };
+  },
+
   /* 给 DOM 用：有图返回 <img>，没图返回一个同尺寸的色块占位，
      这样有没有贴图的两种状态在列表里是对齐的 */
   tag(id, cls) {

@@ -33,7 +33,7 @@ const Game = {
 
   input: {
     keys: {}, mx: 0, my: 0, wx: 0, wy: 0,
-    aimAngle: 0, mouseDown: false,
+    aimAngle: 0, mouseDown: false, mousePressed:false,
     dodgePressed: false, interactPressed: false,
     reloadPressed: false, bagPressed: false
   },
@@ -177,7 +177,8 @@ const Game = {
 
       if (this.state !== 'playing') return;
 
-      if (MeleeSystem.locked() && ['1','2','3','4','5','r','e','tab'].includes(k)) return;
+      if (MeleeSystem.locked() && ['1','2','3','4','5','r','e','tab','b'].includes(k)) return;
+      if(k==='b'){Gunplay.nextMode(this.player);return;}
       if (k === '4') { this.player.switchMelee(); return; }
       if (k === 'e') K.interactPressed = true;
       if (k === 'r') AmmoQuick.press();
@@ -236,7 +237,7 @@ const Game = {
       const ae = document.activeElement;
       if (ae && ae.blur && ae.tagName === 'INPUT') ae.blur();
       if (!this.lootOpen && !this.bagOpen) this.wantLock();
-      if (e.button === 0) K.mouseDown = true;
+      if (e.button === 0) {K.mouseDown = true;K.mousePressed=true;}
       if (e.button === 2) K.dodgePressed = true;
     });
     window.addEventListener('mouseup', e => {
@@ -266,6 +267,7 @@ const Game = {
     window.addEventListener('blur', () => {
       for (const k in K.keys) K.keys[k] = false;
       K.mouseDown = false;
+      K.mousePressed = false;
       MedQuick.cancel();
       AmmoQuick.cancel();
     });
@@ -350,6 +352,10 @@ const Game = {
   },
 
   startRun(loadout, mapId) {
+    this.input.mouseDown=false;
+    this.input.mousePressed=false;
+    /* 开局就把大厅音乐撤掉（选图页可能没走 Base.close） */
+    if (typeof Music !== 'undefined') Music.stop(0.6);
     /* 靶场地图是代码生成的，不进 MAP_CATALOG（选图页不该看到它） */
     const map = (typeof RANGE_MAP !== 'undefined' && mapId === RANGE_MAP.id)
       ? RANGE_MAP
@@ -480,7 +486,7 @@ const Game = {
     /* 靶场里换枪、清弹匣都不该污染存档 */
     if (this.rangeMode) return;
     P.weapons[P.slot] && (P.weapons[P.slot].magCur = P.mag);   // 手上那把的余弹先同步
-    Save.gear.weapons = P.weapons.map(w => (w ? EQUIP.gun(w.id, w.magCur, w.ammo, w.rounds) : null));
+    Save.gear.weapons = P.weapons.map(w => (w ? Gunplay.snapshot(w) : null));
     Save.gear.melee = P.melee || null;
     Save.gear.helmet = P.helmet ? Object.assign({}, P.helmet) : null;
     Save.gear.body = P.body ? Object.assign({}, P.body) : null;

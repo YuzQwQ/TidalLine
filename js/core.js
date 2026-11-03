@@ -615,10 +615,12 @@ const Loot = {
     if (!type) return 'item';
     const a = (type.ammoPool && type.ammoPool.chance) || 0;
     const g = (type.gearPool && type.gearPool.chance) || 0;
+    const attachment=typeof ATTACHMENT_LOOT!=='undefined'?(ATTACHMENT_LOOT[Object.keys(CONTAINER_TYPES).find(k=>CONTAINER_TYPES[k]===type)]||0):0;
     let roll = Math.random();
     if (roll < a) return 'ammo';
     roll -= a;
     if (roll < g) return 'gear';
+    roll-=g;if(roll<attachment)return 'attachment';
     return 'item';
   },
 
@@ -643,9 +645,18 @@ const Loot = {
     const kinds = (options && options.kinds) || ['helmet', 'body', 'bag'];
     const kind = U.pick(kinds);
     /* 背包只有五档，护甲只掷到五级，所以 lv 一定在各自表里 */
-    const item = kind === 'bag' ? EQUIP.bag('bag0' + lv) : EQUIP.armor(GEAR.random(kind, lv));
+    const guns=kind==='gun'?Object.values(WEAPONS).filter(w=>w.rarity===lv):[];
+    const item = kind === 'gun' ? (guns.length ? EQUIP.gun(U.pick(guns).id,0) : null)
+      : kind === 'bag' ? EQUIP.bag('bag0' + lv) : EQUIP.armor(GEAR.random(kind, lv));
     if (!item) return this.roll(quality, null);
     return { item, n: 1 };
+  },
+
+  rollAttachment(quality,cats){
+    const pct=CONTAINER_QUALITY[quality].pct;let r=Math.random()*pct.reduce((a,b)=>a+b,0),level=6;
+    for(let i=0;i<pct.length;i++){r-=pct[i];if(r<0){level=i+1;break;}}
+    const pool=Object.values(ATTACHMENT_DEFS).filter(a=>a.r===level);
+    return pool.length?{item:EQUIP.attachment(U.pick(pool).id),n:1}:this.roll(quality,cats);
   },
 
   fill(quality, preferredCats, type) {
@@ -661,6 +672,7 @@ const Loot = {
       const special = pool !== 'item';
       let r = pool === 'ammo' ? this.rollAmmo(quality, type.ammoPool)
             : pool === 'gear' ? this.rollGear(quality, type.gearPool)
+            : pool === 'attachment' ? this.rollAttachment(quality,preferredCats)
             : this.roll(quality, preferredCats);
       for (let k = 0; !special && k < 8 && seen.has(r.item.id); k++) r = this.roll(quality, preferredCats);
       seen.add(r.item.id);

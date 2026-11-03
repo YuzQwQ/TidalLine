@@ -9,9 +9,9 @@ const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'output/wiki');
 const url = file => pathToFileURL(path.join(root, file)).href;
 const context = vm.createContext({});
-for (const file of ['config.js', 'data.js']) vm.runInContext(fs.readFileSync(path.join(root, 'js', file), 'utf8'), context);
+for (const file of ['config.js', 'data.js', 'attachment-data.js']) vm.runInContext(fs.readFileSync(path.join(root, 'js', file), 'utf8'), context);
 /* 背包从"1 个通用包"扩成 BAGS 五档，装备页条目数随之变化 */
-const expected = vm.runInContext('({types:CONTAINER_TYPES,rows:MAP_ROWS,quality:CONTAINER_QUALITY,itemCount:ITEMS.length,gearCount:Object.keys(WEAPONS).length+HELMETS.length+BODIES.length+BAGS.length})', context);
+const expected = vm.runInContext('({types:CONTAINER_TYPES,rows:MAP_ROWS,quality:CONTAINER_QUALITY,itemCount:ITEMS.length,gearCount:Object.keys(WEAPONS).length+HELMETS.length+BODIES.length+BAGS.length+MELEE.length+Object.keys(ATTACHMENT_DEFS).length})', context);
 
 (async () => {
   fs.mkdirSync(output, { recursive: true });

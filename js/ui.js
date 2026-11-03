@@ -79,14 +79,16 @@ const Tips = {
       rows.push(['耐久', Math.ceil(g.dur) + ' / ' + g.max]);
     } else if (it.equip && it.equip.kind === 'gun') {
       if(it.equip.kind === 'melee')return MELEE.find(x=>x.id===it.equip.melee)?.desc || '';
-  const w = WEAPONS[it.equip.gun];
+  const w = Attachments.resolve(it.equip.gun,it.equip.attachments);
       if (w) {
         const A = AMMO_BY_ID[it.equip.ammo] || defaultAmmo(w.caliber);
         rows.push(['口径', BALLISTICS.caliberName(w.caliber)]);
-        rows.push(['伤害', w.dmgMin + '–' + w.dmgMax + ' · 弹匣 ' + w.mag + ' 发']);
+        rows.push(['伤害', w.dmgMin + '–' + w.dmgMax + (w.pellets>1?' ×'+w.pellets:'') + ' · 弹匣 ' + w.mag + ' 发']);
         rows.push(['射速', w.rpm + ' 发/分']);
+          rows.push(['射击模式',Gunplay.labels[it.equip.fireMode||w.defaultMode]+' · 支持 '+w.modes.map(m=>Gunplay.labels[m]).join('/')]);
+          rows.push(['装填',w.reloadType==='tube'?w.reloadTime+'秒／发':w.reloadTime+'秒／弹匣']);
         if (A) {
-          rows.push(['装填', A.name + '（Lv' + A.level + '）']);
+          rows.push(['弹种', A.name + '（Lv' + A.level + '）']);
           rows.push(['穿透 / 系数', 'Lv' + A.penLevel + ' · ×' + A.dmgMul.toFixed(2)]);
         }
         rows.push(['余弹', (it.equip.mag || 0) + ' 发']);
@@ -117,15 +119,16 @@ const Tips = {
     }
 
     const desc = it.desc || (it.equip ? equipDesc(it) : '');
+    const original=typeof Game!=='undefined'&&Game.state==='base';
 
     box.innerHTML =
       '<div class="tip-hd">' +
         '<span class="tip-ic' + (it.icon ? '' : ' gl') + '">' +
-          (it.icon && Icons.gear[it.icon]
+          (original?Icons.detailTag(it,''):(it.icon && Icons.gear[it.icon]
             ? '<img src="' + Icons.gear[it.icon].src + '" alt="">'
             : (Icons.get(it.id)
                 ? '<img src="' + Icons.get(it.id).src + '" alt="">'
-                : esc((it.short || it.name || '?').charAt(0)))) +
+                : esc((it.short || it.name || '?').charAt(0))))) +
         '</span>' +
         '<span class="tip-ttl"><span class="tip-nm">' + esc(it.name) + '</span>' +
           '<span class="tip-sub">' +
@@ -143,6 +146,7 @@ const Tips = {
       ((foot || hint) ? '<div class="tip-foot">' + esc(foot) +
         (foot && hint ? ' · ' : '') + esc(hint || '') + '</div>' : '');
 
+    if(original)Icons.bindDetailImages(box);
     box.style.display = '';
     this.place(box, rect, Math.min(this.W, window.innerWidth - 16));
     this.bindClose();
@@ -269,7 +273,9 @@ const Deal = {
     const price = Math.abs(o.price || 0);
     const left = sell ? Save.credits + price : Save.credits - price;
     const can = o.can !== false && (sell || left >= 0);
-    const ico = (o.icon && Icons.gear[o.icon])
+    const ico = (typeof Game!=='undefined'&&Game.state==='base')
+      ? Icons.detailTag(o.icon?{icon:o.icon,name:o.name,short:o.short}:(ITEM_BY_ID[o.id]||{id:o.id,name:o.name,short:o.short}),'')
+      : (o.icon && Icons.gear[o.icon])
       ? '<img src="' + Icons.gear[o.icon].src + '" alt="">'
       : (o.id && Icons.get(o.id)
           ? '<img src="' + Icons.get(o.id).src + '" alt="">'
@@ -293,6 +299,7 @@ const Deal = {
         '<button data-a="no">取消</button>' +
       '</div>';
 
+    Icons.bindDetailImages(box);
     let used = false;
     box.querySelectorAll('button').forEach(b => {
       b.onclick = () => {
@@ -360,6 +367,8 @@ const SFX = {
     uiNotify: 0.07,
     door: 0.08,
     search: 0.055,
+    bagZip: 0.045,     // 开背包的拉链：比搜索更轻，只是个"打开了"的触感
+    containerOpen: 0.06,  // 开容器：抽屉拉开那一下，比翻找稍重（这是一次明确的动作）
     drop: 0.055,
     hurt: 0.11,
     extract: 0.09,
@@ -434,7 +443,13 @@ const SFX = {
   SHOT_SAMPLE: {
     rifle: { ids: ['shot_rifle'], rate: 1.00, jitter: 0.045, vol: 1.00 },
     smg: { ids: ['shot_smg'], rate: 1.10, jitter: 0.045, vol: 0.95 },
-    shotgun: { ids: ['shot_shotgun'], rate: 1.00, jitter: 0.030, vol: 1.05 },
+    /* 泵动霰弹枪：开完一枪要拉一次泵，那声"咔啦"在 cycleTime（0.8s）里，
+       取 0.55 处——太靠前会盖住枪声尾音，太靠后就接不上下一发。
+       跟着枪声一起排进音频时钟，不用 setTimeout（后台标签页会漂）。 */
+    shotgun: {
+      ids: ['shot_shotgun'], rate: 1.00, jitter: 0.030, vol: 1.05,
+      pump: { id: 'shot_shotgun_pump', after: 0.44, vol: 0.85 }
+    },
     pistol: {
       ids: ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
       rate: 1.00, jitter: 0.020, vol: 1.00
@@ -448,6 +463,47 @@ const SFX = {
      响度统一由 _addSample 按 LOUD.pickup 对齐，四条听上去一样响。 */
   PICKUP_SAMPLE: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
   _lastPickup: null,
+
+  /* ---------------- 搜索音：一个容器一个声 ----------------
+     翻金属抽屉、翻工具箱、翻纸、翻布料、翻皮包——同一个"搜"的动作，
+     换个容器就是另一种材质声。**不随机**：拉开行李箱就该是拉链声，
+     每次都一样才认得出"这是哪只箱子"。同材质的不同容器用不同变体
+     （纸三条、工具箱三条），避免整张地图翻起来一个味。
+     没配到的容器先空着，落回下面的合成音——等有合适素材再补进去。 */
+  SEARCH_SAMPLE: [
+    'search_metal', 'search_toolbox', 'search_toolbox2', 'search_toolbox3',
+    'search_paper', 'search_paper2', 'search_paper3',
+    'search_cloth', 'search_purse'
+  ],
+  /* 容器 art（CONTAINER_TYPES 里的 art 字段）→ 搜索音 / 打开音 */
+  BOX_SFX: {
+    /* 拉链：包和旅行箱 */
+    crate_satchel:   { search: 'search_cloth',  open: 'bag_zip' },
+    crate_schoolbag: { search: 'search_cloth',  open: 'bag_zip' },
+    crate_luggage:   { search: 'search_cloth',  open: 'bag_zip' },
+    crate_leatherbag:{ search: 'search_purse',  open: 'bag_zip' },
+    crate_jewelry:   { search: 'search_purse' },
+    /* 纸：纸篓、纸箱、文件柜、公文包 */
+    crate_wastepaper:{ search: 'search_paper' },
+    crate_cardboard: { search: 'search_paper2' },
+    crate_filing:    { search: 'search_paper3', open: 'container_open' },
+    crate_diplomatic:{ search: 'search_paper' },
+    /* 布：衣服、背心 */
+    crate_workwear:  { search: 'search_cloth' },
+    crate_rescuevest:{ search: 'search_cloth' },
+    /* 金属滑轨与箱柜 */
+    crate_fast:      { search: 'search_metal',    open: 'container_open' },
+    crate_std:       { search: 'search_toolbox',  open: 'container_open' },
+    crate_med:       { search: 'search_toolbox2', open: 'container_open' },
+    crate_staff:     { search: 'search_toolbox2', open: 'container_open' },
+    crate_bedside:   { search: 'search_toolbox3', open: 'container_open' },
+    crate_tool:      { search: 'search_toolbox',  open: 'container_open' },
+    crate_elec:      { search: 'search_toolbox3', open: 'container_open' },
+    crate_emergency: { search: 'search_toolbox3', open: 'container_open' },
+    crate_military_supply: { search: 'search_toolbox', open: 'container_open' },
+    /* 翻尸体是翻衣服口袋 */
+    corpse:          { search: 'search_cloth' }
+  },
 
   /* ---------------- 界面音效 ----------------
      菜单和面板以前全是哑的，反馈只能靠"画面变了"。四条录音分工：
@@ -546,6 +602,10 @@ const SFX = {
     if (id === 'sell') return this.LOUD.sell;
     /* 拾取的四条变体都按拾取档对齐，四条之间响度一致 */
     if (/^pickup_[1-4]$/.test(id)) return this.LOUD.pickup;
+    /* 搜索的九条材质按同一档对齐，抽到哪条都一样响 */
+    if (/^search_(metal|toolbox\d?|paper\d?|cloth|purse)$/.test(id)) return this.LOUD.search;
+    if (id === 'container_open') return this.LOUD.containerOpen;
+    if (id === 'bag_zip') return this.LOUD.bagZip;
     /* 界面音：四条各一档，UI 是背景层，都压在拾取之下 */
     if (id === 'ui_click') return this.LOUD.uiClick;
     if (id === 'ui_tap') return this.LOUD.uiTap;
@@ -577,20 +637,31 @@ const SFX = {
   /* 解码采样。任何一条失败都不影响其它，也不影响合成音。 */
   load() {
     if (this.loading || !this.ctx) return this.loading;
-    const decode = async (id, dataUri) => {
-      const raw = atob(String(dataUri).split(',')[1] || '');
-      const bin = new Uint8Array(raw.length);
-      for (let i = 0; i < raw.length; i++) bin[i] = raw.charCodeAt(i);
-      this._addSample(id, await this.ctx.decodeAudioData(bin.buffer));
+    /* 拿一段原始字节。失败重试一次——实测四条里会有一条偶发解码失败
+       （本地和 Pages 都见过），少一段就是某个动作永久哑掉，值得重试。 */
+    const grab = async (id, fetchIt) => {
+      for (let k = 0; k < 2; k++) {
+        try {
+          this._addSample(id, await this.ctx.decodeAudioData(await fetchIt()));
+          return true;
+        } catch (e) { /* 再试一次，两次都不行就放弃这一段 */ }
+      }
+      return false;
     };
     const injected = (typeof window !== 'undefined' && window.__AUDIO__) || null;
+    const fromDataUri = (uri) => {
+      const raw = atob(String(uri).split(',')[1] || '');
+      const bin = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; i++) bin[i] = raw.charCodeAt(i);
+      return bin.buffer;
+    };
     this.loading = (async () => {
       let n = 0;
       if (injected) {
         /* 记下"本应加载多少段"，面板好显示 12/18 这样的进度 */
         this.wantCount = Object.keys(injected).length;
         for (const id of Object.keys(injected)) {
-          try { await decode(id, injected[id]); n++; } catch (e) {}
+          if (await grab(id, () => Promise.resolve(fromDataUri(injected[id])))) n++;
         }
       } else {
         /* 多文件版：http 下能读到就加载；file:// 被 CORS 挡住时静默跳过 */
@@ -598,10 +669,7 @@ const SFX = {
           const man = await fetch('assets/audio/manifest.json').then(r => r.json());
           this.wantCount = (man.assets || []).length;
           for (const a of man.assets || []) {
-            try {
-              const buf = await fetch('assets/audio/' + a.file).then(r => r.arrayBuffer());
-              this._addSample(a.id, await this.ctx.decodeAudioData(buf)); n++;
-            } catch (e) {}
+            if (await grab(a.id, () => fetch('assets/audio/' + a.file).then(r => r.arrayBuffer()))) n++;
           }
         } catch (e) {}
       }
@@ -634,7 +702,7 @@ const SFX = {
     }
     tail.connect(this.master || c.destination);
     this._autoFree(s, chain);
-    s.start(c.currentTime);
+    s.start(c.currentTime + ((opts && opts.delay) || 0));
     return true;
   },
 
@@ -651,11 +719,21 @@ const SFX = {
     const o = opts || {};
     const j = p.jitter || 0;
     const jv = 0.04;         // 音量抖动 ±4%：同一段录音连播时，"每发都一样响"比音高更像复读机
-    return this._playSample(ready[n % ready.length], {
+    const played = this._playSample(ready[n % ready.length], {
       rate: (p.rate || 1) * (o.rate || 1) * (1 - j + Math.random() * j * 2),
       vol: (p.vol || 1) * (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2),
       lp: o.lp
     });
+    /* 泵动枪补一声拉泵。敌人开火（lp 压过的那路）不加——那是远处的枪，
+       不该听见上膛的细节 */
+    if (played && p.pump && !o.lp && this.samples[p.pump.id]) {
+      this._playSample(p.pump.id, {
+        delay: p.pump.after,
+        rate: 0.98 + Math.random() * 0.04,
+        vol: p.pump.vol
+      });
+    }
+    return played;
   },
 
   /* 物品交互：从四条拾取录音里随机抽一条。
@@ -676,6 +754,48 @@ const SFX = {
       rate: (o.rate || 1) * (1 - j + Math.random() * j * 2),
       vol: (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2)
     });
+  },
+
+  /* 搜索：按容器固定一条，同一个容器每次都是同一个声。
+     查不到（这个容器还没配素材）就返回 false，落回下面的合成音。
+     抖动只留一点：完全不抖的话，连搜同一只箱子五六次会像复读机。 */
+  _playSearch(opts) {
+    const o = opts || {};
+    const id = this._boxSfxOf(o.at, 'search');
+    if (!id) return false;
+    /* 刚掀开箱子时会自动搜第一件，两个音会糊在一起——
+       让翻找声等开箱声先走完（拉链 0.29s、箱盖 1.46s，各留一点余量）。 */
+    let delay = (o.delay || 0);
+    if (this._boxOpenAt != null) {
+      const open = this.BOX_SFX[o.at] && this.BOX_SFX[o.at].open;
+      const dur = (open && this.samples[open]) ? this.samples[open].duration : 0;
+      const since = (this.ctx ? this.ctx.currentTime : 0) - this._boxOpenAt;
+      if (dur && since < dur) delay = Math.max(delay, dur - since + 0.05);
+    }
+    const j = 0.03;
+    const jv = 0.05;
+    return this._playSample(id, {
+      delay: delay,
+      rate: (o.rate || 1) * (1 - j + Math.random() * j * 2),
+      vol: (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2)
+    });
+  },
+
+  /* 掀开容器的那一下。同样按容器固定；没配到的容器不响——
+     "开"是点缀，没有合适素材就别硬凑一个。 */
+  _playContainerOpen(opts) {
+    const id = this._boxSfxOf((opts || {}).at, 'open');
+    if (!id) return false;
+    if (this.ctx) this._boxOpenAt = this.ctx.currentTime;
+    return this._playSample(id, { rate: 0.98 + Math.random() * 0.04 });
+  },
+
+  /* 查表：容器的 art → 某一个动作的音效 id。素材没加载上等于没配。 */
+  _boxSfxOf(at, what) {
+    if (!at) return null;
+    const row = this.BOX_SFX[at];
+    const id = row && row[what];
+    return (id && this.samples[id]) ? id : null;
   },
 
   /* 界面音：有采样播采样，没有就落回合成的一声短音 ——
@@ -997,6 +1117,16 @@ const SFX = {
     if (this.ctx.state === 'suspended' && this.ctx.resume) {
       try { const p = this.ctx.resume(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
     }
+    /* 搜索：按容器 art 查表，一个容器一个声（没配到的落回合成音） */
+    if (name === 'search' && this._playSearch(opts)) return;
+
+    /* 掀开容器：按容器查表。查不到就直接收住——不落回通用开箱音，
+       没配到素材的容器就该安静，"开"只是点缀，硬凑一个反而都一样。 */
+    if (name === 'container_open') {
+      this._playContainerOpen(opts);
+      return;
+    }
+
     /* 有采样就优先用采样；没有（或解码失败）就落到下面的合成音 */
     if (this.samples[name]) { this._playSample(name, opts); return; }
     const seq = this.SEQ[name];
@@ -1011,7 +1141,8 @@ const SFX = {
 
     /* 枪声：真实录音优先，按枪型选；素材缺失才落回下面的合成版 */
     if (name === 'shot') {
-      const gunId = (opts && opts.gun) || 'rifle';
+      const modelId = (opts && opts.gun) || 'm4a1';
+      const gunId = WEAPONS[modelId]?.category || modelId;
       if (this._playGun(gunId, opts)) return;
       const gun = this.GUN[gunId] || this.GUN.rifle;
       return this._shot(gun, opts, gunId);

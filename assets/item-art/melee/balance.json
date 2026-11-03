@@ -23,7 +23,7 @@
       "weapon": "melee01",
       "mode": "circle",
       "seconds": 8,
-      "hpLost": 28,
+      "hpLost": 56,
       "kills": 0,
       "attackStarts": 15,
       "playerDead": false

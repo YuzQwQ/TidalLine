@@ -1,0 +1,302 @@
+{
+  "passed": true,
+  "icons": 32,
+  "canvas": [
+    48,
+    48
+  ],
+  "minimumMargin": 4,
+  "hardAlpha": true,
+  "noAliases": true,
+  "orientation": "three-quarter front slight top; front left foreground, rear right background; grips and magazines upright; other parts SW-NE; never mirror/flip",
+  "reports": [
+    {
+      "id": "att_optic01",
+      "visible": 862,
+      "sha256": "288cc790012e5a55d702fcd185ee1049c693b30de1e3f316074006e845e2aee7",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_optic02",
+      "visible": 1023,
+      "sha256": "552c5e2aef71df8f5b2ecd7531fbea7fbd26cacba15b198e58781be2dac62c30",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_optic03",
+      "visible": 580,
+      "sha256": "32e72b75fe6499664205470b90ad4168ac33008011c361b0d86435c19667b7e8",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_optic04",
+      "visible": 435,
+      "sha256": "f7af6e4e61d58bd2412be2718924b9286a2231fc09af2cc8b32ed5491b24732d",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_grip01",
+      "visible": 526,
+      "sha256": "46fbfa7495a9a0ec6d0e356133c5e3698adabef11c41e8cde02cb2d2c30b922f",
+      "original": [
+        1289,
+        1221
+      ]
+    },
+    {
+      "id": "att_grip02",
+      "visible": 612,
+      "sha256": "9ecb67219dd77c6b7bf8a9eab539ba4aa97c9ba9c0f764dd0478de758c624048",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_grip03",
+      "visible": 936,
+      "sha256": "32118ef5c57f476ac8b4ab15428773c26bfda59d6e2f4506a716b78c1d638d90",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_grip04",
+      "visible": 617,
+      "sha256": "e24f6ad92e1d7f548e3330909de90d77305e607d351a772401503925b8e757d8",
+      "original": [
+        1265,
+        1244
+      ]
+    },
+    {
+      "id": "att_stock01",
+      "visible": 603,
+      "sha256": "ffe7f2c58e2394030f141cbae00fa991587fabbbad2789409a91e4ed38ff2676",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_stock02",
+      "visible": 527,
+      "sha256": "d55c5803b7c76de28052b00fe60bc3130ba1c60b72cc44f9e4b57a977d00db11",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_stock03",
+      "visible": 700,
+      "sha256": "eb749c5d4985e4eca744ded4f304be6281f4daa0c245a122959553f21bd0ec6f",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_muzzle01",
+      "visible": 675,
+      "sha256": "cd22a9c7d7df61f88e1ea6c058282c31ea1d52eb70081ebdf71556549a8a85fb",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_muzzle02",
+      "visible": 756,
+      "sha256": "c4754cf1102263435e8374356faeeeba5eb59772900b103711e8c4715255404c",
+      "original": [
+        1269,
+        1240
+      ]
+    },
+    {
+      "id": "att_muzzle03",
+      "visible": 829,
+      "sha256": "07873e0e04487acd9d52ca1fcee4c9052c31ee66215d86b1d9c0f218f419c790",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_muzzle04",
+      "visible": 673,
+      "sha256": "b01a07960e1ef568d4e601d0fa90feb0be9f683e8098a89eaf2ab428ae8db4bd",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_muzzle05",
+      "visible": 665,
+      "sha256": "7c731865ea77a08051c5a9851cc43667b5f57e07107accd81e5699fa638c4f7f",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_muzzle06",
+      "visible": 774,
+      "sha256": "fc9acbaf9f297d1ea49e65b6d46fd8e74d21c23f607fe58a9c63ba6578947da1",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_556_ext",
+      "visible": 465,
+      "sha256": "358b8fec76f0434cb0a2849bc4f04dc6aa4c4c87a96846386f3302f96dd22155",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_556_quick",
+      "visible": 534,
+      "sha256": "cee8430f77e535074e0332b650cf8a61e08c25dbb73d958487b40a005e14d6c7",
+      "original": [
+        1312,
+        1199
+      ]
+    },
+    {
+      "id": "att_mag_556_quick_ext",
+      "visible": 418,
+      "sha256": "949fa4b5acae9173ac5a014fad2ee8fa33360514ac6ce44709b3770ed0efae93",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_762x39_ext",
+      "visible": 440,
+      "sha256": "fc381b9718c4155050b61f40348bfec0d455603b1c3c4792e34db5318acf171f",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_762x39_quick",
+      "visible": 533,
+      "sha256": "54737f2e21658ce14868813b622b734a68498ffe35a507989dc5bee9fc0fdfc9",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_762x39_quick_ext",
+      "visible": 441,
+      "sha256": "1d63a9a4fa51f7953e633a74c645fb664d376e6d1c8f26f46b2ac0f4e58975d7",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_9mm_ext",
+      "visible": 329,
+      "sha256": "84493eeff4970f108c61f324ca1a8b75b460136b8d4d9c31d33225f23b1c548b",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_9mm_quick",
+      "visible": 438,
+      "sha256": "8c603105faabf45308c914a90638c7419e56d769e0040f4d181868cbe9131780",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_9mm_quick_ext",
+      "visible": 360,
+      "sha256": "4b5eafe19220041b3acdefb2d2cfeb99b6a3b8a8d9d6a45d0373ce87891ba147",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_45acp_ext",
+      "visible": 451,
+      "sha256": "622585adda18d384767b764106c6a0d32e8fde2b08ab7991cb41325fb237f1e6",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_45acp_quick",
+      "visible": 551,
+      "sha256": "14255366311d12f020953012c21b540039f1d37f4f7242f444cfefe4ac8851c7",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_45acp_quick_ext",
+      "visible": 428,
+      "sha256": "78ca02d61b434d985282c8854e7d49e79b75d3513ea2a8e21603b196822ed603",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_12g_ext",
+      "visible": 542,
+      "sha256": "3558b3a9e76eacaa4c19dff1141188709aeb1b51f8888223b3bb61bd7d5aed7f",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_12g_quick",
+      "visible": 621,
+      "sha256": "ca45e8b286d0695334d57433af4aa8674ddc3d7942435974434c2379670dc409",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_12g_quick_ext",
+      "visible": 566,
+      "sha256": "5c0b04b694a5acd42eda94ca1fd2f916a885a0518f7ed93f0dff18edb347e61a",
+      "original": [
+        1254,
+        1254
+      ]
+    }
+  ]
+}

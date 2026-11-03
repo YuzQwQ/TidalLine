@@ -19,9 +19,9 @@
   <div class="kicker">TIDELINE · ITEM SHEET</div>
   <h1>物品清单</h1>
   <div class="lede">
-    共 173 件：140 件收集品、33 件物资；140 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
+    共 183 件：140 件收集品、43 件物资；140 件进图鉴。这份清单直接从 <code>js/data.js</code> 生成，
     和游戏里的数据完全一致；改完物品表重跑 <code>node gen-item-sheet.js</code> 就会更新。<br>
-    <a href="assets/item-art/ammunition/index.html">弹药三口径图标</a> · 已配置图标 <b>173 / 173</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a> · <a href="assets/item-art/electronics/index.html">新增电子产品9件</a> · <a href="assets/item-art/medical-collectibles/index.html">新增医疗收集品10件</a> · <a href="assets/item-art/industrial/index.html">新增工业器材12件</a> · <a href="assets/item-art/heritage/index.html">新增文物藏品8件</a> · <a href="assets/item-art/military/index.html">新增军事物资15件</a> · <a href="assets/item-art/intel/index.html">新增情报资料13件</a> · <a href="assets/item-art/occult/index.html">新增神秘学物品15件</a>。
+    <a href="design/weapons/arsenal-v1/art/index.html">枪械与新增弹药图标</a> · 已配置图标 <b>183 / 183</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a> · <a href="assets/item-art/electronics/index.html">新增电子产品9件</a> · <a href="assets/item-art/medical-collectibles/index.html">新增医疗收集品10件</a> · <a href="assets/item-art/industrial/index.html">新增工业器材12件</a> · <a href="assets/item-art/heritage/index.html">新增文物藏品8件</a> · <a href="assets/item-art/military/index.html">新增军事物资15件</a> · <a href="assets/item-art/intel/index.html">新增情报资料13件</a> · <a href="assets/item-art/occult/index.html">新增神秘学物品15件</a>。
     <br>收集品保留九类，物资单独分为弹药类与医疗物品。<a href="design/items/CLASSIFICATION.md">逐件分类与世界观依据</a>。
     <br>医疗品18件图标已全部绘制，5件开放恢复HP，其余效果待开放。<a href="assets/item-art/medical/index.html">查看医疗图标总览</a>。<a href="design/items/MEDICAL.md">医疗系统说明</a> · <a href="design/world setting/医疗产业提案.md">医疗产业提案（非正式历史）</a>。
     <br>稀有度采用白、绿、蓝、紫、金、红六级。<a href="design/items/RARITY.md">查看 140 件收集品的稀有度评级</a>；
@@ -2395,9 +2395,9 @@
         <div class="vis"><b>画什么</b>银色怀表，表盖敞开，指针停在同一个位置，表面有水痕</div>
       </div>
     </div></div>
-  </section></section><section class="item-group" data-item-group="supply"><h2 class="item-group-title">物资<span>33 件</span></h2><p class="category-description">用于装填与治疗，不计入收集图鉴。</p>
+  </section></section><section class="item-group" data-item-group="supply"><h2 class="item-group-title">物资<span>43 件</span></h2><p class="category-description">用于装填与治疗，不计入收集图鉴。</p>
   <section class="cat" data-item-category="ammo">
-    <h3><span class="dot" style="background:#a58e61"></span>弹药类<em>ammo</em><i>15 件</i></h3>
+    <h3><span class="dot" style="background:#a58e61"></span>弹药类<em>ammo</em><i>25 件</i></h3>
     <p class="category-description"><b>武器弹药</b> · 用于武器装填的物资。当前为通用弹药，后续可按枪械与口径扩充分型。</p>
     
     <div class="grid">
@@ -2476,6 +2476,81 @@
         <div class="vis"><b>画什么</b>橄榄色弹药盒＋细长尖头5.56×45mm步枪弹</div>
       </div>
     </div>
+    <div class="item" data-item="ammo_762x39_1" style="--rc:#c6ceca">
+      <div class="thumb" style="background:#c6ceca26">
+        <img src="assets/items/ammo_762x39.png" width="48" height="48" alt="7.62mm普通弹">
+      </div>
+      <div class="meta">
+        <div class="name">7.62mm普通弹<i class="tag">可堆叠 60</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_762x39_1</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#c6ceca">寻常</span> · 0.016kg · ¥80 · 背包简称 <b style="color:#a8c4ba">7.62·1</b></div>
+        <div class="desc">7.62×39mm 制式弹药，普通级。
+
+伤害系数 ×0.90，穿透等级 1。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="item" data-item="ammo_762x39_2" style="--rc:#3f8b78">
+      <div class="thumb" style="background:#3f8b7826">
+        <img src="assets/items/ammo_762x39.png" width="48" height="48" alt="7.62mm改良弹">
+      </div>
+      <div class="meta">
+        <div class="name">7.62mm改良弹<i class="tag">可堆叠 60</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_762x39_2</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f8b78">良品</span> · 0.016kg · ¥180 · 背包简称 <b style="color:#a8c4ba">7.62·2</b></div>
+        <div class="desc">7.62×39mm 制式弹药，改良级。
+
+伤害系数 ×1.00，穿透等级 2。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="item" data-item="ammo_762x39_3" style="--rc:#3f6d9b">
+      <div class="thumb" style="background:#3f6d9b26">
+        <img src="assets/items/ammo_762x39.png" width="48" height="48" alt="7.62mm钢芯弹">
+      </div>
+      <div class="meta">
+        <div class="name">7.62mm钢芯弹<i class="tag">可堆叠 60</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_762x39_3</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f6d9b">上乘</span> · 0.016kg · ¥420 · 背包简称 <b style="color:#a8c4ba">7.62·3</b></div>
+        <div class="desc">7.62×39mm 制式弹药，钢芯级。
+
+伤害系数 ×1.05，穿透等级 3。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="item" data-item="ammo_762x39_4" style="--rc:#9165b3">
+      <div class="thumb" style="background:#9165b326">
+        <img src="assets/items/ammo_762x39.png" width="48" height="48" alt="7.62mm穿甲弹">
+      </div>
+      <div class="meta">
+        <div class="name">7.62mm穿甲弹<i class="tag">可堆叠 60</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_762x39_4</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#9165b3">稀见</span> · 0.016kg · ¥1,000 · 背包简称 <b style="color:#a8c4ba">7.62·4</b></div>
+        <div class="desc">7.62×39mm 制式弹药，穿甲级。
+
+伤害系数 ×1.10，穿透等级 4。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="item" data-item="ammo_762x39_5" style="--rc:#a8862a">
+      <div class="thumb" style="background:#a8862a26">
+        <img src="assets/items/ammo_762x39.png" width="48" height="48" alt="7.62mm特种穿甲弹">
+      </div>
+      <div class="meta">
+        <div class="name">7.62mm特种穿甲弹<i class="tag">可堆叠 60</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_762x39_5</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#a8862a">珍罕</span> · 0.016kg · ¥2,500 · 背包简称 <b style="color:#a8c4ba">7.62·5</b></div>
+        <div class="desc">7.62×39mm 制式弹药，特种穿甲级。
+
+伤害系数 ×1.15，穿透等级 5。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
+      </div>
+    </div>
     <div class="item" data-item="ammo_9mm_1" style="--rc:#c6ceca">
       <div class="thumb" style="background:#c6ceca26">
         <img src="assets/items/ammo_9mm.png" width="48" height="48" alt="9mm普通弹">
@@ -2549,6 +2624,81 @@
         
         
         <div class="vis"><b>画什么</b>蓝灰色弹药盒＋短粗圆头9×19mm手枪弹</div>
+      </div>
+    </div>
+    <div class="item" data-item="ammo_45acp_1" style="--rc:#c6ceca">
+      <div class="thumb" style="background:#c6ceca26">
+        <img src="assets/items/ammo_45acp.png" width="48" height="48" alt=".45 ACP普通弹">
+      </div>
+      <div class="meta">
+        <div class="name">.45 ACP普通弹<i class="tag">可堆叠 90</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_45acp_1</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#c6ceca">寻常</span> · 0.015kg · ¥50 · 背包简称 <b style="color:#a8c4ba">.45·1</b></div>
+        <div class="desc">.45 ACP 制式弹药，普通级。
+
+伤害系数 ×0.90，穿透等级 1。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="item" data-item="ammo_45acp_2" style="--rc:#3f8b78">
+      <div class="thumb" style="background:#3f8b7826">
+        <img src="assets/items/ammo_45acp.png" width="48" height="48" alt=".45 ACP改良弹">
+      </div>
+      <div class="meta">
+        <div class="name">.45 ACP改良弹<i class="tag">可堆叠 90</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_45acp_2</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f8b78">良品</span> · 0.015kg · ¥110 · 背包简称 <b style="color:#a8c4ba">.45·2</b></div>
+        <div class="desc">.45 ACP 制式弹药，改良级。
+
+伤害系数 ×1.00，穿透等级 2。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="item" data-item="ammo_45acp_3" style="--rc:#3f6d9b">
+      <div class="thumb" style="background:#3f6d9b26">
+        <img src="assets/items/ammo_45acp.png" width="48" height="48" alt=".45 ACP钢芯弹">
+      </div>
+      <div class="meta">
+        <div class="name">.45 ACP钢芯弹<i class="tag">可堆叠 90</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_45acp_3</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#3f6d9b">上乘</span> · 0.015kg · ¥250 · 背包简称 <b style="color:#a8c4ba">.45·3</b></div>
+        <div class="desc">.45 ACP 制式弹药，钢芯级。
+
+伤害系数 ×1.05，穿透等级 3。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="item" data-item="ammo_45acp_4" style="--rc:#9165b3">
+      <div class="thumb" style="background:#9165b326">
+        <img src="assets/items/ammo_45acp.png" width="48" height="48" alt=".45 ACP穿甲弹">
+      </div>
+      <div class="meta">
+        <div class="name">.45 ACP穿甲弹<i class="tag">可堆叠 90</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_45acp_4</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#9165b3">稀见</span> · 0.015kg · ¥600 · 背包简称 <b style="color:#a8c4ba">.45·4</b></div>
+        <div class="desc">.45 ACP 制式弹药，穿甲级。
+
+伤害系数 ×1.10，穿透等级 4。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="item" data-item="ammo_45acp_5" style="--rc:#a8862a">
+      <div class="thumb" style="background:#a8862a26">
+        <img src="assets/items/ammo_45acp.png" width="48" height="48" alt=".45 ACP特种穿甲弹">
+      </div>
+      <div class="meta">
+        <div class="name">.45 ACP特种穿甲弹<i class="tag">可堆叠 90</i><i class="tag dim">不进图鉴</i></div>
+        <div class="sub"><code>ammo_45acp_5</code> · <span style="color:#a58e61">物资 / 弹药类</span> · <span style="color:#a8862a">珍罕</span> · 0.015kg · ¥1,500 · 背包简称 <b style="color:#a8c4ba">.45·5</b></div>
+        <div class="desc">.45 ACP 制式弹药，特种穿甲级。
+
+伤害系数 ×1.15，穿透等级 5。同口径的枪都能装，口径不对的装不进去。</div>
+        
+        
+        
       </div>
     </div>
     <div class="item" data-item="ammo_12g_1" style="--rc:#c6ceca">
@@ -3053,10 +3203,10 @@ M-4。
   <div class="kicker">TIDELINE · GEAR SHEET</div>
   <h1>装备清单</h1>
   <div class="lede">
-    这一批是新加的装备图标：<b>4 把武器</b> + <b>10 款头盔</b> +
-    <b>10 款身体护甲</b>，另加 <b>5 款背包</b> 和 <b>3 种近战武器</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
+    这一批是新加的装备图标：<b>12 把武器</b> + <b>10 款头盔</b> +
+    <b>10 款身体护甲</b>，另加 <b>5 款背包</b> 和 <b>3 种近战武器</b>及 <b>32 件枪械配件</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
     局内背包顶部 7 格装备条、尸体面板顶部 3 格装备区（都是 24px 图标），藏身处装备区（34px 图标），以及仓库、装备选择与商人交易面板。背包决定携带容量，未装备时为 6 格。<br>
-    已完成 <b>32 / 32</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
+    已完成 <b>72 / 72</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
     <code>node gen-gear-sheet.js</code> 就会更新。
   </div>
 </header>
@@ -3081,42 +3231,114 @@ M-4。
 </div>
 
 <section class="cat">
-  <h2>武器<em>weapon</em><i>4 张</i></h2>
+  <h2>武器<em>weapon</em><i>12 张</i></h2>
   <div class="grid">
     <div class="item">
-      <div class="thumb"><img src="assets/gear/rifle.png" width="48" height="48" alt="rifle"></div>
+      <div class="thumb"><img src="assets/gear/m4a1.png" width="48" height="48" alt="m4a1"></div>
       <div class="meta">
-        <div class="name">制式步枪<i class="tag">主武器位</i></div>
-        <div class="sub"><code>rifle.png</code> · 步枪 · 15–22 伤害 · 弹匣 30 · 420 发/分 · 3.2kg · ¥45,000</div>
-        <div class="desc">口径通用，射速中等。什么都能打，什么都不精。</div>
-        <div class="vis"><b>画什么</b>侧视 3/4，枪口朝右上。深灰聚合物护木 + 短枪管 + 30 发弯弹匣 + 简易机械瞄具，折叠枪托收到枪身侧。全长约占画布 40px 的横向 90%。</div>
+        <div class="name">M4A1<i class="tag">主武器位</i></div>
+        <div class="sub"><code>m4a1.png</code> · M4A1 · 15–22 伤害 · 弹匣 30 · 800 发/分 · 3.2kg · ¥168,000 · 5.56×45mm · 半自动 / 全自动 · 2.4s/弹匣</div>
+        <div class="desc">M4A1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。</div>
+        <div class="vis"><b>画什么</b>黑色AR式卡宾枪，直线伸缩枪托、短护木、顶部提把和弧形弹匣。</div>
       </div>
     </div>
     <div class="item">
-      <div class="thumb"><img src="assets/gear/shotgun.png" width="48" height="48" alt="shotgun"></div>
+      <div class="thumb"><img src="assets/gear/akm.png" width="48" height="48" alt="akm"></div>
       <div class="meta">
-        <div class="name">短管霰弹枪<i class="tag">主武器位</i></div>
-        <div class="sub"><code>shotgun.png</code> · 霰弹 · 7–10 伤害 · 弹匣 6 · 80 发/分 · 3.6kg · ¥24,000</div>
-        <div class="desc">六颗弹丸，近距离两枪一个。远了就是放烟花。</div>
-        <div class="vis"><b>画什么</b>侧视，枪口朝右上。短粗枪管，下方一根管状弹仓，中间是泵动护木，木质枪托发暗、有磕碰。整枪比步枪短一截、粗一圈。</div>
+        <div class="name">AKM<i class="tag">主武器位</i></div>
+        <div class="sub"><code>akm.png</code> · AKM · 20–27 伤害 · 弹匣 30 · 600 发/分 · 3.6kg · ¥125,000 · 7.62×39mm · 半自动 / 全自动 · 2.7s/弹匣</div>
+        <div class="desc">AKM，使用7.62×39mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。</div>
+        <div class="vis"><b>画什么</b>深色钢制机匣，旧胡桃木枪托与护木，明显弯曲的7.62弹匣。</div>
       </div>
     </div>
     <div class="item">
-      <div class="thumb"><img src="assets/gear/smg.png" width="48" height="48" alt="smg"></div>
+      <div class="thumb"><img src="assets/gear/famas_f1.png" width="48" height="48" alt="famas_f1"></div>
       <div class="meta">
-        <div class="name">冲锋枪<i class="tag">主武器位</i></div>
-        <div class="sub"><code>smg.png</code> · 冲锋 · 9–13 伤害 · 弹匣 25 · 780 发/分 · 2.4kg · ¥38,000</div>
-        <div class="desc">快、轻、飘。适合边走边打，但不适合站定对枪。</div>
-        <div class="vis"><b>画什么</b>侧视，明显比步枪小一圈。方正的机匣、细长的直弹匣、金属折叠托收在侧面，上机匣一颗拉机柄。剪影要"短、窄、密"。</div>
+        <div class="name">FAMAS F1<i class="tag">主武器位</i></div>
+        <div class="sub"><code>famas_f1.png</code> · FAMAS F1 · 15–22 伤害 · 弹匣 25 · 1000 发/分 · 3.7kg · ¥215,000 · 5.56×45mm · 半自动 / 三连发 / 全自动 · 2.9s/弹匣</div>
+        <div class="desc">FAMAS F1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。</div>
+        <div class="vis"><b>画什么</b>黑色无托步枪，顶部高提把，弹匣位于握把后方，短枪管。</div>
       </div>
     </div>
     <div class="item">
-      <div class="thumb"><img src="assets/gear/pistol.png" width="48" height="48" alt="pistol"></div>
+      <div class="thumb"><img src="assets/gear/pp19_01.png" width="48" height="48" alt="pp19_01"></div>
       <div class="meta">
-        <div class="name">手枪<i class="tag">副武器位</i></div>
-        <div class="sub"><code>pistol.png</code> · 手枪 · 14–19 伤害 · 弹匣 12 · 300 发/分 · 1.1kg · ¥5,000</div>
-        <div class="desc">主武器空仓时的最后一句。</div>
-        <div class="vis"><b>画什么</b>侧视，只占画布一半（约 28px 长）。套筒 + 握把 + 露出一小截枪管，套筒后端有防滑纹，扳机护圈完整。</div>
+        <div class="name">PP-19-01 Vityaz<i class="tag">主武器位</i></div>
+        <div class="sub"><code>pp19_01.png</code> · PP-19-01 · 11–15 伤害 · 弹匣 30 · 700 发/分 · 2.4kg · ¥72,000 · 9×19mm · 半自动 / 全自动 · 2.1s/弹匣</div>
+        <div class="desc">PP-19-01 Vityaz，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。</div>
+        <div class="vis"><b>画什么</b>黑色短管AK式冲锋枪，三角折叠托，细长弯曲弹匣，不采用螺旋弹筒。</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><img src="assets/gear/mp5a3.png" width="48" height="48" alt="mp5a3"></div>
+      <div class="meta">
+        <div class="name">MP5A3<i class="tag">主武器位</i></div>
+        <div class="sub"><code>mp5a3.png</code> · MP5A3 · 11–15 伤害 · 弹匣 30 · 800 发/分 · 2.6kg · ¥115,000 · 9×19mm · 半自动 / 全自动 · 2.3s/弹匣</div>
+        <div class="desc">MP5A3，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。</div>
+        <div class="vis"><b>画什么</b>圆筒形护木，双导杆伸缩枪托，细弯弹匣，深色滚轮闭锁机匣轮廓。</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><img src="assets/gear/ump45.png" width="48" height="48" alt="ump45"></div>
+      <div class="meta">
+        <div class="name">UMP45<i class="tag">主武器位</i></div>
+        <div class="sub"><code>ump45.png</code> · UMP45 · 15–20 伤害 · 弹匣 25 · 600 发/分 · 2.3kg · ¥108,000 · .45 ACP · 半自动 / 全自动 · 2.3s/弹匣</div>
+        <div class="desc">UMP45，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。</div>
+        <div class="vis"><b>画什么</b>方正深灰聚合物机匣，镂空折叠托，粗直弹匣。</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><img src="assets/gear/mp155.png" width="48" height="48" alt="mp155"></div>
+      <div class="meta">
+        <div class="name">MP-155<i class="tag">主武器位</i></div>
+        <div class="sub"><code>mp155.png</code> · MP-155 · 7–10 伤害 · 弹匣 5 · 240 发/分 · 3.6kg · ¥78,000 · 12 Gauge · 半自动 · 0.65s/发</div>
+        <div class="desc">MP-155，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。</div>
+        <div class="vis"><b>画什么</b>长枪管半自动猎枪，胡桃木枪托和前护木，下方细长管式弹仓，无盒式弹匣。</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><img src="assets/gear/rem870.png" width="48" height="48" alt="rem870"></div>
+      <div class="meta">
+        <div class="name">Remington 870<i class="tag">主武器位</i></div>
+        <div class="sub"><code>rem870.png</code> · R870 · 7–10 伤害 · 弹匣 6 · 75 发/分 · 3.4kg · ¥58,000 · 12 Gauge · 泵动 · 0.75s/发</div>
+        <div class="desc">Remington 870，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。</div>
+        <div class="vis"><b>画什么</b>深色木枪托，长条肋纹泵动护木，钢制机匣和管式弹仓，无盒式弹匣。</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><img src="assets/gear/saiga12.png" width="48" height="48" alt="saiga12"></div>
+      <div class="meta">
+        <div class="name">Saiga-12<i class="tag">主武器位</i></div>
+        <div class="sub"><code>saiga12.png</code> · Saiga-12 · 7–10 伤害 · 弹匣 8 · 300 发/分 · 3.8kg · ¥175,000 · 12 Gauge · 半自动 · 3.3s/弹匣</div>
+        <div class="desc">Saiga-12，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。</div>
+        <div class="vis"><b>画什么</b>黑色AK式霰弹枪，聚合物固定托，较粗枪管，明显的宽盒式弹匣。</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><img src="assets/gear/glock17.png" width="48" height="48" alt="glock17"></div>
+      <div class="meta">
+        <div class="name">Glock 17<i class="tag">副武器位</i></div>
+        <div class="sub"><code>glock17.png</code> · Glock · 11–15 伤害 · 弹匣 17 · 360 发/分 · 1.1kg · ¥32,000 · 9×19mm · 半自动 · 1.5s/弹匣</div>
+        <div class="desc">Glock 17，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。</div>
+        <div class="vis"><b>画什么</b>黑色方形套筒，简洁聚合物枪身与双排弹匣握把，短枪管。</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><img src="assets/gear/m1911a1.png" width="48" height="48" alt="m1911a1"></div>
+      <div class="meta">
+        <div class="name">M1911A1<i class="tag">副武器位</i></div>
+        <div class="sub"><code>m1911a1.png</code> · M1911A1 · 15–20 伤害 · 弹匣 7 · 300 发/分 · 1.2kg · ¥37,000 · .45 ACP · 半自动 · 1.8s/弹匣</div>
+        <div class="desc">M1911A1，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。</div>
+        <div class="vis"><b>画什么</b>细长钢制套筒，棕色单排握把，外露击锤与圆弧扳机护圈。</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><img src="assets/gear/beretta92.png" width="48" height="48" alt="beretta92"></div>
+      <div class="meta">
+        <div class="name">Beretta 92FS<i class="tag">副武器位</i></div>
+        <div class="sub"><code>beretta92.png</code> · 92FS · 11–15 伤害 · 弹匣 15 · 360 发/分 · 1.2kg · ¥44,000 · 9×19mm · 半自动 · 1.7s/弹匣</div>
+        <div class="desc">Beretta 92FS，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。</div>
+        <div class="vis"><b>画什么</b>较长开放式套筒，露出的枪管，深色握把与圆弧护圈。</div>
       </div>
     </div></div>
 </section>
@@ -3375,6 +3597,7 @@ M-9 的采购报告曾将其定义为「具备多功能野外作业能力的辅�
 林业部门因此采购了一批加重型砍刀。
 
 采购记录显示，最后一批货物的收货单位并非林业部门，而是环礁湾特别治安署。</div><div class="vis">真实伤害 26 · 间隔 1.4秒 · 前摇 0.35秒 · 扇角 100° · 半径 0.95格</div></div></div></div></section>
+<section class="cat" id="attachments"><h2>枪械配件<em>attachments</em><i>32 件 · 五槽位</i></h2><p><a href="design/weapons/attachments-v1/art/index.html">配件原稿、统一视角与预览</a> · 绿蓝军火商有售，紫色通过搜刮获得。局内外均可即时改装。</p><div class="grid"><div class="item lv2"><div class="thumb"><img src="assets/gear/att_optic01.png" width="48" height="48" alt="att_optic01"></div><div class="meta"><div class="name">微型反射瞄具<i class="tag">良品</i></div><div class="sub">att_optic01 · 0.08kg · ¥7,500</div><div class="desc">微型反射瞄具，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">瞄准时间 -12%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_optic02.png" width="48" height="48" alt="att_optic02"></div><div class="meta"><div class="name">全息瞄具<i class="tag">上乘</i></div><div class="sub">att_optic02 · 0.25kg · ¥13,500</div><div class="desc">全息瞄具，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">基础散布 -12% · 瞄准时间 +2%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_optic03.png" width="48" height="48" alt="att_optic03"></div><div class="meta"><div class="name">低倍率光学瞄具<i class="tag">上乘</i></div><div class="sub">att_optic03 · 0.32kg · ¥18,000</div><div class="desc">低倍率光学瞄具，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">基础散布 -20% · 瞄准时间 +5%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_optic04.png" width="48" height="48" alt="att_optic04"></div><div class="meta"><div class="name">精密光学瞄具<i class="tag">稀见</i></div><div class="sub">att_optic04 · 0.48kg · ¥30,000</div><div class="desc">精密光学瞄具，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">基础散布 -30% · 瞄准时间 +8%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_grip01.png" width="48" height="48" alt="att_grip01"></div><div class="meta"><div class="name">垂直握把<i class="tag">良品</i></div><div class="sub">att_grip01 · 0.12kg · ¥6,750</div><div class="desc">垂直握把，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">纵向后坐力 -18% · 瞄准时间 +2%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_grip02.png" width="48" height="48" alt="att_grip02"></div><div class="meta"><div class="name">斜角握把<i class="tag">良品</i></div><div class="sub">att_grip02 · 0.1kg · ¥7,500</div><div class="desc">斜角握把，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -16%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_grip03.png" width="48" height="48" alt="att_grip03"></div><div class="meta"><div class="name">紧凑握把<i class="tag">上乘</i></div><div class="sub">att_grip03 · 0.08kg · ¥10,500</div><div class="desc">紧凑握把，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">瞄准时间 -10% · 横向后坐力 +3%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_grip04.png" width="48" height="48" alt="att_grip04"></div><div class="meta"><div class="name">人体工学握把<i class="tag">上乘</i></div><div class="sub">att_grip04 · 0.14kg · ¥13,500</div><div class="desc">人体工学握把，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -8% · 纵向后坐力 -8%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_stock01.png" width="48" height="48" alt="att_stock01"></div><div class="meta"><div class="name">固定枪托<i class="tag">良品</i></div><div class="sub">att_stock01 · 0.3kg · ¥9,000</div><div class="desc">固定枪托，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -12% · 纵向后坐力 -12% · 瞄准时间 +3%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_stock02.png" width="48" height="48" alt="att_stock02"></div><div class="meta"><div class="name">伸缩枪托<i class="tag">良品</i></div><div class="sub">att_stock02 · 0.22kg · ¥8,250</div><div class="desc">伸缩枪托，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">瞄准时间 -12% · 横向后坐力 +3% · 纵向后坐力 +3%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_stock03.png" width="48" height="48" alt="att_stock03"></div><div class="meta"><div class="name">精密枪托<i class="tag">稀见</i></div><div class="sub">att_stock03 · 0.45kg · ¥22,500</div><div class="desc">精密枪托，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">双轴回正速度 +25% · 基础散布 -8% · 瞄准时间 +5%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_muzzle01.png" width="48" height="48" alt="att_muzzle01"></div><div class="meta"><div class="name">标准制退器<i class="tag">良品</i></div><div class="sub">att_muzzle01 · 0.08kg · ¥6,000</div><div class="desc">标准制退器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">纵向后坐力 -15%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_muzzle02.png" width="48" height="48" alt="att_muzzle02"></div><div class="meta"><div class="name">横向补偿器<i class="tag">上乘</i></div><div class="sub">att_muzzle02 · 0.1kg · ¥10,500</div><div class="desc">横向补偿器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -18% · 瞄准时间 +2%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_muzzle03.png" width="48" height="48" alt="att_muzzle03"></div><div class="meta"><div class="name">复合补偿器<i class="tag">上乘</i></div><div class="sub">att_muzzle03 · 0.12kg · ¥13,500</div><div class="desc">复合补偿器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -10% · 纵向后坐力 -10% · 瞄准时间 +3%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_muzzle04.png" width="48" height="48" alt="att_muzzle04"></div><div class="meta"><div class="name">精密枪口装置<i class="tag">稀见</i></div><div class="sub">att_muzzle04 · 0.1kg · ¥18,000</div><div class="desc">精密枪口装置，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">基础散布 -12% · 瞄准时间 +4%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_muzzle05.png" width="48" height="48" alt="att_muzzle05"></div><div class="meta"><div class="name">收束器<i class="tag">上乘</i></div><div class="sub">att_muzzle05 · 0.06kg · ¥12,000</div><div class="desc">收束器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹丸扩散 -20% · 瞄准时间 +2%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_muzzle06.png" width="48" height="48" alt="att_muzzle06"></div><div class="meta"><div class="name">扩散器<i class="tag">良品</i></div><div class="sub">att_muzzle06 · 0.05kg · ¥5,250</div><div class="desc">扩散器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹丸扩散 +25%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_556_ext.png" width="48" height="48" alt="att_mag_556_ext"></div><div class="meta"><div class="name">5.56×45mm 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_556_ext · 0.12kg · ¥10,500</div><div class="desc">5.56×45mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_556_quick.png" width="48" height="48" alt="att_mag_556_quick"></div><div class="meta"><div class="name">5.56×45mm 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_556_quick · 0.1kg · ¥13,500</div><div class="desc">5.56×45mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_556_quick_ext.png" width="48" height="48" alt="att_mag_556_quick_ext"></div><div class="meta"><div class="name">5.56×45mm 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_556_quick_ext · 0.14kg · ¥21,000</div><div class="desc">5.56×45mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_762x39_ext.png" width="48" height="48" alt="att_mag_762x39_ext"></div><div class="meta"><div class="name">7.62×39mm 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_762x39_ext · 0.16kg · ¥10,500</div><div class="desc">7.62×39mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_762x39_quick.png" width="48" height="48" alt="att_mag_762x39_quick"></div><div class="meta"><div class="name">7.62×39mm 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_762x39_quick · 0.14kg · ¥13,500</div><div class="desc">7.62×39mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_762x39_quick_ext.png" width="48" height="48" alt="att_mag_762x39_quick_ext"></div><div class="meta"><div class="name">7.62×39mm 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_762x39_quick_ext · 0.18kg · ¥21,000</div><div class="desc">7.62×39mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_9mm_ext.png" width="48" height="48" alt="att_mag_9mm_ext"></div><div class="meta"><div class="name">9×19mm 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_9mm_ext · 0.08kg · ¥6,000</div><div class="desc">9×19mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_9mm_quick.png" width="48" height="48" alt="att_mag_9mm_quick"></div><div class="meta"><div class="name">9×19mm 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_9mm_quick · 0.07kg · ¥8,250</div><div class="desc">9×19mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_9mm_quick_ext.png" width="48" height="48" alt="att_mag_9mm_quick_ext"></div><div class="meta"><div class="name">9×19mm 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_9mm_quick_ext · 0.1kg · ¥12,000</div><div class="desc">9×19mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_45acp_ext.png" width="48" height="48" alt="att_mag_45acp_ext"></div><div class="meta"><div class="name">.45 ACP 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_45acp_ext · 0.1kg · ¥6,750</div><div class="desc">.45 ACP 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_45acp_quick.png" width="48" height="48" alt="att_mag_45acp_quick"></div><div class="meta"><div class="name">.45 ACP 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_45acp_quick · 0.09kg · ¥9,000</div><div class="desc">.45 ACP 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_45acp_quick_ext.png" width="48" height="48" alt="att_mag_45acp_quick_ext"></div><div class="meta"><div class="name">.45 ACP 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_45acp_quick_ext · 0.12kg · ¥13,500</div><div class="desc">.45 ACP 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_12g_ext.png" width="48" height="48" alt="att_mag_12g_ext"></div><div class="meta"><div class="name">12 Gauge 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_12g_ext · 0.18kg · ¥9,000</div><div class="desc">12 Gauge 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_12g_quick.png" width="48" height="48" alt="att_mag_12g_quick"></div><div class="meta"><div class="name">12 Gauge 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_12g_quick · 0.16kg · ¥12,000</div><div class="desc">12 Gauge 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_12g_quick_ext.png" width="48" height="48" alt="att_mag_12g_quick_ext"></div><div class="meta"><div class="name">12 Gauge 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_12g_quick_ext · 0.22kg · ¥18,000</div><div class="desc">12 Gauge 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div></div></section>
 <footer>
   清单由 <code>gen-gear-sheet.js</code> 生成，数据来自 <code>js/data.js</code> 的 WEAPONS / HELMETS / BODIES / BAGS。<br>
   图标共用 <code>assets/gear/</code>，已接入藏身处、局内装备槽和尸体装备区。更新贴图后重跑本脚本刷新进度，
@@ -3635,7 +3858,7 @@ M-9 的采购报告曾将其定义为「具备多功能野外作业能力的辅�
       </dl>
       <div class="desc">1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
       
-      <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(60, 11)</code> <code>(10, 38)</code> <code>(6, 40)</code></p></details>
+      <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(60, 11)</code> <code>(6, 40)</code> <code>(9, 40)</code></p></details>
       <div class="vis"><b>画什么</b>一格体积的灰白与暗绿色金属医疗物资柜，顶面占大半，短而可见的前门上一个简单绿色加号、黑色短拉手和密封边，左上光、短侧壁，顶面亮门面暗，比例同参考储物柜，75度高角度俯视。</div>
     </div>
   </article>
@@ -3686,7 +3909,7 @@ M-9 的采购报告曾将其定义为「具备多功能野外作业能力的辅�
       </dl>
       <div class="desc">1.8 秒读条。蓝紫占六成二、金色接近一成，最适合作为常规高收益目标。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
       <div class="vis"><b>独立弹药池</b>每次抽取 25% 走弹药池，其余沿用原有物品池。等级：寻常10% / 良品18% / 上乘32% / 稀见30% / 珍罕10%（红档份额并入金档）；三种口径等概率，5.56mm 与 9mm 每组 10–20 发，12 号霰弹每组 4–8 发。</div>
-      <div class="vis"><b>独立装备池</b>每次抽取 10% 走装备池：头盔 / 护甲 / 背包 等概率抽一种，等级分布与弹药池一致（寻常10% / 良品18% / 上乘32% / 稀见30% / 珍罕10%）。</div>
+      <div class="vis"><b>独立装备池</b>每次抽取 10% 走装备池：头盔 / 护甲 / 背包 / gun 等概率抽一种，等级分布与弹药池一致（寻常10% / 良品18% / 上乘32% / 稀见30% / 珍罕10%）。</div>
       <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(55, 5)</code> <code>(54, 11)</code> <code>(45, 52)</code></p></details>
       <div class="vis"><b>画什么</b>深橄榄绿低矮厚重军用储物箱，浅色抽象军需标记、金属护角、双搭扣、帆布束带和提手；75°俯视、左上光源、透明背景。</div>
     </div>
@@ -3738,7 +3961,7 @@ M-9 的采购报告曾将其定义为「具备多功能野外作业能力的辅�
       </dl>
       <div class="desc">2.6 秒，必须站定，读条全程发声。紫金占六成三，值得为它改路线。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
       <div class="vis"><b>独立弹药池</b>每次抽取 25% 走弹药池，其余沿用原有物品池。等级：寻常4% / 良品9% / 上乘22% / 稀见36% / 珍罕29%（红档份额并入金档）；三种口径等概率，5.56mm 与 9mm 每组 10–20 发，12 号霰弹每组 4–8 发。</div>
-      <div class="vis"><b>独立装备池</b>每次抽取 10% 走装备池：头盔 / 护甲 / 背包 等概率抽一种，等级分布与弹药池一致（寻常4% / 良品9% / 上乘22% / 稀见36% / 珍罕29%）。</div>
+      <div class="vis"><b>独立装备池</b>每次抽取 10% 走装备池：头盔 / 护甲 / 背包 / gun 等概率抽一种，等级分布与弹药池一致（寻常4% / 良品9% / 上乘22% / 稀见36% / 珍罕29%）。</div>
       <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(67, 18)</code> <code>(64, 32)</code> <code>(40, 52)</code></p></details>
       <div class="vis"><b>画什么</b>一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。</div>
     </div>

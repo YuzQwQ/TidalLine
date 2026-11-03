@@ -1,0 +1,114 @@
+{
+  "groupsPassed": 16,
+  "failed": false,
+  "cadence": [
+    {
+      "id": "m4a1",
+      "fps": 30,
+      "shots": 14,
+      "seconds": 1
+    },
+    {
+      "id": "akm",
+      "fps": 30,
+      "shots": 10,
+      "seconds": 1
+    },
+    {
+      "id": "famas_f1",
+      "fps": 30,
+      "shots": 17,
+      "seconds": 1
+    },
+    {
+      "id": "pp19_01",
+      "fps": 30,
+      "shots": 12,
+      "seconds": 1
+    },
+    {
+      "id": "mp5a3",
+      "fps": 30,
+      "shots": 14,
+      "seconds": 1
+    },
+    {
+      "id": "ump45",
+      "fps": 30,
+      "shots": 10,
+      "seconds": 1
+    },
+    {
+      "id": "m4a1",
+      "fps": 60,
+      "shots": 14,
+      "seconds": 1
+    },
+    {
+      "id": "akm",
+      "fps": 60,
+      "shots": 10,
+      "seconds": 1
+    },
+    {
+      "id": "famas_f1",
+      "fps": 60,
+      "shots": 17,
+      "seconds": 1
+    },
+    {
+      "id": "pp19_01",
+      "fps": 60,
+      "shots": 12,
+      "seconds": 1
+    },
+    {
+      "id": "mp5a3",
+      "fps": 60,
+      "shots": 14,
+      "seconds": 1
+    },
+    {
+      "id": "ump45",
+      "fps": 60,
+      "shots": 10,
+      "seconds": 1
+    },
+    {
+      "id": "m4a1",
+      "fps": 144,
+      "shots": 14,
+      "seconds": 1
+    },
+    {
+      "id": "akm",
+      "fps": 144,
+      "shots": 11,
+      "seconds": 1
+    },
+    {
+      "id": "famas_f1",
+      "fps": 144,
+      "shots": 17,
+      "seconds": 1
+    },
+    {
+      "id": "pp19_01",
+      "fps": 144,
+      "shots": 12,
+      "seconds": 1
+    },
+    {
+      "id": "mp5a3",
+      "fps": 144,
+      "shots": 14,
+      "seconds": 1
+    },
+    {
+      "id": "ump45",
+      "fps": 144,
+      "shots": 11,
+      "seconds": 1
+    }
+  ]
+}

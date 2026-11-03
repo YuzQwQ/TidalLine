@@ -2,10 +2,10 @@ const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('ass
 const root=path.resolve(__dirname,'..'),spec=require('../design/items/economy.json');
 const harness=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0];
 const c=new Function('require','__dirname',harness+'\nreturn ctx;')(require,root);
-const {Game,Save,Base,ITEMS,GEAR,EQUIP,WEAPONS}=c;
+const {Game,Save,Base,ITEMS,GEAR,EQUIP,WEAPONS,WEAPON_ALIASES}=c;
 const {Medical,formatMoney}=vm.runInContext('({Medical,formatMoney})',c);Game.init();
 const medical=[2000,5000,12000,35000,95000,2500,6000,18000,3000,6000,40000,110000,25000,65000,180000,7000,55000,150000];
-assert.equal(ITEMS.length,173);
+assert.equal(ITEMS.length,183);
 for(const item of ITEMS){
  if(item.cat==='ammo')continue;   // 弹药价格在 AMMO_TABLE 里单独定，不跟着 economy.json 走
  if(item.cat==='medical')continue; // 医疗品的字段快照由 test-medical.js 校，这里只管价
@@ -21,9 +21,16 @@ for(const [type,prices]of [['helmet',[2000,6000,15000,48000,120000,350000]],['bo
   const {price,...a}=JSON.parse(JSON.stringify(g)),{price:_old,...b}=old;delete b.dr;assert.deepEqual(a,b,'防护数值不随价格变化');
  }
 }
-for(const [id,price,rarity]of [['pistol',5000,2],['shotgun',24000,3],['smg',38000,3],['rifle',45000,5]]){
- assert.equal(WEAPONS[id].price,price);assert.equal(EQUIP.gun(id,7).r,rarity);
- const {price:_p,rarity:_r,...a}=JSON.parse(JSON.stringify(WEAPONS[id]));const {price:_op,...b}=spec.baseline.weapons[id];delete a.caliber;delete a.ammo;assert.deepEqual(a,b);
+/* 武器价格与各字段的权威校验在 test-arsenal（对着 design/weapons 规格表逐把核）。
+   这里只确认旧 id 别名（存档里可能还写着 rifle/smg）仍解析到对应真实枪型，不会断档。 */
+for(const [id,rarity]of [['pistol',2],['shotgun',3],['smg',3],['rifle',5]]){
+ const g=EQUIP.gun(id,7);
+ assert(g,'旧 id '+id+' 应仍能造出枪实例');
+ const realId=String(g.id).replace(/^g_/,'');
+ assert.notEqual(realId,id,'旧 id '+id+' 应已解析成真实枪型');
+ assert.equal(g.r,rarity);
+ assert.equal(WEAPONS[id].id,realId);
+ assert.equal(WEAPONS[id].price,WEAPONS[realId].price);
 }
 assert.equal(c.START_CREDITS,60000);assert.equal(ITEMS.find(i=>i.id==='ammo_556_1').price,60);assert.equal(ITEMS.find(i=>i.id==='ammo_9mm_1').price,35);assert.equal(ITEMS.find(i=>i.id==='heal01').price,2000);
 assert.equal(formatMoney(3000000),'¥3,000,000');
@@ -34,11 +41,16 @@ const armor=JSON.parse(JSON.stringify(EQUIP.armor(GEAR.make('helmet',4,17))));ar
 const gun=JSON.parse(JSON.stringify(EQUIP.gun('smg',7)));gun.price=420;gun.sell=210;gun.r=3;
 c.localStorage.setItem(Save.key,JSON.stringify({v:3,credits:12345,hp:43,runs:6,stash:[{id:'g_helmet4',n:1,gear:armor},{id:'g_smg',n:1,gear:gun},{id:'life01',n:2}],gear:{weapons:['rifle','shotgun','pistol'],helmet:{lv:4,dur:13},body:{lv:5,dur:77}},loadout:{ammo:60,bandage:3,stone:3}}));
 Save.load();assert.equal(Save.credits,12345);assert.equal(Save.hp,43);assert.equal(Save.runs,6);
-let h=Save.stash.find(e=>e.id==='g_helmet4').gear,w=Save.stash.find(e=>e.id==='g_smg').gear;
+let h=Save.stash.find(e=>e.id==='g_helmet4').gear;
+/* 旧存档里的 g_smg 会按别名迁移成真实枪型（g_pp19_01），不是丢掉 —— 按枪类找，不认死 id */
+const wEntry=Save.stash.find(e=>e.gear&&e.gear.equip&&e.gear.equip.kind==='gun');
+assert(wEntry,'旧存档里的 g_smg 应迁移保留下来');
+let w=wEntry.gear;
 assert.equal(h.price,48000);assert.equal(h.equip.gear.price,48000);assert.equal(h.equip.gear.dur,17);assert.equal(h.sell,Math.floor(48000*.5*17/65));
-assert.equal(w.price,38000);assert.equal(w.sell,19000);assert.equal(w.equip.mag,7);assert.equal(w.r,3);
+assert.equal(w.price,WEAPONS[w.equip.gun].price);assert.equal(w.sell,Math.floor(w.price/2));assert.equal(w.equip.mag,7);assert.equal(w.r,3);
 assert.equal(Save.gear.helmet.price,48000);assert.equal(Save.gear.helmet.dur,13);assert.equal(Save.gear.body.price,220000);assert.equal(Save.gear.body.dur,77);
-Save.save();Save.flush();Save.load();assert.equal(Save.credits,12345);assert.equal(Save.stashCount('life01'),2);assert.equal(Save.stash.find(e=>e.id==='g_smg').gear.equip.mag,7);
+Save.save();Save.flush();Save.load();assert.equal(Save.credits,12345);assert.equal(Save.stashCount('life01'),2);
+assert.equal(Save.stash.find(e=>e.gear&&e.gear.equip&&e.gear.equip.kind==='gun').gear.equip.mag,7);
 Base.open();Save.credits=100000;Save.stash=[];Save.bag=[];Save.addBag('ammo_556_1',30);Save.addBag('ammo_9mm_1',20);Save.addBag('ammo_12g_1',10);Save.addBag('heal01',3);
 assert.equal(Save.bagWeight()>0,true);assert.equal(Save.bag.length>=4,true);
 Save.credits=100000;Base.buyArmor('helmet',2);assert.equal(Save.credits,94000);assert.equal(Save.stash[0].gear.price,6000);

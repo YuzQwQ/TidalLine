@@ -24,16 +24,16 @@ for(const item of curated){
  assert((item.cat==='medical'&&!item.iconId)||fs.existsSync(path.join(root,'assets/items',hasIcon+'.png'))||pendingArt.has(item.id),'缺贴图 '+item.id);
 }
 assert.equal(items.filter(i=>!i.noCodex).length,140);assert.equal(items.filter(i=>i.cat==='occult').length,15);
-assert.equal(items.filter(i=>groupOf(i)==='collectible').length,140);assert.equal(items.filter(i=>groupOf(i)==='supply').length,33);
+assert.equal(items.filter(i=>groupOf(i)==='collectible').length,140);assert.equal(items.filter(i=>groupOf(i)==='supply').length,43);
 for(const id of ['life02','art03'])assert.equal(items.find(i=>i.id===id).cat,'intel');
 assert.equal(items.find(i=>i.id==='antiq03').cat,'life');assert.equal(items.find(i=>i.id==='elec01').cat,'elec');
-/* 弹药：15 种，id 只有 ammo_{口径}_{等级} 这一种写法，全部不进图鉴与掉落 */
+/* 弹药：25 种（五口径 × 五等级），id 只有 ammo_{口径}_{等级} 这一种写法，全部不进图鉴与掉落 */
 const ammo=items.filter(i=>i.cat==='ammo');
-assert.equal(ammo.length,15);
-assert.equal(new Set(ammo.map(a=>a.id)).size,15);
+assert.equal(ammo.length,25);
+assert.equal(new Set(ammo.map(a=>a.id)).size,25);
 for(const a of ammo){
   assert.equal(a.id,'ammo_'+a.caliber+'_'+a.level);
-  assert(['556','9mm','12g'].includes(a.caliber));
+  assert(['556','762x39','9mm','45acp','12g'].includes(a.caliber));
   assert(a.level>=1&&a.level<=5);
   assert(a.noCodex&&a.noLoot);
   assert.equal(a.penLevel,a.level);

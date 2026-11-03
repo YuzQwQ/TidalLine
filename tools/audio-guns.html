@@ -294,6 +294,25 @@
     { label: '连摸 5 件', ghost: true, run: () => [0, 220, 440, 660, 880].forEach(t => setTimeout(() => SFX.play('pickup'), t)) },
     { label: '四条各一遍', ghost: true, run: () => ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'].forEach((id, i) => setTimeout(() => SFX._playSample(id), i * 320)) }
   ]);
+  card(othersHost, '搜索：一个容器一个声', '不随机——点哪个容器就是那个容器的声，重点听彼此不一样', [
+    { label: '旅行箱（布）', run: () => SFX.play('search', { at: 'crate_luggage' }) },
+    { label: '文件柜（纸）', ghost: true, run: () => SFX.play('search', { at: 'crate_filing' }) },
+    { label: '抽屉（金属）', ghost: true, run: () => SFX.play('search', { at: 'crate_fast' }) },
+    { label: '工具箱', ghost: true, run: () => SFX.play('search', { at: 'crate_tool' }) },
+    { label: '皮质旅行包', ghost: true, run: () => SFX.play('search', { at: 'crate_leatherbag' }) },
+    { label: '尸体 / 工作服（布）', ghost: true, run: () => SFX.play('search', { at: 'corpse' }) },
+    { label: '保险箱（没素材）', ghost: true, run: () => SFX.play('search', { at: 'crate_heavy' }) }
+  ]);
+  card(othersHost, '打开容器', '同样是固定的：包是拉链，柜和箱是箱盖', [
+    { label: '开旅行箱（拉链）', run: () => SFX.play('container_open', { at: 'crate_luggage' }) },
+    { label: '开文件柜（抽屉）', ghost: true, run: () => SFX.play('container_open', { at: 'crate_filing' }) },
+    { label: '开工具箱（箱盖）', ghost: true, run: () => SFX.play('container_open', { at: 'crate_tool' }) },
+    { label: '开保险箱（没素材·不响）', ghost: true, run: () => SFX.play('container_open', { at: 'crate_heavy' }) }
+  ]);
+  card(othersHost, '背包开合', '拉链 6231 · 开包升调、关包降调', [
+    { label: '拉开', run: () => SFX.play('bag_zip', { rate: 1.06 }) },
+    { label: '拉上', ghost: true, run: () => SFX.play('bag_zip', { rate: 0.9 }) }
+  ]);
   card(othersHost, '枪 ⇄ 刀', '换枪是清脆滑套，收刀压低一点，霰弹是泵动上膛', [
     { label: '枪 → 刀', run: () => SFX.play('shot_switch', { rate: 0.86 }) },
     { label: '刀 → 枪', ghost: true, run: () => SFX.play('shot_switch') },
@@ -314,8 +333,9 @@
   card(reserveHost, '消音手枪开火', '录音 855656 · 预留：等做多手枪', [
     { label: '消音单发', run: () => SFX._playSample('shot_pistol_silent'), say: '消音手枪（预留素材）' }
   ]);
-  card(reserveHost, '霰弹上膛', '录音 380886 后半段 · 预留：可做逐发上膛', [
-    { label: '上膛', run: () => SFX._playSample('shot_shotgun_pump') }
+  card(reserveHost, '霰弹泵动上膛', '每次霰弹开火后 0.44s 自动跟一声（排在音频时钟上）', [
+    { label: '泵动', run: () => SFX._playSample('shot_shotgun_pump') },
+    { label: '开火（含泵动）', ghost: true, run: () => SFX.play('shot', { gun: 'shotgun' }) }
   ]);
 
   /* 用玩家那套公式模拟脚步：stride = 60 * (v/120)^0.4 */
@@ -343,6 +363,8 @@
     ['shot_switch', '切枪', 'switch'],
     ['step_stone_1', '脚步', 'step'],
     ['pickup_1', '拾取', 'pickup'],
+    ['search_metal', '搜索', 'search'],
+    ['bag_zip', '背包拉链', 'bagZip'],
     ['ui_click', '界面点击', 'uiClick'],
     ['ui_tap', '界面悬停', 'uiTap'],
     ['ui_confirm', '出发确认', 'uiConfirm'],

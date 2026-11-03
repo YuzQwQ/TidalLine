@@ -23,3 +23,6 @@
   box-shadow:none;
 }
 .st-stock-mount #stashGrid .scell.st-selected{box-shadow:0 0 0 1px #ffe0a0}
+
+/* Full-resolution inspector art uses normal downsampling; inventory tiles remain pixelated. */
+.st-item-picture img.item-detail-original{image-rendering:auto}

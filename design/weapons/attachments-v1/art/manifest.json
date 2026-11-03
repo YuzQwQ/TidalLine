@@ -1,0 +1,456 @@
+{
+  "generator": "built-in image_gen",
+  "processing": "trim, nearest resize, hard alpha, palette; no rotation or mirror",
+  "orientation": "three-quarter front, slight top; front left foreground, rear right background; grips and magazines upright",
+  "assets": [
+    {
+      "id": "att_optic01",
+      "name": "微型反射瞄具",
+      "source": "sources/att_optic01.png",
+      "target": "assets/gear/att_optic01.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：微型反射瞄具。小型开放式黑灰金属框架，青绿色矩形镜片，低矮安装底座，复古工业质感。没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端镜片位于画面左下前景，底座后端在右上后景，主轴从左下到右上。能看见前端、右侧面和少量顶部，轻微近大远小。不可镜像或左右翻转，不画前端朝右的版本。透明背景，完整单个物体，中央构图，像素风，缩小到48×48也轮廓清晰，周围留4px安全边，无文字、无底色、无场景、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "288cc790012e5a55d702fcd185ee1049c693b30de1e3f316074006e845e2aee7"
+    },
+    {
+      "id": "att_optic02",
+      "name": "全息瞄具",
+      "source": "sources/att_optic02.png",
+      "target": "assets/gear/att_optic02.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：全息瞄具。全息瞄具，厚实方形黑灰保护罩，青绿色前端镜片，低矮底座，侧边有机械调节旋钮。这是一件单独的装备物品，没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端在画面左下前景，后端在右上后景，主轴从左下到右上。同时展示前端、右侧面和少量顶部，轻微近大远小，不用广角。不要镜像，不要左右翻转，不画前端朝右的版本。低饱和复古工业像素风，材质明确，左上方光源。透明背景，完整单个物体，中央构图，缩小至48×48仍清晰，周围留4px安全边。无文字、无标志、无底色、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "552c5e2aef71df8f5b2ecd7531fbea7fbd26cacba15b198e58781be2dac62c30"
+    },
+    {
+      "id": "att_optic03",
+      "name": "低倍率光学瞄具",
+      "source": "sources/att_optic03.png",
+      "target": "assets/gear/att_optic03.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：低倍率光学瞄具。低倍率光学瞄具，短圆筒深灰镜身，一枚上方调节钮，两道安装环，前端绿色物镜比后端目镜大。这是一件单独的装备物品，没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端在画面左下前景，后端在右上后景，主轴从左下到右上。同时展示前端、右侧面和少量顶部，轻微近大远小，不用广角。不要镜像，不要左右翻转，不画前端朝右的版本。低饱和复古工业像素风，材质明确，左上方光源。透明背景，完整单个物体，中央构图，缩小至48×48仍清晰，周围留4px安全边。无文字、无标志、无底色、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "32e72b75fe6499664205470b90ad4168ac33008011c361b0d86435c19667b7e8"
+    },
+    {
+      "id": "att_optic04",
+      "name": "精密光学瞄具",
+      "source": "sources/att_optic04.png",
+      "target": "assets/gear/att_optic04.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：精密光学瞄具。精密光学瞄具，较长黑灰镜筒，前端较大的物镜罩，后端较小的目镜，两个安装环和三枚机械调节旋钮，旧式光学仪器质感。这是一件单独的装备物品，没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端在画面左下前景，后端在右上后景，主轴从左下到右上。同时展示前端、右侧面和少量顶部，轻微近大远小，不用广角。不要镜像，不要左右翻转，不画前端朝右的版本。低饱和复古工业像素风，材质明确，左上方光源。透明背景，完整单个物体，中央构图，缩小至48×48仍清晰，周围留4px安全边。无文字、无标志、无底色、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "f7af6e4e61d58bd2412be2718924b9286a2231fc09af2cc8b32ed5491b24732d"
+    },
+    {
+      "id": "att_grip01",
+      "name": "垂直握把",
+      "source": "sources/att_grip01.png",
+      "target": "assets/gear/att_grip01.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: straight vertical foregrip, black ribbed polymer cylindrical grip, short flat mounting clamp.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "46fbfa7495a9a0ec6d0e356133c5e3698adabef11c41e8cde02cb2d2c30b922f"
+    },
+    {
+      "id": "att_grip02",
+      "name": "斜角握把",
+      "source": "sources/att_grip02.png",
+      "target": "assets/gear/att_grip02.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: low angled foregrip, triangular sloping open profile, charcoal textured polymer and flat mounting shoe.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "9ecb67219dd77c6b7bf8a9eab539ba4aa97c9ba9c0f764dd0478de758c624048"
+    },
+    {
+      "id": "att_grip03",
+      "name": "紧凑握把",
+      "source": "sources/att_grip03.png",
+      "target": "assets/gear/att_grip03.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: very short stubby foregrip, compact dark gray polymer thumb stop with rounded end and tiny mounting clamp.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "32118ef5c57f476ac8b4ab15428773c26bfda59d6e2f4506a716b78c1d638d90"
+    },
+    {
+      "id": "att_grip04",
+      "name": "人体工学握把",
+      "source": "sources/att_grip04.png",
+      "target": "assets/gear/att_grip04.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: ergonomic foregrip, contoured olive gray palm shape, finger grooves and rubberized inset panels, solid short mounting base.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "e24f6ad92e1d7f548e3330909de90d77305e607d351a772401503925b8e757d8"
+    },
+    {
+      "id": "att_stock01",
+      "name": "固定枪托",
+      "source": "sources/att_stock01.png",
+      "target": "assets/gear/att_stock01.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：固定枪托。固定枪托，实心旧橄榄绿色聚合物枪托和黑色肩垫。与枪身连接的短金属接口是前端，必须位于左下前景；肩垫是后端，必须位于右上后景。这是一件单独的装备物品，没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端在画面左下前景，后端在右上后景，主轴从左下到右上。同时展示前端、右侧面和少量顶部，轻微近大远小，不用广角。不要镜像，不要左右翻转，不画前端朝右的版本。低饱和复古工业像素风，材质明确，左上方光源。透明背景，完整单个物体，中央构图，缩小至48×48仍清晰，周围留4px安全边。无文字、无标志、无底色、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "ffe7f2c58e2394030f141cbae00fa991587fabbbad2789409a91e4ed38ff2676"
+    },
+    {
+      "id": "att_stock02",
+      "name": "伸缩枪托",
+      "source": "sources/att_stock02.png",
+      "target": "assets/gear/att_stock02.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: telescopic buttstock, slim skeletal charcoal body, exposed short metal adjustment tube and sliding latch, ribbed shoulder pad.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "d55c5803b7c76de28052b00fe60bc3130ba1c60b72cc44f9e4b57a977d00db11"
+    },
+    {
+      "id": "att_stock03",
+      "name": "精密枪托",
+      "source": "sources/att_stock03.png",
+      "target": "assets/gear/att_stock03.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：精密枪托。精密枪托，石墨灰厚实框架，可调托腮板和方形肩垫，小型银色调节旋钮。枪身连接接口在左下前景，肩垫在右上后景，复古机械设计。这是一件单独的装备物品，没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端在画面左下前景，后端在右上后景，主轴从左下到右上。同时展示前端、右侧面和少量顶部，轻微近大远小，不用广角。不要镜像，不要左右翻转，不画前端朝右的版本。低饱和复古工业像素风，材质明确，左上方光源。透明背景，完整单个物体，中央构图，缩小至48×48仍清晰，周围留4px安全边。无文字、无标志、无底色、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "eb749c5d4985e4eca744ded4f304be6281f4daa0c245a122959553f21bd0ec6f"
+    },
+    {
+      "id": "att_muzzle01",
+      "name": "标准制退器",
+      "source": "sources/att_muzzle01.png",
+      "target": "assets/gear/att_muzzle01.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: short cylindrical steel muzzle brake with two large rectangular side ports, threaded collar, weathered gunmetal.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "cd22a9c7d7df61f88e1ea6c058282c31ea1d52eb70081ebdf71556549a8a85fb"
+    },
+    {
+      "id": "att_muzzle02",
+      "name": "横向补偿器",
+      "source": "sources/att_muzzle02.png",
+      "target": "assets/gear/att_muzzle02.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: squat asymmetrical muzzle compensator with distinct side vent cuts, wide steel collar, graphite gray.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "c4754cf1102263435e8374356faeeeba5eb59772900b103711e8c4715255404c"
+    },
+    {
+      "id": "att_muzzle03",
+      "name": "复合补偿器",
+      "source": "sources/att_muzzle03.png",
+      "target": "assets/gear/att_muzzle03.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：复合补偿器。复合补偿器，短粗切面深灰钢制筒体，顶部和右侧面有三排通气孔。前端圆孔在左下，带安装螺纹的后端在右上。这是一件单独的装备物品，没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端在画面左下前景，后端在右上后景，主轴从左下到右上。同时展示前端、右侧面和少量顶部，轻微近大远小，不用广角。不要镜像，不要左右翻转，不画前端朝右的版本。低饱和复古工业像素风，材质明确，左上方光源。透明背景，完整单个物体，中央构图，缩小至48×48仍清晰，周围留4px安全边。无文字、无标志、无底色、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "07873e0e04487acd9d52ca1fcee4c9052c31ee66215d86b1d9c0f218f419c790"
+    },
+    {
+      "id": "att_muzzle04",
+      "name": "精密枪口装置",
+      "source": "sources/att_muzzle04.png",
+      "target": "assets/gear/att_muzzle04.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：精密枪口装置。精密枪口装置，短钢制圆筒，同心机械加工环，小而整齐的通气孔，银灰色口沿。前端圆形出口在左下，安装接口在右上。这是一件单独的装备物品，没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端在画面左下前景，后端在右上后景，主轴从左下到右上。同时展示前端、右侧面和少量顶部，轻微近大远小，不用广角。不要镜像，不要左右翻转，不画前端朝右的版本。低饱和复古工业像素风，材质明确，左上方光源。透明背景，完整单个物体，中央构图，缩小至48×48仍清晰，周围留4px安全边。无文字、无标志、无底色、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "b01a07960e1ef568d4e601d0fa90feb0be9f683e8098a89eaf2ab428ae8db4bd"
+    },
+    {
+      "id": "att_muzzle05",
+      "name": "收束器",
+      "source": "sources/att_muzzle05.png",
+      "target": "assets/gear/att_muzzle05.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：收束器。收束器，短而略收窄的平滑钢制圆筒，两道浅环纹，末端安装螺纹。开口是左下前端，螺纹是右上后端。这是一件单独的装备物品，没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端在画面左下前景，后端在右上后景，主轴从左下到右上。同时展示前端、右侧面和少量顶部，轻微近大远小，不用广角。不要镜像，不要左右翻转，不画前端朝右的版本。低饱和复古工业像素风，材质明确，左上方光源。透明背景，完整单个物体，中央构图，缩小至48×48仍清晰，周围留4px安全边。无文字、无标志、无底色、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "7c731865ea77a08051c5a9851cc43667b5f57e07107accd81e5699fa638c4f7f"
+    },
+    {
+      "id": "att_muzzle06",
+      "name": "扩散器",
+      "source": "sources/att_muzzle06.png",
+      "target": "assets/gear/att_muzzle06.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：扩散器。扩散器，较宽的喇叭形短钢筒，口部四道宽浅槽，底部厚安装环。展开的宽口在左下，安装环在右上。这是一件单独的装备物品，没有人物，没有完整枪械，没有战斗场景。严格固定三分之四前视角，轻微俯视；前端在画面左下前景，后端在右上后景，主轴从左下到右上。同时展示前端、右侧面和少量顶部，轻微近大远小，不用广角。不要镜像，不要左右翻转，不画前端朝右的版本。低饱和复古工业像素风，材质明确，左上方光源。透明背景，完整单个物体，中央构图，缩小至48×48仍清晰，周围留4px安全边。无文字、无标志、无底色、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "front-left, rear-right",
+      "sha256": "fc9acbaf9f297d1ea49e65b6d46fd8e74d21c23f607fe58a9c63ba6578947da1"
+    },
+    {
+      "id": "att_mag_556_ext",
+      "name": "5.56×45mm 扩容弹匣",
+      "source": "sources/att_mag_556_ext.png",
+      "target": "assets/gear/att_mag_556_ext.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: slightly curved narrow rifle magazine, gray aluminum ribbed body, visibly elongated extended lower body with standard flat floorplate.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "358b8fec76f0434cb0a2849bc4f04dc6aa4c4c87a96846386f3302f96dd22155"
+    },
+    {
+      "id": "att_mag_556_quick",
+      "name": "5.56×45mm 快速弹匣",
+      "source": "sources/att_mag_556_quick.png",
+      "target": "assets/gear/att_mag_556_quick.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: slightly curved narrow rifle magazine, gray aluminum ribbed body, short standard capacity body with distinctive cloth pull tab on base.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "cee8430f77e535074e0332b650cf8a61e08c25dbb73d958487b40a005e14d6c7"
+    },
+    {
+      "id": "att_mag_556_quick_ext",
+      "name": "5.56×45mm 快速扩容弹匣",
+      "source": "sources/att_mag_556_quick_ext.png",
+      "target": "assets/gear/att_mag_556_quick_ext.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: slightly curved narrow rifle magazine, gray aluminum ribbed body, visibly elongated extended lower body with pronounced rubber pull loop on base.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "949fa4b5acae9173ac5a014fad2ee8fa33360514ac6ce44709b3770ed0efae93"
+    },
+    {
+      "id": "att_mag_762x39_ext",
+      "name": "7.62×39mm 扩容弹匣",
+      "source": "sources/att_mag_762x39_ext.png",
+      "target": "assets/gear/att_mag_762x39_ext.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, visibly elongated extended lower body with standard flat floorplate.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "fc381b9718c4155050b61f40348bfec0d455603b1c3c4792e34db5318acf171f"
+    },
+    {
+      "id": "att_mag_762x39_quick",
+      "name": "7.62×39mm 快速弹匣",
+      "source": "sources/att_mag_762x39_quick.png",
+      "target": "assets/gear/att_mag_762x39_quick.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, short standard capacity body with distinctive cloth pull tab on base.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "54737f2e21658ce14868813b622b734a68498ffe35a507989dc5bee9fc0fdfc9"
+    },
+    {
+      "id": "att_mag_762x39_quick_ext",
+      "name": "7.62×39mm 快速扩容弹匣",
+      "source": "sources/att_mag_762x39_quick_ext.png",
+      "target": "assets/gear/att_mag_762x39_quick_ext.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, visibly elongated extended lower body with pronounced rubber pull loop on base.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "1d63a9a4fa51f7953e633a74c645fb664d376e6d1c8f26f46b2ac0f4e58975d7"
+    },
+    {
+      "id": "att_mag_9mm_ext",
+      "name": "9×19mm 扩容弹匣",
+      "source": "sources/att_mag_9mm_ext.png",
+      "target": "assets/gear/att_mag_9mm_ext.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, visibly elongated extended lower body with standard flat floorplate.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "84493eeff4970f108c61f324ca1a8b75b460136b8d4d9c31d33225f23b1c548b"
+    },
+    {
+      "id": "att_mag_9mm_quick",
+      "name": "9×19mm 快速弹匣",
+      "source": "sources/att_mag_9mm_quick.png",
+      "target": "assets/gear/att_mag_9mm_quick.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, short standard capacity body with distinctive cloth pull tab on base.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "8c603105faabf45308c914a90638c7419e56d769e0040f4d181868cbe9131780"
+    },
+    {
+      "id": "att_mag_9mm_quick_ext",
+      "name": "9×19mm 快速扩容弹匣",
+      "source": "sources/att_mag_9mm_quick_ext.png",
+      "target": "assets/gear/att_mag_9mm_quick_ext.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, visibly elongated extended lower body with pronounced rubber pull loop on base.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "4b5eafe19220041b3acdefb2d2cfeb99b6a3b8a8d9d6a45d0373ce87891ba147"
+    },
+    {
+      "id": "att_mag_45acp_ext",
+      "name": ".45 ACP 扩容弹匣",
+      "source": "sources/att_mag_45acp_ext.png",
+      "target": "assets/gear/att_mag_45acp_ext.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, visibly elongated extended lower body with standard flat floorplate.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "622585adda18d384767b764106c6a0d32e8fde2b08ab7991cb41325fb237f1e6"
+    },
+    {
+      "id": "att_mag_45acp_quick",
+      "name": ".45 ACP 快速弹匣",
+      "source": "sources/att_mag_45acp_quick.png",
+      "target": "assets/gear/att_mag_45acp_quick.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone equipment attachment inventory icon for TidalLine, a fictional 1990s post-flood salvage game. Authentic chunky low-resolution pixel art, readable square pixel clusters, simplified realistic metal and polymer, restrained muted industrial colors, upper-left light and clear lighter edges on dark green UI. Consistent slightly elevated three-quarter product display, entire single object visible, centered within 40x40 logical pixels on 48x48 canvas with at least 4 logical pixels transparent padding. Genuinely transparent background, no ground, shadow, scene, firearm, hands, person, UI, rarity background, text, logos, letters, numbers, glow, watermark, photorealism or futuristic elements. Object ONLY: broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, short standard capacity body with distinctive cloth pull tab on base.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "14255366311d12f020953012c21b540039f1d37f4f7242f444cfefe4ac8851c7"
+    },
+    {
+      "id": "att_mag_45acp_quick_ext",
+      "name": ".45 ACP 快速扩容弹匣",
+      "source": "sources/att_mag_45acp_quick_ext.png",
+      "target": "assets/gear/att_mag_45acp_quick_ext.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：.45 ACP 快速扩容弹匣。蓝黑色宽直钢制弹匣，较宽的供弹口，侧面观察孔。加长扩容主体，底部有橡胶快拔拉环。弹匣必须竖直摆放，供弹口朝上，底板朝下，不要横放或斜躺。采用固定三分之四前视角，轻微俯视：物体前侧位于画面左侧前景，后侧退向右侧后景；能看见前端立面、右侧面和少量顶部。轻微近大远小，不要强广角，不镜像或左右翻转。低饱和复古工业像素风，材质清晰，左上光源。没有人物，没有完整枪械，没有战斗场景。单个完整物品，透明背景，中央构图，适合48×48像素图标，周围留4px透明安全边。无文字、无标志、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "78ca02d61b434d985282c8854e7d49e79b75d3513ea2a8e21603b196822ed603"
+    },
+    {
+      "id": "att_mag_12g_ext",
+      "name": "12 Gauge 扩容弹匣",
+      "source": "sources/att_mag_12g_ext.png",
+      "target": "assets/gear/att_mag_12g_ext.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：12 Gauge 扩容弹匣。暗橄榄黑色宽盒式聚合物霰弹弹匣，宽大加强筋和厚实供弹口。加长扩容主体，普通平底板。弹匣必须竖直摆放，供弹口朝上，底板朝下，不要横放或斜躺。采用固定三分之四前视角，轻微俯视：物体前侧位于画面左侧前景，后侧退向右侧后景；能看见前端立面、右侧面和少量顶部。轻微近大远小，不要强广角，不镜像或左右翻转。低饱和复古工业像素风，材质清晰，左上光源。没有人物，没有完整枪械，没有战斗场景。单个完整物品，透明背景，中央构图，适合48×48像素图标，周围留4px透明安全边。无文字、无标志、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "3558b3a9e76eacaa4c19dff1141188709aeb1b51f8888223b3bb61bd7d5aed7f"
+    },
+    {
+      "id": "att_mag_12g_quick",
+      "name": "12 Gauge 快速弹匣",
+      "source": "sources/att_mag_12g_quick.png",
+      "target": "assets/gear/att_mag_12g_quick.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：12 Gauge 快速弹匣。暗橄榄黑色宽盒式聚合物霰弹弹匣，宽大加强筋和厚实供弹口。标准长度主体，底部有布质快拔拉片。弹匣必须竖直摆放，供弹口朝上，底板朝下，不要横放或斜躺。采用固定三分之四前视角，轻微俯视：物体前侧位于画面左侧前景，后侧退向右侧后景；能看见前端立面、右侧面和少量顶部。轻微近大远小，不要强广角，不镜像或左右翻转。低饱和复古工业像素风，材质清晰，左上光源。没有人物，没有完整枪械，没有战斗场景。单个完整物品，透明背景，中央构图，适合48×48像素图标，周围留4px透明安全边。无文字、无标志、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "ca45e8b286d0695334d57433af4aa8674ddc3d7942435974434c2379670dc409"
+    },
+    {
+      "id": "att_mag_12g_quick_ext",
+      "name": "12 Gauge 快速扩容弹匣",
+      "source": "sources/att_mag_12g_quick_ext.png",
+      "target": "assets/gear/att_mag_12g_quick_ext.png",
+      "prompt": "为像素游戏《潮汐线》绘制一件静态、未安装的枪械配件物品图标：12 Gauge 快速扩容弹匣。暗橄榄黑色宽盒式聚合物霰弹弹匣，宽大加强筋和厚实供弹口。加长扩容主体，底部有橡胶快拔拉环。弹匣必须竖直摆放，供弹口朝上，底板朝下，不要横放或斜躺。采用固定三分之四前视角，轻微俯视：物体前侧位于画面左侧前景，后侧退向右侧后景；能看见前端立面、右侧面和少量顶部。轻微近大远小，不要强广角，不镜像或左右翻转。低饱和复古工业像素风，材质清晰，左上光源。没有人物，没有完整枪械，没有战斗场景。单个完整物品，透明背景，中央构图，适合48×48像素图标，周围留4px透明安全边。无文字、无标志、无场景、无投影、无光效。",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "placement": "upright",
+      "sha256": "5c0b04b694a5acd42eda94ca1fd2f916a885a0518f7ed93f0dff18edb347e61a"
+    }
+  ],
+  "missing": []
+}

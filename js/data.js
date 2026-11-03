@@ -36,13 +36,13 @@ const TILE_H = { "#":3, ".":2, ",":1, "~":0, H:3, "+":2, S:2, P:2, E:3 };
 /* 弹药池：chance 是「每次抽取走这个池」的概率；count 是各口径每组发数区间。 */
 const AMMO_POOL = {
   chance: 0.25,
-  count: { '556': [10, 20], '9mm': [10, 20], '12g': [4, 8] }
+  count: { '556': [10, 20], '762x39': [10,20], '9mm': [10, 20], '45acp': [10,20], '12g': [4, 8] }
 };
 
-/* 装备池：kinds 里等概率抽一种（头盔 / 护甲 / 背包），等级分布与同容器的弹药池一致。 */
+/* 装备池：kinds 里等概率抽一种（头盔 / 护甲 / 背包 / 枪械），等级分布与同容器的弹药池一致。 */
 const GEAR_POOL = {
   chance: 0.10,
-  kinds: ['helmet', 'body', 'bag']
+  kinds: ['helmet', 'body', 'bag', 'gun']
 };
 
 const CONTAINER_TYPES = {
@@ -697,7 +697,7 @@ const ITEMS = [
   { id:'mil15',  name:'首潮撤离标图板', short:'撤离标图', cat:'mil', r:6, w:2.6, price:1600000,
     desc:'一块曾用于环礁湾首次大规模撤离行动的原始军事指挥标图板。\n\n它由金属框架和可更换的透明标绘板组成，底层压着一张当时使用的城市地图。不同颜色的标记分别代表道路管制区、人员集中点、后勤集结区与撤离路线。\n\n标图板经历过多次人工修改。部分标记被擦去后重新绘制，旧线条仍隐约透在下面。板面边缘的时间栏中，几次更新的记录间隔越来越短。\n\n这块标图板属于首次撤离行动的原始指挥器材，而不是事后根据档案制作的纪念复制品。与它同时保存的还有使用登记、交接记录，以及后来对撤离路线变更过程的整理资料。\n\n其中一条通往港口的线路，被连续修改了三次。\n\n最后的版本没有画到港口。\n\n标图板右下角还留着一小片没有被覆盖的区域，那里标注着最早设定的一处人员集合点。后续更新中，这个位置既没有被涂掉，也没有重新标记。\n\n它只是留在那里。' },
 
-  /* 弹药不在这里逐条写：见本表之后的 AMMO_TABLE（三口径 × 五等级，
+  /* 弹药不在这里逐条写：见本表之后的 AMMO_TABLE（五口径 × 五等级，
      属性统一从 BALLISTICS / CALIBERS 派生）。 */
 
   /* --- 情报资料 --- */
@@ -789,25 +789,159 @@ const ITEMS = [
    掉落与商店供货数量本轮未定，所以 noLoot，不参与容器抽取。
    ------------------------------------------------------------ */
 const AMMO_TABLE = [
-  // [口径, 等级, 名称, 单发价格]
-  ['556', 1, '5.56mm普通弹',      60],
-  ['556', 2, '5.56mm改良弹',     140],
-  ['556', 3, '5.56mm钢芯弹',     320],
-  ['556', 4, '5.56mm硬芯穿甲弹', 800],
-  ['556', 5, '5.56mm特种穿甲弹', 2000],
-  ['9mm', 1, '9mm普通弹',         35],
-  ['9mm', 2, '9mm强化弹',         80],
-  ['9mm', 3, '9mm钢芯弹',        180],
-  ['9mm', 4, '9mm穿甲弹',        450],
-  ['9mm', 5, '9mm特种穿甲弹',   1100],
-  ['12g', 1, '普通鹿弹',          80],
-  ['12g', 2, '强化鹿弹',         180],
-  ['12g', 3, '硬质鹿弹',         400],
-  ['12g', 4, '穿甲霰弹',         900],
-  ['12g', 5, '特种穿甲霰弹',    2200]
+  [
+    "556",
+    1,
+    "5.56mm普通弹",
+    60
+  ],
+  [
+    "556",
+    2,
+    "5.56mm改良弹",
+    140
+  ],
+  [
+    "556",
+    3,
+    "5.56mm钢芯弹",
+    320
+  ],
+  [
+    "556",
+    4,
+    "5.56mm硬芯穿甲弹",
+    800
+  ],
+  [
+    "556",
+    5,
+    "5.56mm特种穿甲弹",
+    2000
+  ],
+  [
+    "762x39",
+    1,
+    "7.62mm普通弹",
+    80
+  ],
+  [
+    "762x39",
+    2,
+    "7.62mm改良弹",
+    180
+  ],
+  [
+    "762x39",
+    3,
+    "7.62mm钢芯弹",
+    420
+  ],
+  [
+    "762x39",
+    4,
+    "7.62mm穿甲弹",
+    1000
+  ],
+  [
+    "762x39",
+    5,
+    "7.62mm特种穿甲弹",
+    2500
+  ],
+  [
+    "9mm",
+    1,
+    "9mm普通弹",
+    35
+  ],
+  [
+    "9mm",
+    2,
+    "9mm强化弹",
+    80
+  ],
+  [
+    "9mm",
+    3,
+    "9mm钢芯弹",
+    180
+  ],
+  [
+    "9mm",
+    4,
+    "9mm穿甲弹",
+    450
+  ],
+  [
+    "9mm",
+    5,
+    "9mm特种穿甲弹",
+    1100
+  ],
+  [
+    "45acp",
+    1,
+    ".45 ACP普通弹",
+    50
+  ],
+  [
+    "45acp",
+    2,
+    ".45 ACP改良弹",
+    110
+  ],
+  [
+    "45acp",
+    3,
+    ".45 ACP钢芯弹",
+    250
+  ],
+  [
+    "45acp",
+    4,
+    ".45 ACP穿甲弹",
+    600
+  ],
+  [
+    "45acp",
+    5,
+    ".45 ACP特种穿甲弹",
+    1500
+  ],
+  [
+    "12g",
+    1,
+    "普通鹿弹",
+    80
+  ],
+  [
+    "12g",
+    2,
+    "强化鹿弹",
+    180
+  ],
+  [
+    "12g",
+    3,
+    "硬质鹿弹",
+    400
+  ],
+  [
+    "12g",
+    4,
+    "穿甲霰弹",
+    900
+  ],
+  [
+    "12g",
+    5,
+    "特种穿甲霰弹",
+    2200
+  ]
 ];
 
-const AMMO_STACK_LIMITS = { '12g': 20, '556': 60, '9mm': 90 };
+const AMMO_STACK_LIMITS = {"556":60,"762x39":60,"9mm":90,"45acp":90,"12g":20};
 const AMMO_ITEMS = AMMO_TABLE.map(([caliber, level, name, price]) => {
   const t = BALLISTICS.tier(level);
   const cal = BALLISTICS.caliber(caliber);
@@ -815,7 +949,7 @@ const AMMO_ITEMS = AMMO_TABLE.map(([caliber, level, name, price]) => {
     id: BALLISTICS.ammoId(caliber, level),
     iconId: 'ammo_' + caliber,
     name, short: cal.short + '·' + level,
-    cat: 'ammo', r: level, w: 0.012, price, stack: AMMO_STACK_LIMITS[caliber],
+    cat: 'ammo', r: level, w: cal.weight || 0.012, price, stack: AMMO_STACK_LIMITS[caliber],
     noCodex: true, noLoot: true,
     caliber, level, penLevel: t.pen, dmgMul: t.dmgMul,
     desc: cal.name + ' 制式弹药，' + t.name + '级。\n\n' +
@@ -991,43 +1125,480 @@ const DECOR = RAID_MAP.props;
    两个主武器槽 + 一个副武器位。slot 决定它能放进哪个位置。
    数值直接驱动 Player.tryShoot / 换弹 / HUD。
    ------------------------------------------------------------ */
+/* BEGIN ARSENAL */
+const WEAPON_ALIASES = {"rifle":"m4a1","smg":"pp19_01","shotgun":"mp155","pistol":"glock17"};
+function canonicalWeaponId(id){return WEAPON_ALIASES[id]||id;}
 const WEAPONS = {
-  rifle: {
-    id: 'rifle', name: '制式步枪', short: '步枪', slot: 'primary', w: 3.2,
-    caliber: '556', ammo: 'ammo_556_1',
-    dmgMin: 15, dmgMax: 22, rpm: 420, mag: 30, speed: 620, range: 640,
-    spreadBase: 0.040, spreadMax: 0.260, recoilPerShot: 0.075, pellets: 1,
-    price: 45000, rarity: 5,       // 军火商买价；回收价 = 买价的一半
-    desc: '口径通用，射速中等。什么都能打，什么都不精。'
+  "m4a1": {
+    "id": "m4a1",
+    "name": "M4A1",
+    "short": "M4A1",
+    "category": "rifle",
+    "caliber": "556",
+    "rpm": 800,
+    "mag": 30,
+    "reloadTime": 2.4,
+    "price": 168000,
+    "rarity": 5,
+    "w": 3.2,
+    "recoilVMul": 1,
+    "recoilHMul": 1,
+    "spreadMul": 1,
+    "recoilPerShot": 0.075,
+    "modes": [
+      "semi",
+      "auto"
+    ],
+    "defaultMode": "auto",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "M4A1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+    "visual": "黑色AR式卡宾枪，直线伸缩枪托、短护木、顶部提把和弧形弹匣。",
+    "slot": "primary",
+    "ammo": "ammo_556_1",
+    "dmgMin": 15,
+    "dmgMax": 22,
+    "pellets": 1,
+    "speed": 620,
+    "range": 640,
+    "aimTime": 0.4,
+    "spreadBase": 0.04,
+    "spreadMax": 0.26,
+    "recoilBaseV": 3.4,
+    "recoilBaseH": 2.4,
+    "pelletSpread": 0
   },
-  shotgun: {
-    id: 'shotgun', name: '短管霰弹枪', short: '霰弹', slot: 'primary', w: 3.6,
-    caliber: '12g', ammo: 'ammo_12g_1',
-    dmgMin: 7, dmgMax: 10, rpm: 80, mag: 6, speed: 560, range: 300,
-    spreadBase: 0.105, spreadMax: 0.30, recoilPerShot: 0.22, pellets: 6,
-    price: 24000, rarity: 3,
-    desc: '六颗弹丸，近距离两枪一个。远了就是放烟花。'
+  "akm": {
+    "id": "akm",
+    "name": "AKM",
+    "short": "AKM",
+    "category": "rifle",
+    "caliber": "762x39",
+    "rpm": 600,
+    "mag": 30,
+    "reloadTime": 2.7,
+    "price": 125000,
+    "rarity": 4,
+    "w": 3.6,
+    "recoilVMul": 1.35,
+    "recoilHMul": 1.2,
+    "spreadMul": 1.1,
+    "recoilPerShot": 0.085,
+    "modes": [
+      "semi",
+      "auto"
+    ],
+    "defaultMode": "auto",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "AKM，使用7.62×39mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+    "visual": "深色钢制机匣，旧胡桃木枪托与护木，明显弯曲的7.62弹匣。",
+    "slot": "primary",
+    "ammo": "ammo_762x39_1",
+    "dmgMin": 20,
+    "dmgMax": 27,
+    "pellets": 1,
+    "speed": 620,
+    "range": 640,
+    "aimTime": 0.4,
+    "spreadBase": 0.044000000000000004,
+    "spreadMax": 0.28600000000000003,
+    "recoilBaseV": 3.4,
+    "recoilBaseH": 2.4,
+    "pelletSpread": 0
   },
-  smg: {
-    id: 'smg', name: '冲锋枪', short: '冲锋', slot: 'primary', w: 2.4,
-    caliber: '9mm', ammo: 'ammo_9mm_1',
-    dmgMin: 9, dmgMax: 13, rpm: 780, mag: 25, speed: 600, range: 420,
-    spreadBase: 0.050, spreadMax: 0.280, recoilPerShot: 0.055, pellets: 1,
-    price: 38000, rarity: 3,
-    desc: '快、轻、飘。适合边走边打，但不适合站定对枪。'
+  "famas_f1": {
+    "id": "famas_f1",
+    "name": "FAMAS F1",
+    "short": "FAMAS F1",
+    "category": "rifle",
+    "caliber": "556",
+    "rpm": 1000,
+    "mag": 25,
+    "reloadTime": 2.9,
+    "price": 215000,
+    "rarity": 5,
+    "w": 3.7,
+    "recoilVMul": 1.1,
+    "recoilHMul": 1.25,
+    "spreadMul": 1.05,
+    "recoilPerShot": 0.09,
+    "modes": [
+      "semi",
+      "burst3",
+      "auto"
+    ],
+    "defaultMode": "auto",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "FAMAS F1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+    "visual": "黑色无托步枪，顶部高提把，弹匣位于握把后方，短枪管。",
+    "slot": "primary",
+    "ammo": "ammo_556_1",
+    "dmgMin": 15,
+    "dmgMax": 22,
+    "pellets": 1,
+    "speed": 620,
+    "range": 640,
+    "aimTime": 0.4,
+    "spreadBase": 0.042,
+    "spreadMax": 0.273,
+    "recoilBaseV": 3.4,
+    "recoilBaseH": 2.4,
+    "pelletSpread": 0
   },
-  pistol: {
-    id: 'pistol', name: '手枪', short: '手枪', slot: 'secondary', w: 1.1,
-    caliber: '9mm', ammo: 'ammo_9mm_1',
-    dmgMin: 14, dmgMax: 19, rpm: 300, mag: 12, speed: 600, range: 460,
-    spreadBase: 0.045, spreadMax: 0.220, recoilPerShot: 0.100, pellets: 1,
-    price: 5000, rarity: 2,
-    desc: '主武器空仓时的最后一句。'
+  "pp19_01": {
+    "id": "pp19_01",
+    "name": "PP-19-01 Vityaz",
+    "short": "PP-19-01",
+    "category": "smg",
+    "caliber": "9mm",
+    "rpm": 700,
+    "mag": 30,
+    "reloadTime": 2.1,
+    "price": 72000,
+    "rarity": 3,
+    "w": 2.4,
+    "recoilVMul": 0.7,
+    "recoilHMul": 0.8,
+    "spreadMul": 1.05,
+    "recoilPerShot": 0.055,
+    "modes": [
+      "semi",
+      "auto"
+    ],
+    "defaultMode": "auto",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "PP-19-01 Vityaz，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+    "visual": "黑色短管AK式冲锋枪，三角折叠托，细长弯曲弹匣，不采用螺旋弹筒。",
+    "slot": "primary",
+    "ammo": "ammo_9mm_1",
+    "dmgMin": 11,
+    "dmgMax": 15,
+    "pellets": 1,
+    "speed": 600,
+    "range": 420,
+    "aimTime": 0.3,
+    "spreadBase": 0.052500000000000005,
+    "spreadMax": 0.29400000000000004,
+    "recoilBaseV": 2.6,
+    "recoilBaseH": 1.8,
+    "pelletSpread": 0
+  },
+  "mp5a3": {
+    "id": "mp5a3",
+    "name": "MP5A3",
+    "short": "MP5A3",
+    "category": "smg",
+    "caliber": "9mm",
+    "rpm": 800,
+    "mag": 30,
+    "reloadTime": 2.3,
+    "price": 115000,
+    "rarity": 4,
+    "w": 2.6,
+    "recoilVMul": 0.6,
+    "recoilHMul": 0.65,
+    "spreadMul": 0.8,
+    "recoilPerShot": 0.06,
+    "modes": [
+      "semi",
+      "auto"
+    ],
+    "defaultMode": "auto",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "MP5A3，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+    "visual": "圆筒形护木，双导杆伸缩枪托，细弯弹匣，深色滚轮闭锁机匣轮廓。",
+    "slot": "primary",
+    "ammo": "ammo_9mm_1",
+    "dmgMin": 11,
+    "dmgMax": 15,
+    "pellets": 1,
+    "speed": 600,
+    "range": 420,
+    "aimTime": 0.3,
+    "spreadBase": 0.04000000000000001,
+    "spreadMax": 0.22400000000000003,
+    "recoilBaseV": 2.6,
+    "recoilBaseH": 1.8,
+    "pelletSpread": 0
+  },
+  "ump45": {
+    "id": "ump45",
+    "name": "UMP45",
+    "short": "UMP45",
+    "category": "smg",
+    "caliber": "45acp",
+    "rpm": 600,
+    "mag": 25,
+    "reloadTime": 2.3,
+    "price": 108000,
+    "rarity": 4,
+    "w": 2.3,
+    "recoilVMul": 0.95,
+    "recoilHMul": 0.9,
+    "spreadMul": 1,
+    "recoilPerShot": 0.07,
+    "modes": [
+      "semi",
+      "auto"
+    ],
+    "defaultMode": "auto",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "UMP45，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+    "visual": "方正深灰聚合物机匣，镂空折叠托，粗直弹匣。",
+    "slot": "primary",
+    "ammo": "ammo_45acp_1",
+    "dmgMin": 15,
+    "dmgMax": 20,
+    "pellets": 1,
+    "speed": 600,
+    "range": 420,
+    "aimTime": 0.3,
+    "spreadBase": 0.05,
+    "spreadMax": 0.28,
+    "recoilBaseV": 2.6,
+    "recoilBaseH": 1.8,
+    "pelletSpread": 0
+  },
+  "mp155": {
+    "id": "mp155",
+    "name": "MP-155",
+    "short": "MP-155",
+    "category": "shotgun",
+    "caliber": "12g",
+    "rpm": 240,
+    "mag": 5,
+    "reloadTime": 0.65,
+    "price": 78000,
+    "rarity": 3,
+    "w": 3.6,
+    "recoilVMul": 1.85,
+    "recoilHMul": 1.4,
+    "spreadMul": 1,
+    "recoilPerShot": 0.22,
+    "modes": [
+      "semi"
+    ],
+    "defaultMode": "semi",
+    "reloadType": "tube",
+    "cycleTime": 0,
+    "desc": "MP-155，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+    "visual": "长枪管半自动猎枪，胡桃木枪托和前护木，下方细长管式弹仓，无盒式弹匣。",
+    "slot": "primary",
+    "ammo": "ammo_12g_1",
+    "dmgMin": 7,
+    "dmgMax": 10,
+    "pellets": 6,
+    "speed": 560,
+    "range": 300,
+    "aimTime": 0.45,
+    "spreadBase": 0.025,
+    "spreadMax": 0.14,
+    "recoilBaseV": 4.4,
+    "recoilBaseH": 2.4,
+    "pelletSpread": 0.1785
+  },
+  "rem870": {
+    "id": "rem870",
+    "name": "Remington 870",
+    "short": "R870",
+    "category": "shotgun",
+    "caliber": "12g",
+    "rpm": 75,
+    "mag": 6,
+    "reloadTime": 0.75,
+    "price": 58000,
+    "rarity": 3,
+    "w": 3.4,
+    "recoilVMul": 2.2,
+    "recoilHMul": 1.25,
+    "spreadMul": 0.85,
+    "recoilPerShot": 0.24,
+    "modes": [
+      "pump"
+    ],
+    "defaultMode": "pump",
+    "reloadType": "tube",
+    "cycleTime": 0.8,
+    "desc": "Remington 870，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+    "visual": "深色木枪托，长条肋纹泵动护木，钢制机匣和管式弹仓，无盒式弹匣。",
+    "slot": "primary",
+    "ammo": "ammo_12g_1",
+    "dmgMin": 7,
+    "dmgMax": 10,
+    "pellets": 6,
+    "speed": 560,
+    "range": 300,
+    "aimTime": 0.45,
+    "spreadBase": 0.02125,
+    "spreadMax": 0.11900000000000001,
+    "recoilBaseV": 4.4,
+    "recoilBaseH": 2.4,
+    "pelletSpread": 0.1785
+  },
+  "saiga12": {
+    "id": "saiga12",
+    "name": "Saiga-12",
+    "short": "Saiga-12",
+    "category": "shotgun",
+    "caliber": "12g",
+    "rpm": 300,
+    "mag": 8,
+    "reloadTime": 3.3,
+    "price": 175000,
+    "rarity": 5,
+    "w": 3.8,
+    "recoilVMul": 2.1,
+    "recoilHMul": 1.75,
+    "spreadMul": 1.2,
+    "recoilPerShot": 0.26,
+    "modes": [
+      "semi"
+    ],
+    "defaultMode": "semi",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "Saiga-12，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+    "visual": "黑色AK式霰弹枪，聚合物固定托，较粗枪管，明显的宽盒式弹匣。",
+    "slot": "primary",
+    "ammo": "ammo_12g_1",
+    "dmgMin": 7,
+    "dmgMax": 10,
+    "pellets": 6,
+    "speed": 560,
+    "range": 300,
+    "aimTime": 0.45,
+    "spreadBase": 0.03,
+    "spreadMax": 0.168,
+    "recoilBaseV": 4.4,
+    "recoilBaseH": 2.4,
+    "pelletSpread": 0.1785
+  },
+  "glock17": {
+    "id": "glock17",
+    "name": "Glock 17",
+    "short": "Glock",
+    "category": "pistol",
+    "caliber": "9mm",
+    "rpm": 360,
+    "mag": 17,
+    "reloadTime": 1.5,
+    "price": 32000,
+    "rarity": 2,
+    "w": 1.1,
+    "recoilVMul": 0.75,
+    "recoilHMul": 0.8,
+    "spreadMul": 0.95,
+    "recoilPerShot": 0.1,
+    "modes": [
+      "semi"
+    ],
+    "defaultMode": "semi",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "Glock 17，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+    "visual": "黑色方形套筒，简洁聚合物枪身与双排弹匣握把，短枪管。",
+    "slot": "secondary",
+    "ammo": "ammo_9mm_1",
+    "dmgMin": 11,
+    "dmgMax": 15,
+    "pellets": 1,
+    "speed": 600,
+    "range": 460,
+    "aimTime": 0.2,
+    "spreadBase": 0.042749999999999996,
+    "spreadMax": 0.209,
+    "recoilBaseV": 2.4,
+    "recoilBaseH": 1.6,
+    "pelletSpread": 0
+  },
+  "m1911a1": {
+    "id": "m1911a1",
+    "name": "M1911A1",
+    "short": "M1911A1",
+    "category": "pistol",
+    "caliber": "45acp",
+    "rpm": 300,
+    "mag": 7,
+    "reloadTime": 1.8,
+    "price": 37000,
+    "rarity": 3,
+    "w": 1.2,
+    "recoilVMul": 1.2,
+    "recoilHMul": 1,
+    "spreadMul": 0.9,
+    "recoilPerShot": 0.12,
+    "modes": [
+      "semi"
+    ],
+    "defaultMode": "semi",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "M1911A1，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+    "visual": "细长钢制套筒，棕色单排握把，外露击锤与圆弧扳机护圈。",
+    "slot": "secondary",
+    "ammo": "ammo_45acp_1",
+    "dmgMin": 15,
+    "dmgMax": 20,
+    "pellets": 1,
+    "speed": 600,
+    "range": 460,
+    "aimTime": 0.2,
+    "spreadBase": 0.0405,
+    "spreadMax": 0.198,
+    "recoilBaseV": 2.4,
+    "recoilBaseH": 1.6,
+    "pelletSpread": 0
+  },
+  "beretta92": {
+    "id": "beretta92",
+    "name": "Beretta 92FS",
+    "short": "92FS",
+    "category": "pistol",
+    "caliber": "9mm",
+    "rpm": 360,
+    "mag": 15,
+    "reloadTime": 1.7,
+    "price": 44000,
+    "rarity": 3,
+    "w": 1.2,
+    "recoilVMul": 0.7,
+    "recoilHMul": 0.65,
+    "spreadMul": 0.8,
+    "recoilPerShot": 0.09,
+    "modes": [
+      "semi"
+    ],
+    "defaultMode": "semi",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "desc": "Beretta 92FS，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+    "visual": "较长开放式套筒，露出的枪管，深色握把与圆弧护圈。",
+    "slot": "secondary",
+    "ammo": "ammo_9mm_1",
+    "dmgMin": 11,
+    "dmgMax": 15,
+    "pellets": 1,
+    "speed": 600,
+    "range": 460,
+    "aimTime": 0.2,
+    "spreadBase": 0.036,
+    "spreadMax": 0.17600000000000002,
+    "recoilBaseV": 2.4,
+    "recoilBaseH": 1.6,
+    "pelletSpread": 0
   }
 };
+for(const [old,id]of Object.entries(WEAPON_ALIASES))Object.defineProperty(WEAPONS,old,{get:()=>WEAPONS[id],enumerable:false});
+ART.gear=[...new Set([...ART.gear.filter(id=>!WEAPON_ALIASES[id]),...Object.keys(WEAPONS)])];
+/* END ARSENAL */
 
 /* 三个武器位：0/1 主武器，2 副武器（副武器必须一直有枪，见 Base.ensureSidearm） */
-const DEFAULT_WEAPONS = ['rifle', 'shotgun', 'pistol'];
+const DEFAULT_WEAPONS = ['m4a1','mp155','glock17'];
 const SIDEARM_SLOT = 2;
 const MELEE = [
  {id:'melee01',name:'旧式折叠刀',short:'折叠刀',r:1,w:.15,price:3000,damage:12,interval:.55,windup:.12,angle:55,radius:.65,available:true,desc:"一种带锁定机构的普通折叠刀，刀身不长，折叠后能够轻松放进衣袋。\n\n事故发生后，环礁湾的五金店曾出现过短暂的折叠刀抢购潮。店主们最初以为人们需要它来割断绳索、拆开包装，或者处理其他生活琐事。\n\n直到有人开始询问，刀刃究竟能不能刺穿厚重的冬季外套。"},
@@ -1297,10 +1868,11 @@ const EQUIP = {
 
   /* 枪（id + 余弹）→ 伪物品。枪没有耐久，回收价固定半价。
      余弹存在 equip.mag 里，所以换下来的枪不会把子弹丢掉。 */
-  gun(id, mag, ammoId, rounds) {
-    const w = WEAPONS[id];
+  gun(id, mag, ammoId, rounds, state = {}) {
+    const w = typeof Attachments!=='undefined'?Attachments.resolve(id,state.attachments):WEAPONS[canonicalWeaponId(id)];
     if (!w) return null;
-    const m = Math.max(0, mag | 0);
+    id=w.id;
+    const m = Math.max(0, Math.min(w.mag, mag | 0));
     /* 弹匣里装的是哪一档弹药；没写就回落到武器的默认（同口径 Lv1） */
     const a = (ammoId && AMMO_BY_ID[ammoId] && AMMO_BY_ID[ammoId].caliber === w.caliber)
       ? ammoId : w.ammo;
@@ -1312,7 +1884,7 @@ const EQUIP = {
       sell: this.sellPrice(w.price, 1, 1),
       stack: 1,
       icon: id,
-      equip: { kind: 'gun', gun: id, mag: m, ammo: a, rounds: magazineRounds(w, m, a, rounds) },
+      equip: { kind: 'gun', gun: id, attachments:{...(w.attachments||{})}, mag: m, ammo: a, rounds: magazineRounds(w, m, a, rounds),fireMode:w.modes.includes(state.fireMode)?state.fireMode:w.defaultMode,cycleRemaining:Math.max(0,Math.min(w.cycleTime,Number(state.cycleRemaining)||0)) },
       note: m > 0 ? String(m) : ''
     };
   },

@@ -205,12 +205,13 @@ Object.assign(Game, {
         /* 鼠标世界坐标：双轴后坐力要用它当局部坐标系原点（P.aimPoint） */
         aimX: K.wx, aimY: K.wy
       });
-      if (K.mouseDown && !AmmoWheel.isOpen() && !MedWheel.isOpen()) P.tryShoot();
+      if(!AmmoWheel.isOpen()&&!MedWheel.isOpen())Gunplay.trigger(P,K.mouseDown,K.mousePressed);
     } else {
       // 看面板时人站住，但世界继续
       P.update(dt, { mx: 0, my: 0, sneak: false, sprint: false, dodge: false, aimAngle: K.aimAngle });
     }
 
+    K.mousePressed=false;
     if (P.dead) { this.beginDying(); return; }
     if (K.dodgePressed) K.dodgePressed = false;
     if (K.reloadPressed) { P.tryReload(); K.reloadPressed = false; }
@@ -464,7 +465,9 @@ Object.assign(Game, {
       if (q.still) {
         Noise.emit(b.x, b.y, q.noise, 'search');
       }
-      SFX.play('search');
+      /* 按容器种类选翻找声：拉开行李箱是拉链，翻文件柜是纸。
+         没配到素材的容器落回合成音，不会哑。 */
+      SFX.play('search', { at: b.art || b.kind });
       return;
     }
 

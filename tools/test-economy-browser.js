@@ -17,7 +17,7 @@ const root=path.resolve(__dirname,'..'),output=path.join(root,'output/economy');
    });
    await page.reload();await page.waitForFunction(()=>Game.state==='base'&&ITEMS.every(i=>Icons.get(i.id)));
    assert.equal(await page.locator('#bCredits').innerText(),'¥12,345');assert.equal(await page.locator('#carryCost').count(),0);assert.equal(await page.locator('#btnDeploy').count(),1);
-   assert(await page.evaluate(()=>Save.credits===12345&&Save.hp===1&&Save.runs===8&&Save.stash.find(e=>e.id==='g_helmet4').gear.price===48000&&Save.stash.find(e=>e.id==='g_helmet4').gear.equip.gear.dur===17&&Save.stash.find(e=>e.id==='g_smg').gear.equip.mag===7&&Save.stash.find(e=>e.id==='g_smg').gear.sell===19000));
+   assert(await page.evaluate(()=>Save.credits===12345&&Save.hp===1&&Save.runs===8&&Save.stash.find(e=>e.id==='g_helmet4').gear.price===48000&&Save.stash.find(e=>e.id==='g_helmet4').gear.equip.gear.dur===17&&(g=>!!g&&g.equip.mag===7&&g.sell===Math.floor(g.price/2))(Save.stash.find(e=>e.gear&&e.gear.equip&&e.gear.equip.kind==='gun')?.gear)));
    await page.evaluate(()=>Tips.show(Save.stash.find(e=>e.id==='g_helmet4').gear,{left:100,top:150,right:150}));
    const tip=await page.locator('#itemTip').innerText();assert(tip.includes('¥48,000')&&tip.includes('¥6,276'));await page.evaluate(()=>{Tips.hide();Save.credits=60000;Base.render();});
    await page.locator('[data-t="shop"]').click();const cap=page.locator('#shopGrid .scell').filter({has:page.locator('.cn',{hasText:/^工帽$/})});

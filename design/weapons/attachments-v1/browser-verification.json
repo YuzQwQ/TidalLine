@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "slots": 5,
+      "publicStock": 24,
+      "inventoryFilter": 32,
+      "install": true,
+      "detach": true,
+      "disabledSlots": true,
+      "raid": true,
+      "conflict": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    },
+    {
+      "offline": true,
+      "slots": 5,
+      "publicStock": 24,
+      "inventoryFilter": 32,
+      "install": true,
+      "detach": true,
+      "disabledSlots": true,
+      "raid": true,
+      "conflict": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    }
+  ]
+}

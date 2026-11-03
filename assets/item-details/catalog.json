@@ -1,0 +1,1896 @@
+{
+  "format": "original-png",
+  "resize": false,
+  "preload": false,
+  "assets": [
+    {
+      "key": "gear/akm",
+      "source": "design/weapons/arsenal-v1/art/sources/akm.png",
+      "target": "design/weapons/arsenal-v1/art/sources/akm.png",
+      "sourceHash": "fbbe2b3206a36f5f3f92ded71190a0c771a55f211b36af1dde675c93e2c669b4",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "gear/att_grip01",
+      "source": "design/weapons/attachments-v1/art/sources/att_grip01.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_grip01.png",
+      "sourceHash": "ce4197d1ced8265bfa643df82df7f5e52b787cf9a4fcbdd182a7828742a2b924",
+      "width": 1289,
+      "height": 1221
+    },
+    {
+      "key": "gear/att_grip02",
+      "source": "design/weapons/attachments-v1/art/sources/att_grip02.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_grip02.png",
+      "sourceHash": "b7e326a21973830f8212c977322d0335a18d9d0bc38f6f6cfa45acd8dafe9e20",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_grip03",
+      "source": "design/weapons/attachments-v1/art/sources/att_grip03.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_grip03.png",
+      "sourceHash": "d77372a81a8a444b5597c078ca264028f41c72c3369c6213acbf5c5cc3d6fe74",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_grip04",
+      "source": "design/weapons/attachments-v1/art/sources/att_grip04.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_grip04.png",
+      "sourceHash": "d7ae154ed2d06901c339082fd8ef4415adb190a64f1eb17e29277d92166b65f4",
+      "width": 1265,
+      "height": 1244
+    },
+    {
+      "key": "gear/att_mag_12g_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_12g_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_12g_ext.png",
+      "sourceHash": "312f618a2b388a1340c52ccd99dcc092f958e73bed2fa06d05b90870124eba88",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_12g_quick",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_12g_quick.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_12g_quick.png",
+      "sourceHash": "2368cbb1a3386d51ad6961b3971c74a23dbee0ba7684c8b4886e6df6fa973491",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_12g_quick_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_12g_quick_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_12g_quick_ext.png",
+      "sourceHash": "4771a3db3ecd2b82b66d8766d4b0a0f643c9cd696c26a81a84adc5681a144eb6",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_45acp_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_45acp_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_45acp_ext.png",
+      "sourceHash": "bf251c344ef8485f23fb3aec87da5c8e5b8633c63fa11f8445891dfd13a7fe91",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_45acp_quick",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick.png",
+      "sourceHash": "9ce80da7406254acbe37bdb617038e06a0b56cd5ce1400fff92c294a97125f82",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_45acp_quick_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick_ext.png",
+      "sourceHash": "219e61965c4337cb570e4d11bf2a882d28644da49aa3d9bb0a2441c5d7b9d40e",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_556_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_556_ext.png",
+      "sourceHash": "b6d8b316fac66e9e7a67d574ef433368fdb597adf86394fddb0df17de5809cd9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_quick",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_556_quick.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_556_quick.png",
+      "sourceHash": "ecdf9dbd06bd149fe57e945c500c678f291dc61475e37be4f6d12ecb7b10fa9e",
+      "width": 1312,
+      "height": 1199
+    },
+    {
+      "key": "gear/att_mag_556_quick_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_556_quick_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_556_quick_ext.png",
+      "sourceHash": "01bebb77729a4ed5c8d952f57c5bbc51f95c9460de069e15fffa2b5ded025953",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_762x39_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_762x39_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_762x39_ext.png",
+      "sourceHash": "80d06fd1a29d77bb7571ce24007b579bb95259df112048bd2b85396b0ccf407a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_762x39_quick",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_762x39_quick.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_762x39_quick.png",
+      "sourceHash": "7cf98a79c4688cf8861e14d06dc0cde5f1542eda1f9ce7e3a0243190a854fb79",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_762x39_quick_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_762x39_quick_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_762x39_quick_ext.png",
+      "sourceHash": "52c4e909f07661859a24fdce308613b8215b2b0e1e1d5ad992f7d68a0b0d605c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_9mm_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_9mm_ext.png",
+      "sourceHash": "a9db59b6ee210308bddfff7248b6758dfce2c389bbdc06f6105149467b990409",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_quick",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_9mm_quick.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_9mm_quick.png",
+      "sourceHash": "41f8fbfee59d3e9ddad7d8b868943fe1285a6126a3c61f3c2d101502fb63a53c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_quick_ext",
+      "source": "design/weapons/attachments-v1/art/sources/att_mag_9mm_quick_ext.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_mag_9mm_quick_ext.png",
+      "sourceHash": "14c4837341b3cda02328d8731d47cbc9f73f8dbc91838685bb9320800707b69e",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_muzzle01",
+      "source": "design/weapons/attachments-v1/art/sources/att_muzzle01.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_muzzle01.png",
+      "sourceHash": "a25b97d63e1b8dca8fd6ba8291183e94dac87abf40a7b8a09ca775a015733422",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_muzzle02",
+      "source": "design/weapons/attachments-v1/art/sources/att_muzzle02.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_muzzle02.png",
+      "sourceHash": "216b26830c57551ff7782234ce116ce06ebcbda0d1ca6f8a9ba3dac0b2872de0",
+      "width": 1269,
+      "height": 1240
+    },
+    {
+      "key": "gear/att_muzzle03",
+      "source": "design/weapons/attachments-v1/art/sources/att_muzzle03.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_muzzle03.png",
+      "sourceHash": "2e13993e86d98b52d7bb79a4cba8c0cdc85d353ed49afe639cb3ad9041eb107d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_muzzle04",
+      "source": "design/weapons/attachments-v1/art/sources/att_muzzle04.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_muzzle04.png",
+      "sourceHash": "94b0d95f6cd26cb4afc92b6c31da1c4195a963841a0c950aed4298757041cfcf",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_muzzle05",
+      "source": "design/weapons/attachments-v1/art/sources/att_muzzle05.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_muzzle05.png",
+      "sourceHash": "70babbe061183e9e8dafbc1352ae12939a185729b06b1f042869beaf7d4fb184",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_muzzle06",
+      "source": "design/weapons/attachments-v1/art/sources/att_muzzle06.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_muzzle06.png",
+      "sourceHash": "a60ad407c215ca9f7765d43548220d5a3ffe93541f8c35650bacc8c5ac94df34",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_optic01",
+      "source": "design/weapons/attachments-v1/art/sources/att_optic01.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_optic01.png",
+      "sourceHash": "43dd0b44be0e2925d16e4deed593a30a1e8489e92f24885e84a6130815499586",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_optic02",
+      "source": "design/weapons/attachments-v1/art/sources/att_optic02.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_optic02.png",
+      "sourceHash": "2539e8e20d744f1c9ec5215261571fe2d066ccc35c0ab4b07dcb481f46af6694",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_optic03",
+      "source": "design/weapons/attachments-v1/art/sources/att_optic03.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_optic03.png",
+      "sourceHash": "e1c168407196d97fb95224b1254703a01ab220951bee44a0062c4d4b4d677866",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_optic04",
+      "source": "design/weapons/attachments-v1/art/sources/att_optic04.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_optic04.png",
+      "sourceHash": "fde9a3b45b7cb75cc300111449e0710ce063ebe562a3532c3da01c71b76c04d4",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_stock01",
+      "source": "design/weapons/attachments-v1/art/sources/att_stock01.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_stock01.png",
+      "sourceHash": "a969748f167c044be2641d05ed39af01f33880b6a5d421683b712303d67d59b8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_stock02",
+      "source": "design/weapons/attachments-v1/art/sources/att_stock02.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_stock02.png",
+      "sourceHash": "f3ef490019c6be7dfc769cc3f1cb67721dc0b474dd4e3d82699084d58a404883",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_stock03",
+      "source": "design/weapons/attachments-v1/art/sources/att_stock03.png",
+      "target": "design/weapons/attachments-v1/art/sources/att_stock03.png",
+      "sourceHash": "0de74285dfad6a73d5e884d6f3ea3694bd0022036466906caefa9b27b624af16",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/bag",
+      "source": "assets/item-art/legacy/sources/bag.png",
+      "target": "assets/item-art/legacy/sources/bag.png",
+      "sourceHash": "2c874de523d5e9a316fa67e970067cc9a3cc876746a8a29044d5bf2e190b6d6d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/bag01",
+      "source": "assets/item-art/backpacks/sources/bag01.png",
+      "target": "assets/item-art/backpacks/sources/bag01.png",
+      "sourceHash": "8683b73f9b734f86082affc6ac29c146789d3dacc6706896ae2c787e7a4d5a91",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/bag02",
+      "source": "assets/item-art/backpacks/sources/bag02.png",
+      "target": "assets/item-art/backpacks/sources/bag02.png",
+      "sourceHash": "ee4d1a819d2fb08818a0e340ba1137bf29465dea2ce681beb16ede1810ff3a63",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/bag03",
+      "source": "assets/item-art/backpacks/sources/bag03.png",
+      "target": "assets/item-art/backpacks/sources/bag03.png",
+      "sourceHash": "f3e4d7ed3567f68b9a5e88718c1f831b0af27efb2ccba15ba957b3b246b874a9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/bag04",
+      "source": "assets/item-art/backpacks/sources/bag04.png",
+      "target": "assets/item-art/backpacks/sources/bag04.png",
+      "sourceHash": "ca9847f79897bc34dfce0368a1133349da9ef2a79c2762c084acd2c85433bca5",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/bag05",
+      "source": "assets/item-art/backpacks/sources/bag05.png",
+      "target": "assets/item-art/backpacks/sources/bag05.png",
+      "sourceHash": "378afd2ba629cd8f8ec5a5faf9f0949f8522e39ae76e5f31c3c9606b98857eb9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/beretta92",
+      "source": "design/weapons/arsenal-v1/art/sources/beretta92.png",
+      "target": "design/weapons/arsenal-v1/art/sources/beretta92.png",
+      "sourceHash": "1a91a9f340378b22c68b034e1d97f308235188c0934ff56703251ced7f2dd0d0",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body1",
+      "source": "assets/item-art/legacy/sources/body1.png",
+      "target": "assets/item-art/legacy/sources/body1.png",
+      "sourceHash": "ef8caaa47cfc33432da57b856865c7401f35cc118caa23e0da5573bc0dd1ed18",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body1_leather",
+      "source": "assets/item-art/armor-variants/sources/body1_leather.png",
+      "target": "assets/item-art/armor-variants/sources/body1_leather.png",
+      "sourceHash": "6933b9509ceaa235ed1181c1da542655282a84a9ebe5dcd5d825a53b8d4fbe0e",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body2",
+      "source": "assets/item-art/legacy/sources/body2.png",
+      "target": "assets/item-art/legacy/sources/body2.png",
+      "sourceHash": "d22da55b188d96de5d046990c4568b587852b2a594a877102f53e7ac4a31d191",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body2_concealed",
+      "source": "assets/item-art/armor-variants/sources/body2_concealed.png",
+      "target": "assets/item-art/armor-variants/sources/body2_concealed.png",
+      "sourceHash": "8167ef61a661d5f95f521ac48058ccfcb67aef95ea4f516663c9f03928b30d73",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body3",
+      "source": "assets/item-art/legacy/sources/body3.png",
+      "target": "assets/item-art/legacy/sources/body3.png",
+      "sourceHash": "4f23d1ddcbcf8772c8c40978a82286ebd5c81521125d3f71eb09ddf217f7dd4a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body3_fragmentation",
+      "source": "assets/item-art/armor-variants/sources/body3_fragmentation.png",
+      "target": "assets/item-art/armor-variants/sources/body3_fragmentation.png",
+      "sourceHash": "035014e407a6fc282336e92cc3b2272bcf5c2c38f2786507805e228cfda5c149",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body4",
+      "source": "assets/item-art/legacy/sources/body4.png",
+      "target": "assets/item-art/legacy/sources/body4.png",
+      "sourceHash": "30fb31bc00cea8bf4265797093fc023df5a636297ce8860d4c95cedd6bd54999",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body4_lightplate",
+      "source": "assets/item-art/armor-variants/sources/body4_lightplate.png",
+      "target": "assets/item-art/armor-variants/sources/body4_lightplate.png",
+      "sourceHash": "4f0371f6057f2220d8df0e8556b4df8169e0a806478d808c52107ce7215c821c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body5",
+      "source": "assets/item-art/legacy/sources/body5.png",
+      "target": "assets/item-art/legacy/sources/body5.png",
+      "sourceHash": "935cf251d98423b830d2cf7d8002edddb69bc38f867c618568ed77a8ea6fedda",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/body6",
+      "source": "assets/item-art/legacy/sources/body6.png",
+      "target": "assets/item-art/legacy/sources/body6.png",
+      "sourceHash": "2f2321fcef685f2d571c049e8edef73e807a9057547cc01c24de97ae10cddb85",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/famas_f1",
+      "source": "design/weapons/arsenal-v1/art/sources/famas_f1.png",
+      "target": "design/weapons/arsenal-v1/art/sources/famas_f1.png",
+      "sourceHash": "1ef95df5b6c8bf1cd1759b7c8154962e874347310c5f8bf65853acc8310c1bc5",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/glock17",
+      "source": "design/weapons/arsenal-v1/art/sources/glock17.png",
+      "target": "design/weapons/arsenal-v1/art/sources/glock17.png",
+      "sourceHash": "cc5f5b37572af4ec9c93677dc0bd7e76918c95d41aa3b4684bc9eda996e7aab4",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "gear/helmet1",
+      "source": "assets/item-art/legacy/sources/helmet1.png",
+      "target": "assets/item-art/legacy/sources/helmet1.png",
+      "sourceHash": "225b4b4b76a39166d211cb4dde51cdb1fdf62b244f0d274f83880e43476f8e29",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/helmet1_motorcycle",
+      "source": "assets/item-art/armor-variants/sources/helmet1_motorcycle.png",
+      "target": "assets/item-art/armor-variants/sources/helmet1_motorcycle.png",
+      "sourceHash": "01d2569d9d9dace0db1b418678f7ec1b2eac8d1fc3c56fa4849abccd782368ff",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/helmet2",
+      "source": "assets/item-art/legacy/sources/helmet2.png",
+      "target": "assets/item-art/legacy/sources/helmet2.png",
+      "sourceHash": "ffdc21eddebda68cb8eda87aa4860d73eda84055fb0d825e970360c2ed8eb10a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/helmet2_rescue",
+      "source": "assets/item-art/armor-variants/sources/helmet2_rescue.png",
+      "target": "assets/item-art/armor-variants/sources/helmet2_rescue.png",
+      "sourceHash": "966bd1b1aed03c03d1450f6783e51281081571f0e80ed7b728b5babca0be0a9b",
+      "width": 1278,
+      "height": 1230
+    },
+    {
+      "key": "gear/helmet3",
+      "source": "assets/item-art/legacy/sources/helmet3.png",
+      "target": "assets/item-art/legacy/sources/helmet3.png",
+      "sourceHash": "e022254b37cbabb9a2919cd7fa111a650de9fb7af0cf5a5a942580cf61275683",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/helmet3_riot",
+      "source": "assets/item-art/armor-variants/sources/helmet3_riot.png",
+      "target": "assets/item-art/armor-variants/sources/helmet3_riot.png",
+      "sourceHash": "f38b6e7ee26cd71df22a2322844fc0a3f07575a09c3057097d6e20aeb848cc81",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/helmet4",
+      "source": "assets/item-art/legacy/sources/helmet4.png",
+      "target": "assets/item-art/legacy/sources/helmet4.png",
+      "sourceHash": "1311aba0d018d81d1c857ca926015cfc45f4bab2be353e2846a22ec51ecf8bd7",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/helmet4_light",
+      "source": "assets/item-art/armor-variants/sources/helmet4_light.png",
+      "target": "assets/item-art/armor-variants/sources/helmet4_light.png",
+      "sourceHash": "640775da66022cad2cbd661b56f76714370d4c6ee83b913e7194f029f3ef52cf",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/helmet5",
+      "source": "assets/item-art/legacy/sources/helmet5.png",
+      "target": "assets/item-art/legacy/sources/helmet5.png",
+      "sourceHash": "46889fa37b818377295eb47ff1750a722b38e42ae86e99f17bc809eddb7009c9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/helmet6",
+      "source": "assets/item-art/legacy/sources/helmet6.png",
+      "target": "assets/item-art/legacy/sources/helmet6.png",
+      "sourceHash": "07dd13d87b9ff4fd992bee0485800e2aceee67e001abcc1862923f6bb80af229",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/m1911a1",
+      "source": "design/weapons/arsenal-v1/art/sources/m1911a1.png",
+      "target": "design/weapons/arsenal-v1/art/sources/m1911a1.png",
+      "sourceHash": "6bb983962552e86d17c50e8f6fd212ede80c696a292a17e2d1440f4735913dbc",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "key": "gear/m4a1",
+      "source": "design/weapons/arsenal-v1/art/sources/m4a1.png",
+      "target": "design/weapons/arsenal-v1/art/sources/m4a1.png",
+      "sourceHash": "4b3d19a5f2fef7bf2df0bc2edfa1e407d9af3771f67f101964822b4fa5ae9688",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/melee01",
+      "source": "assets/item-art/melee/sources/melee01.png",
+      "target": "assets/item-art/melee/sources/melee01.png",
+      "sourceHash": "4da5b5a84f3e045025d49cd0af7112e28b78f0efdf312adca21a43acafa7cb43",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/melee02",
+      "source": "assets/item-art/melee/sources/melee02.png",
+      "target": "assets/item-art/melee/sources/melee02.png",
+      "sourceHash": "23801838b3afdc6be19ec5d8b2bcbd1553f896c9775199a861c0e23eeeecbb91",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/melee03",
+      "source": "assets/item-art/melee/sources/melee03.png",
+      "target": "assets/item-art/melee/sources/melee03.png",
+      "sourceHash": "f4ebcec3fda4a9f2e19d882596748f918731af03db029e01df779f79a64ff435",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/mp155",
+      "source": "design/weapons/arsenal-v1/art/sources/mp155.png",
+      "target": "design/weapons/arsenal-v1/art/sources/mp155.png",
+      "sourceHash": "7feec4b68445ffb870bee56f91fc8c1ae8bd9da5c8ed6802dff54d1a00acfc2c",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "key": "gear/mp5a3",
+      "source": "design/weapons/arsenal-v1/art/sources/mp5a3.png",
+      "target": "design/weapons/arsenal-v1/art/sources/mp5a3.png",
+      "sourceHash": "5ea41352b2787226e4601a49e2b7c22582129da823f454f73411cd4d26efdb32",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "gear/pp19_01",
+      "source": "design/weapons/arsenal-v1/art/sources/pp19_01.png",
+      "target": "design/weapons/arsenal-v1/art/sources/pp19_01.png",
+      "sourceHash": "851fdda7efe16c189e0816854fe131d52eb7d3b4fbae6da0b976965c2c3bb35e",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "key": "gear/rem870",
+      "source": "design/weapons/arsenal-v1/art/sources/rem870.png",
+      "target": "design/weapons/arsenal-v1/art/sources/rem870.png",
+      "sourceHash": "ba2bf90259928318a587fecb8a7208739bf98be75a84aba7533f5b641c4e65e6",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/saiga12",
+      "source": "design/weapons/arsenal-v1/art/sources/saiga12.png",
+      "target": "design/weapons/arsenal-v1/art/sources/saiga12.png",
+      "sourceHash": "935c245d361c0aa8a88e4644eed9b8e47a1ad88429c241cc6e25530c82c2da44",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/ump45",
+      "source": "design/weapons/arsenal-v1/art/sources/ump45.png",
+      "target": "design/weapons/arsenal-v1/art/sources/ump45.png",
+      "sourceHash": "59ec9f89f87381a15e9668ff3987bdda76413cbd7ad520f2b382d4fd4ef35d4c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ammo_12g",
+      "source": "assets/item-art/ammunition/sources/ammo_12g.png",
+      "target": "assets/item-art/ammunition/sources/ammo_12g.png",
+      "sourceHash": "040a43c705e7c0d77915ac0d663cee896f4d1bc67f777a937dc2ca38eefbe69d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ammo_45acp",
+      "source": "design/weapons/arsenal-v1/art/sources/ammo_45acp.png",
+      "target": "design/weapons/arsenal-v1/art/sources/ammo_45acp.png",
+      "sourceHash": "df459b4129560b08b122e8996e7d0d54a27b6f14a8c1c5f792174679f4bf10aa",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ammo_556",
+      "source": "assets/item-art/ammunition/sources/ammo_556.png",
+      "target": "assets/item-art/ammunition/sources/ammo_556.png",
+      "sourceHash": "85834f3820b72b3164bca94d0a4e05222bc9a1ad6d83518b0afc87ea3ded144d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ammo_762x39",
+      "source": "design/weapons/arsenal-v1/art/sources/ammo_762x39.png",
+      "target": "design/weapons/arsenal-v1/art/sources/ammo_762x39.png",
+      "sourceHash": "e103d8d27daaf01fda36e3135a6d15619e74cdc0726eca0a8090ecd7210e9adf",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ammo_9mm",
+      "source": "assets/item-art/ammunition/sources/ammo_9mm.png",
+      "target": "assets/item-art/ammunition/sources/ammo_9mm.png",
+      "sourceHash": "6b4b8abcc1f4290b8e4a406f6136b70e73e7237eb0be1e4100ca1912d6e4f88f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/antiq01",
+      "source": "assets/item-art/legacy/sources/antiq01.png",
+      "target": "assets/item-art/legacy/sources/antiq01.png",
+      "sourceHash": "5b938d726de1b3d847cc37c11aa2e8060816a18d9a973c93ae1c053604f70ab8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/antiq02",
+      "source": "assets/item-art/legacy/sources/antiq02.png",
+      "target": "assets/item-art/legacy/sources/antiq02.png",
+      "sourceHash": "5a273ae715e1d0bc136f3a890b07eaa6db0f6c13f628c6f2dc4321db41093ab9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/antiq03",
+      "source": "assets/item-art/legacy/sources/antiq03.png",
+      "target": "assets/item-art/legacy/sources/antiq03.png",
+      "sourceHash": "cc19831b09dca2bf871032915674168947340c98a9ffa135ea55a1ffb7b1eec0",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/antiq04",
+      "source": "assets/item-art/legacy/sources/antiq04.png",
+      "target": "assets/item-art/legacy/sources/antiq04.png",
+      "sourceHash": "28cbea2407c9a9f89a6990aa50caa01c28f9392142e01641ced9908738e6b3d1",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/antiq05",
+      "source": "assets/item-art/legacy/sources/antiq05.png",
+      "target": "assets/item-art/legacy/sources/antiq05.png",
+      "sourceHash": "ec95b4343631b0559008891b13960ac46279e01ec34a92106c23d49337985593",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/antiq06",
+      "source": "assets/item-art/collectibles/sources/antiq06.png",
+      "target": "assets/item-art/collectibles/sources/antiq06.png",
+      "sourceHash": "989a32a93f2fa9e314f3734f16672d2ca9e2705b0d39625577b9c75de5a5542f",
+      "width": 1439,
+      "height": 1093
+    },
+    {
+      "key": "items/antiq07",
+      "source": "assets/item-art/heritage/sources/antiq07.png",
+      "target": "assets/item-art/heritage/sources/antiq07.png",
+      "sourceHash": "8a78c0a80d61e323af1d6895bc4f5804dc43d8d80e6d6f73266527d236237fbf",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "items/antiq08",
+      "source": "assets/item-art/heritage/sources/antiq08.png",
+      "target": "assets/item-art/heritage/sources/antiq08.png",
+      "sourceHash": "f630977daeb0d35b0532c47cb21c186b894111cebb2f0b2fcc1d04e7ff10f61b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/antiq09",
+      "source": "assets/item-art/heritage/sources/antiq09.png",
+      "target": "assets/item-art/heritage/sources/antiq09.png",
+      "sourceHash": "120fd24dafdac7191a3c5905b0d42e599796c781daa3967b583b24778b51b0db",
+      "width": 1408,
+      "height": 1117
+    },
+    {
+      "key": "items/art01",
+      "source": "assets/item-art/legacy/sources/art01.png",
+      "target": "assets/item-art/legacy/sources/art01.png",
+      "sourceHash": "eb4191612598a5033a68b019bb4d64fb0e0bd3c82fe23604cb453c859f55ab32",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/art02",
+      "source": "assets/item-art/legacy/sources/art02.png",
+      "target": "assets/item-art/legacy/sources/art02.png",
+      "sourceHash": "f21a17e920a0f9c5ee38436372c9666791b42e5d7201313e8d97bd9021864dd4",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/art03",
+      "source": "assets/item-art/legacy/sources/art03.png",
+      "target": "assets/item-art/legacy/sources/art03.png",
+      "sourceHash": "4685119a750b35dd8e9e3ab42c05132727f652b49b5b51ea35932e70533e7b55",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/art04",
+      "source": "assets/item-art/heritage/sources/art04.png",
+      "target": "assets/item-art/heritage/sources/art04.png",
+      "sourceHash": "9668bfee91d376ed66f6ffcf9a4ccbb5d316dbef670ac649250f4d366e5e1afe",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/art05",
+      "source": "assets/item-art/heritage/sources/art05.png",
+      "target": "assets/item-art/heritage/sources/art05.png",
+      "sourceHash": "e67884c9cfb4e074d22ca28d34946926056bf75685e3bc59490d6e047f8e3039",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec01",
+      "source": "assets/item-art/legacy/sources/elec01.png",
+      "target": "assets/item-art/legacy/sources/elec01.png",
+      "sourceHash": "17958a43611e050084fd8f625face8f5e85397c2dc2b13e681ca4352a110380b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec02",
+      "source": "assets/item-art/legacy/sources/elec02.png",
+      "target": "assets/item-art/legacy/sources/elec02.png",
+      "sourceHash": "b252d15664e8e3291cc704506ea475055f7f683f6aebbabf129238c221e6e4c5",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec03",
+      "source": "assets/item-art/legacy/sources/elec03.png",
+      "target": "assets/item-art/legacy/sources/elec03.png",
+      "sourceHash": "5b0797fbf75cc264932e9473a9fb73e77649431d0b87f75b7dc7ee058f5e555d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec04",
+      "source": "assets/item-art/legacy/sources/elec04.png",
+      "target": "assets/item-art/legacy/sources/elec04.png",
+      "sourceHash": "c7f265300e44681b356da0a5cf12a2e361976987c15ebab2db6ee4a130246af3",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec05",
+      "source": "assets/item-art/collectibles/sources/elec05.png",
+      "target": "assets/item-art/collectibles/sources/elec05.png",
+      "sourceHash": "1983e8363abe563d87de8d92ca76e6f969609984033a98232b7dd78de6586aae",
+      "width": 1264,
+      "height": 1244
+    },
+    {
+      "key": "items/elec06",
+      "source": "assets/item-art/collectibles/sources/elec06.png",
+      "target": "assets/item-art/collectibles/sources/elec06.png",
+      "sourceHash": "c00190677f810ea945c66d7cd29a3467a974d62c7c9cf9c2337e014e5b126cb0",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec07",
+      "source": "assets/item-art/electronics/sources/elec07.png",
+      "target": "assets/item-art/electronics/sources/elec07.png",
+      "sourceHash": "8c9326abe8156a7ccd6e58e566ae7946b3469e49b23f2794155e5473a6e1ec3b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec08",
+      "source": "assets/item-art/electronics/sources/elec08.png",
+      "target": "assets/item-art/electronics/sources/elec08.png",
+      "sourceHash": "b69f78d192a9c0f9d884be3c0ee62e4e8eb6e5d767c1915daaad70122030c778",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec09",
+      "source": "assets/item-art/electronics/sources/elec09.png",
+      "target": "assets/item-art/electronics/sources/elec09.png",
+      "sourceHash": "33d0a67e084e692d815d36ef9cb4e39aa0efc0840ba70fd0a32479650d412fef",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec10",
+      "source": "assets/item-art/electronics/sources/elec10.png",
+      "target": "assets/item-art/electronics/sources/elec10.png",
+      "sourceHash": "f08ffbdc7b300fd742d6421bcca2faffb5f1550eb86ed102186464c1ea64e4f9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec11",
+      "source": "assets/item-art/electronics/sources/elec11.png",
+      "target": "assets/item-art/electronics/sources/elec11.png",
+      "sourceHash": "eae1e9ad99270c5a70720ad1e3f244ef5051d4c86fa0cf2129000fcda325b130",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec12",
+      "source": "assets/item-art/electronics/sources/elec12.png",
+      "target": "assets/item-art/electronics/sources/elec12.png",
+      "sourceHash": "d13e21aece26abf9a7a9c56ba10dd16b6e8d5a606563235a6052c9646a5b7b56",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec13",
+      "source": "assets/item-art/electronics/sources/elec13.png",
+      "target": "assets/item-art/electronics/sources/elec13.png",
+      "sourceHash": "d9b0706308af86673a5d0123ed27440b4ecf56bf784327402eeb6621abd43414",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec14",
+      "source": "assets/item-art/electronics/sources/elec14.png",
+      "target": "assets/item-art/electronics/sources/elec14.png",
+      "sourceHash": "05ba6c07466a752c3cf20de38a03da9d452481bbb5258c8f6e517c5c2aab5655",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec15",
+      "source": "assets/item-art/electronics/sources/elec15.png",
+      "target": "assets/item-art/electronics/sources/elec15.png",
+      "sourceHash": "4f0056fc7dbbfee30521f5e8d99ce70db11ebeeebc41b5d160fe8fc509c82039",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal01",
+      "source": "assets/item-art/medical/sources/heal01.png",
+      "target": "assets/item-art/medical/sources/heal01.png",
+      "sourceHash": "db618a511e4c053c9a0265bf2fae420db0590dedb08736b723db0a1a1d02185d",
+      "width": 1261,
+      "height": 1247
+    },
+    {
+      "key": "items/heal02",
+      "source": "assets/item-art/medical/sources/heal02.png",
+      "target": "assets/item-art/medical/sources/heal02.png",
+      "sourceHash": "1087d18953badd1de5b96d216ae09e8d9be3957f3fda4449c9396d317677c62b",
+      "width": 1271,
+      "height": 1238
+    },
+    {
+      "key": "items/heal03",
+      "source": "assets/item-art/medical/sources/heal03.png",
+      "target": "assets/item-art/medical/sources/heal03.png",
+      "sourceHash": "647297fdc59adac64dfef28a561fcee11e2e3d69002fe21643569ad8c23cdd67",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "key": "items/heal04",
+      "source": "assets/item-art/medical/sources/heal04.png",
+      "target": "assets/item-art/medical/sources/heal04.png",
+      "sourceHash": "7d2cb10697d58c84f393cd96e11c920a035d7a645bdf6ee5fde3b352ec68db7d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal05",
+      "source": "assets/item-art/medical/sources/heal05.png",
+      "target": "assets/item-art/medical/sources/heal05.png",
+      "sourceHash": "39c3b6c5de442ff443f762740ed4e248b5527512532cecd421bc6c26d27b0f32",
+      "width": 1330,
+      "height": 1182
+    },
+    {
+      "key": "items/heal06",
+      "source": "assets/item-art/medical/sources/heal06.png",
+      "target": "assets/item-art/medical/sources/heal06.png",
+      "sourceHash": "8bd5ea45dd357c15d4506ee1c9a3c0bb628904d59efed98b0d91a0c8c315358c",
+      "width": 1374,
+      "height": 1145
+    },
+    {
+      "key": "items/heal07",
+      "source": "assets/item-art/medical/sources/heal07.png",
+      "target": "assets/item-art/medical/sources/heal07.png",
+      "sourceHash": "2a41972b8902abd41246f5fa73a8eadda0404bc7902d38ddaf258d327d2691ac",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal08",
+      "source": "assets/item-art/medical/sources/heal08.png",
+      "target": "assets/item-art/medical/sources/heal08.png",
+      "sourceHash": "77b1d345a75a1fa41357b4dd82b30cdbd7b4f16b145381e8322415cdf3ec2d99",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal09",
+      "source": "assets/item-art/medical/sources/heal09.png",
+      "target": "assets/item-art/medical/sources/heal09.png",
+      "sourceHash": "f4c8a89be53881dcc9d5ed18be036464943907ab74327e243edd786bf5436025",
+      "width": 1308,
+      "height": 1202
+    },
+    {
+      "key": "items/heal10",
+      "source": "assets/item-art/medical/sources/heal10.png",
+      "target": "assets/item-art/medical/sources/heal10.png",
+      "sourceHash": "c241bdf68ee3cce056d0aa7cc837454c45bd56c44d5b7952c353d28134d95750",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal11",
+      "source": "assets/item-art/medical/sources/heal11.png",
+      "target": "assets/item-art/medical/sources/heal11.png",
+      "sourceHash": "014e8b2595963acfb0dbe1f7eaabf61ff8191dd8457ab10b5b74de8f441bab12",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "key": "items/heal12",
+      "source": "assets/item-art/medical/sources/heal12.png",
+      "target": "assets/item-art/medical/sources/heal12.png",
+      "sourceHash": "adb0f48b1d66ccb418ed7862b6183b4ce7c49fa5fcb64476bdbd7ff13bba6352",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal13",
+      "source": "assets/item-art/medical/sources/heal13.png",
+      "target": "assets/item-art/medical/sources/heal13.png",
+      "sourceHash": "7fe4e7bf9c93c6ab4633de8f642e5d289aed19574cefd2a5120bdf88b58bbce8",
+      "width": 1263,
+      "height": 1246
+    },
+    {
+      "key": "items/heal14",
+      "source": "assets/item-art/medical/sources/heal14.png",
+      "target": "assets/item-art/medical/sources/heal14.png",
+      "sourceHash": "cb69cfc62dbd434bc4ec59dca66354356a7af719168208d313c1da19cdef058d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal15",
+      "source": "assets/item-art/medical/sources/heal15.png",
+      "target": "assets/item-art/medical/sources/heal15.png",
+      "sourceHash": "a54d41333ba15c2a98e4dbed277a2a5b1b6ba5a2022c27350eb1833ef9ff1ddb",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal16",
+      "source": "assets/item-art/medical/sources/heal16.png",
+      "target": "assets/item-art/medical/sources/heal16.png",
+      "sourceHash": "4b34561bc76aedd14478aff8d095c94048e3748ad5b66a2ecb222560635a20ad",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal17",
+      "source": "assets/item-art/medical/sources/heal17.png",
+      "target": "assets/item-art/medical/sources/heal17.png",
+      "sourceHash": "8938e1dfa18ca81858994d381177efa3fcd8f908b00cd30ec1df072ebafbd2c8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/heal18",
+      "source": "assets/item-art/medical/sources/heal18.png",
+      "target": "assets/item-art/medical/sources/heal18.png",
+      "sourceHash": "9e17199ea3a84c6b5662ec98eb3c05a69d6d7bbee3cab429c6bdd7c3e3a5a085",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind01",
+      "source": "assets/item-art/legacy/sources/ind01.png",
+      "target": "assets/item-art/legacy/sources/ind01.png",
+      "sourceHash": "8621366dca7e5b3eabd629092ec358ff03c604308998593c310bf962e9509145",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind02",
+      "source": "assets/item-art/legacy/sources/ind02.png",
+      "target": "assets/item-art/legacy/sources/ind02.png",
+      "sourceHash": "1033d421c639319028a0a731effff21619531d6cd6366c6abe8d547e4193e91b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind03",
+      "source": "assets/item-art/legacy/sources/ind03.png",
+      "target": "assets/item-art/legacy/sources/ind03.png",
+      "sourceHash": "84873d6b735400c11b66765d63b546f154987c92c352efe513738e1756590a9d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind04",
+      "source": "assets/item-art/industrial/sources/ind04.png",
+      "target": "assets/item-art/industrial/sources/ind04.png",
+      "sourceHash": "6716d32327e8161bc061470e128b77a45922c90ff5c7883c977a3af6e68a0728",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind05",
+      "source": "assets/item-art/industrial/sources/ind05.png",
+      "target": "assets/item-art/industrial/sources/ind05.png",
+      "sourceHash": "91d21103cb0806f624d4d9dbce9a3fc159d4a836f86dcd99c774049d0a57299e",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind06",
+      "source": "assets/item-art/industrial/sources/ind06.png",
+      "target": "assets/item-art/industrial/sources/ind06.png",
+      "sourceHash": "a56e7d8ec1ce952e119c630944049a8850affb3ddbb4960fd6c2672fe5f76a88",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind07",
+      "source": "assets/item-art/industrial/sources/ind07.png",
+      "target": "assets/item-art/industrial/sources/ind07.png",
+      "sourceHash": "a42fe5e1f6d8ad4b359b1405a6340684b012dc524a2a303f7e806e022e713ee2",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind08",
+      "source": "assets/item-art/industrial/sources/ind08.png",
+      "target": "assets/item-art/industrial/sources/ind08.png",
+      "sourceHash": "1d9abae7ca0e873336e05125ed9bcd444a51381110920df4b0144168d37b7809",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind09",
+      "source": "assets/item-art/industrial/sources/ind09.png",
+      "target": "assets/item-art/industrial/sources/ind09.png",
+      "sourceHash": "a62e1d8503dc4754d587ef65f768752103d21ad2c4e169815395ded9a412f2f3",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind10",
+      "source": "assets/item-art/industrial/sources/ind10.png",
+      "target": "assets/item-art/industrial/sources/ind10.png",
+      "sourceHash": "d697261bf92173a0c17f82581863add998d463cd8802cec915cb9f5e76348344",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind11",
+      "source": "assets/item-art/industrial/sources/ind11.png",
+      "target": "assets/item-art/industrial/sources/ind11.png",
+      "sourceHash": "c7b7100963f63053bc1f81a9310dbf0054ee3d7d70f5bc5dcd8db01b9fa910f6",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind12",
+      "source": "assets/item-art/industrial/sources/ind12.png",
+      "target": "assets/item-art/industrial/sources/ind12.png",
+      "sourceHash": "5631aaba4e70624806662ffded90f85ceb70cd9e3706de8aac469df6d6682100",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind13",
+      "source": "assets/item-art/industrial/sources/ind13.png",
+      "target": "assets/item-art/industrial/sources/ind13.png",
+      "sourceHash": "e54a3d9fd25f691d08c79767ba1d633431fe81a909c0677d4beabe050bc47047",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind14",
+      "source": "assets/item-art/industrial/sources/ind14.png",
+      "target": "assets/item-art/industrial/sources/ind14.png",
+      "sourceHash": "dc3606842155539aa8d00382433941842eda68d71f328217feeb76879f2c48c5",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind15",
+      "source": "assets/item-art/industrial/sources/ind15.png",
+      "target": "assets/item-art/industrial/sources/ind15.png",
+      "sourceHash": "ac50d5a6b6b5c036fec5a9fd72c014f847a4109b5524e9243e042fd04932f319",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel01",
+      "source": "assets/item-art/intel/sources/intel01.png",
+      "target": "assets/item-art/intel/sources/intel01.png",
+      "sourceHash": "f81f7ceaa1f56bd3f5d9ba846a8f855dff873f6c55fc0f04cda2f45fd120ab90",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "key": "items/intel02",
+      "source": "assets/item-art/intel/sources/intel02.png",
+      "target": "assets/item-art/intel/sources/intel02.png",
+      "sourceHash": "ab9366a40fc03c0544049a96beecd5579b547ee43087731839293234c3d3c789",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel03",
+      "source": "assets/item-art/intel/sources/intel03.png",
+      "target": "assets/item-art/intel/sources/intel03.png",
+      "sourceHash": "f5b0bdda81006a836ed88e0d69045d2e6d025a450044535e0d1226d47d055351",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "items/intel04",
+      "source": "assets/item-art/intel/sources/intel04.png",
+      "target": "assets/item-art/intel/sources/intel04.png",
+      "sourceHash": "279b6bfb7343b786209bfa3adc717ab5c486822fc4aaa8db332fdc599f44cec5",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel05",
+      "source": "assets/item-art/intel/sources/intel05.png",
+      "target": "assets/item-art/intel/sources/intel05.png",
+      "sourceHash": "3eb9805fbfae760bec047d1187d57e251ff8476d251053ca51792977dd4a4ce7",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel06",
+      "source": "assets/item-art/intel/sources/intel06.png",
+      "target": "assets/item-art/intel/sources/intel06.png",
+      "sourceHash": "0211ed5982c9bbf9a4fc329227355c88649c610ee8ea7a5ded7cf303aaf82653",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel07",
+      "source": "assets/item-art/intel/sources/intel07.png",
+      "target": "assets/item-art/intel/sources/intel07.png",
+      "sourceHash": "6e6faffaf315d45709c14a3a4db71b11c91a58171289a07b2cb5d5c713b16510",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel08",
+      "source": "assets/item-art/intel/sources/intel08.png",
+      "target": "assets/item-art/intel/sources/intel08.png",
+      "sourceHash": "9d2e8d26c26eb67680a3f53b24ca0b8bdaf5e92006a638f464eb83ce88905f7f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel09",
+      "source": "assets/item-art/intel/sources/intel09.png",
+      "target": "assets/item-art/intel/sources/intel09.png",
+      "sourceHash": "b1b943872b636478c278dea2fac10bee6588edc9e508bd4f512a4cd095ac2b71",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel10",
+      "source": "assets/item-art/intel/sources/intel10.png",
+      "target": "assets/item-art/intel/sources/intel10.png",
+      "sourceHash": "d7158a04a8bb578cc2fdb9cfd68c0a543ce61e52e1775d4059d4a59d873d1503",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel11",
+      "source": "assets/item-art/intel/sources/intel11.png",
+      "target": "assets/item-art/intel/sources/intel11.png",
+      "sourceHash": "c000ff20111df64283cdbd14b0c14cf86a7bf144941d66969ea0de8ffefb2494",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel12",
+      "source": "assets/item-art/intel/sources/intel12.png",
+      "target": "assets/item-art/intel/sources/intel12.png",
+      "sourceHash": "56efcaa91c62e2feeac04aee88a5beab3c869f1d86c27edbfdf47bef40f27160",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel13",
+      "source": "assets/item-art/intel/sources/intel13.png",
+      "target": "assets/item-art/intel/sources/intel13.png",
+      "sourceHash": "5eae5a243c6df7d898466be290d14beb8d40356960be2167c877e07eb8a17652",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life01",
+      "source": "assets/item-art/legacy/sources/life01.png",
+      "target": "assets/item-art/legacy/sources/life01.png",
+      "sourceHash": "3be7c728c22c5013d48e302d4abd2dad4b5c81096c6dca84eac115822b0fb9ab",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life02",
+      "source": "assets/item-art/legacy/sources/life02.png",
+      "target": "assets/item-art/legacy/sources/life02.png",
+      "sourceHash": "6916072cc688ed4b27dea8c7b0f0d6658a6650e5d02bb063d7493380bb6dc358",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life03",
+      "source": "assets/item-art/legacy/sources/life03.png",
+      "target": "assets/item-art/legacy/sources/life03.png",
+      "sourceHash": "5ab65954e454bc7491027a7ffe60902969f67ed68975ca8ecb499581943c526e",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life04",
+      "source": "assets/item-art/legacy/sources/life04.png",
+      "target": "assets/item-art/legacy/sources/life04.png",
+      "sourceHash": "12308fed7c3782865956a46cb62e4e6f19b2b79ed741e2653f4e20116d4ca65d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life05",
+      "source": "assets/item-art/legacy/sources/life05.png",
+      "target": "assets/item-art/legacy/sources/life05.png",
+      "sourceHash": "2d97844cf2b3ec34634027fd60ac30f1fbe8e81ed9f5085185fbe38a21a67d2d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life06",
+      "source": "assets/item-art/collectibles/sources/life06.png",
+      "target": "assets/item-art/collectibles/sources/life06.png",
+      "sourceHash": "419bcacc3f17c7562ec5ec4180f189bd934f2c2f1bd0938bd47eab1e577d6928",
+      "width": 1402,
+      "height": 1122
+    },
+    {
+      "key": "items/life08",
+      "source": "assets/item-art/collectibles/sources/life08.png",
+      "target": "assets/item-art/collectibles/sources/life08.png",
+      "sourceHash": "72ba4aeaf159cb1e4e8fac4db629c88f7165b0256e9353d0dd939663a7e734dc",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life10",
+      "source": "assets/item-art/collectibles/sources/life10.png",
+      "target": "assets/item-art/collectibles/sources/life10.png",
+      "sourceHash": "7fee0e1c0f9bed8041033202f2c3dbad199ae3875da28fdf6ea482d75a47a83f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life11",
+      "source": "assets/item-art/collectibles/sources/life11.png",
+      "target": "assets/item-art/collectibles/sources/life11.png",
+      "sourceHash": "6df1992b87d48841a15f4cafb78b7815b01a7e9900c89deea1a2d2d19bda56f7",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life13",
+      "source": "assets/item-art/collectibles/sources/life13.png",
+      "target": "assets/item-art/collectibles/sources/life13.png",
+      "sourceHash": "d5876c5772a10ff284aa2ddd9dc85a11fa86cd6c1d6a2d5d351ff11b5e9d8d5b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life15",
+      "source": "assets/item-art/collectibles/sources/life15.png",
+      "target": "assets/item-art/collectibles/sources/life15.png",
+      "sourceHash": "5b4ad97566b6281161a4fdca6c9375cccb0ecf7ca41c09cd53cbec21618535a7",
+      "width": 1312,
+      "height": 1199
+    },
+    {
+      "key": "items/life19",
+      "source": "assets/item-art/collectibles/sources/life19.png",
+      "target": "assets/item-art/collectibles/sources/life19.png",
+      "sourceHash": "b96231c5eef633a91d3e88df7af42dd2daf7c9f024bfa7a8880ed7df9154f265",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life20",
+      "source": "assets/item-art/collectibles/sources/life20.png",
+      "target": "assets/item-art/collectibles/sources/life20.png",
+      "sourceHash": "5af6d4b14e3fea5e6e79af055ccde776409f80f48bbbc186ff1ec8c135da2763",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life22",
+      "source": "assets/item-art/collectibles/sources/life22.png",
+      "target": "assets/item-art/collectibles/sources/life22.png",
+      "sourceHash": "8f4dc0a57a5b3e79437c57d76df8debbe182f735dc3b3dd989110e5554dd6d18",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life28",
+      "source": "assets/item-art/collectibles/sources/life28.png",
+      "target": "assets/item-art/collectibles/sources/life28.png",
+      "sourceHash": "53f61a182362c6b8e52100c36b460e77221d66a1474f65e45ff56f82a1a7ac23",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life32",
+      "source": "assets/item-art/collectibles/sources/life32.png",
+      "target": "assets/item-art/collectibles/sources/life32.png",
+      "sourceHash": "77edc23e8ad5500f9eb34b223b0ca39cf3053873ee21766bca3813f016211fb8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life33",
+      "source": "assets/item-art/collectibles/sources/life33.png",
+      "target": "assets/item-art/collectibles/sources/life33.png",
+      "sourceHash": "85f5ad78fa20b5cfc1d5d1caac42ce463296cd981fe2e39e966ec04f751dede0",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life36",
+      "source": "assets/item-art/collectibles/sources/life36.png",
+      "target": "assets/item-art/collectibles/sources/life36.png",
+      "sourceHash": "b84d41ae527c7d4f1f9feaea71c8efa26ca19887216fbaf3154c54ae6075145f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life37",
+      "source": "assets/item-art/collectibles/sources/life37.png",
+      "target": "assets/item-art/collectibles/sources/life37.png",
+      "sourceHash": "5cd4e919a61508ddf0acc110c274ab556750449aaf6bebc224e80cf9b3bafc2a",
+      "width": 1269,
+      "height": 1239
+    },
+    {
+      "key": "items/life38",
+      "source": "assets/item-art/collectibles/sources/life38.png",
+      "target": "assets/item-art/collectibles/sources/life38.png",
+      "sourceHash": "38a2277954185467be423dfd05b6465c767e8136f5f5031280cbc4901e1b9fbe",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life39",
+      "source": "assets/item-art/collectibles/sources/life39.png",
+      "target": "assets/item-art/collectibles/sources/life39.png",
+      "sourceHash": "4da3fd316c18f65da0877472be51485c90bc0ce411758761f3f3185db8b6c1d3",
+      "width": 1240,
+      "height": 1269
+    },
+    {
+      "key": "items/life41",
+      "source": "assets/item-art/collectibles/sources/life41.png",
+      "target": "assets/item-art/collectibles/sources/life41.png",
+      "sourceHash": "a38d16bcda633e5cb2f8ee4abcc5567cfd7490d42ddbe53247c8b87f48f7d3e0",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life43",
+      "source": "assets/item-art/collectibles/sources/life43.png",
+      "target": "assets/item-art/collectibles/sources/life43.png",
+      "sourceHash": "348d72e9267c8038ed41d8c28902e63d57da986338cba213318e77f797d24aeb",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life44",
+      "source": "assets/item-art/collectibles/sources/life44.png",
+      "target": "assets/item-art/collectibles/sources/life44.png",
+      "sourceHash": "b4e67e04e7bec8ee180c28a4d3fc816e2815c3b988a71bce7bbce16b8bb158e7",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life45",
+      "source": "assets/item-art/collectibles/sources/life45.png",
+      "target": "assets/item-art/collectibles/sources/life45.png",
+      "sourceHash": "ed4e1b2127f3e9ec5a91f6ec21323d68bede0014e38019e4e21d16ff8ba01d8a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life46",
+      "source": "assets/item-art/collectibles/sources/life46.png",
+      "target": "assets/item-art/collectibles/sources/life46.png",
+      "sourceHash": "1990281d17835e664293d9651ea0fa6ad42328b8066764e13f5de59960478e49",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life47",
+      "source": "assets/item-art/collectibles/sources/life47.png",
+      "target": "assets/item-art/collectibles/sources/life47.png",
+      "sourceHash": "b049ccfd9d36eb6648d494d18370e6d17a1c01eaea15783f479094f52e176192",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life48",
+      "source": "assets/item-art/collectibles/sources/life48.png",
+      "target": "assets/item-art/collectibles/sources/life48.png",
+      "sourceHash": "e69421f6c221a8b459d4d8b8647012750d1e41e476865dc6fd270c2ba3c27bfe",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life49",
+      "source": "assets/item-art/collectibles/sources/life49.png",
+      "target": "assets/item-art/collectibles/sources/life49.png",
+      "sourceHash": "8f81c79aa897cb7b13772de13a68b2bf60c6533be399bb118a569714cdc49d1c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/lux01",
+      "source": "assets/item-art/legacy/sources/lux01.png",
+      "target": "assets/item-art/legacy/sources/lux01.png",
+      "sourceHash": "7e3eb3a725d7b298a0b9efa9897a9e80b2292aa6188b4dd7e50140f8f257c5bf",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/lux02",
+      "source": "assets/item-art/legacy/sources/lux02.png",
+      "target": "assets/item-art/legacy/sources/lux02.png",
+      "sourceHash": "f00ae5bb0062b41908539067851a4f02f50a52cdc17c4dad2c464ef58223d1a3",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/lux03",
+      "source": "assets/item-art/legacy/sources/lux03.png",
+      "target": "assets/item-art/legacy/sources/lux03.png",
+      "sourceHash": "53f9078d37b7d387e00aff1ba4f9e5fad61f8b42da71b5e7bf19c03b26616bbb",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/lux04",
+      "source": "assets/item-art/heritage/sources/lux04.png",
+      "target": "assets/item-art/heritage/sources/lux04.png",
+      "sourceHash": "aea77a7ff89a8f7cc9e0551b672aafdbfaedab8c13156f0c25e3a18aa2cd5700",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/lux05",
+      "source": "assets/item-art/heritage/sources/lux05.png",
+      "target": "assets/item-art/heritage/sources/lux05.png",
+      "sourceHash": "4ea316eed1cf50857aa32ff09d0664b41547af080c7c926e58a1f16ea305ca90",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med02",
+      "source": "assets/item-art/legacy/sources/med02.png",
+      "target": "assets/item-art/legacy/sources/med02.png",
+      "sourceHash": "259bc52509a5784fe35b21956c3e45ddc37c35446066dd3b8dc74c2094a95d58",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med03",
+      "source": "assets/item-art/legacy/sources/med03.png",
+      "target": "assets/item-art/legacy/sources/med03.png",
+      "sourceHash": "34e5216b71f75522f43f4b95c0383383d521b84127f68d69f6809cdcdc918548",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med06",
+      "source": "assets/item-art/medical-collectibles/sources/med06.png",
+      "target": "assets/item-art/medical-collectibles/sources/med06.png",
+      "sourceHash": "69e81c1232cdde089aee69934eb2085e2af549accb20329ca26663a305e19fda",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med07",
+      "source": "assets/item-art/medical-collectibles/sources/med07.png",
+      "target": "assets/item-art/medical-collectibles/sources/med07.png",
+      "sourceHash": "893050fe90b7596e211413db5ebf81b4150c30e216b0ad4016c918b061e748d8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med08",
+      "source": "assets/item-art/medical-collectibles/sources/med08.png",
+      "target": "assets/item-art/medical-collectibles/sources/med08.png",
+      "sourceHash": "0307dcff60a58cc91d4238ee08caf3ce8851e671c3be0ab6ed96023cc4fc51c2",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med09",
+      "source": "assets/item-art/medical-collectibles/sources/med09.png",
+      "target": "assets/item-art/medical-collectibles/sources/med09.png",
+      "sourceHash": "41e20b2a8565f4fcf5cf13f4dca0bdbe6378948d8bfaf8e9064e9d000cb982e2",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med10",
+      "source": "assets/item-art/medical-collectibles/sources/med10.png",
+      "target": "assets/item-art/medical-collectibles/sources/med10.png",
+      "sourceHash": "3d1512a35c0b8aa06d3d8ac35174e1b1b4575ebe575895a86ac1eed09960d04e",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "items/med11",
+      "source": "assets/item-art/medical-collectibles/sources/med11.png",
+      "target": "assets/item-art/medical-collectibles/sources/med11.png",
+      "sourceHash": "9efd148e3b72278cd32d5c954b5db040431fb4152f3e8b7c4d8e7291fa8699bf",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med12",
+      "source": "assets/item-art/medical-collectibles/sources/med12.png",
+      "target": "assets/item-art/medical-collectibles/sources/med12.png",
+      "sourceHash": "683aee5f1cf1a570af2d73d76f0c3720398a8c6d1a93fd537dcb67a0064104e7",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med13",
+      "source": "assets/item-art/medical-collectibles/sources/med13.png",
+      "target": "assets/item-art/medical-collectibles/sources/med13.png",
+      "sourceHash": "36201e8ac57c48562ee601b531619bdbcf359bb263dc81b48006a3cca7565f6a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med14",
+      "source": "assets/item-art/medical-collectibles/sources/med14.png",
+      "target": "assets/item-art/medical-collectibles/sources/med14.png",
+      "sourceHash": "34d621ea639cea6fc89f6ca27284971b4ce7d5eb479cc812d3f53ecc727f17a9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med15",
+      "source": "assets/item-art/medical-collectibles/sources/med15.png",
+      "target": "assets/item-art/medical-collectibles/sources/med15.png",
+      "sourceHash": "6b2cefb1ccf34e95d6817a4971a8562fbb9437ee90502a30fa7d5126f82ebd50",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil01",
+      "source": "assets/item-art/military/sources/mil01.png",
+      "target": "assets/item-art/military/sources/mil01.png",
+      "sourceHash": "996d0c67883309e5cd523163e69bf7eb91bc2a89fbec55ec3fa351d9b2f0394d",
+      "width": 1376,
+      "height": 1143
+    },
+    {
+      "key": "items/mil02",
+      "source": "assets/item-art/military/sources/mil02.png",
+      "target": "assets/item-art/military/sources/mil02.png",
+      "sourceHash": "c86aa996a1b961f695605daa89536f02800a6b1d32afa592508dec2e75bd8e3a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil03",
+      "source": "assets/item-art/military/sources/mil03.png",
+      "target": "assets/item-art/military/sources/mil03.png",
+      "sourceHash": "75ae5921d148df1bb73d9b827f6caf212d907461fc875a12ff9fd1f9edddb509",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil04",
+      "source": "assets/item-art/military/sources/mil04.png",
+      "target": "assets/item-art/military/sources/mil04.png",
+      "sourceHash": "5adc240e4652ba08630006d95b23a7b3f4c809e0421d05e698641b9c3222d12d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil05",
+      "source": "assets/item-art/military/sources/mil05.png",
+      "target": "assets/item-art/military/sources/mil05.png",
+      "sourceHash": "56aefdf76ebc402c395ec6c976bc963dff2309f3e37e8a8d96dcb0531ca94a36",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil06",
+      "source": "assets/item-art/military/sources/mil06.png",
+      "target": "assets/item-art/military/sources/mil06.png",
+      "sourceHash": "1165afdf10ce498c76cf47dfd32896cef33c705f040f2d0ca502cbd195782b90",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil07",
+      "source": "assets/item-art/military/sources/mil07.png",
+      "target": "assets/item-art/military/sources/mil07.png",
+      "sourceHash": "b6ad41b48a09acf896e4d385e051a65cfce3ee05e8f7b518e23114bc4df2873b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil08",
+      "source": "assets/item-art/military/sources/mil08.png",
+      "target": "assets/item-art/military/sources/mil08.png",
+      "sourceHash": "e08ecc3e60f88d30fd1769c366fb283b1e98ec522d058b640e010a61c87429cd",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil09",
+      "source": "assets/item-art/military/sources/mil09.png",
+      "target": "assets/item-art/military/sources/mil09.png",
+      "sourceHash": "65364f59c154d80afb04f2c347fb084e5260472541be2ba0700ee63ad43b5db3",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil10",
+      "source": "assets/item-art/military/sources/mil10.png",
+      "target": "assets/item-art/military/sources/mil10.png",
+      "sourceHash": "0ab92032777b390509ade91d5812f7bda5dfb7edd3deb32f9daed435cc70aa98",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil11",
+      "source": "assets/item-art/military/sources/mil11.png",
+      "target": "assets/item-art/military/sources/mil11.png",
+      "sourceHash": "13a5647f44c85b050524d9bd0641baccd108ff8aa6b77228df1ae94b40c6df93",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil12",
+      "source": "assets/item-art/military/sources/mil12.png",
+      "target": "assets/item-art/military/sources/mil12.png",
+      "sourceHash": "6d07e7827786cfc6fb1124b1e05b602eead935b8b7e9d98792c9f4af4af95cc5",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil13",
+      "source": "assets/item-art/military/sources/mil13.png",
+      "target": "assets/item-art/military/sources/mil13.png",
+      "sourceHash": "cfba0cedad5f368fe0fcfba7a1018185bd643c4eb4e25015edee8dc037d66006",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil14",
+      "source": "assets/item-art/military/sources/mil14.png",
+      "target": "assets/item-art/military/sources/mil14.png",
+      "sourceHash": "11d6dddb9ddeb3b7447074950da141c43032de1a04c8941bffb94373b8e7398d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil15",
+      "source": "assets/item-art/military/sources/mil15.png",
+      "target": "assets/item-art/military/sources/mil15.png",
+      "sourceHash": "ca1c1d29db58567c101a431123a982267c04d87571acc0ebe12b3e29c86708d8",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "items/occ01",
+      "source": "assets/item-art/occult/sources/occ01.png",
+      "target": "assets/item-art/occult/sources/occ01.png",
+      "sourceHash": "e2068c6ecdcdf3587007f6e22f7620538573bb794938304d14d4174cf4353961",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ02",
+      "source": "assets/item-art/occult/sources/occ02.png",
+      "target": "assets/item-art/occult/sources/occ02.png",
+      "sourceHash": "449c977fbd073933edfe6e271fd7722e4ac6091a5bb74cc5266c392837657982",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ03",
+      "source": "assets/item-art/occult/sources/occ03.png",
+      "target": "assets/item-art/occult/sources/occ03.png",
+      "sourceHash": "f7f7ece4435cb4aabbf0eba0360c283786bb98bf70760d1c84542ada27cdbefb",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ04",
+      "source": "assets/item-art/occult/sources/occ04.png",
+      "target": "assets/item-art/occult/sources/occ04.png",
+      "sourceHash": "669c11f5027690e9b53cf90f84f07d89f14a93b8f11bf87d6f42c35c43d84041",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ05",
+      "source": "assets/item-art/occult/sources/occ05.png",
+      "target": "assets/item-art/occult/sources/occ05.png",
+      "sourceHash": "ce1d20f6296cb04544000b7b609453540e555d5e4a861327f298c0fc26e5f024",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ06",
+      "source": "assets/item-art/occult/sources/occ06.png",
+      "target": "assets/item-art/occult/sources/occ06.png",
+      "sourceHash": "9575249aec3e5b6c3c2f0914aba974b419bcafab9191c647d8f6ae7bf9db532d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ07",
+      "source": "assets/item-art/occult/sources/occ07.png",
+      "target": "assets/item-art/occult/sources/occ07.png",
+      "sourceHash": "34e8c84558bc8cea7368d770f8ca84da22eb25006d8a47202e8cc57c08b37975",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ08",
+      "source": "assets/item-art/occult/sources/occ08.png",
+      "target": "assets/item-art/occult/sources/occ08.png",
+      "sourceHash": "f0387db9e41fecc005c57abc5c54e5c464b38866c1ae39066ea6ca8cf839eae0",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ09",
+      "source": "assets/item-art/occult/sources/occ09.png",
+      "target": "assets/item-art/occult/sources/occ09.png",
+      "sourceHash": "ae52837f2a4fb0dc2994333d69018716e15536d31b195f1c0a28a79f2ee0466c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ10",
+      "source": "assets/item-art/occult/sources/occ10.png",
+      "target": "assets/item-art/occult/sources/occ10.png",
+      "sourceHash": "31fbb27de570a396156287c2be68a3fdb0fff38ebcd8c88dfac0f9a4264a7a2e",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ11",
+      "source": "assets/item-art/occult/sources/occ11.png",
+      "target": "assets/item-art/occult/sources/occ11.png",
+      "sourceHash": "79213f9649c17ece23ce6ffa93f8e846b16b3a983b2ed0b63fa54a3935be2f35",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ12",
+      "source": "assets/item-art/occult/sources/occ12.png",
+      "target": "assets/item-art/occult/sources/occ12.png",
+      "sourceHash": "c083c1170a5c1101758c1862f4a18ddffdaec7cfeea7c58e3e9de911ffb153c6",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ13",
+      "source": "assets/item-art/occult/sources/occ13.png",
+      "target": "assets/item-art/occult/sources/occ13.png",
+      "sourceHash": "0355fa59904224cb7a3d167e005eb811250c7f9690a63877d0be67e611271b15",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ14",
+      "source": "assets/item-art/occult/sources/occ14.png",
+      "target": "assets/item-art/occult/sources/occ14.png",
+      "sourceHash": "78dc7d08936b423ef7702860fc9b662e4aabd930e2ddcadc51ba1fe73ffe8c3a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ15",
+      "source": "assets/item-art/occult/sources/occ15.png",
+      "target": "assets/item-art/occult/sources/occ15.png",
+      "sourceHash": "f95ef821d70343dbc17cd24abedc86de30ce814678c4308a84206926ece4404f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd01",
+      "source": "assets/item-art/legacy/sources/odd01.png",
+      "target": "assets/item-art/legacy/sources/odd01.png",
+      "sourceHash": "ea5ae9067fdd9b6e0decadc53cc52a54bc591d037922418a3c87a9bdcafb6441",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd02",
+      "source": "assets/item-art/legacy/sources/odd02.png",
+      "target": "assets/item-art/legacy/sources/odd02.png",
+      "sourceHash": "a92706e1fac43c8ff99d4a2da3fdda612c17496c21f6b5140c39842ec430069d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd03",
+      "source": "assets/item-art/legacy/sources/odd03.png",
+      "target": "assets/item-art/legacy/sources/odd03.png",
+      "sourceHash": "4194e426d2204a1dc92592da6b77791b4ad2a9fd2590983d92d55aba3c469323",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/spec01",
+      "source": "assets/item-art/legacy/sources/spec01.png",
+      "target": "assets/item-art/legacy/sources/spec01.png",
+      "sourceHash": "8f22f879ea378a2d4edde92a65fe7d8050d29214ab379c04374c96c01ae5f00c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/spec02",
+      "source": "assets/item-art/legacy/sources/spec02.png",
+      "target": "assets/item-art/legacy/sources/spec02.png",
+      "sourceHash": "6e9b679057e446de140abdda8f18dfb1b7931993ced0807c01d7d4f62af64a57",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/spec03",
+      "source": "assets/item-art/legacy/sources/spec03.png",
+      "target": "assets/item-art/legacy/sources/spec03.png",
+      "sourceHash": "960ff4037dea12b6358ae2af3a87a60bf0b232b972e38135cd1ba001b74ad0bc",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/spec04",
+      "source": "assets/item-art/heritage/sources/spec04.png",
+      "target": "assets/item-art/heritage/sources/spec04.png",
+      "sourceHash": "7a04180cfa8cf4f16f193a8707802ca05975fc0591007bc19667372984850a23",
+      "width": 1254,
+      "height": 1254
+    }
+  ],
+  "missing": []
+}

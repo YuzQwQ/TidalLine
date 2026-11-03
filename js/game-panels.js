@@ -8,6 +8,8 @@ Object.assign(Game, {
   /* ---------------- 搜刮面板 ---------------- */
   openLoot(obj, isCorpse) {
     Medical.cancel();
+    /* 打开容器：抽屉拉开那一声。尸体不开抽屉，跳过 */
+    if (!isCorpse && typeof SFX !== 'undefined') SFX.play('container_open', { at: obj.art || obj.kind });
     this.lootOpen = obj;
     this.lootIsCorpse = !!isCorpse;
     if (isCorpse && !obj.items) obj.items = obj.loot;
@@ -86,7 +88,8 @@ Object.assign(Game, {
     if (manual) this.autoSearch = false;
     this.search = { idx: idx, t: 0, total: this.searchTime(e.item), noiseT: 0 };
     this.renderLootList();
-    SFX.play('search');
+    /* 翻尸体是翻衣服口袋，开箱子是拉链或纸——按容器种类发声，不随机 */
+    SFX.play('search', { at: this.lootIsCorpse ? 'corpse' : (box.art || box.kind) });
     return true;
   },
 
@@ -272,7 +275,7 @@ Object.assign(Game, {
     {
       const e = at.gun >= 0 ? arr[at.gun] : null;
       const id = e ? this.gunId(e) : null;
-      const w = id ? WEAPONS[id] : null;
+      const w = id ? Attachments.resolve(id, e.gun.attachments) : null;
       cells.push({
         idx: at.gun,
         icon: id,
@@ -321,13 +324,13 @@ Object.assign(Game, {
   gunId(entry) {
     const g = entry && entry.gun;
     if (!g) return null;
-    return typeof g === 'string' ? g : (g.id || null);
+    return canonicalWeaponId(typeof g === 'string' ? g : (g.id || null));
   },
 
   corpseGun(entry){
     const id=this.gunId(entry),w=WEAPONS[id];if(!w)return null;
     const g=entry.gun;
-    return g.magCur!=null?EQUIP.gun(id,g.magCur,g.ammo,g.rounds):EQUIP.gun(id,Math.max(1,Math.round(w.mag*.3)));
+    return g.magCur!=null?EQUIP.gun(id,g.magCur,g.ammo,g.rounds,g):EQUIP.gun(id,Math.max(1,Math.round(w.mag*.3)));
   },
 
   /* 装备条目有两种形态：尸体身上的是 { gear } / { gun }，
@@ -337,11 +340,11 @@ Object.assign(Game, {
     if (entry.gear) return { g: entry.gear, isGun: false, bag: false };
     if (entry.gun) {
       const id = this.gunId(entry);
-      return { g: WEAPONS[id] || null, isGun: true, gunId: id, gunItem:this.corpseGun(entry), bag: false };
+      return { g: Attachments.resolve(id,entry.gun.attachments), isGun: true, gunId: id, gunItem:this.corpseGun(entry), bag: false };
     }
     const eq = entry.item && entry.item.equip;
     if (!eq) return null;
-    if (eq.kind === 'gun') return { g: WEAPONS[eq.gun] || null, isGun: true, gunId: eq.gun, gunItem:EQUIP.gun(eq.gun,eq.mag,eq.ammo,eq.rounds),bag: false };
+    if (eq.kind === 'gun') return { g: Attachments.resolve(eq.gun,eq.attachments), isGun: true, gunId: canonicalWeaponId(eq.gun), gunItem:EQUIP.gun(eq.gun,eq.mag,eq.ammo,eq.rounds,eq),bag: false };
     if (eq.kind === 'bag') return { g: BACKPACK.make(eq.bag), isGun: false, bag: true };
     if (eq.kind === 'armor') return { g: eq.gear, isGun: false, bag: false };
     return null;
@@ -350,6 +353,11 @@ Object.assign(Game, {
   takeGear(entry, idx) {
     const P = this.player;
     if (!P || !entry) return false;
+    if(entry.item?.equip?.kind==='attachment'){
+      if(!this.lootOpen||this.lootOpen.items[idx]!==entry)return false;
+      const res=P.bag.canAdd(entry.item,1);if(!res.ok){this.toast(res.why);return false;}
+      P.bag.add(entry.item,1);this.lootOpen.items[idx]=null;this.syncBoxState(this.lootOpen);if(this.lootOpen)this.renderLootList();this.renderBag();Game.sfx('pickup');return true;
+    }
     const s = this.gearSpec(entry);
     if (!s || !s.g) return false;
     const g = s.g;
@@ -363,7 +371,7 @@ Object.assign(Game, {
       const free = range.find(k => !P.weapons[k]);
       if (free != null) {
         const snap=s.gunItem.equip,got=snap.mag;
-        P.weapons[free] = Object.assign({}, g, { magCur: got,ammo:snap.ammo,rounds:[...snap.rounds] });
+        P.weapons[free] = Object.assign({}, g, { attachments:{...snap.attachments},magCur: got,ammo:snap.ammo,rounds:[...snap.rounds],fireMode:snap.fireMode,cycleRemaining:snap.cycleRemaining });
         if (!P.weapons[P.slot] || P.slot===free) { P.slot = free; P.mag = got; }
         msg = '换上 ' + g.name + '（' + got + ' 发）';
       }
@@ -407,23 +415,25 @@ Object.assign(Game, {
     const s = P && P.bag.slots[i];
     if (!s || !s.item || !s.item.equip) return false;
     const eq = s.item.equip;
+    if(eq.kind==='attachment')return false;
     let old = null;
 
     if (eq.kind === 'melee') return MeleeSystem.equipBag(i);
     if (eq.kind === 'gun') {
-      const def = WEAPONS[eq.gun];
+      const def = Attachments.resolve(eq.gun,eq.attachments);
       if (!def) return false;
       const range = def.slot === 'primary' ? [0, 1] : [2];
       const free = range.find(k => !P.weapons[k]);
-      const at = (free != null) ? free : P.slot;     // 没有空位就换手上这把
+      const at = (free != null) ? free : (range.includes(P.slot)?P.slot:range[0]);
       const cur = P.weapons[at];
-      if (cur) old = EQUIP.gun(cur.id, cur.magCur, cur.ammo, cur.rounds);
+      if (cur) old = Gunplay.snapshot(cur);
       P.weapons[at] = Object.assign({}, def, {
         magCur: eq.mag || 0,
         rounds: magazineRounds(def, eq.mag || 0, eq.ammo, eq.rounds),
+        fireMode:eq.fireMode||def.defaultMode,cycleRemaining:eq.cycleRemaining||0,
         ammo: (AMMO_BY_ID[eq.ammo] && AMMO_BY_ID[eq.ammo].caliber === def.caliber) ? eq.ammo : def.ammo
       });
-      P.reloadT = 0; P.reloadPending = false; AmmoQuick.cancel();
+      Gunplay.cancel(P,true); AmmoQuick.cancel();
       P.slot = at;
       P.mag = P.weapons[at].magCur;
     } else {
@@ -461,6 +471,8 @@ Object.assign(Game, {
     const el = document.getElementById('bagBox');
     el.classList.toggle('open', this.bagOpen);
     if (this.bagOpen) this.renderBag();
+    /* 开合背包：一声拉链。开包和关包音高差一点，听得出是合上还是拉开 */
+    if (typeof SFX !== 'undefined') SFX.play('bag_zip', { rate: this.bagOpen ? 1.06 : 0.9 });
   },
 
   renderGearPanel() {
@@ -524,7 +536,7 @@ Object.assign(Game, {
       if (c && c.click) nodes[n].onclick = c.click;
       if (n < 3 && P.weapons[n]) nodes[n].oncontextmenu = ev => {
         ev.preventDefault(); ev.stopPropagation();
-        Ctx.show(ev.clientX, ev.clientY, [{label:'退弹', onClick:() => P.unloadWeapon(n)}]);
+        Ctx.show(ev.clientX, ev.clientY, [{label:'退弹', onClick:() => P.unloadWeapon(n)},...(n===P.slot&&P.weapon.modes.length>1?[{label:'切换射击模式（B）',onClick:()=>{Gunplay.nextMode(P);Game.renderGearPanel();}}]:[])]);
       };
     }
   },
@@ -533,7 +545,7 @@ Object.assign(Game, {
     const eq = it?.equip, p = this.player;
     if (!p || eq?.kind !== 'gun') return false;
     const snapshot = p.bag.slots.map(s => ({...s}));
-    const rounds = magazineRounds(WEAPONS[eq.gun], eq.mag, eq.ammo, eq.rounds);
+    const rounds = magazineRounds(Attachments.resolve(eq.gun,eq.attachments), eq.mag, eq.ammo, eq.rounds);
     const counts = {}; for (const id of rounds) counts[id] = (counts[id] || 0) + 1;
     for (const [id,n] of Object.entries(counts)) if (!p.bag.addAmmo(id,n)) {
       p.bag.slots = snapshot; this.toast('背包空间不足，退弹已取消'); return false;
@@ -674,7 +686,7 @@ Object.assign(Game, {
     if(!P)return [];
     if(P._equipmentLoss)return P._equipmentLoss;
     const lost=[];
-    P.weapons.forEach((w,i)=>{if(w)lost.push(EQUIP.gun(w.id,i===P.slot?P.mag:w.magCur,w.ammo,w.rounds));});
+    P.weapons.forEach((w,i)=>{if(w)lost.push(Gunplay.snapshot(w,i===P.slot?P.mag:w.magCur));});
     if(P.helmet)lost.push(EQUIP.armor(P.helmet));
     if(P.body)lost.push(EQUIP.armor(P.body));
     if(P.back)lost.push(EQUIP.bag(P.back.id));
@@ -688,6 +700,8 @@ Object.assign(Game, {
   showEnd(success, reason) {
     this.action = null;
     this.closeLoot();
+    /* 结算页已经算局外了，大厅音乐接着响 —— 死回来不至于一片死寂 */
+    if (typeof Music !== 'undefined') Music.play('base');
     if (this.bagOpen) this.toggleBag();
     if (typeof MedHud !== 'undefined') MedHud.reset();   // 收尾：轮盘、快捷栏、进度条一起清
     if (success || !this._deathSoundPlayed) SFX.play(success ? 'extract' : 'death');

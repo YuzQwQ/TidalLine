@@ -1,0 +1,468 @@
+{
+  "version": 1,
+  "status": "integrated",
+  "aliases": {
+    "rifle": "m4a1",
+    "smg": "pp19_01",
+    "shotgun": "mp155",
+    "pistol": "glock17"
+  },
+  "calibers": {
+    "556": {
+      "id": "556",
+      "name": "5.56×45mm",
+      "short": "5.56",
+      "label": "5.56mm",
+      "damage": [
+        15,
+        22
+      ],
+      "stack": 60,
+      "weight": 0.012,
+      "prices": [
+        60,
+        140,
+        320,
+        800,
+        2000
+      ]
+    },
+    "762x39": {
+      "id": "762x39",
+      "name": "7.62×39mm",
+      "short": "7.62",
+      "label": "7.62mm",
+      "damage": [
+        20,
+        27
+      ],
+      "stack": 60,
+      "weight": 0.016,
+      "prices": [
+        80,
+        180,
+        420,
+        1000,
+        2500
+      ]
+    },
+    "9mm": {
+      "id": "9mm",
+      "name": "9×19mm",
+      "short": "9mm",
+      "label": "9mm",
+      "damage": [
+        11,
+        15
+      ],
+      "stack": 90,
+      "weight": 0.012,
+      "prices": [
+        35,
+        80,
+        180,
+        450,
+        1100
+      ]
+    },
+    "45acp": {
+      "id": "45acp",
+      "name": ".45 ACP",
+      "short": ".45",
+      "label": ".45 ACP",
+      "damage": [
+        15,
+        20
+      ],
+      "stack": 90,
+      "weight": 0.015,
+      "prices": [
+        50,
+        110,
+        250,
+        600,
+        1500
+      ]
+    },
+    "12g": {
+      "id": "12g",
+      "name": "12 Gauge",
+      "short": "12G",
+      "label": "12号",
+      "damage": [
+        7,
+        10
+      ],
+      "stack": 20,
+      "weight": 0.012,
+      "prices": [
+        80,
+        180,
+        400,
+        900,
+        2200
+      ]
+    }
+  },
+  "families": {
+    "rifle": {
+      "aimTime": 0.4,
+      "spreadBase": 0.04,
+      "spreadMax": 0.26,
+      "recoilPerShot": 0.075,
+      "baseV": 3.4,
+      "baseH": 2.4,
+      "speed": 620,
+      "range": 640
+    },
+    "smg": {
+      "aimTime": 0.3,
+      "spreadBase": 0.05,
+      "spreadMax": 0.28,
+      "recoilPerShot": 0.055,
+      "baseV": 2.6,
+      "baseH": 1.8,
+      "speed": 600,
+      "range": 420
+    },
+    "shotgun": {
+      "aimTime": 0.45,
+      "spreadBase": 0.025,
+      "spreadMax": 0.14,
+      "recoilPerShot": 0.22,
+      "baseV": 4.4,
+      "baseH": 2.4,
+      "speed": 560,
+      "range": 300,
+      "pelletSpread": 0.1785
+    },
+    "pistol": {
+      "aimTime": 0.2,
+      "spreadBase": 0.045,
+      "spreadMax": 0.22,
+      "recoilPerShot": 0.1,
+      "baseV": 2.4,
+      "baseH": 1.6,
+      "speed": 600,
+      "range": 460
+    }
+  },
+  "weapons": [
+    {
+      "id": "m4a1",
+      "name": "M4A1",
+      "short": "M4A1",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 800,
+      "mag": 30,
+      "reloadTime": 2.4,
+      "price": 168000,
+      "rarity": 5,
+      "w": 3.2,
+      "recoilVMul": 1,
+      "recoilHMul": 1,
+      "spreadMul": 1,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "M4A1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色AR式卡宾枪，直线伸缩枪托、短护木、顶部提把和弧形弹匣。"
+    },
+    {
+      "id": "akm",
+      "name": "AKM",
+      "short": "AKM",
+      "category": "rifle",
+      "caliber": "762x39",
+      "rpm": 600,
+      "mag": 30,
+      "reloadTime": 2.7,
+      "price": 125000,
+      "rarity": 4,
+      "w": 3.6,
+      "recoilVMul": 1.35,
+      "recoilHMul": 1.2,
+      "spreadMul": 1.1,
+      "recoilPerShot": 0.085,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "AKM，使用7.62×39mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "深色钢制机匣，旧胡桃木枪托与护木，明显弯曲的7.62弹匣。"
+    },
+    {
+      "id": "famas_f1",
+      "name": "FAMAS F1",
+      "short": "FAMAS F1",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 1000,
+      "mag": 25,
+      "reloadTime": 2.9,
+      "price": 215000,
+      "rarity": 5,
+      "w": 3.7,
+      "recoilVMul": 1.1,
+      "recoilHMul": 1.25,
+      "spreadMul": 1.05,
+      "recoilPerShot": 0.09,
+      "modes": [
+        "semi",
+        "burst3",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "FAMAS F1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色无托步枪，顶部高提把，弹匣位于握把后方，短枪管。"
+    },
+    {
+      "id": "pp19_01",
+      "name": "PP-19-01 Vityaz",
+      "short": "PP-19-01",
+      "category": "smg",
+      "caliber": "9mm",
+      "rpm": 700,
+      "mag": 30,
+      "reloadTime": 2.1,
+      "price": 72000,
+      "rarity": 3,
+      "w": 2.4,
+      "recoilVMul": 0.7,
+      "recoilHMul": 0.8,
+      "spreadMul": 1.05,
+      "recoilPerShot": 0.055,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "PP-19-01 Vityaz，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色短管AK式冲锋枪，三角折叠托，细长弯曲弹匣，不采用螺旋弹筒。"
+    },
+    {
+      "id": "mp5a3",
+      "name": "MP5A3",
+      "short": "MP5A3",
+      "category": "smg",
+      "caliber": "9mm",
+      "rpm": 800,
+      "mag": 30,
+      "reloadTime": 2.3,
+      "price": 115000,
+      "rarity": 4,
+      "w": 2.6,
+      "recoilVMul": 0.6,
+      "recoilHMul": 0.65,
+      "spreadMul": 0.8,
+      "recoilPerShot": 0.06,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "MP5A3，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "圆筒形护木，双导杆伸缩枪托，细弯弹匣，深色滚轮闭锁机匣轮廓。"
+    },
+    {
+      "id": "ump45",
+      "name": "UMP45",
+      "short": "UMP45",
+      "category": "smg",
+      "caliber": "45acp",
+      "rpm": 600,
+      "mag": 25,
+      "reloadTime": 2.3,
+      "price": 108000,
+      "rarity": 4,
+      "w": 2.3,
+      "recoilVMul": 0.95,
+      "recoilHMul": 0.9,
+      "spreadMul": 1,
+      "recoilPerShot": 0.07,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "UMP45，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "方正深灰聚合物机匣，镂空折叠托，粗直弹匣。"
+    },
+    {
+      "id": "mp155",
+      "name": "MP-155",
+      "short": "MP-155",
+      "category": "shotgun",
+      "caliber": "12g",
+      "rpm": 240,
+      "mag": 5,
+      "reloadTime": 0.65,
+      "price": 78000,
+      "rarity": 3,
+      "w": 3.6,
+      "recoilVMul": 1.85,
+      "recoilHMul": 1.4,
+      "spreadMul": 1,
+      "recoilPerShot": 0.22,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "tube",
+      "cycleTime": 0,
+      "desc": "MP-155，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+      "visual": "长枪管半自动猎枪，胡桃木枪托和前护木，下方细长管式弹仓，无盒式弹匣。"
+    },
+    {
+      "id": "rem870",
+      "name": "Remington 870",
+      "short": "R870",
+      "category": "shotgun",
+      "caliber": "12g",
+      "rpm": 75,
+      "mag": 6,
+      "reloadTime": 0.75,
+      "price": 58000,
+      "rarity": 3,
+      "w": 3.4,
+      "recoilVMul": 2.2,
+      "recoilHMul": 1.25,
+      "spreadMul": 0.85,
+      "recoilPerShot": 0.24,
+      "modes": [
+        "pump"
+      ],
+      "defaultMode": "pump",
+      "reloadType": "tube",
+      "cycleTime": 0.8,
+      "desc": "Remington 870，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+      "visual": "深色木枪托，长条肋纹泵动护木，钢制机匣和管式弹仓，无盒式弹匣。"
+    },
+    {
+      "id": "saiga12",
+      "name": "Saiga-12",
+      "short": "Saiga-12",
+      "category": "shotgun",
+      "caliber": "12g",
+      "rpm": 300,
+      "mag": 8,
+      "reloadTime": 3.3,
+      "price": 175000,
+      "rarity": 5,
+      "w": 3.8,
+      "recoilVMul": 2.1,
+      "recoilHMul": 1.75,
+      "spreadMul": 1.2,
+      "recoilPerShot": 0.26,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "Saiga-12，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+      "visual": "黑色AK式霰弹枪，聚合物固定托，较粗枪管，明显的宽盒式弹匣。"
+    },
+    {
+      "id": "glock17",
+      "name": "Glock 17",
+      "short": "Glock",
+      "category": "pistol",
+      "caliber": "9mm",
+      "rpm": 360,
+      "mag": 17,
+      "reloadTime": 1.5,
+      "price": 32000,
+      "rarity": 2,
+      "w": 1.1,
+      "recoilVMul": 0.75,
+      "recoilHMul": 0.8,
+      "spreadMul": 0.95,
+      "recoilPerShot": 0.1,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "Glock 17，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色方形套筒，简洁聚合物枪身与双排弹匣握把，短枪管。"
+    },
+    {
+      "id": "m1911a1",
+      "name": "M1911A1",
+      "short": "M1911A1",
+      "category": "pistol",
+      "caliber": "45acp",
+      "rpm": 300,
+      "mag": 7,
+      "reloadTime": 1.8,
+      "price": 37000,
+      "rarity": 3,
+      "w": 1.2,
+      "recoilVMul": 1.2,
+      "recoilHMul": 1,
+      "spreadMul": 0.9,
+      "recoilPerShot": 0.12,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "M1911A1，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "细长钢制套筒，棕色单排握把，外露击锤与圆弧扳机护圈。"
+    },
+    {
+      "id": "beretta92",
+      "name": "Beretta 92FS",
+      "short": "92FS",
+      "category": "pistol",
+      "caliber": "9mm",
+      "rpm": 360,
+      "mag": 15,
+      "reloadTime": 1.7,
+      "price": 44000,
+      "rarity": 3,
+      "w": 1.2,
+      "recoilVMul": 0.7,
+      "recoilHMul": 0.65,
+      "spreadMul": 0.8,
+      "recoilPerShot": 0.09,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "Beretta 92FS，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "较长开放式套筒，露出的枪管，深色握把与圆弧护圈。"
+    }
+  ],
+  "decisions": {
+    "damage": "confirmed_by_user",
+    "newAmmo": "recommended_defaults_used_after_optional_question",
+    "merchantMaxAmmoLevel": 2,
+    "allGunsInShop": true,
+    "modeKey": "b",
+    "pumpTrigger": "one shot per press; automatic cycling",
+    "tubeInterrupt": "finish current shell then respond to requested shot; cancel pending shot on incompatible actions"
+  }
+}

@@ -50,7 +50,9 @@ const server = http.createServer((req, res) => {
       }
       return output;
     });
-    assert.equal(specs.length, 21);
+    /* 状态数会随武器增加（每把近战刀都有专属动画），按数据算，不写死 */
+    const wantSpecs = await page.evaluate(() => Object.keys(PLAYER_ANIMS).length * ART.charDirs.length);
+    assert.equal(specs.length, wantSpecs, '每个动画状态 × 每个朝向都要覆盖');
     for (const s of specs) {
       const key = s.state + '_' + s.dir;
       assert.equal(s.width, s.frames * s.size, key); assert.equal(s.height, s.size, key);
@@ -143,8 +145,14 @@ const server = http.createServer((req, res) => {
     const external = []; offline.on('request', req => { if (req.url().includes('/assets/')) external.push(req.url()); });
     await offline.goto(pathToFileURL(path.join(root, '潮汐线.html')).href + '#play');
     await offline.waitForFunction(() => Object.keys(PLAYER_ANIMS).every(state => ART.charDirs.every(dir => Art.map['anim/player_' + state + '_' + dir])));
-    assert.equal(await offline.evaluate(() => Object.keys(window.__SPRITES__).filter(key => key.startsWith('anim/')).length), 21);
+    /* 内联的 anim 条数会随武器/敌人增加而变，这里查的是「该有的都有」，不认死数字 */
+    const missingStrips = await offline.evaluate(() => {
+      const keys = [];
+      for (const s of Object.keys(PLAYER_ANIMS)) for (const d of ART.charDirs) keys.push('anim/player_' + s + '_' + d);
+      return keys.filter(k => !window.__SPRITES__[k]);
+    });
+    assert.deepEqual(missingStrips, [], '单文件版缺少玩家动画条：' + missingStrips.join(','));
     assert.equal(external.length, 0); assert.deepEqual(errors, []);
-    console.log('OK: interactive preview, all 21 strips embedded offline, no browser errors');
+    console.log('OK: interactive preview, all player strips embedded offline, no browser errors');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(() => server.close());

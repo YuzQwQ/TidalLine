@@ -8,7 +8,7 @@ const c = new Function('require', '__dirname', harness + '\nreturn ctx;')(requir
 /* 顶层 const 不会挂到沙箱对象上，统一用 runInContext 取 */
 const G = vm.runInContext(
   '({Loot,Game,Save,ITEMS,ITEM_BY_ID,EQUIP,GEAR,BACKPACK,BAGS,' +
-  'CONTAINER_TYPES,CONTAINER_QUALITY,BOX_COUNT,RARITY,Medical,bagSlots})', c);
+  'CONTAINER_TYPES,CONTAINER_QUALITY,BOX_COUNT,RARITY,Medical,bagSlots,WEAPONS,ATTACHMENT_LOOT})', c);
 const { Loot, Game, Save, ITEMS, EQUIP, BACKPACK, CONTAINER_TYPES,
         CONTAINER_QUALITY, BOX_COUNT } = G;
 
@@ -37,7 +37,7 @@ test('两个容器都挂上了弹药池与装备池', () => {
     assert.equal(t.ammoPool.chance, 0.25);
     assert.equal(t.gearPool.chance, 0.10);
   }
-  assert.deepEqual(Array.from(K.gearPool.kinds), ['helmet', 'body', 'bag']);
+  assert.deepEqual(Array.from(K.gearPool.kinds), ['helmet', 'body', 'bag', 'gun']);
 });
 
 test('其它容器保持原样：没有 rolls / 池', () => {
@@ -50,7 +50,7 @@ test('其它容器保持原样：没有 rolls / 池', () => {
 });
 
 /* ---------- 弹药池 ---------- */
-test('弹药池三种口径等概率，发数落在区间内', () => {
+test('弹药池五种口径等概率，发数落在区间内', () => {
   const cal = {};
   for (let i = 0; i < 30000; i++) {
     const r = Loot.rollAmmo('rich', K.ammoPool);
@@ -60,8 +60,8 @@ test('弹药池三种口径等概率，发数落在区间内', () => {
     assert.ok(r.n >= range[0] && r.n <= range[1], '发数越界 ' + r.n);
     cal[r.item.caliber] = (cal[r.item.caliber] || 0) + 1;
   }
-  assert.equal(Object.keys(cal).length, 3);
-  for (const n of Object.values(cal)) assert(Math.abs(n / 30000 - 1 / 3) < 0.015);
+  assert.equal(Object.keys(cal).length, 5);
+  for (const n of Object.values(cal)) assert(Math.abs(n / 30000 - 1 / 5) < 0.015);
 });
 
 test('防水补给箱弹药等级分布 = rich 稀有度（红档并入金档）', () => {
@@ -81,10 +81,10 @@ test('军用物资箱弹药等级分布 = fine 稀有度（红档并入金档）
 });
 
 /* ---------- 装备池 ---------- */
-test('装备池只在头盔 / 护甲 / 背包里抽，等级 1–5', () => {
+test('头盔 / 护甲 / 背包子池仍等概率抽，等级 1–5', () => {
   const kinds = {}, levels = {};
   for (let i = 0; i < 60000; i++) {
-    const { item } = Loot.rollGear('rich', K.gearPool);
+    const { item } = Loot.rollGear('rich', {kinds:['helmet','body','bag']});
     const eq = item.equip;
     assert.ok(eq && (eq.kind === 'armor' || eq.kind === 'bag'), '种类越界');
     const kind = eq.kind === 'bag' ? 'bag' : eq.gear.type;
@@ -98,10 +98,10 @@ test('装备池只在头盔 / 护甲 / 背包里抽，等级 1–5', () => {
   assert.equal(levels[6], undefined, '不该出六级');
 });
 
-test('装备池稀有度分布与同容器的弹药池一致', () => {
+test('防具背包子池稀有度分布与同容器的弹药池一致', () => {
   const lv = [0, 0, 0, 0, 0];
   for (let i = 0; i < 80000; i++) {
-    const { item } = Loot.rollGear('rich', K.gearPool);
+    const { item } = Loot.rollGear('rich', {kinds:['helmet','body','bag']});
     const eq = item.equip;
     lv[(eq.kind === 'bag' ? BACKPACK.def(eq.bag).r : eq.gear.lv) - 1]++;
   }
@@ -123,18 +123,23 @@ test('容器实际抽取次数落在 rolls 区间内，且每次都出东西', (
   }
 });
 
-test('两个容器实际掉出的弹药占比 ≈ 25%、装备 ≈ 10%', () => {
+test('配件独立分支不稀释弹药／装备分支，缺档均回到普通池', () => {
   for (const [q, t] of [['rich', K], ['fine', Q]]) {
-    let ammo = 0, gear = 0, total = 0;
+    let ammo = 0, gear = 0, attachment = 0, total = 0;
     for (let i = 0; i < 3000; i++) {
       for (const e of Loot.fill(q, t.cats, t)) {
         total++;
         if (e.item.cat === 'ammo') ammo++;
-        if (e.item.cat === 'gear') gear++;
+        if (e.item.equip?.kind === 'attachment') attachment++;
+        else if (e.item.cat === 'gear') gear++;
       }
     }
     assert(Math.abs(ammo / total - 0.25) < 0.02, q + ' 弹药占比 ' + (ammo / total * 100).toFixed(2) + '%');
-    assert(Math.abs(gear / total - 0.10) < 0.015, q + ' 装备占比 ' + (gear / total * 100).toFixed(2) + '%');
+    const pct=Array.from(CONTAINER_QUALITY[q].pct),levels=pct.slice(0,5);levels[4]+=pct[5];
+    const missingGun=levels.reduce((n,p,i)=>n+(Object.values(G.WEAPONS).some(w=>w.rarity===i+1)?0:p),0)/100;
+    const expectedGear=.10*(1-missingGun/4),expectedAttachment=G.ATTACHMENT_LOOT[t===K?'K':'Q']*(pct[1]+pct[2]+pct[3])/100;
+    assert(Math.abs(gear / total - expectedGear) < 0.015, q + ' 非配件装备占比 ' + (gear / total * 100).toFixed(2) + '%');
+    assert(Math.abs(attachment / total - expectedAttachment)<.015,q+' 配件占比');
   }
 });
 
@@ -142,11 +147,15 @@ test('掉出的背包能穿回去，携带容量随之变化', () => {
   const before = G.bagSlots();
   const r = Loot.rollGear('rich', K.gearPool);
   const eq = r.item.equip;
-  if (eq.kind === 'bag') {
+  if (eq?.kind === 'bag') {
     Save.gear.back = BACKPACK.make(eq.bag);
     assert.equal(G.bagSlots(), BACKPACK.def(eq.bag).slots);
-  } else {
+  } else if(eq?.kind==='gun') {
+    assert(G.WEAPONS[eq.gun]);assert.equal(eq.mag,0);
+  } else if(eq?.kind==='armor') {
     assert.ok(EQUIP.armor(eq.gear), '护甲伪物品造不出来');
+  } else {
+    assert.equal(r.item.equip,undefined,'枪械缺档回退为普通物品');
   }
   assert.ok(before >= 4);
 });

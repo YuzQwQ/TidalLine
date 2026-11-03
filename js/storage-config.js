@@ -2,6 +2,7 @@ const STORAGE_UI_CONFIG={
   categories:[
     {id:'all',name:'全部物品',icon:'box'},
     {id:'weapons',name:'武器',icon:'tool'},
+    {id:'attachments',name:'枪械配件',icon:'tool'},
     {id:'ammo',name:'弹药',icon:'box'},
     {id:'protection',name:'防护装备',icon:'person'},
     {id:'bags',name:'背包',icon:'box'},

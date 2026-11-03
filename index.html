@@ -1054,9 +1054,12 @@ window.addEventListener('error', function (e) {
 .rg-sfx-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin: 5px 0 4px; }
 .rg-sfx-btns button { padding: 3px 0; font-size: 10px; }
 .rg-sfx-tip { color: #4c665e; font-size: 9.5px; line-height: 1.5; }
+
+.tip-ic img.item-detail-original{image-rendering:auto}
 </style>
 <link rel="stylesheet" href="assets/ui/safehouse.css">
-<link rel="stylesheet" href="assets/ui/merchant.css"><link rel="stylesheet" href="assets/ui/storage.css"></head>
+<link rel="stylesheet" href="assets/ui/merchant.css"><link rel="stylesheet" href="assets/ui/storage.css">
+<link rel="stylesheet" href="assets/ui/attachments.css"></head>
 <body>
 
 <div id="stage">
@@ -1116,7 +1119,8 @@ window.addEventListener('error', function (e) {
       <div><kbd>Shift</kbd><span>潜行（噪声最小）</span></div>
       <div><kbd>空格</kbd><span>冲刺（噪声最大）</span></div>
       <div><kbd>E</kbd><span>搜刮 / 开门 / 撤离 / 搜尸体</span></div>
-      <div><kbd>R</kbd><span>换弹</span></div>
+      <div><kbd>R</kbd><span>短按装填 · 长按弹药轮盘</span></div>
+      <div><kbd>B</kbd><span>切换射击模式</span></div>
       <div><kbd>Tab</kbd><span>背包</span></div>
       <div><kbd>5</kbd><span>医疗（长按打开轮盘选药）</span></div>
     </div>
@@ -1253,13 +1257,18 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 <script src="js/config.js"></script>
 <script src="js/pixfont.js"></script>
 <script src="js/data.js"></script>
+<script src="js/attachment-data.js"></script>
+<script src="js/attachments.js"></script>
 <script src="js/core.js"></script>
 <script src="js/entities.js"></script>
+<script src="js/gunplay.js"></script>
 <script src="js/human-ai.js"></script>
 <script src="js/common.js"></script>
 <script src="js/medical.js"></script>
+<script src="js/detail-art.js"></script>
 <script src="js/art.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/music.js"></script>
 <script src="js/save.js"></script>
 <script src="js/base.js"></script>
 <script src="js/game.js"></script>
@@ -1275,6 +1284,7 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 <script src="js/merchant-ui.js"></script>
 <script src="js/storage-config.js"></script>
 <script src="js/storage-ui.js"></script>
+<script src="js/attachment-ui.js"></script>
 <script src="js/boot.js"></script>
 </body>
 </html>

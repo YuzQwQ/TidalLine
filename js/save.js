@@ -16,12 +16,13 @@ const Save = {
   // 武器位和护甲一样存"物品"（EQUIP.gun 伪物品，带余弹），不是光存一个 id：
   // 这样从尸体上捡的枪、军火商买的枪、身上那把，走的是同一套数据结构。
   gear: {
-    weapons: [EQUIP.gun('rifle', 30), EQUIP.gun('shotgun', 6), EQUIP.gun('pistol', 12)],
+    weapons: DEFAULT_WEAPONS.map(id=>EQUIP.gun(id,WEAPONS[id].mag)),
     helmet: null,      // { type:'helmet', lv, dur }
     body: null,        // { type:'body',   lv, dur }
     back: null         // { id, name, slots, w, price }：决定携带容量，见 bagSlots()
   },
   meleeGiftClaimed: false,
+  attachmentRecovery: [],
   runs: 0,
   bestHaul: 0,        // 单局带出价值的历史最高（结算页的"新纪录"用）
   codexCount() { return ITEMS.filter(item=>!item.noCodex&&itemGroup(item)==='collectible'&&this.codex[item.id]).length; },
@@ -35,9 +36,9 @@ const Save = {
         const e = list[i];
         if (!e) continue;
         if (typeof e === 'string') {
-          if (WEAPONS[e]) out[i] = EQUIP.gun(e, WEAPONS[e].mag);
+          if (WEAPONS[e]) out[i] = this.migrateGun({gun:e,mag:({rifle:30,smg:25,shotgun:6,pistol:12})[e]??WEAPONS[e].mag});
         } else if (e.equip && e.equip.kind === 'gun' && WEAPONS[e.equip.gun]) {
-          out[i] = EQUIP.gun(e.equip.gun, e.equip.mag | 0, e.equip.ammo, e.equip.rounds);   // 重新包一遍，字段补齐（含装填弹种）
+          out[i] = this.migrateGun(e.equip);
         }
       }
     }
@@ -46,11 +47,24 @@ const Save = {
     return out;
   },
 
+  migrateGun(eq){
+    const w=typeof Attachments!=='undefined'?Attachments.resolve(eq.gun,eq.attachments):WEAPONS[canonicalWeaponId(eq.gun)];if(!w)return null;
+    if(typeof Attachments!=='undefined'&&this._partSpill){for(const bad of Attachments.normalize(eq.gun,eq.attachments).invalid){if(bad.known)this._partSpill.push(EQUIP.attachment(bad.id));else this.attachmentRecovery.push({gun:eq.gun,...bad});}}
+    const count=Math.max(0,eq.mag|0),fallback=AMMO_BY_ID[eq.ammo]?.caliber===w.caliber?eq.ammo:w.ammo;
+    const rounds=(Array.isArray(eq.rounds)?eq.rounds:[]).filter(id=>AMMO_BY_ID[id]?.caliber===w.caliber).slice(0,count);
+    while(rounds.length<count)rounds.push(fallback);
+    if(this._ammoSpill)for(const id of rounds.slice(w.mag))this._ammoSpill.push({id,n:1});
+    return EQUIP.gun(w.id,Math.min(count,w.mag),fallback,rounds.slice(0,w.mag),eq);
+  },
+
   load() {
     try {
+      this._ammoSpill=[];
       const raw = localStorage.getItem(this.key);
       if (!raw) { this.bag = this.defaultBag(); return; }
       const d = JSON.parse(raw);
+      this._partSpill=[];
+      this.attachmentRecovery=Array.isArray(d.attachmentRecovery)?d.attachmentRecovery:[];
       this.codex = d.codex || {};
       this.stash = Array.isArray(d.stash) ? d.stash : [];
       this.runs = d.runs || 0;
@@ -76,6 +90,10 @@ const Save = {
 
       this.normalizeStash();
       this.normalizeBag();
+      for(const item of this._partSpill)this.stash.push({id:item.id,n:1,gear:item});
+      this._partSpill=null;
+      if(this._ammoSpill.length)this.stash=this.normalizeList([...this.stash,...this._ammoSpill]);
+      this._ammoSpill=null;
     } catch (e) {
       if (!Array.isArray(this.bag) || !this.bag.length) this.bag = this.defaultBag();
     }
@@ -143,6 +161,7 @@ const Save = {
         gear: this.gear,
         runs: this.runs,
         meleeGiftClaimed: this.meleeGiftClaimed,
+        attachmentRecovery: this.attachmentRecovery,
         bestHaul: this.bestHaul
       }));
     } catch (e) { /* localStorage 不可用就算了 */ }
@@ -178,10 +197,11 @@ const Save = {
       if (e.gear && e.gear.equip) {
         // 用当前模板重算价格与回收价，耐久、余弹仍来自旧快照。
         const spec = e.gear.equip;
-        const current = spec.kind === 'melee' ? EQUIP.melee(spec.melee,spec.bound) : spec.kind === 'armor' ? EQUIP.armor(spec.gear)
-          : spec.kind === 'gun' ? EQUIP.gun(spec.gun, spec.mag, spec.ammo, spec.rounds)
+        const current = spec.kind === 'attachment' ? EQUIP.attachment(spec.attachment) : spec.kind === 'melee' ? EQUIP.melee(spec.melee,spec.bound) : spec.kind === 'armor' ? EQUIP.armor(spec.gear)
+          : spec.kind === 'gun' ? this.migrateGun(spec)
           : spec.kind === 'bag' ? EQUIP.bag(spec.bag) : null;
         if (current) out.push({ id: current.id, n: 1, gear: current });
+        else if(spec.kind==='attachment'&&this._partSpill)this.attachmentRecovery.push({id:spec.attachment,kind:'unknown-loose'});
         continue;
       }
       const id = this.migrateAmmoId(Medical.canonicalId(e.id));

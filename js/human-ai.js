@@ -2,12 +2,12 @@
 const HUMAN_UNIT_DEFS = {
   holdout: {name:'据点看守',short:'看',color:'#b8a26b',hp:48,speed:42,sight:10,fov:110*Math.PI/180,hear:1,
     dmg:4,range:6*CFG.TILE,cd:1.5,faction:'scav',human:true,arrow:true,tactical:true,
-    weapon:'shotgun',levels:[[2,80],[3,20]],helmetChance:.65,bodyChance:.85,mag:6,reserve:12,reload:3,aim:.65,
+    weapon:'rem870',levels:[[2,80],[3,20]],helmetChance:.65,bodyChance:.85,mag:6,reserve:12,reload:3,aim:.65,
     warning:1,guardRadius:3,leash:8,chaseLimit:6,quietReset:10,pump:.4,search:8,
     desc:'守着楼院和物资的人。工装、旧头盔和短霰弹枪，足够让陌生人在门口停一停。'},
   retriever: {name:'受雇回收员',short:'回',color:'#7c9684',hp:60,speed:50,sight:13,fov:110*Math.PI/180,hear:1,
     dmg:10,range:11*CFG.TILE,cd:1.6,faction:'scav',human:true,arrow:true,tactical:true,
-    weapon:'rifle',levels:[[3,80],[4,20]],helmetChance:.9,bodyChance:1,mag:30,reserve:30,reload:2.6,aim:.55,
+    weapon:'m4a1',levels:[[3,80],[4,20]],helmetChance:.9,bodyChance:1,mag:30,reserve:30,reload:2.6,aim:.55,
     burst:3,burstGap:.16,search:8,radioRange:10,radioGap:1,rolePeriod:6,coverRadius:6,coverPath:8,
     desc:'带着回收清单进入环礁湾的专业人员。先确认目标，再决定带走多少别的东西。'}
 };
@@ -131,7 +131,7 @@ const HumanAI={
     if(!this.clear(e.x,e.y,mx,my,true))return false;
     const ammo=ammoItem(w.caliber,e.gearLv);const mul=ammo?.dmgMul??1;
     for(let i=0;i<(w.pellets||1);i++){
-      const ang=angle+U.rand(-w.spreadBase,w.spreadBase);
+      const sp=w.pellets>1?w.pelletSpread:w.spreadBase,ang=angle+U.rand(-sp,sp);
       Game.bullets.push(new Bullet(mx,my,ang,w.speed,e.t.faction,d.dmg*mul,w.range,e.penLevel));
     }
     a.mag--;a.shots++;a.fireFlash=.12;

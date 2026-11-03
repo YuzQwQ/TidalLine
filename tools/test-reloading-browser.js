@@ -14,7 +14,7 @@ const server=http.createServer((req,res)=>{
       const p=await browser.newPage({viewport:{width:1200,height:800}}),errors=[];
       p.on('pageerror',e=>errors.push(e.message));
       await p.goto('http://127.0.0.1:'+server.address().port+'/'+encodeURIComponent(file)+'#base');
-      await p.waitForFunction(()=>Icons.get('ammo_556_1')&&Icons.gear.rifle);
+      await p.waitForFunction(()=>Icons.get('ammo_556_1')&&Icons.gear.m4a1);
       await p.evaluate(()=>{
         Save.gear.back=BACKPACK.make('bag05');Save.bag=[];
         Save.gear.weapons=[EQUIP.gun('rifle',2,'ammo_556_1',['ammo_556_1','ammo_556_5']),null,EQUIP.gun('pistol',0)];
@@ -54,8 +54,8 @@ const server=http.createServer((req,res)=>{
       await p.evaluate(()=>window.dispatchEvent(new Event('blur')));await p.keyboard.up('r');
       assert(await p.evaluate(()=>!AmmoWheel.isOpen()&&!AmmoQuick.pressing));
       // Base weapon unloading also targets the carried bag.
-      await p.evaluate(()=>{Game.syncGear();Base.open();Save.bag=[];Base.render();});
-      await p.locator('#baseGear .slot').first().click({button:'right'});
+      await p.evaluate(()=>{Game.syncGear();Base.open();Safehouse.route('loadout');Save.bag=[];Base.render();});
+      await p.locator('#baseGear .slot').first().scrollIntoViewIfNeeded();await p.waitForTimeout(150);await p.locator('#baseGear .slot').first().click({button:'right'});
       await p.getByText('退弹',{exact:true}).click();
       assert(await p.evaluate(()=>Save.gear.weapons[0].equip.mag===0&&Save.bag.some(e=>e.id==='ammo_556_3')));
       assert.deepEqual(errors,[]);

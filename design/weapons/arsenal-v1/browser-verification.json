@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "pixels": [
+    {
+      "id": "m4a1",
+      "visible": 236
+    },
+    {
+      "id": "akm",
+      "visible": 188
+    },
+    {
+      "id": "famas_f1",
+      "visible": 294
+    },
+    {
+      "id": "pp19_01",
+      "visible": 186
+    },
+    {
+      "id": "mp5a3",
+      "visible": 219
+    },
+    {
+      "id": "ump45",
+      "visible": 247
+    },
+    {
+      "id": "mp155",
+      "visible": 95
+    },
+    {
+      "id": "rem870",
+      "visible": 145
+    },
+    {
+      "id": "saiga12",
+      "visible": 181
+    },
+    {
+      "id": "glock17",
+      "visible": 314
+    },
+    {
+      "id": "m1911a1",
+      "visible": 258
+    },
+    {
+      "id": "beretta92",
+      "visible": 263
+    },
+    {
+      "id": "ammo_762x39",
+      "visible": 1035
+    },
+    {
+      "id": "ammo_45acp",
+      "visible": 946
+    }
+  ],
+  "reports": [
+    {
+      "file": "index.html",
+      "errors": [],
+      "externalAssets": 0,
+      "shop": true,
+      "burst": true,
+      "semi": true,
+      "reload": true,
+      "modeMenu": true,
+      "pump": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ]
+    },
+    {
+      "file": "潮汐线.html",
+      "errors": [],
+      "externalAssets": 0,
+      "shop": true,
+      "burst": true,
+      "semi": true,
+      "reload": true,
+      "modeMenu": true,
+      "pump": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ]
+    }
+  ]
+}

@@ -52,7 +52,66 @@ const man = require('../assets/audio/manifest.json');
     assert(Math.abs(extra.melee * rms('melee') - extra.loudMelee) < 0.02, '近战对齐到 LOUD.melee');
     assert(Math.abs(extra.sell * rms('sell') - extra.loudSell) < 0.02, '出售对齐到 LOUD.sell');
     assert(extra.durMelee < 0.55, '近战挥砍短于折叠刀 0.55s 攻击间隔');
-    assert(Math.abs(extra.durShotgun - 0.70) < 0.02, '霰弹 0.70s：留得住衰减尾音');
+    /* 霰弹开火必须留得住衰减尾音——早期版本切到 0.4s，听着像被人掐断。
+       现在换成带完整尾音的录音（0.78s），只卡下限：换更长的素材不用改测试。 */
+    assert(extra.durShotgun >= 0.70, '霰弹留得住衰减尾音，实际 ' + extra.durShotgun.toFixed(3) + 's');
+
+    /* ---------- 1.6 搜索音按容器固定：一个容器一个声，不随机 ---------- */
+    const sr = await page.evaluate(() => {
+      /* 同一个容器连搜 12 次，必须每次都是同一条 */
+      const stable = {};
+      const hit = (at) => {
+        const got = [];
+        const real = SFX._playSample.bind(SFX);
+        SFX._playSample = (id) => { got.push(id); return real(id); };
+        for (let i = 0; i < 12; i++) SFX.play('search', { at });
+        SFX._playSample = real;
+        return got;
+      };
+      for (const at of ['crate_luggage', 'crate_filing', 'crate_tool', 'crate_leatherbag', 'crate_fast']) {
+        const got = hit(at);
+        stable[at] = { kinds: [...new Set(got)].sort(), n: got.length };
+      }
+      stable.corpse = (() => { const got = hit('corpse'); return { kinds: [...new Set(got)].sort(), n: got.length }; })();
+      /* 没配素材的容器（垃圾桶）应该落回合成音，不播任何采样 */
+      const trash = hit('crate_trash');
+      /* 打开音也按容器走 */
+      const openOf = (at) => {
+        const got = [];
+        const real = SFX._playSample.bind(SFX);
+        SFX._playSample = (id) => { got.push(id); return real(id); };
+        SFX.play('container_open', { at });
+        SFX._playSample = real;
+        return got;
+      };
+      return {
+        stable, trash,
+        openLuggage: openOf('crate_luggage'), openTool: openOf('crate_tool'),
+        openTrash: openOf('crate_trash'),
+        gains: SFX.SEARCH_SAMPLE.map(id => SFX.gainOf[id]),
+        loud: SFX.LOUD.search,
+        rms: SFX.SEARCH_SAMPLE.map(id => SFX._measure(SFX.samples[id])),
+        zip: SFX.gainOf.bag_zip, zipLoud: SFX.LOUD.bagZip,
+        zipRms: SFX.samples.bag_zip ? SFX._measure(SFX.samples.bag_zip) : 0
+      };
+    });
+    for (const [at, v] of Object.entries(sr.stable)) {
+      assert.equal(v.kinds.length, 1, at + ' 每次都是同一个声，实际 ' + v.kinds.join('/'));
+    }
+    /* 不同材质的容器必须是不同的声——不然等于没分（尸体用布料声，和衣服类容器同材质） */
+    const used = Object.entries(sr.stable).filter(([at]) => at !== 'corpse').map(([, v]) => v.kinds[0]);
+    assert.equal(new Set(used).size, used.length, '不同容器不共用一条音（' + used.join('/') + '）');
+    assert.equal(sr.stable.corpse.kinds[0], 'search_cloth', '翻尸体是布料的声');
+    assert.equal(sr.trash.length, 0, '没配素材的容器落回合成音，不播采样');
+    assert.deepEqual(sr.openLuggage, ['bag_zip'], '行李箱掀开是拉链声');
+    assert.deepEqual(sr.openTool, ['container_open'], '工具箱掀开是箱盖声');
+    assert.equal(sr.openTrash.length, 0, '没配素材的容器不响开箱音');
+    /* 九条素材都对齐到 LOUD.search：换到哪个容器都一样响 */
+    sr.gains.forEach((g, i) => {
+      assert(Math.abs(g * sr.rms[i] - sr.loud) < 0.02, '搜索素材 ' + i + ' 对齐到 LOUD.search');
+      assert(g >= 0.15 && g <= 3, '搜索素材 ' + i + ' 增益没被钳住（' + g.toFixed(2) + '）');
+    });
+    assert(Math.abs(sr.zip * sr.zipRms - sr.zipLoud) < 0.02, '拉链对齐到 LOUD.bagZip');
 
     /* ---------- 2. 换弹序列：三段按 0 / 0.55 / 1.05 排，长度落在 1.5s 内 ---------- */
     const seq = await page.evaluate(() => SFX.SEQ.reload);
@@ -155,8 +214,11 @@ const man = require('../assets/audio/manifest.json');
     assert.deepEqual(routing.pistol,
       ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3', 'shot_pistol_1'],
       '手枪三条独立录音按顺序轮换，不重复同一发');
-    assert.deepEqual(routing.others, ['shot_rifle', 'shot_smg', 'shot_shotgun'],
+    assert.deepEqual(routing.others.slice(0, 3), ['shot_rifle', 'shot_smg', 'shot_shotgun'],
       '其余三把各走自己的录音');
+    /* 泵动霰弹枪开完要补一声拉泵（排在音频时钟上，跟着这一发走） */
+    assert.equal(routing.others[3], 'shot_shotgun_pump', '霰弹开火后跟一声拉泵');
+    assert.equal(routing.others.length, 4, '其余枪型不额外补音');
     assert(routing.rates[1] > routing.rates[0], '冲锋枪是升调播放（' + routing.rates[1] + ' > ' + routing.rates[0] + '）');
     assert(routing.enemy && routing.enemy.lp > 0, '敌人枪声走同一批录音并低通处理');
     assert(routing.fellBack, '采样缺失时落回合成音，不会变哑');

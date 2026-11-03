@@ -70,6 +70,36 @@ const CFG = {
     AIM_DEAD: 12
   },
 
+  /* ---------- 体力 ----------
+     上限先按满级给（成长系统落地后按角色等级取一段，条会跟着变短：
+     弧长 = ARC.SPAN × (当前上限 / MAX)，所以上限低的人条也短一截）。 */
+  STAMINA: {
+    MAX: 100,               // 满级上限
+    REGEN: 17,              // 每秒恢复
+    REGEN_DELAY: 0.7,       // 停手多久开始回
+    SPRINT_DRAIN: 13,       // 冲刺每秒消耗（还要乘负重倍率）
+    DODGE_COST: 22,         // 闪避一次性扣除
+    /* 负重对体力消耗的影响：中载及以下不额外消耗，重载变贵，超载最贵。
+       档位顺序跟着 BAG.TIERS：轻装 / 中载 / 重载 / 超载 */
+    LOAD_MULT: [1, 1, 1.45, 2.4],
+    NO_DODGE_TIER: 3,       // 超载（档位 3）直接不能闪避
+    EXHAUST_EXIT: 0.25,     // 力竭后回到这个比例才能重新冲刺
+    HOLD: 0.5,              // 回满后再亮多久
+    FADE: 0.9,              // 淡出耗时（慢慢化掉，不是啪一下没了）
+    FADE_IN: 0.1,           // 淡入要快，一消耗就得看得见
+    ARC: {
+      /* 一条竖着的浅弧，不是套在身上的半圈：
+         圆心挪到玩家左边，弧凸向右，看着就是右侧竖着的一条。
+         弧长固定，弧度（圆心角）单独调 —— 想更直就把 SWEEP 调小，
+         半径会自己变大（R = 弧长 / 弧度），长度不变。 */
+      LEN: 40,                // 满上限时的弧长（px）
+      SWEEP: 1.22,            // 圆心角 ≈70°：再大就弯回去成半圆了
+      GAP: 17,                // 弧离玩家中心多远（贴着角色外圈）
+      W: 3,                   // 条带粗细
+      MIN: 0.3                // 上限再低也留这么长，免得只剩一个点
+    }
+  },
+
   /* ---------- 视野 ---------- */
   FOV: {
     RADIUS: 11,             // 视锥半径（格）—— 按 32px 格调过，让锥边缘刚好在屏幕边
@@ -341,6 +371,7 @@ const ITEM_GROUP_BY_CAT = Object.fromEntries(Object.entries(ITEM_GROUPS).flatMap
 function itemGroup(item) { return item ? ITEM_GROUP_BY_CAT[item.cat] || null : null; }
 function formatMoney(value) { return '¥' + Math.round(Number(value) || 0).toLocaleString('en-US'); }
 function itemCategoryLabel(item) {
+  if(item?.equip?.kind==='attachment')return '装备 / 枪械配件';
   const group=ITEM_GROUPS[itemGroup(item)],cat=CATS[item.cat];
   return (group?group.name+' / ':'')+(cat?cat.name:'装备');
 }
@@ -386,9 +417,101 @@ function stashFilterMatch(item, f) {
    玩家、敌人、霰弹的每一颗弹丸都调这里，不要另写一套。
    ------------------------------------------------------------ */
 const CALIBERS = {
-  '556': { id: '556', name: '5.56×45mm', short: '5.56', label: '5.56mm' },
-  '9mm': { id: '9mm', name: '9×19mm',   short: '9mm',  label: '9mm'  },
-  '12g': { id: '12g', name: '12 Gauge', short: '12G',  label: '12 号' }
+  "556": {
+    "id": "556",
+    "name": "5.56×45mm",
+    "short": "5.56",
+    "label": "5.56mm",
+    "damage": [
+      15,
+      22
+    ],
+    "stack": 60,
+    "weight": 0.012,
+    "prices": [
+      60,
+      140,
+      320,
+      800,
+      2000
+    ]
+  },
+  "762x39": {
+    "id": "762x39",
+    "name": "7.62×39mm",
+    "short": "7.62",
+    "label": "7.62mm",
+    "damage": [
+      20,
+      27
+    ],
+    "stack": 60,
+    "weight": 0.016,
+    "prices": [
+      80,
+      180,
+      420,
+      1000,
+      2500
+    ]
+  },
+  "9mm": {
+    "id": "9mm",
+    "name": "9×19mm",
+    "short": "9mm",
+    "label": "9mm",
+    "damage": [
+      11,
+      15
+    ],
+    "stack": 90,
+    "weight": 0.012,
+    "prices": [
+      35,
+      80,
+      180,
+      450,
+      1100
+    ]
+  },
+  "45acp": {
+    "id": "45acp",
+    "name": ".45 ACP",
+    "short": ".45",
+    "label": ".45 ACP",
+    "damage": [
+      15,
+      20
+    ],
+    "stack": 90,
+    "weight": 0.015,
+    "prices": [
+      50,
+      110,
+      250,
+      600,
+      1500
+    ]
+  },
+  "12g": {
+    "id": "12g",
+    "name": "12 Gauge",
+    "short": "12G",
+    "label": "12号",
+    "damage": [
+      7,
+      10
+    ],
+    "stack": 20,
+    "weight": 0.012,
+    "prices": [
+      80,
+      180,
+      400,
+      900,
+      2200
+    ]
+  }
 };
 
 /* config 不依赖 core.js，这里自带一个夹取，避免加载顺序问题 */

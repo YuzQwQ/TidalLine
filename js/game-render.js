@@ -587,6 +587,44 @@ Object.assign(Game, {
       c.fill();
       this.drawFacingArrow(c, psx, psy, P.angle, acol);
     }
+
+    /* 体力条：跟着人走，画在右侧 */
+    this.drawStamina(c, psx, psy, P);
+  },
+
+  /* 体力弧：玩家右侧一条竖着的浅弧，从上端往下消耗，绿 → 黄 → 红；
+     回满后整条淡到看不见，所以平时不占视野，只有真掉体力那会儿才冒出来。
+     弧长跟体力上限走：上限低的人条也短一截（成长系统落地后就是这个效果）。 */
+  drawStamina(c, sx, sy, P) {
+    const S = CFG.STAMINA;
+    if (!S || P.dead || !P.stamAlpha || P.stamAlpha < 0.01) return;
+    const a = P.stamAlpha;
+    const arc = S.ARC;
+    const ratio = P.stamRatio;
+    const len = arc.LEN * U.clamp(P.maxStamina / S.MAX, arc.MIN, 1);
+    const R = len / arc.SWEEP;              // 弧长定死，弧度越小半径越大
+    const cx = sx + arc.GAP - R;            // 圆心推到玩家左边，弧才是"竖着凸向右"
+    const a0 = -arc.SWEEP / 2;              // 上端
+    const a1 = a0 + arc.SWEEP;              // 下端
+    /* 从下往上消耗：体力掉一点，上面先空一截，剩的一段贴着下端 */
+    const start = a1 - arc.SWEEP * ratio;
+
+    c.lineCap = 'butt';
+    /* 轨道：只比条带宽一点点，是一根线，不是一块面 */
+    c.globalAlpha = a * 0.55;
+    c.strokeStyle = P.exhausted ? 'rgba(96,26,26,0.9)' : 'rgba(6,14,12,0.9)';
+    c.lineWidth = arc.W + 2;
+    c.beginPath(); c.arc(cx, sy, R, a0, a1); c.stroke();
+
+    /* 填充：绿 → 红，力竭时压到最红 */
+    const hue = P.exhausted ? 0 : 4 + 128 * ratio;
+    const sat = 58 + 14 * (1 - ratio);
+    const lum = 50 - 4 * ratio;
+    c.globalAlpha = a;
+    c.strokeStyle = 'hsl(' + hue.toFixed(0) + ',' + sat.toFixed(0) + '%,' + lum.toFixed(0) + '%)';
+    c.lineWidth = arc.W;
+    c.beginPath(); c.arc(cx, sy, R, start, a1); c.stroke();
+    c.globalAlpha = 1;
   },
 
   /* 没有方向图时，用一个小三角在身外标朝向 */
@@ -735,11 +773,12 @@ Object.assign(Game, {
 
     if (P.reloadT > 0) {
       c.fillStyle = '#c98a5e';
-      c.fillText('换弹中', 26, CFG.VIEW_H - 26);
+      c.fillText((P.weapon.reloadType==='tube'?'逐发装填 ':'换弹 ')+P.reloadT.toFixed(1)+'s', 26, CFG.VIEW_H - 26);
     } else if (P.mag === 0) {
       c.fillStyle = '#8d3a3a';
       c.fillText('按 R 装填', 26, CFG.VIEW_H - 26);
     }
+    c.fillStyle='#a8ba9d';c.font='9px monospace';c.textAlign='right';c.fillText(Gunplay.labels[P.weapon.fireMode||P.weapon.defaultMode]+' · '+({ready:'就绪',firing:'射击',cycling:'泵动',reloading:'装填'})[Gunplay.state(P)],178,CFG.VIEW_H-17);c.textAlign='left';
 
     }
     /* --- 右上：潮汐（靶场换成在场时长，没有倒计时） --- */

@@ -78,7 +78,7 @@ const ctx = {
 ctx.globalThis = ctx;
 vm.createContext(ctx);
 
-for (const f of ['config.js', 'data.js', 'core.js', 'entities.js', 'human-ai.js',
+for (const f of ['config.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
   'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
   'medhud.js', 'melee.js', 'range.js', 'boot.js']) {
@@ -266,7 +266,7 @@ P4.mag = 3;
 const reserve0 = P4.bag.hasAmmo();
 P4.tryReload();
 ok('进入换弹', P4.reloadT > 0);
-for (let i = 0; i < 120; i++) Game.update(1 / 60);
+for (let i = 0; i < 150; i++) Game.update(1 / 60);
 ok('换弹完成补满', P4.mag === CFG.WEAPON.mag, 'mag=' + P4.mag);
 ok('储备弹药减少', P4.bag.hasAmmo() < reserve0,
    reserve0 + ' → ' + P4.bag.hasAmmo());
@@ -388,10 +388,10 @@ Game.takeGear(corpseA.items[1], 1);
 ok('空护甲位直接穿上', PG.body && PG.body.lv === 3);
 
 Game.takeGear(corpseA.items[2], 2);
-ok('枪进空的主武器位', PG.weapons[1] && PG.weapons[1].id === 'smg');
+ok('枪进空的主武器位', PG.weapons[1] && PG.weapons[1].id === 'pp19_01');
 ok('尸体上的枪已拿走', corpseA.items[2] === null);
-ok('尸体枪只给三成弹匣', PG.weapons[1].magCur === 8, PG.weapons[1].magCur + ' / 25 发');
-ok('武器槽写回存档', Save.gear.weapons[1] && Save.gear.weapons[1].equip.gun === 'smg',
+ok('尸体枪只给三成弹匣', PG.weapons[1].magCur === 9, PG.weapons[1].magCur + ' / 30 发');
+ok('武器槽写回存档', Save.gear.weapons[1] && Save.gear.weapons[1].equip.gun === 'pp19_01',
   Save.gear.weapons[1] ? Save.gear.weapons[1].name : '空');
 ok('头盔写回存档', !!Save.gear.helmet && Save.gear.helmet.lv === 1);
 
@@ -425,7 +425,7 @@ const bn = PG.bag.slots.length;
 Game.takeGear(corpseC.items[0], 0);
 ok('武器位满了枪进背包', PG.bag.slots.length === bn + 1);
 const bi = PG.bag.slots.findIndex(s => s.item.equip && s.item.equip.kind === 'gun');
-ok('背包里的枪记住余弹', PG.bag.slots[bi].item.equip.mag === 8);
+ok('背包里的枪记住余弹', PG.bag.slots[bi].item.equip.mag === 9);
 
 // 背包满 / 超重时不硬塞
 const full = PG.bag.slots.slice();
@@ -906,11 +906,11 @@ ok('耐久会写回存档',
 console.log('\n=== 武器槽 ===');
 PE.fillWeapons(['rifle', 'shotgun', 'pistol']);
 ok('三个武器槽都装上', PE.weapons.filter(Boolean).length === 3);
-ok('默认拿第一把', PE.slot === 0 && PE.weapon.id === 'rifle');
+ok('默认拿第一把', PE.slot === 0 && PE.weapon.id === 'm4a1');
 PE.mag = 12;
 PE.switchWeapon(1);
-ok('切到霰弹枪', PE.weapon.id === 'shotgun');
-ok('每把枪的弹匣各自记住', PE.mag === 6, 'mag=' + PE.mag);
+ok('切到霰弹枪', PE.weapon.id === 'mp155');
+ok('每把枪的弹匣各自记住', PE.mag === 5, 'mag=' + PE.mag);
 PE.switchWeapon(0);
 ok('切回来还是原来的余弹', PE.mag === 12, 'mag=' + PE.mag);
 ok('霰弹一次打六颗', (() => {
@@ -1189,7 +1189,7 @@ console.log('\n=== 武器位与军火商 ===');
 Save.stash = []; Save.credits = 200000;
 Save.gear.weapons = [EQUIP.gun('rifle', 18), null, EQUIP.gun('pistol', 7)];
 ok('武器位存的是物品而不是 id',
-  typeof Save.gear.weapons[0] === 'object' && Save.gear.weapons[0].equip.gun === 'rifle');
+  typeof Save.gear.weapons[0] === 'object' && Save.gear.weapons[0].equip.gun === 'm4a1');
 ok('余弹跟着枪存下来', Save.gear.weapons[0].equip.mag === 18);
 ok('副武器默认有枪', !!Save.gear.weapons[SIDEARM_SLOT]);
 
@@ -1222,21 +1222,21 @@ ok('副武器位只列副武器',
 Base.togglePicker('w0', null);
 const rifleBefore = Save.gear.weapons[0];
 Base.equipFromStash(smgEntry, 'w0');
-ok('换上仓库里的冲锋枪', Save.gear.weapons[0].equip.gun === 'smg');
+ok('换上仓库里的冲锋枪', Save.gear.weapons[0].equip.gun === 'pp19_01');
 ok('换下来的步枪回仓库（余弹也在）',
-  Save.stash.some(e => e.gear && e.gear.equip.gun === 'rifle' && e.gear.equip.mag === 18));
+  Save.stash.some(e => e.gear && e.gear.equip.gun === 'm4a1' && e.gear.equip.mag === 18));
 ok('原先那把不在身上了', Save.gear.weapons[0] !== rifleBefore);
 
 // 卸下主武器：回仓库，不再是"只能换不能卸"
 Save.addGearStash(EQUIP.gun('shotgun', 6));
-const shotgunEntry = Save.stash.find(e => e.gear && e.gear.equip.gun === 'shotgun');
+const shotgunEntry = Save.stash.find(e => e.gear && e.gear.equip.gun === 'mp155');
 Base.togglePicker('w1', null);
 Base.equipFromStash(shotgunEntry, 'w1');
-ok('第二个主武器位也能装', Save.gear.weapons[1].equip.gun === 'shotgun',
+ok('第二个主武器位也能装', Save.gear.weapons[1].equip.gun === 'mp155',
   Save.gear.weapons[1] ? Save.gear.weapons[1].equip.gun : '空');
 Base.unequip('w1');
 ok('主武器能卸下', Save.gear.weapons[1] === null);
-ok('卸下的枪回仓库', Save.stash.some(e => e.gear && e.gear.equip.gun === 'shotgun'));
+ok('卸下的枪回仓库', Save.stash.some(e => e.gear && e.gear.equip.gun === 'mp155'));
 
 // 副武器现在允许卸下，死亡后也不补发
 const sideBefore = Save.gear.weapons[SIDEARM_SLOT];
@@ -1267,9 +1267,9 @@ ok('未打空的枪余弹写回存档',
 
 // 老存档：['rifle','shotgun','pistol'] 这种只有 id 的格式要能迁移
 const migrated = Save.migrateWeapons(['smg', null, 'pistol']);
-ok('老存档的 id 能迁成物品', migrated[0] && migrated[0].equip.gun === 'smg');
-ok('老存档迁移后弹匣是满的', migrated[0].equip.mag === WEAPONS.smg.mag);
-ok('迁移保留已有副武器', migrated[2].equip.gun === 'pistol');
+ok('老存档的 id 能迁成物品', migrated[0] && migrated[0].equip.gun === 'pp19_01');
+ok('老存档迁移保留旧弹数，不额外补发', migrated[0].equip.mag === 25);
+ok('迁移保留已有副武器', migrated[2].equip.gun === 'glock17');
 
 console.log('\n=== 撤离 ===');
 Game.startRun();
@@ -1363,7 +1363,7 @@ for (const id of ['rifle', 'shotgun', 'smg', 'pistol']) {
   sfxLog.length = 0;
   gunner.tryShoot();
   const call = sfxLog.find(c => c.name === 'shot');
-  ok('开火带枪型：' + id, !!call && call.opts && call.opts.gun === id);
+  ok('开火带枪型：' + id, !!call && call.opts && call.opts.gun === vm.runInContext('canonicalWeaponId',ctx)(id));
 }
 
 /* ---- 脚步：同样的时间，越快步子越密 ---- */
@@ -1486,7 +1486,7 @@ ok('重置本枪回到默认射速', Math.abs(Game.player.weapon.rpm - WEAPONS.r
 /* 换枪：四把枪都能在靶场里上膛 */
 for (const id of ['shotgun', 'smg', 'pistol', 'rifle']) {
   noThrow('靶场换枪 ' + id, () => Range.equip(id));
-  ok('靶场当前枪是 ' + id, Game.player.weapon.id === id, Game.player.weapon.id);
+  ok('靶场当前枪是 ' + id, Game.player.weapon.id === vm.runInContext('canonicalWeaponId',ctx)(id), Game.player.weapon.id);
 }
 
 /* 弹孔与散布统计 */
@@ -1501,8 +1501,8 @@ Range.setDisp(RANGE_PARAMS.find(p => p.key === 'rpm'), 600);
 Range.apply();
 const exp = Range.exportJson();
 ok('导出 JSON 只列改动项',
-   !!exp.weapons && !!exp.weapons.rifle && exp.weapons.rifle.rpm === 600 &&
-   !exp.weapons.smg,
+   !!exp.weapons && !!exp.weapons.m4a1 && exp.weapons.m4a1.rpm === 600 &&
+   !exp.weapons.pp19_01,
    JSON.stringify(exp.weapons));
 ok('导出结构能被写回脚本识别', exp.version === 1 && !('weaponDiff' in exp),
    Object.keys(exp).join(','));
@@ -1708,6 +1708,119 @@ console.log('\n=== 双轴后坐力 ===');
     PR.update(1 / 60, { mx: 0, my: 0, aimAngle: Math.PI, aimX: PR.x + 60, aimY: PR.y });
     ok('鼠标离开死区才改朝向', Math.abs(PR.angle - Math.PI) < 1e-9, PR.angle.toFixed(4));
   }
+}
+
+/* ============================================================
+   体力：冲刺持续消耗 / 闪避直接扣 / 负重放大消耗
+   ============================================================ */
+console.log('\n=== 体力 ===');
+{
+  Game.startRun();
+  const PR = Game.player;
+  const S = CFG.STAMINA;
+  const dt = 1 / 60;
+  PR.x = M.cx(23); PR.y = M.cy(13);
+
+  const mk = (o) => Object.assign({
+    mx: 1, my: 0, sneak: false, sprint: false, dodge: false,
+    aimAngle: 0, aimX: PR.x + 200, aimY: PR.y
+  }, o || {});
+  const run = (n, o) => { for (let i = 0; i < n; i++) PR.update(dt, mk(o)); };
+  /* 负重档位直接改 totalWeight：塞几十公斤东西进来太麻烦，挡位才是要看的 */
+  const setW = (w) => Object.defineProperty(PR, 'totalWeight', { value: w, configurable: true });
+  const clrW = () => { delete PR.totalWeight; };
+  const reset = () => {
+    PR.stamina = PR.maxStamina; PR.exhausted = false;
+    PR.dodgeCd = 0; PR.dodgeT = 0; PR.stamHold = 0;
+  };
+
+  ok('开局满体力', PR.stamina === PR.maxStamina && PR.maxStamina === S.MAX, PR.maxStamina + '');
+  ok('满体力时体力条不显示', PR.stamAlpha === 0);
+
+  /* 冲刺：一直在掉，条要立刻亮起来 */
+  reset();
+  run(60, { sprint: true });
+  ok('冲刺一秒持续掉体力', PR.stamina < S.MAX - S.SPRINT_DRAIN * 0.8 &&
+     PR.stamina > S.MAX - S.SPRINT_DRAIN * 1.2, '剩 ' + PR.stamina.toFixed(1));
+  ok('消耗后体力条显示出来', PR.stamAlpha > 0.9, PR.stamAlpha.toFixed(2));
+
+  /* 站着按住空格不算冲刺消耗 */
+  reset();
+  run(60, { sprint: true, mx: 0, my: 0 });
+  ok('原地按住冲刺不掉体力', PR.stamina === S.MAX, PR.stamina.toFixed(2));
+
+  /* 负重：中载及以下不变，重载变贵，超载最贵 */
+  const drainWith = (w) => {
+    reset(); setW(w);
+    run(60, { sprint: true });
+    const d = S.MAX - PR.stamina;
+    clrW();
+    return d;
+  };
+  const dLight = drainWith(5), dMid = drainWith(25), dHeavy = drainWith(40), dOver = drainWith(60);
+  ok('轻装按基础速率消耗', Math.abs(dLight - S.SPRINT_DRAIN) < 0.6, dLight.toFixed(2) + '/s');
+  ok('中载及以下不影响消耗', Math.abs(dMid - dLight) < 0.05,
+     dMid.toFixed(2) + ' vs ' + dLight.toFixed(2));
+  ok('重载提高消耗', Math.abs(dHeavy / dLight - S.LOAD_MULT[2]) < 0.03, (dHeavy / dLight).toFixed(3));
+  ok('超载大幅提高消耗', Math.abs(dOver / dLight - S.LOAD_MULT[3]) < 0.03, (dOver / dLight).toFixed(3));
+
+  /* 闪避：一次性扣 */
+  reset();
+  PR.update(dt, mk({ dodge: true }));
+  ok('闪避直接扣一大截体力', Math.abs((S.MAX - PR.stamina) - S.DODGE_COST) < 0.01,
+     '扣了 ' + (S.MAX - PR.stamina).toFixed(1));
+  ok('闪避确实滑出去了', PR.dodgeT > 0);
+  ok('闪避后体力条亮着', PR.stamAlpha > 0.9);
+
+  /* 超载不可闪避 */
+  reset(); setW(60);
+  PR.update(dt, mk({ dodge: true }));
+  ok('超载不能闪避', PR.dodgeT === 0 && PR.stamina === S.MAX);
+  ok('超载闪避给出原因', PR.dodgeBlockedWhy() === '超载，闪不动', PR.dodgeBlockedWhy());
+  clrW();
+
+  /* 体力不够也闪不动 */
+  reset();
+  PR.stamina = S.DODGE_COST - 2;
+  PR.update(dt, mk({ dodge: true }));
+  ok('体力不足不能闪避', PR.dodgeT === 0 && !PR.canDodge());
+  ok('体力不足也给出原因', PR.dodgeBlockedWhy() === '体力不够，闪不动', PR.dodgeBlockedWhy());
+
+  /* 力竭：冲空了就冲不动，歇够才能再来 */
+  reset();
+  PR.stamina = 1;
+  run(30, { sprint: true });
+  ok('体力耗尽进入力竭', PR.exhausted && PR.stamina === 0, PR.stamina.toFixed(2));
+  run(60, { sprint: true });
+  /* 力竭期间体力照回（人还在慢慢挪），但没回到 EXHAUST_EXIT 之前蹬不起来 */
+  ok('力竭时按住也冲不起来', PR.sprinting === false && PR.stamRatio < S.EXHAUST_EXIT,
+     '回到 ' + PR.stamRatio.toFixed(2));
+  run(180, {});
+  ok('歇够后体力恢复', PR.stamina > S.MAX * S.EXHAUST_EXIT, PR.stamina.toFixed(1));
+  ok('恢复过线后解除力竭', !PR.exhausted);
+  run(30, { sprint: true });
+  ok('解除后能重新冲刺', PR.sprinting === true && PR.stamina < S.MAX);
+
+  /* 回满后淡出 */
+  reset();
+  run(240, {});
+  ok('停手后回满体力', PR.stamina === S.MAX, PR.stamina.toFixed(2));
+  ok('回满后体力条淡到消失', PR.stamAlpha < 0.01, PR.stamAlpha.toFixed(3));
+
+  /* 上限决定弧长：满级就是整条，上限低的人条更短；弧度固定，短就短在长度上 */
+  const lenOf = (max) => S.ARC.LEN * (Math.min(1, max / S.MAX) >= S.ARC.MIN
+    ? Math.min(1, max / S.MAX) : S.ARC.MIN);
+  ok('满级上限对应整条弧', Math.abs(lenOf(S.MAX) - S.ARC.LEN) < 1e-9, lenOf(S.MAX).toFixed(1) + 'px');
+  ok('上限减半弧长减半', Math.abs(lenOf(S.MAX / 2) - S.ARC.LEN / 2) < 1e-9, lenOf(S.MAX / 2).toFixed(1) + 'px');
+  ok('弧度收小后半径自动变大', S.ARC.LEN / S.ARC.SWEEP > S.ARC.GAP,
+     'R=' + (S.ARC.LEN / S.ARC.SWEEP).toFixed(1) + 'px，圆心在玩家左侧 ' +
+     (S.ARC.LEN / S.ARC.SWEEP - S.ARC.GAP).toFixed(1) + 'px');
+  ok('弧比半圆平得多', S.ARC.SWEEP < Math.PI * 0.5,
+     (S.ARC.SWEEP * 180 / Math.PI).toFixed(0) + '° vs 半圆 180°');
+  PR.maxStamina = S.MAX; PR.stamina = S.MAX;
+  noThrow('体力条绘制不抛错', () => { PR.stamAlpha = 1; Game.drawStamina(ctxMock, 100, 100, PR); });
+  PR.stamina = 1; PR.exhausted = true;
+  noThrow('力竭时绘制不抛错', () => Game.drawStamina(ctxMock, 100, 100, PR));
 }
 
 console.log('\n---------------------------------------');

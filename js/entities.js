@@ -231,6 +231,14 @@ class Player {
     this.dodgeCd = 0;
     this.dodgeT = 0;
     this.dodgeAngle = 0;
+    /* 体力：上限先按满级给，成长系统落地后按角色等级取一段 */
+    this.maxStamina = (CFG.STAMINA && CFG.STAMINA.MAX) || 100;
+    this.stamina = this.maxStamina;
+    this.stamRegenT = 9;      // 距上次消耗多久（开局算早就歇够了）
+    this.stamAlpha = 0;       // 体力条显示浓度 0~1，满体力会淡到 0
+    this.stamHold = 0;        // 回满之后再亮一会儿
+    this.exhausted = false;   // 力竭：回到 EXHAUST_EXIT 之前冲不动
+    this.dodgeMsgT = 0;       // 「闪不动」提示的节流
     this.noiseT = 0;
     this.stepDist = 0;          // 距上一步走过的距离，够了就响一声
     this.waterT = 0;
@@ -274,6 +282,59 @@ class Player {
   get slots() { return (this.back && this.back.slots) || BASE_BAG_SLOTS; }
 
   get tier() { return weightTier(this.totalWeight); }
+
+  /* ---------------- 体力 ----------------
+     冲刺按秒扣、闪避一次性扣，负重只放大"消耗"，不影响上限。 */
+  get stamRatio() { return U.clamp(this.stamina / Math.max(1, this.maxStamina), 0, 1); }
+  /* 中载及以下不变，重载变贵，超载最贵（跟 BAG.TIERS 的档位对齐） */
+  get stamLoadMult() {
+    const L = CFG.STAMINA && CFG.STAMINA.LOAD_MULT;
+    return L ? (L[this.tier.i] != null ? L[this.tier.i] : 1) : 1;
+  }
+  dodgeCost() { return (CFG.STAMINA.DODGE_COST || 0) * this.stamLoadMult; }
+  canDodge() { return !this.dodgeBlockedWhy(); }
+  /* 超载为什么不能闪：那个档位移速已经砍到 55%，还能滑一步就没人怕超载了。
+     体力不够同理——闪避是"应急"，应急不该无条件。 */
+  dodgeBlockedWhy() {
+    const S = CFG.STAMINA;
+    if (this.tier.i >= S.NO_DODGE_TIER) return '超载，闪不动';
+    if (this.stamina < this.dodgeCost()) return '体力不够，闪不动';
+    return '';
+  }
+  spendStamina(v) {
+    this.stamina = Math.max(0, this.stamina - v);
+    this.stamRegenT = 0;
+    this.stamHold = CFG.STAMINA.HOLD;
+    if (this.stamina <= 0) { this.exhausted = true; this.sprinting = false; }
+  }
+  updateStamina(dt, sprinting, moving) {
+    const S = CFG.STAMINA;
+    if (sprinting && moving && !this.exhausted) {
+      this.spendStamina(S.SPRINT_DRAIN * this.stamLoadMult * dt);
+    } else {
+      this.stamRegenT += dt;
+      if (this.stamRegenT >= S.REGEN_DELAY && this.stamina < this.maxStamina) {
+        this.stamina = Math.min(this.maxStamina, this.stamina + S.REGEN * dt);
+      }
+      /* 力竭要歇够才能再冲，不然回 1 点就能接着冲，条会一直贴着 0 抖 */
+      if (this.exhausted && this.stamRatio >= S.EXHAUST_EXIT) this.exhausted = false;
+    }
+    /* 显示：不满就一直亮着；回满后停 HOLD 秒再慢慢化掉，别老糊在视野里 */
+    const full = this.stamina >= this.maxStamina - 0.01;
+    if (!full || this.stamHold > 0) {
+      if (full) this.stamHold -= dt;
+      else this.stamHold = S.HOLD;
+      this.stamAlpha = Math.min(1, this.stamAlpha + dt / S.FADE_IN);
+    } else {
+      this.stamAlpha = Math.max(0, this.stamAlpha - dt / S.FADE);
+    }
+  }
+  /* 按了闪避但闪不动：一句话说明原因，节流免得连点刷屏 */
+  dodgeDenied(why) {
+    if (this.dodgeMsgT > 0 || !why) return;
+    this.dodgeMsgT = 1.1;
+    if (typeof Game !== 'undefined' && Game.toast) Game.toast(why);
+  }
 
   /* 旧移速字段兼容；负重分档仍生效，护甲只增加瞄准准备时间。 */
   get armorMove() { return 1; } // legacy API; armor no longer directly slows movement
@@ -330,7 +391,7 @@ class Player {
   }
 
   checkAimProfile() {
-    const profile=this.slot+':'+this.weapon.id+':'+(this.body?.id||'none')+':'+(this.body?.aimPenaltyPct||0)+':'+!!this.meleeActive;
+    const profile=this.slot+':'+this.weapon.id+':'+JSON.stringify(this.weapon.attachments||{})+':'+(this.body?.id||'none')+':'+(this.body?.aimPenaltyPct||0)+':'+!!this.meleeActive;
     if(this.aimProfile!==profile){this.aimProfile=profile;this.resetAim();}
   }
   updateAim(dt) {
@@ -358,7 +419,7 @@ class Player {
     this.syncSpread();
     /* 换枪会打断换弹，别让换弹序列的后两段还响在空枪上 */
     if (typeof SFX !== 'undefined') SFX.stopSeq('reload');
-    Game.sfx(SWITCH_SFX[this.weapon.id] || 'shot_switch');
+    Game.sfx(SWITCH_SFX[this.weapon.category] || 'shot_switch');
     return true;
   }
 
@@ -381,9 +442,10 @@ class Player {
         def = WEAPONS[e.id];
       }
       if (!def) continue;
+      if(typeof Attachments!=='undefined')def=Attachments.resolve(def.id,e?.equip?.attachments);
       const loaded = (e && e.equip && AMMO_BY_ID[e.equip.ammo] && AMMO_BY_ID[e.equip.ammo].caliber === def.caliber)
         ? e.equip.ammo : def.ammo;
-      this.weapons[i] = Object.assign({}, def, { magCur: U.clamp(mag | 0, 0, def.mag), ammo: loaded, rounds: magazineRounds(def, mag, loaded, e?.equip?.rounds) });
+      this.weapons[i] = Object.assign({}, def, { magCur: U.clamp(mag | 0, 0, def.mag), ammo: loaded, rounds: magazineRounds(def, mag, loaded, e?.equip?.rounds),fireMode:e?.equip?.fireMode||def.defaultMode,cycleRemaining:e?.equip?.cycleRemaining||0 });
     }
     /* 余弹照存档来 —— 空着就是空着，不白送子弹 */
     this.slot = this.weapons[0] ? 0 : (this.weapons[1] ? 1 : 2);
@@ -434,7 +496,9 @@ class Player {
       this.angle = input.aimAngle;
     }
     this.sneaking = input.sneak;
-    this.sprinting = input.sprint && !input.sneak;
+    /* 力竭或空槽时冲不起来：不是"按住没用"，是这一下确实蹬不动了 */
+    this.sprinting = input.sprint && !input.sneak && !this.exhausted && this.stamina > 0;
+    this.dodgeMsgT = Math.max(0, this.dodgeMsgT - dt);
     /* 治疗期间可以走，但不能冲刺——冲刺直接打断 */
     if (this.sprinting && Game.action && Game.action.type === 'heal') {
       Medical.cancel('冲刺打断了治疗');
@@ -458,17 +522,25 @@ class Player {
         const n = 1 + ((Math.random() * 4) | 0);
         Game.sfx('step_stone_' + n, { rate: 1.06, vol: 1.1 });
       }
+      this.updateStamina(dt, false, false);   // 滑行中不回体力，但条要亮着
       return;   // 闪避期间不响应移动输入
     }
     if (input.dodge && this.dodgeCd <= 0) {
-      this.resetAim();
-      this.dodgeCd = CFG.P.DODGE_CD;
-      this.dodgeT = CFG.P.DODGE_TIME;
-      this.dodgeAngle = this.angle;
-      this.windupShot = false;      // 闪避会把还没出膛的那一发收掉
-      Noise.emit(this.x, this.y, CFG.NOISE.dodge, 'dodge');
-      Game.sfx('dodge');
-      return;
+      const why = this.dodgeBlockedWhy();
+      if (why) {
+        this.dodgeDenied(why);          // 闪不动就给个说法，然后照常走移动分支
+      } else {
+        this.resetAim();
+        this.dodgeCd = CFG.P.DODGE_CD;
+        this.dodgeT = CFG.P.DODGE_TIME;
+        this.dodgeAngle = this.angle;
+        this.windupShot = false;      // 闪避会把还没出膛的那一发收掉
+        this.spendStamina(this.dodgeCost());
+        Noise.emit(this.x, this.y, CFG.NOISE.dodge, 'dodge');
+        Game.sfx('dodge');
+        this.updateStamina(dt, false, false);
+        return;
+      }
     }
 
     /* --- 移动 --- */
@@ -499,6 +571,8 @@ class Player {
     const x0 = this.x, y0 = this.y;
     moveEntity(this, this.vx * dt, this.vy * dt);
     this.frameTravel = U.dist(x0, y0, this.x, this.y);
+    /* 体力在移动之后结一次账：这帧到底动没动（moving）到这儿才确定 */
+    this.updateStamina(dt, this.sprinting, this.moving);
 
     this.updateAim(dt);
 
@@ -552,12 +626,12 @@ class Player {
        停火超过各自的 decayDelay 才开始，移动中回正慢一点。 */
     const AX = R.axis;
     if (this.rH !== 0 && this.sinceShot > AX.h.decayDelay) {
-      const k = AX.h.decay * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
+      const k = AX.h.decay * (this.weapon.recoilRecovery||1) * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
       this.rH *= Math.exp(-k * dt);
       if (Math.abs(this.rH) < 0.05) this.rH = 0;
     }
     if (this.rV !== 0 && this.sinceShot > AX.v.decayDelay) {
-      const k = AX.v.decay * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
+      const k = AX.v.decay * (this.weapon.recoilRecovery||1) * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
       this.rV *= Math.exp(-k * dt);
       if (this.rV < 0.05) this.rV = 0;
     }
@@ -630,14 +704,15 @@ class Player {
     const aimA = this.shootAngle;
     const pellets = W.pellets || 1;
     // 霰弹的每颗弹丸再额外散开一点，否则六颗会叠成一束
-    const sp = pellets > 1 ? this.spread * 1.7 : this.spread;
+    const centerA=aimA+U.rand(-this.spread,this.spread);
+    const sp = W.pelletSpread || 0;
     /* 弹药属性一次取好：伤害系数进单颗伤害，穿透等级随子弹走。
        霰弹的六颗弹丸分辨率独立，所以这里每颗都带同一份弹药属性、各自结算。 */
     const ammo = shotAmmo;
     const ammoMul = ammo ? ammo.dmgMul : 1;
     const pen = ammo ? ammo.penLevel : 1;
     for (let i = 0; i < pellets; i++) {
-      const a = aimA + U.rand(-sp, sp);
+      const a = centerA + (pellets>1?U.rand(-sp,sp):0);
       const mx = this.x + Math.cos(a) * 14;
       const my = this.y + Math.sin(a) * 14;
       Game.bullets.push(new Bullet(mx, my, a, W.speed, 'player',
@@ -663,13 +738,15 @@ class Player {
     else if (this.moving) { mulH = AX.h.moveMult; mulV = AX.v.moveMult; }
     else if (this.sneaking) { mulH = AX.h.sneakMult; mulV = AX.v.sneakMult; }
 
-    this.rV = Math.min(AX.v.max, this.rV + AX.v.kick * mulV);
+    const tuneV=(typeof Range!=='undefined'&&Range.active)?AX.v.kick/3.4:1;
+    const tuneH=(typeof Range!=='undefined'&&Range.active)?AX.h.kick/2.4:1;
+    this.rV = Math.min(AX.v.max, this.rV + (W.recoilBaseV??AX.v.kick)*(W.recoilVMul??1)*tuneV*mulV);
 
     /* 方向：bias 不为 0 固定偏向一侧，否则对半随机。
        扰动取两次均匀分布的均值（近似三角分布），小扰动更常见，偶尔才来一下大的。 */
     const sign = AX.h.bias > 0 ? 1 : (AX.h.bias < 0 ? -1 : (Math.random() < 0.5 ? -1 : 1));
     const jitter = (Math.random() + Math.random() - 1) * AX.h.rand;
-    this.rH = U.clamp(this.rH + (AX.h.kick + jitter) * mulH * sign, -AX.h.max, AX.h.max);
+    this.rH = U.clamp(this.rH + ((W.recoilBaseH??AX.h.kick)+jitter)*(W.recoilHMul??1)*tuneH*mulH*sign, -AX.h.max, AX.h.max);
 
     /* 位移变了就立刻重算准星，别等下一帧 update */
     if (this._aimValid) this.updateAimPoint(this.aimMouse.x, this.aimMouse.y);

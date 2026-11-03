@@ -190,7 +190,7 @@ meleeWrap(Player.prototype,'switchWeapon',function(original,i){
       this.fireCd=Math.max(this.fireCd,.28);
       /* 刀 → 枪：按的是当前枪的槽位时 switchWeapon 会提前返回、什么都不播，
          这个方向以前是全程无声的，这里补上 */
-      if(!r)Game.sfx(SWITCH_SFX[this.weapons[i].id]||'shot_switch');
+      if(!r)Game.sfx(SWITCH_SFX[this.weapons[i].category]||'shot_switch');
     }
     return true;
   }

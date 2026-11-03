@@ -5,6 +5,8 @@ const fs = require('fs');
 const path = require('path');
 
 const dir = __dirname;
+require('./tools/build-attachments.js').build();
+require('child_process').execFileSync(process.execPath,[path.join(dir,'tools/build-detail-art.js')],{cwd:dir,stdio:'inherit'});
 require('./tools/build-scene-library.js').build();
 if (!process.argv.includes('--assets-only')) require('./tools/build-economy.js').build();
 // 地图由设计稿编译，避免多文件版与离线版使用不同点位。
@@ -14,10 +16,10 @@ if (!process.argv.includes('--assets-only')) require('./tools/build-linhai-map.j
 require('./tools/build-prop-bounds.js').build();
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
-const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'core.js', 'entities.js', 'human-ai.js',
-  'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
+const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
+  'common.js', 'medical.js', 'detail-art.js', 'art.js', 'ui.js', 'music.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'merchant-ui.js', 'storage-config.js', 'storage-ui.js', 'boot.js'];
+  'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'merchant-ui.js', 'storage-config.js', 'storage-ui.js', 'attachment-ui.js', 'boot.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear', 'effects'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */
@@ -47,6 +49,26 @@ if (fs.existsSync(AUDIO_DIR)) {
   }
 }
 
+/* 背景音乐另外走一张表：整首 MP3 比全部音效加起来还大，所以单独设上限，
+   超了就不内联 —— 单文件版安安静静没有 BGM，好过把它撑到十几 MB。
+   没超的话单文件版双击也有音乐（file:// 下同样只能靠 data URI）。 */
+const BGM_INLINE_MAX = 6 * 1024 * 1024;
+const bgm = {};
+if (fs.existsSync(AUDIO_DIR)) {
+  for (const f of fs.readdirSync(AUDIO_DIR)) {
+    if (!/^bgm_.*\.mp3$/i.test(f)) continue;
+    const buf = fs.readFileSync(path.join(AUDIO_DIR, f));
+    if (buf.length > BGM_INLINE_MAX) {
+      console.log('单文件版跳过 ' + f + '（' + (buf.length / 1048576).toFixed(1) +
+        'MB，超过内联上限 ' + (BGM_INLINE_MAX / 1048576) + 'MB）');
+      continue;
+    }
+    /* key 去掉 bgm_ 前缀：这里存的是曲目 id（Music.TRACKS 的键） */
+    bgm[f.replace(/^bgm_/i, '').replace(/\.mp3$/i, '')] =
+      'data:audio/mp3;base64,' + buf.toString('base64');
+  }
+}
+
 /* 多文件版（index.html）靠这个文件拿音频：<script src> 不受 file:// 的 CORS 限制，
    双击就能有声音。单文件版把整块条件加载删掉，改用下面的内联注入 —— 两边都只有一份数据。
    这份是构建产物，bundle 里就是 base64，不入库（见 .gitignore）。
@@ -55,7 +77,10 @@ if (fs.existsSync(AUDIO_DIR)) {
 const BUNDLE_BLOCK = /<!-- @@AUDIO_BUNDLE_START@@ -->[\s\S]*?<!-- @@AUDIO_BUNDLE_END@@ -->\r?\n?/;
 const BUNDLE_LEGACY = /<script src="assets\/audio\/bundle\.js"><\/script>\r?\n?/;
 fs.writeFileSync(path.join(AUDIO_DIR, 'bundle.js'),
-  'window.__AUDIO__ = ' + JSON.stringify(audio) + ';\n', 'utf8');
+  'window.__AUDIO__ = ' + JSON.stringify(audio) + ';\n' +
+  /* 音乐也进 bundle：file:// 的多文件版同样 fetch 不到本地 mp3，
+     双击打开要能听到，只能靠 data URI。这份是构建产物，不入库。 */
+  'window.__MUSIC__ = ' + JSON.stringify(bgm) + ';\n', 'utf8');
 
 /* ---------- 2. 注入资源表（必须在替换脚本标签之前） ---------- */
 let out = html.replace(BUNDLE_BLOCK, '').replace(BUNDLE_LEGACY, '');
@@ -70,10 +95,14 @@ for (const [id, file] of Object.entries({room:'room',armor:'merchant_armor',guns
 out = out.replace('<link rel="stylesheet" href="assets/ui/safehouse.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/safehouse.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/merchant.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/merchant.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/storage.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/storage.css'),'utf8')+'\n</style>');
-const inlineTag = '<script>\nwindow.__UI_ASSETS__ = '+JSON.stringify(uiAssets)+';\nwindow.__SPRITES__ = ' +
+out = out.replace('<link rel="stylesheet" href="assets/ui/attachments.css">','<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/attachments.css'),'utf8')+'\n</style>');
+const inlineTag = '<script>\nwindow.__SELF_CONTAINED__ = true;\nwindow.__UI_ASSETS__ = '+JSON.stringify(uiAssets)+';\nwindow.__SPRITES__ = ' +
   JSON.stringify(sprites) + ';\n' +
   (Object.keys(audio).length
     ? 'window.__AUDIO__ = ' + JSON.stringify(audio) + ';\n'
+    : '') +
+  (Object.keys(bgm).length
+    ? 'window.__MUSIC__ = ' + JSON.stringify(bgm) + ';\n'
     : '') + '</script>';
 const anchor = '<script src="js/config.js"></script>';
 if (!out.includes(anchor)) {
@@ -118,6 +147,11 @@ if (ac) {
   const akb = (Object.values(audio)
     .reduce((a, s) => a + s.length, 0) / 1024).toFixed(0);
   console.log('内联音频 ' + ac + ' 个，共 ' + akb + ' KB');
+}
+const bc = Object.keys(bgm).length;
+if (bc) {
+  console.log('内联音乐 ' + bc + ' 首，共 ' +
+    (Object.values(bgm).reduce((a, s) => a + s.length, 0) / 1024).toFixed(0) + ' KB');
 }
 const kb = (Buffer.byteLength(out, 'utf8') / 1024).toFixed(1);
 console.log('已生成 潮汐线.html  ' + kb + ' KB  （内联脚本 ' + (total / 1024).toFixed(1) + ' KB）');

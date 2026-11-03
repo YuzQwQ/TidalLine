@@ -22,12 +22,16 @@ const Base = {
     Save.normalizeBag();
     this.ensureSidearm();     // 不自动补发死亡损失
     this.render();
+    /* 大厅 BGM：进藏身处就起，离开时由 close()/startRun 淡出 */
+    if (typeof Music !== 'undefined') Music.play('base');
   },
 
   close() {
     this.picker = null;
     this._anchor = null;
     document.getElementById('baseVeil').classList.add('hidden');
+    /* 这里不停音乐：close() 只是去选图页，那还在局外。
+       真正进图由 Game.startRun() 掐掉。 */
   },
 
   /* 藏身处内部的提示（不是 canvas 上那个 toast） */
@@ -88,7 +92,7 @@ const Base = {
     for (let i = 0; i < 3; i++) {
       const key = 'w' + i;
       const it = G.weapons[i];                  // 伪物品（EQUIP.gun）
-      const w = it ? WEAPONS[it.equip.gun] : null;
+      const w = it ? Attachments.resolve(it.equip.gun,it.equip.attachments) : null;
       const ammo = it ? (it.equip.mag | 0) : 0;
       const own = this.stashEquip(key).length;
       const act = this.picker === key
@@ -163,7 +167,7 @@ const Base = {
       return Save.stash.filter(e => {
         const it = stashItem(e);
         if (!it || !it.equip || it.equip.kind !== 'gun') return false;
-        const def = WEAPONS[it.equip.gun];
+        const def = Attachments.resolve(it.equip.gun,it.equip.attachments);
         return def && def.slot === want;
       }).sort((a, b) => {
         const ia = WEAPONS[stashItem(a).equip.gun], ib = WEAPONS[stashItem(b).equip.gun];
@@ -308,7 +312,7 @@ const Base = {
       for (const e of list) {
         const it = stashItem(e);
         if (isGun) {
-          const def = WEAPONS[it.equip.gun];
+          const def = Attachments.resolve(it.equip.gun,it.equip.attachments);
           const ammo = it.equip.mag | 0;
           box.appendChild(this.pickerRow({
             icon: it.icon, fb: def.short,
@@ -374,11 +378,11 @@ const Base = {
     let next, name, verb;
 
     if (kind === 'gun') {
-      const def = WEAPONS[it.equip.gun];
+      const def = Attachments.resolve(it.equip.gun,it.equip.attachments);
       if (!def) return false;
       const want = this.slotIdx(key) < 2 ? 'primary' : 'secondary';
       if (def.slot !== want) return false;                 // 类型不对，别硬塞
-      next = EQUIP.gun(it.equip.gun, it.equip.mag | 0, it.equip.ammo, it.equip.rounds);    // 余弹跟着枪走
+      next = EQUIP.gun(it.equip.gun, it.equip.mag | 0, it.equip.ammo, it.equip.rounds,it.equip);
       name = def.name; verb = '装上 ';
     } else if (kind === 'bag') {
       if (it.equip.kind !== 'bag') return false;
@@ -631,7 +635,7 @@ const Base = {
     this.renderAmmoShop(el);
   },
 
-  /* 弹药柜：三种口径 × 一~二级，一盒 30 发。
+  /* 弹药柜：五种口径 × 一~二级，一盒 30 发。
      三级以上没有渠道 —— 那才是下海一趟的理由。 */
   SHOP_AMMO_MAX_LV: 2,
   SHOP_AMMO_PACK: 30,
@@ -788,11 +792,11 @@ const Base = {
 
   buyGun(id) {
     const d = WEAPONS[id];
-    if (!d) return;
-    if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return; }
+    if (!d) return false;
+    if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return false; }
     if (Save.credits < d.price) {
       this.note('买 ' + d.name + ' 还差 ' + formatMoney(d.price - Save.credits), true);
-      return;
+      return false;
     }
     Save.credits -= d.price;
     Save.addGearStash(EQUIP.gun(id, d.mag));      // 崭新：满弹匣
@@ -800,6 +804,7 @@ const Base = {
     Game.sfx('pickup');
     this.render();
     this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），已入仓库，可在备战页装备');
+    return true;
   },
 
   buyArmor(type, lv) {
@@ -924,7 +929,7 @@ const Base = {
     if (eq?.kind !== 'gun') return false;
     const bag = new Bag();
     bag.slots = Save.bag.map(e => ({item:stashItem(e), n:e.n||1, cap:e.cap}));
-    const rounds = magazineRounds(WEAPONS[eq.gun], eq.mag, eq.ammo, eq.rounds), counts = {};
+    const rounds = magazineRounds(Attachments.resolve(eq.gun,eq.attachments), eq.mag, eq.ammo, eq.rounds), counts = {};
     for (const id of rounds) counts[id] = (counts[id]||0)+1;
     for (const [id,n] of Object.entries(counts)) if (!bag.addAmmo(id,n)) {
       this.note('背包空间不足，退弹已取消', true); return false;

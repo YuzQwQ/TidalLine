@@ -91,15 +91,16 @@ test('步枪装不进 9mm / 12g，冲锋枪与手枪共用 9mm', () => {
   assert.equal(R.loadAmmo('ammo_9mm_3'), true, '手枪也吃 9mm');
 });
 
-test('15 种弹药的 id、等级、价格与需求一致', () => {
+test('25 种弹药的 id、等级、价格与需求一致', () => {
   const expect = {
     ammo_556_1: [1, 60], ammo_556_2: [2, 140], ammo_556_3: [3, 320], ammo_556_4: [4, 800], ammo_556_5: [5, 2000],
     ammo_9mm_1: [1, 35], ammo_9mm_2: [2, 80], ammo_9mm_3: [3, 180], ammo_9mm_4: [4, 450], ammo_9mm_5: [5, 1100],
     ammo_12g_1: [1, 80], ammo_12g_2: [2, 180], ammo_12g_3: [3, 400], ammo_12g_4: [4, 900], ammo_12g_5: [5, 2200]
   };
+  for(const [cal,prices] of Object.entries({'762x39':[80,180,420,1000,2500],'45acp':[50,110,250,600,1500]}))prices.forEach((price,i)=>expect['ammo_'+cal+'_'+(i+1)]=[i+1,price]);
   const ammo = ITEMS.filter(i => i.cat === 'ammo');
-  assert.equal(ammo.length, 15);
-  assert.equal(Object.keys(expect).length, 15);
+  assert.equal(ammo.length, 25);
+  assert.equal(Object.keys(expect).length, 25);
   for (const item of ammo) {
     const [lv, price] = expect[item.id];
     assert.equal(item.level, lv, item.id + ' 等级');
@@ -108,7 +109,7 @@ test('15 种弹药的 id、等级、价格与需求一致', () => {
     assert.equal(item.dmgMul, t.dmgMul, item.id + ' 伤害系数应来自统一表');
     assert.equal(item.penLevel, t.pen, item.id + ' 穿透等级应来自统一表');
     assert(item.noLoot && item.noCodex, item.id + ' 不该进掉落/图鉴');
-    assert.equal(item.stack, { '12g':20, '556':60, '9mm':90 }[item.caliber]);
+    assert.equal(item.stack, { '12g':20, '556':60, '9mm':90, '762x39':60, '45acp':90 }[item.caliber]);
   }
   assert.equal(ITEMS.filter(i => i.id === 'ammo').length, 0, '老的通用弹药应该已经去掉');
 });
@@ -204,7 +205,7 @@ test('一次开火 = 1 发弹药 + 6 颗弹丸', () => {
   const before = P.bag.ammoCount('ammo_12g_1');
   P.tryShoot();
   assert.equal(Game.bullets.length, 6, '六颗');
-  assert.equal(P.mag, 5, '弹匣只少 1');
+  assert.equal(P.mag, 4, '弹匣只少 1');
   assert.equal(P.bag.ammoCount('ammo_12g_1'), before, '备弹不该在开火时就被扣');
 });
 

@@ -8,15 +8,18 @@ const { writeSheet } = require('./tools/wiki-layout');
 const dir = __dirname;
 const money=n=>'¥'+Number(n).toLocaleString('en-US');
 require('./tools/build-economy.js').build();
+require('./tools/build-attachments.js').build();
 const ctx = { console, Math, Object, Array };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/config.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/data.js'), 'utf8'), ctx);
+vm.runInContext(fs.readFileSync(path.join(dir, 'js/attachment-data.js'), 'utf8'), ctx);
 vm.runInContext(
   'globalThis.WEAPONS=WEAPONS;globalThis.HELMETS=HELMETS;globalThis.BODIES=BODIES;' +
   'globalThis.MELEE=MELEE;globalThis.BAGS=BAGS;globalThis.BASE_BAG_SLOTS=BASE_BAG_SLOTS;globalThis.RARITY=RARITY;', ctx);
 
+const ATTACHMENTS=vm.runInContext('Object.values(ATTACHMENT_DEFS)',ctx);
 const { WEAPONS, HELMETS, BODIES, BAGS, BASE_BAG_SLOTS, RARITY, MELEE } = ctx;
 
 const GEAR_DIR = path.join(dir, 'assets', 'gear');
@@ -78,9 +81,9 @@ function weaponCard(key) {
       <div class="thumb">${thumb(id)}</div>
       <div class="meta">
         <div class="name">${esc(w.name)}<i class="tag">${esc(slotName)}</i></div>
-        <div class="sub"><code>${esc(id)}.png</code> · ${esc(w.short)} · ${w.dmgMin}–${w.dmgMax} 伤害 · 弹匣 ${w.mag} · ${w.rpm} 发/分 · ${w.w}kg · ${money(w.price)}</div>
+        <div class="sub"><code>${esc(id)}.png</code> · ${esc(w.short)} · ${w.dmgMin}–${w.dmgMax} 伤害 · 弹匣 ${w.mag} · ${w.rpm} 发/分 · ${w.w}kg · ${money(w.price)} · ${esc({"556":"5.56×45mm","762x39":"7.62×39mm","9mm":"9×19mm","45acp":".45 ACP","12g":"12 Gauge"}[w.caliber])} · ${w.modes.map(m=>({semi:"半自动",auto:"全自动",burst3:"三连发",pump:"泵动"}[m])).join(" / ")} · ${w.reloadTime}s${w.reloadType==="tube"?"/发":"/弹匣"}</div>
         <div class="desc">${esc(w.desc || '')}</div>
-        <div class="vis"><b>画什么</b>${esc(VISUAL[key] || '')}</div>
+        <div class="vis"><b>画什么</b>${esc(w.visual || VISUAL[key] || '')}</div>
       </div>
     </div>`;
 }
@@ -118,8 +121,8 @@ function armorCard(type, g) {
     </div>`;
 }
 
-const total = Object.keys(WEAPONS).length + HELMETS.length + BODIES.length + BAGS.length + MELEE.length;
-const done = Object.keys(WEAPONS).filter(k => hasIcon(ICON_ID[k] || k)).length
+const total = ATTACHMENTS.length + Object.keys(WEAPONS).length + HELMETS.length + BODIES.length + BAGS.length + MELEE.length;
+const done = ATTACHMENTS.filter(a=>hasIcon(a.id)).length + Object.keys(WEAPONS).filter(k => hasIcon(ICON_ID[k] || k)).length
   + HELMETS.filter(g => hasIcon(g.id || lid(g.lv))).length
   + BODIES.filter(g => hasIcon(g.id || bid(g.lv))).length
   + BAGS.filter(b => hasIcon(b.id)).length + MELEE.filter(d=>hasIcon(d.id)).length;
@@ -137,7 +140,7 @@ const html = `<!DOCTYPE html>
   <h1>装备清单</h1>
   <div class="lede">
     这一批是新加的装备图标：<b>${Object.keys(WEAPONS).length} 把武器</b> + <b>${HELMETS.length} 款头盔</b> +
-    <b>${BODIES.length} 款身体护甲</b>，另加 <b>${BAGS.length} 款背包</b> 和 <b>${MELEE.length} 种近战武器</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
+    <b>${BODIES.length} 款身体护甲</b>，另加 <b>${BAGS.length} 款背包</b> 和 <b>${MELEE.length} 种近战武器</b>及 <b>${ATTACHMENTS.length} 件枪械配件</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
     局内背包顶部 7 格装备条、尸体面板顶部 3 格装备区（都是 24px 图标），藏身处装备区（34px 图标），以及仓库、装备选择与商人交易面板。背包决定携带容量，未装备时为 ${BASE_BAG_SLOTS} 格。<br>
     已完成 <b>${done} / ${total}</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
     <code>node gen-gear-sheet.js</code> 就会更新。
@@ -187,6 +190,7 @@ const html = `<!DOCTYPE html>
 </section>
 
 <section class="cat"><h2>近战武器<em>melee</em><i>3 张 · 4 切换</i></h2><p><a href="assets/item-art/melee/index.html">持刀动画与原稿</a> · 折叠刀与战斗刀有售，砍刀暂不开放获取。首次赠刀绑定不可出售。</p><div class="grid">${MELEE.map(d=>`<div class="item lv${d.r}"><div class="thumb">${thumb(d.id)}</div><div class="meta"><div class="name">${esc(d.name)}<i class="tag">${RARITY[d.r-1].name}</i></div><div class="sub">${d.id}.png · ${d.w}kg · ${money(d.price)}</div><div class="desc">${esc(d.desc)}</div><div class="vis">真实伤害 ${d.damage} · 间隔 ${d.interval}秒 · 前摇 ${d.windup}秒 · 扇角 ${d.angle}° · 半径 ${d.radius}格</div></div></div>`).join('')}</div></section>
+<section class="cat" id="attachments"><h2>枪械配件<em>attachments</em><i>32 件 · 五槽位</i></h2><p><a href="design/weapons/attachments-v1/art/index.html">配件原稿、统一视角与预览</a> · 绿蓝军火商有售，紫色通过搜刮获得。局内外均可即时改装。</p><div class="grid">${ATTACHMENTS.map(a=>`<div class="item lv${a.r}"><div class="thumb">${thumb(a.id)}</div><div class="meta"><div class="name">${esc(a.name)}<i class="tag">${RARITY[a.r-1].name}</i></div><div class="sub">${a.id} · ${a.w}kg · ${money(a.price)}</div><div class="desc">${esc(a.description)}</div><div class="vis">${Object.entries(a.statModifiers).map(([k,v])=>({aimTime:"瞄准时间",baseSpread:"基础散布",recoilHorizontal:"横向后坐力",recoilVertical:"纵向后坐力",recoilRecovery:"双轴回正速度",reloadTime:"装填时间",magazineCapacity:"弹匣容量",pelletSpread:"弹丸扩散"}[k])+" "+(v>0?"+":"")+Math.round(v*100)+"%").join(" · ")}</div></div></div>`).join('')}</div></section>
 <footer>
   清单由 <code>gen-gear-sheet.js</code> 生成，数据来自 <code>js/data.js</code> 的 WEAPONS / HELMETS / BODIES / BAGS。<br>
   图标共用 <code>assets/gear/</code>，已接入藏身处、局内装备槽和尸体装备区。更新贴图后重跑本脚本刷新进度，
