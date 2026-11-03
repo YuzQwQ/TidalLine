@@ -156,7 +156,8 @@ const man = require('../assets/audio/manifest.json');
     assert(/SFX\.stopSeq\('reload'\)/.test(switchBody[1]), '换枪掐掉换弹序列');
     const reloadBody = /tryReload\(\)\s*\{([\s\S]*?)\n  \}/.exec(ent);
     assert(reloadBody, '找得到 tryReload');
-    assert(/sfx\('reload'\)/.test(reloadBody[1]), '换弹开始播 reload');
+    /* 换弹调用可以带 opts.model（专属整段换弹按型号路由），但必须播 reload */
+    assert(/sfx\('reload'/.test(reloadBody[1]), '换弹开始播 reload');
     assert(/step_stone_/.test(ent), '玩家脚步已接入');
     await page.close();
 

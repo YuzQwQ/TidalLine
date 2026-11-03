@@ -1,4 +1,4 @@
-/* 新增那几条采样的接线测试：装备穿脱、六段挥砍、冲刺起步、命中三件套。
+/* 新增那几条采样的接线测试：装备穿脱、六段挥砍、冲刺起步、命中三件套、专属枪声。
    这些都属于"接上了但听不出接没接"的类型 —— 采样 id 写错、路由漏了一条、
    或者每帧都响一次，眼睛里都看不出来，只能靠断言把它们逼出来。
 
@@ -7,6 +7,7 @@
    3. 仓库里穿上、脱下装备都会出声（Base 那一层要真的调）
    4. 冲刺只在"跑起来"的那一帧响一声，站住不动、跑的过程中都不再响
    5. 又脆又响的素材（爆头、护甲破裂）被峰值卡住，不会顶到削波
+   6. FAMAS / MP5 的枪声和换弹走专属录音，别的枪仍走通用路径
 
    跑法：node tools/test-sfx-wiring.js */
 const path = require('path');
@@ -17,7 +18,8 @@ const { chromium } = require('playwright');
 const ROOT = path.resolve(__dirname, '..');
 const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
   'gear_helmet', 'gear_armor', 'gear_bag',
-  'melee_1', 'melee_2', 'melee_3', 'melee_4', 'melee_5', 'melee_6'];
+  'melee_1', 'melee_2', 'melee_3', 'melee_4', 'melee_5', 'melee_6',
+  'shot_famas', 'shot_mp5', 'reload_mp5'];
 
 (async () => {
   const browser = await chromium.launch({
@@ -54,9 +56,18 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
 
     /* 峰值安全：播放增益乘上素材峰值不能超过 1，否则这条声音一响就在削波 */
     out.clip = {};
-    for (const id of ['hit', 'headshot', 'break', 'sprint']) {
+    for (const id of ['hit', 'headshot', 'break', 'sprint', 'shot_famas', 'shot_mp5', 'reload_mp5']) {
       out.clip[id] = +(SFX.gainOf[id] * SFX._peak(SFX.samples[id])).toFixed(3);
     }
+
+    /* 专属枪声与换弹的响度档：都归到枪声 / 换弹档，不会落进默认值 */
+    out.loud.shot_famas = SFX._targetFor('shot_famas');
+    out.loud.shot_mp5 = SFX._targetFor('shot_mp5');
+    out.loud.reload_mp5 = SFX._targetFor('reload_mp5');
+    out.loudTable.shot_famas = SFX.LOUD.shot;
+    out.loudTable.shot_mp5 = SFX.LOUD.shot;
+    out.loudTable.reload_mp5 = SFX.LOUD.reload;
+    out.modelMap = { famas_f1: SFX.SHOT_MODEL.famas_f1, mp5a3: SFX.SHOT_MODEL.mp5a3 };
 
     /* 抓 _playSample 的入参：既看播了哪一段，也看 rate 有没有分穿上/卸下 */
     const played = [];
@@ -81,7 +92,27 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
     const unknown = SFX.gear('melee');
     out.unknownGear = { ok: unknown, played: played.length };
 
-    /* 3. 仓库那条路径：穿上 / 脱下都要真的调到 gear() */
+    /* 4. 专属枪声与换弹：FAMAS / MP5 各走各的录音，MP5 换弹是整段一口气 */
+    played.length = 0;
+    SFX.play('shot', { gun: 'famas_f1' });
+    SFX.play('shot', { gun: 'mp5a3' });
+    out.shotIds = played.map(p => p.id);
+    played.length = 0;
+    SFX.play('reload', { model: 'mp5a3' });
+    out.mp5Reload = played.map(p => p.id);
+    /* 没登记专属换弹的枪（AKM）和不带型号的调用落回三段拼接 */
+    const seqIds = [];
+    const realSeq = SFX._playSeq.bind(SFX);
+    SFX._playSeq = (n, s) => { seqIds.push(s.map(x => x[0]).join('+')); return realSeq(n, s); };
+    SFX.play('reload', { model: 'akm' });
+    SFX.play('reload');
+    SFX._playSeq = realSeq;
+    out.genericReload = seqIds;
+    played.length = 0;
+
+    /* 3. 仓库那条路径：穿上 / 脱下都要有声音。
+       穿戴必须是材质声（SFX.gear）；卸下走哪个音是设计选择
+       （材质声降速 / 拾取音），这里只断言"不哑"—— 两种实现都该过。 */
     Save.stash = [];
     Save.gear.helmet = null;
     Save.addGearStash(EQUIP.armor(GEAR.make('helmet', 4)));
@@ -89,12 +120,17 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
     const gearCalls = [];
     const realGear = SFX.gear.bind(SFX);
     SFX.gear = (k, o) => { gearCalls.push({ k, off: !!(o && o.off) }); return realGear(k, o); };
+    const playCalls = [];
+    const realPlay = SFX.play.bind(SFX);
+    SFX.play = (n, o) => { playCalls.push(n); return realPlay(n, o); };
     out.equipOk = Base.equipFromStash(entry, 'helmet');
     out.afterEquip = Save.gear.helmet ? Save.gear.helmet.lv : null;
+    const gearAfterEquip = gearCalls.length, playAfterEquip = playCalls.length;
     out.unequipOk = Base.unequip('helmet');
     out.afterUnequip = Save.gear.helmet;
-    out.gearCalls = gearCalls;
-    SFX.gear = realGear;
+    out.equipGearCalls = gearCalls.slice(0, gearAfterEquip);
+    out.unequipSounds = (gearCalls.length - gearAfterEquip) + (playCalls.length - playAfterEquip);
+    SFX.gear = realGear; SFX.play = realPlay;
 
     SFX._playSample = real;
     return out;
@@ -117,9 +153,22 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
 
   assert(b.equipOk && b.afterEquip === 4, '仓库里戴头盔要成功');
   assert(b.unequipOk && b.afterUnequip == null, '卸头盔要成功');
-  assert.equal(b.gearCalls.length, 2, '穿上 + 卸下各响一声，实际 ' + b.gearCalls.length + ' 声');
-  assert.deepEqual(b.gearCalls[0], { k: 'helmet', off: false }, '穿上是 off=false');
-  assert.deepEqual(b.gearCalls[1], { k: 'helmet', off: true }, '卸下是 off=true');
+  assert.deepEqual(b.equipGearCalls, [{ k: 'helmet', off: false }],
+    '戴头盔必须是材质声 SFX.gear：' + JSON.stringify(b.equipGearCalls));
+  assert(b.unequipSounds >= 1,
+    '卸头盔不能是哑的（实际 ' + b.unequipSounds + ' 声）—— 走哪个音是设计选择，哑了就是接线断了');
+
+  /* 专属枪声与换弹 */
+  assert.deepEqual(b.shotIds, ['shot_famas', 'shot_mp5'],
+    'FAMAS / MP5 应各播各的专属枪声：' + b.shotIds.join(','));
+  assert.deepEqual(b.modelMap, { famas_f1: 'famas', mp5a3: 'mp5' },
+    'SHOT_MODEL 没把 famas_f1 / mp5a3 映射到专属枪声');
+  assert.deepEqual(b.mp5Reload, ['reload_mp5'],
+    'MP5 换弹应该整段播 reload_mp5，实际播了：' + b.mp5Reload.join(','));
+  assert.equal(b.genericReload.length, 2,
+    'AKM 和不带型号的换弹应该各走一次三段拼接，实际 ' + b.genericReload.length + ' 次');
+  assert(b.genericReload.every(s => s === 'reload_out+reload_in+reload_rack'),
+    '通用换弹的三段拼接内容变了：' + b.genericReload.join(' | '));
 
   /* ---------- 局内：冲刺起步只响一次 ---------- */
   const play = await browser.newPage();

@@ -296,6 +296,30 @@
       "site": "Freesound",
       "sid": 714258,
       "license": "TODO"
+    },
+    {
+      "id": "snd-369126",
+      "name": "FAMAS 开火声",
+      "author": "",
+      "site": "Freesound",
+      "sid": 369126,
+      "license": "TODO"
+    },
+    {
+      "id": "snd-698869",
+      "name": "MP5 开火声",
+      "author": "",
+      "site": "Freesound",
+      "sid": 698869,
+      "license": "TODO"
+    },
+    {
+      "id": "snd-616757",
+      "name": "MP5 换弹声",
+      "author": "",
+      "site": "Freesound",
+      "sid": 616757,
+      "license": "TODO"
     }
   ],
   "assets": [
@@ -1068,6 +1092,48 @@
       "rms": 0.0649,
       "bytes": 35904,
       "sha256_16": "cf8be702b574b027"
+    },
+    {
+      "id": "shot_famas",
+      "file": "shot_famas.wav",
+      "from": "snd-369126",
+      "note": "FAMAS F1 专属枪声：源 0–0.55s（自然衰减到 -68dB，尾部 189ms 静音自动裁掉）。1000RPM 每发只有 60ms，0.3s 的尾音正好填进间隔",
+      "dur": 0.305,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.94,
+      "rms": 0.1481,
+      "bytes": 26984,
+      "sha256_16": "8a019e159299307f"
+    },
+    {
+      "id": "shot_mp5",
+      "file": "shot_mp5.wav",
+      "from": "snd-698869",
+      "note": "MP5A3 专属枪声：源 0–0.18s。原素材 0.2s 后拖着一条 -33dB 的长尾近一秒（混响/回声），800RPM 下每发 75ms，长尾会把连发糊成一片 —— 60ms 淡出把尾音切干净，只留爆响",
+      "dur": 0.18,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.95,
+      "rms": 0.121,
+      "bytes": 17324,
+      "sha256_16": "a080a0ce84a6fe72"
+    },
+    {
+      "id": "reload_mp5",
+      "file": "reload_mp5.wav",
+      "from": "snd-616757",
+      "note": "MP5A3 整段换弹录音 1.47s：退匣 0–0.2s → 插匣 0.5–0.8s → 拉栓 1.0–1.45s。不像通用换弹那样按三段重排时间轴，这整段一口气播完，动作的先后节奏是原生的",
+      "dur": 1.47,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.95,
+      "rms": 0.0702,
+      "bytes": 129698,
+      "sha256_16": "2a02b6cf81cc5907"
     }
   ],
   "mix": {

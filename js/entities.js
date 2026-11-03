@@ -821,7 +821,7 @@ class Player {
     if (!this.bag.ammoCountByCaliber(this.weapon.caliber)) { Game.toast('没有同口径备弹'); return false; }
     this.reloadT = CFG.P.RELOAD_TIME;
     this.reloadPending = true; this.reloadSlot = this.slot;
-    Game.sfx('reload');
+    Game.sfx('reload', { model: this.weapon.id });
     Noise.emit(this.x, this.y, CFG.NOISE.reload, 'reload'); return true;
   }
 

@@ -26,7 +26,7 @@ const Gunplay={
   startReload(p){
     Medical.cancel();const w=this.prepare(p);if(!w||p.dead||p.meleeActive||w.cycleRemaining>0||p.reloadPending||p.mag>=w.mag)return false;
     if(!p.bag.ammoCountByCaliber(w.caliber)){Game.toast('没有同口径备弹');return false;}
-    this.cancel(p);p.reloadPending=true;p.reloadSlot=p.slot;p.reloadT=w.reloadTime;Game.sfx('reload');Noise.emit(p.x,p.y,CFG.NOISE.reload,'reload');return true;
+    this.cancel(p);p.reloadPending=true;p.reloadSlot=p.slot;p.reloadT=w.reloadTime;Game.sfx('reload',{model:w.id});Noise.emit(p.x,p.y,CFG.NOISE.reload,'reload');return true;
   },
   finishReload(p){
     if(!p.reloadPending||p.reloadT>1e-9)return;
@@ -39,7 +39,7 @@ const Gunplay={
     p.mag=w.magCur=rounds.length;const shoot=p._tubeShot;p._tubeShot=false;p.reloadPending=false;
     Game.syncGear();if(Game.bagOpen)Game.renderBag();
     if(shoot&&p.mag>0&&!this.blocked(p)){this.single.call(p);return;}
-    if(tube&&p.mag<w.mag&&p.bag.ammoCountByCaliber(w.caliber)>0&&!shoot){p.reloadPending=true;p.reloadT=w.reloadTime;Game.sfx('reload');}
+    if(tube&&p.mag<w.mag&&p.bag.ammoCountByCaliber(w.caliber)>0&&!shoot){p.reloadPending=true;p.reloadT=w.reloadTime;Game.sfx('reload',{model:w.id});}
   },
   snapshot(w,mag){return EQUIP.gun(w.id,mag??w.magCur,w.ammo,w.rounds,w);}
 };

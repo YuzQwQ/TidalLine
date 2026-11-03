@@ -447,6 +447,12 @@ const SFX = {
        全图最常听见的两把枪就是 M4A1 和 AKM，同音的话一进图就听得出是偷懒。
        600RPM（每发 0.1s）比步枪慢，长尾音正好填进间隔里。 */
     ak47: { ids: ['shot_ak47'], rate: 1.00, jitter: 0.035, vol: 1.02 },
+    /* FAMAS F1：5.56 但枪声更"脆"更短（0.3s），1000RPM 是全图最快，
+       每发只有 60ms，尾音再长就要盖到下一发头上了 */
+    famas: { ids: ['shot_famas'], rate: 1.00, jitter: 0.040, vol: 0.98 },
+    /* MP5A3：9mm 冲锋枪，短促的"哒"——原素材尾音拖了近一秒，
+       已在切分时用 60ms 淡出切干净，800RPM 连发才糊不成一片 */
+    mp5: { ids: ['shot_mp5'], rate: 1.00, jitter: 0.045, vol: 0.95 },
     smg: { ids: ['shot_smg'], rate: 1.10, jitter: 0.045, vol: 0.95 },
     /* 泵动霰弹枪：开完一枪要拉一次泵，那声"咔啦"在 cycleTime（0.8s）里，
        取 0.55 处——太靠前会盖住枪声尾音，太靠后就接不上下一发。
@@ -463,7 +469,12 @@ const SFX = {
   /* 型号 → 专属枪声。键是 WEAPONS 里的 id，值是 SHOT_SAMPLE 的键。
      没登记的型号自动按 category 走通用那条（m4a1/famas 走 rifle、三把 9mm 走 smg…）。
      枪和声是两件事：同口径的两把枪可以有完全不同的录音，所以按型号分而不是按口径。 */
-  SHOT_MODEL: { akm: 'ak47' },
+  SHOT_MODEL: { akm: 'ak47', famas_f1: 'famas', mp5a3: 'mp5' },
+
+  /* 型号 → 专属换弹。没登记的走上面 SEQ 那套三段拼接；
+     登记了就播整段原生录音——动作节奏是录音里自带的，不重排时间轴。
+     调用方（tryReload / Gunplay.startReload）把武器 id 用 opts.model 传进来。 */
+  RELOAD_SAMPLE: { mp5a3: 'reload_mp5' },
 
   shotCursor: {},     // 枪型 → 下一个该用第几条变体
 
@@ -627,7 +638,7 @@ const SFX = {
     if (/^reload_/.test(id)) return this.LOUD.reload;
     /* 开火采样：四把枪（含手枪的三个变体）和预留的 AK 都按枪声档对齐。
        这样换哪把枪、换哪段录音，最终 RMS 都一样，不会出现某把枪特别响。 */
-    if (/^shot_(rifle|smg|shotgun|pistol_[123]|ak47)$/.test(id)) return this.LOUD.shot;
+    if (/^shot_(rifle|smg|shotgun|pistol_[123]|ak47|famas|mp5)$/.test(id)) return this.LOUD.shot;
     if (id === 'shot_pistol_silent') return this.LOUD.shot * 0.55;
     if (id === 'shot_shotgun_pump') return this.LOUD.switch;
     /* 近战挥砍与出售结算走自己的档，别落进 0.08 的默认值 */
@@ -1214,6 +1225,16 @@ const SFX = {
 
     /* 有采样就优先用采样；没有（或解码失败）就落到下面的合成音 */
     if (this.samples[name]) { this._playSample(name, opts); return; }
+    /* 换弹：这把枪有专属的整段录音就放录音（动作节奏是原生的），
+       没有才落到 SEQ 那套三段拼接。必须排在 SEQ 之前。 */
+    if (name === 'reload' && opts && opts.model) {
+      const own = this.RELOAD_SAMPLE[opts.model];
+      if (own && this.samples[own]) {
+        this._playSample(own, { rate: 0.99 + Math.random() * 0.02 });
+        return;
+      }
+    }
+
     const seq = this.SEQ[name];
     if (seq && this.samples[seq[0][0]]) { this._playSeq(name, seq); return; }
 

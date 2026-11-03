@@ -136,7 +136,8 @@ const fourSteps = () => [0, 480, 960, 1440].forEach(t => setTimeout(() => step({
 const GUNS = [
   { id: 'm4a1', name: 'M4A1', note: '5.56 · shot_rifle' },
   { id: 'akm', name: 'AKM', note: '7.62×39 · shot_ak47（专属录音）' },
-  { id: 'mp5a3', name: 'MP5A3', note: '9mm · shot_smg' },
+  { id: 'famas_f1', name: 'FAMAS F1', note: '5.56 · shot_famas（专属录音）' },
+  { id: 'mp5a3', name: 'MP5A3', note: '9mm · shot_mp5（专属录音）' },
   { id: 'rem870', name: 'Rem870', note: '12g · shot_shotgun + 泵动' },
   { id: 'glock17', name: 'Glock 17', note: '9mm · shot_pistol_1/2/3' }
 ];
@@ -183,12 +184,13 @@ const GROUPS = [
       {
         name: '开火（按型号路由）', scope: 'raid',
         where: 'js/entities.js:776（玩家）· js/human-ai.js（敌人）',
-        detail: '先查 <span class="code">SHOT_MODEL</span>（akm → shot_ak47），再退回 gun category；' +
+        detail: '先查 <span class="code">SHOT_MODEL</span>（akm/famas_f1/mp5a3 各有专属录音），再退回 gun category；' +
           '手枪三条轮换，霰弹开完自动补一声泵动 · LOUD.shot <b>0.14</b>（全场最响）',
-        sounds: ['shot_rifle', 'shot_ak47', 'shot_smg', 'shot_shotgun',
+        sounds: ['shot_rifle', 'shot_ak47', 'shot_famas', 'shot_mp5', 'shot_smg', 'shot_shotgun',
                  'shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
         btns: GUNS.map(g => ({ l: g.name, fn: () => SFX.play('shot', { gun: g.id }), say: g.name + ' · ' + g.note }))
           .concat([{ l: 'AKM 三连', ghost: true, fn: () => [0, 100, 200].forEach(t => setTimeout(() => SFX.play('shot', { gun: 'akm' }), t)), say: 'AKM 600RPM 三连发' }])
+          .concat([{ l: 'MP5 六连', ghost: true, fn: () => [0, 75, 150, 225, 300, 375].forEach(t => setTimeout(() => SFX.play('shot', { gun: 'mp5a3' }), t)), say: 'MP5 800RPM 六连发 · 尾音切干净了才糊不成一片' }])
       },
       {
         name: '泵动（霰弹枪）', scope: 'raid',
@@ -269,17 +271,23 @@ const GROUPS = [
         ]
       },
       {
-        name: '换弹（三段序列）', scope: 'raid',
+        name: '换弹（三段序列 / MP5 整段）', scope: 'raid',
         where: 'js/gunplay.js:29（主动换弹）· :42（自动装填）· js/entities.js:824',
-        detail: '采样 <b>reload_out → reload_in → reload_rack</b>，按游戏节奏排在 0 / 0.55 / 1.05 秒 · LOUD.reload <b>0.075</b>',
-        sounds: ['reload_out', 'reload_in', 'reload_rack'],
+        detail: '通用：采样 <b>reload_out → reload_in → reload_rack</b>，按游戏节奏排在 0 / 0.55 / 1.05 秒 · ' +
+          'LOUD.reload <b>0.075</b><br>' +
+          'MP5A3 有专属整段录音 <b>reload_mp5</b>（616757，1.47s）：退匣 → 插匣 → 拉栓一口气播完，' +
+          '动作的先后节奏是录音里原生的，不重排时间轴 · ' +
+          '调用方把武器 id 用 <span class="code">opts.model</span> 传进来，' +
+          '<span class="code">RELOAD_SAMPLE</span> 没登记的枪才落回三段拼接',
+        sounds: ['reload_out', 'reload_in', 'reload_rack', 'reload_mp5'],
         btns: [
-          { l: '换弹', fn: () => SFX.play('reload') },
+          { l: '通用换弹', fn: () => SFX.play('reload') },
+          { l: 'MP5 换弹', fn: () => SFX.play('reload', { model: 'mp5a3' }) },
           { l: '三段分开听', ghost: true, fn: () => {
             SFX.play('reload_out');
             setTimeout(() => SFX.play('reload_in'), 550);
             setTimeout(() => SFX.play('reload_rack'), 1050);
-          } }
+          }, say: '通用三段：退匣 → 插匣 → 拉栓' }
         ]
       }
     ]
