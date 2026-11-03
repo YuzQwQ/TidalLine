@@ -878,9 +878,64 @@ const Base = {
   /* ---- 背包：和局内背包同一套格子 UI ----
      这里不放"携带数量"了：想带什么就把什么放进背包，带多少就是包里的数量。
      弹药和药物回藏身处时留在包里（下一趟接着用），其它东西自动回仓库。 */
+  /* 背包标题行：容量 + 「清空背包」按钮。
+     DOM 只搭一次，之后复用 —— 每次 render() 重建会把按钮上的焦点和 hover 打断。
+     按钮不写在 index.html 里，由这里插进去，和健康卡同一个路数。 */
+  ensureBagHead() {
+    const grid = document.getElementById('baseBagGrid');
+    if (!grid) return null;
+    let hd = document.getElementById('bagHead');
+    if (hd) return hd;
+    const h3 = grid.previousElementSibling;
+    if (!h3 || h3.tagName !== 'H3') return null;
+    hd = document.createElement('div');
+    hd.id = 'bagHead';
+    hd.className = 'bag-hd';
+    h3.parentNode.insertBefore(hd, h3);
+    hd.appendChild(h3);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'btnClearBag';
+    btn.className = 'mini';
+    btn.textContent = '清空背包';
+    btn.onclick = () => this.clearBag();
+    hd.appendChild(btn);
+    return hd;
+  },
+
+  /* ---- 一键清空背包：全部放回仓库 ---- */
+  clearBag() {
+    if (!Save.bag.length) { this.note('背包已经是空的'); return 0; }
+    const keep = [];
+    let moved = 0, stuck = 0;
+    for (const e of Save.bag) {
+      const it = stashItem(e);
+      if (!it) { keep.push(e); continue; }
+      /* 整叠走，别按「一件」走：逐件点击时 toStash 一次只搬 1 件（用过的医疗品
+         本来就是单件，堆叠的靠玩家多点几次），但这里是**整条删掉**，
+         照抄那个 1 就等于把剩下的 n-1 件吞了。只有真的用过的（cap 不满）才是单件。 */
+      const used = !!it.healCap && e.cap != null && e.cap < it.healCap - 1e-6;
+      const n = (e.gear || used) ? 1 : Math.max(1, e.n || 1);
+      /* 弹药先问仓库塞不塞得下 —— 和逐件点「放回仓库」是同一条规则，
+         塞不下就留在包里，不吞、也不把仓库撑爆 */
+      if (it.cat === 'ammo' && !Save.canAddStash(it.id, n)) { keep.push(e); stuck += n; continue; }
+      if (e.gear) Save.addGearStash(it);
+      else Save.addStash(it.id, n, e.cap);
+      moved += n;
+    }
+    Save.bag = keep;
+    Save.save(); Save.flush();
+    if (moved && typeof SFX !== 'undefined') SFX.play('bag_zip', { rate: 0.9 });
+    this.render();
+    this.note('背包已清空：' + moved + ' 件放回仓库' +
+      (stuck ? '，' + stuck + ' 发弹药仓库放不下，留在包里' : ''));
+    return moved;
+  },
+
   renderBag() {
     const grid = document.getElementById('baseBagGrid');
     if (!grid) return;
+    this.ensureBagHead();
     grid.innerHTML = '';
     /* 老存档可能带着超过当前容量的东西：多出来的格子照样画出来，
        让玩家能搬回仓库，别让它们卡在包里看不见 */
@@ -916,6 +971,13 @@ const Base = {
     const bar = document.getElementById('bagBar');
     if (bar && bar.querySelector) {
       bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';
+    }
+    /* 空包时按钮变灰：点它只会得到一句「背包已经是空的」，不如直接说明白 */
+    const clear = document.getElementById('btnClearBag');
+    if (clear) {
+      const empty = !Save.bag.length;
+      clear.disabled = empty;
+      clear.title = empty ? '背包已经是空的' : '把背包里的东西全部放回仓库（装备栏不动）';
     }
     Save.save();
   },

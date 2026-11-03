@@ -82,3 +82,15 @@
 .clinic-acts button[data-clinic-pay]:hover{background:#dfbf7d}
 .clinic-acts button[data-clinic-pay]:disabled{background:#1b2a24;border-color:#2b3a32;color:#5f7a72;cursor:not-allowed}
 @media(max-width:640px){.clinic-checkout{padding:16px}.clinic-vendor{padding-bottom:10px}.clinic-bill{padding:10px}.clinic-acts button{padding:9px 8px;font-size:12px}}
+
+/* ---- 备战页背包标题行：容量在左、清空按钮在右 ----
+   按钮由 Base.ensureBagHead() 插进去（index.html 里没有它），
+   样式沿用仓库那边「出售寻常收集品」的 mini 按钮，两边看起来是一套东西。 */
+.bag-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 10px}
+.bag-hd h3{flex:1;min-width:0;margin:0}
+/* 原本 .base-left h3 em 是 float:right，进了 flex 行之后改成行内右对齐，别再浮动 */
+.bag-hd h3 em{float:none;margin-left:8px}
+.bag-hd .mini{margin:0;padding:4px 11px;font-size:10.5px;letter-spacing:1px;font-family:inherit;cursor:pointer;background:transparent;color:#6fa093;border:1px solid #26403a;border-radius:2px}
+.bag-hd .mini:hover:not(:disabled){background:#16241f;color:#a8c4ba;border-color:#2f5a4f}
+.bag-hd .mini:disabled{color:#3f5a52;border-color:#1a2a25;cursor:not-allowed}
+.sh-shell .bag-hd .mini{min-height:36px}   /* 和仓库那边「出售寻常收集品」同高 */
