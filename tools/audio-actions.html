@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>潮汐线 · 局内交互音效总览</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 22px 26px 46px; background: #070b09; color: #cfd8d4;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif; font-size: 13px;
+  }
+  h1 { font-size: 15px; font-weight: 600; letter-spacing: 1px; margin: 0 0 4px; color: #e6efeb; }
+  .sub { color: #5f7a72; font-size: 11.5px; margin-bottom: 14px; line-height: 1.7; max-width: 1000px; }
+  h2 {
+    font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #6fd6ba;
+    margin: 26px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #16241f;
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  h2 em { font-style: normal; font-size: 10.5px; color: #46605a; letter-spacing: .3px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 10px; }
+  .card {
+    background: #0b1210; border: 1px solid #182822; border-radius: 4px; padding: 11px 13px 12px;
+  }
+  .card h3 { margin: 0 0 4px; font-size: 13px; font-weight: 600; color: #dce8e3; display: flex; align-items: center; gap: 7px; }
+  .badge {
+    font-size: 9.5px; letter-spacing: .3px; padding: 1px 6px; border-radius: 2px;
+    border: 1px solid #22352e; color: #7f9b92; font-weight: 400;
+  }
+  .badge.raid { border-color: #2b5a4d; color: #6fd6ba; }
+  .badge.base { border-color: #4a4128; color: #c9b26a; }
+  .badge.both { border-color: #2c3f57; color: #8fb4d8; }
+  .where { font-size: 10.5px; color: #4e6a62; font-family: Consolas, Menlo, monospace; margin-bottom: 6px; }
+  .detail { font-size: 10.5px; color: #6d8a81; line-height: 1.65; margin-bottom: 8px; }
+  .detail b { color: #9db6ae; font-weight: 400; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; }
+  /* 用 span 而不是 button：SFX.bindUI 的全局委托会匹配 button，
+     每点一下就先响一声 ui_click，试听时多出来的杂音会盖住要听的那一下 */
+  .ab {
+    display: inline-block; padding: 4px 11px; font-size: 11.5px; letter-spacing: .4px; cursor: pointer;
+    background: #14685c; color: #eaf4f0; border-radius: 3px; user-select: none;
+  }
+  .ab:hover { background: #1a7d6e; }
+  .ab.ghost { background: transparent; border: 1px solid #22352e; color: #8ba39b; }
+  .ab.ghost:hover { border-color: #2f4a41; color: #cfd8d4; }
+  .meter { height: 4px; margin-top: 9px; background: #0f1a16; border-radius: 3px; overflow: hidden; }
+  .meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg,#14685c,#6fd6ba); }
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid #101a16; }
+  th { color: #5f7a72; font-weight: 400; font-size: 10.5px; letter-spacing: .4px; }
+  td.n { color: #8ba39b; font-variant-numeric: tabular-nums; text-align: right; width: 62px; }
+  td.k { color: #b9c8c3; }
+  td .ab { padding: 2px 9px; font-size: 10.5px; }
+  tr.lad:hover { background: #0e1b17; }
+  .ladbar { height: 5px; background: #0f1a16; border-radius: 3px; overflow: hidden; min-width: 120px; }
+  .ladbar i { display: block; height: 100%; background: linear-gradient(90deg,#1c5f52,#6fd6ba); }
+  tr.lad.gap td.k { color: #c9b26a; }
+  #toolbar { display: flex; align-items: center; gap: 10px; margin: 12px 0 4px; flex-wrap: wrap; }
+  input[type=search] {
+    padding: 5px 9px; font-size: 12px; background: #0f1714; border: 1px solid #1e312b; border-radius: 3px;
+    color: #cfd8d4; outline: none; font-family: inherit; width: 200px;
+  }
+  input[type=search]:focus { border-color: #2a443d; }
+  .tbtn {
+    padding: 5px 13px; font-size: 11.5px; letter-spacing: .5px; cursor: pointer; user-select: none;
+    background: #14685c; color: #eaf4f0; border: 0; border-radius: 3px; font-family: inherit;
+  }
+  .tbtn:hover { background: #1a7d6e; }
+  .tbtn.ghost { background: transparent; border: 1px solid #22352e; color: #8ba39b; }
+  .tbtn.ghost:hover { border-color: #2f4a41; color: #cfd8d4; }
+  #stat { margin-left: auto; color: #5f7a72; font-size: 11.5px; font-variant-numeric: tabular-nums; }
+  #log { margin-top: 8px; color: #6fd6ba; font-size: 11px; min-height: 16px; }
+  .note { font-size: 11px; color: #5f7a72; line-height: 1.8; margin: 6px 0 0; }
+  .note b { color: #9db6ae; font-weight: 400; }
+  .code { font-family: Consolas, Menlo, monospace; color: #6fd6ba; }
+</style>
+</head>
+<body>
+<h1>潮汐线 · 局内交互音效总览</h1>
+<div class="sub">
+  这一页是<b style="color:#8ba39b">局内所有交互动作</b>用到的音效清单：每条都写清
+  触发时机、调用位置、声音来源（采样 / 合成 / 序列）和响度档。试听全部走游戏里
+  同一份 <span class="code">SFX</span> 代码（<span class="code">js/ui.js</span>），
+  参数也一模一样 —— 这里听到的就是进游戏听到的。枪声的细分在
+  <a style="color:#6fd6ba" href="audio-guns.html">枪声与音量试听</a>。
+</div>
+
+<div id="toolbar">
+  <input id="q" type="search" placeholder="过滤动作 / 文件 / 参数…">
+  <div class="tbtn" id="walk">走一遍完整流程</div>
+  <div class="tbtn ghost" id="stopAll">停</div>
+  <span id="stat">采样加载中…</span>
+</div>
+<div id="log"></div>
+
+<h2>响度阶梯 <em>LOUD 表 · 谁盖住谁</em></h2>
+<div id="ladder"></div>
+<p class="note">
+  数值是 <span class="code">SFX.LOUD</span> 里的档位，采样按 RMS 归一到这个值，合成音直接当增益用。
+  总线上挂了一只压缩器（阈值 −8dB、比率 3）兜连发叠加，所以枪声连打几发不会顶到削波。
+  点击左边任意一行的名字就能试听这一档。
+</p>
+
+<h2>动作清单 <em>按游戏里的分组</em></h2>
+<div id="groups"></div>
+
+<h2>素材覆盖 <em>39 段采样有没有全接上</em></h2>
+<div id="cover"></div>
+
+<h2>缺口 <em>定义了但局内没用的</em></h2>
+<div id="gaps"></div>
+
+<p class="note">
+  采样清单和声音都来自 <span class="code">assets/audio/bundle.js</span>（构建产物，由
+  <span class="code">node build.js</span> 生成）。它是本地文件时页面能直接出声；
+  打不开这个文件的话页面会退化成合成音，功能照常，只是少了采样那部分质感。
+</p>
+
+<script src="../assets/audio/bundle.js"></script>
+<script src="../js/config.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/ui.js"></script>
+<script>
+/* ============================================================
+   一、动作清单
+   每条 = 一个交互动作。where 是触发点，detail 是声音规格，
+   sounds 是用到的采样 id（用于后面做覆盖检查）。
+   试听按钮的 fn 必须原样照抄游戏里的调用，连参数一起抄。
+   ============================================================ */
+const SCOPE = { raid: ['raid', '局内'], base: ['base', '局外'], both: ['both', '通用'] };
+
+/* ---- 游戏里那些"重复动作"的原样调用 ---- */
+const step = (o) => SFX.play('step_stone_' + (1 + Math.floor(Math.random() * 4)),
+  o || { rate: 0.94 + Math.random() * 0.12, vol: 0.9 });
+const fourSteps = () => [0, 480, 960, 1440].forEach(t => setTimeout(() => step({ rate: 1, vol: 0.9 }), t));
+const GUNS = [
+  { id: 'm4a1', name: 'M4A1', note: '5.56 · shot_rifle' },
+  { id: 'akm', name: 'AKM', note: '7.62×39 · shot_ak47（专属录音）' },
+  { id: 'mp5a3', name: 'MP5A3', note: '9mm · shot_smg' },
+  { id: 'rem870', name: 'Rem870', note: '12g · shot_shotgun + 泵动' },
+  { id: 'glock17', name: 'Glock 17', note: '9mm · shot_pistol_1/2/3' }
+];
+
+const GROUPS = [
+  {
+    id: 'move', name: '移动', scope: 'raid',
+    note: '走路、潜行、闪避。全场最频繁的两个声音，靠节奏和音色区分，不靠音量。',
+    rows: [
+      {
+        name: '脚步', scope: 'raid',
+        where: 'js/entities.js:594（走路）· :523（闪避落地踩实那一步）',
+        detail: '采样 <b>×4</b> 随机 · rate 0.94–1.06 · vol 0.5–1.2（越快步子越沉，潜行压到七成）· LOUD.step <b>0.05</b>',
+        sounds: ['step_stone_1', 'step_stone_2', 'step_stone_3', 'step_stone_4'],
+        btns: [
+          { l: '单步', fn: () => step() },
+          { l: '走四步', ghost: true, fn: fourSteps },
+          { l: '潜行', ghost: true, fn: () => step({ rate: 0.96, vol: 0.55 }) }
+        ]
+      },
+      {
+        name: '闪避', scope: 'raid',
+        where: 'js/entities.js:540（Player.dodge）',
+        detail: '合成破风：带通 600→2600Hz 扫频 0.18s + 低频垫 · LOUD.dodge <b>0.09</b>',
+        sounds: [],
+        btns: [{ l: '闪避', fn: () => SFX.play('dodge') }]
+      }
+    ]
+  },
+  {
+    id: 'fight', name: '战斗', scope: 'raid',
+    note: '开火、命中反馈、换弹切枪。枪声细分见「枪声与音量试听」页。',
+    rows: [
+      {
+        name: '开火（按型号路由）', scope: 'raid',
+        where: 'js/entities.js:763（玩家）· js/human-ai.js（敌人）',
+        detail: '先查 <span class="code">SHOT_MODEL</span>（akm → shot_ak47），再退回 gun category；' +
+          '手枪三条轮换，霰弹开完自动补一声泵动 · LOUD.shot <b>0.14</b>（全场最响）',
+        sounds: ['shot_rifle', 'shot_ak47', 'shot_smg', 'shot_shotgun',
+                 'shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
+        btns: GUNS.map(g => ({ l: g.name, fn: () => SFX.play('shot', { gun: g.id }), say: g.name + ' · ' + g.note }))
+          .concat([{ l: 'AKM 三连', ghost: true, fn: () => [0, 100, 200].forEach(t => setTimeout(() => SFX.play('shot', { gun: 'akm' }), t)), say: 'AKM 600RPM 三连发' }])
+      },
+      {
+        name: '泵动（霰弹枪）', scope: 'raid',
+        where: 'js/ui.js:455（跟着枪声排在音频时钟后 0.44s）',
+        detail: '采样 <b>shot_shotgun_pump</b> 0.343s · vol 0.85 · ' +
+          '只有 cycleTime > 0 的枪才有（Rem870 有，MP-155 / Saiga-12 半自动没有）',
+        sounds: ['shot_shotgun_pump'],
+        btns: [{ l: '枪声 + 泵动', fn: () => SFX.play('shot', { gun: 'rem870' }) }]
+      },
+      {
+        name: '敌人开火', scope: 'raid',
+        where: 'js/entities.js:1231（敌人 AI 开枪）',
+        detail: '复用手枪采样但压低并低通 1200Hz —— 听得出是"别人在打"，' +
+          '而不是换了个音色 · LOUD.enemyShot <b>0.075</b>',
+        sounds: ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
+        btns: [{ l: '敌人开火', fn: () => SFX.play('enemyShot') }]
+      },
+      {
+        name: '命中反馈', scope: 'raid',
+        where: 'js/entities.js:1394（敌人挨打）',
+        detail: '合成高频"啪"0.06s（2600Hz 高通）· LOUD.hit <b>0.085</b>',
+        sounds: [],
+        btns: [{ l: '命中', fn: () => SFX.play('hit') }]
+      },
+      {
+        name: '爆头', scope: 'raid',
+        where: 'js/entities.js:1394（部位 = head）',
+        detail: '合成双段：4200Hz 高通脆响 + 900→320Hz 下沉三角波 · LOUD.headshot <b>0.085</b>',
+        sounds: [],
+        btns: [{ l: '爆头', fn: () => SFX.play('headshot') }]
+      },
+      {
+        name: '护甲破裂', scope: 'raid',
+        where: 'js/entities.js:870（护甲被打穿）',
+        detail: '合成：700Hz 闷响 + 300→120Hz 金属裂开 · LOUD.break <b>0.10</b>',
+        sounds: [],
+        btns: [{ l: '护甲破裂', fn: () => SFX.play('break') }]
+      },
+      {
+        name: '挥刀', scope: 'raid',
+        where: 'js/melee.js:26（近战命中）· js/entities.js:1239（敌人近战）',
+        detail: '采样 <b>melee</b> 0.45s（风声由高扫到低）· LOUD.melee <b>0.10</b>',
+        sounds: ['melee'],
+        btns: [{ l: '挥刀', fn: () => SFX.play('melee') }]
+      },
+      {
+        name: '切枪', scope: 'raid',
+        where: 'js/entities.js:422 · js/melee.js（近战武器切换）',
+        detail: '采样 <b>shot_switch</b> 0.235s；霰弹枪换用 <b>shot_switch_shotgun</b> 0.696s（上膛）· LOUD.switch <b>0.08</b>',
+        sounds: ['shot_switch', 'shot_switch_shotgun'],
+        btns: [
+          { l: '通用切枪', fn: () => SFX.play('shot_switch') },
+          { l: '霰弹切枪', ghost: true, fn: () => SFX.play('shot_switch_shotgun') }
+        ]
+      },
+      {
+        name: '换弹（三段序列）', scope: 'raid',
+        where: 'js/gunplay.js:29（主动换弹）· :42（自动装填）· js/entities.js:811',
+        detail: '采样 <b>reload_out → reload_in → reload_rack</b>，按游戏节奏排在 0 / 0.55 / 1.05 秒 · LOUD.reload <b>0.075</b>',
+        sounds: ['reload_out', 'reload_in', 'reload_rack'],
+        btns: [
+          { l: '换弹', fn: () => SFX.play('reload') },
+          { l: '三段分开听', ghost: true, fn: () => {
+            SFX.play('reload_out');
+            setTimeout(() => SFX.play('reload_in'), 550);
+            setTimeout(() => SFX.play('reload_rack'), 1050);
+          } }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'loot', name: '搜刮与物品', scope: 'raid',
+    note: '这一组的规则最多：拾取随机、搜索按容器固定、开容器按容器映射。',
+    rows: [
+      {
+        name: '拾取', scope: 'both',
+        where: 'js/game-panels.js:404 / :450 · js/game-update.js:304 · js/medical.js:160,188（医疗品开始/结束）· js/base.js（仓库取物）',
+        detail: '采样 <b>×4</b> 每次随机抽一条（且不重复刚播过的那条）· LOUD.pickup <b>0.06</b>',
+        sounds: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
+        btns: [
+          { l: '拾取一次', fn: () => SFX.play('pickup') },
+          { l: '连抽八次', ghost: true, fn: () => {
+            for (let i = 0; i < 8; i++) setTimeout(() => SFX.play('pickup'), i * 260);
+          }, say: '连着翻一具尸体，就是这个听感' }
+        ]
+      },
+      {
+        name: '搜索（一个容器一个声）', scope: 'raid',
+        where: 'js/game-update.js:477（读条开始）· js/game-panels.js:92（面板里搜）',
+        detail: '按容器 art 查 <span class="code">BOX_SFX</span>，19 个容器有专属音；' +
+          '同材质不同容器用不同变体（纸 3 条、工具箱 3 条）；没配到的落回合成音 · LOUD.search <b>0.055</b>',
+        sounds: ['search_metal', 'search_toolbox', 'search_toolbox2', 'search_toolbox3',
+                 'search_paper', 'search_paper2', 'search_paper3', 'search_cloth', 'search_purse'],
+        btns: [
+          { l: '金属抽屉', fn: () => SFX.play('search', { at: 'crate_fast' }) },
+          { l: '工具箱', fn: () => SFX.play('search', { at: 'crate_tool' }) },
+          { l: '纸箱', fn: () => SFX.play('search', { at: 'crate_cardboard' }) },
+          { l: '布包', fn: () => SFX.play('search', { at: 'crate_satchel' }) },
+          { l: '皮包', fn: () => SFX.play('search', { at: 'crate_leatherbag' }) },
+          { l: '尸体', fn: () => SFX.play('search', { at: 'corpse' }) }
+        ]
+      },
+      {
+        name: '打开容器', scope: 'raid',
+        where: 'js/game-panels.js:12（打开容器面板，尸体不响）',
+        detail: '按容器查表：包/旅行箱/皮包是<b>拉链</b>（bag_zip），箱柜是<b>抽屉</b>（container_open）；' +
+          '没配到的容器就安静，不落回通用音 · LOUD.containerOpen <b>0.06</b> / bagZip <b>0.045</b>',
+        sounds: ['container_open', 'bag_zip'],
+        btns: [
+          { l: '抽屉（箱柜）', fn: () => SFX.play('container_open', { at: 'crate_std' }) },
+          { l: '拉链（包）', fn: () => SFX.play('container_open', { at: 'crate_satchel' }) }
+        ]
+      },
+      {
+        name: '背包开合', scope: 'both',
+        where: 'js/game-panels.js:475（toggleBag）',
+        detail: '采样 <b>bag_zip</b> · 开 1.06 / 关 0.90 —— 拉开比拉上略快，' +
+          '这是个"打开了"的触感，不该盖过局内的脚步 · LOUD.bagZip <b>0.045</b>',
+        sounds: ['bag_zip'],
+        btns: [
+          { l: '开背包', fn: () => SFX.play('bag_zip', { rate: 1.06 }) },
+          { l: '关背包', ghost: true, fn: () => SFX.play('bag_zip', { rate: 0.9 }) }
+        ]
+      },
+      {
+        name: '丢弃物品', scope: 'raid',
+        where: 'js/game-update.js:127',
+        detail: '合成闷响 0.12s（380Hz）· 丢东西本来就该低调 · LOUD.drop <b>0.055</b>',
+        sounds: [],
+        btns: [{ l: '丢弃', fn: () => SFX.play('drop') }]
+      }
+    ]
+  },
+  {
+    id: 'world', name: '场景与结算', scope: 'raid',
+    rows: [
+      {
+        name: '开门', scope: 'raid',
+        where: 'js/game-update.js:450',
+        detail: '合成闷响 0.16s（420Hz）· LOUD.door <b>0.08</b>',
+        sounds: [],
+        btns: [{ l: '开门', fn: () => SFX.play('door') }]
+      },
+      {
+        name: '撤离成功', scope: 'raid',
+        where: 'js/game-panels.js:707（结算面板）',
+        detail: '合成上行 0.5s（320→640Hz）· LOUD.extract <b>0.09</b>',
+        sounds: [],
+        btns: [{ l: '撤离', fn: () => SFX.play('extract') }]
+      },
+      {
+        name: '死亡', scope: 'raid',
+        where: 'js/game-update.js:569（阵亡）· js/game-panels.js:707（结算）',
+        detail: '合成下沉 0.8s（200→40Hz）· LOUD.death <b>0.13</b>',
+        sounds: [],
+        btns: [{ l: '死亡', fn: () => SFX.play('death') }]
+      }
+    ]
+  },
+  {
+    id: 'ui', name: '界面', scope: 'both',
+    note: '界面音是背景层：四处都在响，所以全部压在拾取之下。',
+    rows: [
+      {
+        name: '点击', scope: 'both',
+        where: 'js/ui.js:849（全局事件委托，所有按钮的默认点击音）',
+        detail: '采样 <b>ui_click</b> 0.068s 清脆一声 · LOUD.uiClick <b>0.05</b>',
+        sounds: ['ui_click'],
+        btns: [{ l: '点击', fn: () => SFX.ui('click') }]
+      },
+      {
+        name: '悬停', scope: 'both',
+        where: 'js/ui.js:864（鼠标经过按钮，90ms 节流）',
+        detail: '采样 <b>ui_tap</b> 0.127s 短提示 · LOUD.uiTap <b>0.028</b>（最轻的一档）',
+        sounds: ['ui_tap'],
+        btns: [{ l: '悬停', fn: () => SFX.ui('tap') }]
+      },
+      {
+        name: '确认（出发 / 进入游戏）', scope: 'base',
+        where: 'index.html:1182, 1228（标签上写 data-sfx="confirm"）',
+        detail: '采样 <b>ui_confirm</b> 0.453s 高调一句 · LOUD.uiConfirm <b>0.085</b>',
+        sounds: ['ui_confirm'],
+        btns: [{ l: '确认', fn: () => SFX.ui('confirm') }]
+      },
+      {
+        name: '通知', scope: 'both',
+        where: 'js/game.js:510（好消息提示）',
+        detail: '采样 <b>ui_notify</b> 0.865s 明朗一句 · LOUD.uiNotify <b>0.07</b>',
+        sounds: ['ui_notify'],
+        btns: [{ l: '通知', fn: () => SFX.ui('notify') }]
+      }
+    ]
+  },
+  {
+    id: 'base', name: '局外（仓库 / 藏身处）', scope: 'base',
+    note: '不算局内交互，但走的是同一套 SFX，一并列出来免得漏看。',
+    rows: [
+      {
+        name: '出售结算', scope: 'base',
+        where: 'js/base.js:1166, 1183',
+        detail: '采样 <b>sell</b> 0.84s 老式收银机 —— 和拾取区分开 · LOUD.sell <b>0.07</b>',
+        sounds: ['sell'],
+        btns: [{ l: '出售', fn: () => SFX.play('sell') }]
+      }
+    ]
+  }
+];
+
+/* ============================================================
+   二、响度阶梯（数值直接读 SFX.LOUD，改代码这里就跟着变）
+   ============================================================ */
+const LADDER = [
+  ['shot', '枪声（玩家）', () => SFX.play('shot', { gun: 'm4a1' })],
+  ['death', '死亡', () => SFX.play('death')],
+  ['hurt', '受伤（局内未接）', () => SFX.play('hurt')],
+  ['melee', '挥刀', () => SFX.play('melee')],
+  ['break', '护甲破裂', () => SFX.play('break')],
+  ['extract', '撤离', () => SFX.play('extract')],
+  ['dodge', '闪避', () => SFX.play('dodge')],
+  ['switch', '切枪', () => SFX.play('shot_switch')],
+  ['hit', '命中', () => SFX.play('hit')],
+  ['headshot', '爆头', () => SFX.play('headshot')],
+  ['door', '开门', () => SFX.play('door')],
+  ['reload', '换弹', () => SFX.play('reload')],
+  ['enemyShot', '敌人开火', () => SFX.play('enemyShot')],
+  ['uiConfirm', '界面·确认', () => SFX.ui('confirm')],
+  ['sell', '出售结算', () => SFX.play('sell')],
+  ['uiNotify', '界面·通知', () => SFX.ui('notify')],
+  ['pickup', '拾取', () => SFX.play('pickup')],
+  ['containerOpen', '开容器', () => SFX.play('container_open', { at: 'crate_std' })],
+  ['search', '搜索', () => SFX.play('search', { at: 'crate_tool' })],
+  ['drop', '丢弃', () => SFX.play('drop')],
+  ['step', '脚步', () => step({ rate: 1, vol: 0.9 })],
+  ['uiClick', '界面·点击', () => SFX.ui('click')],
+  ['bagZip', '背包拉链', () => SFX.play('bag_zip', { rate: 1.06 })],
+  ['uiTap', '界面·悬停', () => SFX.ui('tap')]
+];
+
+/* ============================================================
+   三、缺口：定义了、响度档也留了，但局内没人调用
+   ============================================================ */
+const GAPS = [
+  {
+    name: 'hurt（受伤）', src: '合成 · 180→90Hz 锯齿波 0.16s',
+    why: '<span class="code">SFX.LOUD.hurt = 0.11</span> 和合成分支都写好了，' +
+      '但局内<b>没有任何地方调用</b>它：玩家挨打（js/entities.js:1384 的 resolveHit）' +
+      '只有画面反馈 —— 屏幕闪红 + 紫色伤害数字 + 抖屏，没有声音。' +
+      '目前只有靶场 js/range.js:509 的试听面板能听到这一声。'
+  }
+];
+
+/* ============================================================
+   四、渲染
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const logEl = $('#log');
+let sayTimer = 0;
+function say(t) {
+  logEl.textContent = t || '';
+  clearTimeout(sayTimer);
+}
+
+let analyser = null, meterRaf = 0, curFill = null;
+function meter(fill) {
+  if (!analyser && SFX.ctx) {
+    analyser = SFX.ctx.createAnalyser();
+    analyser.fftSize = 1024;
+    if (SFX.master) SFX.master.connect(analyser);
+  }
+  curFill = fill;
+  if (meterRaf) return;
+  const buf = new Float32Array(analyser.fftSize);
+  const tick = () => {
+    analyser.getFloatTimeDomainData(buf);
+    let s = 0;
+    for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i];
+    const rms = Math.sqrt(s / buf.length);
+    if (curFill) curFill.style.width = Math.min(100, rms * 340) + '%';
+    meterRaf = requestAnimationFrame(tick);
+  };
+  tick();
+}
+
+function act(fn, fill, text) {
+  if (SFX.ctx && SFX.ctx.state === 'suspended') SFX.ctx.resume();
+  meter(fill);
+  fn();
+  if (text) say(text);
+}
+
+function btn(label, spec, onPlay) {
+  const el = document.createElement('span');
+  el.className = 'ab' + (spec.ghost ? ' ghost' : '');
+  el.textContent = label;
+  el.onclick = () => act(spec.fn, onPlay, spec.say);
+  return el;
+}
+
+function renderGroups(filter) {
+  const host = $('#groups');
+  host.innerHTML = '';
+  for (const g of GROUPS) {
+    const rows = g.rows.filter(r => !filter || match(r, filter, g));
+    if (!rows.length) continue;
+    const h = document.createElement('h2');
+    h.innerHTML = g.name + ' <em>' + (SCOPE[g.scope][1]) + (g.note ? ' · ' + g.note : '') + '</em>';
+    host.appendChild(h);
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    for (const r of rows) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const sc = SCOPE[r.scope];
+      card.innerHTML =
+        '<h3>' + r.name + '<span class="badge ' + sc[0] + '">' + sc[1] + '</span></h3>' +
+        '<div class="where">' + r.where + '</div>' +
+        '<div class="detail">' + r.detail + '</div>';
+      const row = document.createElement('div');
+      row.className = 'row';
+      const bar = document.createElement('div');
+      bar.className = 'meter';
+      bar.appendChild(document.createElement('i'));
+      for (const b of r.btns) row.appendChild(btn(b.l, b, bar.firstChild));
+      card.appendChild(row);
+      card.appendChild(bar);
+      grid.appendChild(card);
+    }
+    host.appendChild(grid);
+  }
+}
+
+function match(r, filter, g) {
+  const hay = [r.name, r.where, r.detail, g.name, (r.sounds || []).join(' ')].join(' ').toLowerCase();
+  return hay.indexOf(filter.toLowerCase()) >= 0;
+}
+
+function renderLadder() {
+  const host = $('#ladder');
+  host.innerHTML = '';
+  const max = Math.max.apply(null, LADDER.map(l => SFX.LOUD[l[0]] || 0));
+  const t = document.createElement('table');
+  t.innerHTML = '<tr><th>动作</th><th>响度</th><th style="width:38%">相对</th><th></th></tr>';
+  for (const [key, label, fn] of LADDER) {
+    const v = SFX.LOUD[key] || 0;
+    const tr = document.createElement('tr');
+    tr.className = 'lad' + (key === 'hurt' ? ' gap' : '');
+    tr.innerHTML =
+      '<td class="k"><span class="ab ghost" style="padding:1px 8px;font-size:10.5px">' + label + '</span></td>' +
+      '<td class="n">' + v.toFixed(3) + '</td>' +
+      '<td><div class="ladbar"><i style="width:' + Math.round(v / max * 100) + '%"></i></div></td>' +
+      '<td class="n" style="width:70px;color:#46605a">' + key + '</td>';
+    tr.querySelector('.ab').onclick = () => act(fn, null, label + ' · ' + v.toFixed(3));
+    t.appendChild(tr);
+  }
+  host.appendChild(t);
+}
+
+/* 覆盖检查：把 39 段采样和动作清单对一遍，看谁没被任何动作用到 */
+function renderCover(sampleIds) {
+  const host = $('#cover');
+  host.innerHTML = '';
+  if (!sampleIds.length) {
+    host.innerHTML = '<p class="note">（拿不到采样清单：多文件版需要本地服务器，' +
+      '自包含版用 <span class="code">window.__AUDIO__</span>）</p>';
+    return;
+  }
+  const used = {};
+  for (const g of GROUPS) for (const r of g.rows) {
+    for (const s of (r.sounds || [])) {
+      if (!used[s]) used[s] = [];
+      used[s].push(r.name);
+    }
+  }
+  const t = document.createElement('table');
+  t.innerHTML = '<tr><th>采样</th><th>用在哪</th><th style="width:90px">状态</th></tr>';
+  let orphan = 0;
+  for (const id of sampleIds) {
+    const u = used[id];
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="k" style="font-family:Consolas,Menlo,monospace">' + id + '</td>' +
+      '<td>' + (u ? u.join('、') : '—') + '</td>' +
+      '<td class="n" style="color:' + (u ? '#6fd6ba' : '#c9b26a') + '">' + (u ? '已接入' : '预留') + '</td>';
+    if (!u) orphan++;
+    t.appendChild(tr);
+  }
+  host.appendChild(t);
+  host.appendChild(Object.assign(document.createElement('p'), {
+    className: 'note',
+    innerHTML: '共 <b>' + sampleIds.length + '</b> 段采样，已接入 <b>' +
+      (sampleIds.length - orphan) + '</b> 段，预留 <b>' + orphan + '</b> 段' +
+      (orphan ? '（预留 = 切好了但还没有对应的武器/动作）' : '')
+  }));
+}
+
+function renderGaps() {
+  const host = $('#gaps');
+  host.innerHTML = '';
+  for (const g of GAPS) {
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = '<h3>' + g.name + '<span class="badge base">未接入</span></h3>' +
+      '<div class="detail" style="margin-bottom:6px">' + g.src + '</div>' +
+      '<div class="detail">' + g.why + '</div>';
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.appendChild(btn('试听（只有靶场能听到）', { fn: () => SFX.play('hurt') }, null));
+    c.appendChild(row);
+    host.appendChild(c);
+  }
+}
+
+/* ============================================================
+   五、完整流程走一遍
+   按真实节奏排：脚步 → 开门 → 走近箱子 → 开容器 → 搜索 →
+   拾取 → 切枪 → 换弹 → 开火 → 命中 → 爆头 → 护甲破裂 →
+   挥刀 → 闪避 → 撤离
+   ============================================================ */
+const WALK = [
+  [0,     '脚步（走四步）', fourSteps],
+  [2100,  '开门', () => SFX.play('door')],
+  [2700,  '打开容器（抽屉）', () => SFX.play('container_open', { at: 'crate_std' })],
+  [4300,  '搜索（工具箱）', () => SFX.play('search', { at: 'crate_tool' })],
+  [5300,  '拾取 ×3', () => { for (let i = 0; i < 3; i++) setTimeout(() => SFX.play('pickup'), i * 260); }],
+  [6300,  '切枪', () => SFX.play('shot_switch')],
+  [6800,  '换弹（三段）', () => SFX.play('reload')],
+  [8600,  '开火 ×3（AKM）', () => [0, 100, 200].forEach(t => setTimeout(() => SFX.play('shot', { gun: 'akm' }), t))],
+  [9000,  '命中', () => SFX.play('hit')],
+  [9300,  '爆头', () => SFX.play('headshot')],
+  [9600,  '护甲破裂', () => SFX.play('break')],
+  [9900,  '挥刀', () => SFX.play('melee')],
+  [10200, '闪避', () => SFX.play('dodge')],
+  [10600, '撤离', () => SFX.play('extract')]
+];
+let walkTimers = [];
+function walk() {
+  walkTimers.forEach(clearTimeout);
+  walkTimers = [];
+  if (SFX.ctx && SFX.ctx.state === 'suspended') SFX.ctx.resume();
+  say('流程播放中…');
+  WALK.forEach(([ms, label, fn]) => {
+    walkTimers.push(setTimeout(() => {
+      fn();
+      say('▸ ' + label);
+    }, ms));
+  });
+  walkTimers.push(setTimeout(() => say(''), 11500));
+}
+
+/* ============================================================
+   六、启动
+   ============================================================ */
+SFX.init();
+if (SFX.ctx && SFX.ctx.state === 'suspended') SFX.ctx.resume();
+
+renderGroups('');
+renderLadder();
+renderGaps();
+
+/* 采样清单：自包含版从 __AUDIO__ 拿，多文件版从 manifest.json 拿 */
+(function () {
+  const injected = (typeof window !== 'undefined' && window.__AUDIO__) || null;
+  if (injected) {
+    const ids = Object.keys(injected).sort();
+    renderCover(ids);
+    $('#stat').textContent = '采样 ' + ids.length + ' 段';
+    return;
+  }
+  fetch('../assets/audio/manifest.json').then(r => r.json()).then(m => {
+    const ids = (m.assets || []).map(a => a.id).sort();
+    renderCover(ids);
+    $('#stat').textContent = '采样 ' + ids.length + ' 段';
+  }).catch(() => {
+    renderCover([]);
+    $('#stat').textContent = '采样清单拿不到（需要本地服务器）';
+  });
+})();
+
+$('#q').addEventListener('input', e => renderGroups(e.target.value.trim()));
+$('#walk').onclick = walk;
+$('#stopAll').onclick = () => {
+  walkTimers.forEach(clearTimeout);
+  walkTimers = [];
+  if (SFX.stopSeq) SFX.stopSeq('reload');
+  say('已停止');
+};
+</script>
+</body>
+</html>

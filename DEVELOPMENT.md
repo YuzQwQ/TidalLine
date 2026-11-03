@@ -825,6 +825,8 @@ node gen-art-sheet.js             # 重新生成 美术清单.html（会检测�
 node tools/prepare-item-icons.js  <原稿目录>   # 物品原稿 → 48×48
 node tools/prepare-scene-icons.js <原稿目录>   # 场景原稿 → 32×32
 node tools/cdp-shot.js <url> <out.png> [等待ms] [表达式]   # 用真实浏览器截图
+node tools/build-audio-page.js      # 把两个试听页打成自包含版（内联音频包）
+node tools/test-audio-actions.js    # 音效总览页的防漂移测试
 ```
 
 最后那个 `cdp-shot.js` 值得记一下：headless 的 `--screenshot` 不会等图片解码，
@@ -915,6 +917,39 @@ SHOT_MODEL: { akm: 'ak47' },       // 型号 → SHOT_SAMPLE 的键
 ——顺带修掉一个旧坑：那页只加载 `ui.js`，没有 `WEAPONS` 表，点"单发"一直是
 `ReferenceError` 静默失败（`SFX.play('shot')` 里要查型号）。现在它加载
 `config.js` + `data.js`，自包含版 `tools/build-audio-page.js` 也把这两份一起内联。
+
+### 局内交互音效总览页
+
+`tools/audio-actions.html`（自包含版 `tools/audio-actions.standalone.html`）是**局内所有
+交互动作**的清单 + 试听器。和枪声页分工不同：那页管"每把枪什么音色"，这一页管
+"玩家做的每一个动作对应哪一声"。
+
+页面上有四块：
+
+1. **响度阶梯** —— 直接读 `SFX.LOUD` 的值画成条形，一眼看出谁盖住谁
+   （枪声 0.140 → 界面悬停 0.028）。点任意一行试听那一档。
+2. **动作清单** —— 6 组 24 条：移动 / 战斗 / 搜刮与物品 / 场景与结算 / 界面 / 局外。
+   每条写清触发时机、调用位置（`文件:行号`）、声音来源（采样 / 合成 / 序列）、
+   响度档和它占用的采样 id。每条都带试听按钮。
+3. **素材覆盖** —— 39 段采样和动作清单对一遍，标出"已接入 / 预留"。
+   现在唯一预留的是 `shot_pistol_silent`（消音手枪，等做多手枪）。
+4. **缺口** —— 定义了、响度档也留了，但局内没人调用的声音。
+
+试听按钮**原样照抄游戏里的调用**（连参数一起抄），走同一个 `SFX.play`，
+所以这里听到的就是进游戏听到的。页面里的按钮用 `span` 而不是 `button`：
+`SFX.bindUI` 的全局委托匹配 `button`，用 `button` 每点一下会先响一声 `ui_click`，
+多出来的杂音会盖住要听的那一下。
+
+还有一个「走一遍完整流程」：按真实节奏把脚步 → 开门 → 开容器 → 搜索 → 拾取 →
+切枪 → 换弹 → 开火 → 命中 → 爆头 → 护甲破裂 → 挥刀 → 闪避 → 撤离串起来播一遍。
+
+**这一页最容易和代码脱节**，所以配了 `tools/test-audio-actions.js`：
+
+- 页面里写的每个 `文件:行号` 都去源码那一行核对（代码挪了位就红）
+- 声明用到的每个采样 id 都得在 `assets/audio/manifest.json` 里
+- 响度阶梯的每个键都得在 `SFX.LOUD` 里
+- 把所有试听按钮点一遍，断言每种该有的声音都真的触发了
+- 顺手断言 `hurt` **还没有**被局内调用（真接上了，测试会红，提醒把页面上的"缺口"改成"已接入"）
 
 ### 界面音效
 

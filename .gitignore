@@ -16,3 +16,4 @@ assets/audio/bundle.js
 
 # 试听页的打包产物（node tools/build-audio-page.js 生成）
 tools/audio-guns.standalone.html
+tools/audio-actions.standalone.html
