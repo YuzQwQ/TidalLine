@@ -1185,13 +1185,15 @@ const Base = {
     this.note('清掉 ' + count + ' 件寻常物，+' + gain + ' 信用点');
   },
 
-  /* ---- 出发：背包里装了什么就带什么，不再现场买补给 ---- */
-  deploy(mapId) {
+  /* ---- 出发：背包里装了什么就带什么，不再现场买补给 ----
+     opts.force：用户已经在出发前提醒里点了「继续出发」，明知有缺口也要走。
+     这时跳过"没枪就拦下"的硬闸门 —— 提醒已经摆明风险，别再二次拦截。 */
+  deploy(mapId, opts) {
     const map = MAP_CATALOG.find(m => m.id === (mapId || RAID_MAP.id));
     if (!map) return;
     /* 至少携带一把枪或近战武器，不再免费补发手枪 */
     this.ensureSidearm();
-    if (!Save.gear.weapons.some(Boolean) && !Save.gear.melee) {
+    if (!(opts && opts.force) && !Save.gear.weapons.some(Boolean) && !Save.gear.melee) {
       this.note('请先装备一把枪械或近战武器', true);
       return;
     }
@@ -1245,6 +1247,107 @@ const MapSelect = {
   },
   confirm() {
     if(Game.state!=='map-select')return;
+    /* 出发前检查：有缺口先弹提醒，让玩家选「备战 / 继续 / 取消」，
+       三项都干净就直接出发。 */
+    if (DeployGuard.guard(this.selectedId)) return;
     Base.deploy(this.selectedId);
+  }
+};
+
+/* ============================================================
+   出发前提醒：生命值过低 / 未装备枪械 / 未携带药物。
+   点「出发」时检查，缺任意一项就弹窗让玩家自己决定去留。
+   ============================================================ */
+const DeployGuard = {
+  /* 生命值低于这个比例就算「过低」。取 0.5：满血 100 掉到 50 以下就提醒。 */
+  HP_RATIO: 0.5,
+
+  /* 背包里算「药物」的条目：cat === 'medical' 且局内真能用的那几类。
+     Medical.is 已经覆盖 cat 判定，这里再排除纯图鉴收藏品（没有 healCap 的）。 */
+  carriesMeds() {
+    return Save.bag.some(e => {
+      const it = ITEM_BY_ID[e.id];
+      return it && Medical.is(it) && (it.healCap || 0) > 0;
+    });
+  },
+
+  hasGun() {
+    return Save.gear.weapons.some(Boolean) || !!Save.gear.melee;
+  },
+
+  /* 收集当前所有缺口，返回 [ { kind, title, detail } ] */
+  problems() {
+    const out = [];
+    if (Save.hp <= CFG.P.HP * this.HP_RATIO) {
+      out.push({
+        kind: 'hp',
+        title: '生命值过低',
+        detail: '当前 ' + Save.hp + ' / ' + CFG.P.HP +
+          '。带伤进场风险很高，建议先回藏身处治疗。'
+      });
+    }
+    if (!this.hasGun()) {
+      out.push({
+        kind: 'gun',
+        title: '未装备枪械',
+        detail: '身上没有枪也没有近战武器，进场后赤手空拳。建议先去备战页配一把。'
+      });
+    }
+    if (!this.carriesMeds()) {
+      out.push({
+        kind: 'med',
+        title: '未携带药物',
+        detail: '背包里没有可用的医疗品，中弹后无法自行治疗。建议带上绷带或急救包。'
+      });
+    }
+    return out;
+  },
+
+  /* 有缺口就弹窗并返回 true（拦截出发）；全干净返回 false。 */
+  guard(mapId) {
+    const problems = this.problems();
+    if (!problems.length) return false;
+
+    const veil = document.getElementById('deployVeil');
+    const warns = document.getElementById('deployWarns');
+    if (!veil || !warns) return false;
+
+    const ic = { hp: '⚠', gun: '✕', med: '＋' };
+    warns.innerHTML = problems.map(p =>
+      '<div class="deploy-warn warn-' + p.kind + '">' +
+        '<span class="dw-ic">' + (ic[p.kind] || '!') + '</span>' +
+        '<div class="dw-body"><b>' + esc(p.title) + '</b><span>' + esc(p.detail) + '</span></div>' +
+      '</div>'
+    ).join('');
+
+    this._pendingMap = mapId;
+    veil.classList.remove('hidden');
+    /* 把焦点送进弹窗，Esc 键的关闭逻辑在这里也能用 */
+    const focusBtn = document.getElementById('deployGoPrepare');
+    if (focusBtn) focusBtn.focus();
+
+    /* 通知音：这是一次需要留意的提示 */
+    if (typeof SFX !== 'undefined' && SFX.ui) SFX.ui('notify');
+    return true;
+  },
+
+  close() {
+    const veil = document.getElementById('deployVeil');
+    if (veil) veil.classList.add('hidden');
+    this._pendingMap = null;
+  },
+
+  /* 前往备战：回藏身处，直接切到「备战」（装备 / 携带）页。
+     safehouse 版有 Safehouse.route('loadout')；没有就退回聚焦装备页。 */
+  goPrepare() {
+    this.close();
+    MapSelect.back();
+    if (typeof Safehouse !== 'undefined' && Safehouse.route) {
+      Safehouse.route('loadout');
+    } else {
+      const tab = document.querySelector('.sh-prepare, #paneGear');
+      if (tab && tab.click) tab.click();
+      else if (tab) tab.scrollIntoView();
+    }
   }
 };

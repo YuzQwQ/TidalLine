@@ -307,7 +307,23 @@ const Game = {
     document.getElementById('btnDeploy').onclick = () => MapSelect.open();
     document.getElementById('btnMapBack').onclick = () => MapSelect.back();
     document.getElementById('btnMapStart').onclick = () => MapSelect.confirm();
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&this.state==='map-select'){e.preventDefault();MapSelect.back();}});
+    /* 出发前提醒弹窗的三个动作 */
+    document.getElementById('deployGoPrepare').onclick = () => DeployGuard.goPrepare();
+    document.getElementById('deployGoAnyway').onclick = () => {
+      const mapId = DeployGuard._pendingMap || MapSelect.selectedId;
+      DeployGuard.close();
+      Base.deploy(mapId, { force: true });
+    };
+    document.getElementById('deployCancel').onclick = () => DeployGuard.close();
+    /* Esc 在提醒弹窗上关闭弹窗，没弹窗时才返回藏身处 */
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape' && this.state==='map-select'){
+        e.preventDefault();
+        const veil = document.getElementById('deployVeil');
+        if (veil && !veil.classList.contains('hidden')) DeployGuard.close();
+        else MapSelect.back();
+      }
+    });
     document.getElementById('btnSellJunk').onclick = () => Base.sellJunk();
     Ctx.bindClose();
   },

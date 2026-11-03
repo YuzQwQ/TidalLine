@@ -885,6 +885,47 @@ window.addEventListener('error', function (e) {
 .deal-acts button.go:hover { background: #1a8577; }
 .deal-acts button.go.no { background: #23302b; color: #6b4a3a; border-color: #3a2626; cursor: default; }
 .deal-acts button.go.no:hover { background: #23302b; }
+
+/* ---- 出发前提醒：生命/枪械/药物有缺口时弹出 ---- */
+#deployVeil { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(5, 9, 8, 0.88); backdrop-filter: blur(3px); z-index: 30; }
+#deployVeil.hidden { display: none; }
+.deploy-modal {
+  width: min(460px, 92vw); box-sizing: border-box;
+  background: #0e1512; border: 1px solid #2a443d;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.78);
+  padding: 22px 24px 20px;
+}
+.deploy-modal h2 {
+  margin: 0 0 4px; font-size: 15px; font-weight: 600; letter-spacing: 1px; color: #e6efeb;
+}
+.deploy-modal .dm-sub { font-size: 11px; color: #779181; margin-bottom: 14px; }
+.deploy-warns { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.deploy-warn {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 11px; border: 1px solid #2b3a34; border-radius: 4px; background: #101a16;
+}
+.deploy-warn .dw-ic { flex: 0 0 18px; text-align: center; font-size: 14px; line-height: 1.2; }
+.deploy-warn .dw-body { flex: 1; min-width: 0; }
+.deploy-warn .dw-body b { display: block; font-size: 12.5px; color: #dbe5e1; font-weight: 600; }
+.deploy-warn .dw-body span { display: block; font-size: 11px; color: #779181; line-height: 1.6; margin-top: 2px; }
+.deploy-warn.warn-hp { border-color: #54321f; background: #1a130e; }
+.deploy-warn.warn-hp .dw-ic { color: #d97a4a; }
+.deploy-warn.warn-gun { border-color: #5a3a1c; background: #18130e; }
+.deploy-warn.warn-gun .dw-ic { color: #d9a94a; }
+.deploy-warn.warn-med { border-color: #1e4a3e; background: #0e1814; }
+.deploy-warn.warn-med .dw-ic { color: #5fd6a8; }
+.deploy-acts { display: flex; gap: 8px; }
+.deploy-acts button {
+  flex: 1; margin: 0; padding: 11px 10px; font-size: 12.5px; letter-spacing: 1px;
+  background: #12201b; color: #a8c4ba; border: 1px solid #2a443d; border-radius: 4px; cursor: pointer;
+  font-family: inherit;
+}
+.deploy-acts button:hover { background: #16241f; color: #dbe5e1; border-color: #3a5a4f; }
+.deploy-acts button.primary { background: #14685C; color: #eaf4f0; border-color: #14685C; }
+.deploy-acts button.primary:hover { background: #1a8577; }
+.deploy-acts button.danger { background: #3a2626; color: #d9a0a0; border-color: #5a3434; }
+.deploy-acts button.danger:hover { background: #4a3030; border-color: #6b3d3d; color: #ecc2c2; }
 .medical-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
 .medical-actions button { flex:1; min-width:105px; margin:0; padding:10px 8px; font-size:12px; letter-spacing:0; }
 .medical-actions button:disabled, #doctorService button:disabled { opacity:.45; cursor:not-allowed; }
@@ -1125,6 +1166,10 @@ window.addEventListener('error', function (e) {
 <style>
 .mod-overlay[hidden]{display:none}.mod-overlay{position:fixed;inset:0;z-index:100;background:#020906c9;display:grid;place-items:center;padding:12px;color:#d5dfce;font:13px/1.6 system-ui}.mod-dialog{width:min(1100px,100%);max-height:calc(100dvh - 24px);overflow:auto;background:linear-gradient(130deg,#243228,#101b16);border:1px solid #ad995e;box-shadow:0 15px 80px #000b}.mod-dialog header{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:16px 22px;border-bottom:1px solid #74856755}.mod-dialog h2{font-size:22px;margin:0;color:#e9dbaf}.mod-dialog small{color:#9baa93}.mod-dialog button,.mod-dialog select{background:#273729;border:1px solid #687e59;color:#d7e0ca;padding:9px;cursor:pointer;font:inherit}.mod-dialog button:disabled{opacity:.4;cursor:not-allowed}.mod-target{display:flex;align-items:center;gap:14px;padding:12px 22px}.mod-target select{flex:1;min-width:0}.mod-body{display:grid;grid-template-columns:310px minmax(0,1fr);gap:22px;padding:0 22px 22px}.mod-picture{height:185px;background:#0b1512;border:1px solid #74856755;display:grid;place-items:center}.mod-picture img{width:90%;height:170px;object-fit:contain;image-rendering:auto}.mod-picture img:not(.item-detail-original){image-rendering:pixelated}.mod-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.mod-slots button{min-width:0;display:flex;align-items:center;flex-direction:column;gap:4px}.mod-slots button img{width:40px;height:40px;object-fit:contain;image-rendering:pixelated}.mod-slots button>b{height:40px;font-size:25px}.mod-slots small{font-size:10px;overflow-wrap:anywhere}.mod-dialog .selected{border-color:#e5c481;background:#584b2d}.mod-note{font-size:11px;color:#9aaa92;padding:8px}.mod-work{min-width:0}.mod-work h3{margin:0 0 8px}.mod-parts{max-height:220px;overflow:auto;display:grid;gap:6px;margin-bottom:14px}.mod-parts button{display:flex;align-items:center;gap:12px;text-align:left;min-height:54px}.mod-parts button:first-child{display:block}.mod-parts img{width:42px;height:42px;object-fit:contain;image-rendering:pixelated}.mod-parts span{min-width:0}.mod-parts b,.mod-parts small{display:block}.mod-parts small{font-size:10px}.mod-stats>div{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:8px;border-bottom:1px solid #79927322;padding:5px 0;font-size:11px}.mod-stats span{text-align:right}.mod-stat-head{color:#e2c78e}.mod-stats .gain{color:#82d3a0}.mod-stats .loss{color:#e89c86}.mod-reason{min-height:25px;color:#dcc18d}.mod-dialog .mod-apply{width:100%;background:#927640;color:#fff0cd;font-size:16px}.mod-entry{min-height:36px;padding:8px 12px;background:#635431;border:1px solid #9a8556;color:#eee2bb;cursor:pointer}@media(max-width:700px){.mod-body{grid-template-columns:1fr;padding:0 12px 14px;gap:14px}.mod-target{padding:10px 12px}.mod-picture{height:125px}.mod-picture img{height:115px}.mod-slots{grid-template-columns:repeat(3,minmax(0,1fr))}.mod-slots button{padding:7px 3px;font-size:11px}.mod-dialog header{padding:12px}.mod-dialog h2{font-size:18px}.mod-stats>div{gap:4px;font-size:10px}.mod-parts{max-height:200px}.mod-gun>p{margin:6px 0}.mod-note{padding:0}.mod-slots button img{width:30px;height:30px}.mod-slots button>b{height:30px}}
 
+/* Full page inside the hideout shell, with global navigation available. */
+.mod-page[hidden]{display:none}.mod-page{flex:1;min-height:0;overflow:auto;padding:20px 24px;color:#d5dfce;font:13px/1.6 system-ui}.mod-page .mod-dialog{width:100%;max-width:1360px;max-height:none;overflow:visible;margin:0 auto;box-shadow:0 10px 40px #0005}.mod-page .mod-body{grid-template-columns:minmax(280px,35%) minmax(0,1fr)}.mod-page .mod-picture{height:240px}.mod-page .mod-picture img{height:220px}.mod-page .mod-slots{grid-template-columns:repeat(3,minmax(0,1fr))}.mod-page .mod-parts{max-height:260px}.sh-shell[data-view=gunsmith] .base-main,.sh-shell[data-view=gunsmith] .base-nav,.sh-shell[data-view=gunsmith] .sh-demo-work{display:none!important}
+@media(max-width:799px){.mod-page{overflow:visible;padding:12px}.mod-page .mod-body{grid-template-columns:1fr}.mod-page .mod-picture{height:160px}.mod-page .mod-picture img{height:145px}.mod-page .mod-dialog header{gap:8px}.mod-page .mod-dialog header button{font-size:11px}}
+
 </style></head>
 <body>
 
@@ -1277,6 +1322,20 @@ window.addEventListener('error', function (e) {
           <span>卖出不影响图鉴记录</span>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 出发前提醒：生命值过低 / 未装备枪械 / 未携带药物 -->
+<div class="veil hidden" id="deployVeil">
+  <div class="deploy-modal" role="dialog" aria-modal="true" aria-labelledby="deployModalTitle">
+    <h2 id="deployModalTitle">出发前检查</h2>
+    <p class="dm-sub">有几项准备可能不足，建议先回藏身处补一补。</p>
+    <div class="deploy-warns" id="deployWarns"></div>
+    <div class="deploy-acts">
+      <button type="button" id="deployGoPrepare" class="primary">前往备战</button>
+      <button type="button" id="deployGoAnyway">继续出发</button>
+      <button type="button" id="deployCancel" class="danger">取消</button>
     </div>
   </div>
 </div>
@@ -11387,13 +11446,15 @@ const Base = {
     this.note('清掉 ' + count + ' 件寻常物，+' + gain + ' 信用点');
   },
 
-  /* ---- 出发：背包里装了什么就带什么，不再现场买补给 ---- */
-  deploy(mapId) {
+  /* ---- 出发：背包里装了什么就带什么，不再现场买补给 ----
+     opts.force：用户已经在出发前提醒里点了「继续出发」，明知有缺口也要走。
+     这时跳过"没枪就拦下"的硬闸门 —— 提醒已经摆明风险，别再二次拦截。 */
+  deploy(mapId, opts) {
     const map = MAP_CATALOG.find(m => m.id === (mapId || RAID_MAP.id));
     if (!map) return;
     /* 至少携带一把枪或近战武器，不再免费补发手枪 */
     this.ensureSidearm();
-    if (!Save.gear.weapons.some(Boolean) && !Save.gear.melee) {
+    if (!(opts && opts.force) && !Save.gear.weapons.some(Boolean) && !Save.gear.melee) {
       this.note('请先装备一把枪械或近战武器', true);
       return;
     }
@@ -11447,7 +11508,108 @@ const MapSelect = {
   },
   confirm() {
     if(Game.state!=='map-select')return;
+    /* 出发前检查：有缺口先弹提醒，让玩家选「备战 / 继续 / 取消」，
+       三项都干净就直接出发。 */
+    if (DeployGuard.guard(this.selectedId)) return;
     Base.deploy(this.selectedId);
+  }
+};
+
+/* ============================================================
+   出发前提醒：生命值过低 / 未装备枪械 / 未携带药物。
+   点「出发」时检查，缺任意一项就弹窗让玩家自己决定去留。
+   ============================================================ */
+const DeployGuard = {
+  /* 生命值低于这个比例就算「过低」。取 0.5：满血 100 掉到 50 以下就提醒。 */
+  HP_RATIO: 0.5,
+
+  /* 背包里算「药物」的条目：cat === 'medical' 且局内真能用的那几类。
+     Medical.is 已经覆盖 cat 判定，这里再排除纯图鉴收藏品（没有 healCap 的）。 */
+  carriesMeds() {
+    return Save.bag.some(e => {
+      const it = ITEM_BY_ID[e.id];
+      return it && Medical.is(it) && (it.healCap || 0) > 0;
+    });
+  },
+
+  hasGun() {
+    return Save.gear.weapons.some(Boolean) || !!Save.gear.melee;
+  },
+
+  /* 收集当前所有缺口，返回 [ { kind, title, detail } ] */
+  problems() {
+    const out = [];
+    if (Save.hp <= CFG.P.HP * this.HP_RATIO) {
+      out.push({
+        kind: 'hp',
+        title: '生命值过低',
+        detail: '当前 ' + Save.hp + ' / ' + CFG.P.HP +
+          '。带伤进场风险很高，建议先回藏身处治疗。'
+      });
+    }
+    if (!this.hasGun()) {
+      out.push({
+        kind: 'gun',
+        title: '未装备枪械',
+        detail: '身上没有枪也没有近战武器，进场后赤手空拳。建议先去备战页配一把。'
+      });
+    }
+    if (!this.carriesMeds()) {
+      out.push({
+        kind: 'med',
+        title: '未携带药物',
+        detail: '背包里没有可用的医疗品，中弹后无法自行治疗。建议带上绷带或急救包。'
+      });
+    }
+    return out;
+  },
+
+  /* 有缺口就弹窗并返回 true（拦截出发）；全干净返回 false。 */
+  guard(mapId) {
+    const problems = this.problems();
+    if (!problems.length) return false;
+
+    const veil = document.getElementById('deployVeil');
+    const warns = document.getElementById('deployWarns');
+    if (!veil || !warns) return false;
+
+    const ic = { hp: '⚠', gun: '✕', med: '＋' };
+    warns.innerHTML = problems.map(p =>
+      '<div class="deploy-warn warn-' + p.kind + '">' +
+        '<span class="dw-ic">' + (ic[p.kind] || '!') + '</span>' +
+        '<div class="dw-body"><b>' + esc(p.title) + '</b><span>' + esc(p.detail) + '</span></div>' +
+      '</div>'
+    ).join('');
+
+    this._pendingMap = mapId;
+    veil.classList.remove('hidden');
+    /* 把焦点送进弹窗，Esc 键的关闭逻辑在这里也能用 */
+    const focusBtn = document.getElementById('deployGoPrepare');
+    if (focusBtn) focusBtn.focus();
+
+    /* 通知音：这是一次需要留意的提示 */
+    if (typeof SFX !== 'undefined' && SFX.ui) SFX.ui('notify');
+    return true;
+  },
+
+  close() {
+    const veil = document.getElementById('deployVeil');
+    if (veil) veil.classList.add('hidden');
+    this._pendingMap = null;
+  },
+
+  /* 前往备战：回藏身处，直接切到「备战」（装备 / 携带）页。
+     safehouse 版有 Safehouse.route('loadout')；没有就退回聚焦装备页。 */
+  goPrepare() {
+    this.close();
+    MapSelect.back();
+    if (typeof Safehouse !== 'undefined' && Safehouse.route) {
+      Safehouse.route('loadout');
+    } else {
+      const tab = document.querySelector('.sh-prepare, #paneGear');
+      if (tab && tab.click) tab.click();
+      else if (tab) tab.scrollIntoView();
+    }
   }
 };
 
@@ -11763,7 +11925,23 @@ const Game = {
     document.getElementById('btnDeploy').onclick = () => MapSelect.open();
     document.getElementById('btnMapBack').onclick = () => MapSelect.back();
     document.getElementById('btnMapStart').onclick = () => MapSelect.confirm();
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&this.state==='map-select'){e.preventDefault();MapSelect.back();}});
+    /* 出发前提醒弹窗的三个动作 */
+    document.getElementById('deployGoPrepare').onclick = () => DeployGuard.goPrepare();
+    document.getElementById('deployGoAnyway').onclick = () => {
+      const mapId = DeployGuard._pendingMap || MapSelect.selectedId;
+      DeployGuard.close();
+      Base.deploy(mapId, { force: true });
+    };
+    document.getElementById('deployCancel').onclick = () => DeployGuard.close();
+    /* Esc 在提醒弹窗上关闭弹窗，没弹窗时才返回藏身处 */
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape' && this.state==='map-select'){
+        e.preventDefault();
+        const veil = document.getElementById('deployVeil');
+        if (veil && !veil.classList.contains('hidden')) DeployGuard.close();
+        else MapSelect.back();
+      }
+    });
     document.getElementById('btnSellJunk').onclick = () => Base.sellJunk();
     Ctx.bindClose();
   },
@@ -16330,7 +16508,7 @@ const SAFEHOUSE_CONFIG = {
   ],
   facilities: [
     {id:'comms',name:'通讯桌',subtitle:'商人联络',icon:'radio',x:20,y:52,action:'traders',state:'live'},
-    {id:'bench',name:'装备台',subtitle:'整理装备与携带',icon:'tool',x:42,y:38,action:'loadout',state:'live'},
+    {id:'bench',name:'装备台',subtitle:'改装枪械',icon:'tool',x:42,y:38,action:'gunsmith',state:'live'},
     {id:'medical',name:'医疗角',subtitle:'医疗用品与治疗',icon:'cross',x:70,y:44,action:'doctor',state:'live'},
     {id:'storage',name:'储物区',subtitle:'入库与回收',icon:'box',x:18,y:73,action:'stash',state:'live'},
     {id:'workshop',name:'制作工位',subtitle:'设施规划',icon:'gear',x:43,y:64,action:'workshop',state:'planned',message:'制作工位已预留。配方、材料消耗、制造队列及设施升级尚未开放。'},
@@ -16400,8 +16578,8 @@ const Safehouse = {
     const home=this.view==='home';this.root.dataset.view=this.view;
     this.root.querySelector('.sh-home').hidden=!home;this.root.querySelector('.sh-work').hidden=home;
     const merchant=['traders','doctor'].includes(this.view);
-    for(const n of this.root.querySelectorAll('.sh-top [data-sh]')){const on=n.dataset.sh===this.view||(merchant&&n.dataset.sh==='traders');n.classList.toggle('on',on);if(n.tagName==='BUTTON')n.setAttribute('aria-current',on?'page':'false');}
-    this.root.querySelector('[data-sh-work-title]').textContent={loadout:'备战 · 装备与携带',stash:'仓库 · 物资管理',traders:'商人 · 交易与补给',doctor:'医生 · 药品与治疗'}[this.view]||'';
+    for(const n of this.root.querySelectorAll('.sh-top [data-sh]')){const on=n.dataset.sh===this.view||(this.view==='gunsmith'&&n.dataset.sh==='home')||(merchant&&n.dataset.sh==='traders');n.classList.toggle('on',on);if(n.tagName==='BUTTON')n.setAttribute('aria-current',on?'page':'false');}
+    this.root.querySelector('[data-sh-work-title]').textContent={gunsmith:'装备台 · 枪械改装',loadout:'备战 · 装备与携带',stash:'仓库 · 物资管理',traders:'商人 · 交易与补给',doctor:'医生 · 药品与治疗'}[this.view]||'';
     const profile=this.root.querySelector('.sh-merchant-profile');profile.hidden=!merchant;
     if(merchant){const m=SAFEHOUSE_CONFIG.merchants[this.demo?(this.view==='doctor'?'doctor':'shop'):Base.tab]||SAFEHOUSE_CONFIG.merchants.shop;const key=m.asset;if(profile.dataset.asset!==key){profile.innerHTML='<img alt="'+m.name+'"><div><b>'+m.name+'</b><small>'+m.role+'</small><p>“'+m.quote+'”</p></div>';profile.querySelector('img').src=this.asset(key);profile.dataset.asset=key;}}
   },
@@ -16412,10 +16590,11 @@ const Safehouse = {
     if(id==='recovery'){this.explain('角色恢复','伤势与自动恢复尚未开放。现阶段请在备战中使用医疗品，或前往医生购买收费治疗。');return;}
     if(id==='archive'){this.archive();return;}
     if(id==='maps'){if(this.demo)this.explain('出发行动','游戏中此按钮将打开现有地图选择，保留围栏区等已开放地图。最终确认才启动行动；本独立原型不启动游戏。');else{this.stopTimer();MapSelect.open();}return;}
-    if(!['home','loadout','stash','traders','doctor'].includes(id)){this.explain('功能尚未开放','入口已预留，等待对应系统接入。当前操作不会改变资金、库存或任务状态。');return;}
+    if(!['home','gunsmith','loadout','stash','traders','doctor'].includes(id)){this.explain('功能尚未开放','入口已预留，等待对应系统接入。当前操作不会改变资金、库存或任务状态。');return;}
     this.view=id;
     if(!this.demo){Tips.hide();Deal.hide();Ctx.hide();Base.closePicker();if(['traders','doctor'].includes(id))Base.tab=id==='doctor'?'doctor':(['shop','gun','doctor'].includes(Base.tab)?Base.tab:'shop');else Base.tab='stash';this.applyView();Base.page=0;Base.render();if(id!=='home')Base.renderStash();}
     this.refresh();
+    if(id==='gunsmith'&&!this.demo&&typeof ModUI!=='undefined')ModUI.showPage();
   },
   explain(title,text){const d=this.root.querySelector('dialog');d.querySelector('.sh-dialog-content').innerHTML='<small class="sh-kicker">TIDAL LINE / 功能说明</small><h2></h2><p></p>';d.querySelector('h2').textContent=title;d.querySelector('p').textContent=text;if(!d.open)d.showModal();},
   archive(){
@@ -16671,7 +16850,7 @@ const StorageUI={
 </script>
 <script>
 /* ===== attachment-ui.js ===== */
-/* One workshop overlay, shared by warehouse, loadout and raid. */
+/* Dedicated hideout page; the same transaction controls remain an overlay in raids. */
 const ModUI={
   el:null,target:null,slot:'optic',selection:null,timer:null,
   ownerLabel(t){return ({'base-equipped':'已装备','raid-equipped':'已装备','base-bag':'携带背包','raid-bag':'背包',stash:'仓库'})[t.owner]+' · '+(t.index+1);},
@@ -16680,14 +16859,21 @@ const ModUI={
   openWithPart(entry){const inv=Attachments.inventory();if(!inv.includes(entry)){Game.toast('请先将配件移出安全箱');return false;}
     const id=Attachments.entryItem(entry)?.equip?.attachment,d=ATTACHMENT_DEFS[id];if(!d)return false;
     this.target=Attachments.targets().find(t=>Attachments.compatible(Attachments.read(t).equip.gun,id))||Attachments.targets()[0]||null;this.slot=d.subtype;this.selection={id,source:entry};this.open();return true;},
-  open(){if(!this.el){this.el=document.createElement('section');this.el.id='modOverlay';this.el.className='mod-overlay';this.el.setAttribute('role','dialog');this.el.setAttribute('aria-label','枪械改装');document.body.appendChild(this.el);
+  mountSurface(page){if(!this.el){this.el=document.createElement('section');this.el.id='modOverlay';this.el.setAttribute('aria-label','枪械改装');
       this.el.addEventListener('click',e=>{if(e.target===this.el)this.close();});
       window.addEventListener('keydown',e=>{if(this.el.hidden)return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();this.close();}},true);
     }
-    if(Game.state==='playing'&&!Game.bagOpen)Game.toggleBag({silent:true});Game.input.mouseDown=false;Game.input.mousePressed=false;Game.releaseLock();Tips.hide();Ctx.hide();Deal.hide();
-    this.el.hidden=false;this.render();clearInterval(this.timer);this.timer=setInterval(()=>this.refresh(),100);
+    this.page=page;this.el.className=page?'mod-page':'mod-overlay';this.el.setAttribute('role',page?'region':'dialog');
+    (page?Safehouse.root.querySelector('.sh-work'):document.body).appendChild(this.el);
   },
-  close(){if(this.el)this.el.hidden=true;clearInterval(this.timer);this.timer=null;},
+  showPage(){this.mountSurface(true);if(!Attachments.read(this.target)){this.target=Attachments.targets()[0]||null;this.selection=null;this.slot='optic';}this.start();},
+  start(){this.el.hidden=false;this.render();clearInterval(this.timer);this.timer=setInterval(()=>this.refresh(),100);},
+  open(){if(Game.state==='base'){Safehouse.route('gunsmith');return;}this.mountSurface(false);
+    if(Game.state==='playing'&&!Game.bagOpen)Game.toggleBag({silent:true});Game.input.mouseDown=false;Game.input.mousePressed=false;Game.releaseLock();Tips.hide();Ctx.hide();Deal.hide();
+    this.start();
+  },
+  dismiss(){if(this.el)this.el.hidden=true;clearInterval(this.timer);this.timer=null;},
+  close(){this.dismiss();if(this.page&&Game.state==='base'&&Safehouse.view==='gunsmith')Safehouse.route('home');},
   refresh(){if(!['playing','base'].includes(Game.state)||Game.player?.dead&&Game.state==='playing'){this.close();return;}
     const it=Attachments.read(this.target),sig=JSON.stringify([it?.equip,Attachments.inventory().map(e=>[e.id||e.item?.id,e.n]),this.target&&Attachments.blocked(this.target)]);
     if(sig!==this.sig)this.render();
@@ -16702,7 +16888,7 @@ const ModUI={
     const index=targets.findIndex(t=>t.ref===this.target?.ref),candidates=it?Attachments.inventory().filter(e=>{const id=Attachments.entryItem(e)?.equip?.attachment;return id&&Attachments.compatible(current,id,this.slot);}):[];
     const basic=current&&Attachments.resolve(current.id,{}),baseStats=basic&&this.stats(basic),nowStats=current&&this.stats(current),nextStats=after&&this.stats(after);
     const money=n=>formatMoney(n),fmt=(v,u)=>(Number.isInteger(v)?v:v.toFixed(2))+u;
-    this.el.innerHTML=`<div class="mod-dialog"><header><div><small>GUNSMITH / 枪械改装</small><h2>${esc(it?.name||'选择枪械')}</h2></div><button data-mod-close>关闭 · Esc</button></header><label class="mod-target">改装目标<select aria-label="选择改装枪械"><option value="-1">${targets.length?'请选择具体枪械':'没有可改装枪械'}</option>${targets.map((t,i)=>`<option value="${i}" ${i===index?'selected':''}>${esc(t.name+' · '+this.ownerLabel(t))}</option>`).join('')}</select></label>${!it?'<p class="mod-note">枪械已移动或当前没有可改装目标，请重新选择。安全箱中的枪械需先移出。</p>':`
+    this.el.innerHTML=`<div class="mod-dialog"><header><div><small>GUNSMITH / 枪械改装</small><h2>${esc(it?.name||'选择枪械')}</h2></div><button data-mod-close>${this.page?'返回藏身处':'关闭 · Esc'}</button></header><label class="mod-target">改装目标<select aria-label="选择改装枪械"><option value="-1">${targets.length?'请选择具体枪械':'没有可改装枪械'}</option>${targets.map((t,i)=>`<option value="${i}" ${i===index?'selected':''}>${esc(t.name+' · '+this.ownerLabel(t))}</option>`).join('')}</select></label>${!it?'<p class="mod-note">'+(targets.length?'选择一把枪械开始改装。':'暂无可改装枪械。可先前往军火商购买，或将安全箱中的枪械移出。')+'</p>':`
     <div class="mod-body"><section class="mod-gun"><div class="mod-picture">${Icons.detailTag(it,'')}</div><p>${esc(BALLISTICS.caliberName(current.caliber))} · ${current.w.toFixed(2)}kg · 回收 ${money(it.sell)}</p><div class="mod-slots">${ATTACHMENT_SLOTS.map(slot=>{const state=Attachments.slotState(current.id,current.attachments,slot),a=ATTACHMENT_DEFS[current.attachments[slot]];return `<button data-mod-slot="${slot}" class="${slot===this.slot?'selected ':''}${state}" ${state==='disabled'?'disabled':''}><span>${Attachments.slotNames[slot]}</span>${a?Icons.gearIcon(a.id,'件'):'<b>'+(state==='disabled'?'×':'＋')+'</b>'}<small>${esc(a?.name||(state==='disabled'?'不支持':'原装／空槽'))}</small></button>`;}).join('')}</div><p class="mod-note">已安装配件随枪转移和结算。原装结构不作为可拆物品。实战瞄准时间还受护甲影响。</p></section>
     <section class="mod-work"><h3>${Attachments.slotNames[this.slot]} · 可用配件</h3><div class="mod-parts"><button data-mod-part="-1" class="${sel?.id===null?'selected':''}" ${!current.attachments[this.slot]?'disabled':''}><b>恢复原装／拆卸</b><small>拆下物品与多余弹药返还${Game.state==='playing'?'普通背包':'仓库'}</small></button>${candidates.map((e,i)=>{const a=Attachments.entryItem(e),id=a.equip.attachment;return `<button data-mod-part="${i}" class="r${a.r} ${sel?.source===e?'selected':''}">${Icons.gearIcon(id,'件')}<span><b>${esc(a.name)}</b><small>${esc(Attachments.describe(id))}</small></span></button>`;}).join('')}${!candidates.length?'<p>可用库存中没有兼容配件。</p>':''}</div>
     <div class="mod-stats"><div class="mod-stat-head"><b>属性</b><span>原枪</span><span>当前</span><span>预览</span></div>${nowStats.map(([label,value,unit,higher],i)=>{const v=nextStats[i][1],changed=Math.abs(v-value)>1e-8,good=higher?v>value:v<value;return `<div><b>${label}</b><span>${fmt(baseStats[i][1],unit)}</span><span>${fmt(value,unit)}</span><span class="${changed?(good?'gain':'loss'):''}">${fmt(v,unit)}</span></div>`;}).join('')}</div>
@@ -16727,6 +16913,13 @@ attachmentWrap(Base,'showItem',function(original,e,where,node){const r=original.
 attachmentWrap(Base,'renderGear',function(original){original.call(this);const rows=document.querySelectorAll?.('#baseGear .slot')||[];for(let i=0;i<3;i++){const it=Save.gear.weapons[i],row=rows[i];if(row&&it)row.oncontextmenu=ev=>{ev.preventDefault();Ctx.show(ev.clientX,ev.clientY,[{label:'改装',onClick:()=>ModUI.openTarget(Attachments.findTarget(it))},{label:'退弹',onClick:()=>Base.unloadGun(it)}]);};}});
 attachmentWrap(Game,'renderGearPanel',function(original){original.call(this);const rows=document.querySelectorAll?.('#eqStrip .eqs')||[],p=this.player;if(!p)return;for(let i=0;i<3;i++)if(rows[i]&&p.weapons[i])rows[i].oncontextmenu=e=>{e.preventDefault();Ctx.show(e.clientX,e.clientY,[{label:'改装',onClick:()=>ModUI.openTarget(Attachments.findTarget(p.weapons[i]))},{label:'退弹',onClick:()=>p.unloadWeapon(i)},...(i===p.slot&&p.weapon.modes.length>1?[{label:'切换射击模式（B）',onClick:()=>Gunplay.nextMode(p)}]:[])]);};});
 attachmentWrap(Game,'renderBag',function(original){original.call(this);const rows=document.querySelectorAll?.('#bagGrid .cell')||[],p=this.player;if(!p)return;for(let i=0;i<p.bag.slots.length;i++){const s=p.bag.slots[i],k=s.item.equip?.kind,row=rows[i];if(!row||!['gun','attachment'].includes(k))continue;if(k==='attachment'){row.onclick=()=>ModUI.openWithPart(s);row.title=s.item.name+' · 左键选择安装目标';}row.oncontextmenu=e=>{e.preventDefault();Ctx.show(e.clientX,e.clientY,[{label:k==='gun'?'改装':'安装到枪械',onClick:()=>k==='gun'?ModUI.openTarget(Attachments.findTarget(s)):ModUI.openWithPart(s)},{label:'查看详情',onClick:()=>Tips.show(s.item,row.getBoundingClientRect(),k==='attachment'?Attachments.describe(s.item.equip.attachment):'')},{label:'移入安全箱',onClick:()=>Game.moveToSafe(i)},...(k==='gun'?[{label:'退弹',onClick:()=>Game.unloadLooseGun(s.item)}]:[]),{label:'丢弃',danger:true,onClick:()=>Game.dropFromBag(i)}]);};}});
+
+// Leaving the page releases its polling timer; raid closing retains its existing behavior.
+{
+ const apply=Safehouse.applyView,closeBase=Base.close;
+ Safehouse.applyView=function(){const r=apply.apply(this,arguments);if(this.view!=='gunsmith'&&ModUI.page)ModUI.dismiss();return r;};
+ Base.close=function(){ModUI.dismiss();return closeBase.apply(this,arguments);};
+}
 
 </script>
 <script>
