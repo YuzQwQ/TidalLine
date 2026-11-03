@@ -8849,8 +8849,8 @@ const SFX = {
       lp: o.lp
     });
     /* 泵动枪补一声拉泵。敌人开火（lp 压过的那路）不加——那是远处的枪，
-       不该听见上膛的细节 */
-    if (played && p.pump && !o.lp && this.samples[p.pump.id]) {
+       不该听见上膛的细节；半自动霰弹（pump 显式 false）也不加。 */
+    if (played && p.pump && o.pump !== false && !o.lp && this.samples[p.pump.id]) {
       this._playSample(p.pump.id, {
         delay: p.pump.after,
         rate: 0.98 + Math.random() * 0.04,
@@ -9266,10 +9266,14 @@ const SFX = {
     /* 枪声：真实录音优先，按枪型选；素材缺失才落回下面的合成版 */
     if (name === 'shot') {
       const modelId = (opts && opts.gun) || 'm4a1';
-      const gunId = WEAPONS[modelId]?.category || modelId;
-      if (this._playGun(gunId, opts)) return;
+      const model = WEAPONS[modelId];
+      const gunId = model?.category || modelId;
+      /* 拉泵声只给真有泵动周期的枪（rem870 的 cycleTime 0.8s）。
+         saiga12 / mp155 是半自动，开一枪跟一句"咔啦"就露馅了。 */
+      const shotOpts = Object.assign({}, opts, { pump: !!(model && model.cycleTime > 0) });
+      if (this._playGun(gunId, shotOpts)) return;
       const gun = this.GUN[gunId] || this.GUN.rifle;
-      return this._shot(gun, opts, gunId);
+      return this._shot(gun, shotOpts, gunId);
     }
     /* 敌人的枪声：用同一批手枪录音压低 + 低通，听得出是别人在打，
        而不是换了一个音色；同样在素材缺失时落回合成版 */

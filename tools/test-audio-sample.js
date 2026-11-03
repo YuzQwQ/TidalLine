@@ -190,9 +190,14 @@ const man = require('../assets/audio/manifest.json');
       const pistol = hits.map(h => h.id);
 
       hits.length = 0;
-      for (const g of ['rifle', 'smg', 'shotgun']) SFX.play('shot', { gun: g });
+      for (const g of ['rifle', 'smg', 'rem870']) SFX.play('shot', { gun: g });
       const others = hits.map(h => h.id);
       const rates = hits.map(h => +h.rate.toFixed(2));
+
+      /* 半自动霰弹不该跟着拉泵：saiga12 / mp155 的 cycleTime 都是 0 */
+      hits.length = 0;
+      for (const g of ['saiga12', 'mp155']) SFX.play('shot', { gun: g });
+      const semiauto = hits.map(h => h.id);
 
       hits.length = 0;
       SFX.play('enemyShot');
@@ -208,7 +213,7 @@ const man = require('../assets/audio/manifest.json');
 
       SFX._playSample = realSample;
       SFX._shot = realShot;
-      return { table, pistol, others, rates, enemy, fellBack };
+      return { table, pistol, others, rates, enemy, fellBack, semiauto };
     });
     assert(Object.values(routing.table).every(Boolean), '四把枪的录音都齐全');
     assert.deepEqual(routing.pistol,
@@ -219,6 +224,8 @@ const man = require('../assets/audio/manifest.json');
     /* 泵动霰弹枪开完要补一声拉泵（排在音频时钟上，跟着这一发走） */
     assert.equal(routing.others[3], 'shot_shotgun_pump', '霰弹开火后跟一声拉泵');
     assert.equal(routing.others.length, 4, '其余枪型不额外补音');
+    assert.deepEqual(routing.semiauto, ['shot_shotgun', 'shot_shotgun'],
+      '半自动霰弹只响枪声，不补拉泵（' + routing.semiauto.join(',') + '）');
     assert(routing.rates[1] > routing.rates[0], '冲锋枪是升调播放（' + routing.rates[1] + ' > ' + routing.rates[0] + '）');
     assert(routing.enemy && routing.enemy.lp > 0, '敌人枪声走同一批录音并低通处理');
     assert(routing.fellBack, '采样缺失时落回合成音，不会变哑');
