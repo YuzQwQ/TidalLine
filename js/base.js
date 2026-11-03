@@ -53,6 +53,7 @@ const Base = {
     document.getElementById('bCodex').textContent =
       Save.codexCount() + ' / ' + totalCodex;
 
+    this.renderHealth();
     this.renderGear();
     this.renderPicker();
     this.renderBag();
@@ -83,6 +84,56 @@ const Base = {
   },
 
   /* ---- 装备：3 个武器位 + 头盔 / 护甲 / 背包 ---- */
+  /* ---------------- 备战页的健康状态 ----------------
+     血量 + 一个状态词。状态词目前只按血量分档；debuff 系统上线后
+     往 Save.debuffs 里塞条目（{ id, label } 或直接字符串），这里会自动列成标签，
+     不用再改渲染。 */
+  healthState() {
+    const max = CFG.P.HP;
+    const ratio = Save.hp / max;
+    if (ratio >= 0.999) return { key: 'ok', label: '健康', tone: 'ok', note: '没有可见的伤势。' };
+    if (ratio >= 0.7) return { key: 'light', label: '轻伤', tone: 'warn', note: '行动不受影响，但别再硬吃几发。' };
+    if (ratio >= 0.4) return { key: 'heavy', label: '重伤', tone: 'bad', note: '再挨一下就危险了，建议先处理。' };
+    return { key: 'critical', label: '濒危', tone: 'bad', note: '随时可能倒下。' };
+  },
+
+  /* 卡片的 DOM 只建一次，之后只更新内容：每次 render() 都重建会打断 CSS 过渡 */
+  renderHealth() {
+    const pane = document.getElementById('paneGear');
+    if (!pane) return;
+    let box = document.getElementById('loadoutHealth');
+    if (!box) {
+      box = document.createElement('section');
+      box.id = 'loadoutHealth';
+      box.className = 'loadout-health';
+      pane.insertBefore(box, pane.firstChild);
+    }
+    const max = CFG.P.HP;
+    const hp = Math.round(Save.hp * 10) / 10;
+    const st = this.healthState();
+    const pct = U.clamp(Save.hp / max * 100, 0, 100);
+    /* 未来 debuff：Save.debuffs = ['bleeding', {id:'fracture',label:'骨折'}] */
+    const debuffs = (Save.debuffs || []).filter(Boolean)
+      .map(d => (typeof d === 'string' ? d : (d.label || d.name || d.id)));
+    const chips = debuffs.length
+      ? debuffs.map(d => '<span class="lh-debuff">' + esc(d) + '</span>').join('')
+      : '<span class="lh-debuff none">无异常状态</span>';
+    const full = Save.hp >= max - 1e-6;
+
+    box.className = 'loadout-health tone-' + st.tone;
+    box.innerHTML =
+      '<div class="lh-head"><h3>健康状态</h3><span class="lh-state">' + st.label + '</span></div>' +
+      '<div class="lh-hp"><b>' + hp + '</b><small>/ ' + max + ' HP</small></div>' +
+      '<div class="lh-bar"><i style="width:' + pct.toFixed(1) + '%"></i></div>' +
+      '<p class="lh-note">' + esc(st.note) + '</p>' +
+      '<div class="lh-debuffs">' + chips + '</div>' +
+      '<button type="button" class="lh-treat"' + (full ? ' disabled' : '') + '>' +
+        (full ? '生命值已满' : '快速治疗') + '</button>';
+
+    const btn = box.querySelector('.lh-treat');
+    if (btn && !full) btn.onclick = () => Clinic.open();
+  },
+
   renderGear() {
     const el = document.getElementById('baseGear');
     if (!el) return;
@@ -1349,5 +1400,155 @@ const DeployGuard = {
       if (tab && tab.click) tab.click();
       else if (tab) tab.scrollIntoView();
     }
+  }
+};
+
+/* ============================================================
+   快速治疗：备战页的结账页（Clinic）
+   结构照改枪台那套「清单 → 总价 → 余额 → 确定支付 / 取消」走：
+   左边把可买的治疗档列出来，右边（footer）总价与余额，确认才扣钱。
+
+   价目**不另立一套**：直接从 Medical.quote() 推导。
+   quote(hp) 本来就等于"从 hp 治到满血要多少钱"，所以
+   从 A 治到 B 的价钱 = quote(A) - quote(B)，跟医生那页永远一致。
+   ============================================================ */
+const Clinic = {
+  el: null,
+  pick: 'quick',
+
+  /* 三档：应急包扎 / 现场急救 / 全面治疗。
+     治不了（已经满血或这一档不加血）的选项直接不列出来。 */
+  options() {
+    const max = CFG.P.HP, hp = Save.hp;
+    const base = Medical.quote(hp).total;
+    const mk = (id, name, desc, target) => {
+      const to = Math.min(max, Math.max(hp, target));
+      const heal = to - hp;
+      /* quote 是"治到满"的价钱，两档相减就是这一段的价钱；四舍五入到整数信用点 */
+      const price = Math.max(0, Math.round(base - Medical.quote(to).total));
+      return { id: id, name: name, desc: desc, target: to, heal: heal, price: price };
+    };
+    const list = [
+      mk('quick', '应急包扎', '现场处理伤口，恢复 25 点生命', hp + 25),
+      mk('field', '现场急救', '急救包处理，恢复 60 点生命', hp + 60),
+      mk('full', '全面治疗', '医生接手，恢复到完全健康', max)
+    ].filter(o => o.heal > 0.01);
+    /* 伤势较轻时高档会撞到满血：42 HP 的「急救」和「全面治疗」都是治满、同价，
+       列两行一模一样的没有意义。按目标血量去重，保留更靠后（更明确）的那档。 */
+    const seen = new Set();
+    const out = [];
+    for (let i = list.length - 1; i >= 0; i--) {
+      const key = Math.round(list[i].target * 10) / 10;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.unshift(list[i]);
+    }
+    return out;
+  },
+
+  open() {
+    if (Game.state !== 'base') return false;
+    if (Save.hp >= CFG.P.HP - 1e-6) { Base.note('生命值已满，不需要治疗'); return false; }
+    const opts = this.options();
+    if (!opts.length) { Base.note('当前没有可用的治疗项目'); return false; }
+    this.close();
+    this.pick = opts[0].id;
+
+    const dlg = document.createElement('dialog');
+    dlg.className = 'clinic-checkout';
+    dlg.setAttribute('aria-label', '快速治疗');
+    document.body.appendChild(dlg);
+    this.el = dlg;
+    dlg.addEventListener('cancel', ev => { ev.preventDefault(); this.close(); });
+    this.render();
+    dlg.showModal();
+    if (SFX.ui) SFX.ui('confirm');
+    return true;
+  },
+
+  render() {
+    const dlg = this.el;
+    if (!dlg) return;
+    const opts = this.options();
+    if (!opts.length) { this.close(); return; }
+    if (!opts.some(o => o.id === this.pick)) this.pick = opts[0].id;
+    const sel = opts.find(o => o.id === this.pick);
+    const st = Base.healthState();
+    const max = CFG.P.HP;
+    const hp = Math.round(Save.hp * 10) / 10;
+    const doc = (typeof SAFEHOUSE_CONFIG !== 'undefined' && SAFEHOUSE_CONFIG.merchants
+      && SAFEHOUSE_CONFIG.merchants.doctor) || null;
+    const poor = Save.credits < sel.price;
+
+    dlg.innerHTML =
+      '<header>' +
+        '<small>QUICK TREATMENT / 快速治疗</small>' +
+        '<h2>先处理伤势，再谈出发</h2>' +
+        '<p>' + (doc && doc.name ? esc(doc.name) + '接手。' : '') +
+          '只对当前伤势收费，取消不扣款。</p>' +
+      '</header>' +
+      '<div class="clinic-vitals"><b>' + hp + '</b><small>/ ' + max + ' HP</small><em>' + st.label + '</em></div>' +
+      '<div class="clinic-options">' +
+        opts.map(o =>
+          '<button type="button" class="clinic-option' + (o.id === this.pick ? ' on' : '') +
+            '" data-clinic-opt="' + o.id + '"' + (Save.credits < o.price ? ' disabled' : '') + '>' +
+            '<span class="co-name"><b>' + o.name + '</b><small>' + o.desc +
+              ' · 恢复 ' + Math.round(o.heal) + ' HP</small></span>' +
+            '<span class="co-price">' + formatMoney(o.price) + '</span>' +
+          '</button>'
+        ).join('') +
+      '</div>' +
+      '<footer>' +
+        '<div class="clinic-total"><span>' + sel.name + ' · ' + Math.round(sel.heal) + ' HP</span>' +
+          '<strong>' + formatMoney(sel.price) + '</strong></div>' +
+        '<p class="clinic-wallet">当前余额 ' + formatMoney(Save.credits) +
+          ' · 治疗后 ' + Math.round(sel.target) + ' / ' + max + ' HP，余额 ' +
+          formatMoney(Save.credits - sel.price) + '</p>' +
+        '<p class="clinic-error" role="status">' + (poor ? '信用点不足，换一档或先去赚钱。' : '') + '</p>' +
+        '<div class="clinic-acts">' +
+          '<button type="button" data-clinic-pay' + (poor ? ' disabled' : '') + '>确定支付</button>' +
+          '<button type="button" data-clinic-cancel>取消</button>' +
+        '</div>' +
+      '</footer>';
+
+    dlg.querySelectorAll('[data-clinic-opt]').forEach(b => {
+      b.onclick = () => {
+        this.pick = b.dataset.clinicOpt;
+        if (SFX.ui) SFX.ui('click');
+        this.render();
+      };
+    });
+    dlg.querySelector('[data-clinic-cancel]').onclick = () => this.close();
+    const pay = dlg.querySelector('[data-clinic-pay]');
+    if (pay) pay.onclick = () => this.pay();
+  },
+
+  /* 支付：以此刻重新报价为准 —— 从开窗到点确认之间血量理论上不会变，
+     但报价函数是纯的，重算一次比信任缓存的 sel 更稳。 */
+  pay() {
+    const opts = this.options();
+    const sel = opts.find(o => o.id === this.pick);
+    if (!sel) { this.close(); return false; }
+    if (Save.credits < sel.price) {
+      const err = this.el && this.el.querySelector('.clinic-error');
+      if (err) err.textContent = '信用点不足，换一档或先去赚钱。';
+      return false;
+    }
+    const before = Save.hp;
+    Save.credits -= sel.price;
+    Save.setHP(sel.target);
+    Save.save(); Save.flush();
+    this.close();
+    Game.sfx('sell');
+    Base.render();
+    Base.note('治疗完成：+' + Math.round(sel.target - before) + ' HP（-' + formatMoney(sel.price) + '）');
+    return true;
+  },
+
+  close() {
+    if (!this.el) return;
+    if (this.el.open) this.el.close();
+    this.el.remove();
+    this.el = null;
   }
 };

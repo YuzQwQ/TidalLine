@@ -13,3 +13,60 @@
 @media(max-width:1250px) and (min-width:800px){.sh-top{gap:10px;padding:0 18px}.sh-brand b{font-size:21px}.sh-brand>span{font-size:44px}.sh-top nav>button{padding:0 12px;gap:7px;font-size:16px}.sh-global{gap:10px}.sh-identity{display:none}.sh-facility b{font-size:15px}.sh-facility{gap:7px}.sh-facility small{font-size:10px}.sh-hex{width:40px;height:42px}.sh-stat b{font-size:12px}.sh-statusbar{grid-template-columns:1fr 1fr 1.7fr}.sh-status-card{padding:10px}.sh-status-card>b{font-size:13px}.sh-status-card h2{font-size:13px;gap:6px}.sh-status-card h2 svg{width:18px}.sh-radio-foot>span{max-width:130px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.sh-merchant-profile p{display:none}}
 @media(max-width:799px){#baseVeil{overflow:auto}.base.sh-shell,.sh-shell.sh-demo-shell{height:auto;min-height:100dvh;overflow:visible}.sh-top{height:auto;min-height:110px;flex-wrap:wrap;padding:10px 16px 0;gap:0 16px}.sh-brand b{font-size:22px}.sh-brand>span{font-size:40px}.sh-global{margin-left:auto;gap:10px}.sh-wallet b{font-size:16px}.sh-identity{display:none}.sh-settings{min-width:30px;min-height:44px}.sh-top nav{order:3;flex-basis:100%;overflow-x:auto;min-height:50px}.sh-top nav>button{flex:0 0 auto;padding:0 14px;gap:7px;min-height:50px;font-size:14px}.sh-top nav>button svg{width:20px}.sh-top nav>button:first-child{padding-left:5px}.sh-nav-dot{top:7px;right:7px}.sh-home{height:auto;min-height:0;padding:280px 14px 18px;overflow:visible}.sh-room{bottom:auto;height:430px}.sh-room-img{object-position:35% center}.sh-room-shade{background:linear-gradient(0deg,#101514,transparent 60%,#0b0e0b80)}.sh-heading{top:20px;left:22px}.sh-heading h1{font-size:30px;margin-bottom:8px}.sh-heading h1 small{font-size:12px}.sh-heading p{font-size:11px}.sh-gold-rule{width:240px;height:3px}.sh-facilities{position:relative;inset:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px;pointer-events:auto;margin-bottom:16px}.sh-facility{position:static;transform:none;min-width:0;padding:8px;gap:8px;min-height:64px}.sh-facility b{font-size:15px}.sh-facility small{font-size:9px;white-space:normal}.sh-hex{width:36px;height:40px}.sh-hex svg{width:23px}.sh-facility.planned .sh-hex{width:32px;height:36px}.sh-facility.planned b{font-size:13px}.sh-facility>em{font-size:8px;margin-left:auto}.sh-overview{position:relative;inset:auto;width:100%;padding:20px;margin-bottom:16px}.sh-section-title{font-size:23px}.sh-overview .sh-stat{min-height:55px}.sh-wave{margin:8px 0}.sh-statusbar{position:relative;inset:auto;height:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}.sh-status-card{padding:12px 10px}.sh-status-card h2{font-size:13px;gap:6px}.sh-status-card>b{font-size:13px;white-space:normal}.sh-status-card>small{font-size:10px}.sh-broadcast{grid-column:1/-1}.sh-radio-row p{min-height:48px;font-size:13px;-webkit-line-clamp:3}.sh-radio-row button{min-width:28px;min-height:44px}.sh-radio-foot button{min-height:36px}.sh-radio-foot{font-size:9px}.sh-primary-actions{position:relative;inset:auto;width:100%;margin-top:16px;gap:12px}.sh-action{min-height:74px}.sh-deploy{min-height:84px}.sh-work{height:auto;min-height:calc(100dvh - 110px);overflow:visible}.sh-work-heading{padding:16px;gap:10px;flex-wrap:wrap}.sh-work-heading>span{display:none}.sh-work-heading h1{font-size:18px}.sh-shell .base-main{display:flex;flex-direction:column;overflow:visible;min-height:0}.sh-shell .base-left{flex:none;width:100%;border-right:0;overflow:visible;padding:16px}.sh-shell .base-right{flex:none;width:100%;min-height:600px;display:flex}.sh-shell .stash-grid{min-height:420px;height:420px;flex:none;padding:12px}.sh-shell .base-nav{padding:10px 16px;min-height:52px}.sh-shell .nav-tabs{display:flex;flex-wrap:wrap;gap:8px}.sh-shell .nav-tabs button{padding:9px 12px;font-size:12px;min-height:40px}.sh-shell .nav-tip{display:none}.sh-merchant-profile{position:relative;right:auto;top:auto;padding:14px 16px;background:#1b261bd9;order:0}.sh-merchant-profile p{font-size:11px}.sh-merchant-profile img{height:72px;width:58px}.sh-shell .store-hd{padding:16px 12px}.sh-shell .store-filter{padding:12px;flex-wrap:wrap}.sh-shell .store-filter button{min-height:36px}.sh-shell .store-ft{padding:10px 12px;flex-wrap:wrap;gap:8px}.sh-shell .shop-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.sh-dialog{padding:26px 20px}.sh-codex{grid-template-columns:1fr 1fr}.sh-shell .slot{min-height:65px}}
 @media(prefers-reduced-motion:reduce){.sh-facility{transition:none}}
+
+/* ---- 备战页：健康状态卡 + 快速治疗结账（Clinic） ----
+   颜色沿用藏身处那套（金 #dfbf7d / 墨绿 #111a15 / 米白 #e4e0d5），
+   但结账框挂在 body 下（dialog），用不上 .sh-shell 上的变量，所以直接写死。 */
+.loadout-health{margin:0 0 14px;padding:12px 14px;color:#e4e0d5;border:1px solid #2f4a40;background:linear-gradient(160deg,#14211c,#0d1714)}
+.loadout-health .lh-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
+.loadout-health h3{margin:0;padding:0;border:0;font-size:12px;letter-spacing:1px;color:#9db6ae}
+.loadout-health .lh-state{padding:1px 8px;font-size:10.5px;letter-spacing:1px;border:1px solid #3d6a58;color:#7fd6b4}
+.loadout-health.tone-warn .lh-state{border-color:#6b5526;color:#d9b45f}
+.loadout-health.tone-bad .lh-state{border-color:#6b3030;color:#e08585}
+.loadout-health.tone-bad{background:linear-gradient(160deg,#1d1412,#120e0c);border-color:#4a2b26}
+.loadout-health .lh-hp{display:flex;align-items:baseline;gap:5px;font-variant-numeric:tabular-nums}
+.loadout-health .lh-hp b{font-size:22px;font-weight:600;letter-spacing:.5px;color:#eaf4f0}
+.loadout-health .lh-hp small{font-size:11px;color:#7d978b}
+.loadout-health .lh-bar{height:4px;margin:7px 0 8px;background:#0b1310;overflow:hidden}
+.loadout-health .lh-bar i{display:block;height:100%;background:linear-gradient(90deg,#2f7d63,#6fd6ba);transition:width .2s}
+.loadout-health.tone-warn .lh-bar i{background:linear-gradient(90deg,#7d6430,#d9b45f)}
+.loadout-health.tone-bad .lh-bar i{background:linear-gradient(90deg,#7d3a32,#e08585)}
+.loadout-health .lh-note{margin:0 0 8px;font-size:10.5px;line-height:1.6;color:#7d978b}
+.loadout-health .lh-debuffs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.loadout-health .lh-debuff{padding:1px 7px;font-size:10px;letter-spacing:.5px;border:1px solid #4a3a22;color:#c9a86a;background:#1a150e}
+.loadout-health .lh-debuff.none{border-color:#26362f;color:#5f7a72;background:transparent}
+.loadout-health .lh-treat{width:100%;margin:0;padding:9px 12px;font-size:12px;letter-spacing:1px;cursor:pointer;color:#0f1a16;background:#c9a86a;border:0;font-family:inherit}
+.loadout-health .lh-treat:hover{background:#dfbf7d}
+.loadout-health .lh-treat:disabled{color:#5f7a72;background:#1b2a24;cursor:not-allowed}
+
+/* 结账框 */
+.clinic-checkout{width:min(560px,calc(100vw - 28px));max-height:calc(100dvh - 32px);overflow:auto;padding:22px 24px;color:#e4e0d5;background:linear-gradient(140deg,#252d24,#0f1713);border:1px solid #c1a46c;box-shadow:0 20px 90px #000b;font:13px/1.65 system-ui,"Microsoft YaHei",sans-serif}
+.clinic-checkout::backdrop{background:#080b09ad;backdrop-filter:blur(6px)}
+.clinic-checkout header>small{display:block;font-size:10px;letter-spacing:2px;color:#d0bc92}
+.clinic-checkout h2{margin:4px 0 6px;font-size:21px;font-weight:600;color:#e6c78e}
+.clinic-checkout header>p{margin:0 0 14px;font-size:11.5px;line-height:1.7;color:#b8bdaa}
+.clinic-checkout .clinic-vitals{display:flex;align-items:center;gap:10px;padding:9px 11px;margin-bottom:12px;border:1px solid #3a4a3f;background:#0e1713}
+.clinic-checkout .clinic-vitals b{font-size:19px;font-variant-numeric:tabular-nums;color:#eaf4f0}
+.clinic-checkout .clinic-vitals small{font-size:11px;color:#8fa79b}
+.clinic-checkout .clinic-vitals em{margin-left:auto;font-style:normal;font-size:10.5px;letter-spacing:1px;padding:1px 8px;border:1px solid #5c4c2a;color:#d9b45f}
+.clinic-options{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.clinic-option{display:flex;align-items:center;gap:10px;padding:9px 11px;text-align:left;cursor:pointer;color:#cfd8d4;background:#111b16;border:1px solid #2b3f36;font-family:inherit}
+.clinic-option:hover{border-color:#4a6a58}
+.clinic-option.on{border-color:#c1a46c;background:#1a2118}
+.clinic-option:disabled{opacity:.45;cursor:not-allowed}
+.clinic-option .co-name{flex:1;min-width:0}
+.clinic-option .co-name b{display:block;font-size:12.5px;font-weight:600;color:#e6efeb}
+.clinic-option .co-name small{display:block;font-size:10.5px;color:#83998f;margin-top:1px}
+.clinic-option .co-price{font-size:12px;font-variant-numeric:tabular-nums;color:#d9b45f;white-space:nowrap}
+.clinic-checkout footer{border-top:1px solid #33443a;padding-top:11px}
+.clinic-total{display:flex;align-items:baseline;justify-content:space-between;font-size:12px;color:#b8bdaa}
+.clinic-total strong{font-size:19px;color:#e6c78e;font-variant-numeric:tabular-nums}
+.clinic-wallet{margin:3px 0 9px;font-size:10.5px;color:#83998f}
+.clinic-error{margin:0 0 8px;font-size:11px;color:#e08a7a;min-height:15px}
+.clinic-acts{display:flex;gap:8px}
+.clinic-acts button{flex:1;padding:10px 12px;font-size:12.5px;letter-spacing:1px;cursor:pointer;font-family:inherit;border:1px solid #3c4c42;background:#16241f;color:#a8c4ba}
+.clinic-acts button:hover{color:#dbe5e1;border-color:#557064}
+.clinic-acts button[data-clinic-pay]{background:#c9a86a;border-color:#c9a86a;color:#0f1a16}
+.clinic-acts button[data-clinic-pay]:hover{background:#dfbf7d}
+.clinic-acts button[data-clinic-pay]:disabled{background:#1b2a24;border-color:#2b3a32;color:#5f7a72;cursor:not-allowed}
+@media(max-width:640px){.clinic-checkout{padding:16px}.clinic-option{padding:8px}.clinic-acts button{padding:9px 8px;font-size:12px}}
