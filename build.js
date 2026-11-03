@@ -1,19 +1,26 @@
 /* 把多文件版本打包成单个 HTML —— 双击就能玩，不需要本地服务器。
    会把 assets/ 下所有 png 转成 base64 内联，分享出去不会丢图。
-   用法：node build.js */
+   用法：node build.js
+        node build.js --assets-only   跳过经济表与地图编译
+        node build.js --audio-only    只刷新 assets/audio/bundle.js（改完音效素材时用） */
 const fs = require('fs');
 const path = require('path');
 
 const dir = __dirname;
-require('./tools/build-attachments.js').build();
-require('child_process').execFileSync(process.execPath,[path.join(dir,'tools/build-detail-art.js')],{cwd:dir,stdio:'inherit'});
-require('./tools/build-scene-library.js').build();
-if (!process.argv.includes('--assets-only')) require('./tools/build-economy.js').build();
-// 地图由设计稿编译，避免多文件版与离线版使用不同点位。
-// 纯素材更新沿用已编译的地图快照，不写入或绕过正在编辑的地图草稿。
-if (!process.argv.includes('--assets-only')) require('./tools/build-linhai-map.js').build();
-// 预计算家具透明边，file:// 无需读取可能受跨域限制的Canvas像素。
-require('./tools/build-prop-bounds.js').build();
+/* 只刷音频的时候，别的资源构建一个都不跑：它们会重写页面文件，
+   而工作区里可能还有别人没提交的改动，不该被顺手卷进来。 */
+const AUDIO_ONLY = process.argv.includes('--audio-only');
+if (!AUDIO_ONLY) {
+  require('./tools/build-attachments.js').build();
+  require('child_process').execFileSync(process.execPath,[path.join(dir,'tools/build-detail-art.js')],{cwd:dir,stdio:'inherit'});
+  require('./tools/build-scene-library.js').build();
+  if (!process.argv.includes('--assets-only')) require('./tools/build-economy.js').build();
+  // 地图由设计稿编译，避免多文件版与离线版使用不同点位。
+  // 纯素材更新沿用已编译的地图快照，不写入或绕过正在编辑的地图草稿。
+  if (!process.argv.includes('--assets-only')) require('./tools/build-linhai-map.js').build();
+  // 预计算家具透明边，file:// 无需读取可能受跨域限制的Canvas像素。
+  require('./tools/build-prop-bounds.js').build();
+}
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
 const JS_FILES = ['config.js', 'pixfont.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
@@ -81,6 +88,12 @@ fs.writeFileSync(path.join(AUDIO_DIR, 'bundle.js'),
   /* 音乐也进 bundle：file:// 的多文件版同样 fetch 不到本地 mp3，
      双击打开要能听到，只能靠 data URI。这份是构建产物，不入库。 */
   'window.__MUSIC__ = ' + JSON.stringify(bgm) + ';\n', 'utf8');
+
+if (AUDIO_ONLY) {
+  console.log('bundle.js 已刷新：' + Object.keys(audio).length + ' 段采样' +
+    (Object.keys(bgm).length ? '、' + Object.keys(bgm).length + ' 首 BGM' : ''));
+  process.exit(0);
+}
 
 /* ---------- 2. 注入资源表（必须在替换脚本标签之前） ---------- */
 let out = html.replace(BUNDLE_BLOCK, '').replace(BUNDLE_LEGACY, '');

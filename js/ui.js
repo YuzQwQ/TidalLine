@@ -369,6 +369,7 @@ const SFX = {
     search: 0.055,
     bagZip: 0.045,     // 开背包的拉链：比搜索更轻，只是个"打开了"的触感
     drop: 0.055,
+    gear: 0.07,        // 头盔/护甲/背包装卸：比拾取重一点，穿戴是个"动作"
     hurt: 0.11,
     extract: 0.09,
     death: 0.13
@@ -471,6 +472,18 @@ const SFX = {
      响度统一由 _addSample 按 LOUD.pickup 对齐，四条听上去一样响。 */
   PICKUP_SAMPLE: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
   _lastPickup: null,
+
+  /* ---------------- 挥砍音：六段真实的挥空 ----------------
+     875462 本来就是六次独立的挥砍，切开就是六个变体 —— 每次出手抽一条。
+     挥刀是局内最高频的近战动作（折叠刀 0.55s 一刀），一条素材两刀就听出复读，
+     六条再加上音高抖动，连挥十几刀都不重样。
+     旧的 melee.wav 留作兜底：六条都解不出来（素材缺失）才轮到它。 */
+  MELEE_SAMPLE: ['melee_1', 'melee_2', 'melee_3', 'melee_4', 'melee_5', 'melee_6'],
+  _lastMelee: null,
+
+  /* ---------------- 装备穿脱：一件装备一个材质的声 ----------------
+     头盔是硬壳与织带、护甲是布料与插板、背包是扣具与织带。
+     只有这三类有专属声：枪械的"交互"其实就是拉套筒，那是切枪音的事。 */
 
   /* ---------------- 搜索音：一个容器一个声 ----------------
      翻金属抽屉、翻工具箱、翻纸、翻布料、翻皮包——同一个"搜"的动作，
@@ -617,7 +630,11 @@ const SFX = {
     if (id === 'shot_pistol_silent') return this.LOUD.shot * 0.55;
     if (id === 'shot_shotgun_pump') return this.LOUD.switch;
     /* 近战挥砍与出售结算走自己的档，别落进 0.08 的默认值 */
-    if (id === 'melee') return this.LOUD.melee;
+    if (id === 'melee' || /^melee_[1-6]$/.test(id)) return this.LOUD.melee;
+    /* 装备穿脱：头盔 / 护甲 / 背包三件同一个档，换哪件都一样响 */
+    if (/^gear_(helmet|armor|bag)$/.test(id)) return this.LOUD.gear;
+    /* 玩家挨打：整局最需要"被听见"的一次反馈，压在枪声之下、拾取之上 */
+    if (id === 'hurt') return this.LOUD.hurt;
     if (id === 'sell') return this.LOUD.sell;
     /* 拾取的四条变体都按拾取档对齐，四条之间响度一致 */
     if (/^pickup_[1-4]$/.test(id)) return this.LOUD.pickup;
@@ -783,6 +800,42 @@ const SFX = {
     return this._playSample(ready[n], {
       rate: (o.rate || 1) * (1 - j + Math.random() * j * 2),
       vol: (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2)
+    });
+  },
+
+  /* 挥砍：六个变体里随机抽一条，同样只避开"刚刚那条"。
+     六段挥空本来就有快有慢（0.14~0.29s），音高只抖 ±4% 就够了 ——
+     抖多了会听出是同一刀被拉长了。 */
+  _playMelee(opts) {
+    const ready = this.MELEE_SAMPLE.filter(id => this.samples[id]);
+    if (!ready.length) return false;
+    let n = Math.floor(Math.random() * ready.length);
+    if (ready.length > 1 && ready[n] === this._lastMelee) {
+      n = (n + 1 + Math.floor(Math.random() * (ready.length - 1))) % ready.length;
+    }
+    this._lastMelee = ready[n];
+    const o = opts || {};
+    const j = 0.04;      // 音高抖动
+    const jv = 0.05;     // 音量抖动
+    return this._playSample(ready[n], {
+      rate: (o.rate || 1) * (1 - j + Math.random() * j * 2),
+      vol: (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2)
+    });
+  },
+
+  /* 装备穿脱：按槽位挑材质声。穿上（rate 1.0）和卸下（rate 0.94、轻一点）
+     用同一个采样，只改速度和音量 —— 同一个动作的两种方向，不需要两份素材。
+     采样缺失就静默（局外界面不该因为少个文件冒出合成杂音）。 */
+  gear(kind, opts) {
+    if (!this.on || !this.ctx) return false;
+    const id = this.GEAR_SFX[kind];
+    if (!id || !this.samples[id]) return false;
+    const o = opts || {};
+    const off = o.off === true;
+    const j = 0.02;
+    return this._playSample(id, {
+      rate: (off ? 0.94 : 1.0) * (1 - j + Math.random() * j * 2),
+      vol: (off ? 0.9 : 1.0) * (o.vol != null ? o.vol : 1)
     });
   },
 
@@ -1131,6 +1184,11 @@ const SFX = {
     }
     /* 搜索：按容器 art 查表，一个容器一个声（没配到的落回合成音） */
     if (name === 'search' && this._playSearch(opts)) return;
+
+    /* 挥砍：六段挥空随机抽一条。必须排在"有同名采样就播"之前 ——
+       旧的 melee.wav 还占着 melee 这个 id，否则永远只播那一条。
+       六条都没解出来才轮到旧的 melee 采样，再不行才落回合成风声。 */
+    if (name === 'melee' && this._playMelee(opts)) return;
 
     /* 有采样就优先用采样；没有（或解码失败）就落到下面的合成音 */
     if (this.samples[name]) { this._playSample(name, opts); return; }

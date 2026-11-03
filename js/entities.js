@@ -839,7 +839,7 @@ class Player {
      部位倍率先并进来，再交给 BALLISTICS 统一算穿透与耐久，别在这里各乘一次。 */
   /* 返回**实际掉的血**（扣完护甲）：伤害飘字按这个数显示，
      不是按枪的纸面伤害 —— 打穿护甲和打在护甲上，玩家看到的数字得不一样。 */
-  hurt(base, part, pen) {
+  hurt(base, part, pen, src) {
     if (this.dead) return 0;
     part = part || 'body';
     const head = part === 'head';
@@ -851,6 +851,16 @@ class Player {
     /* 自己挨打也飘字：紫色（hurt 字体），和敌人的骨白、爆头的橙金区分开。
        写在 hurt 里而不是各个伤害来源，玩家中弹/近战/将来任何掉血都走这一条。 */
     Game.popDamage(this.x, this.y - 20, dmg, { font: 'hurt', key: this });
+    /* 挨打的声音（660770）：以前只有闪红、抖屏和紫色数字，耳朵是哑的。
+       挡下了是一声硬碰；打穿了就把高频压掉，听感上"闷"一点 ——
+       别让没挡住的伤听起来像挡住了。近战落在身上更闷，也更轻。 */
+    const soaked = res.durabilityLoss > 0;
+    const punch = src === 'melee';
+    Game.sfx('hurt', {
+      vol: punch ? 0.8 : (head ? 1.05 : 1),
+      rate: head ? 1.05 : 0.97,
+      lp: punch ? 900 : (soaked ? null : 2600)
+    });
     this.hurtAnimT = PLAYER_ANIMS.hurt.frames / PLAYER_ANIMS.hurt.fps;
     this.hp -= dmg;
     /* 受击不打断治疗：只有死亡才强制中断（下面 hp<=0 那一段处理） */
@@ -1233,7 +1243,7 @@ class Enemy {
       // 近战
       const d = U.dist(this.x, this.y, tgt.x, tgt.y);
       if (d < this.t.range + 8) {
-        if (this.target.kind === 'player') Game.player.hurt(this.t.dmg, 'body', this.penLevel);
+        if (this.target.kind === 'player') Game.player.hurt(this.t.dmg, 'body', this.penLevel, 'melee');
         else tgt.hp -= this.t.dmg;
       }
       Game.sfx('melee');
@@ -1381,7 +1391,7 @@ class Bullet {
 
     if (actor === Game.player) {
       Game.lastHitAngle = Math.atan2(this.vy, this.vx);
-      actor.hurt(base, part, this.pen);
+      actor.hurt(base, part, this.pen, 'bullet');
       Game.impact(actor.x, actor.y, this.angle, true, false);
       return;
     }

@@ -232,6 +232,46 @@
       "site": "Freesound",
       "sid": 47635,
       "license": "CC0"
+    },
+    {
+      "id": "snd-660770",
+      "name": "枪械受击反馈",
+      "author": "",
+      "site": "Freesound",
+      "sid": 660770,
+      "license": "TODO"
+    },
+    {
+      "id": "snd-96137",
+      "name": "头盔通用交互",
+      "author": "",
+      "site": "Freesound",
+      "sid": 96137,
+      "license": "TODO"
+    },
+    {
+      "id": "snd-778518",
+      "name": "护甲通用交互",
+      "author": "",
+      "site": "Freesound",
+      "sid": 778518,
+      "license": "TODO"
+    },
+    {
+      "id": "snd-746684",
+      "name": "背包装备交互",
+      "author": "",
+      "site": "Freesound",
+      "sid": 746684,
+      "license": "TODO"
+    },
+    {
+      "id": "snd-875462",
+      "name": "六段挥舞声",
+      "author": "",
+      "site": "Freesound",
+      "sid": 875462,
+      "license": "TODO"
     }
   ],
   "assets": [
@@ -822,6 +862,146 @@
       "rms": 0.0893,
       "bytes": 251414,
       "sha256_16": "c27c85135192b543"
+    },
+    {
+      "id": "hurt",
+      "file": "hurt.wav",
+      "from": "snd-660770",
+      "note": "玩家受击：源 0–0.30s（素材峰值 1.007 已削波，切分时压到 0.11 RMS）。挨枪时的那一声反馈，之前只有闪红没有声音",
+      "dur": 0.202,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.635,
+      "rms": 0.11,
+      "bytes": 17834,
+      "sha256_16": "924c994d3ffb90c4"
+    },
+    {
+      "id": "gear_helmet",
+      "file": "gear_helmet.wav",
+      "from": "snd-96137",
+      "note": "头盔穿脱：源 0–0.46s，外壳塑料与织带的摩擦，尾部 0.12s 自然衰减",
+      "dur": 0.458,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.795,
+      "rms": 0.07,
+      "bytes": 40464,
+      "sha256_16": "149f73e8948527ae"
+    },
+    {
+      "id": "gear_armor",
+      "file": "gear_armor.wav",
+      "from": "snd-778518",
+      "note": "护甲穿脱：源 0–0.50s，布料与插板的一串闷响（素材很轻，峰值 0.219，按 0.07 RMS 提了 9dB）",
+      "dur": 0.5,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.619,
+      "rms": 0.0699,
+      "bytes": 48044,
+      "sha256_16": "3f8058bb3eed7ccb"
+    },
+    {
+      "id": "gear_bag",
+      "file": "gear_bag.wav",
+      "from": "snd-746684",
+      "note": "背包穿脱：源 0–0.46s，扣具啪一声 + 织带拖过桌面的摩擦",
+      "dur": 0.452,
+      "sampleRate": 32000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.45,
+      "rms": 0.07,
+      "bytes": 28978,
+      "sha256_16": "c19b983d79d4242f"
+    },
+    {
+      "id": "melee_1",
+      "file": "melee_1.wav",
+      "from": "snd-875462",
+      "note": "近战挥砍变体 1：源 0.03–0.24s（整段 5.40s 里六次挥砍的第 1 下）",
+      "dur": 0.187,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.614,
+      "rms": 0.1,
+      "bytes": 16572,
+      "sha256_16": "f801000b4ef97eac"
+    },
+    {
+      "id": "melee_2",
+      "file": "melee_2.wav",
+      "from": "snd-875462",
+      "note": "近战挥砍变体 2：源 1.09–1.30s（整段 5.40s 里六次挥砍的第 2 下）",
+      "dur": 0.137,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.607,
+      "rms": 0.1,
+      "bytes": 12100,
+      "sha256_16": "972fe83a071f96f4"
+    },
+    {
+      "id": "melee_3",
+      "file": "melee_3.wav",
+      "from": "snd-875462",
+      "note": "近战挥砍变体 3：源 2.05–2.46s（整段 5.40s 里六次挥砍的第 3 下）",
+      "dur": 0.289,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.604,
+      "rms": 0.1,
+      "bytes": 25500,
+      "sha256_16": "0d6f0316b40fb1cb"
+    },
+    {
+      "id": "melee_4",
+      "file": "melee_4.wav",
+      "from": "snd-875462",
+      "note": "近战挥砍变体 4：源 3.00–3.30s（整段 5.40s 里六次挥砍的第 4 下）",
+      "dur": 0.195,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.621,
+      "rms": 0.1,
+      "bytes": 17206,
+      "sha256_16": "927609b8d2471339"
+    },
+    {
+      "id": "melee_5",
+      "file": "melee_5.wav",
+      "from": "snd-875462",
+      "note": "近战挥砍变体 5：源 3.96–4.28s（整段 5.40s 里六次挥砍的第 5 下）",
+      "dur": 0.219,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.558,
+      "rms": 0.1,
+      "bytes": 19350,
+      "sha256_16": "0452631f69f7c159"
+    },
+    {
+      "id": "melee_6",
+      "file": "melee_6.wav",
+      "from": "snd-875462",
+      "note": "近战挥砍变体 6：源 4.96–5.30s（整段 5.40s 里六次挥砍的第 6 下）",
+      "dur": 0.235,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.764,
+      "rms": 0.1,
+      "bytes": 20772,
+      "sha256_16": "76b787df737e8533"
     }
   ],
   "mix": {

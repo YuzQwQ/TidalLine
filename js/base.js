@@ -461,6 +461,7 @@ const Base = {
     this.closePicker();
     this.render();
     this.note(verb + name + (cur ? '，' + cur.name + ' 放回仓库' : ''));
+    this.gearVoice(key, false);
     return true;
   },
 
@@ -490,7 +491,17 @@ const Base = {
     this.closePicker();
     this.render();
     this.note('卸下' + cur.name + '，已放回仓库');
+    this.gearVoice(key, true);
     return true;
+  },
+
+  /* 穿 / 脱装备的声音：头盔、护甲、背包各有一套材质声（硬壳、布料插板、扣具织带）。
+     枪械和近战没有专属声 —— 它们的"交互"是拉套筒，那是切枪音的事。
+     素材没加载上就静默，局外界面不该因为少个文件冒出合成杂音。 */
+  gearVoice(key, off) {
+    if (typeof SFX === 'undefined' || !SFX.gear) return;
+    if (this.slotKind(key) === 'gun') return;
+    SFX.gear(key, { off: !!off });
   },
 
   /* ---- 护甲商人：只卖崭新的一~三级 ---- */

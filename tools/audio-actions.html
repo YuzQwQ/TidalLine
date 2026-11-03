@@ -104,7 +104,7 @@
 <h2>动作清单 <em>按游戏里的分组</em></h2>
 <div id="groups"></div>
 
-<h2>素材覆盖 <em>39 段采样有没有全接上</em></h2>
+<h2>素材覆盖 <em>切好的采样有没有全接上</em></h2>
 <div id="cover"></div>
 
 <h2>缺口 <em>定义了但局内没用的</em></h2>
@@ -182,7 +182,7 @@ const GROUPS = [
       },
       {
         name: '泵动（霰弹枪）', scope: 'raid',
-        where: 'js/ui.js:455（跟着枪声排在音频时钟后 0.44s）',
+        where: 'js/ui.js:456（跟着枪声排在音频时钟后 0.44s）',
         detail: '采样 <b>shot_shotgun_pump</b> 0.343s · vol 0.85 · ' +
           '只有 cycleTime > 0 的枪才有（Rem870 有，MP-155 / Saiga-12 半自动没有）',
         sounds: ['shot_shotgun_pump'],
@@ -190,7 +190,7 @@ const GROUPS = [
       },
       {
         name: '敌人开火', scope: 'raid',
-        where: 'js/entities.js:1231（敌人 AI 开枪）',
+        where: 'js/entities.js:1241（敌人 AI 开枪）',
         detail: '复用手枪采样但压低并低通 1200Hz —— 听得出是"别人在打"，' +
           '而不是换了个音色 · LOUD.enemyShot <b>0.075</b>',
         sounds: ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
@@ -198,31 +198,53 @@ const GROUPS = [
       },
       {
         name: '命中反馈', scope: 'raid',
-        where: 'js/entities.js:1394（敌人挨打）',
+        where: 'js/entities.js:1404（敌人挨打）',
         detail: '合成高频"啪"0.06s（2600Hz 高通）· LOUD.hit <b>0.085</b>',
         sounds: [],
         btns: [{ l: '命中', fn: () => SFX.play('hit') }]
       },
       {
+        name: '受击反馈（自己中弹）', scope: 'raid',
+        where: 'js/entities.js:859（Player.hurt 里的 Game.sfx —— 子弹与近战都走这一条）',
+        detail: '采样 <b>hurt</b> 0.202s（660770）· 挡下了是一声硬碰，' +
+          '打穿了就低通 2600Hz 压暗；近战再压到 900Hz、八成音量 —— ' +
+          '别让没挡住的伤听起来像挡住了 · LOUD.hurt <b>0.11</b><br>' +
+          '以前挨打只有闪红、抖屏和紫色数字，<b>耳朵是哑的</b>；' +
+          '现在这一声是"我被打中了"的唯一听觉线索',
+        sounds: ['hurt'],
+        btns: [
+          { l: '中弹（挡下）', fn: () => SFX.play('hurt', { rate: 0.97 }) },
+          { l: '中弹（打穿）', ghost: true, fn: () => SFX.play('hurt', { rate: 0.97, lp: 2600 }) },
+          { l: '近战挨打', ghost: true, fn: () => SFX.play('hurt', { rate: 0.97, lp: 900, vol: 0.8 }) }
+        ]
+      },
+      {
         name: '爆头', scope: 'raid',
-        where: 'js/entities.js:1394（部位 = head）',
+        where: 'js/entities.js:1404（部位 = head）',
         detail: '合成双段：4200Hz 高通脆响 + 900→320Hz 下沉三角波 · LOUD.headshot <b>0.085</b>',
         sounds: [],
         btns: [{ l: '爆头', fn: () => SFX.play('headshot') }]
       },
       {
         name: '护甲破裂', scope: 'raid',
-        where: 'js/entities.js:870（护甲被打穿）',
+        where: 'js/entities.js:880（护甲被打穿）',
         detail: '合成：700Hz 闷响 + 300→120Hz 金属裂开 · LOUD.break <b>0.10</b>',
         sounds: [],
         btns: [{ l: '护甲破裂', fn: () => SFX.play('break') }]
       },
       {
         name: '挥刀', scope: 'raid',
-        where: 'js/melee.js:26（近战命中）· js/entities.js:1239（敌人近战）',
-        detail: '采样 <b>melee</b> 0.45s（风声由高扫到低）· LOUD.melee <b>0.10</b>',
-        sounds: ['melee'],
-        btns: [{ l: '挥刀', fn: () => SFX.play('melee') }]
+        where: 'js/melee.js:26（近战命中）· js/entities.js:1249（敌人近战）',
+        detail: '采样 <b>×6</b> 每次随机抽一条（875462 本来就是六次挥空，切开就是六个变体，' +
+          '同样只避开刚播过的那条）· 0.14–0.29s，音高抖 ±4% · LOUD.melee <b>0.10</b><br>' +
+          '旧的 melee.wav 留作兜底：六条都解不出来才轮到它，再不行落回合成风声',
+        sounds: ['melee_1', 'melee_2', 'melee_3', 'melee_4', 'melee_5', 'melee_6', 'melee'],
+        btns: [
+          { l: '挥一刀', fn: () => SFX.play('melee') },
+          { l: '连挥六刀', ghost: true, fn: () => {
+            for (let i = 0; i < 6; i++) setTimeout(() => SFX.play('melee'), i * 260);
+          }, say: '六刀六条不同的挥空' }
+        ]
       },
       {
         name: '切枪', scope: 'raid',
@@ -350,21 +372,21 @@ const GROUPS = [
     rows: [
       {
         name: '点击', scope: 'both',
-        where: 'js/ui.js:850（全局事件委托，所有按钮的默认点击音）',
+        where: 'js/ui.js:904（全局事件委托，所有按钮的默认点击音）',
         detail: '采样 <b>ui_click</b> 0.068s 清脆一声 · LOUD.uiClick <b>0.05</b>',
         sounds: ['ui_click'],
         btns: [{ l: '点击', fn: () => SFX.ui('click') }]
       },
       {
         name: '悬停', scope: 'both',
-        where: 'js/ui.js:860（鼠标经过按钮，90ms 节流）',
+        where: 'js/ui.js:914（鼠标经过按钮，90ms 节流）',
         detail: '采样 <b>ui_tap</b> 0.127s 短提示 · LOUD.uiTap <b>0.028</b>（最轻的一档）',
         sounds: ['ui_tap'],
         btns: [{ l: '悬停', fn: () => SFX.ui('tap') }]
       },
       {
         name: '确认（出发 / 进入游戏）', scope: 'base',
-        where: 'index.html:1182, 1228（标签上写 data-sfx="confirm"）',
+        where: 'index.html:1223, 1283（标签上写 data-sfx="confirm"）',
         detail: '采样 <b>ui_confirm</b> 0.453s 高调一句 · LOUD.uiConfirm <b>0.085</b>',
         sounds: ['ui_confirm'],
         btns: [{ l: '确认', fn: () => SFX.ui('confirm') }]
@@ -383,8 +405,24 @@ const GROUPS = [
     note: '不算局内交互，但走的是同一套 SFX，一并列出来免得漏看。',
     rows: [
       {
+        name: '装备穿脱（头盔 / 护甲 / 背包）', scope: 'base',
+        where: 'js/base.js:465（equipFromStash）· :495（unequip）—— 仓库双击装备也走这两条',
+        detail: '一件装备一种材质：头盔是硬壳与织带（<b>gear_helmet</b>）、' +
+          '护甲是布料与插板（<b>gear_armor</b>）、背包是扣具与织带（<b>gear_bag</b>）· ' +
+          '穿上 rate 1.0，卸下 rate 0.94 且压到九成 —— 同一个动作的两个方向，不需要两份素材 · ' +
+          'LOUD.gear <b>0.07</b><br>' +
+          '枪械和近战没有专属声：它们的"交互"是拉套筒，那是切枪音的事',
+        sounds: ['gear_helmet', 'gear_armor', 'gear_bag'],
+        btns: [
+          { l: '戴头盔', fn: () => SFX.gear('helmet') },
+          { l: '穿护甲', fn: () => SFX.gear('body') },
+          { l: '背包上肩', fn: () => SFX.gear('back') },
+          { l: '卸下（慢一档）', ghost: true, fn: () => SFX.gear('body', { off: true }) }
+        ]
+      },
+      {
         name: '出售结算', scope: 'base',
-        where: 'js/base.js:1282（单件出售）, 1299（批量出售）',
+        where: 'js/base.js:1293（单件出售）, 1310（批量出售）',
         detail: '采样 <b>sell</b> 0.84s 老式收银机 —— 和拾取区分开 · LOUD.sell <b>0.07</b>',
         sounds: ['sell'],
         btns: [{ l: '出售', fn: () => SFX.play('sell') }]
@@ -399,7 +437,7 @@ const GROUPS = [
 const LADDER = [
   ['shot', '枪声（玩家）', () => SFX.play('shot', { gun: 'm4a1' })],
   ['death', '死亡', () => SFX.play('death')],
-  ['hurt', '受伤（局内未接）', () => SFX.play('hurt')],
+  ['hurt', '受伤（自己中弹）', () => SFX.play('hurt')],
   ['melee', '挥刀', () => SFX.play('melee')],
   ['break', '护甲破裂', () => SFX.play('break')],
   ['extract', '撤离', () => SFX.play('extract')],
@@ -413,6 +451,7 @@ const LADDER = [
   ['uiConfirm', '界面·确认', () => SFX.ui('confirm')],
   ['sell', '出售结算', () => SFX.play('sell')],
   ['uiNotify', '界面·通知', () => SFX.ui('notify')],
+  ['gear', '装备穿脱', () => SFX.gear('back')],
   ['pickup', '拾取', () => SFX.play('pickup')],
   ['search', '搜索', () => SFX.play('search', { at: 'crate_tool' })],
   ['drop', '丢弃', () => SFX.play('drop')],
@@ -424,16 +463,11 @@ const LADDER = [
 
 /* ============================================================
    三、缺口：定义了、响度档也留了，但局内没人调用
+   ------------------------------------------------------------
+   目前是空的：最后一条（player 挨打没声音）已经由 660770 补上，
+   玩家中弹 / 被近战砍都走 Player.hurt 里那一 声。
    ============================================================ */
-const GAPS = [
-  {
-    name: 'hurt（受伤）', src: '合成 · 180→90Hz 锯齿波 0.16s',
-    why: '<span class="code">SFX.LOUD.hurt = 0.11</span> 和合成分支都写好了，' +
-      '但局内<b>没有任何地方调用</b>它：玩家挨打（js/entities.js:1384 的 resolveHit）' +
-      '只有画面反馈 —— 屏幕闪红 + 紫色伤害数字 + 抖屏，没有声音。' +
-      '目前只有靶场 js/range.js:509 的试听面板能听到这一声。'
-  }
-];
+const GAPS = [];
 
 /* ============================================================
    四、渲染
@@ -529,7 +563,7 @@ function renderLadder() {
   for (const [key, label, fn] of LADDER) {
     const v = SFX.LOUD[key] || 0;
     const tr = document.createElement('tr');
-    tr.className = 'lad' + (key === 'hurt' ? ' gap' : '');
+    tr.className = 'lad';
     tr.innerHTML =
       '<td class="k"><span class="ab ghost" style="padding:1px 8px;font-size:10.5px">' + label + '</span></td>' +
       '<td class="n">' + v.toFixed(3) + '</td>' +
@@ -582,6 +616,11 @@ function renderCover(sampleIds) {
 function renderGaps() {
   const host = $('#gaps');
   host.innerHTML = '';
+  if (!GAPS.length) {
+    host.innerHTML = '<p class="note">没有缺口：<b>定义了的响度档都有人调用</b>。' +
+      '（原来挂着的那条"玩家挨打没声音"已经由 660770 补上了。）</p>';
+    return;
+  }
   for (const g of GAPS) {
     const c = document.createElement('div');
     c.className = 'card';
@@ -590,7 +629,7 @@ function renderGaps() {
       '<div class="detail">' + g.why + '</div>';
     const row = document.createElement('div');
     row.className = 'row';
-    row.appendChild(btn('试听（只有靶场能听到）', { fn: () => SFX.play('hurt') }, null));
+    row.appendChild(btn('试听', { fn: () => SFX.play('hurt') }, null));
     c.appendChild(row);
     host.appendChild(c);
   }
@@ -613,9 +652,10 @@ const WALK = [
   [9000,  '命中', () => SFX.play('hit')],
   [9300,  '爆头', () => SFX.play('headshot')],
   [9600,  '护甲破裂', () => SFX.play('break')],
-  [9900,  '挥刀', () => SFX.play('melee')],
-  [10200, '闪避', () => SFX.play('dodge')],
-  [10600, '撤离', () => SFX.play('extract')]
+  [9750,  '中弹（受击反馈）', () => SFX.play('hurt', { rate: 0.97 })],
+  [10100, '挥刀', () => SFX.play('melee')],
+  [10400, '闪避', () => SFX.play('dodge')],
+  [10800, '撤离', () => SFX.play('extract')]
 ];
 let walkTimers = [];
 function walk() {
@@ -629,7 +669,7 @@ function walk() {
       say('▸ ' + label);
     }, ms));
   });
-  walkTimers.push(setTimeout(() => say(''), 11500));
+  walkTimers.push(setTimeout(() => say(''), 12000));
 }
 
 /* ============================================================

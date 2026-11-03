@@ -47,7 +47,7 @@ const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
       assert(line !== null, cur + ':' + n[1] + ' 指向的行不存在（代码挪位了？）');
       /* 这一行既可能是调用点，也可能是配置项（泵动的 after/vol 之类），
          只要还跟音效沾边就行 —— 目的是发现"代码挪了、文档没跟" */
-      assert(/sfx|SFX|\bplay\(|\bui\(|toggleBag|pump|rate:|vol:|data-sfx/.test(line),
+      assert(/sfx|SFX|\bplay\(|\bui\(|toggleBag|gearVoice|pump|rate:|vol:|data-sfx/.test(line),
         cur + ':' + n[1] + ' 不像音效相关的行：' + line.trim().slice(0, 60));
       checked++;
     }
@@ -66,11 +66,11 @@ const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
     assert(ids.includes(id), '页面声明的采样 ' + id + ' 不在 manifest 里');
   }
 
-  /* ---------- 3. 缺口：hurt 确实还没被局内调用 ---------- */
+  /* ---------- 3. 缺口：现在一条都没有了（hurt 已经接进局内） ---------- */
   const jsFiles = fs.readdirSync(path.join(ROOT, 'js')).filter(f => f.endsWith('.js'));
-  const hurtCalls = jsFiles.filter(f => /sfx\('hurt'\)|play\('hurt'\)/.test(read('js/' + f)));
-  assert.deepEqual(hurtCalls, [],
-    'hurt 已经接进局内了（' + hurtCalls.join(', ') + '）：页面上的"缺口"要改成"已接入"');
+  const hurtCalls = jsFiles.filter(f => /sfx\('hurt'/.test(read('js/' + f)));
+  assert(hurtCalls.length > 0,
+    '玩家受击的 hurt 采样应该已经接进局内了（Player.hurt 里那一句）');
 
   /* ---------- 4. 页面自身跑起来：数据自洽 ---------- */
   const browser = await chromium.launch({
@@ -104,27 +104,30 @@ const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
   for (const k of r.ladder) {
     assert(r.loudKeys.includes(k), '响度阶梯里的 ' + k + ' 不在 SFX.LOUD 里');
   }
-  assert(r.gaps.some(g => /hurt/.test(g)), '缺口里要列出 hurt');
+  assert.equal(r.gaps.length, 0, '缺口应该都补完了（还挂着：' + r.gaps.join('、') + '）');
 
   /* ---------- 5. 点一遍所有按钮，确认都触发得到声音 ---------- */
   const played = await page.evaluate(async () => {
     const hits = [];
     const realPlay = SFX.play.bind(SFX);
     const realUi = SFX.ui.bind(SFX);
+    const realGear = SFX.gear.bind(SFX);
     SFX.play = (n, o) => { hits.push(n); return realPlay(n, o); };
     SFX.ui = (k, o) => { hits.push('ui:' + k); return realUi(k, o); };
+    SFX.gear = (k, o) => { hits.push('gear:' + k); return realGear(k, o); };
     for (const b of document.querySelectorAll('#groups .ab')) {
       b.click();
       await new Promise(r => setTimeout(r, 30));
     }
-    SFX.play = realPlay; SFX.ui = realUi;
+    SFX.play = realPlay; SFX.ui = realUi; SFX.gear = realGear;
     return hits;
   });
   const uniq = [...new Set(played)];
   assert(uniq.length >= 20, '点一遍按钮至少触发 20 种声音（实际 ' + uniq.length + '）');
-  for (const need of ['pickup', 'search', 'bag_zip', 'reload', 'hit',
+  for (const need of ['pickup', 'search', 'bag_zip', 'reload', 'hit', 'hurt',
                       'headshot', 'break', 'melee', 'dodge', 'drop', 'door', 'extract',
-                      'death', 'sell', 'ui:click', 'ui:tap', 'ui:confirm', 'ui:notify']) {
+                      'death', 'sell', 'gear:helmet', 'gear:body', 'gear:back',
+                      'ui:click', 'ui:tap', 'ui:confirm', 'ui:notify']) {
     assert(uniq.includes(need), '试听按钮没触发 ' + need);
   }
 
