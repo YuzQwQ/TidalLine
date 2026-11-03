@@ -54,7 +54,7 @@ window.addEventListener('DOMContentLoaded', () => {
         } else Game.toast('目标位置不可站立，保留出生位置');
         Game.updateCamera(true);
       }
-      if (parts.indexOf('ui') >= 0) setTimeout(() => Game.toggleBag(), 200);
+      if (parts.indexOf('ui') >= 0) setTimeout(() => Game.toggleBag({ silent: true }), 200);
       if (parts.indexOf('recoil') >= 0) {
         // 调试：把后坐力固定住，方便看准星张开的样子
         Game.player.recoil = 0.9;

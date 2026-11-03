@@ -285,8 +285,10 @@ const GROUPS = [
       {
         name: '打开容器', scope: 'raid',
         where: 'js/game-panels.js:12（打开容器面板，尸体不响）',
-        detail: '按容器查表：包/旅行箱/皮包是<b>拉链</b>（bag_zip），箱柜是<b>抽屉</b>（container_open）；' +
-          '没配到的容器就安静，不落回通用音 · LOUD.containerOpen <b>0.06</b> / bagZip <b>0.045</b>',
+        detail: '按容器查表：包/旅行箱/皮包是<b>这只容器自己的拉链</b>（bag_zip），' +
+          '箱柜是<b>抽屉</b>（container_open）；没配到的容器就安静，不落回通用音 · ' +
+          'LOUD.containerOpen <b>0.06</b> / bagZip <b>0.045</b><br>' +
+          '注意这和"玩家自己的背包开合"是两回事：这里响的是被翻的那只箱子',
         sounds: ['container_open', 'bag_zip'],
         btns: [
           { l: '抽屉（箱柜）', fn: () => SFX.play('container_open', { at: 'crate_std' }) },
@@ -295,9 +297,11 @@ const GROUPS = [
       },
       {
         name: '背包开合', scope: 'both',
-        where: 'js/game-panels.js:475（toggleBag）',
+        where: 'js/game-panels.js:479（toggleBag）· js/game.js:192（Tab 键）',
         detail: '采样 <b>bag_zip</b> · 开 1.06 / 关 0.90 —— 拉开比拉上略快，' +
-          '这是个"打开了"的触感，不该盖过局内的脚步 · LOUD.bagZip <b>0.045</b>',
+          '这是个"打开了"的触感，不该盖过局内的脚步 · LOUD.bagZip <b>0.045</b><br>' +
+          '<b>只有玩家自己按出来的那一下才响</b>：搜容器时搜刮面板会把背包一起带出来，' +
+          '那是系统动作（<span class="code">toggleBag({ silent: true })</span>），不发声',
         sounds: ['bag_zip'],
         btns: [
           { l: '开背包', fn: () => SFX.play('bag_zip', { rate: 1.06 }) },
@@ -325,14 +329,14 @@ const GROUPS = [
       },
       {
         name: '撤离成功', scope: 'raid',
-        where: 'js/game-panels.js:707（结算面板）',
+        where: 'js/game-panels.js:711（结算面板）',
         detail: '合成上行 0.5s（320→640Hz）· LOUD.extract <b>0.09</b>',
         sounds: [],
         btns: [{ l: '撤离', fn: () => SFX.play('extract') }]
       },
       {
         name: '死亡', scope: 'raid',
-        where: 'js/game-update.js:569（阵亡）· js/game-panels.js:707（结算）',
+        where: 'js/game-update.js:569（阵亡）· js/game-panels.js:711（结算）',
         detail: '合成下沉 0.8s（200→40Hz）· LOUD.death <b>0.13</b>',
         sounds: [],
         btns: [{ l: '死亡', fn: () => SFX.play('death') }]

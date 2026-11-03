@@ -47,7 +47,7 @@ const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
       assert(line !== null, cur + ':' + n[1] + ' 指向的行不存在（代码挪位了？）');
       /* 这一行既可能是调用点，也可能是配置项（泵动的 after/vol 之类），
          只要还跟音效沾边就行 —— 目的是发现"代码挪了、文档没跟" */
-      assert(/sfx|SFX|\bplay\(|\bui\(|pump|rate:|vol:|data-sfx/.test(line),
+      assert(/sfx|SFX|\bplay\(|\bui\(|toggleBag|pump|rate:|vol:|data-sfx/.test(line),
         cur + ':' + n[1] + ' 不像音效相关的行：' + line.trim().slice(0, 60));
       checked++;
     }

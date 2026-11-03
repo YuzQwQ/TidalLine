@@ -562,7 +562,7 @@ Object.assign(Game, {
     this._deathSoundPlayed = true;
     this.action = null;
     this.closeLoot();
-    if (this.bagOpen) this.toggleBag();
+    if (this.bagOpen) this.toggleBag({ silent: true });
     if (typeof MedHud !== 'undefined') MedHud.reset();   // 死亡：轮盘和按住状态一并清掉
     this.player.dodgeT = 0;
     this.player.tickAnimation(0, false);

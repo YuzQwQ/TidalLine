@@ -11,7 +11,7 @@ const ModUI={
       this.el.addEventListener('click',e=>{if(e.target===this.el)this.close();});
       window.addEventListener('keydown',e=>{if(this.el.hidden)return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();this.close();}},true);
     }
-    if(Game.state==='playing'&&!Game.bagOpen)Game.toggleBag();Game.input.mouseDown=false;Game.input.mousePressed=false;Game.releaseLock();Tips.hide();Ctx.hide();Deal.hide();
+    if(Game.state==='playing'&&!Game.bagOpen)Game.toggleBag({silent:true});Game.input.mouseDown=false;Game.input.mousePressed=false;Game.releaseLock();Tips.hide();Ctx.hide();Deal.hide();
     this.el.hidden=false;this.render();clearInterval(this.timer);this.timer=setInterval(()=>this.refresh(),100);
   },
   close(){if(this.el)this.el.hidden=true;clearInterval(this.timer);this.timer=null;},

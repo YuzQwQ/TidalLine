@@ -47,7 +47,7 @@ Object.assign(Game, {
     // 搜刮时背包一起打开（左侧），关面板时如果是自动开的就收回去
     if (!this.bagOpen) {
       this.bagWasAuto = true;
-      this.toggleBag();
+      this.toggleBag({ silent: true });
     }
   },
 
@@ -59,7 +59,7 @@ Object.assign(Game, {
     document.getElementById('lootBox').style.display = 'none';
     if (this.bagWasAuto) {
       this.bagWasAuto = false;
-      if (this.bagOpen) this.toggleBag();
+      if (this.bagOpen) this.toggleBag({ silent: true });
     }
   },
 
@@ -466,13 +466,17 @@ Object.assign(Game, {
   },
 
   /* ---------------- 背包面板 ---------------- */
-  toggleBag() {
+  /* opts.silent：背包不是玩家自己按出来的（搜容器时自动带出来、结算/死亡时自动收起），
+     这时不开拉链声。以前两种情况都响，翻一个箱子先响一声拉链，
+     听着像是在开自己的包 —— 现在只有玩家自己按 Tab 或点背包按钮才有声音。 */
+  toggleBag(opts) {
+    const silent = !!(opts && opts.silent);
     this.bagOpen = !this.bagOpen;
     const el = document.getElementById('bagBox');
     el.classList.toggle('open', this.bagOpen);
     if (this.bagOpen) this.renderBag();
     /* 开合背包：一声拉链。开包和关包音高差一点，听得出是合上还是拉开 */
-    if (typeof SFX !== 'undefined') SFX.play('bag_zip', { rate: this.bagOpen ? 1.06 : 0.9 });
+    if (!silent && typeof SFX !== 'undefined') SFX.play('bag_zip', { rate: this.bagOpen ? 1.06 : 0.9 });
   },
 
   renderGearPanel() {
@@ -702,7 +706,7 @@ Object.assign(Game, {
     this.closeLoot();
     /* 结算页已经算局外了，大厅音乐接着响 —— 死回来不至于一片死寂 */
     if (typeof Music !== 'undefined') Music.play('base');
-    if (this.bagOpen) this.toggleBag();
+    if (this.bagOpen) this.toggleBag({ silent: true });
     if (typeof MedHud !== 'undefined') MedHud.reset();   // 收尾：轮盘、快捷栏、进度条一起清
     if (success || !this._deathSoundPlayed) SFX.play(success ? 'extract' : 'death');
 

@@ -425,7 +425,7 @@ const Game = {
     M.tideLevel = 0;
     this.stats.found = 0;
     this.closeLoot();
-    if (this.bagOpen) this.toggleBag();
+    if (this.bagOpen) this.toggleBag({ silent: true });
 
     this.updateCamera(true);
     this.toast('进入' + map.title);
