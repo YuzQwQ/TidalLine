@@ -149,6 +149,9 @@
 <script src="../assets/audio/bundle.js"></script>
 <!-- 步枪 A/B/C 变体定义，和导出脚本共用同一份 -->
 <script src="rifle-variants.js"></script>
+<!-- 枪声按型号路由（SHOT_MODEL），需要 WEAPONS 表；配置也要先到，data.js 顶层会读 CFG -->
+<script src="../js/config.js"></script>
+<script src="../js/data.js"></script>
 <script src="../js/ui.js"></script>
 <script>
   /* id 是 SHOT_SAMPLE 的键，model 是 WEAPONS 里的型号 —— 试听页要走和游戏里

@@ -26,6 +26,10 @@ let html = fs.readFileSync(SRC, 'utf8');
    页面里的采样部分会自动退化成合成音，脚本本身照样能跑 */
 const audioTag = inline('assets/audio/bundle.js');
 const variantTag = inline('tools/rifle-variants.js');
+/* 枪声按型号路由（SHOT_MODEL）要查 WEAPONS 表，data.js 顶层又会读 CFG ——
+   这两份也得内联，否则自包含版点"单发"会 ReferenceError: WEAPONS is not defined */
+const cfgTag = inline('js/config.js');
+const dataTag = inline('js/data.js');
 const uiTag = inline('js/ui.js');
 
 const audioRe = /<script src="\.\.\/assets\/audio\/bundle\.js"><\/script>/;
@@ -36,6 +40,14 @@ if (audioTag) {
 }
 const variantRe = /<script src="rifle-variants\.js"><\/script>/;
 html = html.replace(variantRe, () => variantTag || '<!-- 缺少 tools/rifle-variants.js -->');
+html = html.replace(
+  /<script src="\.\.\/js\/config\.js"><\/script>/,
+  () => cfgTag || '<!-- 缺少 js/config.js -->'
+);
+html = html.replace(
+  /<script src="\.\.\/js\/data\.js"><\/script>/,
+  () => dataTag || '<!-- 缺少 js/data.js -->'
+);
 html = html.replace(
   /<script src="\.\.\/js\/ui\.js"><\/script>/,
   () => uiTag || '<!-- 缺少 js/ui.js -->'
@@ -48,5 +60,5 @@ html = html.replace(
 fs.writeFileSync(OUT, html);
 const kb = (Buffer.byteLength(html) / 1024).toFixed(0);
 console.log('已生成 tools/audio-guns.standalone.html  ' + kb + ' KB');
-console.log('  （自包含：ui.js ' + (uiTag ? '已内联' : '缺失') + '，音频包 ' +
-  (audioTag ? '已内联' : '缺失') + '）');
+console.log('  （自包含：ui.js ' + (uiTag ? '已内联' : '缺失') + '，武器表 ' +
+  (dataTag ? '已内联' : '缺失') + '，音频包 ' + (audioTag ? '已内联' : '缺失') + '）');

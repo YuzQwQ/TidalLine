@@ -908,7 +908,10 @@ SHOT_MODEL: { akm: 'ak47' },       // 型号 → SHOT_SAMPLE 的键
 
 `shot_ak47` 之前一直躺在 `assets/audio/` 里当预留素材（manifest 里写着"尚未有对应武器"），
 响度档早就按 `LOUD.shot` 对齐了，这次只是把路由接上。试听页 `tools/audio-guns.html`
-的枪声卡片也改成走**同一条路由**（`gun: g.model`），否则那里听着对、进游戏不对。
+的枪声卡片也改成走**同一条路由**（`gun: g.model`），否则那里听着对、进游戏不对
+——顺带修掉一个旧坑：那页只加载 `ui.js`，没有 `WEAPONS` 表，点"单发"一直是
+`ReferenceError` 静默失败（`SFX.play('shot')` 里要查型号）。现在它加载
+`config.js` + `data.js`，自包含版 `tools/build-audio-page.js` 也把这两份一起内联。
 
 ### 界面音效
 
