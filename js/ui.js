@@ -368,7 +368,6 @@ const SFX = {
     door: 0.08,
     search: 0.055,
     bagZip: 0.045,     // 开背包的拉链：比搜索更轻，只是个"打开了"的触感
-    containerOpen: 0.06,  // 开容器：抽屉拉开那一下，比翻找稍重（这是一次明确的动作）
     drop: 0.055,
     hurt: 0.11,
     extract: 0.09,
@@ -480,38 +479,49 @@ const SFX = {
      （纸三条、工具箱三条），避免整张地图翻起来一个味。
      没配到的容器先空着，落回下面的合成音——等有合适素材再补进去。 */
   SEARCH_SAMPLE: [
-    'search_metal', 'search_toolbox', 'search_toolbox2', 'search_toolbox3',
+    'search_zipper', 'search_lock', 'search_drawer',
+    'search_toolbox', 'search_toolbox2', 'search_toolbox3',
     'search_paper', 'search_paper2', 'search_paper3',
     'search_cloth', 'search_purse'
   ],
-  /* 容器 art（CONTAINER_TYPES 里的 art 字段）→ 搜索音 / 打开音 */
-  BOX_SFX: {
-    /* 拉链：包和旅行箱 */
-    crate_satchel:   { search: 'search_cloth',  open: 'bag_zip' },
-    crate_schoolbag: { search: 'search_cloth',  open: 'bag_zip' },
-    crate_luggage:   { search: 'search_cloth',  open: 'bag_zip' },
-    crate_leatherbag:{ search: 'search_purse',  open: 'bag_zip' },
-    crate_jewelry:   { search: 'search_purse' },
-    /* 纸：纸篓、纸箱、文件柜、公文包 */
-    crate_wastepaper:{ search: 'search_paper' },
-    crate_cardboard: { search: 'search_paper2' },
-    crate_filing:    { search: 'search_paper3', open: 'container_open' },
-    crate_diplomatic:{ search: 'search_paper' },
-    /* 布：衣服、背心 */
-    crate_workwear:  { search: 'search_cloth' },
-    crate_rescuevest:{ search: 'search_cloth' },
-    /* 金属滑轨与箱柜 */
-    crate_fast:      { search: 'search_metal',    open: 'container_open' },
-    crate_std:       { search: 'search_toolbox',  open: 'container_open' },
-    crate_med:       { search: 'search_toolbox2', open: 'container_open' },
-    crate_staff:     { search: 'search_toolbox2', open: 'container_open' },
-    crate_bedside:   { search: 'search_toolbox3', open: 'container_open' },
-    crate_tool:      { search: 'search_toolbox',  open: 'container_open' },
-    crate_elec:      { search: 'search_toolbox3', open: 'container_open' },
-    crate_emergency: { search: 'search_toolbox3', open: 'container_open' },
-    crate_military_supply: { search: 'search_toolbox', open: 'container_open' },
+  /* 容器搜索音：一个容器一个声，**交互容器时只响一次**。
+     以前是「开箱音 + 逐件翻找」两套，还套了循环 —— 一个箱子听着像有人在里面一直翻。
+     现在统一成一件事：碰到容器，响一声，然后安静地搜。
+
+     拉链（bag_zip）从这张表里彻底撤出：它是玩家自己背包的开合声，
+     别人的箱子不该用同一段。 */
+  CONTAINER_SFX: {
+    /* 包与旅行箱：长拉链（577443 coat zipper，1.45s —— 从拉开到收尾一整段） */
+    crate_satchel:    'search_zipper',
+    crate_schoolbag:  'search_zipper',
+    crate_luggage:    'search_zipper',
+    crate_leatherbag: 'search_zipper',
+    /* 珠宝匣：小包/皮革翻找 */
+    crate_jewelry:    'search_purse',
+    /* 纸：纸篓、纸箱、文件柜、密封公文包 */
+    crate_wastepaper: 'search_paper',
+    crate_cardboard:  'search_paper2',
+    crate_filing:     'search_paper3',
+    crate_diplomatic: 'search_paper',
+    /* 衣服：布料翻找。这本来是布包的声，布包换成长拉链之后归了衣服 */
+    crate_workwear:   'search_cloth',
+    crate_rescuevest: 'search_cloth',
+    /* 抽屉与床头柜：滑轨摩擦 + 吱呀（原来是「开容器」那声，现在统一成搜索音） */
+    crate_fast:       'search_drawer',
+    crate_bedside:    'search_drawer',
+    /* 箱柜与工具箱：三种金属翻找轮换用 */
+    crate_std:        'search_toolbox',
+    crate_tool:       'search_toolbox',
+    crate_staff:      'search_toolbox2',
+    crate_med:        'search_toolbox2',
+    crate_elec:       'search_toolbox3',
+    crate_emergency:  'search_toolbox3',
+    crate_military_supply: 'search_toolbox',
+    crate_supply:     'search_toolbox2',
+    /* 小型保险箱：锁舌与门板（734641） */
+    crate_heavy:      'search_lock',
     /* 翻尸体是翻衣服口袋 */
-    corpse:          { search: 'search_cloth' }
+    corpse:           'search_cloth'
   },
 
   /* ---------------- 界面音效 ----------------
@@ -564,14 +574,6 @@ const SFX = {
       this.noiseBuf = buf;
     } catch (e) { this.on = false; }
     if (this.on) { this.load(); this.bindUI(); }
-    /* 切走标签页时 rAF 会停，循环音没人收就会一直响。
-       挂一次就够：回来之后 update 会照常把循环接上。 */
-    if (!this._visBound && typeof document !== 'undefined' && document.addEventListener) {
-      this._visBound = true;
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) this.stopSearchLoop();
-      });
-    }
   },
 
   /* 浏览器不允许在用户手势之前出声。正常流程里 init() 就发生在点「开始」
@@ -619,10 +621,13 @@ const SFX = {
     if (id === 'sell') return this.LOUD.sell;
     /* 拾取的四条变体都按拾取档对齐，四条之间响度一致 */
     if (/^pickup_[1-4]$/.test(id)) return this.LOUD.pickup;
-    /* 搜索的九条材质按同一档对齐，抽到哪条都一样响 */
-    if (/^search_(metal|toolbox\d?|paper\d?|cloth|purse)$/.test(id)) return this.LOUD.search;
-    if (id === 'container_open') return this.LOUD.containerOpen;
+    /* 搜索的各条材质按同一档对齐，碰到哪个容器都一样响 */
+    if (/^search_(zipper|lock|drawer|toolbox\d?|paper\d?|cloth|purse)$/.test(id)) return this.LOUD.search;
+    /* 拉链只剩玩家背包开合用 */
     if (id === 'bag_zip') return this.LOUD.bagZip;
+    /* 结算两段：阵亡一声扫弦、撤离一段吉他 */
+    if (id === 'death') return this.LOUD.death;
+    if (id === 'extract') return this.LOUD.extract;
     /* 界面音：四条各一档，UI 是背景层，都压在拾取之下 */
     if (id === 'ui_click') return this.LOUD.uiClick;
     if (id === 'ui_tap') return this.LOUD.uiTap;
@@ -781,117 +786,27 @@ const SFX = {
     });
   },
 
-  /* 搜索：按容器固定一条，同一个容器每次都是同一个声。
-     查不到（这个容器还没配素材）就返回 false，落回下面的合成音。
+  /* 交互容器：按容器固定一条，同一个容器每次都是同一个声。
+     **只响一次**，不循环 —— 整段搜索是十几秒的持续动作，但声音给一次起手就够了，
+     循环会变成"有人一直在耳边翻包"。
      抖动只留一点：完全不抖的话，连搜同一只箱子五六次会像复读机。 */
   _playSearch(opts) {
     const o = opts || {};
-    const id = this._boxSfxOf(o.at, 'search');
+    const id = this._boxSfxOf(o.at);
     if (!id) return false;
-    /* 刚掀开箱子时会自动搜第一件，两个音会糊在一起——
-       让翻找声等开箱声先走完（拉链 0.29s、箱盖 1.46s，各留一点余量）。 */
-    let delay = (o.delay || 0);
-    if (this._boxOpenAt != null) {
-      const open = this.BOX_SFX[o.at] && this.BOX_SFX[o.at].open;
-      const dur = (open && this.samples[open]) ? this.samples[open].duration : 0;
-      const since = (this.ctx ? this.ctx.currentTime : 0) - this._boxOpenAt;
-      if (dur && since < dur) delay = Math.max(delay, dur - since + 0.05);
-    }
-    const j = 0.03;
-    const jv = 0.05;
+    const j = 0.03;      // 音高抖动
+    const jv = 0.05;     // 音量抖动
     return this._playSample(id, {
-      delay: delay,
+      delay: o.delay || 0,
       rate: (o.rate || 1) * (1 - j + Math.random() * j * 2),
       vol: (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2)
     });
   },
 
-  /* 掀开容器的那一下。同样按容器固定；没配到的容器不响——
-     "开"是点缀，没有合适素材就别硬凑一个。 */
-  _playContainerOpen(opts) {
-    const id = this._boxSfxOf((opts || {}).at, 'open');
-    if (!id) return false;
-    if (this.ctx) this._boxOpenAt = this.ctx.currentTime;
-    /* 掀开这一下要让位：撬开时循环已经在响，抽屉/拉链再叠上来就糊了。
-       收掉之后 _boxOpenAt 会让 sync 按开箱音的实际长度把循环接回来。 */
-    this.stopSearchLoop();
-    return this._playSample(id, { rate: 0.98 + Math.random() * 0.04 });
-  },
-
-  /* ---------------- 容器搜索：循环播放 ----------------
-     一个容器从「撬开」到「全部搜完」是一段连续动作，声音也该是连续的：
-     之前每翻一件就重新起一次采样，中间还夹着拾取音，听着像一叠碎片。
-     现在按容器给一段循环，整段搜索只起一次、搜完就停。
-
-     停的时机不靠各处手写 stopSearchLoop，而是每帧调 syncSearchLoop：
-     把「现在应该响哪个容器」传进来，变了才换。这样走开、被打断、
-     死亡、换容器、搜完了 —— 任何一条路径都自动收住，不会漏掉一路。 */
-  _searchLoop: null,      // { src, g, id }
-  _searchLoopAt: null,    // 当前循环对应的容器 key（null = 没在放）
-
-  /* 传 null 表示"现在不该有搜索声"。每帧调用，内部只在 key 变化时动。 */
-  syncSearchLoop(at) {
-    const key = at || null;
-    if (this._searchLoopAt === key) return;
-    this.stopSearchLoop();
-    this._searchLoopAt = key;
-    if (!key) return;
-    const id = this._boxSfxOf(key, 'search');
-    /* 没配素材的容器：退回上一次的合成音，响一下（不是循环，本来也没有素材可循环） */
-    if (!id) { this.play('search', { at: key }); return; }
-    this._startSearchLoop(id, key);
-  },
-
-  _startSearchLoop(id, at) {
-    const c = this.ctx, buf = this.samples[id];
-    if (!c || !buf) return;
-    /* 开箱声还没走完就先别起：掀开箱子那 1.46s 里叠一层翻找声会糊成一团 */
-    let delay = 0;
-    if (this._boxOpenAt != null) {
-      const open = (this.BOX_SFX[at] || {}).open;
-      const dur = (open && this.samples[open]) ? this.samples[open].duration : 0;
-      const since = c.currentTime - this._boxOpenAt;
-      if (dur && since < dur) delay = dur - since + 0.05;
-    }
-    const src = c.createBufferSource();
-    src.buffer = buf;
-    src.loop = true;
-    /* 音高微扰：同一段素材连绕十几次会听出"复读机"，±3% 够了 */
-    src.playbackRate.value = 0.985 + Math.random() * 0.03;
-    const g = c.createGain();
-    const base = this.gainOf[id] != null ? this.gainOf[id] : 0.4;
-    const t0 = c.currentTime + delay;
-    /* 从 0 淡入：循环段的首尾不一定落在过零点，直接起会有"咔"的一声 */
-    g.gain.setValueAtTime(0, t0);
-    g.gain.linearRampToValueAtTime(base, t0 + 0.08);
-    src.connect(g);
-    g.connect(this.master || c.destination);
-    src.start(t0);
-    this._searchLoop = { src: src, g: g, id: id };
-  },
-
-  stopSearchLoop() {
-    const L = this._searchLoop;
-    this._searchLoop = null;
-    this._searchLoopAt = null;
-    if (!L || !this.ctx) return;
-    const c = this.ctx, t = c.currentTime;
-    /* 淡出 0.12s 再停：循环段可能在任意位置被切断，硬停会"啪"一下 */
-    try {
-      const v = L.g.gain.value;
-      L.g.gain.cancelScheduledValues(t);
-      L.g.gain.setValueAtTime(v, t);
-      L.g.gain.linearRampToValueAtTime(0, t + 0.12);
-      L.src.stop(t + 0.14);
-    } catch (e) { /* 已经停过 / 上下文被关了：忽略 */ }
-    L.src.onended = () => { try { L.g.disconnect(); } catch (e) {} };
-  },
-
-  /* 查表：容器的 art → 某一个动作的音效 id。素材没加载上等于没配。 */
-  _boxSfxOf(at, what) {
+  /* 查表：容器的 art → 搜索音 id。素材没加载上等于没配（会落到合成兜底）。 */
+  _boxSfxOf(at) {
     if (!at) return null;
-    const row = this.BOX_SFX[at];
-    const id = row && row[what];
+    const id = this.CONTAINER_SFX[at];
     return (id && this.samples[id]) ? id : null;
   },
 
@@ -1216,13 +1131,6 @@ const SFX = {
     }
     /* 搜索：按容器 art 查表，一个容器一个声（没配到的落回合成音） */
     if (name === 'search' && this._playSearch(opts)) return;
-
-    /* 掀开容器：按容器查表。查不到就直接收住——不落回通用开箱音，
-       没配到素材的容器就该安静，"开"只是点缀，硬凑一个反而都一样。 */
-    if (name === 'container_open') {
-      this._playContainerOpen(opts);
-      return;
-    }
 
     /* 有采样就优先用采样；没有（或解码失败）就落到下面的合成音 */
     if (this.samples[name]) { this._playSample(name, opts); return; }

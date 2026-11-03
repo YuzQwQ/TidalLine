@@ -122,7 +122,7 @@ const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
   });
   const uniq = [...new Set(played)];
   assert(uniq.length >= 20, '点一遍按钮至少触发 20 种声音（实际 ' + uniq.length + '）');
-  for (const need of ['pickup', 'search', 'container_open', 'bag_zip', 'reload', 'hit',
+  for (const need of ['pickup', 'search', 'bag_zip', 'reload', 'hit',
                       'headshot', 'break', 'melee', 'dodge', 'drop', 'door', 'extract',
                       'death', 'sell', 'ui:click', 'ui:tap', 'ui:confirm', 'ui:notify']) {
     assert(uniq.includes(need), '试听按钮没触发 ' + need);

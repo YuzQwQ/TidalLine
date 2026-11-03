@@ -302,20 +302,18 @@
     { label: '连摸 5 件', ghost: true, run: () => [0, 220, 440, 660, 880].forEach(t => setTimeout(() => SFX.play('pickup'), t)) },
     { label: '四条各一遍', ghost: true, run: () => ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'].forEach((id, i) => setTimeout(() => SFX._playSample(id), i * 320)) }
   ]);
-  card(othersHost, '搜索：一个容器一个声', '不随机——点哪个容器就是那个容器的声，重点听彼此不一样', [
-    { label: '旅行箱（布）', run: () => SFX.play('search', { at: 'crate_luggage' }) },
+  card(othersHost, '容器搜索：一个容器一个声', '交互容器时响一次，不循环；拉链只留给玩家背包', [
+    { label: '旅行箱（长拉链）', run: () => SFX.play('search', { at: 'crate_luggage' }) },
+    { label: '衣服（布料）', ghost: true, run: () => SFX.play('search', { at: 'crate_workwear' }) },
+    { label: '抽屉（滑轨）', ghost: true, run: () => SFX.play('search', { at: 'crate_fast' }) },
+    { label: '小保险（锁舌）', ghost: true, run: () => SFX.play('search', { at: 'crate_heavy' }) },
     { label: '文件柜（纸）', ghost: true, run: () => SFX.play('search', { at: 'crate_filing' }) },
-    { label: '抽屉（金属）', ghost: true, run: () => SFX.play('search', { at: 'crate_fast' }) },
     { label: '工具箱', ghost: true, run: () => SFX.play('search', { at: 'crate_tool' }) },
-    { label: '皮质旅行包', ghost: true, run: () => SFX.play('search', { at: 'crate_leatherbag' }) },
-    { label: '尸体 / 工作服（布）', ghost: true, run: () => SFX.play('search', { at: 'corpse' }) },
-    { label: '保险箱（没素材）', ghost: true, run: () => SFX.play('search', { at: 'crate_heavy' }) }
+    { label: '尸体（口袋）', ghost: true, run: () => SFX.play('search', { at: 'corpse' }) }
   ]);
-  card(othersHost, '打开容器', '同样是固定的：包是拉链，柜和箱是箱盖', [
-    { label: '开旅行箱（拉链）', run: () => SFX.play('container_open', { at: 'crate_luggage' }) },
-    { label: '开文件柜（抽屉）', ghost: true, run: () => SFX.play('container_open', { at: 'crate_filing' }) },
-    { label: '开工具箱（箱盖）', ghost: true, run: () => SFX.play('container_open', { at: 'crate_tool' }) },
-    { label: '开保险箱（没素材·不响）', ghost: true, run: () => SFX.play('container_open', { at: 'crate_heavy' }) }
+  card(othersHost, '结算', '阵亡一声扫弦，撤离一段吉他', [
+    { label: '阵亡', run: () => SFX.play('death') },
+    { label: '撤离', ghost: true, run: () => SFX.play('extract') }
   ]);
   card(othersHost, '背包开合', '拉链 6231 · 开包升调、关包降调', [
     { label: '拉开', run: () => SFX.play('bag_zip', { rate: 1.06 }) },
@@ -367,7 +365,7 @@
     ['shot_switch', '切枪', 'switch'],
     ['step_stone_1', '脚步', 'step'],
     ['pickup_1', '拾取', 'pickup'],
-    ['search_metal', '搜索', 'search'],
+    ['search_zipper', '容器搜索', 'search'],
     ['bag_zip', '背包拉链', 'bagZip'],
     ['ui_click', '界面点击', 'uiClick'],
     ['ui_tap', '界面悬停', 'uiTap'],

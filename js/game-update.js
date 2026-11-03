@@ -307,24 +307,6 @@ Object.assign(Game, {
       }
     }
 
-    /* 搜索声：一个容器一段循环，撬开读条和逐件搜索连成一条线。
-       每帧算一次「现在正在搜哪个容器」，变了才换 —— 走开、被打断、搜完、
-       换容器都由这一处收口，不用在每个分支里手写 stop。
-
-       「正在搜」的口径是 this.search 非空（自动搜索是背靠背排的，
-       中间没有空档，所以整段搜索听起来是连续的）；手动点了一件之后
-       玩家不再继续，声音也就跟着停 —— 面板开着不等于还在翻。 */
-    {
-      const A = this.action;
-      let loopAt = null;
-      if (A && A.type === 'search' && A.target) {
-        loopAt = A.target.art || A.target.kind;         // 正在撬：先响起来
-      } else if (this.lootOpen && this.search) {
-        loopAt = this.lootIsCorpse ? 'corpse' : (this.lootOpen.art || this.lootOpen.kind);
-      }
-      if (typeof SFX !== 'undefined') SFX.syncSearchLoop(loopAt);
-    }
-
     /* 面板跟随检查：走远了自动关 */
     if (this.lootOpen) {
       const d = U.dist(P.x, P.y, this.lootOpen.x, this.lootOpen.y);
@@ -490,13 +472,16 @@ Object.assign(Game, {
       if (q.still) {
         Noise.emit(b.x, b.y, q.noise, 'search');
       }
-      /* 翻找声交给循环：这声一响就是一个容器，撬开读条和后面逐件搜索
-         共用同一段，中间不断（起停由 update 里的 syncSearchLoop 维持）。 */
+      /* 交互容器的那一声：撬开读条一开始就响，只响这一次。
+         读条结束后面板打开时传 silent，别让同一个容器响两遍。 */
+      if (typeof SFX !== 'undefined') SFX.play('search', { at: b.art || b.kind });
       return;
     }
 
     if (it.type === 'corpse') {
       this.action = { type: 'corpse', t: 0, total: 0.35, target: it.obj };
+      /* 翻尸体是翻衣服口袋：和衣服容器同一段布料声，同样只响一次 */
+      if (typeof SFX !== 'undefined') SFX.play('search', { at: 'corpse' });
       return;
     }
   },
@@ -537,11 +522,12 @@ Object.assign(Game, {
       if (a.type === 'search') {
         a.target.searched = true;        // 掀开过了，之后可以反复打开
         this.syncBoxState(a.target);     // 有东西就保持可交互，空的才变暗
-        this.openLoot(a.target);
+        /* 静音打开：交互那一刻已经响过一声了，这里再响就是重音 */
+        this.openLoot(a.target, false, { silent: true });
         this.stats.found++;
       } else if (a.type === 'corpse') {
         a.target.opened = true;
-        this.openLoot(a.target, true);
+        this.openLoot(a.target, true, { silent: true });
       } else if (a.type === 'extract') {
         this.action = null;
         this.doExtract();

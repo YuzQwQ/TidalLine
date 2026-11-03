@@ -65,8 +65,9 @@ const ROOT = path.resolve(__dirname, '..');
 
   assert(r.bagOpenAfterLoot === true, '搜容器时背包确实被带出来了');
   assert(!r.openLoot.includes('bag_zip'), '打开容器不该有拉链声，实际：' + r.openLoot.join(','));
-  assert(r.openLoot.includes('container_open'), '打开容器该有开箱声');
-  assert(r.openLoot.includes('search'), '打开容器后自动搜第一件，该有翻找声');
+  /* 容器现在只有一声：交互时按容器材质播一次，没有"开箱音 + 翻找声"两套了 */
+  assert.equal(r.openLoot.filter(n => n === 'search').length, 1,
+    '打开容器只响一次翻找声，实际：' + r.openLoot.join(','));
 
   assert.equal(r.bagOpenAfterClose, false, '关面板后背包收起来了');
   assert(!r.closeLoot.includes('bag_zip'), '自动收背包不该有拉链声，实际：' + r.closeLoot.join(','));

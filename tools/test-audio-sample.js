@@ -75,19 +75,17 @@ const man = require('../assets/audio/manifest.json');
       stable.corpse = (() => { const got = hit('corpse'); return { kinds: [...new Set(got)].sort(), n: got.length }; })();
       /* 没配素材的容器（垃圾桶）应该落回合成音，不播任何采样 */
       const trash = hit('crate_trash');
-      /* 打开音也按容器走 */
-      const openOf = (at) => {
-        const got = [];
-        const real = SFX._playSample.bind(SFX);
-        SFX._playSample = (id) => { got.push(id); return real(id); };
-        SFX.play('container_open', { at });
-        SFX._playSample = real;
-        return got;
-      };
+      /* 材质对照：几个代表容器必须落到各自的声上 */
+      const pick = {};
+      for (const at of ['crate_luggage', 'crate_workwear', 'crate_fast', 'crate_heavy',
+                        'crate_filing', 'crate_tool', 'crate_jewelry']) {
+        pick[at] = hit(at)[0];
+      }
       return {
-        stable, trash,
-        openLuggage: openOf('crate_luggage'), openTool: openOf('crate_tool'),
-        openTrash: openOf('crate_trash'),
+        stable, trash, pick,
+        /* 容器表里不该再有"打开音"，也不该再出现拉链 */
+        mapValues: Object.values(SFX.CONTAINER_SFX),
+        hasOpenField: Object.values(SFX.CONTAINER_SFX).some(v => v && typeof v === 'object'),
         gains: SFX.SEARCH_SAMPLE.map(id => SFX.gainOf[id]),
         loud: SFX.LOUD.search,
         rms: SFX.SEARCH_SAMPLE.map(id => SFX._measure(SFX.samples[id])),
@@ -98,14 +96,19 @@ const man = require('../assets/audio/manifest.json');
     for (const [at, v] of Object.entries(sr.stable)) {
       assert.equal(v.kinds.length, 1, at + ' 每次都是同一个声，实际 ' + v.kinds.join('/'));
     }
-    /* 不同材质的容器必须是不同的声——不然等于没分（尸体用布料声，和衣服类容器同材质） */
-    const used = Object.entries(sr.stable).filter(([at]) => at !== 'corpse').map(([, v]) => v.kinds[0]);
-    assert.equal(new Set(used).size, used.length, '不同容器不共用一条音（' + used.join('/') + '）');
+    /* 材质分工：包=长拉链、衣服=布料、抽屉=滑轨、保险箱=锁舌、纸=翻纸 */
+    assert.equal(sr.pick.crate_luggage, 'search_zipper', '旅行箱是长拉链');
+    assert.equal(sr.pick.crate_workwear, 'search_cloth', '衣服是布料翻找');
+    assert.equal(sr.pick.crate_fast, 'search_drawer', '抽屉是滑轨声');
+    assert.equal(sr.pick.crate_heavy, 'search_lock', '小型保险箱是锁舌声');
+    assert.equal(sr.pick.crate_filing, 'search_paper3', '文件柜是翻纸声');
+    assert.equal(sr.pick.crate_tool, 'search_toolbox', '工具箱是金属翻找');
+    assert.equal(sr.pick.crate_jewelry, 'search_purse', '珠宝匣是皮革小包声');
     assert.equal(sr.stable.corpse.kinds[0], 'search_cloth', '翻尸体是布料的声');
     assert.equal(sr.trash.length, 0, '没配素材的容器落回合成音，不播采样');
-    assert.deepEqual(sr.openLuggage, ['bag_zip'], '行李箱掀开是拉链声');
-    assert.deepEqual(sr.openTool, ['container_open'], '工具箱掀开是箱盖声');
-    assert.equal(sr.openTrash.length, 0, '没配素材的容器不响开箱音');
+    /* 拉链只归玩家背包：容器表里不许再出现 bag_zip，也不许再有"打开音"这一层 */
+    assert.equal(sr.mapValues.includes('bag_zip'), false, '容器不再用拉链声（那是玩家背包的）');
+    assert.equal(sr.hasOpenField, false, '容器表只剩一个搜索音，没有"打开音"字段');
     /* 九条素材都对齐到 LOUD.search：换到哪个容器都一样响 */
     sr.gains.forEach((g, i) => {
       assert(Math.abs(g * sr.rms[i] - sr.loud) < 0.02, '搜索素材 ' + i + ' 对齐到 LOUD.search');

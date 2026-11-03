@@ -6,10 +6,13 @@
 Object.assign(Game, {
 
   /* ---------------- 搜刮面板 ---------------- */
-  openLoot(obj, isCorpse) {
+  /* opts.silent：这次打开是「刚搜完这个容器」的收尾，声音已经在交互那一刻响过了，
+     别再响第二下 —— 一个容器一次交互只该有一声。 */
+  openLoot(obj, isCorpse, opts) {
     Medical.cancel();
-    /* 打开容器：抽屉拉开那一声。尸体不开抽屉，跳过 */
-    if (!isCorpse && typeof SFX !== 'undefined') SFX.play('container_open', { at: obj.art || obj.kind });
+    if (!(opts && opts.silent) && typeof SFX !== 'undefined') {
+      SFX.play('search', { at: isCorpse ? 'corpse' : (obj.art || obj.kind) });
+    }
     this.lootOpen = obj;
     this.lootIsCorpse = !!isCorpse;
     if (isCorpse && !obj.items) obj.items = obj.loot;
@@ -52,8 +55,6 @@ Object.assign(Game, {
   },
 
   closeLoot() {
-    /* 面板一关就收声：不等下一帧的 syncSearchLoop，免得关窗后还响着 */
-    if (typeof SFX !== 'undefined' && SFX.stopSearchLoop) SFX.stopSearchLoop();
     this.lootOpen = null;
     this.search = null;
     this.autoSearch = false;
@@ -90,8 +91,7 @@ Object.assign(Game, {
     if (manual) this.autoSearch = false;
     this.search = { idx: idx, t: 0, total: this.searchTime(e.item), noiseT: 0 };
     this.renderLootList();
-    /* 翻找声不在这里起：整个容器从撬开到搜完只有一段循环，
-       由 Game.update 每帧调 SFX.syncSearchLoop() 维持，搜完自然停。 */
+    /* 逐件搜索不出声：容器在交互那一刻已经响过一声，翻每一件再响就成了复读机 */
     return true;
   },
 

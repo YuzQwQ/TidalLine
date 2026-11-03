@@ -256,7 +256,7 @@ const GROUPS = [
     rows: [
       {
         name: '拾取', scope: 'both',
-        where: 'js/game-panels.js:406 / :452 · js/game-update.js:304 · js/medical.js:160,188（医疗品开始/结束）· js/base.js（仓库取物）',
+        where: 'js/game-panels.js:406 / :452 · js/game-update.js:304 · js/medical.js:161,189（医疗品开始/结束）· js/base.js（仓库取物）',
         detail: '采样 <b>×4</b> 每次随机抽一条（且不重复刚播过的那条）· LOUD.pickup <b>0.06</b>',
         sounds: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
         btns: [
@@ -267,40 +267,26 @@ const GROUPS = [
         ]
       },
       {
-        name: '搜索（一个容器一个声）', scope: 'raid',
-        where: 'js/game-update.js:325（每帧 syncSearchLoop）',
-        detail: '按容器 art 查 <span class="code">BOX_SFX</span>，19 个容器有专属音；' +
-          '同材质不同容器用不同变体（纸 3 条、工具箱 3 条）；没配到的落回合成音 · LOUD.search <b>0.055</b><br>' +
-          '<b>整段搜索是循环的</b>：从撬开读条到逐件翻完只起一次，期间不断；' +
-          '搜完 / 关面板 / 走开 / 切走标签页立刻淡出 · ' +
-          '<span class="code">SFX.syncSearchLoop(容器)</span>',
-        sounds: ['search_metal', 'search_toolbox', 'search_toolbox2', 'search_toolbox3',
-                 'search_paper', 'search_paper2', 'search_paper3', 'search_cloth', 'search_purse'],
+        name: '容器搜索（一个容器一个声）', scope: 'raid',
+        where: 'js/game-update.js:477（撬开读条起手）· js/game-panels.js:14（直接打开）',
+        detail: '按容器 art 查 <span class="code">CONTAINER_SFX</span>，一个容器一条声：' +
+          '包/旅行箱是<b>长拉链</b>、衣服是<b>布料</b>、抽屉是<b>滑轨</b>、' +
+          '小保险是<b>锁舌</b>、纸/工具箱各有三种变体；没配到的落回合成音 · ' +
+          'LOUD.search <b>0.055</b><br>' +
+          '<b>一次交互只响一声，不循环</b>：撬开读条一开始响，读条结束开面板不再补第二声；' +
+          '拉链（bag_zip）只留给玩家自己的背包，容器不再借用',
+        sounds: ['search_zipper', 'search_lock', 'search_drawer',
+                 'search_toolbox', 'search_toolbox2', 'search_toolbox3',
+                 'search_paper', 'search_paper2', 'search_paper3',
+                 'search_cloth', 'search_purse'],
         btns: [
-          { l: '金属抽屉', fn: () => SFX.play('search', { at: 'crate_fast' }) },
+          { l: '旅行箱（长拉链）', fn: () => SFX.play('search', { at: 'crate_luggage' }) },
+          { l: '衣服（布料）', fn: () => SFX.play('search', { at: 'crate_workwear' }) },
+          { l: '抽屉（滑轨）', fn: () => SFX.play('search', { at: 'crate_fast' }) },
+          { l: '小保险（锁舌）', fn: () => SFX.play('search', { at: 'crate_heavy' }) },
           { l: '工具箱', fn: () => SFX.play('search', { at: 'crate_tool' }) },
           { l: '纸箱', fn: () => SFX.play('search', { at: 'crate_cardboard' }) },
-          { l: '布包', fn: () => SFX.play('search', { at: 'crate_satchel' }) },
-          { l: '皮包', fn: () => SFX.play('search', { at: 'crate_leatherbag' }) },
-          { l: '尸体', fn: () => SFX.play('search', { at: 'corpse' }) },
-          /* 循环版：听整段搜索的连续感（6 秒后自动停） */
-          { l: '循环 6 秒', ghost: true, fn: () => {
-            SFX.syncSearchLoop('crate_tool');
-            setTimeout(() => SFX.syncSearchLoop(null), 6000);
-          }, say: '这就是翻一个工具箱时听到的：一段绕到底，搜完才停' }
-        ]
-      },
-      {
-        name: '打开容器', scope: 'raid',
-        where: 'js/game-panels.js:12（打开容器面板，尸体不响）',
-        detail: '按容器查表：包/旅行箱/皮包是<b>这只容器自己的拉链</b>（bag_zip），' +
-          '箱柜是<b>抽屉</b>（container_open）；没配到的容器就安静，不落回通用音 · ' +
-          'LOUD.containerOpen <b>0.06</b> / bagZip <b>0.045</b><br>' +
-          '注意这和"玩家自己的背包开合"是两回事：这里响的是被翻的那只箱子',
-        sounds: ['container_open', 'bag_zip'],
-        btns: [
-          { l: '抽屉（箱柜）', fn: () => SFX.play('container_open', { at: 'crate_std' }) },
-          { l: '拉链（包）', fn: () => SFX.play('container_open', { at: 'crate_satchel' }) }
+          { l: '尸体（口袋）', fn: () => SFX.play('search', { at: 'corpse' }) }
         ]
       },
       {
@@ -330,7 +316,7 @@ const GROUPS = [
     rows: [
       {
         name: '开门', scope: 'raid',
-        where: 'js/game-update.js:468',
+        where: 'js/game-update.js:450',
         detail: '合成闷响 0.16s（420Hz）· LOUD.door <b>0.08</b>',
         sounds: [],
         btns: [{ l: '开门', fn: () => SFX.play('door') }]
@@ -338,15 +324,22 @@ const GROUPS = [
       {
         name: '撤离成功', scope: 'raid',
         where: 'js/game-panels.js:713（结算面板）',
-        detail: '合成上行 0.5s（320→640Hz）· LOUD.extract <b>0.09</b>',
-        sounds: [],
-        btns: [{ l: '撤离', fn: () => SFX.play('extract') }]
+        detail: '采样 <b>extract</b>（47635 颤音吉他，2.85s）—— 一段慢慢收尾的演奏，' +
+          '从撤离面板出现一直铺到玩家读完结算 · LOUD.extract <b>0.09</b><br>' +
+          '素材缺失时退回原来的合成上行音，不会哑',
+        sounds: ['extract'],
+        btns: [
+          { l: '撤离', fn: () => SFX.play('extract') },
+          { l: '合成兜底', ghost: true, fn: () => SFX._tone && SFX.play('extract', { vol: 0 }), say: '素材在就不会走到合成那条' }
+        ]
       },
       {
         name: '死亡', scope: 'raid',
-        where: 'js/game-update.js:586（阵亡）· js/game-panels.js:713（结算）',
-        detail: '合成下沉 0.8s（200→40Hz）· LOUD.death <b>0.13</b>',
-        sounds: [],
+        where: 'js/game-update.js:572（阵亡）· js/game-panels.js:713（结算）',
+        detail: '采样 <b>death</b>（618532 走调的吉他扫弦，1.70s）—— 一声就收，' +
+          '不拖泥带水 · LOUD.death <b>0.13</b><br>' +
+          '素材缺失时退回原来的合成下沉音，不会哑',
+        sounds: ['death'],
         btns: [{ l: '死亡', fn: () => SFX.play('death') }]
       }
     ]
@@ -357,14 +350,14 @@ const GROUPS = [
     rows: [
       {
         name: '点击', scope: 'both',
-        where: 'js/ui.js:934（全局事件委托，所有按钮的默认点击音）',
+        where: 'js/ui.js:850（全局事件委托，所有按钮的默认点击音）',
         detail: '采样 <b>ui_click</b> 0.068s 清脆一声 · LOUD.uiClick <b>0.05</b>',
         sounds: ['ui_click'],
         btns: [{ l: '点击', fn: () => SFX.ui('click') }]
       },
       {
         name: '悬停', scope: 'both',
-        where: 'js/ui.js:944（鼠标经过按钮，90ms 节流）',
+        where: 'js/ui.js:860（鼠标经过按钮，90ms 节流）',
         detail: '采样 <b>ui_tap</b> 0.127s 短提示 · LOUD.uiTap <b>0.028</b>（最轻的一档）',
         sounds: ['ui_tap'],
         btns: [{ l: '悬停', fn: () => SFX.ui('tap') }]
@@ -378,7 +371,7 @@ const GROUPS = [
       },
       {
         name: '通知', scope: 'both',
-        where: 'js/game.js:526（好消息提示）',
+        where: 'js/game.js:531（好消息提示）',
         detail: '采样 <b>ui_notify</b> 0.865s 明朗一句 · LOUD.uiNotify <b>0.07</b>',
         sounds: ['ui_notify'],
         btns: [{ l: '通知', fn: () => SFX.ui('notify') }]
@@ -391,7 +384,7 @@ const GROUPS = [
     rows: [
       {
         name: '出售结算', scope: 'base',
-        where: 'js/base.js:1166, 1183',
+        where: 'js/base.js:1282（单件出售）, 1299（批量出售）',
         detail: '采样 <b>sell</b> 0.84s 老式收银机 —— 和拾取区分开 · LOUD.sell <b>0.07</b>',
         sounds: ['sell'],
         btns: [{ l: '出售', fn: () => SFX.play('sell') }]
@@ -421,7 +414,6 @@ const LADDER = [
   ['sell', '出售结算', () => SFX.play('sell')],
   ['uiNotify', '界面·通知', () => SFX.ui('notify')],
   ['pickup', '拾取', () => SFX.play('pickup')],
-  ['containerOpen', '开容器', () => SFX.play('container_open', { at: 'crate_std' })],
   ['search', '搜索', () => SFX.play('search', { at: 'crate_tool' })],
   ['drop', '丢弃', () => SFX.play('drop')],
   ['step', '脚步', () => step({ rate: 1, vol: 0.9 })],
@@ -613,8 +605,7 @@ function renderGaps() {
 const WALK = [
   [0,     '脚步（走四步）', fourSteps],
   [2100,  '开门', () => SFX.play('door')],
-  [2700,  '打开容器（抽屉）', () => SFX.play('container_open', { at: 'crate_std' })],
-  [4300,  '搜索（工具箱）', () => SFX.play('search', { at: 'crate_tool' })],
+  [2700,  '搜储物柜（一声）', () => SFX.play('search', { at: 'crate_std' })],
   [5300,  '拾取 ×3', () => { for (let i = 0; i < 3; i++) setTimeout(() => SFX.play('pickup'), i * 260); }],
   [6300,  '切枪', () => SFX.play('shot_switch')],
   [6800,  '换弹（三段）', () => SFX.play('reload')],

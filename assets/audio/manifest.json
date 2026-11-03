@@ -146,14 +146,6 @@
       "license": "TODO"
     },
     {
-      "id": "suno-search",
-      "name": "拉开旧金属抽屉",
-      "author": "Suno",
-      "site": "Freesound",
-      "sid": null,
-      "license": "TODO"
-    },
-    {
       "id": "pepossum-cloth",
       "name": "Cloth foley",
       "author": "pepossum",
@@ -208,6 +200,38 @@
       "site": "Freesound",
       "sid": 752216,
       "license": "TODO"
+    },
+    {
+      "id": "birdofthenorth-zipper",
+      "name": "Coat zipper",
+      "author": "birdofthenorth",
+      "site": "Freesound",
+      "sid": 577443,
+      "license": "CC0"
+    },
+    {
+      "id": "vrymaa-lock",
+      "name": "Lock strong door",
+      "author": "vrymaa",
+      "site": "Freesound",
+      "sid": 734641,
+      "license": "CC0"
+    },
+    {
+      "id": "jarebear-guitar",
+      "name": "Out of tune guitar strumming",
+      "author": "jarebear1223",
+      "site": "Freesound",
+      "sid": 618532,
+      "license": "CC0"
+    },
+    {
+      "id": "subd-guitar",
+      "name": "Tremolo and twang guitar 6",
+      "author": "sub",
+      "site": "Freesound",
+      "sid": 47635,
+      "license": "CC0"
     }
   ],
   "assets": [
@@ -604,20 +628,6 @@
       "sha256_16": "7f65bf723708fd81"
     },
     {
-      "id": "search_metal",
-      "file": "search_metal.wav",
-      "from": "suno-search",
-      "note": "搜索变体（金属）：源 0.22–1.05s，滑轨摩擦+翻动小件",
-      "dur": 0.815,
-      "sampleRate": 44100,
-      "channels": 1,
-      "bits": 16,
-      "peak": 0.85,
-      "rms": 0.0783,
-      "bytes": 71958,
-      "sha256_16": "ab215bca10f2aade"
-    },
-    {
       "id": "search_paper",
       "file": "search_paper.wav",
       "from": "suno-search",
@@ -744,18 +754,74 @@
       "sha256_16": "4a41b3c8f6da57e4"
     },
     {
-      "id": "container_open",
-      "file": "container_open.wav",
-      "from": "qubodup-drawer",
-      "note": "打开容器：源 0.08–1.55s 抽屉拉开+吱呀。1.5s 太长不适合当『搜一件』的音，专门给开容器面板用",
-      "dur": 1.464,
+      "id": "search_zipper",
+      "file": "search_zipper.wav",
+      "from": "birdofthenorth-zipper",
+      "note": "搜索（包类）：源 0.10–1.55s，长拉链，从拉开到收尾一整段",
+      "dur": 1.45,
       "sampleRate": 44100,
       "channels": 1,
       "bits": 16,
-      "peak": 0.85,
-      "rms": 0.06,
-      "bytes": 129176,
-      "sha256_16": "473a5cfd1606d608"
+      "peak": 0.759,
+      "rms": 0.0549,
+      "bytes": 127934,
+      "sha256_16": "c28f12e85ccf1a0e"
+    },
+    {
+      "id": "search_lock",
+      "file": "search_lock.wav",
+      "from": "vrymaa-lock",
+      "note": "搜索（小型保险箱）：源 0.18–1.30s，锁舌与门板",
+      "dur": 1.12,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.921,
+      "rms": 0.055,
+      "bytes": 107564,
+      "sha256_16": "08ac110744300546"
+    },
+    {
+      "id": "search_drawer",
+      "file": "search_drawer.wav",
+      "from": "qubodup-drawer",
+      "note": "搜索（抽屉/床头柜）：源 0.08–1.55s，滑轨摩擦+吱呀。原来只当开容器用，现在统一成搜索音",
+      "dur": 1.47,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.491,
+      "rms": 0.0528,
+      "bytes": 141164,
+      "sha256_16": "15f8c38d733f5689"
+    },
+    {
+      "id": "death",
+      "file": "death.wav",
+      "from": "jarebear-guitar",
+      "note": "阵亡结算：源 0.80–2.50s，一声走调的吉他扫弦",
+      "dur": 1.7,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.543,
+      "rms": 0.1295,
+      "bytes": 163244,
+      "sha256_16": "072efabb76989e4e"
+    },
+    {
+      "id": "extract",
+      "file": "extract.wav",
+      "from": "subd-guitar",
+      "note": "撤离结算：源 0.45–3.30s，一段颤音吉他，收了尾才淡出",
+      "dur": 2.85,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.434,
+      "rms": 0.0893,
+      "bytes": 251414,
+      "sha256_16": "c27c85135192b543"
     }
   ],
   "mix": {
