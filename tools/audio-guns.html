@@ -151,13 +151,16 @@
 <script src="rifle-variants.js"></script>
 <script src="../js/ui.js"></script>
 <script>
+  /* id 是 SHOT_SAMPLE 的键，model 是 WEAPONS 里的型号 —— 试听页要走和游戏里
+     完全同一条路由（型号 → SHOT_MODEL → 采样），否则这里听着对、进游戏不对。 */
   const GUNS = [
-    { id: 'rifle', name: '制式步枪 5.56', tag: '实弹录音 855654 · 脆、快、尾音短', src: 'shot_rifle' },
+    { id: 'rifle', model: 'm4a1', name: '制式步枪 5.56', tag: '实弹录音 855654 · 脆、快、尾音短', src: 'shot_rifle' },
+    { id: 'ak47', model: 'akm', name: 'AKM 7.62×39', tag: '实弹录音 855843 · 金属味重、尾音 0.5s', src: 'shot_ak47' },
     { id: 'shotgun', name: '短管霰弹 12g', tag: '实弹录音 380886 · 最沉、尾巴最长', src: 'shot_shotgun' },
     { id: 'smg', name: '冲锋枪 9mm', tag: '步枪录音升调 1.10 · 又薄又急', src: 'shot_smg' },
     { id: 'pistol', name: '手枪 9mm', tag: '格洛克 855652 · 三条独立录音轮换', src: 'shot_pistol_1/2/3' }
   ];
-  const RPM = { rifle: 420, shotgun: 80, smg: 780, pistol: 300 };
+  const RPM = { rifle: 420, ak47: 600, shotgun: 80, smg: 780, pistol: 300 };
   const logEl = document.getElementById('log');
   const say = t => { logEl.textContent = t; };
 
@@ -226,11 +229,11 @@
   const gunsHost = document.getElementById('guns');
   GUNS.forEach(g => {
     const el = card(gunsHost, g.name, g.tag, [
-      { label: '单发', run: () => SFX.play('shot', { gun: g.id }), say: g.name + ' 单发（实弹录音）' },
-      { label: '三连', ghost: true, run: () => [0, 150, 300].forEach(t => setTimeout(() => SFX.play('shot', { gun: g.id }), t)) },
+      { label: '单发', run: () => SFX.play('shot', { gun: g.model || g.id }), say: g.name + ' 单发（实弹录音）' },
+      { label: '三连', ghost: true, run: () => [0, 150, 300].forEach(t => setTimeout(() => SFX.play('shot', { gun: g.model || g.id }), t)) },
       {
         label: '合成版对比', ghost: true,
-        run: () => { SFX._shot(SFX.GUN[g.id], {}, g.id); say(g.name + ' 合成版（游戏内已不用，仅作对比）'); }
+        run: () => { SFX._shot(SFX.GUN[g.id] || SFX.GUN.rifle, {}, g.id); say(g.name + ' 合成版（游戏内已不用，仅作对比）'); }
       }
     ]);
     /* 手枪有 3 条独立录音，单独给一排，能听出连射时是否真的在换 */
@@ -326,10 +329,6 @@
 
   /* ---- 已切好、但还没有对应武器的素材 ---- */
   const reserveHost = document.getElementById('reserve');
-  card(reserveHost, 'AK-47 开火', '录音 855843 · 预留：等做 AK 系武器时接上', [
-    { label: 'AK 单发', run: () => SFX._playSample('shot_ak47'), say: 'AK-47（预留素材，尚未接入任何枪）' },
-    { label: '连打 8 发', ghost: true, run: () => [0, 110, 220, 330, 440, 550, 660, 770].forEach(t => setTimeout(() => SFX._playSample('shot_ak47', { rate: 0.97 + Math.random() * 0.06 }), t)) }
-  ]);
   card(reserveHost, '消音手枪开火', '录音 855656 · 预留：等做多手枪', [
     { label: '消音单发', run: () => SFX._playSample('shot_pistol_silent'), say: '消音手枪（预留素材）' }
   ]);

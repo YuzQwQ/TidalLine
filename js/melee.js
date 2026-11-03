@@ -38,8 +38,10 @@ const MeleeSystem = {
         const hit=MeleeGeometry.hit(p,e,a.weapon,a.angle);
         if(hit.intersects)a.debug.push({x:e.x,y:e.y,r:e.r,point:hit.point});
         if(!hit.point)continue;
-        e.hurt(a.weapon.damage,'player','body',null,'trueDamage');
-        (p.meleeNumbers||(p.meleeNumbers=[])).push({x:e.x,y:e.y-12,value:a.weapon.damage,life:.65});
+        /* 刀是真实伤害：护甲不减免，飘出来的就是纸面值。
+           和枪共用 Game.popDamage，全场只有一种数字样式。 */
+        const dealt = e.hurt(a.weapon.damage,'player','body',null,'trueDamage');
+        Game.popDamage(e.x, e.y-20, dealt, {key:e});
       }
     }
     if(elapsed+1e-9>=a.weapon.interval)this.cancel(p);
@@ -86,7 +88,6 @@ const MeleeSystem = {
       this.drawSlash(c,p,a,camX,camY);
       if(Game.debug)for(const h of (a.phase==='windup'?Game.enemies.filter(e=>!e.dead&&Math.hypot(e.x-p.x,e.y-p.y)<a.weapon.radius*CFG.TILE+e.r).map(e=>({x:e.x,y:e.y,r:e.r,point:MeleeGeometry.hit(p,e,a.weapon,p.angle).point})):a.debug)){c.save();c.strokeStyle=h.point?'#7fd':'#f85';c.beginPath();c.arc(h.x-camX,h.y-camY,h.r,0,Math.PI*2);c.stroke();if(h.point)c.fillRect(h.point.x-camX-1,h.point.y-camY-1,3,3);c.restore();}
     }
-    for(const n of p.meleeNumbers||[]){c.save();c.globalAlpha=n.life/.65;c.fillStyle='#a6e4da';c.textAlign='center';c.font='bold 11px monospace';c.fillText(String(n.value),n.x-camX,n.y-camY-(.65-n.life)*15);c.restore();}
   },
   slashLayout(d) {
     const radius=d.radius*CFG.TILE,half=d.angle*Math.PI/360;
@@ -107,7 +108,9 @@ const MeleeSystem = {
 };
 
 // Transient combat effects, not placeable scenery or collision objects.
-ART.effects=['melee_slash_lr','melee_slash_rl'];
+/* 追加而不是覆盖：ART.effects 里还挂着别的一次性用图（伤害飘字的位图字体图集），
+   直接赋值会把它们从预加载表里挤掉，进游戏后数字永远画不出来。 */
+ART.effects=[...new Set([...(ART.effects||[]),'melee_slash_lr','melee_slash_rl'])];
 
 /* Exact sector-circle overlap; angular partitioning tests all visibility-changing boundaries.
    Rectangle corners and rectangle/circle intersections split the target into visible intervals. */
@@ -203,7 +206,6 @@ meleeWrap(Player.prototype,'update',function(original,dt,input){
   if(windup)input={...input,dodge:false};else if(input.dodge)MeleeSystem.cancel(this);
   original.call(this,dt,input);
   MeleeSystem.tick(this,dt);
-  this.meleeNumbers=(this.meleeNumbers||[]).filter(n=>(n.life-=dt)>0);
 });
 for(const key of ['toggleBag','openLoot','handleInteract','equipFromBag'])meleeWrap(Game,key,function(original,...args){if(MeleeSystem.locked())return false;MeleeSystem.cancel(this.player);return original.apply(this,args);});
 for(const q of [MedQuick,AmmoQuick])meleeWrap(q,'press',function(original,...args){if(MeleeSystem.locked())return false;MeleeSystem.cancel(Game.player);return original.apply(this,args);});

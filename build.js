@@ -16,7 +16,7 @@ if (!process.argv.includes('--assets-only')) require('./tools/build-linhai-map.j
 require('./tools/build-prop-bounds.js').build();
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
-const JS_FILES = ['config.js', 'pixfont.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
+const JS_FILES = ['config.js', 'pixfont.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
   'common.js', 'medical.js', 'detail-art.js', 'art.js', 'ui.js', 'music.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
   'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'merchant-ui.js', 'storage-config.js', 'storage-ui.js', 'attachment-ui.js', 'boot.js'];

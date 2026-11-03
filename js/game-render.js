@@ -32,6 +32,7 @@ Object.assign(Game, {
     this.renderCanopies(c, camX, camY);
     this.renderFog(c, camX, camY);
     this.renderParticles(c, camX, camY);
+    this.renderDamageText(c, camX, camY);
     /* 靶场的靶子、弹孔、射程尽头都盖在雾之后画，读数才不会被压暗 */
     if (typeof Range !== 'undefined' && Range.active) Range.render(c, camX, camY);
     this.renderNoiseEdge(c);
@@ -645,6 +646,33 @@ Object.assign(Game, {
       c.fillRect(p.x - camX - p.s / 2, p.y - camY - p.s / 2, p.s, p.s);
     }
     c.globalAlpha = 1;
+  },
+
+  /* 伤害飘字：画在雾之后 —— 打出去的伤害是"我方信息"，
+     藏在雾里等于没有；数字本身带描边，盖在亮处也压得住。
+
+     动效全部按时间算，不存速度：
+       弹出  前 POP 秒从 1.35 倍缩回 1 倍（二次缓出，收得干净）
+       上浮  前 0.5s 走 1-(1-k)² ，前段快、尾段几乎停住，读完数字不会飘出画面
+       淡出  最后 0.3s 才压 alpha，前面全亮
+
+     上浮用**固定时长**而不是 t/life：连击合并会把 life 往后顶，
+     按比例算的话数字会在合并的那一下往回掉一截，看着像被弹回去。 */
+  renderDamageText(c, camX, camY) {
+    if (!this.dmgPops.length || typeof FloatText === 'undefined') return;
+    const C = CFG.DMG_TEXT;
+    for (const p of this.dmgPops) {
+      const popT = Math.max(0, 1 - p.t / C.POP);
+      const scale = p.scale * (1 + 0.35 * popT * popT);
+      const riseT = Math.min(0.5, p.life * 0.6);
+      const k = Math.min(1, p.t / riseT);
+      const rise = p.rise * (1 - Math.pow(1 - k, 2));
+      const left = p.life - p.t;
+      const alpha = left < 0.3 ? Math.max(0, left / 0.3) : 1;
+      FloatText.draw(c, p.font, p.txt,
+        p.x + p.drift * k - camX, p.y - rise - camY,
+        { scale: scale, alpha: alpha });
+    }
   },
 
   /* 屏幕边缘的噪声提示：只给方向与粗细 */

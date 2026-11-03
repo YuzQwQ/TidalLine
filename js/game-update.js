@@ -248,6 +248,13 @@ Object.assign(Game, {
     // 保险：连射 + 多个敌人同时挨打时粒子会瞬间堆到几百，画起来拖帧
     if (this.particles.length > 400) this.particles.splice(0, this.particles.length - 400);
 
+    /* 伤害飘字：只推进时间，位置和透明度都是渲染时按 t/life 算的 */
+    for (let i = this.dmgPops.length - 1; i >= 0; i--) {
+      const p = this.dmgPops[i];
+      p.t += dt;
+      if (p.t >= p.life) this.dmgPops.splice(i, 1);
+    }
+
     /* 提示 */
     for (let i = this.toasts.length - 1; i >= 0; i--) {
       this.toasts[i].t -= dt;

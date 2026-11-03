@@ -442,6 +442,10 @@ const SFX = {
        vol   枪型之间的相对音量（整体响度仍由 LOUD.shot 统一对齐） */
   SHOT_SAMPLE: {
     rifle: { ids: ['shot_rifle'], rate: 1.00, jitter: 0.045, vol: 1.00 },
+    /* 7.62×39 的 AKM 用自己那段录音：金属味更重、尾音长一倍（0.5s vs 0.23s）。
+       全图最常听见的两把枪就是 M4A1 和 AKM，同音的话一进图就听得出是偷懒。
+       600RPM（每发 0.1s）比步枪慢，长尾音正好填进间隔里。 */
+    ak47: { ids: ['shot_ak47'], rate: 1.00, jitter: 0.035, vol: 1.02 },
     smg: { ids: ['shot_smg'], rate: 1.10, jitter: 0.045, vol: 0.95 },
     /* 泵动霰弹枪：开完一枪要拉一次泵，那声"咔啦"在 cycleTime（0.8s）里，
        取 0.55 处——太靠前会盖住枪声尾音，太靠后就接不上下一发。
@@ -455,6 +459,11 @@ const SFX = {
       rate: 1.00, jitter: 0.020, vol: 1.00
     }
   },
+  /* 型号 → 专属枪声。键是 WEAPONS 里的 id，值是 SHOT_SAMPLE 的键。
+     没登记的型号自动按 category 走通用那条（m4a1/famas 走 rifle、三把 9mm 走 smg…）。
+     枪和声是两件事：同口径的两把枪可以有完全不同的录音，所以按型号分而不是按口径。 */
+  SHOT_MODEL: { akm: 'ak47' },
+
   shotCursor: {},     // 枪型 → 下一个该用第几条变体
 
   /* ---------------- 物品交互音 ----------------
@@ -1151,7 +1160,8 @@ const SFX = {
     if (name === 'shot') {
       const modelId = (opts && opts.gun) || 'm4a1';
       const model = WEAPONS[modelId];
-      const gunId = model?.category || modelId;
+      /* 先看型号有没有专属录音，没有再退回枪型 */
+      const gunId = (model && this.SHOT_MODEL[modelId]) || (model && model.category) || modelId;
       /* 拉泵声只给真有泵动周期的枪（rem870 的 cycleTime 0.8s）。
          saiga12 / mp155 是半自动，开一枪跟一句"咔啦"就露馅了。 */
       const shotOpts = Object.assign({}, opts, { pump: !!(model && model.cycleTime > 0) });

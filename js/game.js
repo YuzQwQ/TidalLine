@@ -12,6 +12,7 @@ const Game = {
   targets: [],           // 靶场的钢板靶（不是敌人，只吃伤害）
   rangeMode: false,      // 开发靶场：不计时、不淹水、不结算
   particles: [], toasts: [],
+  dmgPops: [],           // 伤害飘字：{x,y,t,life,rise,txt,font,scale}
   cam: { x: 0, y: 0 },
   time: 0,
   acc: 0, lastT: 0,
@@ -374,6 +375,7 @@ const Game = {
     this.targets = [];
     this.particles = [];
     this.toasts = [];
+    this.dmgPops = [];
     this.pileSeq = 0;
     this.action = null;
     this.lootOpen = null;
@@ -523,6 +525,68 @@ const Game = {
         life: U.rand(0.06, 0.16), c: '#e8c88a', s: U.rand(1.5, 2.6)
       });
     }
+  },
+
+  /* 伤害飘字：在 (x, y) 的正上方冒一个数字。
+     y 传给的是"目标顶部"，数字从这点往上长，不会压在头上挡视线。
+     opts.crit 走爆头那一套（橙金、飘得更高、留得更久）。
+     opts.key  目标对象：同一个目标连着中（间隔 < CFG.DMG_TEXT.MERGE），
+               数字并进同一条累加，全自动扫射只看到一条往上跳的数。
+     返回这条飘字当前显示的数值。 */
+  popDamage(x, y, value, opts) {
+    const C = CFG.DMG_TEXT;
+    const o = opts || {};
+    const crit = !!o.crit;
+    const n = Math.max(0, Math.round(value));
+    const font = crit ? 'crit' : 'damage';
+
+    /* 全自动一梭子三十发：三十个数字叠在同一个脑袋上，谁也读不出来。
+       同一个目标短时间内的连续命中并成一条，数字一路往上跳 ——
+       反而更清楚"这一梭子一共打掉了多少"。只并最近几条，免得翻整张表。 */
+    if (o.key) {
+      for (let i = this.dmgPops.length - 1; i >= 0 && i >= this.dmgPops.length - 6; i--) {
+        const p = this.dmgPops[i];
+        if (p.key === o.key && p.font === font && p.t - p.last < C.MERGE) {
+          p.val += n;
+          p.txt = String(p.val);
+          p.last = p.t;                    // 按"距离上一次命中"算窗口，长点射会一直累加
+          /* 还在挨打就别急着淡：把寿命顶到"从现在起还能亮满一条" */
+          p.life = Math.max(p.life, p.t + C.LIFE);
+          return p.val;
+        }
+      }
+    }
+
+    /* 连打时往上错开：0.16s 内连续冒出来的数字每多一条就抬高 STAIR 像素，
+       四档循环。同一时刻多个目标一起挨打时，错开总比完全重叠好。 */
+    if (this.time - (this._popAt || -9) > 0.16) this._popStair = 0;
+    else this._popStair = (this._popStair + 1) % 4;
+    this._popAt = this.time;
+    /* 同一个目标已经有一条在飘（比如扫射途中爆头）：把新的一条抬到它上面，
+       两条数字叠在同一个高度就都读不出来了 */
+    let lift = this._popStair * C.STAIR;
+    if (o.key) {
+      for (const p of this.dmgPops) {
+        if (p.key === o.key) { lift += C.STAIR * 4; break; }
+      }
+    }
+    this.dmgPops.push({
+      x: x + U.rand(-(crit ? C.CRIT_SPREAD : C.SPREAD), crit ? C.CRIT_SPREAD : C.SPREAD),
+      y: y - lift,
+      t: 0,
+      last: 0,          // 上一次合并的时刻，用来判"还在连击里"
+      life: crit ? C.CRIT_LIFE : C.LIFE,
+      rise: crit ? C.CRIT_RISE : C.RISE,
+      drift: U.rand(-C.DRIFT, C.DRIFT),
+      val: n,
+      txt: String(n),
+      font: font,
+      scale: crit ? C.CRIT_SCALE : C.SCALE,
+      key: o.key || null
+    });
+    /* 霰弹一发八颗弹丸，同屏几十条是常态；丢掉最早的几条，别让数组无限长 */
+    if (this.dmgPops.length > C.MAX) this.dmgPops.splice(0, this.dmgPops.length - C.MAX);
+    return n;
   },
 
   impact(x, y, angle, blood, head) {

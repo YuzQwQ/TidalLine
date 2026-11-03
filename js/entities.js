@@ -837,8 +837,10 @@ class Player {
 
   /* base 是「没乘部位倍率、没乘弹药系数」的原始伤害，pen 是弹药穿透等级。
      部位倍率先并进来，再交给 BALLISTICS 统一算穿透与耐久，别在这里各乘一次。 */
+  /* 返回**实际掉的血**（扣完护甲）：伤害飘字按这个数显示，
+     不是按枪的纸面伤害 —— 打穿护甲和打在护甲上，玩家看到的数字得不一样。 */
   hurt(base, part, pen) {
-    if (this.dead) return;
+    if (this.dead) return 0;
     part = part || 'body';
     const head = part === 'head';
     const gear = head ? this.helmet : this.body;
@@ -875,6 +877,7 @@ class Player {
       Medical.cancel('死亡打断了治疗');
       Game.onPlayerDeath(this);
     }
+    return dmg;
   }
 }
 
@@ -1235,7 +1238,7 @@ class Enemy {
   }
 
   hurt(d, fromFaction, part, pen, damageType) {
-    if (this.dead) return;
+    if (this.dead) return 0;
     part = part || 'body';
     const head = part === 'head';
     const gear = head ? this.helmet : this.body;
@@ -1262,6 +1265,7 @@ class Enemy {
       if(this.ai){this.ai.phase=null;this.ai.burstLeft=0;}
       Game.onEnemyKilled(this);
     }
+    return res.health;
   }
 }
 
@@ -1382,9 +1386,14 @@ class Bullet {
     /* 敌人：部位倍率与护甲穿透都在 hurt 里统一算；
        钢板靶只吃伤害数字，不喷血也算命中音 */
     const dummy = !!actor.isRangeTarget;
-    actor.hurt(base, this.faction, part, this.pen);
+    const dealt = actor.hurt(base, this.faction, part, this.pen);
     Game.impact(actor.x, actor.y, this.angle, !dummy, part === 'head');
     Game.sfx(dummy ? 'hit' : (part === 'head' ? 'headshot' : 'hit'));
+    /* 只有玩家打出来的伤害才飘字：敌人互相开火时屏幕上飘一堆数字只是噪声。
+       钢板靶另有自己的读数（Range 那边按散布量尺寸，字号更小），不重复画。 */
+    if (this.faction === 'player' && !dummy) {
+      Game.popDamage(actor.x, actor.y - 20, dealt, { crit: part === 'head', key: actor });
+    }
   }
 
   falloff() {

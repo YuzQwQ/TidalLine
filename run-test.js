@@ -78,7 +78,7 @@ const ctx = {
 ctx.globalThis = ctx;
 vm.createContext(ctx);
 
-for (const f of ['config.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
+for (const f of ['config.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
   'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
   'medhud.js', 'melee.js', 'range.js', 'boot.js']) {

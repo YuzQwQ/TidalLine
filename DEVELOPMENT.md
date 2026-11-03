@@ -93,6 +93,76 @@
 **这套东西只作用于 canvas。** 背包、容器、藏身处这些 DOM 面板仍然是系统字体：
 它们由浏览器排版，没有"按像素网格重画"的入口，硬做只会更丑。
 
+### 伤害数字用素材包的位图字体
+
+伤害数字走另一条路（`js/floattext.js`）：不用系统字体栅格化，直接用现成的点阵图。
+素材是 CC0 的 **Pixel Floating Text & Damage Numbers**（`temp files/PixelFloatingText`，
+不进库）。包里 25 段逐帧动画（"128"、"999!"、"LEVEL UP!"）内容是**定死**的贴条，
+伤害是运行时才知道的数，一个都用不上；真正能用的是 8 套可任意排版的位图字体，
+这里取了两套 Big 档（16px 字形，带描边和投影）：
+
+| 字体 | 外观 | 用在哪 |
+|---|---|---|
+| `damage` | 骨白 + 深色描边 | 普通命中、近战真伤 |
+| `crit` | 橙金 + 白芯 | 爆头 |
+
+为什么不用 `pixfont.js`：中文必须现场栅格化（字库太大），英文数字没必要——
+现成的点阵图笔画宽窄是画师定的，比栅格化的系统字体更硬，而且零运行时开销。
+
+生成物都是**派生**的，源包丢了也能从素材站重下：
+
+```bash
+node tools/build-floatfont.js     # 源 → assets/effects/float_*.png + js/floatfont-data.js
+```
+
+想加颜色（`Heal` / `Mana` / `Poison` / `Burn` / `Gold` / `XP` 六套还没用上）：
+在 `tools/build-floatfont.js` 的 `STYLES` 里加一行，跑一次，再把图集名登记进
+`js/data.js` 的 `ART.effects` —— 那是 `Art` 的预加载白名单，漏了会在游戏里静默不显示
+（`ART.effects` 只能追加不能赋值，`melee.js` 曾经整表覆盖过一次，把字体图集挤掉了）。
+
+排版在 `FloatText.layout`：按每个字形的 `xadvance` 推进，但**包围盒按真实字形求**——
+`1` 比 `8` 窄一半，按步进算会让整串偏右，连打时数字看起来在抖。结果按"字体|文字"缓存
+（上限 400 条，超出丢最早的一批），一局里画几千个数字也只是查表 + `drawImage`。
+
+数据怎么流到屏幕上的：
+
+```
+Enemy.hurt()  →  返回**实际掉血**（扣完护甲，不是纸面伤害）
+Bullet.resolveHit()  →  只有 faction === 'player' 才 Game.popDamage()
+                       （敌人互相开火不飘字，否则满屏噪声）
+Game.popDamage()  →  压进 Game.dmgPops，顺手做连打错位
+game-update.js  →  只推进 t，位置和透明度都在渲染时按 t/life 算
+game-render.js  →  renderDamageText：画在雾之后、HUD 之前
+```
+
+飘字**画在雾之后**：打出去的伤害是"我方信息"，藏在未探索的雾里等于没反馈；
+数字自带深色描边，压在亮色地砖上也看得清。
+
+近战以前有一套自己的 `player.meleeNumbers`（青色 11px 合成字），现在并进同一套，
+全场只有一种数字样式。
+
+`CFG.DMG_TEXT` 里能调的：停留 0.85s（爆头 1.1s）、上浮 15px（爆头 22px）、
+0.12s 的弹出（1.35 → 1 倍）、左右随机 ±3px、连打阶梯 5px、同屏上限 40 条。
+
+**字号保持 1 倍**。素材的字形是 16px 点阵，放大 1.25 倍会出现宽窄不一的像素块，
+和场上其它像素图不在一个网格上；爆头靠**换字体 + 飘得更高 + 停留更久**区分，
+不靠放大。
+
+**连击合并**：同一个目标隔不到 0.15s 再中，数字并进同一条累加（`MERGE`）。
+枪的射速刚好卡在这个值两侧：
+
+| 射速 | 发间隔 | 结果 |
+|---|---|---|
+| M4A1 800 RPM | 75ms | 合并成一条往上跳 |
+| AKM 600 RPM | 100ms | 合并 |
+| 手枪 360 RPM | 167ms | 发发单独显示 |
+| 霰弹 240 RPM | 250ms | 单独显示；但一发八颗弹丸同帧结算，会并成一条总伤害 |
+
+不合并的话，一梭子三十发就是三十条数字叠在同一个脑袋上，谁也读不出来；
+合并后显示的是"这一梭子一共打掉多少"，反而更有用。同一个目标身上还有一条在飘时
+（比如扫射途中爆头），新的一条会往上抬 20px，两条不叠在一起。
+不同目标同时挨打时按命中顺序错开 5px（四档循环）。
+
 ## 这一版实现了什么
 
 对照 v0.4 第十二章的「首版必做」清单：
@@ -766,10 +836,10 @@ node tools/cdp-shot.js "file:///D:/develop/project/tide/潮汐线.html#play,13,4
 分两层，别混着改：
 
 - **合成音**（`js/ui.js` 的 `SFX` 里那一串 `case`）：枪声、命中、爆头、受伤、撤离……用振荡器和噪声现场算。零文件、零体积，改参数立刻见效。
-- **采样**（`assets/audio/*.wav`）：合成做不出来的材质感。目前 39 段——切枪 2（通用 + 霰弹泵动）、换弹 3、脚步 4、开火 6（步枪 / 冲锋枪 / 霰弹 / 手枪三变体）、预留 2（AK / 消音手枪）、近战 1、出售 1、**拾取 4**、**界面 4**、**搜索 9**、**开容器/拉链 2**。
+- **采样**（`assets/audio/*.wav`）：合成做不出来的材质感。目前 39 段——切枪 2（通用 + 霰弹泵动）、换弹 3、脚步 4、开火 7（步枪 5.56 / AK / 冲锋枪 / 霰弹 / 手枪三变体）、预留 1（消音手枪）、近战 1、出售 1、**拾取 4**、**界面 4**、**搜索 9**、**开容器/拉链 2**。
 
 `SFX.play(name)` 先查有没有同名采样，没有就落到下面的 `switch`。所以**想让某个音效换成采样，把文件按名字放进 `assets/audio/` 就行**，不用改代码。
-三个例外走自己的池子，不按名字查：`shot`（按枪型选录音，手枪三变体轮换）、`pickup`
+三个例外走自己的池子，不按名字查：`shot`（先按**型号**、再按枪型选录音，手枪三变体轮换）、`pickup`
 （四条随机抽一条，见下面「拾取音为什么是四条」）和 `search`
 （按容器固定，见下面「搜索音：一个容器一个声」）。
 
@@ -821,6 +891,24 @@ node tools/cdp-shot.js "file:///D:/develop/project/tide/潮汐线.html#play,13,4
 后台标签页里定时器会漂，声音就会跟动作错开。0.44s 取自泵动周期 0.8s 的 0.55 处：
 太靠前盖住枪声尾音，太靠后接不上一发。敌人的霰弹声（低通那一路）不补，
 远处的枪不该听见上膛细节。
+
+### AKM 的专属枪声
+
+12 把枪只有四组枪声（步枪 / 冲锋枪 / 霰弹 / 手枪），其中最常听见的两把 M4A1 和 AKM
+同音——一进图就听得出是偷懒。所以 `SFX` 里加了一层**型号覆盖**：
+
+```js
+SHOT_MODEL: { akm: 'ak47' },       // 型号 → SHOT_SAMPLE 的键
+```
+
+`SFX.play('shot', { gun: W.id })` 拿到型号后先查这张表，查不到才按 `category` 走通用那条。
+5.56 的两把（M4A1 / FAMAS）继续用 `shot_rifle`，AKM 换成 855843 那条 0.5s 的录音：
+金属味更重，远处还挂着一层混响尾巴。AKM 是 600 RPM（每发 0.1s），长尾音正好铺满间隔；
+换成 800 RPM 的枪就会糊，所以**别把这条录音给射速更高的枪**。
+
+`shot_ak47` 之前一直躺在 `assets/audio/` 里当预留素材（manifest 里写着"尚未有对应武器"），
+响度档早就按 `LOUD.shot` 对齐了，这次只是把路由接上。试听页 `tools/audio-guns.html`
+的枪声卡片也改成走**同一条路由**（`gun: g.model`），否则那里听着对、进游戏不对。
 
 ### 界面音效
 
@@ -939,6 +1027,9 @@ node tools/audio-slice.js <输入> <输出> <起> <止> [--trim=0.05] [--rms=0.1
 | 文件 | 行数 | 管什么 |
 |---|---|---|
 | `js/config.js` | 359 | 所有可调数值：角色、武器、弹药穿透矩阵、搜刮时间 |
+| `js/pixfont.js` | 223 | `Pix`：把系统字体栅格化成点阵，接管 canvas 的 `fillText` |
+| `js/floatfont-data.js` | 109 | 生成物：位图字体的字形矩形表（`tools/build-floatfont.js` 重写） |
+| `js/floattext.js` | 117 | `FloatText`：位图飘字的排版与绘制（伤害数字） |
 | `js/data.js` | 生成 | 地图 JSON、物品表、敌人表。由 `tools/build-linhai-map.js` 和 `tools/build-economy.js` 重写 |
 | `js/core.js` | 623 | 工具函数、噪声、寻路、`Loot` 掉落 |
 | `js/entities.js` | 1104 | `Player` / `Enemy` / `Bullet` / `Corpse` / `Bag` |
@@ -963,7 +1054,7 @@ node tools/audio-slice.js <输入> <输出> <起> <止> [--trim=0.05] [--rms=0.1
 - `build.js` 的 `JS_FILES`（单文件包按这个顺序内联）
 - `run-test.js` 顶部 `for (const f of [...]) `（无头测试的加载顺序）
 
-依赖方向是单向的：`config → data → core → entities → common → medical → art → ui → save → base → game → game-update → game-render → game-panels → medhud → boot`。
+依赖方向是单向的：`config → floatfont-data → floattext → data → core → entities → common → medical → art → ui → save → base → game → game-update → game-render → game-panels → medhud → boot`。
 后面的文件可以用前面的任何东西，反过来不行 —— 因为顶层 `const` 在脚本执行完就已就绪，函数体里的引用要到调用时才解析，所以「谁先加载」只影响**顶层立即求值**的表达式。
 
 `Game` 的四个文件用 `Object.assign(Game, { ... })` 挂到同一个对象上，`this` 语义不变，所以方法之间互相调用跟以前完全一样。

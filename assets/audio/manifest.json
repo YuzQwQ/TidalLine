@@ -439,7 +439,7 @@
       "id": "shot_ak47",
       "file": "shot_ak47.wav",
       "from": "serutonin-ak47",
-      "note": "AK47 开火：预留，尚未有对应武器",
+      "note": "AKM 开火：源 0–0.5s。金属味比 5.56 更重，不远处还挂着一层混响尾音 —— 600RPM 的间隔正好让尾巴铺满，听得出是另一把枪",
       "dur": 0.5,
       "sampleRate": 44100,
       "channels": 1,
