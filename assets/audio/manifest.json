@@ -272,6 +272,30 @@
       "site": "Freesound",
       "sid": 875462,
       "license": "TODO"
+    },
+    {
+      "id": "snd-660769",
+      "name": "爆头音效",
+      "author": "",
+      "site": "Freesound",
+      "sid": 660769,
+      "license": "TODO"
+    },
+    {
+      "id": "snd-583310",
+      "name": "护甲损坏音效",
+      "author": "",
+      "site": "Freesound",
+      "sid": 583310,
+      "license": "TODO"
+    },
+    {
+      "id": "snd-714258",
+      "name": "冲刺音效",
+      "author": "",
+      "site": "Freesound",
+      "sid": 714258,
+      "license": "TODO"
     }
   ],
   "assets": [
@@ -864,20 +888,6 @@
       "sha256_16": "c27c85135192b543"
     },
     {
-      "id": "hurt",
-      "file": "hurt.wav",
-      "from": "snd-660770",
-      "note": "玩家受击：源 0–0.30s（素材峰值 1.007 已削波，切分时压到 0.11 RMS）。挨枪时的那一声反馈，之前只有闪红没有声音",
-      "dur": 0.202,
-      "sampleRate": 44100,
-      "channels": 1,
-      "bits": 16,
-      "peak": 0.635,
-      "rms": 0.11,
-      "bytes": 17834,
-      "sha256_16": "924c994d3ffb90c4"
-    },
-    {
       "id": "gear_helmet",
       "file": "gear_helmet.wav",
       "from": "snd-96137",
@@ -1002,6 +1012,62 @@
       "rms": 0.1,
       "bytes": 20772,
       "sha256_16": "76b787df737e8533"
+    },
+    {
+      "id": "hit",
+      "file": "hit.wav",
+      "from": "snd-660770",
+      "note": "命中反馈（打中敌人的那一下）：源 0–0.30s（峰值 1.007 已削波，压到 0.085 RMS）。打在身体和打在头上用两条不同的录音",
+      "dur": 0.202,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.491,
+      "rms": 0.085,
+      "bytes": 17854,
+      "sha256_16": "50ef02285fabf67b"
+    },
+    {
+      "id": "headshot",
+      "file": "headshot.wav",
+      "from": "snd-660769",
+      "note": "爆头反馈：源 0–0.32s，比命中更窄更亮的一记，削波素材压到 0.085 RMS",
+      "dur": 0.212,
+      "sampleRate": 44100,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.79,
+      "rms": 0.085,
+      "bytes": 18708,
+      "sha256_16": "d3d0794bb00ee87d"
+    },
+    {
+      "id": "break",
+      "file": "break.wav",
+      "from": "snd-583310",
+      "note": "护甲被打穿：源 0–0.50s，硬壳裂开的一串碎响，0.46s 收干净",
+      "dur": 0.465,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.69,
+      "rms": 0.054,
+      "bytes": 44704,
+      "sha256_16": "0ae65f193f390022"
+    },
+    {
+      "id": "sprint",
+      "file": "sprint.wav",
+      "from": "snd-714258",
+      "note": "冲刺起步：源 0–0.40s，蹬地一声 + 掠过的风，只响一次不循环",
+      "dur": 0.374,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.377,
+      "rms": 0.0649,
+      "bytes": 35904,
+      "sha256_16": "cf8be702b574b027"
     }
   ],
   "mix": {

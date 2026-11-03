@@ -148,7 +148,7 @@ const GROUPS = [
     rows: [
       {
         name: '脚步', scope: 'raid',
-        where: 'js/entities.js:594（走路）· :523（闪避落地踩实那一步）',
+        where: 'js/entities.js:607（走路）· :524（闪避落地踩实那一步）',
         detail: '采样 <b>×4</b> 随机 · rate 0.94–1.06 · vol 0.5–1.2（越快步子越沉，潜行压到七成）· LOUD.step <b>0.05</b>',
         sounds: ['step_stone_1', 'step_stone_2', 'step_stone_3', 'step_stone_4'],
         btns: [
@@ -159,10 +159,20 @@ const GROUPS = [
       },
       {
         name: '闪避', scope: 'raid',
-        where: 'js/entities.js:540（Player.dodge）',
+        where: 'js/entities.js:541（Player.dodge）',
         detail: '合成破风：带通 600→2600Hz 扫频 0.18s + 低频垫 · LOUD.dodge <b>0.09</b>',
         sounds: [],
         btns: [{ l: '闪避', fn: () => SFX.play('dodge') }]
+      },
+      {
+        name: '冲刺起步', scope: 'raid',
+        where: 'js/entities.js:584（按住 Shift 跑起来的那一帧）',
+        detail: '采样 <b>sprint</b> 0.374s（714258）· 蹬地一声 + 掠过的风 · LOUD.sprint <b>0.065</b><br>' +
+          '<b>只响一次，不循环</b>：sprinting 是"按住 Shift"这个状态，站着按住也一样为真，' +
+          '所以要 <span class="code">sprinting && moving && !_sprintVoiced</span> —— ' +
+          '真跑起来了才响，松开再按就是又一次起步，会再响一次',
+        sounds: ['sprint'],
+        btns: [{ l: '冲刺起步', fn: () => SFX.play('sprint', { rate: 0.97 + Math.random() * 0.06 }) }]
       }
     ]
   },
@@ -172,7 +182,7 @@ const GROUPS = [
     rows: [
       {
         name: '开火（按型号路由）', scope: 'raid',
-        where: 'js/entities.js:763（玩家）· js/human-ai.js（敌人）',
+        where: 'js/entities.js:776（玩家）· js/human-ai.js（敌人）',
         detail: '先查 <span class="code">SHOT_MODEL</span>（akm → shot_ak47），再退回 gun category；' +
           '手枪三条轮换，霰弹开完自动补一声泵动 · LOUD.shot <b>0.14</b>（全场最响）',
         sounds: ['shot_rifle', 'shot_ak47', 'shot_smg', 'shot_shotgun',
@@ -182,7 +192,7 @@ const GROUPS = [
       },
       {
         name: '泵动（霰弹枪）', scope: 'raid',
-        where: 'js/ui.js:456（跟着枪声排在音频时钟后 0.44s）',
+        where: 'js/ui.js:457（跟着枪声排在音频时钟后 0.44s）',
         detail: '采样 <b>shot_shotgun_pump</b> 0.343s · vol 0.85 · ' +
           '只有 cycleTime > 0 的枪才有（Rem870 有，MP-155 / Saiga-12 半自动没有）',
         sounds: ['shot_shotgun_pump'],
@@ -190,51 +200,53 @@ const GROUPS = [
       },
       {
         name: '敌人开火', scope: 'raid',
-        where: 'js/entities.js:1241（敌人 AI 开枪）',
+        where: 'js/entities.js:1245（敌人 AI 开枪）',
         detail: '复用手枪采样但压低并低通 1200Hz —— 听得出是"别人在打"，' +
           '而不是换了个音色 · LOUD.enemyShot <b>0.075</b>',
         sounds: ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
         btns: [{ l: '敌人开火', fn: () => SFX.play('enemyShot') }]
       },
       {
-        name: '命中反馈', scope: 'raid',
-        where: 'js/entities.js:1404（敌人挨打）',
-        detail: '合成高频"啪"0.06s（2600Hz 高通）· LOUD.hit <b>0.085</b>',
-        sounds: [],
-        btns: [{ l: '命中', fn: () => SFX.play('hit') }]
-      },
-      {
-        name: '受击反馈（自己中弹）', scope: 'raid',
-        where: 'js/entities.js:859（Player.hurt 里的 Game.sfx —— 子弹与近战都走这一条）',
-        detail: '采样 <b>hurt</b> 0.202s（660770）· 挡下了是一声硬碰，' +
-          '打穿了就低通 2600Hz 压暗；近战再压到 900Hz、八成音量 —— ' +
-          '别让没挡住的伤听起来像挡住了 · LOUD.hurt <b>0.11</b><br>' +
-          '以前挨打只有闪红、抖屏和紫色数字，<b>耳朵是哑的</b>；' +
-          '现在这一声是"我被打中了"的唯一听觉线索',
-        sounds: ['hurt'],
+        name: '命中反馈（打中敌人）', scope: 'raid',
+        where: 'js/entities.js:1410（Bullet.resolveHit）',
+        detail: '采样 <b>hit</b> 0.202s（660770）· 音高抖 ±3% —— 连打十几发时同一段会听成机械节拍 · ' +
+          'LOUD.hit <b>0.085</b><br>' +
+          '这个动作以前是合成的一声 2600Hz 高通"啪"，换成录音后金属感更具体；' +
+          '素材缺失仍会落回合成音',
+        sounds: ['hit'],
         btns: [
-          { l: '中弹（挡下）', fn: () => SFX.play('hurt', { rate: 0.97 }) },
-          { l: '中弹（打穿）', ghost: true, fn: () => SFX.play('hurt', { rate: 0.97, lp: 2600 }) },
-          { l: '近战挨打', ghost: true, fn: () => SFX.play('hurt', { rate: 0.97, lp: 900, vol: 0.8 }) }
+          { l: '命中', fn: () => SFX.play('hit', { rate: 0.97 + Math.random() * 0.06 }) },
+          { l: '连中五发', ghost: true, fn: () => {
+            for (let i = 0; i < 5; i++) setTimeout(() => SFX.play('hit', { rate: 0.97 + Math.random() * 0.06 }), i * 100);
+          }, say: '600RPM 连中，音高抖开后才不像节拍器' }
         ]
       },
       {
         name: '爆头', scope: 'raid',
-        where: 'js/entities.js:1404（部位 = head）',
-        detail: '合成双段：4200Hz 高通脆响 + 900→320Hz 下沉三角波 · LOUD.headshot <b>0.085</b>',
-        sounds: [],
-        btns: [{ l: '爆头', fn: () => SFX.play('headshot') }]
+        where: 'js/entities.js:1410（部位 = head）',
+        detail: '采样 <b>headshot</b> 0.212s（660769）· 和命中是两条独立录音，' +
+          '更窄更亮，一耳朵分得出来 · LOUD.headshot <b>0.085</b>',
+        sounds: ['headshot'],
+        btns: [
+          { l: '爆头', fn: () => SFX.play('headshot', { rate: 0.97 + Math.random() * 0.06 }) },
+          { l: '命中 → 爆头', ghost: true, fn: () => {
+            SFX.play('hit');
+            setTimeout(() => SFX.play('headshot'), 320);
+          }, say: '连打两枪，第二枪上头' }
+        ]
       },
       {
         name: '护甲破裂', scope: 'raid',
-        where: 'js/entities.js:880（护甲被打穿）',
-        detail: '合成：700Hz 闷响 + 300→120Hz 金属裂开 · LOUD.break <b>0.10</b>',
-        sounds: [],
+        where: 'js/entities.js:884（护甲耐久磨到 broken 的那一瞬）',
+        detail: '采样 <b>break</b> 0.465s（583310）· 硬壳裂开的一串碎响，收在 0.46s · ' +
+          'LOUD.break <b>0.10</b>（这条素材峰高 RMS 低，按 0.10 对齐会削波，' +
+          '所以实际被峰值压到 0.95 收住）· 只在<b>从完好/破损变成失效</b>时响一次，不是每发都响',
+        sounds: ['break'],
         btns: [{ l: '护甲破裂', fn: () => SFX.play('break') }]
       },
       {
         name: '挥刀', scope: 'raid',
-        where: 'js/melee.js:26（近战命中）· js/entities.js:1249（敌人近战）',
+        where: 'js/melee.js:26（近战命中）· js/entities.js:1253（敌人近战）',
         detail: '采样 <b>×6</b> 每次随机抽一条（875462 本来就是六次挥空，切开就是六个变体，' +
           '同样只避开刚播过的那条）· 0.14–0.29s，音高抖 ±4% · LOUD.melee <b>0.10</b><br>' +
           '旧的 melee.wav 留作兜底：六条都解不出来才轮到它，再不行落回合成风声',
@@ -248,7 +260,7 @@ const GROUPS = [
       },
       {
         name: '切枪', scope: 'raid',
-        where: 'js/entities.js:422 · js/melee.js（近战武器切换）',
+        where: 'js/entities.js:423 · js/melee.js（近战武器切换）',
         detail: '采样 <b>shot_switch</b> 0.235s；霰弹枪换用 <b>shot_switch_shotgun</b> 0.696s（上膛）· LOUD.switch <b>0.08</b>',
         sounds: ['shot_switch', 'shot_switch_shotgun'],
         btns: [
@@ -258,7 +270,7 @@ const GROUPS = [
       },
       {
         name: '换弹（三段序列）', scope: 'raid',
-        where: 'js/gunplay.js:29（主动换弹）· :42（自动装填）· js/entities.js:811',
+        where: 'js/gunplay.js:29（主动换弹）· :42（自动装填）· js/entities.js:824',
         detail: '采样 <b>reload_out → reload_in → reload_rack</b>，按游戏节奏排在 0 / 0.55 / 1.05 秒 · LOUD.reload <b>0.075</b>',
         sounds: ['reload_out', 'reload_in', 'reload_rack'],
         btns: [
@@ -372,14 +384,14 @@ const GROUPS = [
     rows: [
       {
         name: '点击', scope: 'both',
-        where: 'js/ui.js:904（全局事件委托，所有按钮的默认点击音）',
+        where: 'js/ui.js:926（全局事件委托，所有按钮的默认点击音）',
         detail: '采样 <b>ui_click</b> 0.068s 清脆一声 · LOUD.uiClick <b>0.05</b>',
         sounds: ['ui_click'],
         btns: [{ l: '点击', fn: () => SFX.ui('click') }]
       },
       {
         name: '悬停', scope: 'both',
-        where: 'js/ui.js:914（鼠标经过按钮，90ms 节流）',
+        where: 'js/ui.js:936（鼠标经过按钮，90ms 节流）',
         detail: '采样 <b>ui_tap</b> 0.127s 短提示 · LOUD.uiTap <b>0.028</b>（最轻的一档）',
         sounds: ['ui_tap'],
         btns: [{ l: '悬停', fn: () => SFX.ui('tap') }]
@@ -452,6 +464,7 @@ const LADDER = [
   ['sell', '出售结算', () => SFX.play('sell')],
   ['uiNotify', '界面·通知', () => SFX.ui('notify')],
   ['gear', '装备穿脱', () => SFX.gear('back')],
+  ['sprint', '冲刺起步', () => SFX.play('sprint')],
   ['pickup', '拾取', () => SFX.play('pickup')],
   ['search', '搜索', () => SFX.play('search', { at: 'crate_tool' })],
   ['drop', '丢弃', () => SFX.play('drop')],
@@ -463,11 +476,17 @@ const LADDER = [
 
 /* ============================================================
    三、缺口：定义了、响度档也留了，但局内没人调用
-   ------------------------------------------------------------
-   目前是空的：最后一条（player 挨打没声音）已经由 660770 补上，
-   玩家中弹 / 被近战砍都走 Player.hurt 里那一 声。
    ============================================================ */
-const GAPS = [];
+const GAPS = [
+  {
+    name: 'hurt（玩家挨打）', src: '合成 · 180→90Hz 锯齿波 0.16s',
+    why: '<span class="code">SFX.LOUD.hurt = 0.11</span> 和合成分支都写好了，' +
+      '但局内<b>没有任何地方调用</b>它：玩家挨打（js/entities.js 的 Player.hurt）' +
+      '只有画面反馈 —— 屏幕闪红 + 紫色伤害数字 + 抖屏，没有声音。' +
+      '660770 / 660769 是<b>打中敌人</b>的反馈，不是自己挨打，别混用；' +
+      '等收到"被打中"的素材（贴脸的一声闷响/金属撞击）再接进来。'
+  }
+];
 
 /* ============================================================
    四、渲染
@@ -563,7 +582,7 @@ function renderLadder() {
   for (const [key, label, fn] of LADDER) {
     const v = SFX.LOUD[key] || 0;
     const tr = document.createElement('tr');
-    tr.className = 'lad';
+    tr.className = 'lad' + (key === 'hurt' ? ' gap' : '');
     tr.innerHTML =
       '<td class="k"><span class="ab ghost" style="padding:1px 8px;font-size:10.5px">' + label + '</span></td>' +
       '<td class="n">' + v.toFixed(3) + '</td>' +
@@ -642,7 +661,8 @@ function renderGaps() {
    挥刀 → 闪避 → 撤离
    ============================================================ */
 const WALK = [
-  [0,     '脚步（走四步）', fourSteps],
+  [0,     '冲刺起步', () => SFX.play('sprint')],
+  [400,   '脚步（走四步）', fourSteps],
   [2100,  '开门', () => SFX.play('door')],
   [2700,  '搜储物柜（一声）', () => SFX.play('search', { at: 'crate_std' })],
   [5300,  '拾取 ×3', () => { for (let i = 0; i < 3; i++) setTimeout(() => SFX.play('pickup'), i * 260); }],
@@ -652,7 +672,6 @@ const WALK = [
   [9000,  '命中', () => SFX.play('hit')],
   [9300,  '爆头', () => SFX.play('headshot')],
   [9600,  '护甲破裂', () => SFX.play('break')],
-  [9750,  '中弹（受击反馈）', () => SFX.play('hurt', { rate: 0.97 })],
   [10100, '挥刀', () => SFX.play('melee')],
   [10400, '闪避', () => SFX.play('dodge')],
   [10800, '撤离', () => SFX.play('extract')]

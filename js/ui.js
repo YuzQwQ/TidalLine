@@ -370,6 +370,7 @@ const SFX = {
     bagZip: 0.045,     // 开背包的拉链：比搜索更轻，只是个"打开了"的触感
     drop: 0.055,
     gear: 0.07,        // 头盔/护甲/背包装卸：比拾取重一点，穿戴是个"动作"
+    sprint: 0.065,     // 冲刺起步的蹬地声：比闪避轻，跑起来就不该再抢耳朵
     hurt: 0.11,
     extract: 0.09,
     death: 0.13
@@ -633,6 +634,13 @@ const SFX = {
     if (id === 'melee' || /^melee_[1-6]$/.test(id)) return this.LOUD.melee;
     /* 装备穿脱：头盔 / 护甲 / 背包三件同一个档，换哪件都一样响 */
     if (/^gear_(helmet|armor|bag)$/.test(id)) return this.LOUD.gear;
+    /* 打中敌人：命中与爆头各一档（这对数字原本是给合成音定的，
+       换成实弹录音后继续沿用，"打中"和"打穿护甲"在响度上也分得开） */
+    if (id === 'hit') return this.LOUD.hit;
+    if (id === 'headshot') return this.LOUD.headshot;
+    if (id === 'break') return this.LOUD.break;
+    /* 冲刺起步 */
+    if (id === 'sprint') return this.LOUD.sprint;
     /* 玩家挨打：整局最需要"被听见"的一次反馈，压在枪声之下、拾取之上 */
     if (id === 'hurt') return this.LOUD.hurt;
     if (id === 'sell') return this.LOUD.sell;
@@ -663,12 +671,26 @@ const SFX = {
     return Math.sqrt(sum / Math.max(1, n));
   },
 
+  /* 整段的峰值。有些素材又脆又响（护甲破裂、爆头这些一记硬碰），
+     按 RMS 对齐会把峰顶推出 0dBFS —— 削波听上去是"糊"，不是"响"，
+     所以增益还要被峰值再卡一道。切分脚本 audio-slice 里是同一条规矩。 */
+  _peak(buf) {
+    let pk = 0;
+    for (let ch = 0; ch < buf.numberOfChannels; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < d.length; i++) { const v = Math.abs(d[i]); if (v > pk) pk = v; }
+    }
+    return pk;
+  },
+
   /* 收一段解码好的采样：顺手把"要播多响"算出来。
      上限 3 倍，免得某段特别安静的环境音被拉出底噪。 */
   _addSample(id, buf) {
     this.samples[id] = buf;
     const rms = this._measure(buf);
-    const gain = rms > 1e-5 ? this._targetFor(id) / rms : 0.4;
+    const pk = this._peak(buf);
+    let gain = rms > 1e-5 ? this._targetFor(id) / rms : 0.4;
+    if (pk > 1e-5) gain = Math.min(gain, 0.95 / pk);
     this.gainOf[id] = U.clamp(gain, 0.15, 3);
     return buf;
   },
