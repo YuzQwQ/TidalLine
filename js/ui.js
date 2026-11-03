@@ -655,25 +655,33 @@ const SFX = {
       for (let i = 0; i < raw.length; i++) bin[i] = raw.charCodeAt(i);
       return bin.buffer;
     };
+    /* 并发灌一批：串行时 39 段要十几秒（Pages 上更久），玩家进大厅后半天没音效。
+       6 路并发既快，又不至于把静态托管的连接数打爆；每段失败仍有上面的重试兜底。 */
+    const pool = async (items, worker, limit) => {
+      let i = 0, n = 0;
+      const lanes = Array.from({ length: Math.max(1, Math.min(limit, items.length)) }, async () => {
+        while (i < items.length) {
+          const k = i++;
+          if (await worker(items[k])) n++;
+        }
+      });
+      await Promise.all(lanes);
+      return n;
+    };
     this.loading = (async () => {
-      let n = 0;
       if (injected) {
         /* 记下"本应加载多少段"，面板好显示 12/18 这样的进度 */
-        this.wantCount = Object.keys(injected).length;
-        for (const id of Object.keys(injected)) {
-          if (await grab(id, () => Promise.resolve(fromDataUri(injected[id])))) n++;
-        }
-      } else {
-        /* 多文件版：http 下能读到就加载；file:// 被 CORS 挡住时静默跳过 */
-        try {
-          const man = await fetch('assets/audio/manifest.json').then(r => r.json());
-          this.wantCount = (man.assets || []).length;
-          for (const a of man.assets || []) {
-            if (await grab(a.id, () => fetch('assets/audio/' + a.file).then(r => r.arrayBuffer()))) n++;
-          }
-        } catch (e) {}
+        const ids = Object.keys(injected);
+        this.wantCount = ids.length;
+        return pool(ids, id => grab(id, () => Promise.resolve(fromDataUri(injected[id]))), 6);
       }
-      return n;
+      /* 多文件版：http 下能读到就加载；file:// 被 CORS 挡住时静默跳过 */
+      try {
+        const man = await fetch('assets/audio/manifest.json').then(r => r.json());
+        const list = man.assets || [];
+        this.wantCount = list.length;
+        return pool(list, a => grab(a.id, () => fetch('assets/audio/' + a.file).then(r => r.arrayBuffer())), 6);
+      } catch (e) { return 0; }
     })();
     return this.loading;
   },
