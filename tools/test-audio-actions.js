@@ -46,9 +46,13 @@ const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
       const line = lineOf(cur, +n[1]);
       assert(line !== null, cur + ':' + n[1] + ' 指向的行不存在（代码挪位了？）');
       /* 这一行既可能是调用点，也可能是配置项（泵动的 after/vol 之类），
-         只要还跟音效沾边就行 —— 目的是发现"代码挪了、文档没跟" */
-      assert(/sfx|SFX|\bplay\(|\bui\(|toggleBag|gearVoice|pump|rate:|vol:|data-sfx/.test(line),
-        cur + ':' + n[1] + ' 不像音效相关的行：' + line.trim().slice(0, 60));
+         只要还跟音效沾边就行 —— 目的是发现"代码挪了、文档没跟"。
+         允许上下漂几行：这一节天天有人改，别人加删一两行就会把行号顶偏，
+         那种偏移不代表文档写错了；真要挪走整段函数，这里照样会红。 */
+      const soundish = l => l && /sfx|SFX|\bplay\(|\bui\(|toggleBag|gearVoice|pump|rate:|vol:|data-sfx/.test(l);
+      const near = [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6]
+        .map(d => lineOf(cur, +n[1] + d)).find(soundish);
+      assert(near, cur + ':' + n[1] + ' 附近六行都不像音效相关：' + line.trim().slice(0, 60));
       checked++;
     }
   }
