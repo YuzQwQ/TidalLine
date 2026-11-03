@@ -23,7 +23,10 @@ const OUT_JS = path.join(ROOT, 'js', 'floatfont-data.js');
 /* id → 素材包里的字体名。加新颜色只要在这里加一行，再跑一次。 */
 const STYLES = {
   damage: 'Damage',
-  crit: 'Critical'
+  crit: 'Critical',
+  /* 玩家受伤：素材包里没有红色，Poison 的紫色是唯一和骨白（敌人）、
+     橙金（爆头）都拉得开的三号色，读作"你在掉血"正合适 */
+  hurt: 'Poison'
 };
 
 function build() {

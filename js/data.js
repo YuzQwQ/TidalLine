@@ -1115,7 +1115,7 @@ const ART = {
 
   /* 飘字用的位图字体图集（assets/effects/float_*.png）。
      由 tools/build-floatfont.js 从素材包生成，键要和 FLOAT_FONTS 里的 sheet 对上。 */
-  effects: ['float_damage', 'float_crit']
+  effects: ['float_damage', 'float_crit', 'float_hurt']
 };
 /* 容器贴图自动并入预加载表：新增容器只要 CONTAINER_TYPES 写了 art，
    就不会因为忘了登记白名单而在游戏里变成代码画的色块。 */
@@ -1924,7 +1924,7 @@ function magazineRounds(w, n, ammo, rounds) {
   const out = (Array.isArray(rounds) ? rounds : []).filter(id => AMMO_BY_ID[id]?.caliber === w.caliber).slice(0,n);
   while(out.length < n) out.push(fallback);
   return out;
-}/* BEGIN SCENE LIBRARY */
+}/* BEGIN SCENE LIBRARY */
 for(const a of [{"group":"tiles","id":"ground_concrete_plain_01"},{"group":"tiles","id":"ground_concrete_plain_02"},{"group":"tiles","id":"ground_soil_compact_01"},{"group":"tiles","id":"ground_soil_compact_02"},{"group":"props","id":"decal_surface_crack_01"},{"group":"props","id":"decal_surface_damp_01"}]){if(!ART[a.group].includes(a.id))ART[a.group].push(a.id);}
 /* END SCENE LIBRARY */
 /* BEGIN PROP BOUNDS */

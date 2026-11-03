@@ -45,7 +45,7 @@ const FONTS = require('../js/floatfont-data.js');
       }
       return out;
     });
-    assert.deepEqual(Object.keys(fontInfo).sort(), ['crit', 'damage'], '接了两套字体');
+    assert.deepEqual(Object.keys(fontInfo).sort(), ['crit', 'damage', 'hurt'], '接了三套字体（伤害/爆头/玩家受伤）');
     for (const [k, f] of Object.entries(fontInfo)) {
       assert.equal(f.glyphs, 46, k + ' 字形数');
       assert.equal(f.w, 368, k + ' 图集宽');
@@ -180,6 +180,33 @@ const FONTS = require('../js/floatfont-data.js');
     assert.equal(merge.pellets.n, 1, '霰弹八颗弹丸并成一条');
     assert(merge.pellets.val > merge.one, '并起来的是总伤害（' + merge.pellets.val + '）');
 
+    /* ---------- 4.8 玩家受伤也飘字：紫色 hurt 字体 ---------- */
+    const phurt = await page.evaluate(() => {
+      const P = Game.player;
+      const hp0 = P.hp;
+      Game.dmgPops = [];
+      P.hurt(30, 'body', 0);
+      const r = {
+        pops: Game.dmgPops.length,
+        font: Game.dmgPops[0] && Game.dmgPops[0].font,
+        txt: Game.dmgPops[0] && Game.dmgPops[0].txt,
+        lost: Math.round(hp0 - P.hp)
+      };
+      /* 连续挨打也走同一套合并 */
+      Game.dmgPops.forEach(p => { p.t = 0.05; });
+      P.hurt(20, 'body', 0);
+      r.mergedN = Game.dmgPops.length;
+      r.mergedVal = Game.dmgPops[0].val;
+      Game.dmgPops = [];
+      P.hp = hp0;                     // 还原，别影响后面的用例
+      return r;
+    });
+    assert.equal(phurt.pops, 1, '玩家挨打冒一条紫色飘字');
+    assert.equal(phurt.font, 'hurt', '用的是 hurt（Poison 紫）字体');
+    assert.equal(phurt.txt, String(phurt.lost), '显示实际掉血');
+    assert.equal(phurt.mergedN, 1, '连续挨打合并成一条');
+    assert.equal(phurt.mergedVal, phurt.lost + 20, '合并累加（' + phurt.lost + ' + 20）');
+
     /* ---------- 5. 爆头走 crit 字体 ---------- */
     const crit = await page.evaluate(async () => {
       const P = Game.player, e = Game.enemies[0];
@@ -206,8 +233,11 @@ const FONTS = require('../js/floatfont-data.js');
 
     /* ---------- 7. 动效：时间到了自己消失 ---------- */
     const life = await page.evaluate(async () => {
+      /* 玩家挨打现在也飘字，等待期间敌人要是开枪，数组里就会多出一条 —— 先把人挪远 */
+      const P = Game.player;
+      for (const o of Game.enemies) { o.x = P.x + 2200; o.y = P.y + 2200; }
       Game.dmgPops = [];
-      Game.popDamage(Game.player.x, Game.player.y - 20, 55);
+      Game.popDamage(P.x, P.y - 20, 55);
       const t0 = Game.dmgPops.length;
       await new Promise(r => setTimeout(r, CFG.DMG_TEXT.LIFE * 1000 + 250));
       return { t0, t1: Game.dmgPops.length };
@@ -232,7 +262,7 @@ const FONTS = require('../js/floatfont-data.js');
     const bad = miss.filter(u => /assets\/effects\/float_/.test(u));
     assert.deepEqual(bad, [], '单文件版没有去请求外置字体图集');
 
-    console.log('伤害飘字：字体 2 套 / 排版 / 命中链路 / 寿命 / 截图 全部通过');
+    console.log('伤害飘字：字体 3 套 / 排版 / 命中链路 / 玩家受伤 / 合并 / 寿命 / 截图 全部通过');
     console.log('  ' + path.relative(ROOT, path.join(SHOT, 'damage-numbers.png')));
   } catch (e) {
     console.error(e);

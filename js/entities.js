@@ -848,6 +848,9 @@ class Player {
     const res = BALLISTICS.hit(pre, pen == null ? CFG.AMMO.UNARMED_PEN : pen, gear);
     const dmg = res.health;
 
+    /* 自己挨打也飘字：紫色（hurt 字体），和敌人的骨白、爆头的橙金区分开。
+       写在 hurt 里而不是各个伤害来源，玩家中弹/近战/将来任何掉血都走这一条。 */
+    Game.popDamage(this.x, this.y - 20, dmg, { font: 'hurt', key: this });
     this.hurtAnimT = PLAYER_ANIMS.hurt.frames / PLAYER_ANIMS.hurt.fps;
     this.hp -= dmg;
     /* 受击不打断治疗：只有死亡才强制中断（下面 hp<=0 那一段处理） */
