@@ -897,9 +897,40 @@ node tools/cdp-shot.js "file:///D:/develop/project/tide/潮汐线.html#play,13,4
 - `container_open`（抽屉 752216）：1.46s 的滑轨吱呀。**它不做通用开箱音**——
   所有容器都响它就是"全都一样"，所以只给表里写了 `open` 的柜和箱用；开尸体不响
 
-一个细节：掀开容器后会**自动搜第一件**，开箱音和翻找声会同时炸出来。
-`_playSearch` 里按开箱音的实际长度让位（拉链 0.29s、箱盖 1.46s，各留 0.05s 余量），
-翻找声排到开箱音之后——不然两个声糊成一团，等于白分材质。
+### 搜索声是**循环**的：一个容器一段，搜完才停
+
+翻一个箱子是持续的十几秒动作，声音也应该是连续的。以前是"每翻一件重新起一次采样"，
+中间还夹着拾取音，听起来是一叠碎片；现在整段搜索只起一次循环（`BufferSource.loop`），
+搜完/关面板/走开才淡出。
+
+启停不靠各处手写 `stopSearchLoop`，而是**每帧同步**：
+
+```js
+// game-update.js 的 update()，每帧算一次"现在正在搜哪个容器"
+const A = this.action;
+let loopAt = null;
+if (A && A.type === 'search' && A.target) loopAt = A.target.art || A.target.kind; // 撬开读条
+else if (this.lootOpen && this.search) loopAt = this.lootIsCorpse ? 'corpse' : (this.lootOpen.art || this.lootOpen.kind);
+SFX.syncSearchLoop(loopAt);
+```
+
+`syncSearchLoop` 内部只在 key 变化时才动（换容器才换源），所以：
+
+| 场景 | 行为 |
+|---|---|
+| 撬开读条 → 逐件翻找 | 同一只容器，key 不变，**中间不断**（逐件之间没有空档） |
+| 全部搜完 | `this.search` 变 null，key 变 null → 淡出 0.12s 停 |
+| 关闭面板 / 走远 70px | `closeLoot()` 里立刻停，不等下一帧 |
+| 手动点了一件、其余不搜了 | 那件搜完就停 —— 面板开着 ≠ 还在翻 |
+| 切走标签页 | rAF 停了没人收，`visibilitychange` 里兜一下 |
+| 死亡 / 撤离 | 都走 `closeLoot()`，自然收住 |
+
+两条配套细节：
+
+- **掀开那一下要让位**：`_playContainerOpen` 会先收掉循环，等开箱音（拉链 0.29s、箱盖 1.46s）
+  走完，`_boxOpenAt` 再把循环按剩余时长接回来——不然抽屉/拉链和翻找声叠在一起就糊了。
+- **循环段首尾不一定在过零点**，直接起会有"咔"的一声，所以起的时候 0→增益淡入 0.08s。
+- 没配素材的容器（保险箱这类）仍然是一次性合成音，没有素材可循环。
 
 ### 霰弹的三件套
 
@@ -966,6 +997,9 @@ SHOT_MODEL: { akm: 'ak47' },       // 型号 → SHOT_SAMPLE 的键
 - 声明用到的每个采样 id 都得在 `assets/audio/manifest.json` 里
 - 响度阶梯的每个键都得在 `SFX.LOUD` 里
 - 把所有试听按钮点一遍，断言每种该有的声音都真的触发了
+
+`tools/test-search-loop.js` 单独盯搜索循环：起循环用的是该容器材质那段采样、
+逐件之间不换源、搜完停、关面板立刻停、撬开读条阶段就响。
 
 另外 `tools/test-bag-voice.js` 是背包开合音的回归测试：打开容器 / 关面板这两条
 系统路径不许出现 `bag_zip`，玩家手动 `toggleBag()` 必须出现。
@@ -1261,3 +1295,8 @@ node run-test.js     # mock 浏览器环境跑完整游戏流程和动画状态�
 ### 枪械配件
 
 32件配件与五槽兼容已接入，局内外可即时改装；仓库／装备枪详情和右键菜单提供入口。局内使用普通背包，局外使用仓库，安全箱须先移出。动作冲突期间可查看、不可提交。属性统一从原枪结算，完整预演格数、负重与混合余弹返还后才提交；不清除冷却、不补弹。军火商24件绿蓝有售，8件紫色搜刮获得。配置、32件美术、兼容矩阵、事务与迁移规则及验收记录见 [枪械配件首版](design/weapons/attachments-v1/README.md)。新配件图标与原稿需分别进入 ART.gear 和详情映射；改装握把与弹匣竖直摆放，保持统一三分之四前视角。
+
+
+### 改枪工坊统一结算
+
+藏身处装备台跳转独立改枪页（js/gunsmith-page.js），采用用户提供的暖灯工坊背景与半透明模糊面板。局外支持多槽位试装、库存优先、按商人分组购买缺件并统一安装。纯预演与提交逻辑位于 Attachments.plan / commitPlan，供货源由 vendors() 提供；付款时重新检查报价、归属、余额、空间与负重。详见 [工坊与结算说明](design/weapons/attachments-v1/README.md)。

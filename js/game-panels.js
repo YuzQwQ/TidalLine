@@ -52,6 +52,8 @@ Object.assign(Game, {
   },
 
   closeLoot() {
+    /* 面板一关就收声：不等下一帧的 syncSearchLoop，免得关窗后还响着 */
+    if (typeof SFX !== 'undefined' && SFX.stopSearchLoop) SFX.stopSearchLoop();
     this.lootOpen = null;
     this.search = null;
     this.autoSearch = false;
@@ -88,8 +90,8 @@ Object.assign(Game, {
     if (manual) this.autoSearch = false;
     this.search = { idx: idx, t: 0, total: this.searchTime(e.item), noiseT: 0 };
     this.renderLootList();
-    /* 翻尸体是翻衣服口袋，开箱子是拉链或纸——按容器种类发声，不随机 */
-    SFX.play('search', { at: this.lootIsCorpse ? 'corpse' : (box.art || box.kind) });
+    /* 翻找声不在这里起：整个容器从撬开到搜完只有一段循环，
+       由 Game.update 每帧调 SFX.syncSearchLoop() 维持，搜完自然停。 */
     return true;
   },
 

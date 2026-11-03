@@ -256,7 +256,7 @@ const GROUPS = [
     rows: [
       {
         name: '拾取', scope: 'both',
-        where: 'js/game-panels.js:404 / :450 · js/game-update.js:304 · js/medical.js:160,188（医疗品开始/结束）· js/base.js（仓库取物）',
+        where: 'js/game-panels.js:406 / :452 · js/game-update.js:304 · js/medical.js:160,188（医疗品开始/结束）· js/base.js（仓库取物）',
         detail: '采样 <b>×4</b> 每次随机抽一条（且不重复刚播过的那条）· LOUD.pickup <b>0.06</b>',
         sounds: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
         btns: [
@@ -268,9 +268,12 @@ const GROUPS = [
       },
       {
         name: '搜索（一个容器一个声）', scope: 'raid',
-        where: 'js/game-update.js:477（读条开始）· js/game-panels.js:92（面板里搜）',
+        where: 'js/game-update.js:325（每帧 syncSearchLoop）',
         detail: '按容器 art 查 <span class="code">BOX_SFX</span>，19 个容器有专属音；' +
-          '同材质不同容器用不同变体（纸 3 条、工具箱 3 条）；没配到的落回合成音 · LOUD.search <b>0.055</b>',
+          '同材质不同容器用不同变体（纸 3 条、工具箱 3 条）；没配到的落回合成音 · LOUD.search <b>0.055</b><br>' +
+          '<b>整段搜索是循环的</b>：从撬开读条到逐件翻完只起一次，期间不断；' +
+          '搜完 / 关面板 / 走开 / 切走标签页立刻淡出 · ' +
+          '<span class="code">SFX.syncSearchLoop(容器)</span>',
         sounds: ['search_metal', 'search_toolbox', 'search_toolbox2', 'search_toolbox3',
                  'search_paper', 'search_paper2', 'search_paper3', 'search_cloth', 'search_purse'],
         btns: [
@@ -279,7 +282,12 @@ const GROUPS = [
           { l: '纸箱', fn: () => SFX.play('search', { at: 'crate_cardboard' }) },
           { l: '布包', fn: () => SFX.play('search', { at: 'crate_satchel' }) },
           { l: '皮包', fn: () => SFX.play('search', { at: 'crate_leatherbag' }) },
-          { l: '尸体', fn: () => SFX.play('search', { at: 'corpse' }) }
+          { l: '尸体', fn: () => SFX.play('search', { at: 'corpse' }) },
+          /* 循环版：听整段搜索的连续感（6 秒后自动停） */
+          { l: '循环 6 秒', ghost: true, fn: () => {
+            SFX.syncSearchLoop('crate_tool');
+            setTimeout(() => SFX.syncSearchLoop(null), 6000);
+          }, say: '这就是翻一个工具箱时听到的：一段绕到底，搜完才停' }
         ]
       },
       {
@@ -297,7 +305,7 @@ const GROUPS = [
       },
       {
         name: '背包开合', scope: 'both',
-        where: 'js/game-panels.js:479（toggleBag）· js/game.js:192（Tab 键）',
+        where: 'js/game-panels.js:481（toggleBag）· js/game.js:192（Tab 键）',
         detail: '采样 <b>bag_zip</b> · 开 1.06 / 关 0.90 —— 拉开比拉上略快，' +
           '这是个"打开了"的触感，不该盖过局内的脚步 · LOUD.bagZip <b>0.045</b><br>' +
           '<b>只有玩家自己按出来的那一下才响</b>：搜容器时搜刮面板会把背包一起带出来，' +
@@ -322,21 +330,21 @@ const GROUPS = [
     rows: [
       {
         name: '开门', scope: 'raid',
-        where: 'js/game-update.js:450',
+        where: 'js/game-update.js:468',
         detail: '合成闷响 0.16s（420Hz）· LOUD.door <b>0.08</b>',
         sounds: [],
         btns: [{ l: '开门', fn: () => SFX.play('door') }]
       },
       {
         name: '撤离成功', scope: 'raid',
-        where: 'js/game-panels.js:711（结算面板）',
+        where: 'js/game-panels.js:713（结算面板）',
         detail: '合成上行 0.5s（320→640Hz）· LOUD.extract <b>0.09</b>',
         sounds: [],
         btns: [{ l: '撤离', fn: () => SFX.play('extract') }]
       },
       {
         name: '死亡', scope: 'raid',
-        where: 'js/game-update.js:569（阵亡）· js/game-panels.js:711（结算）',
+        where: 'js/game-update.js:586（阵亡）· js/game-panels.js:713（结算）',
         detail: '合成下沉 0.8s（200→40Hz）· LOUD.death <b>0.13</b>',
         sounds: [],
         btns: [{ l: '死亡', fn: () => SFX.play('death') }]
@@ -349,14 +357,14 @@ const GROUPS = [
     rows: [
       {
         name: '点击', scope: 'both',
-        where: 'js/ui.js:849（全局事件委托，所有按钮的默认点击音）',
+        where: 'js/ui.js:934（全局事件委托，所有按钮的默认点击音）',
         detail: '采样 <b>ui_click</b> 0.068s 清脆一声 · LOUD.uiClick <b>0.05</b>',
         sounds: ['ui_click'],
         btns: [{ l: '点击', fn: () => SFX.ui('click') }]
       },
       {
         name: '悬停', scope: 'both',
-        where: 'js/ui.js:864（鼠标经过按钮，90ms 节流）',
+        where: 'js/ui.js:944（鼠标经过按钮，90ms 节流）',
         detail: '采样 <b>ui_tap</b> 0.127s 短提示 · LOUD.uiTap <b>0.028</b>（最轻的一档）',
         sounds: ['ui_tap'],
         btns: [{ l: '悬停', fn: () => SFX.ui('tap') }]
@@ -370,7 +378,7 @@ const GROUPS = [
       },
       {
         name: '通知', scope: 'both',
-        where: 'js/game.js:510（好消息提示）',
+        where: 'js/game.js:526（好消息提示）',
         detail: '采样 <b>ui_notify</b> 0.865s 明朗一句 · LOUD.uiNotify <b>0.07</b>',
         sounds: ['ui_notify'],
         btns: [{ l: '通知', fn: () => SFX.ui('notify') }]

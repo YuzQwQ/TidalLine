@@ -307,6 +307,24 @@ Object.assign(Game, {
       }
     }
 
+    /* 搜索声：一个容器一段循环，撬开读条和逐件搜索连成一条线。
+       每帧算一次「现在正在搜哪个容器」，变了才换 —— 走开、被打断、搜完、
+       换容器都由这一处收口，不用在每个分支里手写 stop。
+
+       「正在搜」的口径是 this.search 非空（自动搜索是背靠背排的，
+       中间没有空档，所以整段搜索听起来是连续的）；手动点了一件之后
+       玩家不再继续，声音也就跟着停 —— 面板开着不等于还在翻。 */
+    {
+      const A = this.action;
+      let loopAt = null;
+      if (A && A.type === 'search' && A.target) {
+        loopAt = A.target.art || A.target.kind;         // 正在撬：先响起来
+      } else if (this.lootOpen && this.search) {
+        loopAt = this.lootIsCorpse ? 'corpse' : (this.lootOpen.art || this.lootOpen.kind);
+      }
+      if (typeof SFX !== 'undefined') SFX.syncSearchLoop(loopAt);
+    }
+
     /* 面板跟随检查：走远了自动关 */
     if (this.lootOpen) {
       const d = U.dist(P.x, P.y, this.lootOpen.x, this.lootOpen.y);
@@ -472,9 +490,8 @@ Object.assign(Game, {
       if (q.still) {
         Noise.emit(b.x, b.y, q.noise, 'search');
       }
-      /* 按容器种类选翻找声：拉开行李箱是拉链，翻文件柜是纸。
-         没配到素材的容器落回合成音，不会哑。 */
-      SFX.play('search', { at: b.art || b.kind });
+      /* 翻找声交给循环：这声一响就是一个容器，撬开读条和后面逐件搜索
+         共用同一段，中间不断（起停由 update 里的 syncSearchLoop 维持）。 */
       return;
     }
 

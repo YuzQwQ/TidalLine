@@ -564,6 +564,14 @@ const SFX = {
       this.noiseBuf = buf;
     } catch (e) { this.on = false; }
     if (this.on) { this.load(); this.bindUI(); }
+    /* 切走标签页时 rAF 会停，循环音没人收就会一直响。
+       挂一次就够：回来之后 update 会照常把循环接上。 */
+    if (!this._visBound && typeof document !== 'undefined' && document.addEventListener) {
+      this._visBound = true;
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) this.stopSearchLoop();
+      });
+    }
   },
 
   /* 浏览器不允许在用户手势之前出声。正常流程里 init() 就发生在点「开始」
@@ -804,7 +812,79 @@ const SFX = {
     const id = this._boxSfxOf((opts || {}).at, 'open');
     if (!id) return false;
     if (this.ctx) this._boxOpenAt = this.ctx.currentTime;
+    /* 掀开这一下要让位：撬开时循环已经在响，抽屉/拉链再叠上来就糊了。
+       收掉之后 _boxOpenAt 会让 sync 按开箱音的实际长度把循环接回来。 */
+    this.stopSearchLoop();
     return this._playSample(id, { rate: 0.98 + Math.random() * 0.04 });
+  },
+
+  /* ---------------- 容器搜索：循环播放 ----------------
+     一个容器从「撬开」到「全部搜完」是一段连续动作，声音也该是连续的：
+     之前每翻一件就重新起一次采样，中间还夹着拾取音，听着像一叠碎片。
+     现在按容器给一段循环，整段搜索只起一次、搜完就停。
+
+     停的时机不靠各处手写 stopSearchLoop，而是每帧调 syncSearchLoop：
+     把「现在应该响哪个容器」传进来，变了才换。这样走开、被打断、
+     死亡、换容器、搜完了 —— 任何一条路径都自动收住，不会漏掉一路。 */
+  _searchLoop: null,      // { src, g, id }
+  _searchLoopAt: null,    // 当前循环对应的容器 key（null = 没在放）
+
+  /* 传 null 表示"现在不该有搜索声"。每帧调用，内部只在 key 变化时动。 */
+  syncSearchLoop(at) {
+    const key = at || null;
+    if (this._searchLoopAt === key) return;
+    this.stopSearchLoop();
+    this._searchLoopAt = key;
+    if (!key) return;
+    const id = this._boxSfxOf(key, 'search');
+    /* 没配素材的容器：退回上一次的合成音，响一下（不是循环，本来也没有素材可循环） */
+    if (!id) { this.play('search', { at: key }); return; }
+    this._startSearchLoop(id, key);
+  },
+
+  _startSearchLoop(id, at) {
+    const c = this.ctx, buf = this.samples[id];
+    if (!c || !buf) return;
+    /* 开箱声还没走完就先别起：掀开箱子那 1.46s 里叠一层翻找声会糊成一团 */
+    let delay = 0;
+    if (this._boxOpenAt != null) {
+      const open = (this.BOX_SFX[at] || {}).open;
+      const dur = (open && this.samples[open]) ? this.samples[open].duration : 0;
+      const since = c.currentTime - this._boxOpenAt;
+      if (dur && since < dur) delay = dur - since + 0.05;
+    }
+    const src = c.createBufferSource();
+    src.buffer = buf;
+    src.loop = true;
+    /* 音高微扰：同一段素材连绕十几次会听出"复读机"，±3% 够了 */
+    src.playbackRate.value = 0.985 + Math.random() * 0.03;
+    const g = c.createGain();
+    const base = this.gainOf[id] != null ? this.gainOf[id] : 0.4;
+    const t0 = c.currentTime + delay;
+    /* 从 0 淡入：循环段的首尾不一定落在过零点，直接起会有"咔"的一声 */
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(base, t0 + 0.08);
+    src.connect(g);
+    g.connect(this.master || c.destination);
+    src.start(t0);
+    this._searchLoop = { src: src, g: g, id: id };
+  },
+
+  stopSearchLoop() {
+    const L = this._searchLoop;
+    this._searchLoop = null;
+    this._searchLoopAt = null;
+    if (!L || !this.ctx) return;
+    const c = this.ctx, t = c.currentTime;
+    /* 淡出 0.12s 再停：循环段可能在任意位置被切断，硬停会"啪"一下 */
+    try {
+      const v = L.g.gain.value;
+      L.g.gain.cancelScheduledValues(t);
+      L.g.gain.setValueAtTime(v, t);
+      L.g.gain.linearRampToValueAtTime(0, t + 0.12);
+      L.src.stop(t + 0.14);
+    } catch (e) { /* 已经停过 / 上下文被关了：忽略 */ }
+    L.src.onended = () => { try { L.g.disconnect(); } catch (e) {} };
   },
 
   /* 查表：容器的 art → 某一个动作的音效 id。素材没加载上等于没配。 */
