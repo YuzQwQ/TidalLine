@@ -114,7 +114,7 @@
 本批对应的 `pendingArt` 标记已移除，原有物品图标保留。
 
 [查看8件图标与原尺寸预览](../../assets/item-art/heritage/index.html) ·
-[完整实际提示词与生成来源](../../assets/heritage-generation.json)。原稿保存在
+[完整实际提示词与生成来源](../../assets/source/prompts/heritage-generation.json)。原稿保存在
 `assets/item-art/heritage/sources/`，可运行 `node tools/prepare-heritage-art.js` 重新整理规格。
 
 二十一件里大半是小物件，画面必须靠轮廓分辨，不能靠颜色（这一批全是灰、金、深棕）：

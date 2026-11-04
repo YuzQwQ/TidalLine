@@ -75,40 +75,68 @@
     },
     {
       id: 'prop', name: '装饰', hint: '家具与摆设', paintable: true,
+      /* 这一组以**素材库**为准，不以地图为准。
+       * 以前是从 data.props 反推类型，结果"图上放过的才看得见"：
+       * 诊所的诊疗床被归到通用「床」、银行柜台被归到通用「柜台」，
+       * 新画好的家具（bed_clinic / counter_bank…）在地图上没出现过就永远放不出来。
+       * 现在遍历 SceneLibrary.placeables（每一条都在登记表里声明了 footprint），
+       * 只把"图上有、但素材库没登记"的旧类型补在后面，保证没有选不中的东西。 */
       items(data) {
-        const byType = new Map();
+        const Art = root.MapArtMap;
+        const resolve = p => (Art && Art.resolvePropArt ? Art.resolvePropArt(p) : (p.art || p.type));
+        const used = new Map();          // 贴图基名 → 件数
+        const usedFoot = new Map();      // 贴图基名 → 出现过的占地
         for (const p of data.props) {
-          const s = byType.get(p.type) || { count: 0, names: new Set(), foot: new Set() };
-          s.count++;
-          if (p.name) s.names.add(p.name);
-          s.foot.add((p.footprint || [1, 1]).join('×'));
-          byType.set(p.type, s);
+          const art = resolve(p);
+          used.set(art, (used.get(art) || 0) + 1);
+          const s = usedFoot.get(art) || new Set();
+          s.add((p.footprint || [1, 1]).join('×'));
+          usedFoot.set(art, s);
         }
-        const out = [...byType.entries()].map(([type, s]) => ({
-          key: 'prop.' + type, label: [...s.names][0] || type, count: s.count, swatch: ITEM_COLOR.prop,
-          detail: type + ' · 占地 ' + [...s.foot].join(' / '),
-          paint: { kind: 'prop', type, label: [...s.names][0] || type },
-          match: e => e.kind === 'prop' && e.ref.type === type
-        }));
-        /* 新图里一件家具都没有，类型无从推导；补上目录里的标准家具，否则放不出东西。
-         * 已用到的类型在前，未使用的排在后面并标 0。 */
-        const catalog = (root.MapTemplates && root.MapTemplates.PROP_CATALOG) || [];
-        for (const c of catalog) {
-          if (byType.has(c.type)) continue;
+
+        const out = [];
+        const placeables = [...(Library.placeables || []), ...(Library.decals || [])];
+        for (const a of placeables) {
+          const paint = a.paint;
+          const isDecal = paint.ground === true;
+          const foot = paint.footprint || [1, 1];
+          const next = {
+            key: 'prop.' + a.id, label: a.name, art: a.id,
+            count: used.get(a.id) || 0,
+            swatch: ITEM_COLOR.prop,
+            detail: isDecal
+              ? a.id + ' · 透明贴花 · 可通行 · 不挡视线'
+              : a.id + ' · 占地 ' + foot.join('×') +
+                (usedFoot.has(a.id) ? ' · 图上 ' + [...usedFoot.get(a.id)].join(' / ') : ' · 本图未使用'),
+            /* 原样带上 paint：footprint、碰撞格、树冠参数都要跟着放下去，
+               否则摆一棵树会变成 3×3 的实心方块。 */
+            paint: Object.assign({}, paint, { kind: 'prop', type: paint.type, footprint: foot.slice() }),
+            match: e => e.kind === 'prop' && (e.ref.type === a.id || resolve(e.ref) === a.id)
+          };
+          out.push(next);
+        }
+
+        /* 兜底：图上在用、但素材库没登记的老类型（历史家具）。不补的话点不中、也改不了。 */
+        const known = new Set(out.map(i => i.paint.type));
+        for (const p of data.props) {
+          const art = resolve(p);
+          if (known.has(art) || known.has(p.type)) continue;
+          known.add(art); known.add(p.type);
+          const foots = [...(usedFoot.get(art) || new Set(['1×1']))];
           out.push({
-            key: 'prop.' + c.type, label: c.name, count: 0, swatch: ITEM_COLOR.prop,
-            detail: c.type + ' · 占地 ' + c.footprint.join('×') + ' · 本图未使用',
-            paint: { kind: 'prop', type: c.type, label: c.name, name: c.name, footprint: c.footprint.slice() },
-            match: e => e.kind === 'prop' && e.ref.type === c.type
+            key: 'prop.' + p.type, label: p.name || p.type, swatch: ITEM_COLOR.prop,
+            count: used.get(art) || 0,
+            detail: p.type + ' → ' + art + ' · 占地 ' + foots.join(' / ') + ' · 未登记到素材库',
+            paint: { kind: 'prop', type: p.type, label: p.name || p.type, footprint: foots[0].split('×').map(Number) },
+            match: e => e.kind === 'prop' && resolve(e.ref) === art
           });
         }
-        for(const a of Library.placeables||Library.decals)if(!byType.has(a.id))out.push({
-          key:'prop.'+a.id,label:a.name,art:a.id,count:0,swatch:ITEM_COLOR.prop,
-          detail:a.paint.ground?'透明地面贴花 · 可通行 · 不挡视线':'场景物件 · 占地 '+a.paint.footprint.join('×'),paint:a.paint,
-          match:e=>e.kind==='prop'&&e.ref.type===a.id
+        return out.sort((a, b) => {
+          /* 有图的排前面，再用占地格数把"大件"排上去，最后按名字 */
+          if (!a.art !== !b.art) return a.art ? -1 : 1;
+          const area = i => (i.paint.footprint || [1, 1]).reduce((x, y) => x * y, 1);
+          return (b.art ? area(b) - area(a) : 0) || a.label.localeCompare(b.label, 'zh');
         });
-        for(const item of out){const a=(Library.placeables||Library.decals).find(a=>'prop.'+a.id===item.key);if(a){item.art=a.id;item.paint=a.paint;item.detail=a.paint.ground?'透明地面贴花 · 可通行 · 不挡视线':'场景物件 · 占地 '+a.paint.footprint.join('×');}}
-        return out;
       }
     },
     {

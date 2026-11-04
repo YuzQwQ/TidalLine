@@ -1054,9 +1054,9 @@ window.addEventListener('error', function (e) {
 .rg-sfx-btns button { padding: 3px 0; font-size: 10px; }
 .rg-sfx-tip { color: #4c665e; font-size: 9.5px; line-height: 1.5; }
 </style>
-<link rel="stylesheet" href="assets/ui/safehouse.css">
-<link rel="stylesheet" href="assets/ui/merchant.css">
-<link rel="stylesheet" href="assets/ui/merchant-sales.css"><link rel="stylesheet" href="assets/ui/storage.css"></head>
+<link rel="stylesheet" href="../../../assets/ui/safehouse.css">
+<link rel="stylesheet" href="../../../assets/ui/merchant.css">
+<link rel="stylesheet" href="../../../assets/ui/merchant-sales.css"><link rel="stylesheet" href="../../../assets/ui/storage.css"></head>
 <body>
 
 <div id="stage">
@@ -1195,14 +1195,14 @@ window.addEventListener('error', function (e) {
         <div class="store-hd">
           <h3>仓库<em id="stashCount">0 / 90</em></h3>
           <div class="store-acts">
-            <button class="mini" id="btnSellJunk">出售寻常收集品</button>
+            <button class="mini" id="btnSellJunk">前往出售</button>
           </div>
         </div>
 
         <div class="store-filter" id="stashFilter"></div>
         <div class="stash-grid" id="stashGrid"></div>
         <div class="store-ft">
-          <span>库存总价值 <b id="stashValue">¥0</b></span>
+          <span>库存总估价 <b id="stashValue">¥0</b></span>
           <span class="pager" id="stashPager"></span>
           <span>卖出不影响图鉴记录</span>
         </div>
@@ -1240,46 +1240,47 @@ window.addEventListener('error', function (e) {
 <div class="deal" id="dealBox" style="display:none"></div>
 <!-- 右键菜单：背包物品的「查看详情 / 丢弃」 -->
 <div class="ctxmenu" id="ctxMenu" style="display:none"></div>
-<script src="assets/audio/bundle.js"></script>
-<script src="js/config.js"></script>
-<script src="js/pixfont.js"></script>
-<script src="js/data.js"></script>
-<script src="js/attachment-data.js"></script>
-<script src="js/attachments.js"></script>
-<script src="js/core.js"></script>
-<script src="js/entities.js"></script>
-<script src="js/gunplay.js"></script>
-<script src="js/human-ai.js"></script>
-<script src="js/common.js"></script>
-<script src="js/medical.js"></script>
-<script src="js/art.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/save.js"></script>
-<script src="js/base.js"></script>
-<script src="js/game.js"></script>
-<script src="js/game-update.js"></script>
-<script src="js/game-render.js"></script>
-<script src="js/game-panels.js"></script>
-<script src="js/medhud.js"></script>
-<script src="js/melee.js"></script>
-<script src="js/range.js"></script>
-<script src="js/safehouse-config.js"></script>
-<script src="js/safehouse.js"></script>
-<script src="js/merchant-config.js"></script>
-<script src="js/trader.js"></script>
-<script src="js/merchant-ui.js"></script>
-<script src="js/storage-config.js"></script>
-<script src="js/inventory-view.js"></script>
-<script src="js/storage-ui.js"></script>
-<script src="design/enemies/human-units-v1/fixtures.js"></script>
-<script src="js/attachment-ui.js"></script>
-<script src="js/gunsmith-page.js"></script>
-<script src="js/merchant-dialogue.js"></script>
-<script src="js/storage-loadout.js"></script>
-<script src="js/base-safe.js"></script>
-<script src="js/sales.js"></script>
-<script src="js/merchant-sales.js"></script>
-<script src="js/boot.js"></script>
+<script src="../../../assets/audio/bundle.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/pixfont.js"></script>
+<script src="../../../js/data.js"></script>
+<script src="../../../js/attachment-data.js"></script>
+<script src="../../../js/attachments.js"></script>
+<script src="../../../js/core.js"></script>
+<script src="../../../js/entities.js"></script>
+<script src="../../../js/gunplay.js"></script>
+<script src="../../../js/human-ai.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/medical.js"></script>
+<script src="../../../js/art.js"></script>
+<script src="../../../js/ui.js"></script>
+<script src="../../../js/save.js"></script>
+<script src="../../../js/base.js"></script>
+<script src="../../../js/game.js"></script>
+<script src="../../../js/game-update.js"></script>
+<script src="../../../js/game-render.js"></script>
+<script src="../../../js/game-panels.js"></script>
+<script src="../../../js/medhud.js"></script>
+<script src="../../../js/melee.js"></script>
+<script src="../../../js/range.js"></script>
+<script src="../../../js/safehouse-config.js"></script>
+<script src="../../../js/safehouse.js"></script>
+<script src="../../../js/merchant-config.js"></script>
+<script src="../../../js/trader.js"></script>
+<script src="../../../js/merchant-ui.js"></script>
+<script src="../../../js/storage-config.js"></script>
+<script src="../../../js/inventory-view.js"></script>
+<script src="../../../js/storage-ui.js"></script>
+<script src="../../../design/enemies/human-units-v1/fixtures.js"></script>
+<script src="../../../js/attachment-ui.js"></script>
+<script src="../../../js/gunsmith-page.js"></script>
+<script src="../../../js/merchant-dialogue.js"></script>
+<script src="../../../js/storage-loadout.js"></script>
+<script src="../../../js/base-safe.js"></script>
+<script src="../../../js/buyback-data.js"></script>
+<script src="../../../js/sales.js"></script>
+<script src="../../../js/merchant-sales.js"></script>
+<script src="../../../js/boot.js"></script>
 <script>window.addEventListener("DOMContentLoaded",()=>{const panel=document.createElement("aside");panel.style.cssText="position:fixed;z-index:900;left:8px;top:8px;max-width:calc(100vw - 16px);padding:12px;background:#15241eee;color:#d9e0ca;font:13px system-ui;border:1px solid #758663";const header=document.createElement("b");header.textContent="人类敌人测试 · 独立存档";const actions=document.createElement("div");actions.style.cssText="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px";panel.appendChild(header);panel.appendChild(actions);for(const [key,name]of Object.entries(HumanFixtures.names)){const b=document.createElement("button");b.textContent=name;b.onclick=()=>HumanFixtures.start(key);panel.lastChild.appendChild(b);}document.body.appendChild(panel);HumanFixtures.start("field");});</script>
 </body>
 </html>

@@ -10,7 +10,7 @@ for (const file of ['config.js', 'data.js']) {
 }
 const { types, rows, counts, quality, order, itemSearch, catPref, cats, enemies } = vm.runInContext(
   '({types:CONTAINER_TYPES,rows:MAP_ROWS,counts:BOX_COUNT,quality:CONTAINER_QUALITY,order:QUALITY_ORDER,itemSearch:CFG.ITEM_SEARCH,catPref:CFG.LOOT.catPref,cats:CATS,enemies:ENEMY_TYPES})', ctx);
-const manifest = JSON.parse(fs.readFileSync(path.join(root, 'assets/asset-prompts.json'), 'utf8'));
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'assets/source/prompts/asset-prompts.json'), 'utf8'));
 const artwork = [...manifest.assets, ...(manifest.optional || [])];
 const esc = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const RULES = {

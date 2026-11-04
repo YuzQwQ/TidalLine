@@ -128,7 +128,7 @@
 本批10件贴图已使用内置 image_gen 逐件绘制并接入。最终图标为48×48透明PNG、16色以内、四周4px留边，统一物品展示透视和左上光源。对应的 `pendingArt` 标记已移除。
 
 [查看10件图标与原尺寸预览](../../assets/item-art/medical-collectibles/index.html) ·
-[完整实际提示词与生成来源](../../assets/medical-collectibles-generation.json)。透明原稿在
+[完整实际提示词与生成来源](../../assets/source/prompts/medical-collectibles-generation.json)。透明原稿在
 `assets/item-art/medical-collectibles/sources/`，可运行 `node tools/prepare-medical-collectibles-art.js` 重新整理。
 
 这一批的识别难点是**它们长得都像"米白色的盒子"**：监护仪、除颤仪、呼吸机主机、注射泵、

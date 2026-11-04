@@ -1,7 +1,7 @@
 /* 只验证本轮9件电子产品，允许其他类别并行新增待绘制物品。 */
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict'),crypto=require('crypto');
 const sharp=require('sharp'),{chromium}=require('playwright'),{pathToFileURL}=require('url');
-const root=path.resolve(__dirname,'..'),spec=require('../assets/electronics-generation.json'),folder=path.join(root,'assets/item-art/electronics');
+const root=path.resolve(__dirname,'..'),spec=require('../assets/source/prompts/electronics-generation.json'),folder=path.join(root,'assets/item-art/electronics');
 const c=vm.createContext({});for(const f of ['config.js','data.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),c);const items=vm.runInContext('ITEMS',c);
 async function main(){
  assert.equal(spec.items.length,9);const qa=[],hashes=new Set();

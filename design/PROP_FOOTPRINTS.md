@@ -21,11 +21,11 @@
 
 `canopy:{fadeRows:2,opacity:0.3}` 让玩家中心进入视觉范围上两行时，树冠以30%不透明度绘制，离开恢复100%。树冠单独在角色之后绘制，并裁剪到已探索格；不会把树后尚未探索的区域提前显示。暗处记忆树冠保持30%显示。
 
-新版原生树图96×96，含正面、侧面、背面。四棵树的树干位置与此前一致，视觉左上角向左1格、向上2格移动。预览见 `assets/tree-canopy/index.html`，测试 `node tools/test-tree-canopy.js`。
+新版原生树图96×96，含正面、侧面、背面。四棵树的树干位置与此前一致，视觉左上角向左1格、向上2格移动。预览见 `assets/source/tree-canopy/index.html`，测试 `node tools/test-tree-canopy.js`。
 
 ## 双格素材分辨率
 
-原生分辨率按每格32像素制作：`[2,1]` 对应64×32，`[1,2]` 对应32×64，后续 `[2,2]` 对应64×64。本轮9类家具共27张三向图已从原始高分辨率生成图重新采样，不放大旧32px成品；记录位于 `assets/scene-furniture-large/manifest.json`。双格实例优先使用 `_large` 版本，单格实例继续使用原图，碰撞尺寸不由图片大小反推。
+原生分辨率按每格32像素制作：`[2,1]` 对应64×32，`[1,2]` 对应32×64，后续 `[2,2]` 对应64×64。本轮9类家具共27张三向图已从原始高分辨率生成图重新采样，不放大旧32px成品；记录位于 `assets/source/scene-furniture-large/manifest.json`。双格实例优先使用 `_large` 版本，单格实例继续使用原图，碰撞尺寸不由图片大小反推。
 
 运行 `node tools/prepare-large-furniture.js` 导出原生图，`node tools/gen-furniture-directions-gallery.js` 更新总览，再运行 `node build.js`。`node tools/test-large-furniture.js` 验证像素尺寸、原稿来源、单/双格选图、浏览器与离线版。
 

@@ -1,5 +1,5 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict'),crypto=require('crypto');
-const root=path.resolve(__dirname,'../..'),folder=path.join(root,'assets/scene-furniture-batch-02'),m=require('../../assets/scene-furniture-batch-02/manifest.json'),lib=require('../../design/maps/shared/scene-library.js'),ArtMap=require('../../design/maps/shared/map-art-map.js'),Core=require('../../design/maps/shared/map-core.js'),Tpl=require('../../design/maps/shared/map-templates.js');
+const root=path.resolve(__dirname,'../..'),folder=path.join(root,'assets/source/scene-furniture-batch-02'),m=require('../../assets/source/scene-furniture-batch-02/manifest.json'),lib=require('../../design/maps/shared/scene-library.js'),ArtMap=require('../../design/maps/shared/map-art-map.js'),Core=require('../../design/maps/shared/map-core.js'),Tpl=require('../../design/maps/shared/map-templates.js');
 const fronts=m.assets.filter(a=>a.facing==='front');
 function staticChecks(){
  assert.equal(m.assets.length,36);assert.equal(fronts.length,12);assert.equal(m.planned.length,10);
@@ -14,7 +14,7 @@ function staticChecks(){
   assert.equal(!!reg.paint,a.facing==='front');if(reg.paint)assert.deepEqual(reg.paint.footprint,a.size.map(v=>v/32));
  }
  for(const a of m.planned)assert(!lib.placeables.some(x=>x.id===a.id),'未完成素材不可选');
- const base=require('../../assets/scene-furniture-batch-02/map-baseline.json');for(const [f,hash] of Object.entries(base)){let bytes;if(f.endsWith('.json'))bytes=fs.readFileSync(path.join(root,f));else bytes=fs.readFileSync(path.join(root,'js/data.js'),'utf8').match(new RegExp('/\\* BEGIN GENERATED '+f+' \\*/[\\s\\S]*?/\\* END GENERATED '+f+' \\*/'))[0];assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),hash,'正式地图变动 '+f);}
+ const base=require('../../assets/source/scene-furniture-batch-02/map-baseline.json');for(const [f,hash] of Object.entries(base)){let bytes;if(f.endsWith('.json'))bytes=fs.readFileSync(path.join(root,f));else bytes=fs.readFileSync(path.join(root,'js/data.js'),'utf8').match(new RegExp('/\\* BEGIN GENERATED '+f+' \\*/[\\s\\S]*?/\\* END GENERATED '+f+' \\*/'))[0];assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),hash,'正式地图变动 '+f);}
 }
 async function editorChecks(page){
  const fresh=Tpl.create({id:'furniture-batch-02',width:48,height:36,template:'blank'}).data;

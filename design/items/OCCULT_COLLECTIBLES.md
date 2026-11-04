@@ -95,7 +95,7 @@
 
 新增的 `occ01–occ15` 共15件已使用内置 image_gen 逐件绘制，交付为48×48透明像素图，最多16色，四边保留4像素透明边距。无声祈祷铃展示空腔，不添加铃舌；全批不添加超自然光效。
 
-[图标总览](../../assets/item-art/occult/index.html) · [完整提示词与生成记录](../../assets/occult-generation.json)。透明原稿位于 `assets/item-art/occult/sources/`，运行 `node tools/prepare-occult-art.js` 可重新整理游戏图标。
+[图标总览](../../assets/item-art/occult/index.html) · [完整提示词与生成记录](../../assets/source/prompts/occult-generation.json)。透明原稿位于 `assets/item-art/occult/sources/`，运行 `node tools/prepare-occult-art.js` 可重新整理游戏图标。
 
 
 十五件里有十一件是"小而暗"的物件，缩到 48×48 全靠轮廓与一处高光：

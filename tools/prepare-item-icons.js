@@ -1,12 +1,12 @@
 /* 将 imagegen 原稿整理成游戏规格；需要 sharp。
    node tools/prepare-item-icons.js <原稿目录>
-   文件映射与提示词见 assets/item-icon-prompts.json。 */
+   文件映射与提示词见 assets/source/prompts/item-icon-prompts.json。 */
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/item-icon-prompts.json');
+const manifest = require('../assets/source/prompts/item-icon-prompts.json');
 const sourceDir = process.argv[2];
 const only = process.argv[3];
 if (!sourceDir) {

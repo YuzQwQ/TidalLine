@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/gear-prompts.json');
+const manifest = require('../assets/source/prompts/gear-prompts.json');
 (async () => {
   const groups = [manifest.icons.filter(a => ['weapon','bag'].includes(a.type)), manifest.icons.filter(a => a.type === 'helmet').sort((a,b) => a.lv - b.lv), manifest.icons.filter(a => a.type === 'body').sort((a,b) => a.lv - b.lv)];
   const width = 912, height = 548, svg = [`<rect width="${width}" height="${height}" fill="#0b1411"/>`], layers = [];

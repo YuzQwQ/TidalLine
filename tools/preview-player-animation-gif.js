@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/player-animation-prompts.json');
+const manifest = require('../assets/source/prompts/player-animation-prompts.json');
 (async () => {
   const states = Object.entries(manifest.actions), dirs = ['s','n','e','w'];
   const width = 546, height = 60 + states.length * 112 + 16;

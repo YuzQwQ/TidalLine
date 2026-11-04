@@ -1,5 +1,5 @@
 const fs=require('fs'),path=require('path'),root=path.resolve(__dirname,'..');
-const m=require('../assets/scene-furniture-batch-02/manifest.json'),file=path.join(root,'design/maps/shared/scene-assets.json'),spec=JSON.parse(fs.readFileSync(file,'utf8'));
+const m=require('../assets/source/scene-furniture-batch-02/manifest.json'),file=path.join(root,'design/maps/shared/scene-assets.json'),spec=JSON.parse(fs.readFileSync(file,'utf8'));
 for(const a of m.assets){
  if(a.status!=='ready'||!fs.existsSync(path.join(root,a.target)))throw Error('素材尚未完成 '+a.id);
  const rec={group:'props',id:a.id,name:a.name+(a.facing==='front'?'':a.facing==='side'?' · 侧面':' · 背面'),role:a.facing==='front'?'prop':'scene-component',usage:'不可搜索实体家具；按footprint阻挡通行、弹道与视线。'};

@@ -216,5 +216,5 @@
 ## 待办
 
 - 29件生活用品图标现已齐全。本轮完成24件生活用品，并补齐2件电子产品与1件文物藏品，共27件；全部使用48×48透明PNG。
-- 27件新增物品已移除pendingArt标记，游戏按ID读取图标。原稿与完整提示词见 assets/collectibles-generation.json；[查看新增图标总览](../../assets/item-art/collectibles/index.html)。
+- 27件新增物品已移除pendingArt标记，游戏按ID读取图标。原稿与完整提示词见 assets/source/prompts/collectibles-generation.json；[查看新增图标总览](../../assets/item-art/collectibles/index.html)。
 - 收藏品候选（长命锁、潮绣被面、竹骨麻将、红木算盘、铜制手炉）等待与其它文化传统的工艺品一起重新入场。

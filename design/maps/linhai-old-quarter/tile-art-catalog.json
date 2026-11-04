@@ -528,5 +528,5 @@
     "source": "../../../tools/build-linhai-map.js",
     "provisionalProps": "7类占位家具已补齐独立素材，另新增安保监控台，共10张图替换23处；实体占格保留。"
   },
-  "furnitureGallery": "../../../assets/scene-furniture/index.html"
+  "furnitureGallery": "../../../assets/source/scene-furniture/index.html"
 }

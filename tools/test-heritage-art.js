@@ -1,7 +1,7 @@
 /* 只验证本轮8件文物藏品，允许其他类别并行新增待绘制物品。 */
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict'),crypto=require('crypto');
 const sharp=require('sharp'),{chromium}=require('playwright'),{pathToFileURL}=require('url');
-const root=path.resolve(__dirname,'..'),spec=require('../assets/heritage-generation.json'),folder=path.join(root,'assets/item-art/heritage');
+const root=path.resolve(__dirname,'..'),spec=require('../assets/source/prompts/heritage-generation.json'),folder=path.join(root,'assets/item-art/heritage');
 const c=vm.createContext({});for(const f of ['config.js','data.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),c);const items=vm.runInContext('ITEMS',c);
 async function main(){
  assert.equal(spec.items.length,8);const qa=[],hashes=new Set();

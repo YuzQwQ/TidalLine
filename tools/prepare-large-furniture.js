@@ -1,6 +1,6 @@
 /* 从生成原稿重新采样原生双格图，绝不放大旧32px成品。 */
 const fs=require('fs'),path=require('path'),sharp=require('sharp');
-const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/scene-furniture-large'),m=require('../assets/scene-furniture-large/manifest.json');
+const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/source/scene-furniture-large'),m=require('../assets/source/scene-furniture-large/manifest.json');
 (async()=>{for(const a of m.assets){
  const [w,h]=a.canvas,{data,info}=await sharp(path.join(folder,a.source)).ensureAlpha().raw().toBuffer({resolveWithObject:true});
  let l=info.width,t=info.height,r=-1,b=-1;for(let y=0;y<info.height;y++)for(let x=0;x<info.width;x++)if(data[(y*info.width+x)*4+3]>=128){l=Math.min(l,x);t=Math.min(t,y);r=Math.max(r,x);b=Math.max(b,y);}

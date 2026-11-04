@@ -1,6 +1,6 @@
 # 通用地面素材 · 第一批设计稿
 
-状态：6张素材已绘制并整理为32×32 PNG，连铺与贴花检查通过，待视觉评审。已登记素材库并接入地图编辑器，现有地图未自动替换。查看[素材与组合预览](../../assets/ground-batch-01/index.html)、[原稿及实际提示词](../../assets/ground-batch-01/manifest.json)、[质量报告](../../assets/ground-batch-01/quality.json)。
+状态：6张素材已绘制并整理为32×32 PNG，连铺与贴花检查通过，待视觉评审。已登记素材库并接入地图编辑器，现有地图未自动替换。查看[素材与组合预览](../../assets/source/ground-batch-01/index.html)、[原稿及实际提示词](../../assets/source/ground-batch-01/manifest.json)、[质量报告](../../assets/source/ground-batch-01/quality.json)。
 
 ## 本批范围：6张有色PNG
 

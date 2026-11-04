@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/player-animation-prompts.json');
+const manifest = require('../assets/source/prompts/player-animation-prompts.json');
 const sourceDir = process.argv[2];
 if (!sourceDir) { console.error('请指定原稿目录'); process.exit(1); }
 

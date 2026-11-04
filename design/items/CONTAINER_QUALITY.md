@@ -91,7 +91,7 @@
 
 16 个新容器已使用内置 image_gen 分别重绘。统一规格：32×32 RGBA、主体位于 28×28 内、
 75°俯视、左上光源、顶面亮 / 南立面暗、透明边缘、少量旧化像素，不附带地面和投影。
-原稿、完整提示词与旧图对比保存在 [容器重绘目录](../../assets/container-redraw/index.html)，
+原稿、完整提示词与旧图对比保存在 [容器重绘目录](../../assets/source/container-redraw/index.html)，
 运行 `node tools/prepare-container-redraw.js` 可从透明原稿重新整理交付尺寸（需要 sharp）。
 旧 `tools/gen-container-art.js` 默认保留新版素材；仅显式添加 `--legacy` 时覆盖为旧程序化画法。
 `node tools/preview-container-art.js 5` 会拼一张放大图，方便肉眼检查缩到一格后是否还认得出。

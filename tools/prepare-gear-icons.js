@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/gear-prompts.json');
+const manifest = require('../assets/source/prompts/gear-prompts.json');
 const sourceDir = process.argv[2];
 if (!sourceDir) { console.error('用法: node tools/prepare-gear-icons.js <原稿目录>'); process.exit(1); }
 (async () => {

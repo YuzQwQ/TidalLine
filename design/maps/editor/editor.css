@@ -123,6 +123,9 @@ kbd {
 .cat-item:hover { background: #eaf1e6; }
 .cat-item.on { background: #cfe3d5; color: #14493c; font-weight: 600; }
 .cat-item .sw { width: 9px; height: 9px; border-radius: 2px; border: 1px solid rgba(0,0,0,.18); flex: 0 0 auto; }
+/* 有缩略图的条目（家具、地面）用 16px 见方：9px 时 32×32 的像素图只剩一团色块，
+   分不出床和柜台。色块（没有图的分类）仍用上面那条小的。 */
+.cat-item img.sw { width: 16px; height: 16px; border: 0; object-fit: contain; image-rendering: pixelated; }
 .cat-item .n { margin-left: auto; font-family: var(--mono); color: #8b9d94; }
 .cat-item.on .n { color: #2c6b54; }
 .cat-paint { font-size: 8px; color: #9bb8a6; margin-left: 4px; }

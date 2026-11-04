@@ -845,7 +845,7 @@ Esc 由浏览器强制解锁，之后 `toast` 提示"点画面继续"。
 **统一规范见 [ART_STYLE.md](ART_STYLE.md)。角色和立体场景物件使用相同的约 75° 倾斜俯视正交投影。**
 
 柜子、门、桌椅和油桶同时展示顶面与短立面，以明暗和厚度体现体积。地板、积水和地面标记保持平坦。
-物品栏图标使用独立的展示视角。旧版纯 90° 场景提示词已更新，旧素材归档在 `assets/archive/perspective-v1/`。
+物品栏图标使用独立的展示视角。旧版纯 90° 场景提示词已更新，旧素材归档在 `assets/source/archive/perspective-v1/`。
 
 | 分组 | 目录 | 文件数 | 内容 |
 |---|---|---|---|
@@ -855,11 +855,28 @@ Esc 由浏览器强制解锁，之后 `toast` 提示"点画面继续"。
 | 装饰 | `assets/props/` | 5 | 办公桌、货架、油桶、翻倒椅子、血迹 |
 
 规格：32 × 32，角色和物件占中央 28 × 28，四周 2px 透明边；地形满幅不透明，避免格子间出现黑缝。
+
+> 上面这张表是最初一批的数字。现在运行时场景图共 **180 张**（18 地块 + 162 物件），
+> 全部登记在 `design/maps/shared/scene-assets.json`，条目数、占地、方向以登记表为准，
+> 别再照抄这张表。目录职责、命名、画布、字段定义见
+> **[design/maps/SCENE_ASSET_SPEC.md](design/maps/SCENE_ASSET_SPEC.md)**。
+
+**编辑器的素材列表不是手写的**：`design/maps/editor/palette.js` 的「装饰」分类直接遍历
+`SceneLibrary.placeables`（= 登记表里 `role: "prop"` 的条目），再补上"地图在用但没登记"的旧类型兜底。
+所以新家具登记完就能在编辑器里选到，不用先在地图上摆一个实例。早先这一组是从地图上的
+`prop.type` 反推的，导致"图上放过的才看得见、诊疗床被并进通用床"这类缺口。
+
+两道闸门：
+
+```bash
+node tools/build-scene-library.js   # 编译登记表 → scene-library.js / data.js / 素材总览页；漏登记即报错
+node tools/check-assets.js          # 目录体检：根目录散文件、批次命名、footprint、缺图、方向变体
+```
 生成原稿后跑 `node tools/prepare-scene-icons.js <原稿目录>` 统一裁切缩放
 （角色的一条清单会展开成 3 个文件，原稿名和成品名一致即可）。
 三向角色可通过清单的 `sources.s / sources.n / sources.e` 分别指定原稿；普通资源用 `source`。
 原稿使用内置 image_gen 逐张生成，角色背面和右侧以正面原稿作为形象与配色参考。
-完整提示词和原稿映射保存在 `assets/asset-prompts.json`，当前透视版本的精确生成记录见 `assets/scene-generation-v2.json`；第一版记录保留在 `assets/scene-generation.json`。
+完整提示词和原稿映射保存在 `assets/source/prompts/asset-prompts.json`，当前透视版本的精确生成记录见 `assets/source/prompts/scene-generation-v2.json`；第一版记录保留在 `assets/source/prompts/scene-generation.json`。
 
 门的方向在地图加载时按相邻墙体自动判断：东西墙使用正向图，上下通行；南北墙使用 `_side` 图，左右通行。
 普通门、避难门各有两向两态，共八张图。特殊门洞可在 `js/data.js` 的 `DOOR_AXES` 中用 `"x,y": "vertical"` 或 `"horizontal"` 指定，详见美术规范。
@@ -1406,7 +1423,7 @@ node tools/apply-tune.js tide-tune.json --test
 ## 测试
 
 玩家已有待机、行走、射击、受击、死亡、搜刮、闪避 7 种三向动画，朝左镜像，共 60 帧。
-打开 **`玩家动画.html`** 可暂停、调速预览；图集在 `assets/anim/`，参数在 `PLAYER_ANIMS`，提示词与原稿记录在 `assets/player-animation-prompts.json`。
+打开 **`玩家动画.html`** 可暂停、调速预览；图集在 `assets/anim/`，参数在 `PLAYER_ANIMS`，提示词与原稿记录在 `assets/source/prompts/player-animation-prompts.json`。
 行走按实际位移推进，顶住障碍不迈步；死亡先完整播放并停留 0.2 秒，再进入结算。
 
 动画工具（素材整理需要 sharp，浏览器检查需要 playwright）：
@@ -1489,7 +1506,7 @@ node run-test.js     # mock 浏览器环境跑完整游戏流程和动画状态�
 
 ### 场景家具第二批
 
-新增12种不可搜索家具，三向共36张，按32px/格制作原生单格、多格PNG。正面以prop登记并提供占地，方向图用scene-component、variantOf、facing登记；素材库构建自动同步编辑器目录、方向覆盖与运行时预加载，build-prop-bounds同样从登记表读取新增家具。绘制原稿、完整提示词、22种清单、预览与验收记录见 [场景家具第二批](assets/scene-furniture-batch-02/README.md)。第二批10种仅列为计划。构建用 `node build.js --assets-only` 保持正式地图快照与布点不变，`node tools/test-scene-library.js` 包含新增家具的编辑器选择、朝向、撤销、保存重开、离线选图与多格碰撞检查。
+新增12种不可搜索家具，三向共36张，按32px/格制作原生单格、多格PNG。正面以prop登记并提供占地，方向图用scene-component、variantOf、facing登记；素材库构建自动同步编辑器目录、方向覆盖与运行时预加载，build-prop-bounds同样从登记表读取新增家具。绘制原稿、完整提示词、22种清单、预览与验收记录见 [场景家具第二批](assets/source/scene-furniture-batch-02/README.md)。第二批10种仅列为计划。构建用 `node build.js --assets-only` 保持正式地图快照与布点不变，`node tools/test-scene-library.js` 包含新增家具的编辑器选择、朝向、撤销、保存重开、离线选图与多格碰撞检查。
 
 
 ### 商人批量出售

@@ -6,7 +6,7 @@ const http = require('http');
 const { pathToFileURL } = require('url');
 const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/player-animation-prompts.json');
+const manifest = require('../assets/source/prompts/player-animation-prompts.json');
 const output = path.join(root, 'output/player-animation');
 const server = http.createServer((req, res) => {
   const target = path.resolve(root, '.' + decodeURIComponent(new URL(req.url, 'http://localhost').pathname));

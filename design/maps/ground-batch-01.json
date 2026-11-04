@@ -163,9 +163,9 @@
     ],
     "requiresExistingStoneAndCourtyardComparison": true
   },
-  "generationManifest": "../../assets/ground-batch-01/manifest.json",
-  "preview": "../../assets/ground-batch-01/index.html",
-  "qualityReport": "../../assets/ground-batch-01/quality.json",
+  "generationManifest": "../../assets/source/ground-batch-01/manifest.json",
+  "preview": "../../assets/source/ground-batch-01/index.html",
+  "qualityReport": "../../assets/source/ground-batch-01/quality.json",
   "editorLibrary": "shared/scene-assets.json",
   "integration": "4 terrain brushes plus 2 noncolliding ground decals; existing map unchanged"
 }

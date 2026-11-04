@@ -1,6 +1,6 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict');
 const sharp=require('sharp'),{chromium}=require('playwright'),{pathToFileURL}=require('url');
-const root=path.resolve(__dirname,'..'),m=require('../assets/scene-furniture/manifest.json');
+const root=path.resolve(__dirname,'..'),m=require('../assets/source/scene-furniture/manifest.json');
 (async()=>{
  const c=vm.createContext({console,performance});for(const f of ['config.js','data.js','core.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),c);
  const {map,M}=vm.runInContext('({map:RAID_MAP,M})',c);M.load(map.rows,map.doorAxes,map.props,map);
@@ -14,6 +14,6 @@ const root=path.resolve(__dirname,'..'),m=require('../assets/scene-furniture/man
  console.log('OK: 10张32px透明图，32处替换，106处实体碰撞与不可搜索属性');
  const browser=await chromium.launch({channel:'msedge',headless:true});try{
  for(const file of ['index.html','潮汐线.html']){const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(pathToFileURL(path.join(root,file)).href+'#base');await page.waitForFunction(ids=>typeof Game!=='undefined'&&ids.every(id=>Art.get('props',id)),m.assets.map(a=>a.id));assert(await page.evaluate(({ids,offline})=>ids.every(id=>{const i=Art.get('props',id);return i.naturalWidth===32&&(!offline||i.src.startsWith('data:'));}),{ids:m.assets.map(a=>a.id),offline:file!=='index.html'}));await page.evaluate(()=>{Base.close();Game.startRun({ammo:0,bandage:0,stone:0});Game.enemies=[];Game.state='ended';});assert.deepEqual(errors,[]);await page.close();console.log('OK: '+file+' 全部家具载入');}
- const p=await browser.newPage({viewport:{width:1280,height:1000}});await p.goto(pathToFileURL(path.join(root,'assets/scene-furniture/index.html')).href);await p.evaluate(()=>Promise.all([...document.images].map(i=>i.decode())));await p.screenshot({path:path.join(root,'assets/scene-furniture/contact-sheet.png'),fullPage:true});for(const width of [320,390]){await p.setViewportSize({width,height:844});assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}console.log('OK: 美术总览与窄屏布局');
+ const p=await browser.newPage({viewport:{width:1280,height:1000}});await p.goto(pathToFileURL(path.join(root,'assets/source/scene-furniture/index.html')).href);await p.evaluate(()=>Promise.all([...document.images].map(i=>i.decode())));await p.screenshot({path:path.join(root,'assets/source/scene-furniture/contact-sheet.png'),fullPage:true});for(const width of [320,390]){await p.setViewportSize({width,height:844});assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}console.log('OK: 美术总览与窄屏布局');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

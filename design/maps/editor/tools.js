@@ -312,6 +312,10 @@
       };
       /* 只在不是正面时写 facing：正面是默认值，写进去只是给 layout 增噪。 */
       if (facing !== 'front') rec.facing = facing;
+      /* 素材自己声明了"哪几格挡人""树冠怎么淡出"就一起带过去。
+         少了这些，3×3 的树会变成 3×3 的实心方块（只有树干该挡人）。 */
+      if (Array.isArray(material.collisionCells)) rec.collisionCells = material.collisionCells.map(c => c.slice());
+      if (material.canopy) rec.canopy = Object.assign({}, material.canopy);
       d.props.push(rec);
       return { ok: true, id: rec.id, label: rec.name };
     }

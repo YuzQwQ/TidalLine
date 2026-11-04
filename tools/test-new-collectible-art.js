@@ -1,7 +1,7 @@
 /* 新增27件图标的交付规格、物品定义不变，以及双版本实际装载。 */
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict'),crypto=require('crypto');
 const sharp=require('sharp'),{chromium}=require('playwright'),{pathToFileURL}=require('url');
-const root=path.resolve(__dirname,'..'),manifest=require('../assets/collectibles-generation.json');
+const root=path.resolve(__dirname,'..'),manifest=require('../assets/source/prompts/collectibles-generation.json');
 const folder=path.join(root,'assets/item-art/collectibles'),output=path.join(root,'output/collectible-art');
 const c=vm.createContext({});for(const f of ['config.js','data.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),c);
 const items=vm.runInContext('ITEMS',c);

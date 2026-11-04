@@ -1,4 +1,4 @@
-/* 从 assets/asset-prompts.json 生成美术清单页。
+/* 从 assets/source/prompts/asset-prompts.json 生成美术清单页。
    会顺便检测哪些图已经画好了（assets/chars|props|tiles 下有没有对应文件）。
    角色是三向图，一张卡片里同时给出 _s / _n / _e 三个缩略图，_e 还多显示一个镜像预览。
    用法：node gen-art-sheet.js */
@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const root = __dirname;
-const manifest = JSON.parse(fs.readFileSync(path.join(root, 'assets/asset-prompts.json'), 'utf8'));
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'assets/source/prompts/asset-prompts.json'), 'utf8'));
 
 const GROUP_NAME = { chars: '角色', props: '场景物件', tiles: '地形' };
 const GROUP_ORDER = ['chars', 'props', 'tiles'];
@@ -273,7 +273,7 @@ const html = `<!DOCTYPE html>
     角色是<b>三向图</b>（正 / 背 / 侧），朝左直接用侧面图<b>水平镜像</b>，不用画第四张。
     每张卡右下角可以复制拼好的 prompt。
     玩家动作另见 <a href="玩家动画.html" style="color:#a8c4ba">玩家动画预览</a>（7 种动作、三向图、60 帧）。
-    墙体分层与连接另见 <a href="assets/wall-volume/index.html" style="color:#a8c4ba">立体墙体对照</a>（连续墙顶、南向立面、东向侧面）。
+    墙体分层与连接另见 <a href="assets/source/wall-volume/index.html" style="color:#a8c4ba">立体墙体对照</a>（连续墙顶、南向立面、东向侧面）。
   </div>
   <div class="bar-wrap">
     <div class="pbar"><i style="width:${pct}%"></i></div>
@@ -302,7 +302,7 @@ const html = `<!DOCTYPE html>
 ${body}
 
 <footer>
-  清单由 <code>gen-art-sheet.js</code> 从 <code>assets/asset-prompts.json</code> 生成。
+  清单由 <code>gen-art-sheet.js</code> 从 <code>assets/source/prompts/asset-prompts.json</code> 生成。
   更新图片后重跑 <code>node gen-art-sheet.js</code> 刷新预览与进度，再运行 <code>node build.js</code> 打包游戏。缺某个方向时会自动借其它方向，全缺才退回代码绘制的临时图形。
 </footer>
 

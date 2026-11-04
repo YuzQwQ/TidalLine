@@ -99,7 +99,7 @@
 新增12件贴图已使用内置 image_gen 分别绘制并接入。最终图标为48×48透明PNG、16色以内、四周4px留边，统一物品展示透视与左上光源。对应的 `pendingArt` 标记已移除。
 
 [查看12件图标与原尺寸预览](../../assets/item-art/industrial/index.html) ·
-[完整实际提示词与生成来源](../../assets/industrial-generation.json)。透明原稿保存在
+[完整实际提示词与生成来源](../../assets/source/prompts/industrial-generation.json)。透明原稿保存在
 `assets/item-art/industrial/sources/`，可运行 `node tools/prepare-industrial-art.js` 重新整理规格。
 
 这一批的识别要点与别类不同：**它们大多是灰色的**。所以不能靠颜色区分，只能靠轮廓与一处高对比细节：

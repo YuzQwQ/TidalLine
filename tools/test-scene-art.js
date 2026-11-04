@@ -6,7 +6,7 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/asset-prompts.json');
+const manifest = require('../assets/source/prompts/asset-prompts.json');
 const entries = [...manifest.assets, ...manifest.optional].flatMap(a => a.facing
   ? a.dirs.map(dir => a.group + '/' + a.id + '_' + dir) : [a.group + '/' + a.id]);
 const output = path.join(root, 'output', 'scene-art');

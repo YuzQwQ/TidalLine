@@ -1,6 +1,6 @@
 /* 整理 image_gen 原稿，不绘制/替换内容：裁透明边、最近邻缩放、二值 alpha、16色。 */
 const fs=require('fs'),path=require('path'),sharp=require('sharp');
-const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/scene-furniture');
+const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/source/scene-furniture');
 const manifest=JSON.parse(fs.readFileSync(path.join(folder,'manifest.json'),'utf8'));
 async function main(){
  const report=[];

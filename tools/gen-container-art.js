@@ -557,7 +557,7 @@ const DRAW = {
 
 const outDir = path.join(__dirname, '..', 'assets', 'props');
 const forceLegacy = process.argv.includes('--legacy');
-const redrawManifest = path.join(__dirname, '../assets/container-redraw/manifest.json');
+const redrawManifest = path.join(__dirname, '../assets/source/container-redraw/manifest.json');
 const protectedArt = new Set(fs.existsSync(redrawManifest) ? JSON.parse(fs.readFileSync(redrawManifest, 'utf8')).assets.filter(a => a.status === 'ready').map(a => a.id) : []);
 const wanted = process.argv.slice(2).filter(a => a !== '--legacy');
 const names = wanted.length ? wanted : Object.keys(DRAW);

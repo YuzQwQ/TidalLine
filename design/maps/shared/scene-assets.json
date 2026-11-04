@@ -148,32 +148,61 @@
     {
       "group": "props",
       "id": "barrel",
-      "name": "油桶",
-      "role": "scene-component"
+      "name": "杂物桶",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "barrel",
+        "label": "杂物桶",
+        "name": "杂物桶",
+        "footprint": [
+          1,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "barrel_back",
-      "name": "barrel_back",
-      "role": "scene-component"
+      "name": "杂物桶 · 背面",
+      "role": "scene-component",
+      "variantOf": "barrel",
+      "facing": "back"
     },
     {
       "group": "props",
       "id": "barrel_side",
-      "name": "barrel_side",
-      "role": "scene-component"
+      "name": "杂物桶 · 侧面",
+      "role": "scene-component",
+      "variantOf": "barrel",
+      "facing": "side"
     },
     {
       "group": "props",
       "id": "bed_clinic",
-      "name": "bed_clinic",
-      "role": "scene-component"
+      "name": "诊疗床",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "large": true,
+      "paint": {
+        "kind": "prop",
+        "type": "bed_clinic",
+        "label": "诊疗床",
+        "name": "诊疗床",
+        "footprint": [
+          1,
+          2
+        ]
+      }
     },
     {
       "group": "props",
       "id": "bed_clinic_back",
-      "name": "bed_clinic_back",
-      "role": "scene-component"
+      "name": "诊疗床 · 背面",
+      "role": "scene-component",
+      "variantOf": "bed_clinic",
+      "facing": "back"
     },
     {
       "group": "props",
@@ -196,20 +225,36 @@
     {
       "group": "props",
       "id": "bed_clinic_side",
-      "name": "bed_clinic_side",
-      "role": "scene-component"
+      "name": "诊疗床 · 侧面",
+      "role": "scene-component",
+      "variantOf": "bed_clinic",
+      "facing": "side"
     },
     {
       "group": "props",
       "id": "bed_home",
-      "name": "bed_home",
-      "role": "scene-component"
+      "name": "家用床",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "large": true,
+      "paint": {
+        "kind": "prop",
+        "type": "bed_home",
+        "label": "家用床",
+        "name": "家用床",
+        "footprint": [
+          1,
+          2
+        ]
+      }
     },
     {
       "group": "props",
       "id": "bed_home_back",
-      "name": "bed_home_back",
-      "role": "scene-component"
+      "name": "家用床 · 背面",
+      "role": "scene-component",
+      "variantOf": "bed_home",
+      "facing": "back"
     },
     {
       "group": "props",
@@ -232,20 +277,36 @@
     {
       "group": "props",
       "id": "bed_home_side",
-      "name": "bed_home_side",
-      "role": "scene-component"
+      "name": "家用床 · 侧面",
+      "role": "scene-component",
+      "variantOf": "bed_home",
+      "facing": "side"
     },
     {
       "group": "props",
       "id": "bench_wood",
-      "name": "bench_wood",
-      "role": "scene-component"
+      "name": "长凳",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "large": true,
+      "paint": {
+        "kind": "prop",
+        "type": "bench_wood",
+        "label": "长凳",
+        "name": "长凳",
+        "footprint": [
+          2,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "bench_wood_back",
-      "name": "bench_wood_back",
-      "role": "scene-component"
+      "name": "长凳 · 背面",
+      "role": "scene-component",
+      "variantOf": "bench_wood",
+      "facing": "back"
     },
     {
       "group": "props",
@@ -268,8 +329,10 @@
     {
       "group": "props",
       "id": "bench_wood_side",
-      "name": "bench_wood_side",
-      "role": "scene-component"
+      "name": "长凳 · 侧面",
+      "role": "scene-component",
+      "variantOf": "bench_wood",
+      "facing": "side"
     },
     {
       "group": "props",
@@ -316,38 +379,68 @@
     {
       "group": "props",
       "id": "chair",
-      "name": "翻倒的椅子",
-      "role": "scene-component"
+      "name": "木椅",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "chair",
+        "label": "木椅",
+        "name": "木椅",
+        "footprint": [
+          1,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "chair_back",
-      "name": "chair_back",
-      "role": "scene-component"
+      "name": "木椅 · 背面",
+      "role": "scene-component",
+      "variantOf": "chair",
+      "facing": "back"
     },
     {
       "group": "props",
       "id": "chair_side",
-      "name": "chair_side",
-      "role": "scene-component"
+      "name": "木椅 · 侧面",
+      "role": "scene-component",
+      "variantOf": "chair",
+      "facing": "side"
     },
     {
       "group": "props",
       "id": "console_security",
-      "name": "console_security",
-      "role": "scene-component"
+      "name": "安保监控台",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "console_security",
+        "label": "安保监控台",
+        "name": "安保监控台",
+        "footprint": [
+          1,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "console_security_back",
-      "name": "console_security_back",
-      "role": "scene-component"
+      "name": "安保监控台 · 背面",
+      "role": "scene-component",
+      "variantOf": "console_security",
+      "facing": "back"
     },
     {
       "group": "props",
       "id": "console_security_side",
-      "name": "console_security_side",
-      "role": "scene-component"
+      "name": "安保监控台 · 侧面",
+      "role": "scene-component",
+      "variantOf": "console_security",
+      "facing": "side"
     },
     {
       "group": "props",
@@ -376,14 +469,28 @@
     {
       "group": "props",
       "id": "counter_bank",
-      "name": "counter_bank",
-      "role": "scene-component"
+      "name": "银行柜台",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "large": true,
+      "paint": {
+        "kind": "prop",
+        "type": "counter_bank",
+        "label": "银行柜台",
+        "name": "银行柜台",
+        "footprint": [
+          2,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "counter_bank_back",
-      "name": "counter_bank_back",
-      "role": "scene-component"
+      "name": "银行柜台 · 背面",
+      "role": "scene-component",
+      "variantOf": "counter_bank",
+      "facing": "back"
     },
     {
       "group": "props",
@@ -406,20 +513,36 @@
     {
       "group": "props",
       "id": "counter_bank_side",
-      "name": "counter_bank_side",
-      "role": "scene-component"
+      "name": "银行柜台 · 侧面",
+      "role": "scene-component",
+      "variantOf": "counter_bank",
+      "facing": "side"
     },
     {
       "group": "props",
       "id": "counter_shop",
-      "name": "counter_shop",
-      "role": "scene-component"
+      "name": "营业柜台",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "large": true,
+      "paint": {
+        "kind": "prop",
+        "type": "counter_shop",
+        "label": "营业柜台",
+        "name": "营业柜台",
+        "footprint": [
+          2,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "counter_shop_back",
-      "name": "counter_shop_back",
-      "role": "scene-component"
+      "name": "营业柜台 · 背面",
+      "role": "scene-component",
+      "variantOf": "counter_shop",
+      "facing": "back"
     },
     {
       "group": "props",
@@ -442,8 +565,10 @@
     {
       "group": "props",
       "id": "counter_shop_side",
-      "name": "counter_shop_side",
-      "role": "scene-component"
+      "name": "营业柜台 · 侧面",
+      "role": "scene-component",
+      "variantOf": "counter_shop",
+      "facing": "side"
     },
     {
       "group": "props",
@@ -502,7 +627,7 @@
         20,
         21
       ],
-      "generationManifest": "assets/container-small-safe/manifest.json"
+      "generationManifest": "assets/source/container-small-safe/manifest.json"
     },
     {
       "group": "props",
@@ -633,14 +758,28 @@
     {
       "group": "props",
       "id": "desk",
-      "name": "办公桌",
-      "role": "scene-component"
+      "name": "桌子",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "large": true,
+      "paint": {
+        "kind": "prop",
+        "type": "desk",
+        "label": "桌子",
+        "name": "桌子",
+        "footprint": [
+          2,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "desk_back",
-      "name": "desk_back",
-      "role": "scene-component"
+      "name": "桌子 · 背面",
+      "role": "scene-component",
+      "variantOf": "desk",
+      "facing": "back"
     },
     {
       "group": "props",
@@ -663,20 +802,36 @@
     {
       "group": "props",
       "id": "desk_side",
-      "name": "desk_side",
-      "role": "scene-component"
+      "name": "桌子 · 侧面",
+      "role": "scene-component",
+      "variantOf": "desk",
+      "facing": "side"
     },
     {
       "group": "props",
       "id": "display_clock",
-      "name": "display_clock",
-      "role": "scene-component"
+      "name": "橱窗展柜",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "large": true,
+      "paint": {
+        "kind": "prop",
+        "type": "display_clock",
+        "label": "橱窗展柜",
+        "name": "橱窗展柜",
+        "footprint": [
+          2,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "display_clock_back",
-      "name": "display_clock_back",
-      "role": "scene-component"
+      "name": "橱窗展柜 · 背面",
+      "role": "scene-component",
+      "variantOf": "display_clock",
+      "facing": "back"
     },
     {
       "group": "props",
@@ -699,8 +854,10 @@
     {
       "group": "props",
       "id": "display_clock_side",
-      "name": "display_clock_side",
-      "role": "scene-component"
+      "name": "橱窗展柜 · 侧面",
+      "role": "scene-component",
+      "variantOf": "display_clock",
+      "facing": "side"
     },
     {
       "group": "props",
@@ -711,7 +868,7 @@
         32,
         48
       ],
-      "generationManifest": "assets/door-redraw/manifest.json"
+      "generationManifest": "assets/source/door-redraw/manifest.json"
     },
     {
       "group": "props",
@@ -722,7 +879,7 @@
         32,
         48
       ],
-      "generationManifest": "assets/door-redraw/manifest.json"
+      "generationManifest": "assets/source/door-redraw/manifest.json"
     },
     {
       "group": "props",
@@ -733,7 +890,7 @@
         32,
         48
       ],
-      "generationManifest": "assets/door-redraw/manifest.json"
+      "generationManifest": "assets/source/door-redraw/manifest.json"
     },
     {
       "group": "props",
@@ -744,7 +901,7 @@
         32,
         48
       ],
-      "generationManifest": "assets/door-redraw/manifest.json"
+      "generationManifest": "assets/source/door-redraw/manifest.json"
     },
     {
       "group": "props",
@@ -767,7 +924,7 @@
         32,
         48
       ],
-      "generationManifest": "assets/door-redraw/manifest.json"
+      "generationManifest": "assets/source/door-redraw/manifest.json"
     },
     {
       "group": "props",
@@ -778,7 +935,7 @@
         32,
         48
       ],
-      "generationManifest": "assets/door-redraw/manifest.json"
+      "generationManifest": "assets/source/door-redraw/manifest.json"
     },
     {
       "group": "props",
@@ -789,7 +946,7 @@
         32,
         48
       ],
-      "generationManifest": "assets/door-redraw/manifest.json"
+      "generationManifest": "assets/source/door-redraw/manifest.json"
     },
     {
       "group": "props",
@@ -800,19 +957,33 @@
         32,
         48
       ],
-      "generationManifest": "assets/door-redraw/manifest.json"
+      "generationManifest": "assets/source/door-redraw/manifest.json"
     },
     {
       "group": "props",
       "id": "shelf",
       "name": "货架",
-      "role": "scene-component"
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "large": true,
+      "paint": {
+        "kind": "prop",
+        "type": "shelf",
+        "label": "货架",
+        "name": "货架",
+        "footprint": [
+          2,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "shelf_back",
-      "name": "shelf_back",
-      "role": "scene-component"
+      "name": "货架 · 背面",
+      "role": "scene-component",
+      "variantOf": "shelf",
+      "facing": "back"
     },
     {
       "group": "props",
@@ -835,8 +1006,10 @@
     {
       "group": "props",
       "id": "shelf_side",
-      "name": "shelf_side",
-      "role": "scene-component"
+      "name": "货架 · 侧面",
+      "role": "scene-component",
+      "variantOf": "shelf",
+      "facing": "side"
     },
     {
       "group": "props",
@@ -847,14 +1020,28 @@
     {
       "group": "props",
       "id": "sofa_home",
-      "name": "sofa_home",
-      "role": "scene-component"
+      "name": "沙发",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "large": true,
+      "paint": {
+        "kind": "prop",
+        "type": "sofa_home",
+        "label": "沙发",
+        "name": "沙发",
+        "footprint": [
+          2,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "sofa_home_back",
-      "name": "sofa_home_back",
-      "role": "scene-component"
+      "name": "沙发 · 背面",
+      "role": "scene-component",
+      "variantOf": "sofa_home",
+      "facing": "back"
     },
     {
       "group": "props",
@@ -877,26 +1064,43 @@
     {
       "group": "props",
       "id": "sofa_home_side",
-      "name": "sofa_home_side",
-      "role": "scene-component"
+      "name": "沙发 · 侧面",
+      "role": "scene-component",
+      "variantOf": "sofa_home",
+      "facing": "side"
     },
     {
       "group": "props",
       "id": "stove_home",
-      "name": "stove_home",
-      "role": "scene-component"
+      "name": "灶台",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "stove_home",
+        "label": "灶台",
+        "name": "灶台",
+        "footprint": [
+          1,
+          1
+        ]
+      }
     },
     {
       "group": "props",
       "id": "stove_home_back",
-      "name": "stove_home_back",
-      "role": "scene-component"
+      "name": "灶台 · 背面",
+      "role": "scene-component",
+      "variantOf": "stove_home",
+      "facing": "back"
     },
     {
       "group": "props",
       "id": "stove_home_side",
-      "name": "stove_home_side",
-      "role": "scene-component"
+      "name": "灶台 · 侧面",
+      "role": "scene-component",
+      "variantOf": "stove_home",
+      "facing": "side"
     },
     {
       "group": "props",
@@ -908,31 +1112,60 @@
       "group": "props",
       "id": "tree_courtyard_back",
       "name": "tree_courtyard_back",
-      "role": "scene-component"
+      "role": "scene-component",
+      "variantOf": "tree_courtyard",
+      "facing": "back"
     },
     {
       "group": "props",
       "id": "tree_courtyard_canopy",
-      "name": "tree_courtyard_canopy",
-      "role": "scene-component"
+      "name": "院落树木",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按 footprint 阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "tree_courtyard_canopy",
+        "label": "院落树木",
+        "name": "院落树木",
+        "footprint": [
+          3,
+          3
+        ],
+        "collisionCells": [
+          [
+            1,
+            2
+          ]
+        ],
+        "canopy": {
+          "fadeRows": 2,
+          "opacity": 0.3
+        }
+      }
     },
     {
       "group": "props",
       "id": "tree_courtyard_canopy_back",
-      "name": "tree_courtyard_canopy_back",
-      "role": "scene-component"
+      "name": "院落树木 · 背面",
+      "role": "scene-component",
+      "variantOf": "tree_courtyard_canopy",
+      "facing": "back"
     },
     {
       "group": "props",
       "id": "tree_courtyard_canopy_side",
-      "name": "tree_courtyard_canopy_side",
-      "role": "scene-component"
+      "name": "院落树木 · 侧面",
+      "role": "scene-component",
+      "variantOf": "tree_courtyard_canopy",
+      "facing": "side"
     },
     {
       "group": "props",
       "id": "tree_courtyard_side",
       "name": "tree_courtyard_side",
-      "role": "scene-component"
+      "role": "scene-component",
+      "variantOf": "tree_courtyard",
+      "facing": "side"
     },
     {
       "group": "props",

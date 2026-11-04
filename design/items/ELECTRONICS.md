@@ -112,7 +112,7 @@
 `classification.json` 中对应的 `pendingArt` 标记已移除。
 
 [查看9件图标与原尺寸预览](../../assets/item-art/electronics/index.html) ·
-[完整实际提示词与来源](../../assets/electronics-generation.json)。透明原稿存于
+[完整实际提示词与来源](../../assets/source/prompts/electronics-generation.json)。透明原稿存于
 `assets/item-art/electronics/sources/`；可运行 `node tools/prepare-electronics-art.js` 重新整理规格。
 
 尺寸提示：

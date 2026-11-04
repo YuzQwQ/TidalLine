@@ -12,7 +12,7 @@ const path = require('path');
 const sharp = require('sharp');
 
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/asset-prompts.json');
+const manifest = require('../assets/source/prompts/asset-prompts.json');
 const sourceDir = process.argv[2];
 
 if (!sourceDir) {

@@ -1,7 +1,7 @@
 /* 只验证本轮18件医疗图标；兼容项目中并行新增、尚待绘制的收集品。 */
 const fs=require('fs'),path=require('path'),assert=require('assert/strict'),crypto=require('crypto');
 const sharp=require('sharp'),{chromium}=require('playwright'),{pathToFileURL}=require('url');
-const root=path.resolve(__dirname,'..'),spec=require('../design/items/medical.json'),manifest=require('../assets/medical-generation.json');
+const root=path.resolve(__dirname,'..'),spec=require('../design/items/medical.json'),manifest=require('../assets/source/prompts/medical-generation.json');
 const folder=path.join(root,'assets/item-art/medical'),output=path.join(root,'output/medical-art');
 (async()=>{
  fs.mkdirSync(output,{recursive:true});assert.equal(spec.items.length,18);assert.equal(manifest.items.length,18);

@@ -1,6 +1,6 @@
 /* 原稿裁切/采样/调色板量化；变体边界锁定为同组A，便于稳定混铺。 */
 const fs=require('fs'),path=require('path'),sharp=require('sharp');
-const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/ground-batch-01'),file=path.join(folder,'manifest.json'),m=JSON.parse(fs.readFileSync(file,'utf8'));
+const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/source/ground-batch-01'),file=path.join(folder,'manifest.json'),m=JSON.parse(fs.readFileSync(file,'utf8'));
 const mean=data=>{const v=[0,0,0];for(let y=2;y<30;y++)for(let x=2;x<30;x++)for(let k=0;k<3;k++)v[k]+=data[(y*32+x)*4+k]/784;return v;};
 (async()=>{const groups={};for(const a of m.assets){const source=path.join(folder,a.source);if(!fs.existsSync(source))throw Error('缺少原稿 '+a.id);const meta=await sharp(source).metadata();let data;
  if(a.kind==='ground'){

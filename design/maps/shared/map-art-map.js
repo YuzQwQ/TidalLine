@@ -36,39 +36,23 @@
   }
 
   /* 道具基名 → 已有朝向变体。front 由基名本身承担。
-   * tree_courtyard 是 32px 单格基名；实际绘制用的 96px 树冠另有一条（三向齐全）。 */
-  const FACING_VARIANTS = {
-    barrel: ['side', 'back'],
-    bed_clinic: ['side', 'back'],
-    bed_home: ['side', 'back'],
-    bench_wood: ['side', 'back'],
-    chair: ['side', 'back'],
-    console_security: ['side', 'back'],
-    counter_bank: ['side', 'back'],
-    counter_shop: ['side', 'back'],
-    desk: ['side', 'back'],
-    display_clock: ['side', 'back'],
-    shelf: ['side', 'back'],
-    sofa_home: ['side', 'back'],
-    stove_home: ['side', 'back'],
-    tree_courtyard: ['side', 'back'],
-    tree_courtyard_canopy: ['side', 'back']
-  };
+   * 这张表不再手写：scene-assets.json 里每个 `variantOf + facing` 就是一个方向变体，
+   * 素材库是唯一真相，少一张图构建就会报错（tools/build-scene-library.js）。
+   * 以前这里手抄一份、登记表另写一份，两边迟早对不上。 */
+  const FACING_VARIANTS = {};
+  const LARGE_BASES = new Set();
 
   /* 新素材的三向组件从共用素材库登记读取，游戏与编辑器共用稳定基名。 */
   for(const a of (Library&&Library.assets)||[]){
-    if(a.group==='props'&&a.variantOf&&['side','back'].includes(a.facing)){
+    if(a.group!=='props')continue;
+    if(a.variantOf&&['side','back'].includes(a.facing)){
       const dirs=FACING_VARIANTS[a.variantOf]||(FACING_VARIANTS[a.variantOf]=[]);
       if(!dirs.includes(a.facing))dirs.push(a.facing);
     }
+    /* 有 `_large` 放大版的基名：占地 >1 格时用它，贴图才铺得满两格。
+     * 每个基名三向（正 / 侧 / 背）都齐，实测见 tools/test-map-art-map.js。 */
+    if(a.large)LARGE_BASES.add(a.id);
   }
-
-  /* 有 `_large` 放大版的基名：占地 >1 格时用它，贴图才铺得满两格。
-   * 每个基名三向（正 / 侧 / 背）都齐，实测见 tools/test-map-art-map.js。 */
-  const LARGE_BASES = new Set([
-    'bed_clinic', 'bed_home', 'bench_wood', 'counter_bank', 'counter_shop',
-    'desk', 'display_clock', 'shelf', 'sofa_home'
-  ]);
 
   /* 容器类型字模 → 箱子贴图。与 js/data.js 的 CONTAINER_TYPES.art 同源（有测试锁）。
    * 小型保险箱用crate_heavy，大型保险箱用独立crate_safe_big。 */

@@ -1,6 +1,6 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict'),crypto=require('crypto'),sharp=require('sharp');
 const {chromium}=require('playwright'),{pathToFileURL}=require('url');
-const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/scene-furniture-directions'),m=require('../assets/scene-furniture-directions/manifest.json');
+const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/source/scene-furniture-directions'),m=require('../assets/source/scene-furniture-directions/manifest.json');
 /* 带朝向的家具件数随地图增删，从设计稿现算 */
 const c=vm.createContext({console,performance});
 for(const f of ['config.js','data.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),c);

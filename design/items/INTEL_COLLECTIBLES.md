@@ -89,7 +89,7 @@
 
 本轮新增的 `intel01–intel13` 共13件图标已使用内置图像生成工具逐件绘制，并接入游戏、物品清单、Wiki和离线单文件。交付为48×48透明像素图，最多16色，四边预留4像素透明边距；原有旧报纸与摄影底片图标保留。
 
-[查看图标总览](../../assets/item-art/intel/index.html) · [完整提示词与生成记录](../../assets/intel-generation.json)。透明原稿保存在 `assets/item-art/intel/sources/`，可运行 `node tools/prepare-intel-art.js` 重新整理图标。
+[查看图标总览](../../assets/item-art/intel/index.html) · [完整提示词与生成记录](../../assets/source/prompts/intel-generation.json)。透明原稿保存在 `assets/item-art/intel/sources/`，可运行 `node tools/prepare-intel-art.js` 重新整理图标。
 
 十三件里九件是**纸**，最容易画成一叠同样的白纸。分辨靠三件事：**纸形、配色、附件**。
 

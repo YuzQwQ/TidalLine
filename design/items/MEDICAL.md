@@ -42,7 +42,7 @@
 
 ## 数据与美术
 
-[medical.json](medical.json) 是18件医疗品的源数据，保留完整描述、绘制要求及未来效果。执行 `node tools/build-medical-data.js` 同步运行数据；物品清单和离线构建也会自动同步。18件医疗品图标已全部绘制并装载（含按新描述重绘的绷带），统一48×48透明PNG、硬边透明、4px留边、16色内调色板。医生、仓库、背包、安全箱、搜刮与离线版共用。原稿、提示词与质量报告保存在assets/item-art/medical及assets/medical-generation.json；[查看18件图标总览](../../assets/item-art/medical/index.html)。
+[medical.json](medical.json) 是18件医疗品的源数据，保留完整描述、绘制要求及未来效果。执行 `node tools/build-medical-data.js` 同步运行数据；物品清单和离线构建也会自动同步。18件医疗品图标已全部绘制并装载（含按新描述重绘的绷带），统一48×48透明PNG、硬边透明、4px留边、16色内调色板。医生、仓库、背包、安全箱、搜刮与离线版共用。原稿、提示词与质量报告保存在assets/item-art/medical及assets/source/prompts/medical-generation.json；[查看18件图标总览](../../assets/item-art/medical/index.html)。
 
 医疗产业及物品中新增历史叙事见[提案文件](<../world setting/医疗产业提案.md>)，暂不视为已确认的正式历史。正式世界观文档保持原样。
 

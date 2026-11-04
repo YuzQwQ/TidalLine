@@ -1,7 +1,7 @@
 /* 只验证本轮15件神秘学物品，允许其他类别并行新增待绘制物品。 */
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict'),crypto=require('crypto');
 const sharp=require('sharp'),{chromium}=require('playwright'),{pathToFileURL}=require('url');
-const root=path.resolve(__dirname,'..'),spec=require('../assets/occult-generation.json'),folder=path.join(root,'assets/item-art/occult');
+const root=path.resolve(__dirname,'..'),spec=require('../assets/source/prompts/occult-generation.json'),folder=path.join(root,'assets/item-art/occult');
 const c=vm.createContext({});for(const f of ['config.js','data.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),c);const items=vm.runInContext('ITEMS',c);
 async function main(){
  assert.equal(spec.items.length,15);const qa=[],hashes=new Set();

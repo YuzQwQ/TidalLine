@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/player-animation-prompts.json');
+const manifest = require('../assets/source/prompts/player-animation-prompts.json');
 const dirs = { s: '正面 · 朝下', n: '背面 · 朝上', e: '右侧', w: '左侧 · 镜像' };
 const rows = Object.entries(manifest.actions).map(([state, action]) => `<section><div class="heading"><b>${action.name}</b><span>${action.frames} 帧 · ${action.fps} fps · ${action.loop ? '循环' : '一次动作'}</span></div><div class="grid">${Object.entries(dirs).map(([dir, name]) => `<div class="card"><canvas width="192" height="192" data-state="${state}" data-dir="${dir}"></canvas><div>${name}</div><small></small></div>`).join('')}</div></section>`).join('');
 const html = `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>潮汐线 · 玩家动画</title>

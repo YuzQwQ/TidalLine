@@ -1,12 +1,12 @@
 /* 新增收集品的原稿、3倍像素预览与48px实际显示。 */
 const fs=require('fs'),path=require('path'),vm=require('vm');
-const root=path.resolve(__dirname,'..'),spec=require('../assets/collectibles-generation.json'),c=vm.createContext({});
+const root=path.resolve(__dirname,'..'),spec=require('../assets/source/prompts/collectibles-generation.json'),c=vm.createContext({});
 vm.runInContext(fs.readFileSync(path.join(root,'js/config.js'),'utf8'),c);
 const {tiers,cats}=vm.runInContext('({tiers:RARITY,cats:CATS})',c);
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const cards=spec.items.map(i=>{
  const ready=fs.existsSync(path.join(root,'assets/items',i.id+'.png')),tier=tiers[i.r-1];
- return `<article style="--rc:${tier.color}" data-art="${i.id}"><div class="images">${ready?`<a href="sources/${i.id}.png" title="查看生成原稿"><img class="large" src="../../items/${i.id}.png" alt="${esc(i.name)}"></a><img class="actual" src="../../items/${i.id}.png" alt="48像素实际尺寸">`:'<span>绘制中</span>'}</div><h2>${esc(i.name)}</h2><p><code>${i.id}</code> · ${tier.name} · ${cats[i.cat].name}</p></article>`;
+ return `<article style="--rc:${tier.color}" data-art="${i.id}"><div class="images">${ready?`<a href="sources/${i.id}.png" title="查看生成原稿"><img class="large" src="../items/${i.id}.png" alt="${esc(i.name)}"></a><img class="actual" src="../items/${i.id}.png" alt="48像素实际尺寸">`:'<span>绘制中</span>'}</div><h2>${esc(i.name)}</h2><p><code>${i.id}</code> · ${tier.name} · ${cats[i.cat].name}</p></article>`;
 }).join('');
 const folder=path.join(root,'assets/item-art/collectibles');fs.mkdirSync(folder,{recursive:true});
 fs.writeFileSync(path.join(folder,'index.html'),`<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>潮汐线 · 新增收集品图标</title><style>

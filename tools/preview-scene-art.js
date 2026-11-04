@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const root = path.resolve(__dirname, '..');
-const manifest = require('../assets/asset-prompts.json');
+const manifest = require('../assets/source/prompts/asset-prompts.json');
 const labels = { s: '正面', n: '背面', e: '右侧' };
 const entries = [...manifest.assets, ...manifest.optional].flatMap(a => a.facing
   ? a.dirs.map(dir => ({ group: a.group, id: a.id + '_' + dir, name: a.name + ' · ' + labels[dir] }))

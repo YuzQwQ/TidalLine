@@ -13,7 +13,7 @@ async function build(){
   const dir=path.join(batches,batch,'sources');if(fs.existsSync(dir))for(const f of fs.readdirSync(dir).sort())if(f.endsWith('.png'))add(path.join(dir,f));
  }
  // Recover the first batch by its recorded filenames, then keep it inside the project.
- const gm=JSON.parse(fs.readFileSync(path.join(root,'assets/gear-prompts.json'))),im=JSON.parse(fs.readFileSync(path.join(root,'assets/item-icon-prompts.json')));
+ const gm=JSON.parse(fs.readFileSync(path.join(root,'assets/source/prompts/gear-prompts.json'))),im=JSON.parse(fs.readFileSync(path.join(root,'assets/source/prompts/item-icon-prompts.json')));
  const session=gm.sourceDirectory.split('/').at(-1),cache=path.join(os.homedir(),'.codex/generated_images',session);
  for(const [group,rows]of [['items',im.items],['gear',gm.icons]])for(const row of rows){
   const key=group+'/'+row.id;if(!wanted.has(key)||sources.has(key))continue;
