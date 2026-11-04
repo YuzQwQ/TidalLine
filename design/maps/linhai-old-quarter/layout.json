@@ -30,6 +30,13 @@
       "color": "#6c705e",
       "art": "ground_soil_compact_01"
     },
+    "4": {
+      "name": "压实泥土 B",
+      "walkable": true,
+      "opaque": false,
+      "color": "#6c705e",
+      "art": "ground_soil_compact_02"
+    },
     "#": {
       "name": "墙体 / 边界",
       "walkable": false,
@@ -121,26 +128,26 @@
     "#............................k~~~~~~k..................................#",
     "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
     "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrXXXXXXXXXXX###rrrrrrrrrrr..#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rr###########...rrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rr#iiii#iiii#...rrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rr#iiii#iiii#...rrrrrrrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rr#iiii#iiii#...rrrrrrrrrrk~~~~~~krrrrrrrX#####i###########//#####..#",
-    "#..rr#iiii#iiii####rrrrrrrrrrk~~~~~~krrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
-    "#..rr###+####+#####rrrrrrrrrr========rrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
-    "#..rr#222222222222+rrrrrrrrrr========rrrrrrr.iiiiiiiiiiiiiiiiiiiiiii#..#",
-    "#..rr#222222222222+rrrrrrrrrr========rrrrrrr.iiiiiiiiiiiiiiiiiiiiiii#..#",
-    "#..rr###+#22##222+#rrrrrrrrrr========rrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
-    "#..rr#iii#22#iiiii#rrrrrrrrrrk~~~~~~krrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
-    "#..rr#iii+22+iiiii#rrrrrrrrrrk~~~~~~krrrrrr.###############ii########..#",
-    "#..rr#iii#22+iiiii#rrrrrrrrrrk~~~~~~krrrrrr.w2111#11111#iiiii#111111#..#",
-    "#..rr#####22###++##rrrrrrrrrrk~~~~~~krrrrrr.w2111111111#iiiii#111111#..#",
-    "#.rrr#iii#22222222#rrrrrrrrrrk~~~~~~krrrrrr.#2111#11111#iiiii#111111#..#",
-    "#.rrr#iii+22222222#rrrrrrrrrrk~~~~~~krrrrrr.#2111#11111#iiiii#111111#..#",
-    "#rrrr#########++###rrrrrrrrrrk~~~~~~krrrrrr.#2111#######iiiii#####1##..#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.w2111#11111#iiiiii111111#..#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.i21111111111iiiii#111111#..#",
+    "#..rr###################rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX#####i###########//#####..#",
+    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr###+#####+#####/###rrrrr========rrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr#22222222222222222#rrrrr========rrrrrrr.iiiiiiiiiiiiiiiiiiiiiii#..#",
+    "#..rr#22222222222222222#rrrrr========rrrrrrr.iiiiiiiiiiiiiiiiiiiiiii#..#",
+    "#..rr###+######22#######rrrrr========rrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr#iii#iiiiiiiiiiii#rrrrrrk~~~~~~krrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr#iii+iiiiiiiiiiii#rrrrrrk~~~~~~krrrrrr.###############ii########..#",
+    "#..rr#iii#iiiiiiiiiiii+rrrrrrk~~~~~~krrrrrr.w2111#11111#iiiii#111111#..#",
+    "#..rr#####iiiiiiiiiiii#rrrrrrk~~~~~~krrrrrr.w2111111111#iiiii#111111#..#",
+    "#.rrr#333#######+######rrrrrrk~~~~~~krrrrrr.#2111111111#iiiii#111111#..#",
+    "#.rrr#333+222222222222#rrrrrrk~~~~~~krrrrrr.#2111#11111#iiiii#111111#..#",
+    "#rrrr#333#222222222222#rrrrrrk~~~~~~krrrrrr.#2111#######iiiii#####1##..#",
+    "#rrrr#########+########rrrrrrk~~~~~~srrrrrr.w2111#11111#iiiiii111111#..#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.w2111111111+iiiii#111111#..#",
     "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~srrrrrr.#2222#11111#iiiii#111111#..#",
     "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrr.#########################..#",
     "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
@@ -149,20 +156,20 @@
     "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
     "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrqqqqqqqq.################rrr#",
     "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiiii#rrr#",
-    "#rrrr###++#####rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiii##rrr#",
-    "#rrrr#iiiii#ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
-    "#rrrr#iiiii+ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
-    "#rrrr#iiiii+ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiiii#rrr#",
-    "#rrrr###++##ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.################rrr#",
-    "#rrrr#iiiii#ii#rrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiii#ii#iiiiii#rrr#",
-    "#rrrr#iiiii+ii/rrrrrrrrrrrrrrk~~~~~~krrrrrr.........#iiiiiiiiiiiiii#rrr#",
-    "#rrrr#iiiii+ii/rrrrrrrrrrrrrr--------rrrrrr.........#iiiiiiiiiiiiii#rrr#",
-    "#rrrr#######ii#rrrrrrrrrrrrrr--------rrrrrr.........###i#######++###rrr#",
-    "#rrrr#iiiii+ii#rrrrrrrrrrrrrr--------rrrrrr.........#iiiiiii#iiiiii#rrr#",
-    "#rrrr#iiiii#ii#rrrrrrrrrrrrrrk~~~~~~krrrrrr......rrr#iiiiiii#iiiiii#rrr#",
-    "#rrrr##########rrrrrrrrrrrrrrk~~~~~~kkk####++####rrr#.iiiiii#iiiiii#rrr#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrr#..iiiii#iiiiii#rrr#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrr######ii########rrr#",
+    "#rrrr########+#########rrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiii##rrr#",
+    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
+    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
+    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiiii#rrr#",
+    "#rrrr########22#####22#rrrrrrk~~~~~~krrrrrrqqqqqqqq.################rrr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiii#ii#iiiiii#rrr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrr.........#iiiiiiiiiiiiii#rrr#",
+    "#rrrr#333333#22#222#22#rrrrrr--------rrrrrr.........#iiiiiiiiiiiiii#rrr#",
+    "#rrrr#333333+22#222#22#rrrrrr--------rrrrrr.........###i#######++###rrr#",
+    "#rrrr#333333#22+222#22+rrrrrr--------rrrrrr.........#iiiiiii#iiiiii#rrr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrr......rrr#iiiiiii#iiiiii#rrr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~kkk####++####rrr#.iiiiii#iiiiii#rrr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~kkk#iiiiiiii#rrr#..iiiii#iiiiii#rrr#",
+    "#rrrr##################rrrrrrk~~~~~~kkk#iiiiiiii#rrr######ii########rrr#",
     "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
     "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
     "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii+rrrrrrrrrrrrrrrrrrrrrr#",
@@ -3827,23 +3834,6 @@
       "width": 1
     },
     {
-      "id": "apartment.bed2",
-      "building": "apartment",
-      "name": "卧室门",
-      "cells": [
-        [
-          13,
-          12
-        ]
-      ],
-      "connects": [
-        "apartment.bed2",
-        "apartment.hall"
-      ],
-      "kind": "door",
-      "width": 1
-    },
-    {
       "id": "apartment.kitchen-n",
       "building": "apartment",
       "name": "厨房北门",
@@ -3893,233 +3883,6 @@
       ],
       "kind": "door",
       "width": 1
-    },
-    {
-      "id": "apartment.living-w",
-      "building": "apartment",
-      "name": "客厅侧门",
-      "cells": [
-        [
-          12,
-          17
-        ],
-        [
-          12,
-          18
-        ]
-      ],
-      "connects": [
-        "apartment.living",
-        "apartment.spine"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "apartment.living-n",
-      "building": "apartment",
-      "name": "客厅北门",
-      "cells": [
-        [
-          16,
-          15
-        ],
-        [
-          17,
-          15
-        ]
-      ],
-      "connects": [
-        "apartment.living",
-        "apartment.hall"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "apartment.living-s",
-      "building": "apartment",
-      "name": "客厅通门厅",
-      "cells": [
-        [
-          15,
-          19
-        ],
-        [
-          16,
-          19
-        ]
-      ],
-      "connects": [
-        "apartment.living",
-        "apartment.entry"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "apartment.front",
-      "building": "apartment",
-      "name": "南侧正门",
-      "cells": [
-        [
-          14,
-          22
-        ],
-        [
-          15,
-          22
-        ]
-      ],
-      "connects": [
-        "apartment.entry",
-        "outside"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "apartment.side",
-      "building": "apartment",
-      "name": "东侧后巷门",
-      "cells": [
-        [
-          18,
-          13
-        ],
-        [
-          18,
-          14
-        ]
-      ],
-      "connects": [
-        "apartment.hall",
-        "outside"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "clinic.front",
-      "building": "clinic",
-      "name": "北侧正门",
-      "cells": [
-        [
-          8,
-          33
-        ],
-        [
-          9,
-          33
-        ]
-      ],
-      "connects": [
-        "clinic.waiting",
-        "outside"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "clinic.treatment",
-      "building": "clinic",
-      "name": "候诊通诊疗",
-      "cells": [
-        [
-          8,
-          37
-        ],
-        [
-          9,
-          37
-        ]
-      ],
-      "connects": [
-        "clinic.waiting",
-        "clinic.treatment"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "clinic.waiting-side",
-      "building": "clinic",
-      "name": "候诊侧门",
-      "cells": [
-        [
-          11,
-          35
-        ],
-        [
-          11,
-          36
-        ]
-      ],
-      "connects": [
-        "clinic.waiting",
-        "clinic.service"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "clinic.treatment-side",
-      "building": "clinic",
-      "name": "诊疗后勤门",
-      "cells": [
-        [
-          11,
-          39
-        ],
-        [
-          11,
-          40
-        ]
-      ],
-      "connects": [
-        "clinic.treatment",
-        "clinic.service"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "clinic.pharmacy",
-      "building": "clinic",
-      "name": "药储后勤门",
-      "cells": [
-        [
-          11,
-          42
-        ]
-      ],
-      "connects": [
-        "clinic.pharmacy",
-        "clinic.service"
-      ],
-      "kind": "door",
-      "width": 1
-    },
-    {
-      "id": "clinic.breach",
-      "building": "clinic",
-      "name": "破损侧入口",
-      "cells": [
-        [
-          14,
-          39
-        ],
-        [
-          14,
-          40
-        ]
-      ],
-      "connects": [
-        "clinic.service",
-        "outside"
-      ],
-      "kind": "breach",
-      "width": 2
     },
     {
       "id": "bank.front",
@@ -4267,6 +4030,154 @@
       ],
       "kind": "door",
       "width": 2
+    },
+    {
+      "id": "outdoor.door1",
+      "name": "新门洞",
+      "cells": [
+        [
+          55,
+          24
+        ]
+      ],
+      "connects": [
+        "clockshop",
+        "outdoors"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "outdoor.door2",
+      "name": "新门洞",
+      "cells": [
+        [
+          14,
+          23
+        ]
+      ],
+      "connects": [
+        "apartment",
+        "outdoors"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "apartment.door1",
+      "building": "apartment",
+      "name": "新门洞",
+      "cells": [
+        [
+          16,
+          20
+        ]
+      ],
+      "connects": [
+        "apartment",
+        "apartment.entry"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "apartment.door2",
+      "building": "apartment",
+      "name": "新门洞",
+      "cells": [
+        [
+          14,
+          12
+        ]
+      ],
+      "connects": [
+        "apartment.bed2",
+        "apartment.hall"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "outdoor.door3",
+      "name": "新门洞",
+      "cells": [
+        [
+          22,
+          18
+        ]
+      ],
+      "connects": [
+        "outdoors",
+        "outdoors"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "clinic.door1",
+      "building": "clinic",
+      "name": "新门洞",
+      "cells": [
+        [
+          13,
+          33
+        ]
+      ],
+      "connects": [
+        "outdoors",
+        "clinic.service"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "outdoor.door4",
+      "name": "新门洞",
+      "cells": [
+        [
+          22,
+          42
+        ]
+      ],
+      "connects": [
+        "outdoors",
+        "outdoors"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "outdoor.door5",
+      "name": "新门洞",
+      "cells": [
+        [
+          15,
+          42
+        ]
+      ],
+      "connects": [
+        "clinic",
+        "outdoors"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "clinic.door2",
+      "building": "clinic",
+      "name": "新门洞",
+      "cells": [
+        [
+          12,
+          41
+        ]
+      ],
+      "connects": [
+        "clinic",
+        "clinic.service"
+      ],
+      "kind": "door",
+      "width": 1
     }
   ],
   "windows": [
@@ -4640,11 +4551,11 @@
   "props": [
     {
       "id": "p01",
-      "region": "apartment",
+      "region": "outdoors",
       "type": "bed",
       "name": "床",
-      "x": 7,
-      "y": 8,
+      "x": 8,
+      "y": 6,
       "solid": true,
       "footprint": [
         1,
@@ -4653,11 +4564,11 @@
     },
     {
       "id": "p02",
-      "region": "apartment",
+      "region": "outdoors",
       "type": "bed",
       "name": "床",
-      "x": 12,
-      "y": 8,
+      "x": 14,
+      "y": 6,
       "solid": true,
       "footprint": [
         1,
@@ -4669,13 +4580,14 @@
       "region": "apartment",
       "type": "desk",
       "name": "床头柜",
-      "x": 13,
-      "y": 8,
+      "x": 12,
+      "y": 11,
       "solid": true,
       "footprint": [
         1,
         1
-      ]
+      ],
+      "facing": "side"
     },
     {
       "id": "p05",
@@ -4696,7 +4608,7 @@
       "region": "apartment",
       "type": "sofa",
       "name": "沙发",
-      "x": 13,
+      "x": 11,
       "y": 16,
       "solid": true,
       "footprint": [
@@ -4710,7 +4622,7 @@
       "type": "chair",
       "name": "候诊椅",
       "x": 6,
-      "y": 36,
+      "y": 34,
       "solid": true,
       "footprint": [
         1,
@@ -4746,11 +4658,11 @@
     },
     {
       "id": "p11",
-      "region": "clinic",
+      "region": "outdoors",
       "type": "desk",
       "name": "诊疗台",
-      "x": 6,
-      "y": 38,
+      "x": 16,
+      "y": 40,
       "solid": true,
       "footprint": [
         2,
@@ -4815,11 +4727,11 @@
     },
     {
       "id": "p17",
-      "region": "bank",
+      "region": "outdoors",
       "type": "bench",
       "name": "前厅长凳",
-      "x": 53,
-      "y": 36,
+      "x": 45,
+      "y": 32,
       "solid": true,
       "footprint": [
         2,
@@ -5207,8 +5119,8 @@
       "region": "outdoors",
       "type": "bench",
       "name": "庭院长椅",
-      "x": 27,
-      "y": 24,
+      "x": 28,
+      "y": 29,
       "solid": true,
       "footprint": [
         1,
@@ -5483,7 +5395,7 @@
       "region": "apartment",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 16,
+      "x": 17,
       "y": 13,
       "solid": false,
       "ground": true,
@@ -5547,7 +5459,7 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 51,
+      "x": 52,
       "y": 12,
       "solid": false,
       "ground": true,
@@ -5556,7 +5468,8 @@
         1,
         1
       ],
-      "collisionCells": []
+      "collisionCells": [],
+      "facing": "side"
     },
     {
       "id": "p67",
@@ -5595,8 +5508,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 41,
-      "y": 20,
+      "x": 43,
+      "y": 16,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -5723,8 +5636,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 17,
-      "y": 37,
+      "x": 18,
+      "y": 35,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -5836,7 +5749,7 @@
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
       "x": 20,
-      "y": 15,
+      "y": 19,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -5851,8 +5764,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 25,
-      "y": 17,
+      "x": 24,
+      "y": 11,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -6259,55 +6172,1060 @@
         2
       ],
       "facing": "side"
+    },
+    {
+      "id": "p111",
+      "region": "bank",
+      "type": "workbench_industrial",
+      "name": "重型工作台",
+      "x": 59,
+      "y": 32,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p113",
+      "region": "outdoors",
+      "type": "barrier_queue",
+      "name": "银行排队围栏",
+      "x": 52,
+      "y": 12,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p114",
+      "region": "outdoors",
+      "type": "barrier_queue",
+      "name": "银行排队围栏",
+      "x": 51,
+      "y": 12,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p115",
+      "region": "outdoors",
+      "type": "barrier_queue",
+      "name": "银行排队围栏",
+      "x": 51,
+      "y": 15,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p116",
+      "region": "outdoors",
+      "type": "barrier_queue",
+      "name": "银行排队围栏",
+      "x": 52,
+      "y": 15,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p118",
+      "region": "apartment",
+      "type": "clock_grandfather",
+      "name": "落地钟",
+      "x": 10,
+      "y": 16,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p119",
+      "region": "apartment",
+      "type": "sink_kitchen",
+      "name": "厨房水槽",
+      "x": 6,
+      "y": 18,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p120",
+      "region": "outdoors",
+      "type": "sink_kitchen",
+      "name": "厨房水槽",
+      "x": 3,
+      "y": 15,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p121",
+      "region": "apartment",
+      "type": "fridge_home",
+      "name": "老式冰箱",
+      "x": 6,
+      "y": 16,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p122",
+      "region": "outdoors",
+      "type": "wardrobe_home",
+      "name": "旧衣柜",
+      "x": 6,
+      "y": 6,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p123",
+      "region": "outdoors",
+      "type": "wardrobe_home",
+      "name": "旧衣柜",
+      "x": 12,
+      "y": 6,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p124",
+      "region": "apartment",
+      "type": "table_dining",
+      "name": "老式餐桌",
+      "x": 12,
+      "y": 18,
+      "solid": true,
+      "footprint": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "p125",
+      "region": "apartment",
+      "type": "chair_wood",
+      "name": "普通木椅",
+      "x": 11,
+      "y": 19,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p126",
+      "region": "apartment",
+      "type": "chair_wood",
+      "name": "普通木椅",
+      "x": 14,
+      "y": 19,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p127",
+      "region": "outdoors",
+      "type": "pallet_stack",
+      "name": "木质托盘堆",
+      "x": 27,
+      "y": 1,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p128",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 11,
+      "y": 17,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p129",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 7,
+      "y": 17,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p130",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 7,
+      "y": 18,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p131",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 8,
+      "y": 21,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p132",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 7,
+      "y": 22,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p133",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 13,
+      "y": 21,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p134",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 16,
+      "y": 22,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p135",
+      "region": "outdoors",
+      "type": "bed",
+      "name": "床",
+      "x": 20,
+      "y": 6,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "p136",
+      "region": "outdoors",
+      "type": "clock_grandfather",
+      "name": "落地钟",
+      "x": 10,
+      "y": 6,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p137",
+      "region": "outdoors",
+      "type": "clock_grandfather",
+      "name": "落地钟",
+      "x": 16,
+      "y": 6,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p138",
+      "region": "outdoors",
+      "type": "clock_grandfather",
+      "name": "落地钟",
+      "x": 22,
+      "y": 6,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p139",
+      "region": "apartment",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 6,
+      "y": 9,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p140",
+      "region": "apartment",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 12,
+      "y": 9,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p141",
+      "region": "outdoors",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 18,
+      "y": 9,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p142",
+      "region": "apartment",
+      "type": "desk",
+      "name": "床头柜",
+      "x": 18,
+      "y": 11,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p143",
+      "region": "apartment",
+      "type": "desk",
+      "name": "床头柜",
+      "x": 6,
+      "y": 11,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p144",
+      "region": "outdoors",
+      "type": "wardrobe_home",
+      "name": "旧衣柜",
+      "x": 18,
+      "y": 6,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p145",
+      "region": "outdoors",
+      "type": "pallet_stack",
+      "name": "木质托盘堆",
+      "x": 21,
+      "y": 14,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p146",
+      "region": "outdoors",
+      "type": "barrel",
+      "name": "杂物桶",
+      "x": 22,
+      "y": 13,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p147",
+      "region": "apartment",
+      "type": "barrel",
+      "name": "杂物桶",
+      "x": 17,
+      "y": 13,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p148",
+      "region": "apartment",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 18,
+      "y": 14,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p149",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 20,
+      "y": 12,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p150",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 19,
+      "y": 11,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p152",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 19,
+      "y": 8,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p154",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 21,
+      "y": 7,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p156",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 21,
+      "y": 13,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p159",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 19,
+      "y": 13,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p161",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 21,
+      "y": 10,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p162",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 18,
+      "y": 14,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p163",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 21,
+      "y": 13,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p165",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 19,
+      "y": 10,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p168",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 21,
+      "y": 7,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p169",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 22,
+      "y": 9,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p170",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 22,
+      "y": 11,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p171",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 18,
+      "y": 11,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p172",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 18,
+      "y": 9,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p173",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 18,
+      "y": 8,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p175",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 19,
+      "y": 7,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p176",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 21,
+      "y": 8,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p177",
+      "region": "apartment",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 18,
+      "y": 13,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p178",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 19,
+      "y": 14,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p180",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 22,
+      "y": 14,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p181",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 20,
+      "y": 13,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p182",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 22,
+      "y": 13,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p183",
+      "region": "outdoors",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 16,
+      "y": 44,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "p184",
+      "region": "clinic",
+      "type": "cart_medical",
+      "name": "医疗器械推车",
+      "x": 11,
+      "y": 42,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p185",
+      "region": "clinic",
+      "type": "cart_medical",
+      "name": "医疗器械推车",
+      "x": 11,
+      "y": 38,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p186",
+      "region": "clinic",
+      "type": "cart_medical",
+      "name": "医疗器械推车",
+      "x": 11,
+      "y": 44,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p187",
+      "region": "outdoors",
+      "type": "chair_wood",
+      "name": "普通木椅",
+      "x": 16,
+      "y": 39,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p188",
+      "region": "outdoors",
+      "type": "clock_grandfather",
+      "name": "落地钟",
+      "x": 18,
+      "y": 38,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p190",
+      "region": "clinic",
+      "type": "screen_clinic",
+      "name": "医用屏风",
+      "x": 6,
+      "y": 40,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p191",
+      "region": "clinic",
+      "type": "screen_clinic",
+      "name": "医用屏风",
+      "x": 6,
+      "y": 42,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p192",
+      "region": "clinic",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 9,
+      "y": 38,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p193",
+      "region": "clinic",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 9,
+      "y": 34,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p194",
+      "region": "outdoors",
+      "type": "sofa",
+      "name": "沙发",
+      "x": 15,
+      "y": 34,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "side"
     }
   ],
   "containers": [
     {
       "id": "c01",
-      "region": "apartment",
+      "region": "outdoors",
       "type": "N",
-      "x": 6,
-      "y": 8,
+      "x": 9,
+      "y": 6,
       "preference": [
         "life"
       ]
     },
     {
       "id": "c02",
-      "region": "apartment",
+      "region": "outdoors",
       "type": "N",
-      "x": 11,
-      "y": 8,
-      "preference": [
-        "life"
-      ]
-    },
-    {
-      "id": "c03",
-      "region": "apartment",
-      "type": "C",
-      "x": 8,
-      "y": 8,
-      "preference": [
-        "life"
-      ]
-    },
-    {
-      "id": "c05",
-      "region": "apartment",
-      "type": "L",
-      "x": 6,
-      "y": 21,
+      "x": 15,
+      "y": 6,
       "preference": [
         "life"
       ]
     },
     {
       "id": "c06",
-      "region": "apartment",
+      "region": "outdoors",
       "type": "m",
-      "x": 17,
-      "y": 17,
+      "x": 21,
+      "y": 16,
       "preference": [
         "life"
       ]
@@ -6344,22 +7262,11 @@
       ]
     },
     {
-      "id": "c10",
-      "region": "clinic",
-      "type": "C",
-      "x": 6,
-      "y": 34,
-      "preference": [
-        "med",
-        "medical"
-      ]
-    },
-    {
       "id": "c11",
-      "region": "clinic",
+      "region": "outdoors",
       "type": "M",
       "x": 6,
-      "y": 40,
+      "y": 43,
       "preference": [
         "med",
         "medical"
@@ -6367,10 +7274,10 @@
     },
     {
       "id": "c12",
-      "region": "clinic",
+      "region": "outdoors",
       "type": "M",
-      "x": 9,
-      "y": 40,
+      "x": 6,
+      "y": 44,
       "preference": [
         "med",
         "medical"
@@ -6380,8 +7287,8 @@
       "id": "c13",
       "region": "clinic",
       "type": "H",
-      "x": 6,
-      "y": 42,
+      "x": 11,
+      "y": 39,
       "preference": [
         "med",
         "medical"
@@ -6389,10 +7296,10 @@
     },
     {
       "id": "c14",
-      "region": "outdoors",
+      "region": "clinic",
       "type": "Y",
       "x": 6,
-      "y": 43,
+      "y": 38,
       "preference": [
         "med",
         "medical"
@@ -6532,8 +7439,8 @@
       "id": "c28",
       "region": "clockshop",
       "type": "V",
-      "x": 54,
-      "y": 19,
+      "x": 53,
+      "y": 18,
       "preference": [
         "collect"
       ]
@@ -6660,8 +7567,8 @@
       "id": "c40",
       "region": "outdoors",
       "type": "Z",
-      "x": 22,
-      "y": 19,
+      "x": 23,
+      "y": 20,
       "preference": [
         "life",
         "ind"
@@ -6876,8 +7783,8 @@
       "id": "c60",
       "region": "apartment",
       "type": "A",
-      "x": 14,
-      "y": 8,
+      "x": 16,
+      "y": 11,
       "preference": [
         "ind",
         "elec"
@@ -6887,7 +7794,7 @@
       "id": "c61",
       "region": "apartment",
       "type": "B",
-      "x": 9,
+      "x": 6,
       "y": 8,
       "preference": [
         "collect"
@@ -6897,7 +7804,7 @@
       "id": "c62",
       "region": "apartment",
       "type": "T",
-      "x": 6,
+      "x": 7,
       "y": 16,
       "preference": [
         "ind",
@@ -6965,6 +7872,354 @@
       "y": 25,
       "preference": [
         "collect"
+      ]
+    },
+    {
+      "id": "c70",
+      "region": "apartment",
+      "type": "D",
+      "x": 10,
+      "y": 19,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c71",
+      "region": "apartment",
+      "type": "H",
+      "x": 8,
+      "y": 20,
+      "preference": [
+        "med",
+        "medical"
+      ]
+    },
+    {
+      "id": "c72",
+      "region": "apartment",
+      "type": "e",
+      "x": 7,
+      "y": 20,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c73",
+      "region": "apartment",
+      "type": "W",
+      "x": 13,
+      "y": 16,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c74",
+      "region": "apartment",
+      "type": "L",
+      "x": 15,
+      "y": 19,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c75",
+      "region": "apartment",
+      "type": "C",
+      "x": 17,
+      "y": 22,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c76",
+      "region": "apartment",
+      "type": "b",
+      "x": 10,
+      "y": 22,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c77",
+      "region": "outdoors",
+      "type": "Z",
+      "x": 23,
+      "y": 1,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c78",
+      "region": "outdoors",
+      "type": "Z",
+      "x": 27,
+      "y": 2,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c79",
+      "region": "outdoors",
+      "type": "b",
+      "x": 28,
+      "y": 2,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c80",
+      "region": "outdoors",
+      "type": "b",
+      "x": 26,
+      "y": 1,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c81",
+      "region": "outdoors",
+      "type": "U",
+      "x": 25,
+      "y": 1,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c82",
+      "region": "outdoors",
+      "type": "D",
+      "x": 9,
+      "y": 30,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c83",
+      "region": "outdoors",
+      "type": "N",
+      "x": 21,
+      "y": 6,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c84",
+      "region": "outdoors",
+      "type": "O",
+      "x": 18,
+      "y": 8,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c85",
+      "region": "outdoors",
+      "type": "J",
+      "x": 22,
+      "y": 7,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c86",
+      "region": "outdoors",
+      "type": "B",
+      "x": 22,
+      "y": 8,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c87",
+      "region": "outdoors",
+      "type": "Q",
+      "x": 22,
+      "y": 9,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c88",
+      "region": "apartment",
+      "type": "b",
+      "x": 18,
+      "y": 13,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c89",
+      "region": "outdoors",
+      "type": "C",
+      "x": 19,
+      "y": 16,
+      "preference": [
+        "med",
+        "medical"
+      ]
+    },
+    {
+      "id": "c90",
+      "region": "outdoors",
+      "type": "T",
+      "x": 19,
+      "y": 19,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c91",
+      "region": "clinic",
+      "type": "W",
+      "x": 6,
+      "y": 41,
+      "preference": [
+        "life",
+        "ind"
+      ]
+    },
+    {
+      "id": "c92",
+      "region": "outdoors",
+      "type": "Q",
+      "x": 7,
+      "y": 45,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c93",
+      "region": "outdoors",
+      "type": "V",
+      "x": 16,
+      "y": 38,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c94",
+      "region": "outdoors",
+      "type": "F",
+      "x": 17,
+      "y": 34,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c95",
+      "region": "outdoors",
+      "type": "J",
+      "x": 18,
+      "y": 45,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c96",
+      "region": "outdoors",
+      "type": "D",
+      "x": 18,
+      "y": 44,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c97",
+      "region": "clinic",
+      "type": "R",
+      "x": 6,
+      "y": 36,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c98",
+      "region": "outdoors",
+      "type": "H",
+      "x": 18,
+      "y": 34,
+      "preference": [
+        "med",
+        "medical"
+      ]
+    },
+    {
+      "id": "c99",
+      "region": "outdoors",
+      "type": "D",
+      "x": 20,
+      "y": 45,
+      "preference": [
+        "life"
+      ]
+    },
+    {
+      "id": "c100",
+      "region": "outdoors",
+      "type": "T",
+      "x": 21,
+      "y": 34,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c101",
+      "region": "clinic",
+      "type": "C",
+      "x": 7,
+      "y": 34,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c102",
+      "region": "outdoors",
+      "type": "b",
+      "x": 11,
+      "y": 45,
+      "preference": [
+        "ind",
+        "elec"
       ]
     }
   ],
@@ -7099,16 +8354,16 @@
       "id": "e04",
       "region": "clinic",
       "type": "scav",
-      "x": 9,
-      "y": 38,
+      "x": 14,
+      "y": 44,
       "patrolRadius": 2
     },
     {
       "id": "e05",
       "region": "clinic",
       "type": "scav",
-      "x": 13,
-      "y": 42,
+      "x": 14,
+      "y": 39,
       "patrolRadius": 2
     },
     {
@@ -7132,14 +8387,6 @@
       "region": "bank",
       "type": "guard",
       "x": 55,
-      "y": 35,
-      "patrolRadius": 2
-    },
-    {
-      "id": "e10",
-      "region": "bank",
-      "type": "guard",
-      "x": 64,
       "y": 35,
       "patrolRadius": 2
     },
@@ -7187,8 +8434,8 @@
       "id": "e16",
       "region": "outdoors",
       "type": "scav",
-      "x": 21,
-      "y": 23,
+      "x": 13,
+      "y": 28,
       "patrolRadius": 3
     },
     {
@@ -7227,8 +8474,8 @@
       "id": "e21",
       "region": "outdoors",
       "type": "echo",
-      "x": 21,
-      "y": 48,
+      "x": 15,
+      "y": 51,
       "patrolRadius": 3
     },
     {
@@ -7254,6 +8501,166 @@
       "x": 50,
       "y": 40,
       "patrolRadius": 3
+    },
+    {
+      "id": "e25",
+      "region": "clockshop",
+      "type": "scav",
+      "x": 53,
+      "y": 19,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e26",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 65,
+      "y": 24,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e27",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 58,
+      "y": 23,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e28",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 65,
+      "y": 19,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e29",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 54,
+      "y": 12,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e30",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 66,
+      "y": 15,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e31",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 48,
+      "y": 7,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e32",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 53,
+      "y": 6,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e33",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 41,
+      "y": 8,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e34",
+      "region": "apartment",
+      "type": "scav",
+      "x": 15,
+      "y": 14,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e35",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 19,
+      "y": 11,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e36",
+      "region": "outdoors",
+      "type": "echo",
+      "x": 26,
+      "y": 39,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e37",
+      "region": "outdoors",
+      "type": "echo",
+      "x": 25,
+      "y": 33,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e38",
+      "region": "outdoors",
+      "type": "scav",
+      "x": 21,
+      "y": 8,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e39",
+      "region": "clinic",
+      "type": "echo",
+      "x": 11,
+      "y": 41,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e40",
+      "region": "clinic",
+      "type": "echo",
+      "x": 8,
+      "y": 39,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e41",
+      "region": "clinic",
+      "type": "echo",
+      "x": 8,
+      "y": 42,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e42",
+      "region": "outdoors",
+      "type": "echo",
+      "x": 17,
+      "y": 41,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e43",
+      "region": "clinic",
+      "type": "echo",
+      "x": 10,
+      "y": 36,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e45",
+      "region": "outdoors",
+      "type": "echo",
+      "x": 17,
+      "y": 44,
+      "patrolRadius": 2
     }
   ],
   "spawn": {
