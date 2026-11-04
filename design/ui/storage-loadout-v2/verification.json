@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "sharedNodes": true,
+      "directEquip": true,
+      "choosePrimary": true,
+      "transfer": true,
+      "bagCapacityFailureAtomic": true,
+      "equipmentOnlyValue": true,
+      "rarityFills": true,
+      "persistence": true,
+      "widths": [
+        1600,
+        1280,
+        390,
+        320
+      ],
+      "errors": []
+    },
+    {
+      "offline": true,
+      "sharedNodes": true,
+      "directEquip": true,
+      "choosePrimary": true,
+      "transfer": true,
+      "bagCapacityFailureAtomic": true,
+      "equipmentOnlyValue": true,
+      "rarityFills": true,
+      "persistence": true,
+      "widths": [
+        1600,
+        1280,
+        390,
+        320
+      ],
+      "errors": []
+    }
+  ]
+}

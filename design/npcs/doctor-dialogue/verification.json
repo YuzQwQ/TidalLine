@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "overview": true,
+      "greeting": true,
+      "idle": true,
+      "purchase": true,
+      "treatmentConfirm": true,
+      "treatmentSuccess": true,
+      "cancelSilent": true,
+      "quickConfirmOnly": true,
+      "quickAfterInline": true,
+      "repeatedPaymentSafe": true,
+      "poorSilent": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    },
+    {
+      "offline": true,
+      "overview": true,
+      "greeting": true,
+      "idle": true,
+      "purchase": true,
+      "treatmentConfirm": true,
+      "treatmentSuccess": true,
+      "cancelSilent": true,
+      "quickConfirmOnly": true,
+      "quickAfterInline": true,
+      "repeatedPaymentSafe": true,
+      "poorSilent": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    }
+  ]
+}

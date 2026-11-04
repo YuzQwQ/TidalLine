@@ -26,7 +26,7 @@ const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 const JS_FILES = ['config.js', 'pixfont.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
   'common.js', 'medical.js', 'detail-art.js', 'art.js', 'ui.js', 'music.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'merchant-ui.js', 'storage-config.js', 'storage-ui.js', 'attachment-ui.js', 'boot.js'];
+  'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'trader.js', 'merchant-ui.js', 'storage-config.js', 'inventory-view.js', 'storage-ui.js', 'attachment-ui.js', 'gunsmith-page.js', 'merchant-dialogue.js', 'storage-loadout.js', 'base-safe.js', 'sales.js', 'merchant-sales.js', 'boot.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear', 'effects'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */
@@ -102,11 +102,12 @@ if (/assets\/audio\/bundle\.js/.test(out)) {
   process.exit(1);
 }
 const uiAssets = {};
-for (const [id, file] of Object.entries({room:'room',armor:'merchant_armor',guns:'merchant_guns',doctor:'merchant_doctor'})) {
+for (const [id, file] of Object.entries({room:'room',armor:'merchant_armor',guns:'merchant_guns',doctor:'merchant_doctor',viktor:'merchant_viktor',gunsmith:'gunsmith'})) {
   uiAssets[id] = 'data:image/webp;base64,' + fs.readFileSync(path.join(dir,'assets/ui/safehouse',file+'.webp')).toString('base64');
 }
 out = out.replace('<link rel="stylesheet" href="assets/ui/safehouse.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/safehouse.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/merchant.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/merchant.css'),'utf8')+'\n</style>');
+out = out.replace('<link rel="stylesheet" href="assets/ui/merchant-sales.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/merchant-sales.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/storage.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/storage.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/attachments.css">','<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/attachments.css'),'utf8')+'\n</style>');
 const inlineTag = '<script>\nwindow.__SELF_CONTAINED__ = true;\nwindow.__UI_ASSETS__ = '+JSON.stringify(uiAssets)+';\nwindow.__SPRITES__ = ' +

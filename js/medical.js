@@ -50,11 +50,12 @@ const Medical = {
 
   /* 'stash' 与 'basebag' 都是藏身处的列表，条目形态一致（{id,n,cap} / {id,n,gear}）；
      'bag' / 'safe' 是局内玩家背包里的活条目（{item,n,cap}）。 */
-  stashLike(where) { return where === 'stash' || where === 'basebag'; },
+  stashLike(where) { return where === 'stash' || where === 'basebag' || where === 'basesafe'; },
 
   entries(where) {
     if (where === 'stash') return Game.state === 'base' ? Save.stash : [];
     if (where === 'basebag') return Game.state === 'base' ? Save.bag : [];
+    if (where === 'basesafe') return Game.state === 'base' ? Save.safe : [];
     return Game.state === 'playing' && Game.player && !Game.player.dead
       ? (where === 'safe' ? Game.player.bag.safe : Game.player.bag.slots) : [];
   },

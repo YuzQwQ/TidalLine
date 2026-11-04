@@ -10,6 +10,7 @@ const Save = {
   /* 藏身处的背包，跨局保留：弹药和药物回来时留在里面，其它东西自动回仓库。
      条目形态和仓库一致（{id,n,cap} / {id,n:1,gear}），这样仓库和背包能用同一套代码搬。 */
   bag: [],
+  safe: [],          // 局外保险箱准备区，出发时交给局内保险箱
   credits: START_CREDITS,
   hp: CFG.P.HP,
   // 配装：三个武器位 + 头盔 / 护甲
@@ -61,7 +62,7 @@ const Save = {
     try {
       this._ammoSpill=[];
       const raw = localStorage.getItem(this.key);
-      if (!raw) { this.bag = this.defaultBag(); return; }
+      if (!raw) { this.bag = this.defaultBag(); this.safe=[]; return; }
       const d = JSON.parse(raw);
       this._partSpill=[];
       this.attachmentRecovery=Array.isArray(d.attachmentRecovery)?d.attachmentRecovery:[];
@@ -76,6 +77,7 @@ const Save = {
       /* 这一版把"携带数量"换成了真正的背包：老存档的 loadout 折算成包里的东西，
          数量一条不差（旧 ammo 字段归 5.56，绷带归 heal01），不会白丢。 */
       this.bag = Array.isArray(d.bag) ? d.bag : this.bagFromLoadout(d.loadout || null);
+      this.safe = Array.isArray(d.safe) ? d.safe : [];
 
       // 配装：老存档没有就补默认，缺字段逐项兜底
       const g = d.gear || {};
@@ -90,6 +92,7 @@ const Save = {
 
       this.normalizeStash();
       this.normalizeBag();
+      this.normalizeSafe();
       for(const item of this._partSpill)this.stash.push({id:item.id,n:1,gear:item});
       this._partSpill=null;
       if(this._ammoSpill.length)this.stash=this.normalizeList([...this.stash,...this._ammoSpill]);
@@ -147,7 +150,7 @@ const Save = {
       if (typeof clearTimeout === 'function') clearTimeout(this._saveT);
       this._saveT = 0;
     }
-    if (!this._dirty) return;
+    if (!this._dirty) return true;
     this._dirty = false;
     try {
       localStorage.setItem(this.key, JSON.stringify({
@@ -156,6 +159,7 @@ const Save = {
         /* 仓库不再叠放，条目数会变多；整份存，别再截尾丢东西 */
         stash: this.stash,
         bag: this.bag.slice(-60),
+        safe: this.safe,
         credits: this.credits,
         hp: this.hp,
         gear: this.gear,
@@ -164,7 +168,8 @@ const Save = {
         attachmentRecovery: this.attachmentRecovery,
         bestHaul: this.bestHaul
       }));
-    } catch (e) { /* localStorage 不可用就算了 */ }
+      return true;
+    } catch (e) { this._dirty=true; return false; }
   },
 
   /* 同一种物品合并成一条，顺便丢掉物品表里已经不存在的东西。
@@ -231,6 +236,11 @@ const Save = {
   },
 
   normalizeStash() { this.stash = this.normalizeList(this.stash); },
+  normalizeSafe() {
+    const rows=this.normalizeList(this.safe||[]);this.safe=rows.slice(0,CFG.BAG.SAFE);
+    for(const e of rows.slice(CFG.BAG.SAFE)){if(e.gear)this.addGearStash(e.gear);else this.addStash(e.id,e.n,e.cap);}
+  },
+  safeWeight(){return (this.safe||[]).reduce((n,e)=>n+(stashItem(e)?.w||0)*(e.n||1),0);},
   normalizeBag() {
     this.bag = this.normalizeList(this.bag);
     /* 老存档里药品是叠着的，拆成一件一条之后可能超出背包容量。

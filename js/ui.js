@@ -283,6 +283,7 @@ const Deal = {
 
     box.innerHTML =
       '<div class="deal-hd">' + esc(o.title || '交易') + '</div>' +
+      (o.dialogue ? '<p class="deal-dialogue">“'+esc(o.dialogue)+'”</p>' : '') +
       '<div class="deal-bd">' +
         '<span class="tip-ic' + (o.icon ? '' : ' gl') + '">' + ico + '</span>' +
         '<span class="deal-nm">' + esc(o.name) + '<i>' + esc(o.sub || '') + '</i></span>' +
@@ -467,7 +468,7 @@ const SFX = {
     }
   },
   /* 型号 → 专属枪声。键是 WEAPONS 里的 id，值是 SHOT_SAMPLE 的键。
-     没登记的型号自动按 category 走通用那条（m4a1/famas 走 rifle、三把 9mm 走 smg…）。
+     没登记的型号自动按 category 走通用那条（m4a1 走 rifle、其余 9mm 冲锋枪走 smg…）。
      枪和声是两件事：同口径的两把枪可以有完全不同的录音，所以按型号分而不是按口径。 */
   SHOT_MODEL: { akm: 'ak47', famas_f1: 'famas', mp5a3: 'mp5' },
 
@@ -496,6 +497,7 @@ const SFX = {
   /* ---------------- 装备穿脱：一件装备一个材质的声 ----------------
      头盔是硬壳与织带、护甲是布料与插板、背包是扣具与织带。
      只有这三类有专属声：枪械的"交互"其实就是拉套筒，那是切枪音的事。 */
+  GEAR_SFX: { helmet: 'gear_helmet', body: 'gear_armor', back: 'gear_bag' },
 
   /* ---------------- 搜索音：一个容器一个声 ----------------
      翻金属抽屉、翻工具箱、翻纸、翻布料、翻皮包——同一个"搜"的动作，
@@ -636,13 +638,14 @@ const SFX = {
     /* shot_switch 与各枪专属的 shot_switch_* 都算"切枪"，响度一视同仁 */
     if (/^shot_switch/.test(id)) return this.LOUD.switch;
     if (/^reload_/.test(id)) return this.LOUD.reload;
-    /* 开火采样：四把枪（含手枪的三个变体）和预留的 AK 都按枪声档对齐。
+    /* 开火采样：各枪（含手枪的三个变体）和预留的 AK 都按枪声档对齐。
        这样换哪把枪、换哪段录音，最终 RMS 都一样，不会出现某把枪特别响。 */
     if (/^shot_(rifle|smg|shotgun|pistol_[123]|ak47|famas|mp5)$/.test(id)) return this.LOUD.shot;
     if (id === 'shot_pistol_silent') return this.LOUD.shot * 0.55;
     if (id === 'shot_shotgun_pump') return this.LOUD.switch;
     /* 近战挥砍与出售结算走自己的档，别落进 0.08 的默认值 */
     if (id === 'melee' || /^melee_[1-6]$/.test(id)) return this.LOUD.melee;
+    if (id === 'sell') return this.LOUD.sell;
     /* 装备穿脱：头盔 / 护甲 / 背包三件同一个档，换哪件都一样响 */
     if (/^gear_(helmet|armor|bag)$/.test(id)) return this.LOUD.gear;
     /* 打中敌人：命中与爆头各一档（这对数字原本是给合成音定的，
@@ -654,7 +657,6 @@ const SFX = {
     if (id === 'sprint') return this.LOUD.sprint;
     /* 玩家挨打：整局最需要"被听见"的一次反馈，压在枪声之下、拾取之上 */
     if (id === 'hurt') return this.LOUD.hurt;
-    if (id === 'sell') return this.LOUD.sell;
     /* 拾取的四条变体都按拾取档对齐，四条之间响度一致 */
     if (/^pickup_[1-4]$/.test(id)) return this.LOUD.pickup;
     /* 搜索的各条材质按同一档对齐，碰到哪个容器都一样响 */
@@ -1225,6 +1227,7 @@ const SFX = {
 
     /* 有采样就优先用采样；没有（或解码失败）就落到下面的合成音 */
     if (this.samples[name]) { this._playSample(name, opts); return; }
+
     /* 换弹：这把枪有专属的整段录音就放录音（动作节奏是原生的），
        没有才落到 SEQ 那套三段拼接。必须排在 SEQ 之前。 */
     if (name === 'reload' && opts && opts.model) {

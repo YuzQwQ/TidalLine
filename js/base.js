@@ -20,6 +20,7 @@ const Base = {
     Game.state = 'base';
     Save.normalizeStash();
     Save.normalizeBag();
+    Save.normalizeSafe();
     this.ensureSidearm();     // 不自动补发死亡损失
     this.render();
     /* 大厅 BGM：进藏身处就起，离开时由 close()/startRun 淡出 */
@@ -422,6 +423,7 @@ const Base = {
   /* 装上仓库里那一件（枪 / 甲 / 背包）；身上原有的落回仓库，不会消失。
      武器位存 EQUIP.gun 伪物品（带余弹），护甲位存护甲实例，背包位存背包实例。 */
   equipFromStash(entry, key) {
+    if (!Save.stash.includes(entry)) return false;
     const it = stashItem(entry);
     if (!it || !it.equip) return false;
     const kind = this.slotKind(key);
@@ -495,13 +497,13 @@ const Base = {
     return true;
   },
 
-  /* 穿 / 脱装备的声音：头盔、护甲、背包各有一套材质声（硬壳、布料插板、扣具织带）。
-     枪械和近战没有专属声 —— 它们的"交互"是拉套筒，那是切枪音的事。
-     素材没加载上就静默，局外界面不该因为少个文件冒出合成杂音。 */
+  /* 装备成功使用对应材质／切枪声，卸下回仓库统一使用拾取声。 */
   gearVoice(key, off) {
-    if (typeof SFX === 'undefined' || !SFX.gear) return;
-    if (this.slotKind(key) === 'gun') return;
-    SFX.gear(key, { off: !!off });
+    if (off) { Game.sfx('pickup'); return; }
+    const kind=this.slotKind(key);
+    if(kind==='gun'){const it=this.getEquip(key),w=it&&WEAPONS[it.equip.gun];if(w)Game.sfx(SWITCH_SFX[w.category]||'shot_switch');return;}
+    if(kind==='melee'){Game.sfx('shot_switch',{rate:0.86});return;}
+    if(typeof SFX!=='undefined'&&SFX.gear)SFX.gear(key);
   },
 
   /* ---- 护甲商人：只卖崭新的一~三级 ---- */
@@ -510,9 +512,9 @@ const Base = {
   renderTabs() {
     const el = document.getElementById('baseTabs');
     if (!el) return;
-    const shop = ['shop','gun','doctor'].includes(this.tab);
+    const shop = ['shop','gun','doctor','viktor'].includes(this.tab);
     if (!el.dataset.built) {
-      const opts = [['stash', '仓库'], ['shop', '护甲商人'], ['gun', '军火商'], ['doctor', '医生']];
+      const opts = [['stash', '仓库'], ['shop', '护甲商人'], ['gun', '军火商'], ['doctor', '医生'], ['viktor', '贸易商']];
       el.innerHTML = opts.map(([k, name]) =>
         '<button class="' + (k === (this.tab || 'stash') ? 'on' : '') +
         '" data-t="' + k + '">' + name + '</button>'
@@ -555,6 +557,7 @@ const Base = {
     const clinic = document.getElementById('doctorService');
     if (clinic) clinic.hidden = this.tab !== 'doctor';
 
+    if (this.tab === 'viktor') return TradeMerchant.render(el);
     if (this.tab === 'doctor') return this.renderDoctor(el);
     if (this.tab === 'gun') return this.renderGunShop(el);
 
@@ -779,6 +782,7 @@ const Base = {
     document.getElementById('btnDoctorTreat').onclick = ev => {
       const quote = Medical.quote();
       Deal.show({ kind:'buy', title:'治疗服务', name:'立即恢复至满血',
+        dialogue:typeof MERCHANT_DIALOGUE!=='undefined'?MERCHANT_DIALOGUE.doctor.beforeTreatment[0]:'',
         sub:'恢复 ' + Math.round(quote.missing * 10) / 10 + ' HP · 药费 ' + formatMoney(quote.medicine) + ' + 服务费 ' + formatMoney(quote.service),
         price:quote.total, can:quote.missing > 0 && Save.credits >= quote.total,
         onGo:() => this.treat(quote.total) }, ev.currentTarget.getBoundingClientRect());
@@ -936,11 +940,23 @@ const Base = {
     }
     Save.bag = keep;
     Save.save(); Save.flush();
-    if (moved && typeof SFX !== 'undefined') SFX.play('bag_zip', { rate: 0.9 });
+    if (moved) Game.sfx('pickup');
     this.render();
     this.note('背包已清空：' + moved + ' 件放回仓库' +
       (stuck ? '，' + stuck + ' 发弹药仓库放不下，留在包里' : ''));
     return moved;
+  },
+
+  makeBagCell(e) {
+    const cell=document.createElement('div'),it=e?stashItem(e):null;
+    if(!it){cell.className='cell empty';cell.textContent='·';return cell;}
+    const n=e.n||1;
+    cell.className='cell '+RARITY[U.clamp((it.r||1)-1,0,RARITY.length-1)].cls+(it.equip?' eq':'');
+    cell.innerHTML=Icons.bagTag(it,'ico-bag')+'<span class="cn">'+esc(it.short||it.name)+'</span>'+
+      (n>1?'<span class="qty">'+n+'</span>':'')+
+      (it.healCap&&Medical.isPartial(e)?'<span class="cap">'+Math.ceil(Medical.entryCap(e))+'</span>':'');
+    cell.title=it.name+' · '+(it.w*n).toFixed(2)+'kg · 左键看详情';
+    return cell;
   },
 
   renderBag() {
@@ -952,24 +968,13 @@ const Base = {
        让玩家能搬回仓库，别让它们卡在包里看不见 */
     const cap = Math.max(bagSlots(), Save.bag.length);
     for (let i = 0; i < cap; i++) {
-      const cell = document.createElement('div');
       const e = Save.bag[i];
+      const cell = this.makeBagCell(e);
       const it = e ? stashItem(e) : null;
       if (!it) {
-        cell.className = 'cell empty';
-        cell.textContent = '·';
         grid.appendChild(cell);
         continue;
       }
-      const n = e.n || 1;
-      cell.className = 'cell ' + RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)].cls +
-        (it.equip ? ' eq' : '');
-      cell.innerHTML = Icons.bagTag(it, 'ico-bag') +
-        '<span class="cn">' + esc(it.short || it.name) + '</span>' +
-        (n > 1 ? '<span class="qty">' + n + '</span>' : '') +
-        ((it.healCap && Medical.isPartial(e))
-          ? '<span class="cap">' + Math.ceil(Medical.entryCap(e)) + '</span>' : '');
-      cell.title = it.name + ' · ' + (it.w * n).toFixed(2) + 'kg · 左键看详情';
       cell.onclick = () => this.showItem(e, 'bag', cell);
       cell.oncontextmenu = ev => { ev.preventDefault(); this.showItem(e, 'bag', cell); };
       grid.appendChild(cell);
@@ -996,7 +1001,7 @@ const Base = {
   /* 背包还能不能塞下：先算再动，算不过就不搬，绝不吞东西 */
   bagBlock(it, n) {
     if (!it) return '物品不存在';
-    if (Save.bagWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
+    if (Save.bagWeight() + Save.safeWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
     const stack = stackLimit(it);
     let room = 0;
     for (const e of Save.bag) {
@@ -1011,6 +1016,7 @@ const Base = {
 
   /* 仓库 → 背包：整叠搬（装备和用过的恢复品一件一件搬） */
   toBag(e) {
+    if (!Save.stash.includes(e)) return false;
     const it = stashItem(e);
     if (!it) return false;
     const n = (e.gear || it.healCap) ? 1 : Math.max(1, e.n || 1);
@@ -1021,11 +1027,13 @@ const Base = {
     this.dropFrom(Save.stash, e, n);
     this.render();
     this.note('已放入背包：' + it.name + (n > 1 ? ' ×' + n : ''));
+    Game.sfx('pickup');
     return true;
   },
 
   /* 背包 → 仓库 */
   toStash(e) {
+    if (!Save.bag.includes(e)) return false;
     const it = stashItem(e);
     if (!it) return false;
     const n = (e.gear || it.healCap) ? 1 : Math.max(1, e.n || 1);
@@ -1035,6 +1043,7 @@ const Base = {
     this.dropFrom(Save.bag, e, n);
     this.render();
     this.note('已放回仓库：' + it.name + (n > 1 ? ' ×' + n : ''));
+    Game.sfx('pickup');
     return true;
   },
 
@@ -1060,7 +1069,7 @@ const Base = {
     }
     Save.bag = bag.slots.map(s => s.item.equip ? {id:s.item.id,n:1,gear:s.item} : {id:s.item.id,n:s.n,...(s.cap == null ? {} : {cap:s.cap})});
     eq.mag = 0; eq.rounds = []; it.note = '';
-    Save.save(); Tips.hide(); this.render(); return true;
+    Save.save(); Tips.hide(); this.render(); if(rounds.length)Game.sfx('pickup'); return true;
   },
 
   showItem(e, where, node) {
@@ -1257,57 +1266,9 @@ const Base = {
   },
 
   /* 卖出也要先确认：一格点下去就是一整堆，误点太亏 */
-  askSell(e, n, cell) {
-    const it = stashItem(e);
-    if (!it) return;
-    const gain = unitPrice(it) * n;
-    Deal.show({
-      kind: 'sell',
-      title: '卖出',
-      name: it.name + (n > 1 ? ' ×' + n : ''),
-      sub: it.equip ? '装备按剩余耐久折价' : itemCategoryLabel(it),
-      icon: it.icon,
-      id: it.id,
-      short: it.short,
-      price: gain,
-      onGo: () => this.sell(e, n)
-    }, cell.getBoundingClientRect());
-  },
-
-  /* 按仓库条目卖。装备按剩余耐久折价，永远不超过买价 */
-  sell(e, n) {
-    const it = stashItem(e);
-    if (!it || !e) return;
-    const take = Math.min(e.n || 1, n);
-    const gain = unitPrice(it) * take;
-    if (e.gear) Save.stash = Save.stash.filter(x => x !== e);
-    else {
-      e.n -= take;
-      if (e.n <= 0) Save.stash = Save.stash.filter(x => x !== e);
-    }
-    Save.credits += gain;
-    Save.save();
-    Game.sfx('sell');      // 收银机响一声，和拾取区分开
-    this.render();
-    this.note('卖出 ' + it.name + ' ×' + take + '，+' + gain + ' 信用点');
-  },
-
-  sellJunk() {
-    let gain = 0, count = 0;
-    const keep = [];
-    for (const e of Save.stash) {
-      const it = stashItem(e);
-      if (it && itemGroup(it) === 'collectible' && it.r === 1) { gain += it.price * e.n; count += e.n; }
-      else keep.push(e);
-    }
-    if (!count) { this.note('仓库里没有寻常收集品可卖'); return; }
-    Save.stash = keep;
-    Save.credits += gain;
-    Save.save();
-    Game.sfx('sell');
-    this.render();
-    this.note('清掉 ' + count + ' 件寻常物，+' + gain + ' 信用点');
-  },
+  askSell(e,n,cell){return Sales.confirmWarehouse([{entry:e,n}],cell?.getBoundingClientRect());},
+  sell(e,n){const p=Sales.preview('warehouse',[{entry:e,n}]);return p.ok?Sales.commit(Sales.authorize(p)).ok:false;},
+  sellJunk(){const p=Sales.preview('warehouse',Save.stash.filter(e=>{const it=stashItem(e);return it&&itemGroup(it)==='collectible'&&it.r===1;}).map(entry=>({entry,n:entry.n||1})));if(!p.ok){this.note('仓库里没有寻常收集品可卖');return false;}return Sales.commit(Sales.authorize(p)).ok;},
 
   /* ---- 出发：背包里装了什么就带什么，不再现场买补给 ----
      opts.force：用户已经在出发前提醒里点了「继续出发」，明知有缺口也要走。
@@ -1362,9 +1323,9 @@ const MapSelect = {
     }
     const map=MAP_CATALOG.find(m=>m.id===this.selectedId);
     document.getElementById('mapSelectedName').textContent=map.title;
-    const bagN=Save.bag.length, bagW=Save.bagWeight();
+    const bagN=Save.bag.length, bagW=Save.bagWeight()+Save.safeWeight();
     document.getElementById('mapSupplyCost').textContent='背包 ' + bagN + ' / ' + bagSlots() +
-      ' 格 · ' + bagW.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
+      ' 格 · 保险箱 '+Save.safe.length+' / '+CFG.BAG.SAFE+' 格 · ' + bagW.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
     document.getElementById('mapSelectionHint').textContent=
       '带什么由背包决定：子弹和药物回来还留在包里，其它东西自动入库。';
     document.getElementById('btnMapStart').disabled=false;
@@ -1389,7 +1350,7 @@ const DeployGuard = {
   /* 背包里算「药物」的条目：cat === 'medical' 且局内真能用的那几类。
      Medical.is 已经覆盖 cat 判定，这里再排除纯图鉴收藏品（没有 healCap 的）。 */
   carriesMeds() {
-    return Save.bag.some(e => {
+    return Save.bag.concat(Save.safe||[]).some(e => {
       const it = ITEM_BY_ID[e.id];
       return it && Medical.is(it) && (it.healCap || 0) > 0;
     });
@@ -1579,6 +1540,7 @@ const Clinic = {
           (src ? '<img src="' + esc(src) + '" alt="' + esc(doc.name) + '">'
                : '<span class="clinic-vendor-photo" aria-hidden="true"></span>') +
           '<div><h3>' + esc(doc.name) + '</h3><small>' + esc(identity) + '</small></div>' +
+          (typeof MERCHANT_DIALOGUE!=='undefined'?'<p class="clinic-vendor-quote">“'+esc(MERCHANT_DIALOGUE.doctor.beforeTreatment[0])+'”</p>':'') +
         '</div>' +
       '</section>' +
 

@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "service": {
+        "rules": true,
+        "atomic": true,
+        "partialStack": true,
+        "stale": true,
+        "storageRollback": true,
+        "repeatSafe": true,
+        "instanceDurability": true,
+        "attachmentsAndMixedAmmo": true,
+        "partialMedical": true,
+        "inventoryBoundary": true
+      },
+      "widths": [
+        1920,
+        1440,
+        1280,
+        390,
+        320
+      ]
+    },
+    {
+      "offline": true,
+      "service": {
+        "rules": true,
+        "atomic": true,
+        "partialStack": true,
+        "stale": true,
+        "storageRollback": true,
+        "repeatSafe": true,
+        "instanceDurability": true,
+        "attachmentsAndMixedAmmo": true,
+        "partialMedical": true,
+        "inventoryBoundary": true
+      },
+      "widths": [
+        1920,
+        1440,
+        1280,
+        390,
+        320
+      ]
+    }
+  ]
+}

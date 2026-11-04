@@ -1,0 +1,333 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "items": [
+        {
+          "id": "life01",
+          "cat": "life",
+          "r": 1,
+          "price": 2250,
+          "reference": 1800,
+          "sell": 1800
+        },
+        {
+          "id": "life06",
+          "cat": "life",
+          "r": 1,
+          "price": 1750,
+          "reference": 1400,
+          "sell": 1400
+        },
+        {
+          "id": "life04",
+          "cat": "life",
+          "r": 2,
+          "price": 6750,
+          "reference": 5400,
+          "sell": 5400
+        },
+        {
+          "id": "life05",
+          "cat": "life",
+          "r": 2,
+          "price": 5000,
+          "reference": 4000,
+          "sell": 4000
+        },
+        {
+          "id": "life11",
+          "cat": "life",
+          "r": 3,
+          "price": 15000,
+          "reference": 12000,
+          "sell": 12000
+        },
+        {
+          "id": "life20",
+          "cat": "life",
+          "r": 4,
+          "price": 56250,
+          "reference": 45000,
+          "sell": 45000
+        },
+        {
+          "id": "elec01",
+          "cat": "elec",
+          "r": 2,
+          "price": 9375,
+          "reference": 7500,
+          "sell": 7500
+        },
+        {
+          "id": "elec03",
+          "cat": "elec",
+          "r": 2,
+          "price": 6250,
+          "reference": 5000,
+          "sell": 5000
+        },
+        {
+          "id": "elec07",
+          "cat": "elec",
+          "r": 3,
+          "price": 22500,
+          "reference": 18000,
+          "sell": 18000
+        },
+        {
+          "id": "elec02",
+          "cat": "elec",
+          "r": 4,
+          "price": 37500,
+          "reference": 30000,
+          "sell": 30000
+        },
+        {
+          "id": "ind01",
+          "cat": "ind",
+          "r": 1,
+          "price": 3750,
+          "reference": 3000,
+          "sell": 3000
+        },
+        {
+          "id": "ind02",
+          "cat": "ind",
+          "r": 2,
+          "price": 7000,
+          "reference": 5600,
+          "sell": 5600
+        },
+        {
+          "id": "ind07",
+          "cat": "ind",
+          "r": 2,
+          "price": 5250,
+          "reference": 4200,
+          "sell": 4200
+        },
+        {
+          "id": "ind10",
+          "cat": "ind",
+          "r": 3,
+          "price": 20000,
+          "reference": 16000,
+          "sell": 16000
+        },
+        {
+          "id": "antiq02",
+          "cat": "collect",
+          "r": 3,
+          "price": 21250,
+          "reference": 17000,
+          "sell": 17000
+        },
+        {
+          "id": "art01",
+          "cat": "collect",
+          "r": 3,
+          "price": 20000,
+          "reference": 16000,
+          "sell": 16000
+        },
+        {
+          "id": "med02",
+          "cat": "med",
+          "r": 2,
+          "price": 7250,
+          "reference": 5800,
+          "sell": 5800
+        },
+        {
+          "id": "med15",
+          "cat": "med",
+          "r": 3,
+          "price": 40000,
+          "reference": 32000,
+          "sell": 32000
+        }
+      ],
+      "checks": [
+        "4 traders",
+        "provided portrait loaded and embedded offline",
+        "category filters",
+        "cancel",
+        "double confirm",
+        "funds",
+        "capacity",
+        "whitelist",
+        "stale quote and merchant",
+        "dialogue",
+        "save reload",
+        "original merchants",
+        "390/320 layout"
+      ]
+    },
+    {
+      "offline": true,
+      "items": [
+        {
+          "id": "life01",
+          "cat": "life",
+          "r": 1,
+          "price": 2250,
+          "reference": 1800,
+          "sell": 1800
+        },
+        {
+          "id": "life06",
+          "cat": "life",
+          "r": 1,
+          "price": 1750,
+          "reference": 1400,
+          "sell": 1400
+        },
+        {
+          "id": "life04",
+          "cat": "life",
+          "r": 2,
+          "price": 6750,
+          "reference": 5400,
+          "sell": 5400
+        },
+        {
+          "id": "life05",
+          "cat": "life",
+          "r": 2,
+          "price": 5000,
+          "reference": 4000,
+          "sell": 4000
+        },
+        {
+          "id": "life11",
+          "cat": "life",
+          "r": 3,
+          "price": 15000,
+          "reference": 12000,
+          "sell": 12000
+        },
+        {
+          "id": "life20",
+          "cat": "life",
+          "r": 4,
+          "price": 56250,
+          "reference": 45000,
+          "sell": 45000
+        },
+        {
+          "id": "elec01",
+          "cat": "elec",
+          "r": 2,
+          "price": 9375,
+          "reference": 7500,
+          "sell": 7500
+        },
+        {
+          "id": "elec03",
+          "cat": "elec",
+          "r": 2,
+          "price": 6250,
+          "reference": 5000,
+          "sell": 5000
+        },
+        {
+          "id": "elec07",
+          "cat": "elec",
+          "r": 3,
+          "price": 22500,
+          "reference": 18000,
+          "sell": 18000
+        },
+        {
+          "id": "elec02",
+          "cat": "elec",
+          "r": 4,
+          "price": 37500,
+          "reference": 30000,
+          "sell": 30000
+        },
+        {
+          "id": "ind01",
+          "cat": "ind",
+          "r": 1,
+          "price": 3750,
+          "reference": 3000,
+          "sell": 3000
+        },
+        {
+          "id": "ind02",
+          "cat": "ind",
+          "r": 2,
+          "price": 7000,
+          "reference": 5600,
+          "sell": 5600
+        },
+        {
+          "id": "ind07",
+          "cat": "ind",
+          "r": 2,
+          "price": 5250,
+          "reference": 4200,
+          "sell": 4200
+        },
+        {
+          "id": "ind10",
+          "cat": "ind",
+          "r": 3,
+          "price": 20000,
+          "reference": 16000,
+          "sell": 16000
+        },
+        {
+          "id": "antiq02",
+          "cat": "collect",
+          "r": 3,
+          "price": 21250,
+          "reference": 17000,
+          "sell": 17000
+        },
+        {
+          "id": "art01",
+          "cat": "collect",
+          "r": 3,
+          "price": 20000,
+          "reference": 16000,
+          "sell": 16000
+        },
+        {
+          "id": "med02",
+          "cat": "med",
+          "r": 2,
+          "price": 7250,
+          "reference": 5800,
+          "sell": 5800
+        },
+        {
+          "id": "med15",
+          "cat": "med",
+          "r": 3,
+          "price": 40000,
+          "reference": 32000,
+          "sell": 32000
+        }
+      ],
+      "checks": [
+        "4 traders",
+        "provided portrait loaded and embedded offline",
+        "category filters",
+        "cancel",
+        "double confirm",
+        "funds",
+        "capacity",
+        "whitelist",
+        "stale quote and merchant",
+        "dialogue",
+        "save reload",
+        "original merchants",
+        "390/320 layout"
+      ]
+    }
+  ]
+}

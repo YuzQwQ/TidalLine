@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "groupedPayment": true,
+      "avatar": true,
+      "cancel": true,
+      "repeatSafe": true,
+      "creditRecheck": true,
+      "background": true,
+      "glass": true,
+      "viewports": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    },
+    {
+      "offline": true,
+      "groupedPayment": true,
+      "avatar": true,
+      "cancel": true,
+      "repeatSafe": true,
+      "creditRecheck": true,
+      "background": true,
+      "glass": true,
+      "viewports": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    }
+  ]
+}

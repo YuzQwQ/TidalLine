@@ -50,9 +50,9 @@ const Safehouse = {
     this.root.querySelector('.sh-home').hidden=!home;this.root.querySelector('.sh-work').hidden=home;
     const merchant=['traders','doctor'].includes(this.view);
     for(const n of this.root.querySelectorAll('.sh-top [data-sh]')){const on=n.dataset.sh===this.view||(merchant&&n.dataset.sh==='traders');n.classList.toggle('on',on);if(n.tagName==='BUTTON')n.setAttribute('aria-current',on?'page':'false');}
-    this.root.querySelector('[data-sh-work-title]').textContent={loadout:'备战 · 装备与携带',stash:'仓库 · 物资管理',traders:'商人 · 交易与补给',doctor:'医生 · 药品与治疗'}[this.view]||'';
+    this.root.querySelector('[data-sh-work-title]').textContent={gunsmith:'装备台 · 枪械改装',loadout:'备战 · 装备与携带',stash:'仓库 · 物资管理',traders:'商人 · 交易与补给',doctor:'医生 · 药品与治疗'}[this.view]||'';
     const profile=this.root.querySelector('.sh-merchant-profile');profile.hidden=!merchant;
-    if(merchant){const m=SAFEHOUSE_CONFIG.merchants[this.demo?(this.view==='doctor'?'doctor':'shop'):Base.tab]||SAFEHOUSE_CONFIG.merchants.shop;const key=m.asset;if(profile.dataset.asset!==key){profile.innerHTML='<img alt="'+m.name+'"><div><b>'+m.name+'</b><small>'+m.role+'</small><p>“'+m.quote+'”</p></div>';profile.querySelector('img').src=this.asset(key);profile.dataset.asset=key;}}
+    if(merchant){const m=SAFEHOUSE_CONFIG.merchants[this.demo?(this.view==='doctor'?'doctor':'shop'):Base.tab]||SAFEHOUSE_CONFIG.merchants.shop;const key=m.asset;if(profile.dataset.asset!==(key||'pending')){profile.innerHTML='<img alt="'+m.name+'"><div><b>'+m.name+'</b><small>'+m.role+'</small><p>“'+m.quote+'”</p></div>';if(key)profile.querySelector('img').src=this.asset(key);else profile.querySelector('img').remove();profile.dataset.asset=key||'pending';}}
   },
   route(id){
     const planned=SAFEHOUSE_CONFIG.nav.find(x=>x.id===id&&x.state==='planned')||SAFEHOUSE_CONFIG.facilities.find(x=>x.action===id&&x.state==='planned');
@@ -61,10 +61,11 @@ const Safehouse = {
     if(id==='recovery'){this.explain('角色恢复','伤势与自动恢复尚未开放。现阶段请在备战中使用医疗品，或前往医生购买收费治疗。');return;}
     if(id==='archive'){this.archive();return;}
     if(id==='maps'){if(this.demo)this.explain('出发行动','游戏中此按钮将打开现有地图选择，保留围栏区等已开放地图。最终确认才启动行动；本独立原型不启动游戏。');else{this.stopTimer();MapSelect.open();}return;}
-    if(!['home','loadout','stash','traders','doctor'].includes(id)){this.explain('功能尚未开放','入口已预留，等待对应系统接入。当前操作不会改变资金、库存或任务状态。');return;}
+    if(!['home','gunsmith','loadout','stash','traders','doctor'].includes(id)){this.explain('功能尚未开放','入口已预留，等待对应系统接入。当前操作不会改变资金、库存或任务状态。');return;}
     this.view=id;
-    if(!this.demo){Tips.hide();Deal.hide();Ctx.hide();Base.closePicker();if(['traders','doctor'].includes(id))Base.tab=id==='doctor'?'doctor':(['shop','gun','doctor'].includes(Base.tab)?Base.tab:'shop');else Base.tab='stash';this.applyView();Base.page=0;Base.render();if(id!=='home')Base.renderStash();}
+    if(!this.demo){Tips.hide();Deal.hide();Ctx.hide();Base.closePicker();if(['traders','doctor'].includes(id))Base.tab=id==='doctor'?'doctor':(['shop','gun','doctor','viktor'].includes(Base.tab)?Base.tab:'shop');else Base.tab='stash';this.applyView();Base.page=0;Base.render();if(id!=='home')Base.renderStash();}
     this.refresh();
+    if(id==='gunsmith'&&!this.demo&&typeof ModUI!=='undefined')ModUI.showPage();
   },
   explain(title,text){const d=this.root.querySelector('dialog');d.querySelector('.sh-dialog-content').innerHTML='<small class="sh-kicker">TIDAL LINE / 功能说明</small><h2></h2><p></p>';d.querySelector('h2').textContent=title;d.querySelector('p').textContent=text;if(!d.open)d.showModal();},
   archive(){

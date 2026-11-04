@@ -1,0 +1,59 @@
+/* Merchant sell view reuses the live warehouse node and renderer. */
+const MerchantSales={
+ mounted:false,cart:new Map(),selected:null,category:'all',quality:'all',query:'',sort:'sellableValue',token:null,context:null,
+ active(){return !Safehouse.demo&&Safehouse.view==='merchant'&&MerchantUI.mode==='sell';},
+ esc(s){return MerchantUI.esc(s);},
+ mount(){if(this.mounted||!MerchantUI.detail)return;this.mounted=true;const d=MerchantUI.detail;
+  this.tools=document.createElement('section');this.tools.className='ms-tools';this.tools.hidden=true;
+  this.tools.innerHTML='<header class="ms-capacity"><span>仓库物资</span><b></b><div><i></i></div></header><nav aria-label="出售分类">'+STORAGE_UI_CONFIG.categories.map(c=>'<button data-ms-cat="'+c.id+'">'+c.name+'</button>').join('')+'<select aria-label="收集品子类"><option value="">九类收集品</option>'+COLLECTION_CATS.map(k=>'<option value="cat:'+k+'">'+CATS[k].name+'</option>').join('')+'</select></nav><div class="ms-filters"><input type="search" aria-label="搜索待售库存" placeholder="搜索物品名称…"><select aria-label="出售品质"><option value="all">全部品质</option>'+RARITY.map((r,i)=>'<option value="'+(i+1)+'">'+r.name+'</option>').join('')+'</select><select aria-label="出售排序"><option value="sellableValue">可出售优先 · 价值从高到低</option><option value="value">回收价值优先</option><option value="priceUp">回收价值从低到高</option><option value="rarity">品质优先</option><option value="name">名称排序</option><option value="category">类别整理</option></select></div><p>✓ 已选待售　□ 可出售　↓ 低价收购　⊘ 不予收购　◆ 不可交易</p>';
+  d.querySelector('.mb-sell-mount').before(this.tools);
+  this.tools.querySelector('nav').onclick=e=>{const b=e.target.closest('[data-ms-cat]');if(b){this.category=b.dataset.msCat;this.refresh();}};
+  for(const [selector,key]of [['input','query'],['[aria-label="出售品质"]','quality'],['[aria-label="出售排序"]','sort'],['[aria-label="收集品子类"]','category']])this.tools.querySelector(selector).addEventListener(key==='query'?'input':'change',e=>{this[key]=e.target.value||'all';this.refresh();});
+  this.policy=document.createElement('section');this.policy.className='ms-policy sh-metal';d.querySelector('.mb-person').append(this.policy);
+  this.panel=document.createElement('section');this.panel.className='ms-panel';d.querySelector('.mb-right').append(this.panel);
+ },
+ reset(message=false){const had=this.cart.size;this.cart.clear();this.selected=null;this.closeConfirm();if(message&&had)Base.note('已清空待售预览，仓库物品未改变');},
+ sync(){if(!MerchantUI.mounted||Safehouse.demo)return;this.mount();const merchant=Safehouse.view==='merchant'?MerchantUI.key:null;if(this.context&&this.context!==merchant)this.reset(true);this.context=merchant;
+  const active=this.active(),d=MerchantUI.detail;if(!active)this.closeConfirm();d.classList.toggle('ms-selling',active);this.tools.hidden=!active;this.panel.hidden=!active;this.policy.hidden=!active;
+  d.querySelector('[data-mb-mode="sell"]').hidden=!MERCHANT_BUYBACK[MerchantUI.key];
+  if(active){this.policy.innerHTML='<h3>收购偏好与价格</h3><p>'+this.esc(MERCHANT_BUYBACK[MerchantUI.key]?.label||'暂无收购配置')+'</p><p>现行回收价，无额外加成</p><small>非主营直接拒收；绑定物品不可交易。</small>';this.render();}
+ },
+ list(){const rows=InventoryView.list(Save.stash,this);if(this.sort==='sellableValue')rows.sort((a,b)=>{const qa=Sales.quote(MerchantUI.key,a),qb=Sales.quote(MerchantUI.key,b);return Number(qb.ok)-Number(qa.ok)||((qb.ok?qb.unit:qb.base)*(b.n||1)-(qa.ok?qa.unit:qa.base)*(a.n||1));});return rows;},
+ refresh(){Base.page=0;Base.renderStash();this.render();},
+ select(e){this.selected=e;this.render();},
+ toggle(e,addOnly=false){const id=Sales.id(e);if(this.cart.has(id)){if(!addOnly)this.cart.delete(id);}else{const q=Sales.quote(MerchantUI.key,e);if(!q.ok){Base.note(q.reason,true);return;}this.cart.set(id,{entry:e,n:e.n||1});}this.selected=e;this.closeConfirm();this.render();this.decorate();},
+ decorate(){if(!this.active())return;const list=this.list().slice(Base.page*Base._per,Base.page*Base._per+Base._per);
+  document.querySelectorAll('#stashGrid .scell').forEach((cell,i)=>{const e=list[i];if(!e)return;const q=Sales.quote(MerchantUI.key,e),selected=this.cart.has(Sales.id(e));cell.classList.toggle('ms-chosen',selected);cell.classList.toggle('ms-refused',!q.ok);cell.classList.toggle('ms-low',q.status==='low');cell.title=stashItem(e).name+' · '+q.reason+' · '+formatMoney(q.unit);cell.tabIndex=0;cell.setAttribute('role','button');cell.setAttribute('aria-label',cell.title);cell.setAttribute('aria-pressed',String(selected));
+   cell.querySelectorAll('.ms-badge').forEach(b=>b.remove());const badge=document.createElement('button');badge.className='ms-badge';badge.textContent=selected?'✓':q.ok?(q.status==='low'?'↓':'+'):(q.status==='bound'?'◆':'⊘');badge.setAttribute('aria-label',selected?'取消待售':q.reason);badge.onclick=ev=>{ev.stopPropagation();if(ev.detail>1)return;this.select(e);if(q.ok)this.toggle(e,ev.shiftKey);};cell.append(badge);
+   cell.onclick=ev=>{if(ev.detail>1)return;this.select(e);if(q.ok)this.toggle(e,ev.shiftKey);};cell.ondblclick=null;cell.oncontextmenu=ev=>{ev.preventDefault();this.select(e);};cell.onkeydown=ev=>{if(ev.target!==cell)return;if(ev.key===' '||ev.key==='Enter'){ev.preventDefault();this.select(e);if(q.ok)this.toggle(e,ev.shiftKey);}};
+  });this.render();
+ },
+ render(){if(!this.active()||!this.panel)return;const scroll=this.panel.querySelector('.ms-cart-scroll')?.scrollTop||0;const esc=s=>this.esc(s),e=this.selected&&Save.stash.includes(this.selected)?this.selected:null,it=e&&stashItem(e),q=e&&Sales.quote(MerchantUI.key,e),p=Sales.preview(MerchantUI.key,[...this.cart.values()]);
+  const detail=it?'<h3>'+esc(it.name)+'</h3><div class="ms-detail-body">'+Icons.detailTag(it,'')+'<dl><dt>品质</dt><dd>'+RARITY[(it.r||1)-1].name+'</dd><dt>类别</dt><dd>'+esc(itemCategoryLabel(it))+'</dd><dt>重量</dt><dd>'+it.w+' kg</dd><dt>单件收购价</dt><dd>'+formatMoney(q.unit)+'</dd></dl></div><p>'+esc(q.reason)+'</p>':'<h3>物品详情</h3><p>单击整个物品格加入或移出待售；右键仅查看详情。</p>';
+  this.panel.innerHTML='<section class="ms-item sh-metal">'+detail+'</section><section class="ms-cart sh-metal"><header><h3>出售清单 · '+p.rows.length+' 项</h3><button data-ms-clear>清空</button></header><div class="ms-cart-scroll">'+(p.rows.length?p.rows.map(r=>'<article class="ms-row '+(!r.valid?'invalid':'')+'" data-sale-id="'+r.id+'">'+Icons.bagTag(r.item,'')+'<div><b>'+esc(r.item?.name||'失效物品')+'</b><small>单价 '+formatMoney(r.unit)+' · 小计 '+formatMoney(r.valid?r.unit*r.n:0)+'</small>'+(!r.valid?'<small class="ms-error">'+esc(r.reason)+'</small>':'')+'</div><label><span class="sr-only">出售数量</span><input aria-label="出售数量 '+esc(r.item?.name||'')+'" type="number" min="1" max="'+(r.entry.n||1)+'" step="1" value="'+esc(r.n)+'" '+(r.entry.gear?'readonly':'')+'><small>'+ (r.item?.cat==='ammo'?'发':'件')+'</small></label><button data-ms-remove="'+r.id+'" aria-label="移除 '+esc(r.item?.name||'')+'">×</button></article>').join(''):'<p class="ms-hint">尚未选择物品。筛选与分页不会清空待售清单。</p>')+'</div><footer><p>待售 '+p.rows.length+' 项 · '+p.units+' 单位（弹药按发）</p><dl><dt>基础估价</dt><dd>'+formatMoney(p.base)+'</dd><dt>商人价格修正</dt><dd>'+formatMoney(p.total-p.base)+'</dd><dt>最终出售总价</dt><dd class="gold">'+formatMoney(p.total)+'</dd></dl><button class="mb-gold ms-confirm" '+(!p.ok?'disabled':'')+'>确认出售 · '+formatMoney(p.total)+'</button><p class="ms-error">'+(p.errors.length?'请修正清单中的失效物品或数量':'确认前不会扣除物品')+'</p></footer></section>';
+  this.panel.querySelector('.ms-cart-scroll').scrollTop=scroll;Icons.bindDetailImages(this.panel);this.panel.querySelector('[data-ms-clear]').onclick=()=>{this.reset();this.render();Base.renderStash();};
+  this.panel.querySelectorAll('[data-ms-remove]').forEach(b=>b.onclick=()=>{this.cart.delete(b.dataset.msRemove);this.closeConfirm();this.render();Base.renderStash();});
+  this.panel.querySelectorAll('.ms-row input').forEach(input=>{input.oninput=()=>{const row=this.cart.get(input.closest('[data-sale-id]').dataset.saleId);row.n=input.value===''?NaN:Number(input.value);this.closeConfirm();const preview=Sales.preview(MerchantUI.key,[...this.cart.values()]);this.panel.querySelector('.ms-confirm').disabled=!preview.ok;};input.onchange=()=>{const row=this.cart.get(input.closest('[data-sale-id]').dataset.saleId);row.n=input.value===''?NaN:Number(input.value);this.closeConfirm();this.render();};});
+  this.panel.querySelector('.ms-confirm').onclick=()=>this.confirm(MerchantUI.key,[...this.cart.values()]);
+  this.tools.querySelector('.ms-capacity b').textContent=Save.stash.length+' / '+STASH_SLOTS+' 格';this.tools.querySelector('.ms-capacity i').style.width=Math.min(100,Save.stash.length/STASH_SLOTS*100)+'%';this.tools.querySelectorAll('[data-ms-cat]').forEach(b=>b.classList.toggle('on',b.dataset.msCat===this.category));
+ },
+ closeConfirm(){if(this.token)Sales.cancel(this.token);this.token=null;if(this.dialog?.open)this.dialog.close();},
+ confirm(merchant,requests){const p=Sales.preview(merchant,requests);if(!p.ok){Base.note(p.errors[0]?.reason||'没有可出售物品',true);return;}this.closeConfirm();this.token=Sales.authorize(p);
+  if(!this.dialog){this.dialog=document.createElement('dialog');this.dialog.className='ms-checkout';document.body.append(this.dialog);this.dialog.addEventListener('cancel',()=>this.closeConfirm());this.dialog.addEventListener('close',()=>{if(!this.dialog.open){if(this.token)Sales.cancel(this.token);this.token=null;}});}
+  this.dialog.innerHTML='<h2>确认出售</h2><p>'+this.esc(merchant==='warehouse'?'仓库出售':SAFEHOUSE_CONFIG.merchants[merchant].name)+' · '+p.rows.length+' 项</p><div class="ms-checkout-list">'+p.rows.map(r=>'<p>'+this.esc(r.item.name)+' ×'+r.n+' <b>'+formatMoney(r.unit*r.n)+'</b></p>').join('')+'</div><p>最终所得 <b class="gold">'+formatMoney(p.total)+'</b></p><p>出售后无法撤销，请核对物品与数量。</p><div><button data-ms-pay>确认出售</button><button data-ms-cancel>取消</button></div>';
+  const expectedToken=this.token;this.dialog.querySelector('[data-ms-cancel]').onclick=()=>this.closeConfirm();this.dialog.querySelector('[data-ms-pay]').onclick=ev=>{if(this.token!==expectedToken)return;ev.currentTarget.disabled=true;const token=this.token;this.token=null;const r=Sales.commit(token);this.dialog.close();if(r.ok){this.cart.clear();this.selected=null;this.render();Base.renderStash();}else{Base.note(r.reason,true);this.render();}};this.dialog.showModal();
+ }
+};
+{
+ const apply=Safehouse.applyView,setMode=MerchantUI.setMode,identity=MerchantUI.renderIdentity,render=Base.renderStash,list=Base.stashList,metrics=Base.gridMetrics;
+ Safehouse.applyView=function(){const r=apply.apply(this,arguments);MerchantSales.sync();return r;};
+ MerchantUI.renderIdentity=function(){const r=identity.apply(this,arguments);if(!Safehouse.demo)this.detail.querySelector('[data-mb-mode="sell"]').hidden=!MERCHANT_BUYBACK[this.key];return r;};
+ MerchantUI.setMode=function(mode){if(!Safehouse.demo&&mode==='sell'){this.mode=mode;this.selected=null;Tips.hide();Deal.hide();Base.page=0;this.applyMode();MerchantSales.sync();Base.renderStash();return;}const r=setMode.apply(this,arguments);MerchantSales.sync();return r;};
+ Base.stashList=function(){return MerchantSales.active()?MerchantSales.list():list.apply(this,arguments);};
+ Base.renderStash=function(){const r=render.apply(this,arguments);MerchantSales.decorate();return r;};
+ Base.gridMetrics=function(){if(!MerchantSales.active())return metrics.apply(this,arguments);const grid=document.getElementById('stashGrid'),w=Math.max(200,grid.clientWidth-20),h=Math.max(150,grid.clientHeight-20),gap=9,cols=Math.max(2,Math.floor((w+gap)/90)),cell=(w-gap*(cols-1))/cols;return {cols,rows:Math.max(2,Math.floor((h+gap)/(cell+gap))),cell};};
+ const hide=Deal.hide,close=Base.close;
+ Deal.hide=function(){if(Sales.warehouseToken){Sales.cancel(Sales.warehouseToken);Sales.warehouseToken=null;}return hide.apply(this,arguments);};
+ Base.close=function(){MerchantSales.reset();MerchantSales.context=null;Deal.hide();return close.apply(this,arguments);};
+ MerchantUI.selectStock=function(entry){MerchantSales.select(entry);};
+}

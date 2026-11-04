@@ -81,7 +81,7 @@ vm.createContext(ctx);
 for (const f of ['config.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
   'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'melee.js', 'range.js', 'boot.js']) {
+  'medhud.js', 'melee.js', 'range.js', 'sales.js', 'boot.js']) {
   try {
     vm.runInContext(fs.readFileSync(path.join(dir, 'js', f), 'utf8'), ctx, { filename: f });
   } catch (e) {
@@ -466,6 +466,7 @@ Save.normalizeStash();
 ok('普通物品照常合并', Save.stashCount('lux01') === 3);
 ok('装备不会被合并掉', Save.stash.filter(e => e.gear).length === 2);
 
+Game.state = 'base'; // 仓库交易只允许在局外进行。
 const coin0 = Save.credits;
 const eqEntry = Save.stash.find(e => e.gear);
 Base.sell(eqEntry, 1);
@@ -1312,7 +1313,10 @@ Game.debug = false;
 
 console.log('\n=== 玩家动画状态 ===');
 Game.startRun();
-const animator = new ctx.Player(M.cx(7), M.cy(4));
+/* 出生点的合法站位：北侧楼体在南边投影半格，格子中心（cy(4)=144）正好压在墙沿上，
+   人物会被自己的碰撞圆卡住走不动。游戏里出生也用 navigationPoint，这里照抄。 */
+const SPAWN_PT = M.navigationPoint(7, 4);
+const animator = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y);
 animator.tickAnimation(0.55, false);
 ok('待机有呼吸计时', animator.anim.state === 'idle' && animator.anim.time > 0.5);
 animator.update(1 / 60, inpWalk); animator.tickAnimation(1 / 60, false);
@@ -1356,7 +1360,7 @@ ok('响度表覆盖每条合成音', ['shot', 'enemyShot', 'melee', 'hit', 'head
   'extract', 'death'].every(k => typeof ctx.SFX.LOUD[k] === 'number'));
 
 /* ---- 开火：每把枪带上自己的 id ---- */
-const gunner = new ctx.Player(M.cx(7), M.cy(4));
+const gunner = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y);
 for (const id of ['rifle', 'shotgun', 'smg', 'pistol']) {
   gunner.fillWeapons([EQUIP.gun(id, 5), null, null]);
   gunner.fireCd = 0; gunner.reloadT = 0; gunner.fireCd = 0;
@@ -1368,7 +1372,7 @@ for (const id of ['rifle', 'shotgun', 'smg', 'pistol']) {
 
 /* ---- 脚步：同样的时间，越快步子越密 ---- */
 const stepCount = (speedInput, seconds, sprint) => {
-  const w = new ctx.Player(M.cx(7), M.cy(4));
+  const w = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y);
   const x0 = w.x, y0 = w.y;
   sfxLog.length = 0;
   for (let i = 0; i < Math.round(seconds * 60); i++) {
@@ -1386,18 +1390,18 @@ ok('潜行比走路稀', sneakSteps < walkSteps, sneakSteps + ' vs ' + walkSteps
 
 /* 脚步音量跟速度挂钩：冲刺那一步更沉 */
 const volOf = log => (log.find(c => /^step_stone_/.test(c.name)) || {}).opts?.vol;
-const walkVol = (() => { const w = new ctx.Player(M.cx(7), M.cy(4)); const x0 = w.x, y0 = w.y;
+const walkVol = (() => { const w = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y); const x0 = w.x, y0 = w.y;
   sfxLog.length = 0;
   for (let i = 0; i < 120; i++) { w.update(1 / 60, { ...inpStill, mx: 1, my: 0 }); w.x = x0; w.y = y0; }
   return volOf(sfxLog); })();
-const runVol = (() => { const w = new ctx.Player(M.cx(7), M.cy(4)); const x0 = w.x, y0 = w.y;
+const runVol = (() => { const w = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y); const x0 = w.x, y0 = w.y;
   sfxLog.length = 0;
   for (let i = 0; i < 120; i++) { w.update(1 / 60, { ...inpStill, mx: 1, my: 0, sprint: true }); w.x = x0; w.y = y0; }
   return volOf(sfxLog); })();
 ok('冲刺脚步比走路脚步响', runVol > walkVol, walkVol + ' → ' + runVol);
 
 /* ---- 闪避：起步一声破风，收尾一下落步 ---- */
-const dodger = new ctx.Player(M.cx(7), M.cy(4));
+const dodger = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y);
 sfxLog.length = 0;
 dodger.update(1 / 60, { ...inpStill, dodge: true });
 ok('闪避触发破风声', sfxLog.some(c => c.name === 'dodge'));
@@ -1405,7 +1409,7 @@ for (let i = 0; i < 20; i++) dodger.update(1 / 60, inpStill);
 ok('闪避收尾有落步声', sfxLog.some(c => /^step_stone_/.test(c.name)));
 
 /* ---- 切枪：枪⇄刀两个方向都要有声 ---- */
-const swapper = new ctx.Player(M.cx(7), M.cy(4));
+const swapper = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y);
 swapper.fillWeapons([EQUIP.gun('rifle', 5), null, null]);
 swapper.melee = ctx.MeleeSystem.normalize(EQUIP.melee('melee01'));
 sfxLog.length = 0;
@@ -1416,7 +1420,7 @@ swapper.switchWeapon(0);
 ok('刀 → 枪有声', sfxLog.filter(c => c.name === 'shot_switch').length === 1);
 
 /* 切枪音按枪型走：霰弹枪是泵动上膛，其余沿用通用滑套 */
-const sw2 = new ctx.Player(M.cx(7), M.cy(4));
+const sw2 = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y);
 sw2.fillWeapons([EQUIP.gun('rifle', 5), EQUIP.gun('shotgun', 6), null]);
 sfxLog.length = 0;
 sw2.switchWeapon(1);

@@ -15,16 +15,8 @@ const StorageUI={
     if(Safehouse.demo){const select=this.el.querySelector('[aria-label="库存排序"]');select.querySelector('[value="value"]').textContent='演示顺序';select.querySelector('[value="priceUp"]').disabled=true;select.querySelector('[value="priceUp"]').textContent='价格排序 · 游戏内';}
     this.applyView();this.renderDetail();
   },
-  matches(item,category){
-    if(category==='all')return true;if(category.startsWith('cat:'))return item.cat===category.slice(4);
-    if(category==='weapons')return ['gun','melee'].includes(item.equip?.kind);
-    if(category==='protection')return item.equip?.kind==='armor';if(category==='bags')return item.equip?.kind==='bag';
-    if(category==='collectibles')return Safehouse.demo?item.category==='collectibles':itemGroup(item)==='collectible';
-    return item.cat===category;
-  },
-  list(){
-    return Save.stash.filter(e=>{const it=stashItem(e);return it&&this.matches(it,this.category)&&(this.quality==='all'||it.r===Number(this.quality))&&it.name.toLowerCase().includes(this.query.trim().toLowerCase());}).sort((a,b)=>{const ia=stashItem(a),ib=stashItem(b),value=e=>unitPrice(stashItem(e))*(e.n||1);if(this.sort==='priceUp')return value(a)-value(b);if(this.sort==='rarity')return (ib.r||1)-(ia.r||1)||value(b)-value(a);if(this.sort==='name')return ia.name.localeCompare(ib.name,'zh-CN');if(this.sort==='category')return (itemCategoryLabel(ia)).localeCompare(itemCategoryLabel(ib),'zh-CN')||value(b)-value(a);return value(b)-value(a);});
-  },
+  matches(item,category){if(Safehouse.demo&&category==='collectibles')return item.category==='collectibles';return InventoryView.matches(item,category);},
+  list(){return InventoryView.list(Save.stash,this);},
   applyView(){
     if(!this.mounted)return;const active=Safehouse.view==='stash';this.el.hidden=!active;
     if(active&&!Safehouse.demo&&this.stock.parentNode!==this.el.querySelector('.st-stock-mount'))this.el.querySelector('.st-stock-mount').appendChild(this.stock);
@@ -60,12 +52,7 @@ const StorageUI={
     Icons.bindDetailImages(box);
     for(const button of box.querySelectorAll('[data-st-action]'))button.onclick=()=>{if(!Save.stash.includes(e)){this.selected=null;this.rerender();return;}const action=button.dataset.stAction;if(action==='use')Medical.use(e,'stash');if(action==='transfer')Base.toBag(e);if(action==='sell')Base.askSell(e,e.n||1,s.node);if(action==='unload')Base.unloadGun(it);if(action==='equip')Safehouse.route('loadout');};
   },
-  confirmJunk(){
-    const entries=Save.stash.filter(e=>{const it=stashItem(e);return it&&itemGroup(it)==='collectible'&&it.r===1;});
-    if(!entries.length){this.feedback('仓库里没有可出售的寻常收集品。');return;}
-    const quote=entries.map(e=>({e,n:e.n||1,price:stashItem(e).price})),sum=quote.reduce((n,x)=>n+x.price*x.n,0),count=quote.reduce((n,x)=>n+x.n,0);
-    Deal.show({kind:'sell',title:'确认出售寻常收集品',name:count+' 件 · '+entries.length+' 格',sub:'仅寻常收集品，排除医疗、弹药与装备',price:sum,onGo:()=>{const current=Save.stash.filter(e=>{const it=stashItem(e);return it&&itemGroup(it)==='collectible'&&it.r===1;});if(current.length!==quote.length||quote.some((x,i)=>current[i]!==x.e||(x.e.n||1)!==x.n||stashItem(x.e).price!==x.price)){this.feedback('库存已变化，请重新确认出售清单。',true);return;}Base.sellJunk();}},this.el.querySelector('[data-st-bulk]').getBoundingClientRect());
-  },
+  confirmJunk(){return Sales.confirmWarehouse(Save.stash.filter(e=>{const it=stashItem(e);return it&&itemGroup(it)==='collectible'&&it.r===1;}).map(entry=>({entry,n:entry.n||1})),this.el.querySelector('[data-st-bulk]').getBoundingClientRect(),true);},
   renderDemo(){
     if(!this.mounted)return;const items=STORAGE_UI_CONFIG.demo,list=items.filter(i=>(this.category==='all'||i.category===this.category||(this.category.startsWith('cat:')&&i.cat===this.category.slice(4)))&&(this.quality==='all'||i.rarity===Number(this.quality))&&i.name.toLowerCase().includes(this.query.trim().toLowerCase()));if(this.sort==='rarity')list.sort((a,b)=>b.rarity-a.rarity);if(this.sort==='name')list.sort((a,b)=>a.name.localeCompare(b.name,'zh-CN'));if(this.sort==='category')list.sort((a,b)=>a.category.localeCompare(b.category)||a.name.localeCompare(b.name,'zh-CN'));if(this.selected&&!list.includes(this.selected.item))this.selected=null;const grid=this.el.querySelector('.st-demo-grid');grid.innerHTML='';for(const item of list){const b=document.createElement('button');b.className='scell r'+item.rarity;b.innerHTML='<img alt="" src="../../../assets/'+item.file+'"><span class="cn">'+MerchantUI.esc(item.name)+'</span>'+(item.quantity?'<span class="qty">'+item.quantity+'</span>':'');b.onclick=()=>{this.selected={item};this.renderDetail();};grid.appendChild(b);}this.el.querySelector('[data-st-capacity]').textContent=items.length+' / 600 格 · 演示';this.el.querySelector('.st-capacity i').style.width=items.length/600*100+'%';this.el.querySelector('[data-st-visible]').textContent='演示数据 · 不连接实际仓库';this.el.querySelector('.st-empty').hidden=list.length>0;for(const b of this.el.querySelectorAll('[data-st-category]')){b.classList.toggle('on',b.dataset.stCategory===this.category);b.querySelector('small').textContent=items.filter(i=>b.dataset.stCategory==='all'||i.category===b.dataset.stCategory||('cat:'+i.cat)===b.dataset.stCategory).length;}this.renderDetail();
   }

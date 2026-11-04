@@ -1,0 +1,389 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "decoded": true,
+      "actions": [
+        {
+          "name": "equip mp155",
+          "result": true,
+          "sounds": [
+            "shot_switch_shotgun"
+          ]
+        },
+        {
+          "name": "stale equip silent mp155",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "equip m4a1",
+          "result": true,
+          "sounds": [
+            "shot_switch"
+          ]
+        },
+        {
+          "name": "stale equip silent m4a1",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "equip glock17",
+          "result": true,
+          "sounds": [
+            "shot_switch"
+          ]
+        },
+        {
+          "name": "stale equip silent glock17",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "equip helmet",
+          "result": true,
+          "sounds": [
+            "gear_helmet"
+          ]
+        },
+        {
+          "name": "equip body",
+          "result": true,
+          "sounds": [
+            "gear_armor"
+          ]
+        },
+        {
+          "name": "equip bag",
+          "result": true,
+          "sounds": [
+            "gear_bag"
+          ]
+        },
+        {
+          "name": "unload ammunition to bag",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "empty unload silent",
+          "result": true,
+          "sounds": []
+        },
+        {
+          "name": "equip melee",
+          "result": true,
+          "sounds": [
+            "shot_switch"
+          ]
+        },
+        {
+          "name": "unequip w0",
+          "result": true,
+          "sounds": [
+            "pickup_4"
+          ]
+        },
+        {
+          "name": "unequip w1",
+          "result": true,
+          "sounds": [
+            "pickup_3"
+          ]
+        },
+        {
+          "name": "unequip helmet",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "unequip body",
+          "result": true,
+          "sounds": [
+            "pickup_3"
+          ]
+        },
+        {
+          "name": "unequip melee",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "empty unequip silent",
+          "sounds": []
+        },
+        {
+          "name": "stash to bag",
+          "result": true,
+          "sounds": [
+            "pickup_4"
+          ]
+        },
+        {
+          "name": "stale transfer silent",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "bag to stash",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "medical to bag",
+          "result": true,
+          "sounds": [
+            "pickup_2"
+          ]
+        },
+        {
+          "name": "bag to safe",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "safe to bag",
+          "result": true,
+          "sounds": [
+            "pickup_3"
+          ]
+        },
+        {
+          "name": "clear bag one pickup",
+          "result": 2,
+          "sounds": [
+            "pickup_2"
+          ]
+        },
+        {
+          "name": "empty clear silent",
+          "result": 0,
+          "sounds": []
+        },
+        {
+          "name": "full bag transfer silent",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "full safe transfer silent",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "unequip backpack",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        }
+      ],
+      "realDoubleClick": true,
+      "errors": []
+    },
+    {
+      "offline": true,
+      "decoded": true,
+      "actions": [
+        {
+          "name": "equip mp155",
+          "result": true,
+          "sounds": [
+            "shot_switch_shotgun"
+          ]
+        },
+        {
+          "name": "stale equip silent mp155",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "equip m4a1",
+          "result": true,
+          "sounds": [
+            "shot_switch"
+          ]
+        },
+        {
+          "name": "stale equip silent m4a1",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "equip glock17",
+          "result": true,
+          "sounds": [
+            "shot_switch"
+          ]
+        },
+        {
+          "name": "stale equip silent glock17",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "equip helmet",
+          "result": true,
+          "sounds": [
+            "gear_helmet"
+          ]
+        },
+        {
+          "name": "equip body",
+          "result": true,
+          "sounds": [
+            "gear_armor"
+          ]
+        },
+        {
+          "name": "equip bag",
+          "result": true,
+          "sounds": [
+            "gear_bag"
+          ]
+        },
+        {
+          "name": "unload ammunition to bag",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "empty unload silent",
+          "result": true,
+          "sounds": []
+        },
+        {
+          "name": "equip melee",
+          "result": true,
+          "sounds": [
+            "shot_switch"
+          ]
+        },
+        {
+          "name": "unequip w0",
+          "result": true,
+          "sounds": [
+            "pickup_2"
+          ]
+        },
+        {
+          "name": "unequip w1",
+          "result": true,
+          "sounds": [
+            "pickup_4"
+          ]
+        },
+        {
+          "name": "unequip helmet",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "unequip body",
+          "result": true,
+          "sounds": [
+            "pickup_2"
+          ]
+        },
+        {
+          "name": "unequip melee",
+          "result": true,
+          "sounds": [
+            "pickup_3"
+          ]
+        },
+        {
+          "name": "empty unequip silent",
+          "sounds": []
+        },
+        {
+          "name": "stash to bag",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "stale transfer silent",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "bag to stash",
+          "result": true,
+          "sounds": [
+            "pickup_4"
+          ]
+        },
+        {
+          "name": "medical to bag",
+          "result": true,
+          "sounds": [
+            "pickup_3"
+          ]
+        },
+        {
+          "name": "bag to safe",
+          "result": true,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "safe to bag",
+          "result": true,
+          "sounds": [
+            "pickup_3"
+          ]
+        },
+        {
+          "name": "clear bag one pickup",
+          "result": 2,
+          "sounds": [
+            "pickup_1"
+          ]
+        },
+        {
+          "name": "empty clear silent",
+          "result": 0,
+          "sounds": []
+        },
+        {
+          "name": "full bag transfer silent",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "full safe transfer silent",
+          "result": false,
+          "sounds": []
+        },
+        {
+          "name": "unequip backpack",
+          "result": true,
+          "sounds": [
+            "pickup_4"
+          ]
+        }
+      ],
+      "realDoubleClick": true,
+      "errors": []
+    }
+  ]
+}

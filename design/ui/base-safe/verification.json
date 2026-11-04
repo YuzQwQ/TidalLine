@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "slots": 4,
+      "belowBag": true,
+      "transfer": true,
+      "partialMedical": true,
+      "fullFailureAtomic": true,
+      "saveReload": true,
+      "raidHandoff": true,
+      "deathProtected": true,
+      "existingSettlement": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    },
+    {
+      "offline": true,
+      "slots": 4,
+      "belowBag": true,
+      "transfer": true,
+      "partialMedical": true,
+      "fullFailureAtomic": true,
+      "saveReload": true,
+      "raidHandoff": true,
+      "deathProtected": true,
+      "existingSettlement": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": []
+    }
+  ]
+}

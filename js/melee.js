@@ -233,11 +233,11 @@ meleeWrap(Base,'equipFromStash',function(original,entry,key){if(key!=='melee')re
   if(pWeight>CFG.BAG.CARRY){this.note('装备后负重过高',true);return false;}
   Save.stash.splice(Save.stash.indexOf(entry),1);const old=Save.gear.melee;
   Save.gear.melee=MeleeSystem.normalize(it);if(old)Save.addGearStash(old);
-  Save.save();this.closePicker();this.render();return true;
+  Save.save();this.closePicker();this.render();this.gearVoice('melee',false);return true;
 });
 meleeWrap(Base,'unequip',function(original,key){if(key!=='melee')return original.call(this,key);
   if(!Save.gear.melee)return false;if(Save.stash.length>=STASH_SLOTS){this.note('仓库已满',true);return false;}
-  Save.addGearStash(Save.gear.melee);Save.gear.melee=null;Save.save();this.closePicker();this.render();return true;
+  Save.addGearStash(Save.gear.melee);Save.gear.melee=null;Save.save();this.closePicker();this.render();this.gearVoice('melee',true);return true;
 });
 for(const key of ['askSell','sell'])meleeWrap(Base,key,function(original,e,...args){if(stashItem(e)?.equip?.bound){this.note('首次赠送的绑定刀具不可出售',true);return false;}return original.call(this,e,...args);});
 Base.buyMelee=function(id){const d=MeleeSystem.def(id);if(!d?.available||Save.credits<d.price||Save.stash.length>=STASH_SLOTS)return false;

@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "overview": true,
+      "greeting": true,
+      "noImmediateRepeat": true,
+      "idle": true,
+      "activityReset": true,
+      "dialogSuppression": true,
+      "purchase": true,
+      "failedPurchaseSilent": true,
+      "procurementInline": true,
+      "noPostPaymentPopup": true,
+      "cancelSilent": true,
+      "narrow": true,
+      "timerCleanup": true,
+      "errors": []
+    },
+    {
+      "offline": true,
+      "overview": true,
+      "greeting": true,
+      "noImmediateRepeat": true,
+      "idle": true,
+      "activityReset": true,
+      "dialogSuppression": true,
+      "purchase": true,
+      "failedPurchaseSilent": true,
+      "procurementInline": true,
+      "noPostPaymentPopup": true,
+      "cancelSilent": true,
+      "narrow": true,
+      "timerCleanup": true,
+      "errors": []
+    }
+  ]
+}

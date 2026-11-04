@@ -350,6 +350,11 @@ const Game = {
       if (!ok) stay.push(e);
     }
     Save.bag = stay;
+    if(!this.rangeMode){
+      Save.normalizeSafe();
+      this.player.bag.safe=Save.safe.map(e=>({item:stashItem(e),n:e.n||1,...(e.cap==null?{}:{cap:e.cap})}));
+      Save.safe=[];Save.save();Save.flush();
+    }
   },
 
   grantLegacyBag(L) {

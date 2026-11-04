@@ -39,7 +39,7 @@ const Attachments={
     if(p.dodgeT>0)return '闪避结束后可改装';if(typeof MeleeSystem!=='undefined'&&MeleeSystem.locked())return '近战前摇结束后可改装';
     if(Game.action)return ({heal:'治疗',extract:'撤离',search:'搜刮',corpse:'搜刮'}[Game.action.type]||'当前动作')+'结束后可改装';return '';
   },
-  carriedWeight(){return Save.bagWeight()+Save.gear.weapons.reduce((n,w)=>n+(w?.w||0),0)+(Save.gear.helmet?.w||0)+(Save.gear.body?.w||0)+(Save.gear.back?.w||0)+(Save.gear.melee?.w||0);},
+  carriedWeight(){return Save.bagWeight()+Save.safeWeight()+Save.gear.weapons.reduce((n,w)=>n+(w?.w||0),0)+(Save.gear.helmet?.w||0)+(Save.gear.body?.w||0)+(Save.gear.back?.w||0)+(Save.gear.melee?.w||0);},
   preview(t,slot,id,source){const current=this.read(t);if(!current)return{ok:false,reason:'枪械位置已变化，请重新选择'};
     const eq=current.equip,before=this.resolve(eq.gun,eq.attachments),nextParts={...before.attachments};
     if(!before.attachmentSlots?.[slot])return{ok:false,reason:'此枪不支持该槽位',before};
@@ -62,6 +62,35 @@ const Attachments={
     const diff=raid?mass(next)-mass(inv)+(t.owner==='raid-equipped'?gun.w-current.w:0):t.owner!=='stash'?gun.w-current.w:0;
     if(was+diff>CFG.BAG.CARRY+1e-6&&diff>1e-6)return{...result,reason:'改装后负重过高',extra};
     return{...result,ok:!result.reason,next,gun,extra,source:src};
+  },
+  // Vendor providers are independent of the UI, so additional merchants can be added here.
+  vendors(){return [{id:'gun',offers:Object.values(ATTACHMENT_DEFS).filter(d=>d.r<=3).map(d=>({id:d.id,price:d.price}))}];},
+  offer(id){for(const vendor of this.vendors()){const item=vendor.offers.find(o=>o.id===id);if(item&&Number.isFinite(item.price)&&item.price>=0)return {...item,vendor:vendor.id};}return null;},
+  plan(t,draft){
+    const current=this.read(t);if(Game.state!=='base'||!current)return {ok:false,reason:'枪械位置已变化，请重新选择'};
+    const eq=current.equip,before=this.resolve(eq.gun,eq.attachments),parts={...before.attachments},changes=[],used=new Set(),buys=[];
+    for(const [slot,id]of Object.entries(draft||{})){
+      if(!ATTACHMENT_SLOTS.includes(slot)||!before.attachmentSlots[slot]||(id&&!this.compatible(eq.gun,id,slot)))return {ok:false,reason:'配件与枪械槽位不兼容'};
+      const old=parts[slot]||null;if(old===(id||null))continue;
+      if(id){const source=Save.stash.find(e=>!used.has(e)&&this.entryItem(e)?.equip?.attachment===id);if(source)used.add(source);else{const offer=this.offer(id);if(!offer)return {ok:false,reason:'所选配件未拥有，且暂无出售来源'};buys.push(offer);}parts[slot]=id;}else delete parts[slot];
+      changes.push({slot,id,old});
+    }
+    const after=this.resolve(eq.gun,parts),rows=Save.stash.filter(e=>!used.has(e)).map(e=>({...e}));
+    for(const c of changes)if(c.old){const item=this.item(c.old);rows.push({id:item.id,n:1,gear:item});}
+    const rounds=magazineRounds(before,eq.mag,eq.ammo,eq.rounds),extra=rounds.slice(after.mag),gun=EQUIP.gun(eq.gun,Math.min(rounds.length,after.mag),eq.ammo,rounds.slice(0,after.mag),{...eq,attachments:parts});
+    if(t.owner==='stash'){const index=Save.stash.filter(e=>!used.has(e)).indexOf(t.entry);if(index<0)return {ok:false,reason:'枪械位置已变化'};rows[index]={...rows[index],gear:gun,id:gun.id};}
+    for(const id of extra){const item=AMMO_BY_ID[id],row=rows.find(e=>e.id===id&&!e.gear&&e.n<stackLimit(item));if(row)row.n++;else rows.push({id,n:1});}
+    const total=buys.reduce((n,b)=>n+b.price,0),groups=[];for(const b of buys){let g=groups.find(x=>x.vendor===b.vendor);if(!g){g={vendor:b.vendor,items:[]};groups.push(g);}g.items.push(b);}
+    const quote=JSON.stringify({gun:eq,changes,buys,owned:[...used].map(e=>this.entryItem(e).equip.attachment)});
+    const diff=t.owner==='stash'?0:gun.w-current.w;
+    const reason=!changes.length?'请选择要改装的配件':rows.length>STASH_SLOTS?'仓库空间不足，无法返还配件或余弹':diff>1e-6&&this.carriedWeight()+diff>CFG.BAG.CARRY+1e-6?'改装后负重过高':Save.credits<total?'信用点不足':'';
+    return {ok:!reason,reason,before,after,gun,next:rows,changes,buys,groups,total,quote,extra};
+  },
+  commitPlan(t,draft,quote){const r=this.plan(t,draft);if(!r.ok)return r;if(quote!==r.quote)return {...r,ok:false,reason:'购买内容或枪械状态已变化，请重新确认'};
+    Save.stash=r.next;Save.credits-=r.total;
+    if(t.owner==='base-equipped')Save.gear.weapons[t.index]=r.gun;
+    else if(t.owner==='base-bag')Save.bag[t.index]={...Save.bag[t.index],gear:r.gun,id:r.gun.id};
+    Save.save();Save.flush();return {...r,target:this.findTarget(r.gun)};
   },
   commit(t,slot,id,source){const r=this.preview(t,slot,id,source);if(!r.ok)return r;
     const raid=t.owner.startsWith('raid'),p=Game.player;
