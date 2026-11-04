@@ -442,7 +442,7 @@ const GROUPS = [
       },
       {
         name: '出售结算', scope: 'base',
-        where: 'js/base.js:1293（单件出售）, 1310（批量出售）',
+        where: 'js/sales.js:48（出售结算，单件与批量合一）, js/base.js:1599（治疗结算）',
         detail: '采样 <b>sell</b> 0.84s 老式收银机 —— 和拾取区分开 · LOUD.sell <b>0.07</b>',
         sounds: ['sell'],
         btns: [{ l: '出售', fn: () => SFX.play('sell') }]

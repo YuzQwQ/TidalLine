@@ -1479,3 +1479,19 @@ node run-test.js     # mock 浏览器环境跑完整游戏流程和动画状态�
 ### 商人文字对白
 
 埃德加9句交互台词已接入。数据为 MERCHANT_DIALOGUE（merchant-config.js），展示适配为 merchant-dialogue.js；仅交易成功触发结算对白，后台和离店清理闲置计时器。详见 [埃德加交互台词](design/npcs/edgar-dialogue/README.md)。
+
+
+仓库物品交互音效已接入：装备使用对应切枪／装备材质声，卸下和物品转移使用通用拾取声，均在操作成功后触发一次。详见 [仓库交互音效](design/ui/storage-audio/README.md)。
+
+### 贸易商首版
+
+贸易商维克托·萨伦已作为第四位商人接入。商品白名单与固定零售价格逻辑位于 `js/trader.js`，复用现有Deal及Save入库；18件白至紫收集品按参考价值125%出售。人物不绘制、保留占位，不新增回收业务，出售继续使用仓库。角色与范围说明见 [维克托首版](design/npcs/viktor-v1/README.md)，验证 `node tools/test-viktor.js`。
+
+### 场景家具第二批
+
+新增12种不可搜索家具，三向共36张，按32px/格制作原生单格、多格PNG。正面以prop登记并提供占地，方向图用scene-component、variantOf、facing登记；素材库构建自动同步编辑器目录、方向覆盖与运行时预加载，build-prop-bounds同样从登记表读取新增家具。绘制原稿、完整提示词、22种清单、预览与验收记录见 [场景家具第二批](assets/scene-furniture-batch-02/README.md)。第二批10种仅列为计划。构建用 `node build.js --assets-only` 保持正式地图快照与布点不变，`node tools/test-scene-library.js` 包含新增家具的编辑器选择、朝向、撤销、保存重开、离线选图与多格碰撞检查。
+
+
+### 商人批量出售
+
+四位商人按主营收购，统一原回收价。新增共享库存查询、Sales事务服务与商人出售适配；仓库网格、分页与物品状态继续共用，存档失败回滚。仓库原单件与寻常收集品出售也使用同一服务，范围与价格保留。详见 [三栏出售与验收说明](design/ui/merchant-sales-v1/README.md)。旧文中维克托仅购买的首版限制已由本轮替代。

@@ -35,13 +35,15 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'output/map/linhai');
      if(Math.hypot(actor.x-p.x,actor.y-p.y)>2||!canStand(actor.x,actor.y,7))throw Error('撤离路径碰撞不一致 '+step.x+','+step.y);
     }
    }
-   const d=M.at(52,34).door;Game.player.x=M.cx(51);Game.player.y=M.cy(34);Game.player.vx=Game.player.vy=0;
+   /* 门对象在开关时可能被换掉（M 里重建），所以每次重新取，别握着旧引用读状态。 */
+   const doorAt=()=>M.at(52,34).door;
+   Game.player.x=M.cx(51);Game.player.y=M.cy(34);Game.player.vx=Game.player.vy=0;
    /* 敌人巡逻也会开关门，跑完 10 秒模拟后门的初始状态不再固定。
       先把门统一摆成"开着"，再测玩家交互，否则断言会随巡逻路线随机红。 */
-   if(!d.open)Game.handleInteract();
-   Game.handleInteract();const closed=!d.open&&d.cells.every(([x,y])=>!M.walkable(x,y));
-   Game.handleInteract();const opened=d.open&&d.cells.every(([x,y])=>M.walkable(x,y));
-   Game.player.x=M.cx(52);Game.handleInteract();const cannotCloseOnActor=d.open;
+   if(!doorAt().open)Game.handleInteract();
+   Game.handleInteract();const dC=doorAt();const closed=!dC.open&&dC.cells.every(([x,y])=>!M.walkable(x,y));
+   Game.handleInteract();const dO=doorAt();const opened=dO.open&&dO.cells.every(([x,y])=>M.walkable(x,y));
+   Game.player.x=M.cx(52);Game.handleInteract();const cannotCloseOnActor=doorAt().open;
    Game.startRun();Game.state='ended';Game.enemies=[];
    const box=Game.boxes[0];Game.player.x=box.x+24;Game.player.y=box.y;Game.player.vx=Game.player.vy=0;
    /* boxes[0] 是贵重容器（读条 2.6s），按品质的撬开时长推进，别用固定 1 秒 */
