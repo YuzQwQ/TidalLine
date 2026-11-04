@@ -1,0 +1,13 @@
+[
+  {
+    "id": "pallet_stack_back",
+    "base": "pallet_stack",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: identity of supplied FRONT sprite. Redraw same pallet stack from BACK, object rotated 180 degrees in world, fixed camera 75-degree overhead and fixed UPPER LEFT light. NOT bitmap rotation or mirroring. Show opposite edges of pallet slats and offset layers, cardboard still wedged between layers. Main horizontal span stays wide. Subject: Two or three old broad wooden shipping pallets stacked with slight offsets, damp flattened small cardboard wedged between layers. Visible separated slats, desaturated weathered brown wood, complete low stack. Not a crate. Native target64x32px, transparent background.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b592c53f-bd9c-4c14-aa74-ee8efb56e412.png",
+    "size": [
+      64,
+      32
+    ]
+  }
+]

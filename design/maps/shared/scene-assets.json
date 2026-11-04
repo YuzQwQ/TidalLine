@@ -977,6 +977,426 @@
       "name": "尸体 · 受雇回收员（人类）",
       "role": "scene-component",
       "usage": "运行时死亡尸体；无实体碰撞，不作为编辑器独立放置物块"
+    },
+    {
+      "group": "props",
+      "id": "table_dining",
+      "name": "老式餐桌",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "table_dining",
+        "label": "老式餐桌",
+        "name": "老式餐桌",
+        "footprint": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "table_dining_side",
+      "name": "老式餐桌 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "table_dining",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "table_dining_back",
+      "name": "老式餐桌 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "table_dining",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "chair_wood",
+      "name": "普通木椅",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "chair_wood",
+        "label": "普通木椅",
+        "name": "普通木椅",
+        "footprint": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "chair_wood_side",
+      "name": "普通木椅 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "chair_wood",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "chair_wood_back",
+      "name": "普通木椅 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "chair_wood",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "wardrobe_home",
+      "name": "旧衣柜",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "wardrobe_home",
+        "label": "旧衣柜",
+        "name": "旧衣柜",
+        "footprint": [
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "wardrobe_home_side",
+      "name": "旧衣柜 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "wardrobe_home",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "wardrobe_home_back",
+      "name": "旧衣柜 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "wardrobe_home",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "sink_kitchen",
+      "name": "厨房水槽",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "sink_kitchen",
+        "label": "厨房水槽",
+        "name": "厨房水槽",
+        "footprint": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "sink_kitchen_side",
+      "name": "厨房水槽 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "sink_kitchen",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "sink_kitchen_back",
+      "name": "厨房水槽 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "sink_kitchen",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "fridge_home",
+      "name": "老式冰箱",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "fridge_home",
+        "label": "老式冰箱",
+        "name": "老式冰箱",
+        "footprint": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "fridge_home_side",
+      "name": "老式冰箱 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "fridge_home",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "fridge_home_back",
+      "name": "老式冰箱 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "fridge_home",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "cart_medical",
+      "name": "医疗器械推车",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "cart_medical",
+        "label": "医疗器械推车",
+        "name": "医疗器械推车",
+        "footprint": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "cart_medical_side",
+      "name": "医疗器械推车 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "cart_medical",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "cart_medical_back",
+      "name": "医疗器械推车 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "cart_medical",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "screen_clinic",
+      "name": "医用屏风",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "screen_clinic",
+        "label": "医用屏风",
+        "name": "医用屏风",
+        "footprint": [
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "screen_clinic_side",
+      "name": "医用屏风 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "screen_clinic",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "screen_clinic_back",
+      "name": "医用屏风 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "screen_clinic",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "workbench_clock",
+      "name": "钟表维修台",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "workbench_clock",
+        "label": "钟表维修台",
+        "name": "钟表维修台",
+        "footprint": [
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "workbench_clock_side",
+      "name": "钟表维修台 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "workbench_clock",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "workbench_clock_back",
+      "name": "钟表维修台 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "workbench_clock",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "clock_grandfather",
+      "name": "落地钟",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "clock_grandfather",
+        "label": "落地钟",
+        "name": "落地钟",
+        "footprint": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "clock_grandfather_side",
+      "name": "落地钟 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "clock_grandfather",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "clock_grandfather_back",
+      "name": "落地钟 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "clock_grandfather",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "barrier_queue",
+      "name": "银行排队围栏",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "barrier_queue",
+        "label": "银行排队围栏",
+        "name": "银行排队围栏",
+        "footprint": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "barrier_queue_side",
+      "name": "银行排队围栏 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "barrier_queue",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "barrier_queue_back",
+      "name": "银行排队围栏 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "barrier_queue",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "workbench_industrial",
+      "name": "重型工作台",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "workbench_industrial",
+        "label": "重型工作台",
+        "name": "重型工作台",
+        "footprint": [
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "workbench_industrial_side",
+      "name": "重型工作台 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "workbench_industrial",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "workbench_industrial_back",
+      "name": "重型工作台 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "workbench_industrial",
+      "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "pallet_stack",
+      "name": "木质托盘堆",
+      "role": "prop",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "paint": {
+        "kind": "prop",
+        "type": "pallet_stack",
+        "label": "木质托盘堆",
+        "name": "木质托盘堆",
+        "footprint": [
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "pallet_stack_side",
+      "name": "木质托盘堆 · 侧面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "pallet_stack",
+      "facing": "side"
+    },
+    {
+      "group": "props",
+      "id": "pallet_stack_back",
+      "name": "木质托盘堆 · 背面",
+      "role": "scene-component",
+      "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
+      "variantOf": "pallet_stack",
+      "facing": "back"
     }
   ]
 }

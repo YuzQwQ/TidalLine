@@ -107,7 +107,7 @@
           detail:a.paint.ground?'透明地面贴花 · 可通行 · 不挡视线':'场景物件 · 占地 '+a.paint.footprint.join('×'),paint:a.paint,
           match:e=>e.kind==='prop'&&e.ref.type===a.id
         });
-        for(const item of out){const a=Library.decals.find(a=>'prop.'+a.id===item.key);if(a){item.art=a.id;item.paint=a.paint;item.detail='透明地面贴花 · 可通行 · 不挡视线';}}
+        for(const item of out){const a=(Library.placeables||Library.decals).find(a=>'prop.'+a.id===item.key);if(a){item.art=a.id;item.paint=a.paint;item.detail=a.paint.ground?'透明地面贴花 · 可通行 · 不挡视线':'场景物件 · 占地 '+a.paint.footprint.join('×');}}
         return out;
       }
     },

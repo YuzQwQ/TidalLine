@@ -320,7 +320,10 @@
     ok('改回去以后回到 0 错误', S().result.counts.errors === 0, S().result.counts.errors);
 
     /* ---------- 14. 门可选中 / 可编辑 / 可删除 ---------- */
-    const door = S().data.portals.find(p => p.id === 'apartment.living-w');
+/* 不写死门 id：设计稿改版会增删门洞（apartment.living-w 已经没了）。
+       这里要的只是"一个占两格的门"，所以从当前数据里挑第一个。 */
+    const door = S().data.portals.find(p => Array.isArray(p.cells) && p.cells.length === 2);
+    const DID = door && door.id;
     ok('测试用的门存在且占两格', !!(door && door.cells.length === 2), door && door.cells.length);
     const [dx, dy] = door.cells[1];          // 故意点第二格：多格门任意一格都该命中
     const terrBefore = Core.terrainAt(S().data, dx, dy);
@@ -329,7 +332,7 @@
     click(dx, dy);
     await sleep(80);
     ok('点门的第二格能选中',
-      S().selection && S().selection.kind === 'portal' && S().selection.id === 'apartment.living-w',
+      S().selection && S().selection.kind === 'portal' && S().selection.id === DID,
       JSON.stringify(S().selection));
 
     const insp = document.getElementById('inspector');
@@ -342,7 +345,7 @@
       pname.value = '客厅侧门A';
       pname.dispatchEvent(new Event('change'));
       await sleep(80);
-      ok('改名称写进了数据', (S().data.portals.find(p => p.id === 'apartment.living-w') || {}).name === '客厅侧门A');
+      ok('改名称写进了数据', (S().data.portals.find(p => p.id === DID) || {}).name === '客厅侧门A');
     }
 
     const pkind = insp.querySelector('select');
@@ -351,27 +354,27 @@
       pkind.value = 'breach';
       pkind.dispatchEvent(new Event('change'));
       await sleep(80);
-      ok('改类型写进了数据', (S().data.portals.find(p => p.id === 'apartment.living-w') || {}).kind === 'breach');
+      ok('改类型写进了数据', (S().data.portals.find(p => p.id === DID) || {}).kind === 'breach');
     }
 
     /* 门没有 x/y，方向键与拖动都不该把它挪走 */
-    const cellsBefore = JSON.stringify(S().data.portals.find(p => p.id === 'apartment.living-w').cells);
+    const cellsBefore = JSON.stringify(S().data.portals.find(p => p.id === DID).cells);
     key('ArrowRight');
     await sleep(80);
     ok('方向键不挪动门',
-      JSON.stringify(S().data.portals.find(p => p.id === 'apartment.living-w').cells) === cellsBefore,
-      JSON.stringify(S().data.portals.find(p => p.id === 'apartment.living-w').cells));
+      JSON.stringify(S().data.portals.find(p => p.id === DID).cells) === cellsBefore,
+      JSON.stringify(S().data.portals.find(p => p.id === DID).cells));
 
     key('Delete');
     await sleep(100);
-    ok('Delete 删掉了门', !S().data.portals.some(p => p.id === 'apartment.living-w'));
+    ok('Delete 删掉了门', !S().data.portals.some(p => p.id === DID));
     ok('原地补成了墙', Core.terrainAt(S().data, dx, dy) === '#', Core.terrainAt(S().data, dx, dy));
     ok('另一格也补成了墙', Core.terrainAt(S().data, door.cells[0][0], door.cells[0][1]) === '#',
       Core.terrainAt(S().data, door.cells[0][0], door.cells[0][1]));
 
     key('z', { ctrlKey: true });
     await sleep(140);
-    ok('撤销把门带回来了', !!S().data.portals.find(p => p.id === 'apartment.living-w'));
+    ok('撤销把门带回来了', !!S().data.portals.find(p => p.id === DID));
     ok('撤销把地形也带回来了', Core.terrainAt(S().data, dx, dy) === terrBefore, Core.terrainAt(S().data, dx, dy));
 
     /* 只删不加的话，删掉的洞就补不回来了 */

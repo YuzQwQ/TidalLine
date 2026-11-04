@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-04",
+  "status": "passed",
+  "completedTypes": 12,
+  "sprites": 36,
+  "plannedTypes": 10,
+  "generator": "built-in image_gen",
+  "nativeGridPixels": 32,
+  "directions": ["front", "side", "back"],
+  "checks": {
+    "uniqueImagesAndArchivedPrompts": 36,
+    "nativeDimensionsBinaryAlphaMarginsAndPalette": "passed",
+    "registryAndDirectionComponents": "passed",
+    "editorSelectPlaceRotateUndoRedoSaveReopen": "passed HTTP and file",
+    "developmentAndOfflineRuntime": "36 directions loaded with full footprint collision",
+    "gallery1440_390_320": "passed, no horizontal overflow",
+    "editorRegression": {"passed": 128, "failed": 0},
+    "mainRegression": {"passed": 402, "failed": 0},
+    "mapArtMap": "passed",
+    "propFootprints": "passed development and offline",
+    "formalMapSourcesAndSnapshots": "unchanged against map-baseline.json",
+    "offlineBuild": "node build.js --assets-only passed"
+  },
+  "testMaintenance": [
+    "The scene-library HTTP fixture now serves CSS as text/css for valid visual screenshots.",
+    "The existing prop footprint draw assertion counts the target coordinates as well as the shared image; the current unobserved-area renderer also draws other instances using the same sprite.",
+    "file:// runtime previews use browser screenshots instead of exporting a tainted canvas."
+  ]
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "table_dining_side",
+    "base": "table_dining",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: identity and style of the supplied FRONT sprite; redraw this SAME object as the SIDE variant. Rotate the OBJECT 90 degrees IN WORLD, front now faces EAST/right, camera/light stay fixed. Do NOT rotate or mirror a finished bitmap. Subject identity: Dark brown square wooden dining table, four legs, faded cream cloth covering only one corner, two coasters and faint water rings. No chairs, no meal. Square tabletop occupies most of footprint. Show side construction rather than front doors/backrest face. Fixed steep 75-degree overhead camera, not an eye-level product photo. Native target canvas 64x64.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b78797a7-9ff0-49de-983c-1ca523ca5fd4.png",
+    "size": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "chair_wood_side",
+    "base": "chair_wood",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: identity and style of the supplied FRONT sprite; redraw this SAME object as the SIDE variant. Rotate the OBJECT 90 degrees IN WORLD, front now faces EAST/right, camera/light stay fixed. Do NOT rotate or mirror a finished bitmap. Subject identity: Single normally standing worn brown wooden chair, upright slatted backrest, faded olive seat cushion, four legs. Not fallen over, not rotated on ground. Show side construction rather than front doors/backrest face. Fixed steep 75-degree overhead camera, not an eye-level product photo. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-59029968-f015-4417-a125-ed31d33181dd.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "wardrobe_home_side",
+    "base": "wardrobe_home",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: identity and style of the supplied FRONT sprite; redraw this SAME object as the SIDE variant. Rotate the OBJECT 90 degrees IN WORLD, front now faces EAST/right, camera/light stay fixed. Do NOT rotate or mirror a finished bitmap. CRITICAL: long axis must run NORTH-SOUTH, vertically top-to-bottom, narrow side-view silhouette. Subject identity: Wide brown two-door household wooden wardrobe. One front door slightly ajar revealing a few muted garments. Small brass handles, worn wood edges. Wide horizontal cabinet, top occupies most of image, front door elevation short. Show side construction rather than front doors/backrest face. Fixed steep 75-degree overhead camera, not an eye-level product photo. Native target canvas 32x64.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-ea435939-02d6-4aff-952f-821e8bbcd865.png",
+    "size": [
+      32,
+      64
+    ]
+  },
+  {
+    "id": "sink_kitchen_side",
+    "base": "sink_kitchen",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: identity and style of the supplied FRONT sprite; redraw this SAME object as the SIDE variant. Rotate the OBJECT 90 degrees IN WORLD, front now faces EAST/right, camera/light stay fixed. Do NOT rotate or mirror a finished bitmap. Subject identity: Old compact stainless-steel single-bowl kitchen sink integrated in square grey base cabinet. Yellowed rim, curved tarnished faucet with slight green oxidation. Top-down visible basin, short cabinet front. Show side construction rather than front doors/backrest face. Fixed steep 75-degree overhead camera, not an eye-level product photo. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-f60c0269-6d3a-4919-8a51-93521527a0e7.png",
+    "size": [
+      32,
+      32
+    ]
+  }
+]

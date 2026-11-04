@@ -55,6 +55,14 @@
     tree_courtyard_canopy: ['side', 'back']
   };
 
+  /* 新素材的三向组件从共用素材库登记读取，游戏与编辑器共用稳定基名。 */
+  for(const a of (Library&&Library.assets)||[]){
+    if(a.group==='props'&&a.variantOf&&['side','back'].includes(a.facing)){
+      const dirs=FACING_VARIANTS[a.variantOf]||(FACING_VARIANTS[a.variantOf]=[]);
+      if(!dirs.includes(a.facing))dirs.push(a.facing);
+    }
+  }
+
   /* 有 `_large` 放大版的基名：占地 >1 格时用它，贴图才铺得满两格。
    * 每个基名三向（正 / 侧 / 背）都齐，实测见 tools/test-map-art-map.js。 */
   const LARGE_BASES = new Set([

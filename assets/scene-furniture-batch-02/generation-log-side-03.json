@@ -1,0 +1,46 @@
+[
+  {
+    "id": "clock_grandfather_side",
+    "base": "clock_grandfather",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of the supplied FRONT sprite; redraw this SAME object as SIDE variant. Rotate OBJECT 90 degrees IN WORLD, functional front now faces EAST/right, camera/light stay fixed. Do NOT rotate or mirror a bitmap. Subject identity: Single narrow walnut grandfather clock, small brass clock dial above glazed pendulum window, restrained carved wooden casing. Steep overhead view, some top visible but recognizable dial and pendulum. Not flat wall clock. Show SIDE construction; front dial/front compartments do not face the viewer. Fixed steep 75-degree overhead camera. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-b48b0944-374a-447c-a8f8-ab7ff2a85baa.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "barrier_queue_side",
+    "base": "barrier_queue",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of the supplied FRONT sprite; redraw this SAME object as SIDE variant. Rotate OBJECT 90 degrees IN WORLD, functional front now faces EAST/right, camera/light stay fixed. Do NOT rotate or mirror a bitmap. The two brass stanchions must line up top-to-bottom in screen, red rope stretches vertically between them. Subject identity: One modular bank queue barrier section: two small brass stanchions linked by a sagging faded burgundy velvet belt/rope. Small round brass feet, horizontal section, simple readable silhouette. No crowd. Show SIDE construction; front dial/front compartments do not face the viewer. Fixed steep 75-degree overhead camera. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-55e94b8f-4aa6-47a1-83d2-fb2280a75b78.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "workbench_industrial_side",
+    "base": "workbench_industrial",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of the supplied FRONT sprite; redraw this SAME object as SIDE variant. Rotate OBJECT 90 degrees IN WORLD, functional front now faces EAST/right, camera/light stay fixed. Do NOT rotate or mirror a bitmap. CRITICAL: long axis runs NORTH-SOUTH vertically top-to-bottom, narrow side-view silhouette. Subject identity: Wide heavy industrial workshop bench, thick scratched grey steel tabletop, small dark vise clamped at left, two spanners and a dismantled mechanical part, stout dark metal legs, rusty corners. No chairs. Show SIDE construction; front dial/front compartments do not face the viewer. Fixed steep 75-degree overhead camera. Native target canvas 32x64.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-9bbe89a2-8d06-4ac7-a29f-bdb0430649e2.png",
+    "size": [
+      32,
+      64
+    ]
+  },
+  {
+    "id": "pallet_stack_side",
+    "base": "pallet_stack",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of the supplied FRONT sprite; redraw this SAME object as SIDE variant. Rotate OBJECT 90 degrees IN WORLD, functional front now faces EAST/right, camera/light stay fixed. Do NOT rotate or mirror a bitmap. CRITICAL: long axis runs NORTH-SOUTH vertically top-to-bottom, narrow side-view silhouette. Subject identity: Two or three old broad wooden shipping pallets stacked with slight offsets, damp flattened small cardboard wedged between layers. Visible separated slats, desaturated weathered brown wood, complete low stack. Not a crate. Show SIDE construction; front dial/front compartments do not face the viewer. Fixed steep 75-degree overhead camera. Native target canvas 32x64.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-188818a5-1d73-4e7f-b407-4ce11a188332.png",
+    "size": [
+      32,
+      64
+    ]
+  }
+]

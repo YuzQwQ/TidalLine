@@ -1,0 +1,134 @@
+[
+  {
+    "id": "table_dining",
+    "base": "table_dining",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Dark brown square wooden dining table, four legs, faded cream cloth covering only one corner, two coasters and faint water rings. No chairs, no meal. Square tabletop occupies most of footprint. FRONT view: functional front faces south/down screen. Target native sprite 64x64 pixels, enlarge pixel structure for production master, preserve square footprint.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-8b1b42ea-a734-4c36-9cf0-6bf27c48383d.png",
+    "size": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "chair_wood",
+    "base": "chair_wood",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Single normally standing worn brown wooden chair, upright slatted backrest, faded olive seat cushion, four legs. Not fallen over, not rotated on ground. FRONT view: object's functional front faces south/down screen. Native canvas 32x32 pixels. Broad top, short SOUTH front elevation. Pixel structure designed to remain legible at native size.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-a847c4cc-b0bd-4f91-8eb9-724f3366e6c5.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "wardrobe_home",
+    "base": "wardrobe_home",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Wide brown two-door household wooden wardrobe. One front door slightly ajar revealing a few muted garments. Small brass handles, worn wood edges. Wide horizontal cabinet, top occupies most of image, front door elevation short. FRONT view: object's functional front faces south/down screen. Native canvas 64x32 pixels. Broad top, short SOUTH front elevation. Pixel structure designed to remain legible at native size.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-af78eae4-e0ab-4c76-835a-89f05a374ab4.png",
+    "size": [
+      64,
+      32
+    ]
+  },
+  {
+    "id": "sink_kitchen",
+    "base": "sink_kitchen",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Old compact stainless-steel single-bowl kitchen sink integrated in square grey base cabinet. Yellowed rim, curved tarnished faucet with slight green oxidation. Top-down visible basin, short cabinet front. FRONT view: object's functional front faces south/down screen. Native canvas 32x32 pixels. Broad top, short SOUTH front elevation. Pixel structure designed to remain legible at native size.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-5a07290d-cfb1-43cd-b17b-785a3edb5d71.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "fridge_home",
+    "base": "fridge_home",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Small ivory rounded-corner vintage refrigerator, dark vertical handle, one faded paper note without legible text on door, lightly rusty base. Broad visible top and short front door plane; one complete fridge. FRONT view: object's functional front faces south/down screen. Native canvas 32x32 pixels. Broad top, short SOUTH front elevation. Pixel structure designed to remain legible at native size.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-4f5c7a2e-7a33-490b-85ae-df1c4a87ce5c.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "cart_medical",
+    "base": "cart_medical",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Small two-tier stainless medical trolley on tiny castors. Top holds metal tray, tweezers and two tiny amber medicine bottles; lower shelf holds gauze cartons. Sparse readable details. FRONT view: functional front faces south/down screen. Native canvas 32x32 pixels. Broad visible top, short SOUTH front elevation. Clear native-size pixel silhouette.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-eac2e48d-b08a-49af-945c-c12ad0206f27.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "screen_clinic",
+    "base": "screen_clinic",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Wide folding medical privacy screen, three simple ivory fabric panels in pale grey tubular metal frames, fabric slightly frayed, small feet. Viewed steeply overhead, avoid an eye-level tall rectangle. FRONT view: functional front faces south/down screen. Native canvas 64x32 pixels. Broad visible top, short SOUTH front elevation. Clear native-size pixel silhouette.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-65675b70-6ba5-442c-b1c1-7abb80dbeb40.png",
+    "size": [
+      64,
+      32
+    ]
+  },
+  {
+    "id": "workbench_clock",
+    "base": "workbench_clock",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Wide dark wooden watchmaker workbench, visible spacious wooden tabletop with tiny precision screwdrivers, round magnifying lens, a few brass gears and one opened clock movement. Short front drawers, no chairs, no clock floating above. FRONT view: functional front faces south/down screen. Native canvas 64x32 pixels. Broad visible top, short SOUTH front elevation. Clear native-size pixel silhouette.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e576732a-c2dc-4a4a-b888-8282c9b808e4.png",
+    "size": [
+      64,
+      32
+    ]
+  },
+  {
+    "id": "clock_grandfather",
+    "base": "clock_grandfather",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Single narrow walnut grandfather clock, small brass clock dial above glazed pendulum window, restrained carved wooden casing. Steep overhead view, some top visible but recognizable dial and pendulum. Not flat wall clock. FRONT view: functional front faces south/down screen. Native canvas 32x32 pixels. Broad visible top, short SOUTH front elevation. Clear native-size pixel silhouette.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-83f2addd-e063-4671-aa5c-3cd8fd579946.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "barrier_queue",
+    "base": "barrier_queue",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: One modular bank queue barrier section: two small brass stanchions linked by a sagging faded burgundy velvet belt/rope. Small round brass feet, horizontal section, simple readable silhouette. No crowd. FRONT view: functional front faces south/down screen. Native canvas 32x32 pixels. Broad visible top, short SOUTH front elevation. Clear native-size pixel silhouette.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-6adb13c7-65b1-4316-b310-b1c799b4a79e.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "workbench_industrial",
+    "base": "workbench_industrial",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Wide heavy industrial workshop bench, thick scratched grey steel tabletop, small dark vise clamped at left, two spanners and a dismantled mechanical part, stout dark metal legs, rusty corners. No chairs. FRONT view: functional front faces south/down screen. Native canvas 64x32 pixels. Broad visible top, short SOUTH front elevation. Clear native-size pixel silhouette.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-7d4a6a74-8393-4698-9ba3-3bc8d9e8be21.png",
+    "size": [
+      64,
+      32
+    ]
+  },
+  {
+    "id": "pallet_stack",
+    "base": "pallet_stack",
+    "facing": "front",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. Subject: Two or three old broad wooden shipping pallets stacked with slight offsets, damp flattened small cardboard wedged between layers. Visible separated slats, desaturated weathered brown wood, complete low stack. Not a crate. FRONT view: functional front faces south/down screen. Native canvas 64x32 pixels. Broad visible top, short SOUTH front elevation. Clear native-size pixel silhouette.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-23149426-6019-444f-87fe-793d3804ab97.png",
+    "size": [
+      64,
+      32
+    ]
+  }
+]

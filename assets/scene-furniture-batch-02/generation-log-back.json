@@ -1,0 +1,123 @@
+[
+  {
+    "id": "table_dining_back",
+    "base": "table_dining",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Rotate tabletop arrangement with object; show back apron and legs. Subject identity only: Dark brown square wooden dining table, four legs, faded cream cloth covering only one corner, two coasters and faint water rings. No chairs, no meal. Square tabletop occupies most of footprint. Rear-view requirements override front-specific details in identity description. Native target canvas 64x64.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-23fb603d-3ab5-4d78-b3c6-0fd09ba90598.png",
+    "size": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "chair_wood_back",
+    "base": "chair_wood",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Backrest is SOUTH/front of screen, showing rear wooden slats. Seat lies NORTH/behind. Subject identity only: Single normally standing worn brown wooden chair, upright slatted backrest, faded olive seat cushion, four legs. Not fallen over, not rotated on ground. Rear-view requirements override front-specific details in identity description. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-125e6b88-f8ac-4b56-a6be-6b7861d7f1c6.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "wardrobe_home_back",
+    "base": "wardrobe_home",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Only plain wooden REAR panels and top visible; NO open doors, no visible clothes, no handles. Subject identity only: Wide brown two-door household wooden wardrobe. One front door slightly ajar revealing a few muted garments. Small brass handles, worn wood edges. Wide horizontal cabinet, top occupies most of image, front door elevation short. Rear-view requirements override front-specific details in identity description. Native target canvas 64x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-8a89dc8c-0117-475e-ab3c-69c2f4521f7b.png",
+    "size": [
+      64,
+      32
+    ]
+  },
+  {
+    "id": "sink_kitchen_back",
+    "base": "sink_kitchen",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Faucet at SOUTH/bottom edge of basin; plain rear cabinet panel faces screen. Subject identity only: Old compact stainless-steel single-bowl kitchen sink integrated in square grey base cabinet. Yellowed rim, curved tarnished faucet with slight green oxidation. Top-down visible basin, short cabinet front. Rear-view requirements override front-specific details in identity description. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0dd9673a-c15c-48dd-b25e-838006c06722.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "fridge_home_back",
+    "base": "fridge_home",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Rear metal panel with restrained old condenser grille visible, NO front handle or paper note. Subject identity only: Small ivory rounded-corner vintage refrigerator, dark vertical handle, one faded paper note without legible text on door, lightly rusty base. Broad visible top and short front door plane; one complete fridge. Rear-view requirements override front-specific details in identity description. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-4fc9ce4b-ea71-49bd-ad40-dbbceaadb0bb.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "cart_medical_back",
+    "base": "cart_medical",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Show rear trolley rails, matching trays and supplies seen from opposite end. Subject identity only: Small two-tier stainless medical trolley on tiny castors. Top holds metal tray, tweezers and two tiny amber medicine bottles; lower shelf holds gauze cartons. Sparse readable details. Rear-view requirements override front-specific details in identity description. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-02984dd3-e322-40d7-8a4c-0374c0bcaea3.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "screen_clinic_back",
+    "base": "screen_clinic",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Show REAR sides of the same three ivory fabric panels, frame braces/seams at back; horizontal width twice depth. No clinical scenery. Subject identity only: Wide folding medical privacy screen, three simple ivory fabric panels in pale grey tubular metal frames, fabric slightly frayed, small feet. Viewed steeply overhead, avoid an eye-level tall rectangle. Rear-view requirements override front-specific details in identity description. Native target canvas 64x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-2c183341-184d-4fd3-84b4-0906398eaf1d.png",
+    "size": [
+      64,
+      32
+    ]
+  },
+  {
+    "id": "workbench_clock_back",
+    "base": "workbench_clock",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Workbench's plain REAR wood panel faces south, NO front drawer faces. Same tiny watchmaking tools remain on top, laid out as seen from opposite side. Subject identity only: Wide dark wooden watchmaker workbench, visible spacious wooden tabletop with tiny precision screwdrivers, round magnifying lens, a few brass gears and one opened clock movement. Short front drawers, no chairs, no clock floating above. Rear-view requirements override front-specific details in identity description. Native target canvas 64x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-78938d1a-7e58-473b-a30c-6f74d5f6cb40.png",
+    "size": [
+      64,
+      32
+    ]
+  },
+  {
+    "id": "clock_grandfather_back",
+    "base": "clock_grandfather",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Plain walnut rear casing faces viewer. NO clock dial, NO pendulum glass window visible. Same narrow clock body, some top plane. Subject identity only: Single narrow walnut grandfather clock, small brass clock dial above glazed pendulum window, restrained carved wooden casing. Steep overhead view, some top visible but recognizable dial and pendulum. Not flat wall clock. Rear-view requirements override front-specific details in identity description. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-c3ca042a-5da9-4095-b064-2d431606ef86.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "workbench_industrial_back",
+    "base": "workbench_industrial",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Plain REAR metal framing faces viewer, NO front drawer handles. Same thick steel tabletop, vise and spanners, as seen from opposite side. Subject identity only: Wide heavy industrial workshop bench, thick scratched grey steel tabletop, small dark vise clamped at left, two spanners and a dismantled mechanical part, stout dark metal legs, rusty corners. No chairs. Rear-view requirements override front-specific details in identity description. Native target canvas 64x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-8a2cac12-3de9-4f5e-a79e-78f5a19c3982.png",
+    "size": [
+      64,
+      32
+    ]
+  },
+  {
+    "id": "barrier_queue_back",
+    "base": "barrier_queue",
+    "facing": "back",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of supplied FRONT sprite; redraw SAME object as BACK variant. Rotate OBJECT 180 degrees IN WORLD, functional front faces NORTH/away; camera/light remain fixed. Do NOT rotate/mirror finished bitmap. Visible SOUTH elevation is object's REAR. Same two brass stanchions and faded burgundy belt from opposite side. Horizontal left-right section, slightly visible brass connection hardware at rear. Subject identity only: One modular bank queue barrier section: two small brass stanchions linked by a sagging faded burgundy velvet belt/rope. Small round brass feet, horizontal section, simple readable silhouette. No crowd. Rear-view requirements override front-specific details in identity description. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-0ff1b27a-76c5-4417-a8c6-93cc57e88cfa.png",
+    "size": [
+      32,
+      32
+    ]
+  }
+]

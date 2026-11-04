@@ -1,0 +1,542 @@
+[
+  {
+    "id": "table_dining",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      64,
+      64
+    ],
+    "content": [
+      51,
+      58
+    ]
+  },
+  {
+    "id": "table_dining_side",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      64,
+      64
+    ],
+    "content": [
+      52,
+      58
+    ]
+  },
+  {
+    "id": "table_dining_back",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      64,
+      64
+    ],
+    "content": [
+      52,
+      58
+    ]
+  },
+  {
+    "id": "chair_wood",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      15,
+      26
+    ]
+  },
+  {
+    "id": "chair_wood_side",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      16,
+      26
+    ]
+  },
+  {
+    "id": "chair_wood_back",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      15,
+      26
+    ]
+  },
+  {
+    "id": "wardrobe_home",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      47,
+      26
+    ]
+  },
+  {
+    "id": "wardrobe_home_side",
+    "source": [
+      887,
+      1774
+    ],
+    "canvas": [
+      32,
+      64
+    ],
+    "content": [
+      21,
+      58
+    ]
+  },
+  {
+    "id": "wardrobe_home_back",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      47,
+      26
+    ]
+  },
+  {
+    "id": "sink_kitchen",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      17,
+      26
+    ]
+  },
+  {
+    "id": "sink_kitchen_side",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      16,
+      26
+    ]
+  },
+  {
+    "id": "sink_kitchen_back",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      19,
+      26
+    ]
+  },
+  {
+    "id": "fridge_home",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      17,
+      26
+    ]
+  },
+  {
+    "id": "fridge_home_side",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      16,
+      26
+    ]
+  },
+  {
+    "id": "fridge_home_back",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      17,
+      26
+    ]
+  },
+  {
+    "id": "cart_medical",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      21,
+      26
+    ]
+  },
+  {
+    "id": "cart_medical_side",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      13,
+      26
+    ]
+  },
+  {
+    "id": "cart_medical_back",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      21,
+      26
+    ]
+  },
+  {
+    "id": "screen_clinic",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      60,
+      23
+    ]
+  },
+  {
+    "id": "screen_clinic_side",
+    "source": [
+      887,
+      1774
+    ],
+    "canvas": [
+      32,
+      64
+    ],
+    "content": [
+      8,
+      58
+    ]
+  },
+  {
+    "id": "screen_clinic_back",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      60,
+      23
+    ]
+  },
+  {
+    "id": "workbench_clock",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      48,
+      26
+    ]
+  },
+  {
+    "id": "workbench_clock_side",
+    "source": [
+      887,
+      1774
+    ],
+    "canvas": [
+      32,
+      64
+    ],
+    "content": [
+      19,
+      58
+    ]
+  },
+  {
+    "id": "workbench_clock_back",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      48,
+      26
+    ]
+  },
+  {
+    "id": "clock_grandfather",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      11,
+      26
+    ]
+  },
+  {
+    "id": "clock_grandfather_side",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      8,
+      26
+    ]
+  },
+  {
+    "id": "clock_grandfather_back",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      11,
+      26
+    ]
+  },
+  {
+    "id": "barrier_queue",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      28,
+      14
+    ]
+  },
+  {
+    "id": "barrier_queue_side",
+    "source": [
+      1254,
+      1254
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      6,
+      26
+    ]
+  },
+  {
+    "id": "barrier_queue_back",
+    "source": [
+      1269,
+      1240
+    ],
+    "canvas": [
+      32,
+      32
+    ],
+    "content": [
+      28,
+      14
+    ]
+  },
+  {
+    "id": "workbench_industrial",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      50,
+      26
+    ]
+  },
+  {
+    "id": "workbench_industrial_side",
+    "source": [
+      887,
+      1774
+    ],
+    "canvas": [
+      32,
+      64
+    ],
+    "content": [
+      18,
+      58
+    ]
+  },
+  {
+    "id": "workbench_industrial_back",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      46,
+      26
+    ]
+  },
+  {
+    "id": "pallet_stack",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      36,
+      26
+    ]
+  },
+  {
+    "id": "pallet_stack_side",
+    "source": [
+      887,
+      1774
+    ],
+    "canvas": [
+      32,
+      64
+    ],
+    "content": [
+      23,
+      58
+    ]
+  },
+  {
+    "id": "pallet_stack_back",
+    "source": [
+      1774,
+      887
+    ],
+    "canvas": [
+      64,
+      32
+    ],
+    "content": [
+      35,
+      26
+    ]
+  }
+]

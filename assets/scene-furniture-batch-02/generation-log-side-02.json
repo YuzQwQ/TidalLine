@@ -1,0 +1,46 @@
+[
+  {
+    "id": "fridge_home_side",
+    "base": "fridge_home",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of the supplied FRONT sprite; redraw this SAME object as SIDE variant. Rotate OBJECT 90 degrees IN WORLD, functional front now faces EAST/right, camera/light remain fixed. Do NOT rotate or mirror a bitmap. Subject identity: Small ivory rounded-corner vintage refrigerator, dark vertical handle, one faded paper note without legible text on door, lightly rusty base. Broad visible top and short front door plane; one complete fridge. Show side construction; front doors/front compartments should not face the viewer. Fixed steep 75-degree overhead camera. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-e0347e2f-0426-411f-b885-e371111cd1b6.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "cart_medical_side",
+    "base": "cart_medical",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of the supplied FRONT sprite; redraw this SAME object as SIDE variant. Rotate OBJECT 90 degrees IN WORLD, functional front now faces EAST/right, camera/light remain fixed. Do NOT rotate or mirror a bitmap. Subject identity: Small two-tier stainless medical trolley on tiny castors. Top holds metal tray, tweezers and two tiny amber medicine bottles; lower shelf holds gauze cartons. Sparse readable details. Show side construction; front doors/front compartments should not face the viewer. Fixed steep 75-degree overhead camera. Native target canvas 32x32.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-d9896baa-390b-4b1e-b209-a22c3a6176ed.png",
+    "size": [
+      32,
+      32
+    ]
+  },
+  {
+    "id": "screen_clinic_side",
+    "base": "screen_clinic",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of the supplied FRONT sprite; redraw this SAME object as SIDE variant. Rotate OBJECT 90 degrees IN WORLD, functional front now faces EAST/right, camera/light remain fixed. Do NOT rotate or mirror a bitmap. CRITICAL: long axis runs NORTH-SOUTH vertically top-to-bottom, narrow side-view silhouette. Subject identity: Wide folding medical privacy screen, three simple ivory fabric panels in pale grey tubular metal frames, fabric slightly frayed, small feet. Viewed steeply overhead, avoid an eye-level tall rectangle. Show side construction; front doors/front compartments should not face the viewer. Fixed steep 75-degree overhead camera. Native target canvas 32x64.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-f7d9c668-57ac-4c43-9c53-3d414206cfc1.png",
+    "size": [
+      32,
+      64
+    ]
+  },
+  {
+    "id": "workbench_clock_side",
+    "base": "workbench_clock",
+    "facing": "side",
+    "prompt": "Use case: stylized-concept. Asset: TidalLine 1990s abandoned coastal-town top-down pixel game furniture sprite. Single isolated COMPLETE object, actual transparent alpha background, no floor, no scene, no cast ground shadow, no text, no border or UI. Camera fixed 75 degrees above ground (steep overhead), orthographic, NOT isometric; horizontal table edges stay horizontal, north-south depth vertical. Large visible top plane and short south-facing front elevation. Light upper left. Muted weathered brown/olive/grey palette, crisp chunky pixel art, strongly readable silhouette, no smooth painting. Centered with generous transparent margin, no cropped edges. REFERENCE role: preserve identity/materials of the supplied FRONT sprite; redraw this SAME object as SIDE variant. Rotate OBJECT 90 degrees IN WORLD, functional front now faces EAST/right, camera/light remain fixed. Do NOT rotate or mirror a bitmap. CRITICAL: long axis runs NORTH-SOUTH vertically top-to-bottom, narrow side-view silhouette. Subject identity: Wide dark wooden watchmaker workbench, visible spacious wooden tabletop with tiny precision screwdrivers, round magnifying lens, a few brass gears and one opened clock movement. Short front drawers, no chairs, no clock floating above. Show side construction; front doors/front compartments should not face the viewer. Fixed steep 75-degree overhead camera. Native target canvas 32x64.",
+    "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-ad4e441c-a09b-402a-9a41-752d9b7e9dbd.png",
+    "size": [
+      32,
+      64
+    ]
+  }
+]
