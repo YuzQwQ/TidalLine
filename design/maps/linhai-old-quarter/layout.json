@@ -145,32 +145,32 @@
     "#..rr#####iiiiiiiiiiii#rrrrrrk~~~~~~krrrrrr.w2111111111#iiiii#111111#..#",
     "#.rrr#333#######+######rrrrrrk~~~~~~krrrrrr.#2111111111#iiiii#111111#..#",
     "#.rrr#333+222222222222#rrrrrrk~~~~~~krrrrrr.#2111#11111#iiiii#111111#..#",
-    "#rrrr#333#222222222222#rrrrrrk~~~~~~krrrrrr.#2111#######iiiii#####1##..#",
-    "#rrrr#########+########rrrrrrk~~~~~~srrrrrr.w2111#11111#iiiiii111111#..#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.w2111111111+iiiii#111111#..#",
+    "#rrrr#333#222222222222#rrrrrrk~~~~~~krrrrrr.#2111#######iiiii#####+##..#",
+    "#rrrr#########+########rrrrrrk~~~~~~srrrrrr.w2111#11111#iiiii#111111#..#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.w2111+11111+iiiii+111111#..#",
     "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~srrrrrr.#2222#11111#iiiii#111111#..#",
     "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrr.#########################..#",
     "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
     "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
     "#rrrrq.qqqqqqqqq.qqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrqqqqqqqq.################rrr#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiiii#rrr#",
-    "#rrrr########+#########rrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiii##rrr#",
-    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
-    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.+iiiii+iiiiiiii#rrr#",
-    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiiii#iiiiiiii#rrr#",
-    "#rrrr########22#####22#rrrrrrk~~~~~~krrrrrrqqqqqqqq.################rrr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#iiii#ii#iiiiii#rrr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrr.........#iiiiiiiiiiiiii#rrr#",
-    "#rrrr#333333#22#222#22#rrrrrr--------rrrrrr.........#iiiiiiiiiiiiii#rrr#",
-    "#rrrr#333333+22#222#22#rrrrrr--------rrrrrr.........###i#######++###rrr#",
-    "#rrrr#333333#22+222#22+rrrrrr--------rrrrrr.........#iiiiiii#iiiiii#rrr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrr......rrr#iiiiiii#iiiiii#rrr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~kkk####++####rrr#.iiiiii#iiiiii#rrr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~kkk#iiiiiiii#rrr#..iiiii#iiiiii#rrr#",
-    "#rrrr##################rrrrrrk~~~~~~kkk#iiiiiiii#rrr######ii########rrr#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
+    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrrrrrrrrrr#################rr#",
+    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
+    "#rrrr########+#########rrrrrrk~~~~~~krrrrrrqqqqqqqq.#444444444444444#rr#",
+    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
+    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
+    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
+    "#rrrr########22#####22#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrr.........+44444#4444#4444#rr#",
+    "#rrrr#333333#22#222#22#rrrrrr--------rrrrrr.........#44444#4444#4444#rr#",
+    "#rrrr#333333+22#222#22#rrrrrr--------rrrrrr.........#44444#4444#4444#rr#",
+    "#rrrr#333333#22+222#22+rrrrrr--------rrrrrr.........#44444#4444#4444#rr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrr......rrr#44444###########rr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~kkk####++####rrr#444444444444444#rr#",
+    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~kkk#iiiiiiii#rrr#444444444444444#rr#",
+    "#rrrr##################rrrrrrk~~~~~~kkk#iiiiiiii#rrr#444444444444444#rr#",
+    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrr##############+##rr#",
     "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
     "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii+rrrrrrrrrrrrrrrrrrrrrr#",
     "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii+rrrrrrrrrrrrrrrrrrrrrr#",
@@ -3885,111 +3885,6 @@
       "width": 1
     },
     {
-      "id": "bank.front",
-      "building": "bank",
-      "name": "西侧正门",
-      "cells": [
-        [
-          52,
-          34
-        ],
-        [
-          52,
-          35
-        ]
-      ],
-      "connects": [
-        "bank.lobby",
-        "outside"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "bank.counter",
-      "building": "bank",
-      "name": "前厅通柜台",
-      "cells": [
-        [
-          58,
-          34
-        ],
-        [
-          58,
-          35
-        ]
-      ],
-      "connects": [
-        "bank.lobby",
-        "bank.counter"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "bank.office",
-      "building": "bank",
-      "name": "办公室侧门",
-      "cells": [
-        [
-          57,
-          39
-        ],
-        [
-          57,
-          40
-        ]
-      ],
-      "connects": [
-        "bank.office",
-        "bank.passage"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "bank.security",
-      "building": "bank",
-      "name": "安保过渡门",
-      "cells": [
-        [
-          60,
-          39
-        ],
-        [
-          60,
-          40
-        ]
-      ],
-      "connects": [
-        "bank.passage",
-        "bank.security"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "bank.vault",
-      "building": "bank",
-      "name": "安保通金库",
-      "cells": [
-        [
-          63,
-          41
-        ],
-        [
-          64,
-          41
-        ]
-      ],
-      "connects": [
-        "bank.security",
-        "bank.vault"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
       "id": "warehouse.front",
       "building": "warehouse",
       "name": "北侧装卸入口",
@@ -4175,6 +4070,122 @@
       "connects": [
         "clinic",
         "clinic.service"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "clockshop.door1",
+      "building": "clockshop",
+      "name": "新门洞",
+      "cells": [
+        [
+          49,
+          24
+        ]
+      ],
+      "connects": [
+        "clockshop.counter",
+        "clockshop.store"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "outdoor.door6",
+      "name": "新门洞",
+      "cells": [
+        [
+          61,
+          24
+        ]
+      ],
+      "connects": [
+        "outdoors",
+        "outdoors"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "outdoor.door7",
+      "name": "新门洞",
+      "cells": [
+        [
+          66,
+          22
+        ]
+      ],
+      "connects": [
+        "outdoors",
+        "outdoors"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "bank.door3",
+      "building": "bank",
+      "name": "新门洞",
+      "cells": [
+        [
+          58,
+          33
+        ]
+      ],
+      "connects": [
+        "bank.lobby",
+        "bank.counter"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "bank.door4",
+      "building": "bank",
+      "name": "新门洞",
+      "cells": [
+        [
+          63,
+          33
+        ]
+      ],
+      "connects": [
+        "bank.counter",
+        "bank.counter"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "bank.door1",
+      "building": "bank",
+      "name": "新门洞",
+      "cells": [
+        [
+          52,
+          39
+        ]
+      ],
+      "connects": [
+        "outdoors",
+        "bank.office"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "outdoor.door8",
+      "name": "新门洞",
+      "cells": [
+        [
+          66,
+          47
+        ]
+      ],
+      "connects": [
+        "bank",
+        "outdoors"
       ],
       "kind": "door",
       "width": 1
@@ -4675,7 +4686,7 @@
       "type": "display",
       "name": "橱窗展柜",
       "x": 45,
-      "y": 20,
+      "y": 21,
       "solid": true,
       "facing": "side",
       "footprint": [
@@ -4688,8 +4699,8 @@
       "region": "clockshop",
       "type": "display",
       "name": "橱窗展柜",
-      "x": 48,
-      "y": 20,
+      "x": 45,
+      "y": 19,
       "solid": true,
       "facing": "side",
       "footprint": [
@@ -4795,14 +4806,14 @@
       "region": "bank",
       "type": "desk",
       "name": "安保监控台",
-      "x": 66,
-      "y": 38,
+      "x": 59,
+      "y": 40,
       "solid": true,
-      "facing": "back",
       "footprint": [
         1,
         1
-      ]
+      ],
+      "facing": "side"
     },
     {
       "id": "p23",
@@ -4822,13 +4833,14 @@
       "region": "bank",
       "type": "shelf",
       "name": "后勤架",
-      "x": 55,
-      "y": 43,
+      "x": 53,
+      "y": 44,
       "solid": true,
       "footprint": [
-        2,
-        1
-      ]
+        1,
+        2
+      ],
+      "facing": "side"
     },
     {
       "id": "p25",
@@ -5027,7 +5039,7 @@
       "type": "barrel",
       "name": "杂物桶",
       "x": 52,
-      "y": 30,
+      "y": 29,
       "solid": true,
       "footprint": [
         1,
@@ -5039,8 +5051,8 @@
       "region": "outdoors",
       "type": "barrel",
       "name": "杂物桶",
-      "x": 70,
-      "y": 28,
+      "x": 68,
+      "y": 27,
       "solid": true,
       "footprint": [
         1,
@@ -5411,8 +5423,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 57,
-      "y": 23,
+      "x": 58,
+      "y": 24,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -5844,7 +5856,7 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 68,
+      "x": 69,
       "y": 30,
       "solid": false,
       "ground": true,
@@ -5860,8 +5872,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 69,
-      "y": 36,
+      "x": 68,
+      "y": 29,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -5892,7 +5904,7 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 68,
+      "x": 69,
       "y": 44,
       "solid": false,
       "ground": true,
@@ -5905,11 +5917,11 @@
     },
     {
       "id": "p94",
-      "region": "outdoors",
+      "region": "bank",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 70,
-      "y": 39,
+      "x": 65,
+      "y": 41,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -6179,13 +6191,13 @@
       "type": "workbench_industrial",
       "name": "重型工作台",
       "x": 59,
-      "y": 32,
+      "y": 36,
       "solid": true,
       "footprint": [
-        2,
-        1
+        1,
+        2
       ],
-      "facing": "back"
+      "facing": "side"
     },
     {
       "id": "p113",
@@ -7167,8 +7179,7 @@
       "footprint": [
         2,
         1
-      ],
-      "facing": "side"
+      ]
     },
     {
       "id": "p193",
@@ -7181,8 +7192,7 @@
       "footprint": [
         2,
         1
-      ],
-      "facing": "side"
+      ]
     },
     {
       "id": "p194",
@@ -7195,6 +7205,473 @@
       "footprint": [
         2,
         1
+      ]
+    },
+    {
+      "id": "p195",
+      "region": "clinic",
+      "type": "bed_clinic",
+      "name": "诊疗床",
+      "x": 6,
+      "y": 41,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p196",
+      "region": "clockshop",
+      "type": "barrier_queue",
+      "name": "银行排队围栏",
+      "x": 45,
+      "y": 23,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p197",
+      "region": "clockshop",
+      "type": "barrier_queue",
+      "name": "银行排队围栏",
+      "x": 45,
+      "y": 24,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p198",
+      "region": "clockshop",
+      "type": "barrier_queue",
+      "name": "银行排队围栏",
+      "x": 48,
+      "y": 22,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p199",
+      "region": "clockshop",
+      "type": "barrier_queue",
+      "name": "银行排队围栏",
+      "x": 45,
+      "y": 25,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p200",
+      "region": "outdoors",
+      "type": "desk",
+      "name": "桌子",
+      "x": 64,
+      "y": 19,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p201",
+      "region": "outdoors",
+      "type": "clock_grandfather",
+      "name": "落地钟",
+      "x": 65,
+      "y": 18,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p202",
+      "region": "clockshop",
+      "type": "console_security",
+      "name": "安保监控台",
+      "x": 50,
+      "y": 23,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p203",
+      "region": "bank",
+      "type": "workbench_clock",
+      "name": "钟表维修台",
+      "x": 62,
+      "y": 38,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p204",
+      "region": "bank",
+      "type": "counter_shop",
+      "name": "营业柜台",
+      "x": 56,
+      "y": 38,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p205",
+      "region": "bank",
+      "type": "display_clock",
+      "name": "橱窗展柜",
+      "x": 55,
+      "y": 33,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p206",
+      "region": "bank",
+      "type": "display_clock",
+      "name": "橱窗展柜",
+      "x": 55,
+      "y": 42,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p207",
+      "region": "bank",
+      "type": "workbench_clock",
+      "name": "钟表维修台",
+      "x": 59,
+      "y": 38,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p208",
+      "region": "bank",
+      "type": "sofa_home",
+      "name": "沙发",
+      "x": 60,
+      "y": 31,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p209",
+      "region": "bank",
+      "type": "chair_wood",
+      "name": "普通木椅",
+      "x": 61,
+      "y": 39,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p210",
+      "region": "bank",
+      "type": "chair_wood",
+      "name": "普通木椅",
+      "x": 61,
+      "y": 41,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p211",
+      "region": "bank",
+      "type": "desk",
+      "name": "桌子",
+      "x": 60,
+      "y": 42,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p212",
+      "region": "bank",
+      "type": "shelf",
+      "name": "货架",
+      "x": 62,
+      "y": 36,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p213",
+      "region": "bank",
+      "type": "counter_shop",
+      "name": "营业柜台",
+      "x": 59,
+      "y": 31,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p214",
+      "region": "bank",
+      "type": "display_clock",
+      "name": "橱窗展柜",
+      "x": 56,
+      "y": 36,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p215",
+      "region": "bank",
+      "type": "display_clock",
+      "name": "橱窗展柜",
+      "x": 54,
+      "y": 46,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p216",
+      "region": "bank",
+      "type": "display_clock",
+      "name": "橱窗展柜",
+      "x": 54,
+      "y": 31,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p217",
+      "region": "bank",
+      "type": "clock_grandfather",
+      "name": "落地钟",
+      "x": 53,
+      "y": 31,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p218",
+      "region": "outdoors",
+      "type": "clock_grandfather",
+      "name": "落地钟",
+      "x": 53,
+      "y": 46,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p219",
+      "region": "bank",
+      "type": "clock_grandfather",
+      "name": "落地钟",
+      "x": 53,
+      "y": 38,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p220",
+      "region": "bank",
+      "type": "shelf",
+      "name": "货架",
+      "x": 66,
+      "y": 33,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p221",
+      "region": "bank",
+      "type": "shelf",
+      "name": "货架",
+      "x": 66,
+      "y": 36,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p222",
+      "region": "bank",
+      "type": "shelf",
+      "name": "货架",
+      "x": 66,
+      "y": 39,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p223",
+      "region": "outdoors",
+      "type": "fridge_home",
+      "name": "老式冰箱",
+      "x": 67,
+      "y": 31,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p224",
+      "region": "bank",
+      "type": "display_clock",
+      "name": "橱窗展柜",
+      "x": 58,
+      "y": 46,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p225",
+      "region": "bank",
+      "type": "display_clock",
+      "name": "橱窗展柜",
+      "x": 62,
+      "y": 46,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ],
+      "facing": "back"
+    },
+    {
+      "id": "p226",
+      "region": "bank",
+      "type": "sofa_home",
+      "name": "沙发",
+      "x": 60,
+      "y": 44,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p227",
+      "region": "bank",
+      "type": "sofa_home",
+      "name": "沙发",
+      "x": 63,
+      "y": 44,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p228",
+      "region": "bank",
+      "type": "sofa_home",
+      "name": "沙发",
+      "x": 53,
+      "y": 35,
+      "solid": true,
+      "footprint": [
+        1,
+        2
       ],
       "facing": "side"
     }
@@ -7306,16 +7783,6 @@
       ]
     },
     {
-      "id": "c15",
-      "region": "clockshop",
-      "type": "C",
-      "x": 46,
-      "y": 18,
-      "preference": [
-        "collect"
-      ]
-    },
-    {
       "id": "c16",
       "region": "outdoors",
       "type": "B",
@@ -7337,10 +7804,10 @@
     },
     {
       "id": "c18",
-      "region": "clockshop",
+      "region": "outdoors",
       "type": "B",
-      "x": 47,
-      "y": 18,
+      "x": 67,
+      "y": 21,
       "preference": [
         "collect"
       ]
@@ -7349,8 +7816,8 @@
       "id": "c19",
       "region": "clockshop",
       "type": "B",
-      "x": 45,
-      "y": 22,
+      "x": 46,
+      "y": 18,
       "preference": [
         "collect"
       ]
@@ -7379,8 +7846,8 @@
       "id": "c22",
       "region": "bank",
       "type": "F",
-      "x": 53,
-      "y": 32,
+      "x": 59,
+      "y": 35,
       "preference": [
         "collect"
       ]
@@ -7390,7 +7857,7 @@
       "region": "bank",
       "type": "L",
       "x": 56,
-      "y": 32,
+      "y": 31,
       "preference": [
         "collect"
       ]
@@ -7400,7 +7867,7 @@
       "region": "bank",
       "type": "F",
       "x": 53,
-      "y": 38,
+      "y": 41,
       "preference": [
         "collect"
       ]
@@ -7409,18 +7876,8 @@
       "id": "c25",
       "region": "bank",
       "type": "L",
-      "x": 55,
-      "y": 45,
-      "preference": [
-        "collect"
-      ]
-    },
-    {
-      "id": "c26",
-      "region": "bank",
-      "type": "B",
-      "x": 61,
-      "y": 42,
+      "x": 56,
+      "y": 46,
       "preference": [
         "collect"
       ]
@@ -7429,8 +7886,8 @@
       "id": "c27",
       "region": "bank",
       "type": "B",
-      "x": 66,
-      "y": 42,
+      "x": 65,
+      "y": 31,
       "preference": [
         "collect"
       ]
@@ -7449,8 +7906,8 @@
       "id": "c29",
       "region": "bank",
       "type": "O",
-      "x": 65,
-      "y": 45,
+      "x": 64,
+      "y": 42,
       "preference": [
         "collect"
       ]
@@ -7459,8 +7916,8 @@
       "id": "c30",
       "region": "bank",
       "type": "G",
-      "x": 61,
-      "y": 45,
+      "x": 62,
+      "y": 35,
       "preference": [
         "collect"
       ]
@@ -7469,8 +7926,8 @@
       "id": "c31",
       "region": "bank",
       "type": "B",
-      "x": 66,
-      "y": 45,
+      "x": 65,
+      "y": 42,
       "preference": [
         "collect"
       ]
@@ -7534,7 +7991,7 @@
       "id": "c37",
       "region": "warehouse",
       "type": "Q",
-      "x": 45,
+      "x": 44,
       "y": 52,
       "preference": [
         "ind",
@@ -7589,8 +8046,8 @@
       "id": "c42",
       "region": "outdoors",
       "type": "U",
-      "x": 64,
-      "y": 30,
+      "x": 65,
+      "y": 29,
       "preference": [
         "life",
         "ind"
@@ -7633,8 +8090,8 @@
       "id": "c46",
       "region": "bank",
       "type": "C",
-      "x": 62,
-      "y": 32,
+      "x": 64,
+      "y": 31,
       "preference": [
         "life",
         "ind"
@@ -7655,8 +8112,8 @@
       "id": "c48",
       "region": "bank",
       "type": "K",
-      "x": 64,
-      "y": 32,
+      "x": 62,
+      "y": 31,
       "preference": [
         "life",
         "ind"
@@ -8101,8 +8558,8 @@
       "id": "c91",
       "region": "clinic",
       "type": "W",
-      "x": 6,
-      "y": 41,
+      "x": 11,
+      "y": 34,
       "preference": [
         "life",
         "ind"
@@ -8217,6 +8674,144 @@
       "type": "b",
       "x": 11,
       "y": 45,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c103",
+      "region": "outdoors",
+      "type": "b",
+      "x": 67,
+      "y": 32,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c104",
+      "region": "bank",
+      "type": "b",
+      "x": 67,
+      "y": 42,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c105",
+      "region": "bank",
+      "type": "b",
+      "x": 67,
+      "y": 37,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c106",
+      "region": "bank",
+      "type": "T",
+      "x": 66,
+      "y": 42,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c107",
+      "region": "bank",
+      "type": "T",
+      "x": 57,
+      "y": 41,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c108",
+      "region": "bank",
+      "type": "R",
+      "x": 62,
+      "y": 42,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c109",
+      "region": "outdoors",
+      "type": "R",
+      "x": 66,
+      "y": 31,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c110",
+      "region": "bank",
+      "type": "G",
+      "x": 59,
+      "y": 41,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c111",
+      "region": "bank",
+      "type": "V",
+      "x": 64,
+      "y": 37,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c112",
+      "region": "clockshop",
+      "type": "V",
+      "x": 52,
+      "y": 18,
+      "preference": [
+        "collect"
+      ]
+    },
+    {
+      "id": "c113",
+      "region": "bank",
+      "type": "e",
+      "x": 65,
+      "y": 44,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c114",
+      "region": "warehouse",
+      "type": "Q",
+      "x": 40,
+      "y": 51,
+      "preference": [
+        "ind",
+        "elec"
+      ]
+    },
+    {
+      "id": "c115",
+      "region": "warehouse",
+      "type": "Q",
+      "x": 46,
+      "y": 52,
       "preference": [
         "ind",
         "elec"
@@ -8370,8 +8965,8 @@
       "id": "e06",
       "region": "clockshop",
       "type": "scav",
-      "x": 47,
-      "y": 20,
+      "x": 46,
+      "y": 21,
       "patrolRadius": 2
     },
     {
@@ -8386,24 +8981,24 @@
       "id": "e09",
       "region": "bank",
       "type": "guard",
-      "x": 55,
-      "y": 35,
+      "x": 60,
+      "y": 38,
       "patrolRadius": 2
     },
     {
       "id": "e11",
       "region": "bank",
       "type": "guard",
-      "x": 55,
-      "y": 40,
+      "x": 60,
+      "y": 33,
       "patrolRadius": 2
     },
     {
       "id": "e12",
       "region": "bank",
       "type": "guard",
-      "x": 62,
-      "y": 43,
+      "x": 65,
+      "y": 39,
       "patrolRadius": 2
     },
     {
@@ -8411,23 +9006,23 @@
       "region": "bank",
       "type": "guard",
       "x": 65,
-      "y": 40,
+      "y": 35,
       "patrolRadius": 2
     },
     {
       "id": "e14",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "scav",
-      "x": 43,
-      "y": 48,
+      "x": 39,
+      "y": 41,
       "patrolRadius": 2
     },
     {
       "id": "e15",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "scav",
-      "x": 46,
-      "y": 51,
+      "x": 42,
+      "y": 24,
       "patrolRadius": 2
     },
     {
@@ -8594,8 +9189,8 @@
       "id": "e36",
       "region": "outdoors",
       "type": "echo",
-      "x": 26,
-      "y": 39,
+      "x": 25,
+      "y": 38,
       "patrolRadius": 2
     },
     {
@@ -8661,6 +9256,41 @@
       "x": 17,
       "y": 44,
       "patrolRadius": 2
+    },
+    {
+      "id": "e46",
+      "region": "clockshop",
+      "type": "scav",
+      "x": 50,
+      "y": 21,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e47",
+      "region": "warehouse",
+      "type": "retriever",
+      "x": 42,
+      "y": 50,
+      "patrolRadius": 2,
+      "facing": "s"
+    },
+    {
+      "id": "e48",
+      "region": "warehouse",
+      "type": "retriever",
+      "x": 43,
+      "y": 47,
+      "patrolRadius": 2,
+      "facing": "s"
+    },
+    {
+      "id": "e49",
+      "region": "warehouse",
+      "type": "retriever",
+      "x": 45,
+      "y": 50,
+      "patrolRadius": 2,
+      "facing": "s"
     }
   ],
   "spawn": {
@@ -8911,15 +9541,15 @@
           35
         ],
         [
-          59,
-          39
+          65,
+          36
         ],
         [
           64,
           39
         ],
         [
-          64,
+          57,
           43
         ],
         [

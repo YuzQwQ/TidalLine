@@ -16,7 +16,7 @@
 
 导航第四项 [商人档案](商人档案.html) 是独立页面（有自己按商人分页的标签栏，不并进 wiki.html）：四位商人的身份、背景、职责、信任成长、委托线与全部台词，运行时语音和设定稿台词分开列，缺口直接标出来。它由 `node tools/gen-merchant-sheet.js` 从 `design/merchants/design-v1.json`、`js/merchant-config.js`、`js/safehouse-config.js` 生成，改完文案重跑即可。
 
-容器清单包含全部 25 种箱柜、当前地图中的 97 个实例，以及 3 类可搜刮遗留物，展示贴图、开箱时间、掉落偏好、占格规则和地图位置。
+容器清单包含全部 25 种箱柜、当前地图中的 108 个实例，以及 3 类可搜刮遗留物，展示贴图、开箱时间、掉落偏好、占格规则和地图位置。
 
 修改游戏数据或贴图后，运行 `node gen-wiki.js` 统一更新三份清单与 Wiki。单独运行 `gen-item-sheet.js`、`gen-gear-sheet.js` 或 `gen-container-sheet.js` 也会同步刷新 Wiki。样式位于 `wiki.css`，导航逻辑位于 `wiki.js`。
 
