@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>潮汐线 Wiki · 商人档案</title>
+<style>
+  .lede a, .foot a, .foot-note a { color: #7fb6a3; }
+  .tabs { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px;
+    max-width: 1240px; margin: 22px auto 0; padding: 12px 0; background: #0b1210; border-bottom: 1px solid #1a2a25; }
+  .tabs button { font: inherit; font-size: 12.5px; letter-spacing: 1px; color: #8fa79f; cursor: pointer;
+    background: #101a17; border: 1px solid #1f332c; padding: 8px 15px; }
+  .tabs button:hover { border-color: #3a5c50; color: #cfe0da; }
+  .tabs button.on { background: #1b332b; border-color: #4f8574; color: #e2f0ea; }
+  .tabs .spacer { margin-left: auto; display: flex; gap: 8px; }
+  .cards { max-width: 1240px; margin: 18px auto 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+  .card { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 12px; text-align: left;
+    background: #0f1916; border: 1px solid #1c2e28; border-left: 3px solid #2f5a4b; cursor: pointer; color: inherit; font: inherit; }
+  .card:hover { border-color: #4f8574; background: #12201b; }
+  .card img { width: 96px; height: 120px; object-fit: cover; object-position: top center; background: #0b1411; filter: saturate(.9); }
+  .card h2 { margin: 2px 0 2px; font-size: 16px; letter-spacing: 1px; color: #e2ece8; }
+  .card small { font-size: 10.5px; color: #5d817a; letter-spacing: .5px; }
+  .card em { display: block; margin-top: 6px; font-style: normal; font-size: 11.5px; color: #9fb5ae; line-height: 1.7;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .card b.tag { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 400; color: #c8b184;
+    border: 1px solid #4a3f28; padding: 1px 5px; }
+
+  .view[hidden] { display: none; }
+  .dossier { max-width: 1240px; margin: 22px auto 0; display: grid; grid-template-columns: 240px 1fr; gap: 24px;
+    background: #101a17; border: 1px solid #1c2e28; padding: 18px; }
+  .portrait { margin: 0; }
+  .portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top center; background: #0b1411; border: 1px solid #223a32; }
+  .portrait figcaption { margin-top: 6px; font-size: 10px; letter-spacing: 2px; color: #4d7d70; }
+  .name-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .name-row h2 { margin: 0; font-size: 26px; letter-spacing: 4px; color: #e6f1ec; font-weight: 600; }
+  .tagline { font-size: 11px; letter-spacing: 1px; color: #c8b184; border: 1px solid #4a3f28; padding: 2px 7px; }
+  .theme { margin: 12px 0 6px; padding-left: 14px; border-left: 2px solid #6b8f6b; font-size: 15px; color: #d6c79a; }
+  .shop-quote { margin: 0 0 14px; font-size: 12px; color: #7d948c; }
+  .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px 18px; margin: 0 0 12px; }
+  .meta div { border-top: 1px solid #1a2a25; padding-top: 6px; }
+  .meta dt { font-size: 10px; letter-spacing: 1px; color: #4d7d70; }
+  .meta dd { margin: 3px 0 0; font-size: 12.5px; color: #cfdcd7; }
+  .role-line { font-size: 12px; color: #8fa79f; margin: 0 0 10px; }
+  .role-line b { color: #b9cac4; font-weight: 500; }
+  .anchor-nav { display: flex; flex-wrap: wrap; gap: 6px; }
+  .anchor-nav a { font-size: 11px; color: #8fa79f; text-decoration: none; border: 1px solid #223a32; padding: 3px 8px; }
+  .anchor-nav a:hover { color: #dcf0e8; border-color: #4f8574; }
+
+  .block { max-width: 1240px; margin: 26px auto 0; scroll-margin-top: 78px; }
+  .block h3 { display: flex; align-items: center; gap: 10px; font-size: 14px; letter-spacing: 1px; color: #cfdcd7;
+    margin: 0 0 14px; padding-bottom: 9px; border-bottom: 1px solid #1a2a25; }
+  .block h3 i { font-style: normal; font-size: 11px; color: #4d7d70; letter-spacing: 2px; }
+  .block h3 em { margin-left: auto; font-style: normal; font-size: 10.5px; color: #4d7d70; letter-spacing: 1px; }
+  .block h4.sub { margin: 22px 0 10px; font-size: 12px; letter-spacing: 1px; color: #79a394; font-weight: 600; }
+  .para { font-size: 13px; line-height: 2; color: #a9bdb6; margin: 0 0 14px; max-width: 980px; }
+  .cols { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); margin-bottom: 12px; }
+  .panel { background: #0f1916; border: 1px solid #1a2a25; padding: 12px 14px; }
+  .panel h4 { margin: 0 0 8px; font-size: 11px; letter-spacing: 1px; color: #6fa093; font-weight: 600; }
+  .mini { margin: 0 0 6px; font-size: 12px; line-height: 1.85; color: #93aaa2; }
+  .mini:last-child { margin-bottom: 0; }
+  .dim { color: #5d7a72; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+  .chip { font-size: 11px; color: #a8c4ba; background: #17241f; border: 1px solid #223a32; padding: 2px 7px; }
+  .traits { margin: 0 0 14px; padding-left: 18px; font-size: 12.5px; line-height: 2; color: #a9bdb6; }
+  .arc { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; max-width: 980px; }
+  .arc li { display: grid; grid-template-columns: 44px 1fr; gap: 10px; font-size: 12.5px; color: #a9bdb6;
+    background: #0f1916; border-left: 2px solid #2f5a4b; padding: 8px 12px; }
+  .arc b { color: #79a394; font-weight: 500; }
+  .fold { margin-top: 10px; background: #0f1916; border: 1px solid #1a2a25; padding: 10px 12px; }
+  .fold summary { cursor: pointer; font-size: 11.5px; color: #7fb6a3; }
+  .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin-top: 10px; }
+  .shelf-item { display: grid; grid-template-columns: 32px 1fr; grid-template-rows: auto auto; gap: 0 8px; align-items: center;
+    background: #0b1411; border: 1px solid #1a2a25; padding: 6px 8px; }
+  .shelf-item img { grid-row: span 2; width: 32px; height: 32px; image-rendering: pixelated; }
+  .shelf-item b { font-size: 11.5px; color: #cfdcd7; font-weight: 500; }
+  .shelf-item small { font-size: 10.5px; color: #6f8d85; }
+
+  .table-wrap { overflow: auto; }
+  .tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .tbl th, .tbl td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #1a2a25; vertical-align: top; }
+  .tbl th { background: #121f1a; color: #79a394; font-weight: 600; font-size: 11px; letter-spacing: .5px; }
+  .tbl td { color: #a9bdb6; }
+  .tbl td.miss { color: #4b5f58; text-align: center; }
+  .goods { display: inline-block; margin: 0 6px 6px 0; font-size: 11.5px; color: #a8c4ba; background: #131f1a; border: 1px solid #223a32; padding: 2px 6px; }
+  .goods.placeholder { color: #8d8264; border-color: #3a3325; }
+  .goods i { font-style: normal; font-size: 9px; margin-left: 4px; color: #8d8264; }
+  .foot-note { font-size: 11px; color: #5d7a72; line-height: 1.8; margin: 8px 0 0; }
+
+  .quests { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+  .quest { background: #0f1916; border: 1px solid #1a2a25; border-top: 2px solid #2f5a4b; padding: 14px; align-self: start; }
+  .quest header { display: flex; justify-content: space-between; font-size: 10.5px; color: #6f8d85; letter-spacing: .5px; }
+  .quest header .phase { color: #c8b184; }
+  .quest h4 { margin: 6px 0 8px; font-size: 14px; color: #dce7e3; font-weight: 600; }
+  .quest h4 code { font-size: 10px; }
+  .quest p { font-size: 12px; line-height: 1.85; color: #9fb5ae; margin: 0 0 8px; }
+  .facts { margin: 0 0 10px; display: grid; gap: 4px; }
+  .facts div { display: grid; grid-template-columns: 68px 1fr; gap: 8px; font-size: 11.5px; }
+  .facts dt { color: #4d7d70; }
+  .facts dd { margin: 0; color: #a9bdb6; }
+  .story { border-left: 2px solid #3f5c4d; padding-left: 10px; color: #b6a97f; }
+  .branch { margin-top: 10px; background: #101c17; border: 1px dashed #27403a; padding: 10px; }
+  .branch p { margin: 0 0 8px; }
+  .branch p b { display: block; color: #79a394; font-size: 11px; letter-spacing: .5px; margin-bottom: 2px; }
+  .branch small { color: #6f8d85; }
+  .branch-note { color: #6f8d85 !important; font-size: 11px !important; }
+
+  .lines { display: grid; gap: 8px; }
+  .line-row { display: grid; grid-template-columns: 260px 1fr; gap: 14px; background: #0f1916; border: 1px solid #1a2a25; padding: 10px 12px; }
+  .line-row.unwired { border-style: dashed; opacity: .82; }
+  .line-head b { display: block; font-size: 12.5px; color: #cfdcd7; font-weight: 600; }
+  .line-head small { display: block; font-size: 10.5px; color: #5d7a72; line-height: 1.7; margin-top: 3px; }
+  .badge { display: inline-block; margin: 5px 5px 0 0; font-style: normal; font-size: 9px; color: #7fb6a3;
+    border: 1px solid #2f5a4b; padding: 0 5px; }
+  .badge.warn { color: #c8b184; border-color: #4a3f28; }
+  .badge.design { color: #9a8ab5; border-color: #3d3350; }
+  .line-body .q { margin: 0 0 4px; font-size: 13px; line-height: 1.9; color: #d6c79a; }
+  .line-body .q:last-child { margin-bottom: 0; }
+  .empty { font-size: 12px; color: #5d7a72; border: 1px dashed #24382f; padding: 12px 14px; margin: 0 0 12px; }
+
+  .gaps { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 2; color: #a9bdb6; }
+  .gaps li { margin-bottom: 8px; }
+  footer { max-width: 1240px; margin: 40px auto 0; padding-top: 14px; border-top: 1px solid #1a2a25;
+    font-size: 11px; line-height: 2; color: #5d7a72; }
+  footer code { font-size: 10.5px; }
+  @media (max-width: 860px) {
+    .dossier { grid-template-columns: 1fr; }
+    .portrait img { max-height: 360px; }
+    .line-row { grid-template-columns: 1fr; gap: 6px; }
+    .card { grid-template-columns: 76px 1fr; }
+    .card img { width: 76px; height: 96px; }
+  }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<nav class="wiki-nav" aria-label="清单导航">
+  <a class="wiki-brand" href="wiki.html">潮汐线 <span>WIKI</span></a>
+  <div class="wiki-links"><a data-wiki-link="items" href="wiki.html#items">物品清单</a><a data-wiki-link="gear" href="wiki.html#gear">装备清单</a><a data-wiki-link="containers" href="wiki.html#containers">容器清单</a><a href="商人档案.html" aria-current="page">商人档案</a></div>
+  <a class="wiki-game" href="index.html">进入游戏 ↗</a>
+</nav>
+<main class="wiki-sheet">
+<header>
+  <div class="kicker">TIDELINE · MERCHANT DOSSIER</div>
+  <h1>商人档案</h1>
+  <div class="lede">
+    四位商人的身份、背景、职责、成长与台词，集中在一页里核对文案。台词按「游戏里真的会说」和「设定稿里写好但还没接线」分开列，
+    缺口直接标出来。<br>
+    角色设定来源 <a href="design/merchants/BRIEF_V1.md">BRIEF_V1</a> 与 <a href="design/merchants/design-v1.json">design-v1.json</a>；
+    运行时台词直接读 <code>js/merchant-config.js</code>，所以游戏里改了台词，重跑 <code>node tools/gen-merchant-sheet.js</code> 这页就会跟着变。
+    设计评审入口：<a href="design/merchants/index.html">商人系统设计总览</a> · <a href="design/merchants/QUEST_LINES_V1.md">任务框架</a> · <a href="design/merchants/STOCK_UNLOCKS_V1.md">商品与限购</a> · <a href="design/merchants/STORY_LINKS_V1.md">剧情关系</a>
+  </div>
+</header>
+
+<div class="cards"><a class="card" href="#viktor" data-open="viktor">
+  <img src="assets/ui/safehouse/merchant_viktor.webp" alt="维克托·萨伦" loading="lazy">
+  <div><h2>维克托·萨伦</h2><small>VIKTOR SAREN</small>
+  <b class="tag">贸易商</b><em>哈哈！没有卖不出去的东西，只有没找对的买家！来来来，看看今天有什么好货！</em></div>
+</a><a class="card" href="#shop" data-open="shop">
+  <img src="assets/ui/safehouse/merchant_armor.webp" alt="玛拉·维恩" loading="lazy">
+  <div><h2>玛拉·维恩</h2><small>MARA VANE</small>
+  <b class="tag">护甲商人</b><em>秩序高于公平。</em></div>
+</a><a class="card" href="#gun" data-open="gun">
+  <img src="assets/ui/safehouse/merchant_guns.webp" alt="埃德加·洛克" loading="lazy">
+  <div><h2>埃德加·洛克</h2><small>EDGAR LOCKE</small>
+  <b class="tag">军火商</b><em>结果比代价更重要。</em></div>
+</a><a class="card" href="#doctor" data-open="doctor">
+  <img src="assets/ui/safehouse/merchant_doctor.webp" alt="林岑" loading="lazy">
+  <div><h2>林岑</h2><small>LIN CEN</small>
+  <b class="tag">医生</b><em>只要还有可能，就不该放弃。</em></div>
+</a></div>
+
+<nav class="tabs" aria-label="商人与分节跳转">
+  <button data-tab="overview" class="on">总览</button>
+  <button data-tab="viktor">维克托·萨伦</button><button data-tab="shop">玛拉·维恩</button><button data-tab="gun">埃德加·洛克</button><button data-tab="doctor">林岑</button>
+  <span class="spacer"><button data-tab="gaps">待补与缺口</button></span>
+</nav>
+
+<section class="view" id="m-overview" data-view="overview">
+  <section class="block">
+    <h3><i>00</i>四人对照</h3>
+    <div class="table-wrap"><table class="tbl">
+      <thead><tr><th>商人</th><th>职业</th><th>主题句</th><th>阵营倾向</th><th>最看重</th><th>主营</th><th>台词<br>运行/设定/委托</th></tr></thead>
+      <tbody><tr>
+  <td><a href="#viktor"><b>维克托·萨伦</b></a><br><small>VIKTOR SAREN</small></td>
+  <td>贸易商</td>
+  <td>未定</td>
+  <td>未定</td>
+  <td>未定</td>
+  <td>生活用品、电子产品、工业器材、文物藏品、医疗收集品</td>
+  <td>10 / 0 / 0</td>
+</tr><tr>
+  <td><a href="#shop"><b>玛拉·维恩</b></a><br><small>MARA VANE</small></td>
+  <td>护甲商人</td>
+  <td>秩序高于公平。</td>
+  <td>守序中立，偏守序邪恶（作者定位，不向玩家显示）</td>
+  <td>履约、秩序与可靠交付</td>
+  <td>防具、背包</td>
+  <td>0 / 8 / 6</td>
+</tr><tr>
+  <td><a href="#gun"><b>埃德加·洛克</b></a><br><small>EDGAR LOCKE</small></td>
+  <td>军火商</td>
+  <td>结果比代价更重要。</td>
+  <td>混沌中立，偏中立邪恶（作者定位）</td>
+  <td>结果、可靠数据和保密</td>
+  <td>枪械、弹药、近战、枪械配件</td>
+  <td>8 / 8 / 6</td>
+</tr><tr>
+  <td><a href="#doctor"><b>林岑</b></a><br><small>LIN CEN</small></td>
+  <td>医生</td>
+  <td>只要还有可能，就不该放弃。</td>
+  <td>守序善良，后期可向混沌善良偏移（作者定位）</td>
+  <td>坦诚、可靠病例与救助</td>
+  <td>恢复、止痛、损伤处理、针剂、异常处理</td>
+  <td>9 / 8 / 6</td>
+</tr></tbody></table></div>
+    <p class="foot-note">台词列：游戏内语音条数 / 设定稿已完成节点数（共 8）/ 委托数量。三人的设计稿来自 design-v1.json，贸易商只有运行时配置。</p>
+  </section>
+  <section class="block">
+    <h3><i>01</i>运行时台词覆盖</h3>
+    <div class="table-wrap"><table class="tbl">
+      <thead><tr><th>场景</th><th>维克托·萨伦</th><th>玛拉·维恩</th><th>埃德加·洛克</th><th>林岑</th><th>状态</th></tr></thead>
+      <tbody><tr><td>进入商店<br><small>每次打开商人界面随机一条，避开上一次说过的那句</small></td><td class="">3</td><td class="miss">—</td><td class="">3</td><td class="">3</td><td></td></tr><tr><td>站桩闲置<br><small>界面停留 45 秒无操作，之后每 90 秒一条</small></td><td class="">2</td><td class="miss">—</td><td class="">2</td><td class="">2</td><td></td></tr><tr><td>成交之后<br><small>扣款成功的瞬间播报</small></td><td class="">2</td><td class="miss">—</td><td class="">2</td><td class="">2</td><td></td></tr><tr><td>改枪结算<br><small>改枪结算页的供应商引言；不进随机语音</small></td><td class="miss">—</td><td class="miss">—</td><td class="">1</td><td class="miss">—</td><td></td></tr><tr><td>治疗开单前<br><small>诊台结账页上的引言（静态展示）</small></td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td><td class="">1</td><td></td></tr><tr><td>治疗付款后<br><small>治疗扣款成功后追加到血量卡片下方</small></td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td><td class="">1</td><td></td></tr><tr><td>收购 · 交出货<br><small>贸易商对高价回收的反应</small></td><td class="">1</td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td><td><span class="badge warn">未接线</span></td></tr><tr><td>收购 · 行情上涨<br><small>贸易商对涨价物品的反应</small></td><td class="">1</td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td><td><span class="badge warn">未接线</span></td></tr><tr><td>收购 · 行情下跌<br><small>贸易商对跌价物品的反应</small></td><td class="">1</td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td><td><span class="badge warn">未接线</span></td></tr></tbody></table></div>
+    <p class="foot-note">数字是该场景的台词条数，“—”表示这个场景没有写。运行时的规则：同一场景不会连续说同一条。</p>
+  </section>
+  <section class="block">
+    <h3><i>02</i>设定稿台词覆盖</h3>
+    <div class="table-wrap"><table class="tbl">
+      <thead><tr><th>节点</th><th>维克托·萨伦</th><th>玛拉·维恩</th><th>埃德加·洛克</th><th>林岑</th></tr></thead>
+      <tbody><tr><td>初识</td><td class="miss">—</td><td class="">✓</td><td class="">✓</td><td class="">✓</td></tr><tr><td>普通购买</td><td class="miss">—</td><td class="">✓</td><td class="">✓</td><td class="">✓</td></tr><tr><td>低信任</td><td class="miss">—</td><td class="">✓</td><td class="">✓</td><td class="">✓</td></tr><tr><td>中信任</td><td class="miss">—</td><td class="">✓</td><td class="">✓</td><td class="">✓</td></tr><tr><td>高信任</td><td class="miss">—</td><td class="">✓</td><td class="">✓</td><td class="">✓</td></tr><tr><td>接取委托</td><td class="miss">—</td><td class="">✓</td><td class="">✓</td><td class="">✓</td></tr><tr><td>完成委托</td><td class="miss">—</td><td class="">✓</td><td class="">✓</td><td class="">✓</td></tr><tr><td>关键剧情</td><td class="miss">—</td><td class="">✓</td><td class="">✓</td><td class="">✓</td></tr></tbody></table></div>
+  </section>
+  <section class="block">
+    <h3><i>03</i>共享暗线 · 夜间转运</h3>
+    <p class="para">三人的过去指向同一次夜间转运，但证据只建立弱关联：没有人完全说谎，也没有人说全。共享剧情不要求三人同时满级，也不当毕业门槛。</p>
+    <div class="table-wrap"><table class="tbl">
+      <thead><tr><th>阶段</th><th>证据或节点</th><th>玩家可知</th><th>保留的疑问</th></tr></thead>
+      <tbody><tr><td>初识</td><td>三条职业委托</td><td>各自能供货且讲究交付</td><td>为何如此重视部分旧记录</td></tr><tr><td>熟客</td><td>仓单／样枪日志／隔离记录</td><td>记录存在修改或信息缺口</td><td>谁作出修改、动机是什么</td></tr><tr><td>合作者</td><td>运输名单、试射说明、维持读数</td><td>三人各自承担过职责，也有省略</td><td>省略是否足以改变对其行为的评价</td></tr><tr><td>关键分支</td><td>完整原件与独立核对路径</td><td>玩家可选择合作或提出异议</td><td>真相的不同部分如何相互印证</td></tr><tr><td>核心关系</td><td>三份高信任补充材料</td><td>各人的隐瞒与价值判断更明确</td><td>不强行给出唯一统一叙述</td></tr></tbody></table></div>
+  </section>
+  <section class="block">
+    <h3><i>04</i>待补与缺口</h3>
+    <ul class="gaps">
+      <li><b>玛拉·维恩没有运行时语音</b>：<code>js/merchant-config.js</code> 的 <code>MERCHANT_DIALOGUE</code> 只有 <code>gun</code> / <code>doctor</code> / <code>viktor</code> 三组，缺 <code>shop</code>。
+  她又正好是商人界面的默认页，所以进店、站桩、成交全程静默。补齐成本很低：照另外三人的结构写 greeting / idle / purchase 三组即可。</li>
+      
+  <li><b>维克托·萨伦</b>（贸易商）还没有设定稿：没有年龄、阵营、主题句、背景、性格、信任等级、委托线与八节点台词。
+  目前只有藏身处里的姓名/职业/招牌台词、一张立绘（<code>assets/ui/safehouse/merchant_viktor.webp</code>）、固定货架（18 件，125% 溢价）和 10 条运行时语音。
+  收购反应台词 <code>reserved.*</code> 已写但代码里没有调用点。</li>
+      <li><b>三人共有的接线问题</b>：设定稿里的八节点台词（初识／低中高信任／接取／完成／关键剧情）只有 <code>design-v1.json</code> 里有，
+      游戏内商店只跑 <code>MERCHANT_DIALOGUE</code> 的随机池，两套词还没合并。需要定：哪套作为正式口径，另一套是否保留为设计注释。</li>
+      <li><b>委托台词</b>：六项委托只有「人物信息」一句叙述，接取、进行中、交付、失败、两条分支的结算台词都还没写。</li>
+      <li><b>任务系统未实装</b>：<code>tasks</code> 在藏身处标记为 planned，六项委托的地点多为「拟新增／待设计」，不能当作现有地图已有设施。</li>
+      <li><b>语音池现状</b>：<li><code>procurement</code> 只在改枪结算页当引言用，<code>MerchantSpeech.say()</code> 明确跳过这个键，所以不会在随机语音里出现。</li><li><code>beforeTreatment</code> 是诊台结账页上的静态引言，不经过语音池。</li><li>贸易商的 <code>reserved.sell / priceUp / priceDown</code> 三条收购反应没有被任何代码调用。</li></li>
+    </ul>
+  </section>
+</section>
+
+<section class="view" id="m-viktor" data-view="viktor" hidden>
+  <div class="dossier">
+    <figure class="portrait">
+      <img src="assets/ui/safehouse/merchant_viktor.webp" alt="维克托·萨伦" loading="lazy">
+      <figcaption>VIKTOR SAREN</figcaption>
+    </figure>
+    <div class="dossier-main">
+      <div class="name-row"><h2>维克托·萨伦</h2><span class="tagline">贸易商</span></div>
+      <blockquote class="theme">主题句未定</blockquote>
+      <p class="shop-quote">柜台口头禅：「哈哈！没有卖不出去的东西，只有没找对的买家！来来来，看看今天有什么好货！」</p>
+      <dl class="meta"><div><dt>姓名</dt><dd>维克托·萨伦</dd></div><div><dt>英文名</dt><dd>VIKTOR SAREN</dd></div><div><dt>年龄</dt><dd>未定</dd></div><div><dt>性别</dt><dd>未定</dd></div><div><dt>职业标签</dt><dd>贸易商</dd></div><div><dt>阵营倾向</dt><dd>未定</dd></div></dl>
+      <p class="role-line"><b>贸易商 · 零售、仓储与物资流通</b> · 大型连锁超商集团经营者，拥有广泛的采购与供货渠道。比起坐在办公室里处理文件，他更喜欢亲自与顾客打交道。</p>
+      <nav class="anchor-nav" aria-label="章节跳转">
+        <a href="#m-viktor" data-jump="identity">身份与职责</a>
+        <a href="#m-viktor" data-jump="past">背景</a>
+        <a href="#m-viktor" data-jump="persona">性格与矛盾</a>
+        <a href="#m-viktor" data-jump="trust">信任成长</a>
+        <a href="#m-viktor" data-jump="quests">委托线</a>
+        <a href="#m-viktor" data-jump="lines">台词全集</a>
+      </nav>
+    </div>
+  </div>
+
+  <section class="block" id="m-viktor-identity">
+    <h3><i>01</i>身份与职责</h3>
+    <p class="para">公开身份未定。</p>
+    <div class="cols">
+      <div class="panel">
+        <h4>售卖与经营</h4>
+        <div class="chips"><span class="chip">生活用品</span><span class="chip">电子产品</span><span class="chip">工业器材</span><span class="chip">文物藏品</span><span class="chip">医疗收集品</span></div>
+        <p class="mini">维克托：18件白至紫收集品固定供货，购买后进入仓库。</p>
+      </div>
+      <div class="panel">
+        <h4>收购偏好</h4>
+        <p class="mini">收购全部九类收集品；偏好生活用品、文物藏品及历史影像</p>
+        <p class="mini dim">可收类别：收集品（九类）</p>
+      </div>
+      <div class="panel">
+        <h4>后续扩展</h4>
+        <p class="mini">信任、供货条件与更多贸易渠道预留；当前为固定货架。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="m-viktor-past">
+    <h3><i>02</i>背景与过去</h3>
+    <p class="para">背景未定。这位商人的来历、灾前身份、与第一次潮汐的关系都还没有写。</p>
+    <p class="empty">人物弧光未设计。</p>
+  </section>
+
+  <section class="block" id="m-viktor-persona">
+    <h3><i>03</i>性格与矛盾</h3>
+    <p class="empty">性格条目未定。</p>
+    <div class="cols three">
+      <div class="panel"><h4>隐瞒</h4><p class="mini">未定</p></div>
+      <div class="panel"><h4>原则</h4><p class="mini">未定</p></div>
+      <div class="panel"><h4>危险</h4><p class="mini">未定</p></div>
+    </div>
+    <div class="cols">
+      <div class="panel"><h4>最看重</h4><p class="mini">未定</p></div>
+      <div class="panel"><h4>高信任意味着</h4><p class="mini">未定</p></div>
+    </div>
+    
+  </section>
+
+  <section class="block" id="m-viktor-trust">
+    <h3><i>04</i>信任成长</h3>
+    <p class="empty">信任等级未设计：当前没有信誉、交易额和任务门槛，货架固定开放。</p>
+    <h4 class="sub">商品分级</h4>
+    <p>固定货架：18 件白至紫收集品，售价为参考价值的 <b>125%</b>，买下直接进仓库。没有等级、限购或信任门槛。</p>
+      <div class="chips"><span class="chip">生活用品 · 6</span><span class="chip">电子产品 · 4</span><span class="chip">工业器材 · 4</span><span class="chip">文物藏品 · 2</span><span class="chip">医疗收集品 · 2</span></div>
+      <details class="fold"><summary>展开 18 件在售清单</summary><div class="shelf"><span class="shelf-item"><img src="assets/items/life01.png" alt="" loading="lazy"><b>搪瓷缸</b><small>¥1,800</small></span><span class="shelf-item"><img src="assets/items/life06.png" alt="" loading="lazy"><b>铝饭盒</b><small>¥1,400</small></span><span class="shelf-item"><img src="assets/items/life04.png" alt="" loading="lazy"><b>铁皮饼干盒</b><small>¥5,400</small></span><span class="shelf-item"><img src="assets/items/life05.png" alt="" loading="lazy"><b>未拆封的毛巾</b><small>¥4,000</small></span><span class="shelf-item"><img src="assets/items/life11.png" alt="" loading="lazy"><b>双铃闹钟</b><small>¥12,000</small></span><span class="shelf-item"><img src="assets/items/life20.png" alt="" loading="lazy"><b>纪念瓷器套装</b><small>¥45,000</small></span><span class="shelf-item"><img src="assets/items/elec01.png" alt="" loading="lazy"><b>收音机</b><small>¥7,500</small></span><span class="shelf-item"><img src="assets/items/elec03.png" alt="" loading="lazy"><b>计算器</b><small>¥5,000</small></span><span class="shelf-item"><img src="assets/items/elec07.png" alt="" loading="lazy"><b>电子宠物机</b><small>¥18,000</small></span><span class="shelf-item"><img src="assets/items/elec02.png" alt="" loading="lazy"><b>随身听</b><small>¥30,000</small></span><span class="shelf-item"><img src="assets/items/ind01.png" alt="" loading="lazy"><b>铜管</b><small>¥3,000</small></span><span class="shelf-item"><img src="assets/items/ind02.png" alt="" loading="lazy"><b>轴承</b><small>¥5,600</small></span><span class="shelf-item"><img src="assets/items/ind07.png" alt="" loading="lazy"><b>绝缘胶带</b><small>¥4,200</small></span><span class="shelf-item"><img src="assets/items/ind10.png" alt="" loading="lazy"><b>精密游标卡尺</b><small>¥16,000</small></span><span class="shelf-item"><img src="assets/items/antiq02.png" alt="" loading="lazy"><b>黄铜怀表</b><small>¥17,000</small></span><span class="shelf-item"><img src="assets/items/art01.png" alt="" loading="lazy"><b>黑胶唱片</b><small>¥16,000</small></span><span class="shelf-item"><img src="assets/items/med02.png" alt="" loading="lazy"><b>注射器</b><small>¥5,800</small></span><span class="shelf-item"><img src="assets/items/med15.png" alt="" loading="lazy"><b>便携式心电图机</b><small>¥32,000</small></span></div></details>
+  </section>
+
+  <section class="block" id="m-viktor-quests">
+    <h3><i>05</i>委托线 <em>0 项 · 设计稿，未实装</em></h3>
+    <p class="empty">没有委托线。贸易商只做零售与收购，尚未设计任务、信任或剧情节点。</p>
+  </section>
+
+  <section class="block" id="m-viktor-lines">
+    <h3><i>06</i>台词全集 <em>运行 10 条 · 设定稿 0 节点</em></h3>
+    <h4 class="sub">运行时语音（游戏里真的会说）</h4>
+    <div class="lines">
+    <section class="line-row">
+      <div class="line-head"><b>进入商店</b><small>每次打开商人界面随机一条，避开上一次说过的那句</small><i class="badge">3 条</i></div>
+      <div class="line-body"><p class="q">“哟！瞧瞧谁来了！快进来，今天可有不少好东西！”</p><p class="q">“欢迎欢迎！想买什么尽管说，没有的我也能替你打听打听！”</p><p class="q">“哎呀，来得正好！我刚刚还在想，今天会不会有贵客登门呢！”</p></div>
+    </section>
+    <section class="line-row">
+      <div class="line-head"><b>站桩闲置</b><small>界面停留 45 秒无操作，之后每 90 秒一条</small><i class="badge">2 条</i></div>
+      <div class="line-body"><p class="q">“慢慢挑，不着急！我年轻时也这样，买个东西能琢磨半天！”</p><p class="q">“嘿嘿，看中哪件了？别光盯着呀！价格嘛，总有得商量的余地！”</p></div>
+    </section>
+    <section class="line-row">
+      <div class="line-head"><b>成交之后</b><small>扣款成功的瞬间播报</small><i class="badge">2 条</i></div>
+      <div class="line-body"><p class="q">“好！成交！哈哈，跟爽快人做生意就是舒坦！”</p><p class="q">“多谢惠顾！下次来可别忘了找我，保准还有新鲜玩意儿！”</p></div>
+    </section>
+    <section class="line-row unwired">
+      <div class="line-head"><b>收购 · 交出货</b><small>贸易商对高价回收的反应</small><i class="badge warn">已写未接线</i><i class="badge">1 条</i></div>
+      <div class="line-body"><p class="q">“嚯！好东西啊！你从哪儿翻出来的？算了算了，生意人的规矩，不该问的不问！”</p></div>
+    </section>
+    <section class="line-row unwired">
+      <div class="line-head"><b>收购 · 行情上涨</b><small>贸易商对涨价物品的反应</small><i class="badge warn">已写未接线</i><i class="badge">1 条</i></div>
+      <div class="line-body"><p class="q">“哎哟，这东西现在可抢手！你要是早些时候囤了几件，那我可得夸你有眼光！”</p></div>
+    </section>
+    <section class="line-row unwired">
+      <div class="line-head"><b>收购 · 行情下跌</b><small>贸易商对跌价物品的反应</small><i class="badge warn">已写未接线</i><i class="badge">1 条</i></div>
+      <div class="line-body"><p class="q">“生意嘛，有涨就有跌！别急，货在手里，总有机会的！”</p></div>
+    </section></div>
+    <h4 class="sub">设定稿台词（还没接进游戏）</h4>
+    <p class="empty">这位商人还没有设定稿台词。当前只在 <code>MERCHANT_DIALOGUE</code> 里有 10 条运行时语音，八节点（初识／购买／低中高信任／接取／完成／关键剧情）全部空缺。</p>
+    
+  </section>
+</section>
+<section class="view" id="m-shop" data-view="shop" hidden>
+  <div class="dossier">
+    <figure class="portrait">
+      <img src="assets/ui/safehouse/merchant_armor.webp" alt="玛拉·维恩" loading="lazy">
+      <figcaption>MARA VANE</figcaption>
+    </figure>
+    <div class="dossier-main">
+      <div class="name-row"><h2>玛拉·维恩</h2><span class="tagline">护甲商人</span></div>
+      <blockquote class="theme">秩序高于公平。</blockquote>
+      <p class="shop-quote">柜台口头禅：「规矩说清楚，货物交明白。」</p>
+      <dl class="meta"><div><dt>姓名</dt><dd>玛拉·维恩</dd></div><div><dt>英文名</dt><dd>MARA VANE</dd></div><div><dt>年龄</dt><dd>48 岁</dd></div><div><dt>性别</dt><dd>女</dd></div><div><dt>职业标签</dt><dd>护甲商人</dd></div><div><dt>阵营倾向</dt><dd>守序中立，偏守序邪恶（作者定位，不向玩家显示）</dd></div></dl>
+      <p class="role-line"><b>防护装备与物资供应</b> · 防护装备、头盔与背包。</p>
+      <nav class="anchor-nav" aria-label="章节跳转">
+        <a href="#m-shop" data-jump="identity">身份与职责</a>
+        <a href="#m-shop" data-jump="past">背景</a>
+        <a href="#m-shop" data-jump="persona">性格与矛盾</a>
+        <a href="#m-shop" data-jump="trust">信任成长</a>
+        <a href="#m-shop" data-jump="quests">委托线</a>
+        <a href="#m-shop" data-jump="lines">台词全集</a>
+      </nav>
+    </div>
+  </div>
+
+  <section class="block" id="m-shop-identity">
+    <h3><i>01</i>身份与职责</h3>
+    <p class="para">原环礁湾港务体系防护物资采购负责人，现经营防护装备生意。</p>
+    <div class="cols">
+      <div class="panel">
+        <h4>售卖与经营</h4>
+        <div class="chips"><span class="chip">防具</span><span class="chip">背包</span></div>
+        <p class="mini">玛拉：目前可购买 I—III 级防护与前三档背包。</p>
+      </div>
+      <div class="panel">
+        <h4>收购偏好</h4>
+        <p class="mini">防具与背包；偏好工业器材、港务资料和防护检测器材</p>
+        <p class="mini dim">可收类别：防具、背包、收集品（九类）</p>
+      </div>
+      <div class="panel">
+        <h4>后续扩展</h4>
+        <p class="mini">高级防护与稀缺背包的货源、调配与预留。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="m-shop-past">
+    <h3><i>02</i>背景与过去</h3>
+    <p class="para">玛拉曾管理港区的防护物资采购。第一次潮汐恶化时，她参与装备调配、运输资源分配与撤离名额审核。她保留了部分账册和供货关系，灾后重新经营防护装备生意。她守合同，也相信稀缺资源应该优先分给能够维持秩序的人；其中一些决定让她获利，另一些决定至今仍有人追问。</p>
+    <ol class="arc"><li><b>前期</b>可靠、专业，像个精明的供应商</li><li><b>中期</b>逐渐显露她对资源分配的冷酷逻辑</li><li><b>后期</b>理解她并非嗜血，只是把&quot;秩序&quot;放得比&quot;仁慈&quot;高</li></ol>
+  </section>
+
+  <section class="block" id="m-shop-persona">
+    <h3><i>03</i>性格与矛盾</h3>
+    <ul class="traits"><li>礼貌稳重，善于判断履约能力</li><li>利用信息差，但不以假货牟利</li><li>把资源分配视为职责，很少接受纯粹感情上的请求</li></ul>
+    <div class="cols three">
+      <div class="panel"><h4>隐瞒</h4><p class="mini">保存的撤离记录能证明她并非随意调配，也能显示她曾优先保护有权势或有交易价值的人。</p></div>
+      <div class="panel"><h4>原则</h4><p class="mini">已经答应的交付必须落实，商品状态必须说清。</p></div>
+      <div class="panel"><h4>危险</h4><p class="mini">她可能把合同和名额置于个体处境之上。</p></div>
+    </div>
+    <div class="cols">
+      <div class="panel"><h4>最看重</h4><p class="mini">履约、秩序与可靠交付</p></div>
+      <div class="panel"><h4>高信任意味着</h4><p class="mini">愿意动用供货关系、为玩家承担调货和周转成本，把稀缺名额留给玩家。</p></div>
+    </div>
+    <details class="fold"><summary>外形与立绘参考</summary><p class="mini">48岁，宽肩、结实，短而微卷的深色头发，面部线条清晰，眼神冷静审视。赭黄工作衫、耐磨帆布马甲，旧软尺、钥匙和标签夹。一手扶护甲样品，另一手压住账册。暖棕、橄榄绿，衣着整洁而有磨损。</p><p class="mini dim">立绘：<code>assets/ui/safehouse/merchant_armor.webp</code> · 要求见 <a href="design/merchants/BRIEF_V1.md">BRIEF_V1.md</a> 第七、八节</p></details>
+  </section>
+
+  <section class="block" id="m-shop-trust">
+    <h3><i>04</i>信任成长</h3>
+    <div class="table-wrap"><table class="tbl">
+    <thead><tr><th>等级</th><th>信誉</th><th>累计交易额</th><th>关键任务</th><th>价格系数</th></tr></thead>
+    <tbody><tr>
+      <td><b>Lv.1 初识</b></td>
+      <td>0</td>
+      <td>¥0</td>
+      <td><span class="dim">无</span></td>
+      <td>1.00</td>
+    </tr><tr>
+      <td><b>Lv.2 熟客</b></td>
+      <td>25</td>
+      <td>¥300,000</td>
+      <td>完好的扣具</td>
+      <td>1.00</td>
+    </tr><tr>
+      <td><b>Lv.3 合作者</b></td>
+      <td>60</td>
+      <td>¥1,200,000</td>
+      <td>封存仓单</td>
+      <td>0.98</td>
+    </tr><tr>
+      <td><b>Lv.4 核心关系</b></td>
+      <td>85</td>
+      <td>¥3,000,000</td>
+      <td>最后一班运输车</td>
+      <td>0.96</td>
+    </tr></tbody></table></div>
+    <p class="foot-note">晋级三项同时满足：信誉 + 累计有效交易额 + 关键任务标记。数值为设计建议，未实装。</p>
+    <h4 class="sub">商品分级</h4>
+    <div class="table-wrap"><table class="tbl">
+    <thead><tr><th>等级</th><th>货架内容</th></tr></thead><tbody>
+    <tr><td><b>Lv.1</b></td><td><span class="goods">头盔 I</span><span class="goods">护甲 I</span><span class="goods">头盔 II</span><span class="goods">护甲 II</span><span class="goods">旧帆布挎包</span></td></tr><tr><td><b>Lv.2</b></td><td><span class="goods">头盔 III</span><span class="goods">护甲 III</span><span class="goods">民用旅行背包</span><span class="goods">加固登山背包</span></td></tr><tr><td><b>Lv.3</b></td><td><span class="goods">头盔 IV</span><span class="goods">护甲 IV</span><span class="goods">头盔 V</span><span class="goods">护甲 V</span><span class="goods">战术突击背包</span></td></tr><tr><td><b>Lv.4</b></td><td><span class="goods">头盔 VI</span><span class="goods">护甲 VI</span><span class="goods">远征模块背包</span></td></tr>
+    </tbody></table></div>
+    <p class="foot-note">仅未来分级映射，当前货架不变。标「占位」的条目没有物品 ID，需等对应系统实装。</p>
+  </section>
+
+  <section class="block" id="m-shop-quests">
+    <h3><i>05</i>委托线 <em>6 项 · 设计稿，未实装</em></h3>
+    <div class="quests">
+    <article class="quest">
+      <header><span class="phase">基础回收</span><i>最低 Lv.1</i></header>
+      <h4>遗失货单 <code>mara_01</code></h4>
+      <p>在临海路仓库回收一份护具验货单并撤离交付。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>仓库（拟新增任务交互点）</dd></div>
+        <div><dt>前置</dt><dd>无</dd></div>
+        <div><dt>依赖能力</dt><dd><code>quest_interaction</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +10 · ¥20,000</dd></div>
+      </dl>
+      <p class="story">人物信息：她先确认玩家能否按清单办事。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">基础回收</span><i>最低 Lv.1</i></header>
+      <h4>完好的扣具 <code>mara_02</code></h4>
+      <p>回收指定封装的背带扣具，保持封装可辨并交付。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>工具铺／仓库（拟）</dd></div>
+        <div><dt>前置</dt><dd>mara_01</dd></div>
+        <div><dt>依赖能力</dt><dd><code>quest_items</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +15 · ¥35,000</dd></div>
+      </dl>
+      <p class="story">人物信息：用可核对的包装状态表达保护物资，不新增耐久系统。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">中期调查</span><i>最低 Lv.2</i></header>
+      <h4>封存仓单 <code>mara_03</code></h4>
+      <p>比对旧仓单与银行保存的调拨副本，交回不一致之处。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>仓库、银行办公室（拟）</dd></div>
+        <div><dt>前置</dt><dd>mara_02</dd></div>
+        <div><dt>依赖能力</dt><dd><code>document_comparison</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +35 · ¥60,000</dd></div>
+      </dl>
+      <p class="story">人物信息：玩家发现名单修改可能影响当年的撤离顺序。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">中期风险</span><i>最低 Lv.3</i></header>
+      <h4>封条之内 <code>mara_04</code></h4>
+      <p>取回一箱指定防护样品和外部编号记录，不要求打开箱体。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>后续受损仓储区（待设计）</dd></div>
+        <div><dt>前置</dt><dd>mara_03</dd></div>
+        <div><dt>依赖能力</dt><dd><code>quest_items</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +10 · ¥90,000</dd></div>
+      </dl>
+      <p class="story">人物信息：她对封条与交接链的重视逐渐超过对物资本身的重视。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">关键剧情</span><i>最低 Lv.3</i></header>
+      <h4>最后一班运输车 <code>mara_05</code></h4>
+      <p>调查曾被取消通行资格的运输安排，取得名额修改记录。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>运输记录调查点（待设计）</dd></div>
+        <div><dt>前置</dt><dd>mara_04</dd></div>
+        <div><dt>依赖能力</dt><dd><code>branch_dialogue</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +15 · ¥140,000</dd></div>
+      </dl>
+      <p class="story">人物信息：她的职责、收益和对个体的冷酷同时进入视野。</p>
+      <div class="branch">
+        <p><b>合作路径</b>将完整原件交给她内部存档，接受她对保密的要求。<br><small>防护装备额外1%采购折扣；获取内部调度用语。</small></p>
+        <p><b>替代路径</b>拒绝封存争议记录，保留经核对副本；另做一次独立验货，证明仍能可靠合作。<br><small>一份不同视角的核对材料与一次防护样品奖励；同样获得最高常规货架权限。</small></p>
+        <p class="branch-note">两路核心信誉与解锁完全相同，都不会永久锁货。</p>
+      </div>
+    </article>
+    <article class="quest">
+      <header><span class="phase">高信任揭示</span><i>最低 Lv.4</i></header>
+      <h4>账本之外 <code>mara_06</code></h4>
+      <p>阅读她保留的原始调度页，区分制度要求与她个人作出的选择。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>玛拉柜台对话</dd></div>
+        <div><dt>前置</dt><dd>mara_05</dd></div>
+        <div><dt>依赖能力</dt><dd><code>story_documents</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +5 · ¥200,000</dd></div>
+      </dl>
+      <p class="story">人物信息：不替她开脱，也不以单个真相推翻全部记录。</p>
+      
+    </article></div>
+  </section>
+
+  <section class="block" id="m-shop-lines">
+    <h3><i>06</i>台词全集 <em>运行 0 条 · 设定稿 8 节点</em></h3>
+    <h4 class="sub">运行时语音（游戏里真的会说）</h4>
+    <p class="empty"><code>MERCHANT_DIALOGUE</code> 里没有 <code>shop</code> 这一组键——她是商人界面默认打开的那位，进店却一句台词都不会说。其余三人都有独立语音池。</p>
+    <h4 class="sub">设定稿台词（还没接进游戏）</h4>
+    <div class="lines"><section class="line-row"><div class="line-head"><b>初识</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“柜台上的都是公开货。价钱写着，规矩也写着。”</p></div></section><section class="line-row"><div class="line-head"><b>普通购买</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“数量对过了，交付也记上。”</p></div></section><section class="line-row"><div class="line-head"><b>低信任</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“先把这一笔做完，再谈下一批。”</p></div></section><section class="line-row"><div class="line-head"><b>中信任</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“你交回来的东西和清单相符。以后可以提前问货。”</p></div></section><section class="line-row"><div class="line-head"><b>高信任</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“这批有你的份。留货的条件，我们按上次说的办。”</p></div></section><section class="line-row"><div class="line-head"><b>接取委托</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“清单上每一项都写了。交不齐，就先告诉我。”</p></div></section><section class="line-row"><div class="line-head"><b>完成委托</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“东西收到了。你守约，我也会记着。”</p></div></section><section class="line-row"><div class="line-head"><b>关键剧情</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“当时谁都想上车。可车位不是祈祷出来的。”</p></div></section></div>
+    <p class="foot-note">委托的「人物信息」是叙述、不是台词，写在上面的任务卡里；任务完成/失败台词尚未撰写。</p>
+  </section>
+</section>
+<section class="view" id="m-gun" data-view="gun" hidden>
+  <div class="dossier">
+    <figure class="portrait">
+      <img src="assets/ui/safehouse/merchant_guns.webp" alt="埃德加·洛克" loading="lazy">
+      <figcaption>EDGAR LOCKE</figcaption>
+    </figure>
+    <div class="dossier-main">
+      <div class="name-row"><h2>埃德加·洛克</h2><span class="tagline">军火商</span></div>
+      <blockquote class="theme">结果比代价更重要。</blockquote>
+      <p class="shop-quote">柜台口头禅：「枪不会背叛你。至于卖枪的人……那得看你出多少钱。」</p>
+      <dl class="meta"><div><dt>姓名</dt><dd>埃德加·洛克</dd></div><div><dt>英文名</dt><dd>EDGAR LOCKE</dd></div><div><dt>年龄</dt><dd>55 岁</dd></div><div><dt>性别</dt><dd>男</dd></div><div><dt>职业标签</dt><dd>军火商</dd></div><div><dt>阵营倾向</dt><dd>混沌中立，偏中立邪恶（作者定位）</dd></div></dl>
+      <p class="role-line"><b>军械供应与技术维护</b> · 枪械、弹药与近战装备。</p>
+      <nav class="anchor-nav" aria-label="章节跳转">
+        <a href="#m-gun" data-jump="identity">身份与职责</a>
+        <a href="#m-gun" data-jump="past">背景</a>
+        <a href="#m-gun" data-jump="persona">性格与矛盾</a>
+        <a href="#m-gun" data-jump="trust">信任成长</a>
+        <a href="#m-gun" data-jump="quests">委托线</a>
+        <a href="#m-gun" data-jump="lines">台词全集</a>
+      </nav>
+    </div>
+  </div>
+
+  <section class="block" id="m-gun-identity">
+    <h3><i>01</i>身份与职责</h3>
+    <p class="para">退役军械技术员，兼营灰色渠道武器供应和维护。</p>
+    <div class="cols">
+      <div class="panel">
+        <h4>售卖与经营</h4>
+        <div class="chips"><span class="chip">枪械</span><span class="chip">弹药</span><span class="chip">近战</span><span class="chip">枪械配件</span></div>
+        <p class="mini">埃德加：全新枪械与一级、二级弹药可交易。</p>
+      </div>
+      <div class="panel">
+        <h4>收购偏好</h4>
+        <p class="mini">枪械、弹药与配件；偏好电子产品、军事物资及通信资料</p>
+        <p class="mini dim">可收类别：枪械、近战、弹药、枪械配件、收集品（九类）</p>
+      </div>
+      <div class="panel">
+        <h4>后续扩展</h4>
+        <p class="mini">高阶弹药、专业军械与配件渠道。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="m-gun-past">
+    <h3><i>02</i>背景与过去</h3>
+    <p class="para">埃德加曾向安保承包商、地下武装和特殊护送队提供军械与维护支持。潮汐之后，他开始收集异常环境中的故障、穿透和射击反馈。他提供可靠的武器，也会提出危险的测试委托。比起亲自验证，他更愿意付钱给能把记录带回来的探索者。</p>
+    <ol class="arc"><li><b>前期</b>专业、有趣，看起来很可靠</li><li><b>中期</b>发现他在拿别人测试风险的边界</li><li><b>后期</b>理解他并非杀戮狂，只是把生命的成本过度工具化</li></ol>
+  </section>
+
+  <section class="block" id="m-gun-persona">
+    <h3><i>03</i>性格与矛盾</h3>
+    <ul class="traits"><li>关注结果与数据，愿意解释技术</li><li>对来源谨慎，对品质有职业洁癖</li><li>珍惜自己的性命，容易把别人的风险当作测试成本</li></ul>
+    <div class="cols three">
+      <div class="panel"><h4>隐瞒</h4><p class="mini">他知道部分试验委托的风险高于委托说明所透露的程度，保留着更完整的失败记录。</p></div>
+      <div class="panel"><h4>原则</h4><p class="mini">不把自己知道有品质问题的武器当好货出售。</p></div>
+      <div class="panel"><h4>危险</h4><p class="mini">会把测试对象和执行者的生命过度工具化。</p></div>
+    </div>
+    <div class="cols">
+      <div class="panel"><h4>最看重</h4><p class="mini">结果、可靠数据和保密</p></div>
+      <div class="panel"><h4>高信任意味着</h4><p class="mini">愿意提供高级货源与完整一些的测试记录，让玩家参与重要的采购和反馈。</p></div>
+    </div>
+    <details class="fold"><summary>外形与立绘参考</summary><p class="mini">55岁，干瘦略高，灰白寸发、矩形眼镜、敏锐而带疲态的目光。钢蓝工装、灰黑马甲或旧工业夹克，工具摆放整齐。手持卸下的弹匣与小型工具，台上有维护布、零件和出入库簿。精明克制，偶有干涩的幽默。</p><p class="mini dim">立绘：<code>assets/ui/safehouse/merchant_guns.webp</code> · 要求见 <a href="design/merchants/BRIEF_V1.md">BRIEF_V1.md</a> 第七、八节</p></details>
+  </section>
+
+  <section class="block" id="m-gun-trust">
+    <h3><i>04</i>信任成长</h3>
+    <div class="table-wrap"><table class="tbl">
+    <thead><tr><th>等级</th><th>信誉</th><th>累计交易额</th><th>关键任务</th><th>价格系数</th></tr></thead>
+    <tbody><tr>
+      <td><b>Lv.1 初识</b></td>
+      <td>0</td>
+      <td>¥0</td>
+      <td><span class="dim">无</span></td>
+      <td>1.00</td>
+    </tr><tr>
+      <td><b>Lv.2 熟客</b></td>
+      <td>25</td>
+      <td>¥400,000</td>
+      <td>回收弹壳</td>
+      <td>1.00</td>
+    </tr><tr>
+      <td><b>Lv.3 合作者</b></td>
+      <td>60</td>
+      <td>¥1,500,000</td>
+      <td>第十七次试射</td>
+      <td>0.98</td>
+    </tr><tr>
+      <td><b>Lv.4 核心关系</b></td>
+      <td>85</td>
+      <td>¥4,000,000</td>
+      <td>试射条款</td>
+      <td>0.96</td>
+    </tr></tbody></table></div>
+    <p class="foot-note">晋级三项同时满足：信誉 + 累计有效交易额 + 关键任务标记。数值为设计建议，未实装。</p>
+    <h4 class="sub">商品分级</h4>
+    <div class="table-wrap"><table class="tbl">
+    <thead><tr><th>等级</th><th>货架内容</th></tr></thead><tbody>
+    <tr><td><b>Lv.1</b></td><td><span class="goods">短管霰弹枪</span><span class="goods">手枪</span><span class="goods">5.56mm普通弹</span><span class="goods">5.56mm改良弹</span><span class="goods">9mm普通弹</span><span class="goods">9mm强化弹</span><span class="goods">普通鹿弹</span><span class="goods">强化鹿弹</span><span class="goods">旧式折叠刀</span></td></tr><tr><td><b>Lv.2</b></td><td><span class="goods">制式步枪</span><span class="goods">冲锋枪</span><span class="goods">5.56mm钢芯弹</span><span class="goods">9mm钢芯弹</span><span class="goods">硬质鹿弹</span><span class="goods">M-9 制式战斗刀</span></td></tr><tr><td><b>Lv.3</b></td><td><span class="goods">5.56mm硬芯穿甲弹</span><span class="goods">9mm穿甲弹</span><span class="goods">穿甲霰弹</span><span class="goods placeholder">重型丛林砍刀<i>占位</i></span></td></tr><tr><td><b>Lv.4</b></td><td><span class="goods">5.56mm特种穿甲弹</span><span class="goods">9mm特种穿甲弹</span><span class="goods">特种穿甲霰弹</span></td></tr>
+    </tbody></table></div>
+    <p class="foot-note">仅未来分级映射，当前货架不变。标「占位」的条目没有物品 ID，需等对应系统实装。</p>
+  </section>
+
+  <section class="block" id="m-gun-quests">
+    <h3><i>05</i>委托线 <em>6 项 · 设计稿，未实装</em></h3>
+    <div class="quests">
+    <article class="quest">
+      <header><span class="phase">基础回收</span><i>最低 Lv.1</i></header>
+      <h4>失踪枪箱 <code>edgar_01</code></h4>
+      <p>找回指定枪箱的封存样件及交接凭据。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>临海路仓库（拟）</dd></div>
+        <div><dt>前置</dt><dd>无</dd></div>
+        <div><dt>依赖能力</dt><dd><code>quest_items</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +10 · ¥20,000</dd></div>
+      </dl>
+      <p class="story">人物信息：玩家接触他对来源和品质的要求。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">基础回收</span><i>最低 Lv.1</i></header>
+      <h4>回收弹壳 <code>edgar_02</code></h4>
+      <p>接受委托后在指定区域完成一次射击采样，带回记录。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>现有地图测试区域（待划定）</dd></div>
+        <div><dt>前置</dt><dd>edgar_01</dd></div>
+        <div><dt>依赖能力</dt><dd><code>combat_telemetry</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +15 · ¥35,000</dd></div>
+      </dl>
+      <p class="story">人物信息：不能用购买的普通弹药冒充采样证据。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">中期调查</span><i>最低 Lv.2</i></header>
+      <h4>第十七次试射 <code>edgar_03</code></h4>
+      <p>回收一场失败试射留下的样枪与故障日志。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>试射遗址（待设计）</dd></div>
+        <div><dt>前置</dt><dd>edgar_02</dd></div>
+        <div><dt>依赖能力</dt><dd><code>quest_items</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +35 · ¥60,000</dd></div>
+      </dl>
+      <p class="story">人物信息：他此前提供的风险说明与实测结果不完全一致。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">中期风险</span><i>最低 Lv.3</i></header>
+      <h4>对照记录 <code>edgar_04</code></h4>
+      <p>在明确告知风险的条件下取得对照数据，或回收另一组已记录的数据。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>异常环境调查点（待设计）</dd></div>
+        <div><dt>前置</dt><dd>edgar_03</dd></div>
+        <div><dt>依赖能力</dt><dd><code>combat_telemetry</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +10 · ¥90,000</dd></div>
+      </dl>
+      <p class="story">人物信息：主动试验与资料回收都能交付有效数据。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">关键剧情</span><i>最低 Lv.3</i></header>
+      <h4>试射条款 <code>edgar_05</code></h4>
+      <p>查清委托说明中被省略的风险，并决定如何完成最后的验证。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>柜台对话及试验记录点（待设计）</dd></div>
+        <div><dt>前置</dt><dd>edgar_04</dd></div>
+        <div><dt>依赖能力</dt><dd><code>branch_dialogue</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +15 · ¥140,000</dd></div>
+      </dl>
+      <p class="story">人物信息：拒绝隐瞒风险的试验，仍能通过透明测试或独立资料核验晋级。</p>
+      <div class="branch">
+        <p><b>合作路径</b>接受他的保密测试条件，亲自执行已告知危险的采样；不安排无辜者充当目标。<br><small>高级弹药额外1%采购折扣；取得他的私人技术批注。</small></p>
+        <p><b>替代路径</b>拒绝他原先隐去风险的安排，改用充分告知的对照试验或独立故障日志完成核验。<br><small>取得执行者一侧的完整日志与一份普通弹药奖励；同样获得最高常规货架权限。</small></p>
+        <p class="branch-note">两路核心信誉与解锁完全相同，都不会永久锁货。</p>
+      </div>
+    </article>
+    <article class="quest">
+      <header><span class="phase">高信任揭示</span><i>最低 Lv.4</i></header>
+      <h4>枪口之后 <code>edgar_06</code></h4>
+      <p>查看完整的招募与试验记录，追问他如何计算执行者的代价。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>埃德加柜台对话</dd></div>
+        <div><dt>前置</dt><dd>edgar_05</dd></div>
+        <div><dt>依赖能力</dt><dd><code>story_documents</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +5 · ¥200,000</dd></div>
+      </dl>
+      <p class="story">人物信息：保留他对品质的责任感，也明确他对人的冷漠。</p>
+      
+    </article></div>
+  </section>
+
+  <section class="block" id="m-gun-lines">
+    <h3><i>06</i>台词全集 <em>运行 8 条 · 设定稿 8 节点</em></h3>
+    <h4 class="sub">运行时语音（游戏里真的会说）</h4>
+    <div class="lines">
+    <section class="line-row">
+      <div class="line-head"><b>进入商店</b><small>每次打开商人界面随机一条，避开上一次说过的那句</small><i class="badge">3 条</i></div>
+      <div class="line-body"><p class="q">“来了？说吧，今天准备往什么东西上开洞？”</p><p class="q">“枪、弹药、零件。要是想买安全感，出门左转。”</p><p class="q">“让我猜猜……上次那把枪还活着，你也是。不错的成绩。”</p></div>
+    </section>
+    <section class="line-row">
+      <div class="line-head"><b>站桩闲置</b><small>界面停留 45 秒无操作，之后每 90 秒一条</small><i class="badge">2 条</i></div>
+      <div class="line-body"><p class="q">“看够了吗？放心，它们不会自己走火。至少我卖的不会。”</p><p class="q">“你站在那儿想了半天，是在挑枪，还是在挑自己的死法？”</p></div>
+    </section>
+    <section class="line-row">
+      <div class="line-head"><b>成交之后</b><small>扣款成功的瞬间播报</small><i class="badge">2 条</i></div>
+      <div class="line-body"><p class="q">“好选择。记得保养，我可不负责替你擦枪。”</p><p class="q">“钱货两清。至于它最后打中谁，那是你们之间的事。”</p></div>
+    </section>
+    <section class="line-row">
+      <div class="line-head"><b>改枪结算</b><small>改枪结算页的供应商引言；不进随机语音</small><i class="badge">1 条</i></div>
+      <div class="line-body"><p class="q">“改得挺有想法。至于能不能打中东西……我建议你先去靶场，别去墓地。”</p></div>
+    </section></div>
+    <h4 class="sub">设定稿台词（还没接进游戏）</h4>
+    <div class="lines"><section class="line-row"><div class="line-head"><b>初识</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“口径、用途、预算。按这个顺序说。”</p></div></section><section class="line-row"><div class="line-head"><b>普通购买</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“交付前查过了。回来时告诉我它表现怎么样。”</p></div></section><section class="line-row"><div class="line-head"><b>低信任</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“先给我一个能核对的结果。”</p></div></section><section class="line-row"><div class="line-head"><b>中信任</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“这份记录有用。比一句“打得不错”有用得多。”</p></div></section><section class="line-row"><div class="line-head"><b>高信任</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“这次把完整的测试说明也给你。看完再决定。”</p></div></section><section class="line-row"><div class="line-head"><b>接取委托</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“条件写在纸上。哪一条不能接受，现在说。”</p></div></section><section class="line-row"><div class="line-head"><b>完成委托</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“样品和记录都在，省了我不少猜测。”</p></div></section><section class="line-row"><div class="line-head"><b>关键剧情</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“我没骗他们安全。我只是没替他们问第二遍。”</p></div></section></div>
+    <p class="foot-note">委托的「人物信息」是叙述、不是台词，写在上面的任务卡里；任务完成/失败台词尚未撰写。</p>
+  </section>
+</section>
+<section class="view" id="m-doctor" data-view="doctor" hidden>
+  <div class="dossier">
+    <figure class="portrait">
+      <img src="assets/ui/safehouse/merchant_doctor.webp" alt="林岑" loading="lazy">
+      <figcaption>LIN CEN</figcaption>
+    </figure>
+    <div class="dossier-main">
+      <div class="name-row"><h2>林岑</h2><span class="tagline">医生</span></div>
+      <blockquote class="theme">只要还有可能，就不该放弃。</blockquote>
+      <p class="shop-quote">柜台口头禅：「我见过太多人死于本可以治好的伤。至于那些治不好的……我还在想办法。」</p>
+      <dl class="meta"><div><dt>姓名</dt><dd>林岑</dd></div><div><dt>英文名</dt><dd>LIN CEN</dd></div><div><dt>年龄</dt><dd>41 岁</dd></div><div><dt>性别</dt><dd>女</dd></div><div><dt>职业标签</dt><dd>医生</dd></div><div><dt>阵营倾向</dt><dd>守序善良，后期可向混沌善良偏移（作者定位）</dd></div></dl>
+      <p class="role-line"><b>医疗用品与收费治疗</b> · 医疗用品与付费治疗。</p>
+      <nav class="anchor-nav" aria-label="章节跳转">
+        <a href="#m-doctor" data-jump="identity">身份与职责</a>
+        <a href="#m-doctor" data-jump="past">背景</a>
+        <a href="#m-doctor" data-jump="persona">性格与矛盾</a>
+        <a href="#m-doctor" data-jump="trust">信任成长</a>
+        <a href="#m-doctor" data-jump="quests">委托线</a>
+        <a href="#m-doctor" data-jump="lines">台词全集</a>
+      </nav>
+    </div>
+  </div>
+
+  <section class="block" id="m-doctor-identity">
+    <h3><i>01</i>身份与职责</h3>
+    <p class="para">原环礁湾市立医院急诊医生，现经营临时诊台与医疗供应点。</p>
+    <div class="cols">
+      <div class="panel">
+        <h4>售卖与经营</h4>
+        <div class="chips"><span class="chip">恢复</span><span class="chip">止痛</span><span class="chip">损伤处理</span><span class="chip">针剂</span><span class="chip">异常处理</span></div>
+        <p class="mini">林岑：药品与治疗服务分开收费；部分药效尚未开放。</p>
+      </div>
+      <div class="panel">
+        <h4>收购偏好</h4>
+        <p class="mini">医疗道具；偏好医疗收集品、神秘学研究品及异常观察资料</p>
+        <p class="mini dim">可收类别：医疗品、收集品（九类）</p>
+      </div>
+      <div class="panel">
+        <h4>后续扩展</h4>
+        <p class="mini">高阶医疗供应、损伤处理与特殊医疗支持。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="m-doctor-past">
+    <h3><i>02</i>背景与过去</h3>
+    <p class="para">林岑参与过首次潮汐中的急救、医疗分流与一项保密的异常患者观察计划。她见过仍有反应的患者被长期维持，也见过救治逐渐变成观察。撤离时，她带走部分病例资料。如今她在相对安全的落脚点行医，继续寻找那些记录的后续；她的善意真实存在，也让她越来越难接受救治必须停止的可能。</p>
+    <ol class="arc"><li><b>前期</b>温和、可靠，像真正的医生</li><li><b>中期</b>发现她隐藏了大量异常病例资料</li><li><b>后期</b>理解她的执念与痛苦，并面对&quot;救人是否该有边界&quot;</li></ol>
+  </section>
+
+  <section class="block" id="m-doctor-persona">
+    <h3><i>03</i>性格与矛盾</h3>
+    <ul class="traits"><li>愿意听完，重视病例与隐私</li><li>对普通患者有明确同情心</li><li>一旦涉及可能仍有意识的患者，会对资源和他人风险失去分寸</li></ul>
+    <div class="cols three">
+      <div class="panel"><h4>隐瞒</h4><p class="mini">她保留着异常患者观察资料，也隐瞒了自己持续追查和投入资源的程度。</p></div>
+      <div class="panel"><h4>原则</h4><p class="mini">患者不是仅供获得结论的材料；但她也必须面对自己是否仍尊重患者意愿。</p></div>
+      <div class="panel"><h4>危险</h4><p class="mini">为了不放弃一个人，可能要求别人承担不合理的风险。</p></div>
+    </div>
+    <div class="cols">
+      <div class="panel"><h4>最看重</h4><p class="mini">坦诚、可靠病例与救助</p></div>
+      <div class="panel"><h4>高信任意味着</h4><p class="mini">愿意提供贵重医疗物资、分享病例与研究疑问，让玩家参与她不愿独自作出的判断。</p></div>
+    </div>
+    <details class="fold"><summary>外形与立绘参考</summary><p class="mini">41岁，黑发盘起，面容克制温和，眼下有疲态，目光平静专注。实用的旧象牙白医疗外套，内搭灰绿衬衣，手持纸质病历夹，口袋有笔和手电。桌面仅有少量绷带、药瓶与记录本。成熟、可靠，带压抑的忧虑。</p><p class="mini dim">立绘：<code>assets/ui/safehouse/merchant_doctor.webp</code> · 要求见 <a href="design/merchants/BRIEF_V1.md">BRIEF_V1.md</a> 第七、八节</p></details>
+  </section>
+
+  <section class="block" id="m-doctor-trust">
+    <h3><i>04</i>信任成长</h3>
+    <div class="table-wrap"><table class="tbl">
+    <thead><tr><th>等级</th><th>信誉</th><th>累计交易额</th><th>关键任务</th><th>价格系数</th></tr></thead>
+    <tbody><tr>
+      <td><b>Lv.1 初识</b></td>
+      <td>0</td>
+      <td>¥0</td>
+      <td><span class="dim">无</span></td>
+      <td>1.00</td>
+    </tr><tr>
+      <td><b>Lv.2 熟客</b></td>
+      <td>25</td>
+      <td>¥100,000</td>
+      <td>接触记录</td>
+      <td>1.00</td>
+    </tr><tr>
+      <td><b>Lv.3 合作者</b></td>
+      <td>60</td>
+      <td>¥450,000</td>
+      <td>隔离区样本</td>
+      <td>0.98</td>
+    </tr><tr>
+      <td><b>Lv.4 核心关系</b></td>
+      <td>85</td>
+      <td>¥1,200,000</td>
+      <td>不被允许结束的救治</td>
+      <td>0.96</td>
+    </tr></tbody></table></div>
+    <p class="foot-note">晋级三项同时满足：信誉 + 累计有效交易额 + 关键任务标记。数值为设计建议，未实装。</p>
+    <h4 class="sub">商品分级</h4>
+    <div class="table-wrap"><table class="tbl">
+    <thead><tr><th>等级</th><th>货架内容</th></tr></thead><tbody>
+    <tr><td><b>Lv.1</b></td><td><span class="goods">绷带</span><span class="goods">安禾无菌敷料</span><span class="goods">安禾止痛片</span><span class="goods">止血带</span></td></tr><tr><td><b>Lv.2</b></td><td><span class="goods">家庭急救包</span><span class="goods">复方镇痛胶囊</span><span class="goods">医用夹板</span><span class="goods">H-7 应急医疗针</span></td></tr><tr><td><b>Lv.3</b></td><td><span class="goods">制式野战医疗包</span><span class="goods">强效镇痛剂</span><span class="goods">创伤处理包</span><span class="goods">外科手术包</span><span class="goods">镇静香膏</span><span class="goods">认知稳定剂</span></td></tr><tr><td><b>Lv.4</b></td><td><span class="goods">HV-300 精密医疗箱</span><span class="goods">M-4 代谢激活剂</span><span class="goods">R-9 再生试验剂</span><span class="goods">祛咒圣露</span></td></tr>
+    </tbody></table></div>
+    <p class="foot-note">仅未来分级映射，当前货架不变。标「占位」的条目没有物品 ID，需等对应系统实装。</p>
+  </section>
+
+  <section class="block" id="m-doctor-quests">
+    <h3><i>05</i>委托线 <em>6 项 · 设计稿，未实装</em></h3>
+    <div class="quests">
+    <article class="quest">
+      <header><span class="phase">基础回收</span><i>最低 Lv.1</i></header>
+      <h4>失踪病历 <code>lin_01</code></h4>
+      <p>从诊所转存点取回一份旧医院病历夹。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>临海路诊所（拟转存点）</dd></div>
+        <div><dt>前置</dt><dd>无</dd></div>
+        <div><dt>依赖能力</dt><dd><code>quest_items</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +10 · ¥20,000</dd></div>
+      </dl>
+      <p class="story">人物信息：不把现有诊所直接改名为市立医院。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">基础回收</span><i>最低 Lv.1</i></header>
+      <h4>接触记录 <code>lin_02</code></h4>
+      <p>回收并整理一组撤离时期的接触登记和随访条目。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>诊所／住宅（拟）</dd></div>
+        <div><dt>前置</dt><dd>lin_01</dd></div>
+        <div><dt>依赖能力</dt><dd><code>document_comparison</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +15 · ¥35,000</dd></div>
+      </dl>
+      <p class="story">人物信息：如实标注缺失信息，不要求玩家已有异常状态。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">中期调查</span><i>最低 Lv.2</i></header>
+      <h4>隔离区样本 <code>lin_03</code></h4>
+      <p>获取一份有明确来源的封装样本或等价病例记录。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>后续隔离区（待设计）</dd></div>
+        <div><dt>前置</dt><dd>lin_02</dd></div>
+        <div><dt>依赖能力</dt><dd><code>quest_items</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +35 · ¥60,000</dd></div>
+      </dl>
+      <p class="story">人物信息：样本不能从普通医疗收藏或商店购买替代。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">中期风险</span><i>最低 Lv.3</i></header>
+      <h4>仍有生命体征 <code>lin_04</code></h4>
+      <p>调查持续运转的生命支持系统，带回读数与设备记录。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>生命支持设施（待设计）</dd></div>
+        <div><dt>前置</dt><dd>lin_03</dd></div>
+        <div><dt>依赖能力</dt><dd><code>medical_site_interaction</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +10 · ¥90,000</dd></div>
+      </dl>
+      <p class="story">人物信息：设备在运转不等于患者仍可恢复，调查只提供证据。</p>
+      
+    </article>
+    <article class="quest">
+      <header><span class="phase">关键剧情</span><i>最低 Lv.3</i></header>
+      <h4>不被允许结束的救治 <code>lin_05</code></h4>
+      <p>核对患者意愿、原始病例和维持记录，决定是否支持继续投入。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>医疗记录点与柜台对话（待设计）</dd></div>
+        <div><dt>前置</dt><dd>lin_04</dd></div>
+        <div><dt>依赖能力</dt><dd><code>branch_dialogue</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +15 · ¥140,000</dd></div>
+      </dl>
+      <p class="story">人物信息：支持有限救治或拒绝无限维持，都能完成关键任务。</p>
+      <div class="branch">
+        <p><b>合作路径</b>在充分告知、有退出条件的前提下，支持一轮有明确上限的救治尝试。<br><small>一次限量常规医疗补给；看到她后续观察记录。</small></p>
+        <p><b>替代路径</b>拒绝持续扩大风险，提交患者意愿与独立病例核验，要求她接受资源和救治边界。<br><small>一份完整病例副本与等值常规医疗补给；同样获得最高常规货架权限。</small></p>
+        <p class="branch-note">两路核心信誉与解锁完全相同，都不会永久锁货。</p>
+      </div>
+    </article>
+    <article class="quest">
+      <header><span class="phase">高信任揭示</span><i>最低 Lv.4</i></header>
+      <h4>病历的最后一页 <code>lin_06</code></h4>
+      <p>与她一起确认记录中被省略的判断，讨论救治与研究的边界。</p>
+      <dl class="facts">
+        <div><dt>地点</dt><dd>林岑柜台对话</dd></div>
+        <div><dt>前置</dt><dd>lin_05</dd></div>
+        <div><dt>依赖能力</dt><dd><code>story_documents</code></dd></div>
+        <div><dt>奖励</dt><dd>信誉 +5 · ¥200,000</dd></div>
+      </dl>
+      <p class="story">人物信息：不规定患者最终生死，也不把一次选择写成通用医学结论。</p>
+      
+    </article></div>
+  </section>
+
+  <section class="block" id="m-doctor-lines">
+    <h3><i>06</i>台词全集 <em>运行 9 条 · 设定稿 8 节点</em></h3>
+    <h4 class="sub">运行时语音（游戏里真的会说）</h4>
+    <div class="lines">
+    <section class="line-row">
+      <div class="line-head"><b>进入商店</b><small>每次打开商人界面随机一条，避开上一次说过的那句</small><i class="badge">3 条</i></div>
+      <div class="line-body"><p class="q">“来了？先让我看看你的脸色……嗯，至少比上次好些。”</p><p class="q">“药品都在柜台上。有什么不舒服的，最好现在告诉我。”</p><p class="q">“希望你今天只是来买东西的。诊台刚收拾干净。”</p></div>
+    </section>
+    <section class="line-row">
+      <div class="line-head"><b>站桩闲置</b><small>界面停留 45 秒无操作，之后每 90 秒一条</small><i class="badge">2 条</i></div>
+      <div class="line-body"><p class="q">“还没想好？药可以慢慢挑，伤口可不会等你。”</p><p class="q">“如果累了，就坐一会儿。这里至少没有东西追着你跑。”</p></div>
+    </section>
+    <section class="line-row">
+      <div class="line-head"><b>成交之后</b><small>扣款成功的瞬间播报</small><i class="badge">2 条</i></div>
+      <div class="line-body"><p class="q">“用法写在包装上。别擅自加量，我不想再给你洗胃。”</p><p class="q">“东西收好。希望你用不上，但真需要的时候，别舍不得。”</p></div>
+    </section>
+    <section class="line-row">
+      <div class="line-head"><b>治疗开单前</b><small>诊台结账页上的引言（静态展示）</small><i class="badge">1 条</i></div>
+      <div class="line-body"><p class="q">“坐下，别乱动。伤得怎么样，我检查完自然会告诉你。”</p></div>
+    </section>
+    <section class="line-row">
+      <div class="line-head"><b>治疗付款后</b><small>治疗扣款成功后追加到血量卡片下方</small><i class="badge">1 条</i></div>
+      <div class="line-body"><p class="q">“好了，能处理的都处理干净了。下次别等到快没命了才来找我。”</p></div>
+    </section></div>
+    <h4 class="sub">设定稿台词（还没接进游戏）</h4>
+    <div class="lines"><section class="line-row"><div class="line-head"><b>初识</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“哪里受伤、接触过什么，慢慢说，不用急。”</p></div></section><section class="line-row"><div class="line-head"><b>普通购买</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“药盒上的说明留着。有不清楚的先问。”</p></div></section><section class="line-row"><div class="line-head"><b>低信任</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“缺的那一段接触史，我暂时记作未知。”</p></div></section><section class="line-row"><div class="line-head"><b>中信任</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“这次的记录完整，我可以据此安排下一步。”</p></div></section><section class="line-row"><div class="line-head"><b>高信任</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“有一份病历，我希望你看过再回答我。”</p></div></section><section class="line-row"><div class="line-head"><b>接取委托</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“先保证你能回来。记录不全可以补，人回不来就没有下一次。”</p></div></section><section class="line-row"><div class="line-head"><b>完成委托</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“这些情况很重要。我会把来源一并记下。”</p></div></section><section class="line-row"><div class="line-head"><b>关键剧情</b><small>设定稿 · 尚未接入运行时</small><i class="badge design">设计</i></div>
+      <div class="line-body"><p class="q">“我不是想证明自己是对的。我只是……不想再那么轻易放弃任何一个人。”</p></div></section></div>
+    <p class="foot-note">委托的「人物信息」是叙述、不是台词，写在上面的任务卡里；任务完成/失败台词尚未撰写。</p>
+  </section>
+</section>
+
+<section class="view" id="m-gaps" data-view="gaps" hidden>
+  <section class="block">
+    <h3><i>01</i>设定缺口</h3>
+    <ul class="gaps"><li><b>玛拉·维恩没有运行时语音</b>：<code>js/merchant-config.js</code> 的 <code>MERCHANT_DIALOGUE</code> 只有 <code>gun</code> / <code>doctor</code> / <code>viktor</code> 三组，缺 <code>shop</code>。
+  她又正好是商人界面的默认页，所以进店、站桩、成交全程静默。补齐成本很低：照另外三人的结构写 greeting / idle / purchase 三组即可。</li>
+  <li><b>维克托·萨伦</b>（贸易商）还没有设定稿：没有年龄、阵营、主题句、背景、性格、信任等级、委托线与八节点台词。
+  目前只有藏身处里的姓名/职业/招牌台词、一张立绘（<code>assets/ui/safehouse/merchant_viktor.webp</code>）、固定货架（18 件，125% 溢价）和 10 条运行时语音。
+  收购反应台词 <code>reserved.*</code> 已写但代码里没有调用点。</li></ul>
+  </section>
+  <section class="block">
+    <h3><i>02</i>需要你拍板的几件事</h3>
+    <ul class="gaps">
+      <li><b>贸易商要不要写整份设定？</b>他目前是唯一没有信任等级与委托线的商人，也是唯一收购全部九类收集品的人。若保持“只做零售”，需要在文案上明确他为何不碰任务；若要补齐，参照另外三人 6 项委托的结构。</li>
+      <li><b>两套台词怎么合？</b>设定稿八节点偏性格，运行时池偏营业口吻。建议：进店／闲置／成交用运行时池，剧情推进用八节点，接取与完成委托时插入对应节点台词。</li>
+      <li><b>收购反应要不要接线？</b><code>reserved.*</code> 三条已写，但没有调用点；接上后成交出售时会有人味，代价是文案要覆盖更多物品类别。</li>
+      <li><b>阈值与折扣</b>：Lv2/3/4 的信誉 25/60/85、交易额 30 万／120 万／300 万这一档，是设计建议，尚未按实际收益节奏校准。</li>
+    </ul>
+  </section>
+</section>
+
+<footer>
+  由 <code>node tools/gen-merchant-sheet.js</code> 生成，请勿手改；改设定请改 <code>design/merchants/design-v1.json</code>、<code>js/merchant-config.js</code> 或 <code>js/safehouse-config.js</code> 后重跑。<br>
+  运行时台词与商店配置同源，文案改完这里立刻能看到；设定稿部分标注“未实装”的内容不会出现在游戏里。
+</footer>
+<script>
+(() => {
+  const tabs = [...document.querySelectorAll('[data-tab]')];
+  const views = [...document.querySelectorAll('[data-view]')];
+  const KEYS = ["viktor","shop","gun","doctor","overview","gaps"];
+  function show(key, scroll) {
+    if (!KEYS.includes(key)) key = 'overview';
+    for (const v of views) v.hidden = v.dataset.view !== key;
+    for (const t of tabs) t.classList.toggle('on', t.dataset.tab === key);
+    if (scroll) {
+      /* 切到某位商人时把吸顶的标签栏顶到视口上方，免得还要手动划过首屏卡片。 */
+      const bar = document.querySelector('.tabs');
+      window.scrollTo(0, key === 'overview' ? 0 : Math.max(0, bar.offsetTop - 1));
+    }
+  }
+  function fromHash() {
+    const raw = decodeURIComponent(location.hash.slice(1));
+    const key = raw.split('/')[0] || 'overview';
+    const sub = raw.split('/')[1];
+    show(key, true);
+    if (sub) {
+      const target = document.getElementById('m-' + key + '-' + sub);
+      if (target) target.scrollIntoView({ block: 'start' });
+    }
+  }
+  for (const t of tabs) t.addEventListener('click', () => { location.hash = t.dataset.tab; });
+  for (const a of document.querySelectorAll('[data-jump]')) {
+    a.addEventListener('click', e => { e.preventDefault(); location.hash = a.closest('[data-view]').dataset.view + '/' + a.dataset.jump; });
+  }
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+})();
+</script>
+</main>
+</body>
+</html>

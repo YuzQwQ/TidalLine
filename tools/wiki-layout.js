@@ -1,24 +1,29 @@
-/* 三份清单与合并 Wiki 共用页面外壳；生成任一清单后自动刷新 Wiki。 */
+/* 三份清单与合并 Wiki 共用页面外壳；生成任一清单后自动刷新 Wiki。
+   standalone: true 的页面有自己的脚本与视图切换（商人档案按商人分页），只进导航、不并进 wiki.html。 */
 const fs = require('fs');
 const path = require('path');
 const root = path.resolve(__dirname, '..');
 const pages = [
   { key: 'items', name: '物品清单', file: '物品清单.html' },
   { key: 'gear', name: '装备清单', file: '装备清单.html' },
-  { key: 'containers', name: '容器清单', file: '容器清单.html' }
+  { key: 'containers', name: '容器清单', file: '容器清单.html' },
+  { key: 'merchants', name: '商人档案', file: '商人档案.html', standalone: true }
 ];
 
 function navigation(active, combined = false) {
   return `<nav class="wiki-nav" aria-label="清单导航">
   <a class="wiki-brand" href="wiki.html">潮汐线 <span>WIKI</span></a>
-  <div class="wiki-links">${pages.map(p => `<a data-wiki-link="${p.key}" href="${combined ? '' : 'wiki.html'}#${p.key}"${active === p.key ? ' aria-current="page"' : ''}>${p.name}</a>`).join('')}</div>
+  <div class="wiki-links">${pages.map(p => p.standalone
+    ? `<a href="${p.file}"${active === p.key ? ' aria-current="page"' : ''}>${p.name}</a>`
+    : `<a data-wiki-link="${p.key}" href="${combined ? '' : 'wiki.html'}#${p.key}"${active === p.key ? ' aria-current="page"' : ''}>${p.name}</a>`).join('')}</div>
   <a class="wiki-game" href="index.html">进入游戏 ↗</a>
 </nav>`;
 }
 
 function writeWiki() {
+  const embedded = pages.filter(p => !p.standalone);
   if (!pages.every(p => fs.existsSync(path.join(root, p.file)))) return;
-  const sections = pages.map((p, index) => {
+  const sections = embedded.map((p, index) => {
     const html = fs.readFileSync(path.join(root, p.file), 'utf8');
     const body = html.match(/<main class="wiki-sheet">([\s\S]*?)<\/main>/);
     // 旧清单尚未重新生成时，等下一份生成完成再整合。
