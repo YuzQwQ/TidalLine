@@ -1536,8 +1536,8 @@
       ]
     },
     {
-      "id": "clockshop",
-      "name": "钟表店",
+      "id": "bank",
+      "name": "银行旧址",
       "rect": [
         44,
         17,
@@ -1990,8 +1990,8 @@
       ]
     },
     {
-      "id": "bank",
-      "name": "银行旧址",
+      "id": "clockshop",
+      "name": "钟表店",
       "rect": [
         52,
         31,
@@ -3617,9 +3617,9 @@
       "role": "后勤侧廊"
     },
     {
-      "id": "clockshop.showroom",
-      "building": "clockshop",
-      "name": "营业展示厅",
+      "id": "bank.lobby",
+      "building": "bank",
+      "name": "营业厅",
       "rect": [
         45,
         18,
@@ -3630,11 +3630,11 @@
         47,
         18
       ],
-      "role": "营业展示厅"
+      "role": "营业厅"
     },
     {
-      "id": "clockshop.counter",
-      "building": "clockshop",
+      "id": "bank.counter",
+      "building": "bank",
       "name": "柜台区",
       "rect": [
         45,
@@ -3649,9 +3649,9 @@
       "role": "柜台区"
     },
     {
-      "id": "clockshop.repair",
-      "building": "clockshop",
-      "name": "小维修间",
+      "id": "bank.office",
+      "building": "bank",
+      "name": "值班室",
       "rect": [
         50,
         18,
@@ -3662,11 +3662,11 @@
         51,
         19
       ],
-      "role": "小维修间"
+      "role": "值班室"
     },
     {
-      "id": "clockshop.store",
-      "building": "clockshop",
+      "id": "bank.store",
+      "building": "bank",
       "name": "后仓",
       "rect": [
         50,
@@ -3681,8 +3681,8 @@
       "role": "后仓"
     },
     {
-      "id": "bank.lobby",
-      "building": "bank",
+      "id": "clockshop.lobby",
+      "building": "clockshop",
       "name": "前厅",
       "rect": [
         53,
@@ -3697,8 +3697,8 @@
       "role": "前厅"
     },
     {
-      "id": "bank.counter",
-      "building": "bank",
+      "id": "clockshop.counter",
+      "building": "clockshop",
       "name": "柜台营业区",
       "rect": [
         59,
@@ -3713,8 +3713,8 @@
       "role": "柜台营业区"
     },
     {
-      "id": "bank.office",
-      "building": "bank",
+      "id": "clockshop.office",
+      "building": "clockshop",
       "name": "办公室",
       "rect": [
         53,
@@ -3729,8 +3729,8 @@
       "role": "办公室"
     },
     {
-      "id": "bank.passage",
-      "building": "bank",
+      "id": "clockshop.passage",
+      "building": "clockshop",
       "name": "柜台后通道",
       "rect": [
         58,
@@ -3745,8 +3745,8 @@
       "role": "柜台后通道"
     },
     {
-      "id": "bank.security",
-      "building": "bank",
+      "id": "clockshop.security",
+      "building": "clockshop",
       "name": "安保室",
       "rect": [
         61,
@@ -3761,8 +3761,8 @@
       "role": "安保室"
     },
     {
-      "id": "bank.service",
-      "building": "bank",
+      "id": "clockshop.service",
+      "building": "clockshop",
       "name": "后勤环廊",
       "rect": [
         54,
@@ -3777,8 +3777,8 @@
       "role": "后勤环廊"
     },
     {
-      "id": "bank.vault",
-      "building": "bank",
+      "id": "clockshop.vault",
+      "building": "clockshop",
       "name": "金库 / 保险区",
       "rect": [
         61,
@@ -3936,7 +3936,7 @@
         ]
       ],
       "connects": [
-        "clockshop",
+        "bank",
         "outdoors"
       ],
       "kind": "door",
@@ -4075,8 +4075,8 @@
       "width": 1
     },
     {
-      "id": "clockshop.door1",
-      "building": "clockshop",
+      "id": "bank.door1",
+      "building": "bank",
       "name": "新门洞",
       "cells": [
         [
@@ -4085,8 +4085,8 @@
         ]
       ],
       "connects": [
-        "clockshop.counter",
-        "clockshop.store"
+        "bank.counter",
+        "bank.store"
       ],
       "kind": "door",
       "width": 1
@@ -4124,8 +4124,8 @@
       "width": 1
     },
     {
-      "id": "bank.door3",
-      "building": "bank",
+      "id": "clockshop.door3",
+      "building": "clockshop",
       "name": "新门洞",
       "cells": [
         [
@@ -4134,15 +4134,15 @@
         ]
       ],
       "connects": [
-        "bank.lobby",
-        "bank.counter"
+        "clockshop.lobby",
+        "clockshop.counter"
       ],
       "kind": "door",
       "width": 1
     },
     {
-      "id": "bank.door4",
-      "building": "bank",
+      "id": "clockshop.door4",
+      "building": "clockshop",
       "name": "新门洞",
       "cells": [
         [
@@ -4151,15 +4151,15 @@
         ]
       ],
       "connects": [
-        "bank.counter",
-        "bank.counter"
+        "clockshop.counter",
+        "clockshop.counter"
       ],
       "kind": "door",
       "width": 1
     },
     {
-      "id": "bank.door1",
-      "building": "bank",
+      "id": "clockshop.door1",
+      "building": "clockshop",
       "name": "新门洞",
       "cells": [
         [
@@ -4169,7 +4169,7 @@
       ],
       "connects": [
         "outdoors",
-        "bank.office"
+        "clockshop.office"
       ],
       "kind": "door",
       "width": 1
@@ -4184,7 +4184,7 @@
         ]
       ],
       "connects": [
-        "bank",
+        "clockshop",
         "outdoors"
       ],
       "kind": "door",
@@ -4193,8 +4193,8 @@
   ],
   "windows": [
     {
-      "id": "clockshop.display-window",
-      "building": "clockshop",
+      "id": "bank.display-window",
+      "building": "bank",
       "cells": [
         [
           44,
@@ -4209,8 +4209,8 @@
       "opaque": false
     },
     {
-      "id": "clockshop.counter-window",
-      "building": "clockshop",
+      "id": "bank.counter-window",
+      "building": "bank",
       "cells": [
         [
           44,
@@ -4320,7 +4320,7 @@
     },
     {
       "id": "clock-alley",
-      "name": "钟表店侧巷净通路",
+      "name": "银行侧巷净通路",
       "rect": [
         55,
         17,
@@ -4331,8 +4331,8 @@
       "kind": "outdoor"
     },
     {
-      "id": "bank-north",
-      "name": "银行北侧通路",
+      "id": "clockshop-north",
+      "name": "钟表店北侧通路",
       "rect": [
         43,
         27,
@@ -4343,8 +4343,8 @@
       "kind": "outdoor"
     },
     {
-      "id": "bank-east",
-      "name": "银行东侧通路",
+      "id": "clockshop-east",
+      "name": "钟表店东侧通路",
       "rect": [
         68,
         31,
@@ -4355,7 +4355,7 @@
       "kind": "outdoor"
     },
     {
-      "id": "bank-south",
+      "id": "clockshop-south",
       "name": "东岸撤离横路",
       "rect": [
         49,
@@ -4440,7 +4440,7 @@
     },
     {
       "id": "clock-showroom",
-      "name": "钟表店营业厅通路",
+      "name": "银行营业厅通路",
       "rect": [
         47,
         18,
@@ -4452,7 +4452,7 @@
     },
     {
       "id": "clock-repair",
-      "name": "钟表店维修通路",
+      "name": "银行维修通路",
       "rect": [
         51,
         18,
@@ -4464,7 +4464,7 @@
     },
     {
       "id": "clock-store",
-      "name": "钟表店后仓通路",
+      "name": "银行后仓通路",
       "rect": [
         51,
         23,
@@ -4475,8 +4475,8 @@
       "kind": "indoor"
     },
     {
-      "id": "bank-counter",
-      "name": "银行柜台通路",
+      "id": "clockshop-counter",
+      "name": "钟表店柜台通路",
       "rect": [
         59,
         32,
@@ -4487,8 +4487,8 @@
       "kind": "indoor"
     },
     {
-      "id": "bank-passage",
-      "name": "银行柜台后通道",
+      "id": "clockshop-passage",
+      "name": "钟表店柜台后通道",
       "rect": [
         58,
         38,
@@ -4499,8 +4499,8 @@
       "kind": "indoor"
     },
     {
-      "id": "bank-office",
-      "name": "银行办公通路",
+      "id": "clockshop-office",
+      "name": "钟表店办公通路",
       "rect": [
         54,
         39,
@@ -4511,8 +4511,8 @@
       "kind": "indoor"
     },
     {
-      "id": "bank-service",
-      "name": "银行后勤通路",
+      "id": "clockshop-service",
+      "name": "钟表店后勤通路",
       "rect": [
         58,
         42,
@@ -4523,7 +4523,7 @@
       "kind": "indoor"
     },
     {
-      "id": "bank-vault",
+      "id": "clockshop-vault",
       "name": "安保 / 金库中央通路",
       "rect": [
         63,
@@ -4682,7 +4682,7 @@
     },
     {
       "id": "p12",
-      "region": "clockshop",
+      "region": "bank",
       "type": "display",
       "name": "橱窗展柜",
       "x": 45,
@@ -4696,7 +4696,7 @@
     },
     {
       "id": "p13",
-      "region": "clockshop",
+      "region": "bank",
       "type": "display",
       "name": "橱窗展柜",
       "x": 45,
@@ -4803,7 +4803,7 @@
     },
     {
       "id": "p22",
-      "region": "bank",
+      "region": "clockshop",
       "type": "desk",
       "name": "安保监控台",
       "x": 59,
@@ -4830,7 +4830,7 @@
     },
     {
       "id": "p24",
-      "region": "bank",
+      "region": "clockshop",
       "type": "shelf",
       "name": "后勤架",
       "x": 53,
@@ -5917,7 +5917,7 @@
     },
     {
       "id": "p94",
-      "region": "bank",
+      "region": "clockshop",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
       "x": 65,
@@ -6187,7 +6187,7 @@
     },
     {
       "id": "p111",
-      "region": "bank",
+      "region": "clockshop",
       "type": "workbench_industrial",
       "name": "重型工作台",
       "x": 59,
@@ -7223,7 +7223,7 @@
     },
     {
       "id": "p196",
-      "region": "clockshop",
+      "region": "bank",
       "type": "barrier_queue",
       "name": "银行排队围栏",
       "x": 45,
@@ -7237,7 +7237,7 @@
     },
     {
       "id": "p197",
-      "region": "clockshop",
+      "region": "bank",
       "type": "barrier_queue",
       "name": "银行排队围栏",
       "x": 45,
@@ -7251,7 +7251,7 @@
     },
     {
       "id": "p198",
-      "region": "clockshop",
+      "region": "bank",
       "type": "barrier_queue",
       "name": "银行排队围栏",
       "x": 48,
@@ -7265,7 +7265,7 @@
     },
     {
       "id": "p199",
-      "region": "clockshop",
+      "region": "bank",
       "type": "barrier_queue",
       "name": "银行排队围栏",
       "x": 45,
@@ -7306,7 +7306,7 @@
     },
     {
       "id": "p202",
-      "region": "clockshop",
+      "region": "bank",
       "type": "console_security",
       "name": "安保监控台",
       "x": 50,
@@ -7320,7 +7320,7 @@
     },
     {
       "id": "p203",
-      "region": "bank",
+      "region": "clockshop",
       "type": "workbench_clock",
       "name": "钟表维修台",
       "x": 62,
@@ -7334,7 +7334,7 @@
     },
     {
       "id": "p204",
-      "region": "bank",
+      "region": "clockshop",
       "type": "counter_shop",
       "name": "营业柜台",
       "x": 56,
@@ -7348,7 +7348,7 @@
     },
     {
       "id": "p205",
-      "region": "bank",
+      "region": "clockshop",
       "type": "display_clock",
       "name": "橱窗展柜",
       "x": 55,
@@ -7362,7 +7362,7 @@
     },
     {
       "id": "p206",
-      "region": "bank",
+      "region": "clockshop",
       "type": "display_clock",
       "name": "橱窗展柜",
       "x": 55,
@@ -7376,7 +7376,7 @@
     },
     {
       "id": "p207",
-      "region": "bank",
+      "region": "clockshop",
       "type": "workbench_clock",
       "name": "钟表维修台",
       "x": 59,
@@ -7390,7 +7390,7 @@
     },
     {
       "id": "p208",
-      "region": "bank",
+      "region": "clockshop",
       "type": "sofa_home",
       "name": "沙发",
       "x": 60,
@@ -7403,7 +7403,7 @@
     },
     {
       "id": "p209",
-      "region": "bank",
+      "region": "clockshop",
       "type": "chair_wood",
       "name": "普通木椅",
       "x": 61,
@@ -7417,7 +7417,7 @@
     },
     {
       "id": "p210",
-      "region": "bank",
+      "region": "clockshop",
       "type": "chair_wood",
       "name": "普通木椅",
       "x": 61,
@@ -7430,7 +7430,7 @@
     },
     {
       "id": "p211",
-      "region": "bank",
+      "region": "clockshop",
       "type": "desk",
       "name": "桌子",
       "x": 60,
@@ -7443,7 +7443,7 @@
     },
     {
       "id": "p212",
-      "region": "bank",
+      "region": "clockshop",
       "type": "shelf",
       "name": "货架",
       "x": 62,
@@ -7457,7 +7457,7 @@
     },
     {
       "id": "p213",
-      "region": "bank",
+      "region": "clockshop",
       "type": "counter_shop",
       "name": "营业柜台",
       "x": 59,
@@ -7471,7 +7471,7 @@
     },
     {
       "id": "p214",
-      "region": "bank",
+      "region": "clockshop",
       "type": "display_clock",
       "name": "橱窗展柜",
       "x": 56,
@@ -7485,7 +7485,7 @@
     },
     {
       "id": "p215",
-      "region": "bank",
+      "region": "clockshop",
       "type": "display_clock",
       "name": "橱窗展柜",
       "x": 54,
@@ -7498,7 +7498,7 @@
     },
     {
       "id": "p216",
-      "region": "bank",
+      "region": "clockshop",
       "type": "display_clock",
       "name": "橱窗展柜",
       "x": 54,
@@ -7512,7 +7512,7 @@
     },
     {
       "id": "p217",
-      "region": "bank",
+      "region": "clockshop",
       "type": "clock_grandfather",
       "name": "落地钟",
       "x": 53,
@@ -7539,7 +7539,7 @@
     },
     {
       "id": "p219",
-      "region": "bank",
+      "region": "clockshop",
       "type": "clock_grandfather",
       "name": "落地钟",
       "x": 53,
@@ -7553,7 +7553,7 @@
     },
     {
       "id": "p220",
-      "region": "bank",
+      "region": "clockshop",
       "type": "shelf",
       "name": "货架",
       "x": 66,
@@ -7567,7 +7567,7 @@
     },
     {
       "id": "p221",
-      "region": "bank",
+      "region": "clockshop",
       "type": "shelf",
       "name": "货架",
       "x": 66,
@@ -7581,7 +7581,7 @@
     },
     {
       "id": "p222",
-      "region": "bank",
+      "region": "clockshop",
       "type": "shelf",
       "name": "货架",
       "x": 66,
@@ -7609,7 +7609,7 @@
     },
     {
       "id": "p224",
-      "region": "bank",
+      "region": "clockshop",
       "type": "display_clock",
       "name": "橱窗展柜",
       "x": 58,
@@ -7623,7 +7623,7 @@
     },
     {
       "id": "p225",
-      "region": "bank",
+      "region": "clockshop",
       "type": "display_clock",
       "name": "橱窗展柜",
       "x": 62,
@@ -7637,7 +7637,7 @@
     },
     {
       "id": "p226",
-      "region": "bank",
+      "region": "clockshop",
       "type": "sofa_home",
       "name": "沙发",
       "x": 60,
@@ -7650,7 +7650,7 @@
     },
     {
       "id": "p227",
-      "region": "bank",
+      "region": "clockshop",
       "type": "sofa_home",
       "name": "沙发",
       "x": 63,
@@ -7663,7 +7663,7 @@
     },
     {
       "id": "p228",
-      "region": "bank",
+      "region": "clockshop",
       "type": "sofa_home",
       "name": "沙发",
       "x": 53,
@@ -7794,7 +7794,7 @@
     },
     {
       "id": "c17",
-      "region": "clockshop",
+      "region": "bank",
       "type": "R",
       "x": 51,
       "y": 18,
@@ -7814,7 +7814,7 @@
     },
     {
       "id": "c19",
-      "region": "clockshop",
+      "region": "bank",
       "type": "B",
       "x": 46,
       "y": 18,
@@ -7834,7 +7834,7 @@
     },
     {
       "id": "c21",
-      "region": "clockshop",
+      "region": "bank",
       "type": "G",
       "x": 54,
       "y": 18,
@@ -7844,7 +7844,7 @@
     },
     {
       "id": "c22",
-      "region": "bank",
+      "region": "clockshop",
       "type": "F",
       "x": 59,
       "y": 35,
@@ -7854,7 +7854,7 @@
     },
     {
       "id": "c23",
-      "region": "bank",
+      "region": "clockshop",
       "type": "L",
       "x": 56,
       "y": 31,
@@ -7864,7 +7864,7 @@
     },
     {
       "id": "c24",
-      "region": "bank",
+      "region": "clockshop",
       "type": "F",
       "x": 53,
       "y": 41,
@@ -7874,7 +7874,7 @@
     },
     {
       "id": "c25",
-      "region": "bank",
+      "region": "clockshop",
       "type": "L",
       "x": 56,
       "y": 46,
@@ -7884,7 +7884,7 @@
     },
     {
       "id": "c27",
-      "region": "bank",
+      "region": "clockshop",
       "type": "B",
       "x": 65,
       "y": 31,
@@ -7894,7 +7894,7 @@
     },
     {
       "id": "c28",
-      "region": "clockshop",
+      "region": "bank",
       "type": "V",
       "x": 53,
       "y": 18,
@@ -7904,7 +7904,7 @@
     },
     {
       "id": "c29",
-      "region": "bank",
+      "region": "clockshop",
       "type": "O",
       "x": 64,
       "y": 42,
@@ -7914,7 +7914,7 @@
     },
     {
       "id": "c30",
-      "region": "bank",
+      "region": "clockshop",
       "type": "G",
       "x": 62,
       "y": 35,
@@ -7924,7 +7924,7 @@
     },
     {
       "id": "c31",
-      "region": "bank",
+      "region": "clockshop",
       "type": "B",
       "x": 65,
       "y": 42,
@@ -8088,7 +8088,7 @@
     },
     {
       "id": "c46",
-      "region": "bank",
+      "region": "clockshop",
       "type": "C",
       "x": 64,
       "y": 31,
@@ -8110,7 +8110,7 @@
     },
     {
       "id": "c48",
-      "region": "bank",
+      "region": "clockshop",
       "type": "K",
       "x": 62,
       "y": 31,
@@ -8692,7 +8692,7 @@
     },
     {
       "id": "c104",
-      "region": "bank",
+      "region": "clockshop",
       "type": "b",
       "x": 67,
       "y": 42,
@@ -8703,7 +8703,7 @@
     },
     {
       "id": "c105",
-      "region": "bank",
+      "region": "clockshop",
       "type": "b",
       "x": 67,
       "y": 37,
@@ -8714,7 +8714,7 @@
     },
     {
       "id": "c106",
-      "region": "bank",
+      "region": "clockshop",
       "type": "T",
       "x": 66,
       "y": 42,
@@ -8725,7 +8725,7 @@
     },
     {
       "id": "c107",
-      "region": "bank",
+      "region": "clockshop",
       "type": "T",
       "x": 57,
       "y": 41,
@@ -8736,7 +8736,7 @@
     },
     {
       "id": "c108",
-      "region": "bank",
+      "region": "clockshop",
       "type": "R",
       "x": 62,
       "y": 42,
@@ -8756,7 +8756,7 @@
     },
     {
       "id": "c110",
-      "region": "bank",
+      "region": "clockshop",
       "type": "G",
       "x": 59,
       "y": 41,
@@ -8766,7 +8766,7 @@
     },
     {
       "id": "c111",
-      "region": "bank",
+      "region": "clockshop",
       "type": "V",
       "x": 64,
       "y": 37,
@@ -8776,7 +8776,7 @@
     },
     {
       "id": "c112",
-      "region": "clockshop",
+      "region": "bank",
       "type": "V",
       "x": 52,
       "y": 18,
@@ -8786,7 +8786,7 @@
     },
     {
       "id": "c113",
-      "region": "bank",
+      "region": "clockshop",
       "type": "e",
       "x": 65,
       "y": 44,
@@ -8963,7 +8963,7 @@
     },
     {
       "id": "e06",
-      "region": "clockshop",
+      "region": "bank",
       "type": "scav",
       "x": 46,
       "y": 21,
@@ -8971,7 +8971,7 @@
     },
     {
       "id": "e08",
-      "region": "clockshop",
+      "region": "bank",
       "type": "scav",
       "x": 51,
       "y": 24,
@@ -8979,7 +8979,7 @@
     },
     {
       "id": "e09",
-      "region": "bank",
+      "region": "clockshop",
       "type": "guard",
       "x": 60,
       "y": 38,
@@ -8987,7 +8987,7 @@
     },
     {
       "id": "e11",
-      "region": "bank",
+      "region": "clockshop",
       "type": "guard",
       "x": 60,
       "y": 33,
@@ -8995,7 +8995,7 @@
     },
     {
       "id": "e12",
-      "region": "bank",
+      "region": "clockshop",
       "type": "guard",
       "x": 65,
       "y": 39,
@@ -9003,7 +9003,7 @@
     },
     {
       "id": "e13",
-      "region": "bank",
+      "region": "clockshop",
       "type": "guard",
       "x": 65,
       "y": 35,
@@ -9099,7 +9099,7 @@
     },
     {
       "id": "e25",
-      "region": "clockshop",
+      "region": "bank",
       "type": "scav",
       "x": 53,
       "y": 19,
@@ -9259,7 +9259,7 @@
     },
     {
       "id": "e46",
-      "region": "clockshop",
+      "region": "bank",
       "type": "scav",
       "x": 50,
       "y": 21,
@@ -9364,8 +9364,8 @@
       ]
     },
     {
-      "id": "bank-square",
-      "name": "银行前场",
+      "id": "clockshop-square",
+      "name": "钟表店前场",
       "rect": [
         43,
         31,
