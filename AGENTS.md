@@ -8,13 +8,15 @@
   编辑器的素材列表**完全由这份表生成**——没登记，编辑器里就选不到，即使地图上已经摆了这件家具。
 - **可放置家具用 `role: "prop"`** 并声明 `paint.footprint`；方向变体登记成 `scene-component` + `variantOf` + `facing`（`<基名>_side` / `_back`）；
   有多格放大图时加 `"large": true` 并保证 `_large` / `_large_side` / `_large_back` 三张齐全。
+  窄而高的单格家具（落地钟）再加 `paint.visual: [1, 1.5]`：只放大贴图，碰撞仍按 `footprint`。
 - **两级校验**：
   ```bash
   node tools/build-scene-library.js   # 生成 scene-library.js / data.js / 素材总览页；漏登记直接报错
   node tools/check-assets.js          # 目录与元数据体检（根目录散文件、命名、footprint、缺图）
   ```
   两个都必须 0 错误，不可绕过。
-- **改动后跑回归**：`node tools/test-scene-library.js`（编辑器放置/撤销/保存重开/碰撞），必要时补该物件的专用测试；
+- **改动后跑回归**：`node tools/test-scene-library.js`（编辑器放置/撤销/保存重开/碰撞），必要时补该物件的专用测试
+  （例：`node tools/test-prop-visual.js` 锁"占 1 格、画 1.5 格高"的绘制盒）；
   最后 `node build.js --assets-only` 同步离线单文件版。
 - **原稿不进运行时目录**：生成原稿、预览图、对比截图、旧版本放 `assets/source/<批次>/`；提示词放 `assets/source/prompts/`。
 

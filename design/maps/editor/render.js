@@ -179,6 +179,41 @@
     return { sx, sy, w: Math.max.apply(null, xs) - sx + 1, h: Math.max.apply(null, ys) - sy + 1 };
   }
 
+  /* 实体的贴图绘制盒：占地决定位置（贴底、水平居中），登记表声明的 visual 决定尺寸。
+     落地钟占 1 格却要画 1.5 格高——按 1 格等比换算只会缩成一小撮。
+     这里对矩形四角做连续投影：Core.project 是整格坐标（末尾 -1），处理不了 1.5 格。
+     没有 visual 时与 screenBox 完全等价。 */
+  function edgeProject(x, y, rot, w, h) {
+    switch (((rot % 360) + 360) % 360) {
+      case 90: return [h - y, x];
+      case 180: return [w - x, h - y];
+      case 270: return [y, w - x];
+      default: return [x, y];
+    }
+  }
+
+  /* 贴图绘制盒：设计稿里写死的优先；没写就回落到登记表声明的默认值。
+     老设计稿（以及没动过这个家具的图）不会带 visual，不回落到登记表的话，
+     编辑器里还是一格高、进游戏却变 1.5 格——同一张图两种长相。 */
+  function visualOf(ent) {
+    if (Array.isArray(ent.visual)) return ent.visual;
+    const [fw, fh] = ent.footprint || [1, 1];
+    const d = Art.paintDefaults(Art.resolvePropArt(ent));
+    return d && Array.isArray(d.visual) ? d.visual : [fw, fh];
+  }
+
+  function drawBox(ent, data, rot) {
+    const [fw, fh] = ent.footprint || [1, 1];
+    const [vw, vh] = visualOf(ent);
+    if (vw === fw && vh === fh) return screenBox(ent, data, rot);
+    const x0 = ent.x + (fw - vw) / 2, y0 = ent.y + fh - vh;
+    const pts = [[x0, y0], [x0 + vw, y0], [x0, y0 + vh], [x0 + vw, y0 + vh]]
+      .map(p => edgeProject(p[0], p[1], rot, data.width, data.height));
+    const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+    const sx = Math.min.apply(null, xs), sy = Math.min.apply(null, ys);
+    return { sx, sy, w: Math.max.apply(null, xs) - sx, h: Math.max.apply(null, ys) - sy };
+  }
+
   function draw(data, result, state, canvas) {
     const ctx = canvas.getContext('2d');
     const cssW = canvas.clientWidth, cssH = canvas.clientHeight;
@@ -267,8 +302,11 @@
         const art = Art.propVariant(prop, Art.screenFacing(prop.facing || 'front', state.rot));
         const im = image('props', art);
         if (usable(im)) {
-          const r = prop.ground ? {x:0,y:0,w:tile*box.w,h:tile*box.h} : spriteRect(box, im, tile);
-          ctx.drawImage(im, bx + r.x, by + r.y, r.w, r.h);
+          /* 高家具的贴图盒比占地大：以 drawBox 为准定位，选中描边仍按占地格画。 */
+          const dbox = prop.ground ? box : drawBox(prop, data, state.rot);
+          const dx = m.ox + dbox.sx * tile, dy = m.oy + dbox.sy * tile;
+          const r = prop.ground ? {x:0,y:0,w:tile*box.w,h:tile*box.h} : spriteRect(dbox, im, tile);
+          ctx.drawImage(im, dx + r.x, dy + r.y, r.w, r.h);
         } else {
           drawDot(ctx, bx, by, tile, '#8a6f9a');   // 只有缺图时才退成小方块
         }

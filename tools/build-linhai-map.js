@@ -25,7 +25,12 @@ function compile(layoutOverride) {
     const door = {id:p.id,cells:p.cells,axis,reinforced:['bank.security','bank.vault'].includes(p.id)};
     doors.push(door); for (const c of p.cells) doorAxes[c.join(',')] = axis;
   }
-  const props = d.props.map(p => ({...p,id:p.id,art:MapArt.resolvePropArt(p),provisional:false,ground:p.ground===true})).sort((a,b)=>Number(b.ground)-Number(a.ground));
+  /* 登记表里声明的绘制参数（visual = 贴图绘制盒比占地大）在这里补到每条家具上：
+     老的 layout.json 不会写这个字段，靠登记表统一补齐；设计稿自己写了就以设计稿为准。 */
+  const props = d.props.map(p => {
+    const art = MapArt.resolvePropArt(p);
+    return {...(MapArt.paintDefaults(art) || {}), ...p, id:p.id, art, provisional:false, ground:p.ground===true};
+  }).sort((a,b)=>Number(b.ground)-Number(a.ground));
   const overlays = MapArt.resolveOverlays(d);
   return {id:'linhai-old-quarter',title:d.title,width:d.width,height:d.height,source:'design/maps/linhai-old-quarter/layout.json',sourceSha256:crypto.createHash('sha256').update(String(bytes).replace(/\r\n/g,'\n')).digest('hex'),tideEnabled:false,
     terrain,terrainRows:d.rows,rows:grid.map(r=>r.join('')),spawn:d.spawn,exits:d.exits,doors,doorAxes,props,overlays,

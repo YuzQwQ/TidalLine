@@ -55,6 +55,17 @@ function build() {
         || !p.footprint.every(n => Number.isInteger(n) && n > 0)) {
         fail('家具必须声明 footprint:[宽,高]（正整数格）：' + key);
       }
+      /* visual：只改贴图绘制盒，不改占地与碰撞。落地钟这类"窄而高"的家具占 1 格，
+         按 1 格等比换算会缩成一小撮，所以允许声明 1×1.5 的绘制盒。只放大不缩小。 */
+      if (p.visual !== undefined) {
+        if (!Array.isArray(p.visual) || p.visual.length !== 2
+          || !p.visual.every(n => typeof n === 'number' && isFinite(n) && n > 0)) {
+          fail('visual 必须是 [宽,高] 两个正数（单位：格）：' + key);
+        }
+        if (p.visual[0] < p.footprint[0] || p.visual[1] < p.footprint[1]) {
+          fail('visual 只能放大贴图，不能小于 footprint：' + key);
+        }
+      }
       /* 多格家具靠 _large 把两格铺满，少一张就会退回单格图、留白一整格 */
       if (a.large) {
         for (const sfx of ['_large', '_large_side', '_large_back']) {

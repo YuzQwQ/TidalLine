@@ -13,7 +13,7 @@
 | --- | --- | --- | --- |
 | `ground` | 地面 | 画笔 / 矩形 / 油漆桶 | 字符 + 图例的 `art` 字段 |
 | `decal` | 装饰 | 单击放置，透明贴花 | `ground:true`、`solid:false`、`opaque:false` |
-| `prop` | 装饰 | 单击放置，按 `footprint` 占格 | `type` / `name` / `footprint`（+ 可选 `collisionCells`、`canopy`） |
+| `prop` | 装饰 | 单击放置，按 `footprint` 占格 | `type` / `name` / `footprint`（+ 可选 `collisionCells`、`canopy`、`visual`） |
 
 选择素材不修改地图；第一次绘制时才在同一撤销事务中补上图例。新建地图和已存在地图都能选到全部素材，
 不需要先放一个实例。贴花保持透明边缘与原生 32px 比例，先于家具绘制，不参与移动、子弹或视线碰撞；
@@ -35,7 +35,7 @@
 完整流程、字段定义与常见报错处理见 **[SCENE_ASSET_SPEC.md](SCENE_ASSET_SPEC.md)**。要点：
 
 1. 图放进 `assets/tiles/` 或 `assets/props/`，文件名 = 素材 ID；
-2. 在 `shared/scene-assets.json` 登记（role / name / footprint / 方向变体 / large）；
+2. 在 `shared/scene-assets.json` 登记（role / name / footprint / 方向变体 / large，窄高件再加 visual 绘制盒）；
 3. `node tools/build-scene-library.js` — 生成素材页、编辑器目录与游戏预加载列表，漏登记即报错；
 4. `node tools/check-assets.js` — 目录体检（散文件、命名、缺图、footprint）；
 5. `node tools/test-scene-library.js` — 编辑器放置、撤销、保存重开、运行时碰撞；

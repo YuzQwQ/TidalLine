@@ -178,9 +178,12 @@ const Art = {
   propRect(prop,image,tileSize) {
     if(prop.ground)return {sx:0,sy:0,sw:image.naturalWidth,sh:image.naturalHeight,
       x:prop.x*tileSize,y:prop.y*tileSize,w:tileSize,h:tileSize};
-    const [w,h]=M.propSize(prop),[sx,sy,sw,sh]=this.propBounds(image);
+    /* 绘制盒按 propVisual：家具可以"占 1 格、画 1.5 格高"（落地钟这类窄高件），
+       碰撞与遮挡仍只看 footprint。贴底、居中都以占地为准，只有尺寸预算用绘制盒，
+       所以放大的图只会向上长，不会往下沉或整体偏移。 */
+    const [w,h]=M.propVisual(prop),[fw,fh]=M.propSize(prop),[sx,sy,sw,sh]=this.propBounds(image);
     const scale=Math.min((w*tileSize-4)/sw,(h*tileSize-4)/sh),dw=sw*scale,dh=sh*scale;
-    return {sx,sy,sw,sh,x:prop.x*tileSize+(w*tileSize-dw)/2,y:(prop.y+h)*tileSize-3-dh,w:dw,h:dh};
+    return {sx,sy,sw,sh,x:prop.x*tileSize+(fw*tileSize-dw)/2,y:(prop.y+fh)*tileSize-3-dh,w:dw,h:dh};
   },
 
   // 方向沿墙体走向命名，不能旋转正面位图，否则立面和光源都会跟着转。

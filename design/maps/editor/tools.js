@@ -316,6 +316,11 @@
          少了这些，3×3 的树会变成 3×3 的实心方块（只有树干该挡人）。 */
       if (Array.isArray(material.collisionCells)) rec.collisionCells = material.collisionCells.map(c => c.slice());
       if (material.canopy) rec.canopy = Object.assign({}, material.canopy);
+      /* 贴图绘制盒（visual）与占地分开：落地钟占 1 格、画 1.5 格高。占地被转成侧向
+         （宽高互换）时，绘制盒也要一起换，否则贴图会横着长出格子。 */
+      if (Array.isArray(material.visual)) {
+        rec.visual = (fp[0] === w && fp[1] === h) ? material.visual.slice() : [material.visual[1], material.visual[0]];
+      }
       d.props.push(rec);
       return { ok: true, id: rec.id, label: rec.name };
     }

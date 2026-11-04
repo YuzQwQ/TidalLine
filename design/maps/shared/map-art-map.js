@@ -54,6 +54,16 @@
     if(a.large)LARGE_BASES.add(a.id);
   }
 
+  /* 基名 → 登记表里声明的绘制参数（目前只有 visual：贴图绘制盒比占地大）。
+     地图编译和编辑器都从这里取，同一个数字不会两处各写一份。 */
+  const PAINT_DEFAULTS = {};
+  for(const a of (Library&&Library.placeables)||[]){
+    if(!a.paint)continue;
+    const extra={};
+    if(Array.isArray(a.paint.visual))extra.visual=a.paint.visual.slice();
+    if(Object.keys(extra).length)PAINT_DEFAULTS[a.id]=extra;
+  }
+
   /* 容器类型字模 → 箱子贴图。与 js/data.js 的 CONTAINER_TYPES.art 同源（有测试锁）。
    * 小型保险箱用crate_heavy，大型保险箱用独立crate_safe_big。 */
   const CONTAINER_ART = {
@@ -207,10 +217,17 @@
     return !!ART_TO_FAMILY[art];
   }
 
+  /* 某张贴图基名在登记表里声明的绘制参数；没有就返回 null。
+     调用方负责与地图记录合并（地图记录里已写明的字段优先）。 */
+  function paintDefaults(art) {
+    const d = PAINT_DEFAULTS[art];
+    return d ? JSON.parse(JSON.stringify(d)) : null;
+  }
+
   return {
     TILE_ART, ROT_FAMILIES, FACING_VARIANTS, LARGE_BASES, CONTAINER_ART,
     KNOWN_MISSING, FACINGS, FURNITURE, BY_NAME,
     familyOf, facingsOf, missingFacings, resolveFacing, rotateArt, isDirectional,
-    resolvePropArt, propVariant, screenFacing, nextFacing, containerArt, resolveOverlays
+    resolvePropArt, paintDefaults, propVariant, screenFacing, nextFacing, containerArt, resolveOverlays
   };
 });

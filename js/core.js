@@ -43,6 +43,16 @@ const M = {
     return size;
   },
 
+  /* 贴图绘制盒：默认与占地一致；登记表声明了 visual 时用它。
+     只影响画面，碰撞/遮挡/寻路仍按 footprint——落地钟就是占 1 格、画 1.5 格高。 */
+  propVisual(prop) {
+    if (prop.visual === undefined) return this.propSize(prop);
+    const size = prop.visual;
+    if (!Array.isArray(size) || size.length !== 2 || !size.every(n=>typeof n==='number'&&isFinite(n)&&n>0))
+      throw new Error('贴图绘制盒必须为两个正数: '+prop.id);
+    return size;
+  },
+
   propCells(prop) {
     const [w,h]=this.propSize(prop),cells=[];
     for(let y=prop.y;y<prop.y+h;y++)for(let x=prop.x;x<prop.x+w;x++)cells.push([x,y]);
