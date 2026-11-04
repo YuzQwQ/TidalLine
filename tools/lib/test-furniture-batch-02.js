@@ -1,12 +1,15 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict'),crypto=require('crypto');
 const root=path.resolve(__dirname,'../..'),folder=path.join(root,'assets/source/scene-furniture-batch-02'),m=require('../../assets/source/scene-furniture-batch-02/manifest.json'),lib=require('../../design/maps/shared/scene-library.js'),ArtMap=require('../../design/maps/shared/map-art-map.js'),Core=require('../../design/maps/shared/map-core.js'),Tpl=require('../../design/maps/shared/map-templates.js');
 const fronts=m.assets.filter(a=>a.facing==='front');
+/* 哈希前把换行归一化成 LF：仓库里存的是 LF，Windows 检出可能是 CRLF。
+   不归一化的话，同一份 layout.json 在不同机器上算出不同哈希，"干净检出必红"。 */
+const sha=b=>crypto.createHash('sha256').update(String(b).replace(/\r\n/g,'\n')).digest('hex');
 function staticChecks(){
  assert.equal(m.assets.length,36);assert.equal(fronts.length,12);assert.equal(m.planned.length,10);
  const hashes=new Set();
  for(const a of m.assets){
   assert.equal(a.status,'ready');assert(fs.existsSync(path.join(folder,a.source)));assert(a.prompt&&a.originalSource);
-  const bytes=fs.readFileSync(path.join(root,a.target)),hash=crypto.createHash('sha256').update(bytes).digest('hex');assert(!hashes.has(hash),a.id+'应为独立方向图');hashes.add(hash);
+  const bytes=fs.readFileSync(path.join(root,a.target)),hash=sha(bytes);assert(!hashes.has(hash),a.id+'应为独立方向图');hashes.add(hash);
   const p=require('./png-read').read(path.join(root,a.target));assert.deepEqual([p.w,p.h],a.size);
   const colors=new Set();let n=0;for(let y=0;y<p.h;y++)for(let x=0;x<p.w;x++){const px=p.px[y][x];assert([0,255].includes(px[3]));if(px[3]){n++;assert(x>=2&&x<p.w-2&&y>=2&&y<p.h-2);colors.add(px.join(','));}}assert(n>20);assert(colors.size<=15);
   const reg=lib.assets.find(x=>x.id===a.id&&x.group==='props');assert(reg,a.id+'缺登记');
@@ -14,7 +17,7 @@ function staticChecks(){
   assert.equal(!!reg.paint,a.facing==='front');if(reg.paint)assert.deepEqual(reg.paint.footprint,a.size.map(v=>v/32));
  }
  for(const a of m.planned)assert(!lib.placeables.some(x=>x.id===a.id),'未完成素材不可选');
- const base=require('../../assets/source/scene-furniture-batch-02/map-baseline.json');for(const [f,hash] of Object.entries(base)){let bytes;if(f.endsWith('.json'))bytes=fs.readFileSync(path.join(root,f));else bytes=fs.readFileSync(path.join(root,'js/data.js'),'utf8').match(new RegExp('/\\* BEGIN GENERATED '+f+' \\*/[\\s\\S]*?/\\* END GENERATED '+f+' \\*/'))[0];assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),hash,'正式地图变动 '+f);}
+ const base=require('../../assets/source/scene-furniture-batch-02/map-baseline.json');for(const [f,hash] of Object.entries(base)){let bytes;if(f.endsWith('.json'))bytes=fs.readFileSync(path.join(root,f));else bytes=fs.readFileSync(path.join(root,'js/data.js'),'utf8').match(new RegExp('/\\* BEGIN GENERATED '+f+' \\*/[\\s\\S]*?/\\* END GENERATED '+f+' \\*/'))[0];assert.equal(sha(bytes),hash,'正式地图变动 '+f);}
 }
 async function editorChecks(page){
  const fresh=Tpl.create({id:'furniture-batch-02',width:48,height:36,template:'blank'}).data;

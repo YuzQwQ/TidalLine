@@ -27,7 +27,7 @@ function compile(layoutOverride) {
   }
   const props = d.props.map(p => ({...p,id:p.id,art:MapArt.resolvePropArt(p),provisional:false,ground:p.ground===true})).sort((a,b)=>Number(b.ground)-Number(a.ground));
   const overlays = MapArt.resolveOverlays(d);
-  return {id:'linhai-old-quarter',title:d.title,width:d.width,height:d.height,source:'design/maps/linhai-old-quarter/layout.json',sourceSha256:crypto.createHash('sha256').update(bytes).digest('hex'),tideEnabled:false,
+  return {id:'linhai-old-quarter',title:d.title,width:d.width,height:d.height,source:'design/maps/linhai-old-quarter/layout.json',sourceSha256:crypto.createHash('sha256').update(String(bytes).replace(/\r\n/g,'\n')).digest('hex'),tideEnabled:false,
     terrain,terrainRows:d.rows,rows:grid.map(r=>r.join('')),spawn:d.spawn,exits:d.exits,doors,doorAxes,props,overlays,
     containers:d.containers,enemies:d.enemies,rooms:d.rooms,bridges:d.bridges,tideReserve:d.tide,
     districts:d.buildings.map(b=>({key:b.id,name:b.name,shape:b.shape,rect:b.rect,loot:b.id==='bank'?'high':'normal',label:[Math.round((b.rect[0]+b.rect[2])/2),b.rect[1]-1],footprint:b.footprint}))};
