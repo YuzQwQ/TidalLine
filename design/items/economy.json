@@ -3056,6 +3056,50 @@
     "beretta92": {
       "price": 44000,
       "rarity": 3
+    },
+    "m16a1": {
+      "price": 35000,
+      "rarity": 1
+    },
+    "galil_arm": {
+      "price": 30000,
+      "rarity": 1
+    },
+    "aks74u": {
+      "price": 65000,
+      "rarity": 2
+    },
+    "g36c": {
+      "price": 78000,
+      "rarity": 2
+    },
+    "fn_fnc": {
+      "price": 100000,
+      "rarity": 3
+    },
+    "sig550": {
+      "price": 125000,
+      "rarity": 3
+    },
+    "an94": {
+      "price": 165000,
+      "rarity": 4
+    },
+    "aug_a1": {
+      "price": 230000,
+      "rarity": 5
+    },
+    "groza1": {
+      "price": 250000,
+      "rarity": 5
+    },
+    "ak12": {
+      "price": 115000,
+      "rarity": 3
+    },
+    "mk47_mod2": {
+      "price": 175000,
+      "rarity": 4
     }
   },
   "armor": {

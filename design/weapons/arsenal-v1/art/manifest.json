@@ -5,6 +5,7 @@
       "id": "m4a1",
       "name": "M4A1",
       "source": "art/sources/m4a1.png",
+      "promptFile": "art/m4a1.json",
       "target": "assets/gear/m4a1.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, M4A1: compact black AR-style carbine, straight inline collapsible stock, short round polymer handguard, carry-handle upper receiver, curved 30-round magazine. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Long gun about40 logical pixels long, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -17,6 +18,7 @@
       "id": "akm",
       "name": "AKM",
       "source": "art/sources/akm.png",
+      "promptFile": "art/akm.json",
       "target": "assets/gear/akm.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, AKM: dark blued steel AK stamped receiver, warm worn walnut fixed stock and wooden handguards, strongly curved banana 7.62 magazine. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Long gun about40 logical pixels long, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -29,6 +31,7 @@
       "id": "famas_f1",
       "name": "FAMAS F1",
       "source": "art/sources/famas_f1.png",
+      "promptFile": "art/famas_f1.json",
       "target": "assets/gear/famas_f1.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, FAMAS F1: compact black bullpup assault rifle, long tall integrated carry handle, straight 25-round magazine behind grip, short barrel, distinctive FAMAS silhouette. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Long gun about40 logical pixels long, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -41,6 +44,7 @@
       "id": "pp19_01",
       "name": "PP-19-01 Vityaz",
       "source": "art/sources/pp19_01.png",
+      "promptFile": "art/pp19_01.json",
       "target": "assets/gear/pp19_01.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, PP-19-01 Vityaz: compact black AK-pattern 9mm submachine gun, short barrel, black polymer handguard, side-folding triangular metal stock, thin curved stick magazine; not a helical magazine. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Long gun about40 logical pixels long, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -53,6 +57,7 @@
       "id": "mp5a3",
       "name": "MP5A3",
       "source": "art/sources/mp5a3.png",
+      "promptFile": "art/mp5a3.json",
       "target": "assets/gear/mp5a3.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, MP5A3: black roller-delayed submachine gun, cylindrical ribbed handguard, slim slightly curved 9mm magazine, extended two-rail collapsible stock and diopter sight. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Long gun about40 logical pixels long, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -65,6 +70,7 @@
       "id": "ump45",
       "name": "UMP45",
       "source": "art/sources/ump45.png",
+      "promptFile": "art/ump45.json",
       "target": "assets/gear/ump45.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, UMP45: angular charcoal polymer submachine gun, chunky squared receiver, squared ventilated handguard, open skeletal folding stock, thick straight .45 magazine. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Long gun about40 logical pixels long, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -77,6 +83,7 @@
       "id": "mp155",
       "name": "MP-155",
       "source": "art/sources/mp155.png",
+      "promptFile": "art/mp155.json",
       "target": "assets/gear/mp155.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, MP-155: long hunting semiautomatic shotgun, walnut shoulder stock and fore-end, silver gray long smooth barrel and slim under-barrel tubular magazine, NO box magazine. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Long gun about40 logical pixels long, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -89,6 +96,7 @@
       "id": "rem870",
       "name": "Remington 870",
       "source": "art/sources/rem870.png",
+      "promptFile": "art/rem870.json",
       "target": "assets/gear/rem870.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, Remington 870: pump-action shotgun, dark walnut shoulder stock, long ribbed wooden sliding pump fore-end, dark blued steel receiver and barrel, tubular magazine under barrel, NO detachable box magazine. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Long gun about40 logical pixels long, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -101,6 +109,7 @@
       "id": "saiga12",
       "name": "Saiga-12",
       "source": "art/sources/saiga12.png",
+      "promptFile": "art/saiga12.json",
       "target": "assets/gear/saiga12.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, Saiga-12: black AK-pattern semiautomatic shotgun, dark polymer fixed stock and handguard, stout barrel, visibly thick detachable box magazine, no wooden pump. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Long gun about40 logical pixels long, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -113,6 +122,7 @@
       "id": "glock17",
       "name": "Glock 17",
       "source": "art/sources/glock17.png",
+      "promptFile": "art/glock17.json",
       "target": "assets/gear/glock17.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, Glock 17: compact matte black polymer frame pistol, squared simple dark steel slide, double stack grip, short barrel, squared trigger guard. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Pistol should occupy only about 28 by20 logical pixels, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -125,6 +135,7 @@
       "id": "m1911a1",
       "name": "M1911A1",
       "source": "art/sources/m1911a1.png",
+      "promptFile": "art/m1911a1.json",
       "target": "assets/gear/m1911a1.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, M1911A1: classic slender dark steel single-action pistol, long narrow slide, slim single-stack brown checkered walnut grip, visible hammer and rounded trigger guard. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Pistol should occupy only about 28 by20 logical pixels, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
       "size": [
@@ -137,8 +148,152 @@
       "id": "beretta92",
       "name": "Beretta 92FS",
       "source": "art/sources/beretta92.png",
+      "promptFile": "art/beretta92.json",
       "target": "assets/gear/beretta92.png",
       "prompt": "Use case: stylized-concept. One production inventory pixel-art icon for TidalLine survival game, Beretta 92FS: silver gray and dark blued full-size pistol with distinctive long OPEN-TOP slide exposing barrel, black grip panels and curved trigger guard. Clean readable SIDE PROFILE, stock or grip on LEFT, muzzle points RIGHT and slightly upward about 12 degrees. Entire gun visible, correct distinct model silhouette at tiny 48x48 resolution. Retro 1990s low saturation industrial pixel art, hard square pixel clusters and restrained palette, highlights upper left, simplified realistic metals wood and polymer. Pistol should occupy only about 28 by20 logical pixels, centered within48x48 logical canvas with minimum4px transparent safety margins. Can export enlarged pixels. Truly transparent background. No human hands, no bullets, no scene, no cast floor shadow, no logos, no writing, no label, no UI, no rarity background, no photography.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "m16a1",
+      "name": "M16A1",
+      "source": "../../../assets/item-art/assault-expansion/sources/m16a1.png",
+      "promptFile": "../../../assets/item-art/assault-expansion/m16a1.json",
+      "target": "assets/gear/m16a1.png",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. M16A1 assault rifle, full-length triangular ribbed black polymer handguard, fixed black stock, classic integral carry handle, long barrel, straight short 20-round magazine. No modern rails or attachments. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "galil_arm",
+      "name": "Galil ARM",
+      "source": "../../../assets/item-art/assault-expansion/sources/galil_arm.png",
+      "promptFile": "../../../assets/item-art/assault-expansion/galil_arm.json",
+      "target": "assets/gear/galil_arm.png",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. Galil ARM rifle, heavy dark steel receiver, brown wooden ventilated handguard, distinctive tubular folding stock, long barrel with folded bipod, long curved 35-round 5.56 magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "aks74u",
+      "name": "AKS-74U",
+      "source": "../../../assets/item-art/assault-expansion/sources/aks74u.png",
+      "promptFile": "../../../assets/item-art/assault-expansion/aks74u.json",
+      "target": "assets/gear/aks74u.png",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. AKS-74U compact assault rifle, very short barrel with bulbous muzzle booster, reddish-brown short wooden handguard, triangular side-folding metal skeleton stock, strongly curved 5.45 magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "g36c",
+      "name": "G36C",
+      "source": "../../../assets/item-art/assault-expansion/sources/g36c.png",
+      "promptFile": "../../../assets/item-art/assault-expansion/g36c.json",
+      "target": "assets/gear/g36c.png",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. G36C compact assault rifle, dark charcoal polymer body, distinctive skeleton folding stock, compact slotted handguard, low integral carrying rail, short barrel and translucent dark magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "fn_fnc",
+      "name": "FN FNC",
+      "source": "../../../assets/item-art/assault-expansion/sources/fn_fnc.png",
+      "promptFile": "../../../assets/item-art/assault-expansion/fn_fnc.json",
+      "target": "assets/gear/fn_fnc.png",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. FN FNC assault rifle, dark steel upper receiver, muted olive-black polymer handguard, folding tubular metal stock, standard 30-round 5.56 box magazine, full-length barrel and tall front sight. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "sig550",
+      "name": "SIG SG 550",
+      "source": "../../../assets/item-art/assault-expansion/sources/sig550.png",
+      "promptFile": "../../../assets/item-art/assault-expansion/sig550.json",
+      "target": "assets/gear/sig550.png",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. SIG SG 550 precision service assault rifle, distinctive muted olive green polymer handguard and skeletal folding stock, grey steel receiver, long barrel, translucent ribbed curved magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "an94",
+      "name": "AN-94",
+      "source": "../../../assets/item-art/assault-expansion/sources/an94.png",
+      "promptFile": "../../../assets/item-art/assault-expansion/an94.json",
+      "target": "assets/gear/an94.png",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. AN-94 assault rifle, distinctive asymmetric chunky dark polymer receiver, slanted 5.45 box magazine, long front barrel assembly and fixed-shaped folding stock. Exact recognizable AN-94 profile, no scope. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "aug_a1",
+      "name": "AUG A1",
+      "source": "../../../assets/item-art/assault-expansion/sources/aug_a1.png",
+      "promptFile": "../../../assets/item-art/assault-expansion/aug_a1.json",
+      "target": "assets/gear/aug_a1.png",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. Steyr AUG A1 bullpup assault rifle, distinctive olive green integrated polymer bullpup stock, built-in elevated optical carry-handle sight, folding vertical foregrip, magazine behind the pistol grip, black barrel. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "groza1",
+      "name": "OTs-14-1A Groza-1「雷暴」",
+      "source": "../../../assets/item-art/assault-batch-03/sources/groza1.png",
+      "promptFile": "../../../assets/item-art/assault-batch-03/groza1.json",
+      "target": "assets/gear/groza1.png",
+      "prompt": "Create exactly ONE finished inventory weapon sprite for the indie survival game TidalLine. OTs-14-1A Groza-1, a very compact Soviet-style bullpup assault rifle in 7.62x39. Flat dark steel and worn black polymer, stubby barrel with short cylindrical muzzle device at RIGHT, tall distinctive integrated carry handle spanning above receiver, curved dark 30-round AK magazine BEHIND pistol grip toward butt at LEFT, small squared rear buttplate, forward integral vertical grip below short front end. No separate conventional rifle stock, no grenade launcher, no silencer, no optic, no tan furniture. Bullpup layout absolutely essential: left-to-right order buttplate, curved magazine, pistol grip, foregrip, muzzle. Style: restrained retro pixel art, hard stepped dark outline, coarse deliberate square pixel clusters, small muted palette, cool gunmetal highlights, sparse beige edge wear. Full weapon entirely visible in frame; side-on with very slight top/three-quarter hint, horizontal muzzle pointing RIGHT and 5 degrees upward, buttstock LEFT. Emphasize a clear readable silhouette that survives reduction to 40 pixels wide. Long gun occupies 85% canvas width centered, ample fully transparent empty margin. No labels, letters, typography, rarity frame, gradient background, shadow, fog, glow, vignette or additional objects. True transparent background including all spaces through stock, trigger guard, carry handle and grip gaps. This is a new single weapon bitmap asset, not a sheet, not a photograph or rendered product shot.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "ak12",
+      "name": "AK-12",
+      "source": "../../../assets/item-art/assault-batch-03/sources/ak12.png",
+      "promptFile": "../../../assets/item-art/assault-batch-03/ak12.json",
+      "target": "assets/gear/ak12.png",
+      "prompt": "Create exactly ONE finished inventory weapon sprite for the indie survival game TidalLine. AK-12 modern Russian-style assault rifle in 5.45x39. Worn matte charcoal steel and black polymer. Recognizable AK receiver/dust cover with continuous top picatinny rail, adjustable angular polymer shoulder stock at LEFT, long slim railed handguard at RIGHT with vent slots, narrow gently curved ribbed polymer 30-round magazine, short gas tube, longish barrel ending compact modern slotted muzzle brake at RIGHT. Iron sights only, no scope, no wood, no foregrip attachments. Style: restrained retro pixel art, hard stepped dark outline, coarse deliberate square pixel clusters, small muted palette, cool gunmetal highlights, sparse beige edge wear. Full weapon entirely visible in frame; side-on with very slight top/three-quarter hint, horizontal muzzle pointing RIGHT and 5 degrees upward, buttstock LEFT. Emphasize a clear readable silhouette that survives reduction to 40 pixels wide. Long gun occupies 85% canvas width centered, ample fully transparent empty margin. No labels, letters, typography, rarity frame, gradient background, shadow, fog, glow, vignette or additional objects. True transparent background including all spaces through stock, trigger guard, carry handle and grip gaps. This is a new single weapon bitmap asset, not a sheet, not a photograph or rendered product shot.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "mk47_mod2",
+      "name": "MK47 MOD.2「Mutant」",
+      "source": "../../../assets/item-art/assault-batch-03/sources/mk47_mod2.png",
+      "promptFile": "../../../assets/item-art/assault-batch-03/mk47_mod2.json",
+      "target": "assets/gear/mk47_mod2.png",
+      "prompt": "Create exactly ONE finished inventory weapon sprite for the indie survival game TidalLine. MK47 MOD.2 Mutant, fictional selective-fire game-world variant inspired by the Mk47 design, a black modern AR-style 7.62x39 rifle. Slim extended dark graphite free-floating M-LOK handguard with straight continuous top rail, conventional angular adjustable skeletonized AR stock at LEFT, AR pistol grip and receiver, strongly curved dark ribbed AK-pattern 30-round magazine, medium barrel and short brake at RIGHT. Crisp accurate distinctive AR plus AK-magazine silhouette. Iron sights only, no optic, no underbarrel gadget, no text or real manufacturer logo. Style: restrained retro pixel art, hard stepped dark outline, coarse deliberate square pixel clusters, small muted palette, cool gunmetal highlights, sparse beige edge wear. Full weapon entirely visible in frame; side-on with very slight top/three-quarter hint, horizontal muzzle pointing RIGHT and 5 degrees upward, buttstock LEFT. Emphasize a clear readable silhouette that survives reduction to 40 pixels wide. Long gun occupies 85% canvas width centered, ample fully transparent empty margin. No labels, letters, typography, rarity frame, gradient background, shadow, fog, glow, vignette or additional objects. True transparent background including all spaces through stock, trigger guard, carry handle and grip gaps. This is a new single weapon bitmap asset, not a sheet, not a photograph or rendered product shot.",
       "size": [
         48,
         48
@@ -149,6 +304,7 @@
       "id": "ammo_762x39",
       "name": "7.62×39mm弹药",
       "source": "art/sources/ammo_762x39.png",
+      "promptFile": "art/ammo_762x39.json",
       "target": "assets/items/ammo_762x39.png",
       "prompt": "Use case: stylized-concept. One pixel-art inventory icon for TidalLine: a small worn dark olive and burnt brown cardboard ammunition box with 4 loose 7.62x39 rifle cartridges alongside. Cartridges visibly chunky tapered brass cases with pointed copper bullets, thicker and shorter relative to 5.56; one standing, others laid diagonally. Box plus rounds, three-quarter overhead object view, low resolution48x48 logical pixel art with crisp square clusters, muted1990s industrial palette, upper-left light. Object centered with4px clear margin, truly transparent background. No text, no logo, no characters, no guns, no UI or rarity background. Match retro ammo inventory series.",
       "size": [
@@ -161,8 +317,22 @@
       "id": "ammo_45acp",
       "name": ".45 ACP弹药",
       "source": "art/sources/ammo_45acp.png",
+      "promptFile": "art/ammo_45acp.json",
       "target": "assets/items/ammo_45acp.png",
       "prompt": "Use case: stylized-concept. One pixel-art inventory icon for TidalLine: a small worn charcoal plum cardboard pistol ammunition box with a muted ivory strip and 4 loose .45 ACP pistol cartridges outside. Short broad straight brass cases with large round blunt copper noses, clearly fatter than9mm, NOT pointed rifle rounds and NOT shotgun hulls. Box plus rounds, three-quarter overhead object view, low resolution48x48 logical pixel art with crisp square clusters, muted1990s industrial palette, upper-left light. Object centered with4px clear margin, truly transparent background. No text, no logo, no characters, no guns, no UI or rarity background. Match retro ammo inventory series.",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4
+    },
+    {
+      "id": "ammo_545x39",
+      "name": "5.45×39mm 弹药",
+      "source": "../../../assets/item-art/assault-expansion/sources/ammo_545x39.png",
+      "promptFile": "../../../assets/item-art/assault-expansion/ammo_545x39.json",
+      "target": "assets/items/ammo_545x39.png",
+      "prompt": "Use case: stylized-concept. ONE equipment icon for TidalLine, coarse crisp retro pixel art matching the reference style and orientation. An open weathered muted brown-khaki ammunition cardboard box containing slender 5.45x39 rifle cartridges, with three loose bottleneck brass cartridges with narrow pointed copper bullets beside it. Same oblique view as the ammunition reference, clear different box colour, no printed text or caliber markings. Entire object centered inside 40x40 logical-pixel safe area of a 48x48 icon, 10% transparent margins all sides. Muted limited palette, upper-left light, binary pixel-like edges. No text, labels, rarity colour, scene, background, hands, extra objects, logos or glow. True transparent background.",
       "size": [
         48,
         48

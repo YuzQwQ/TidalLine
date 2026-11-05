@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "icons": 32,
+  "icons": 35,
   "canvas": [
     48,
     48
@@ -293,6 +293,33 @@
       "id": "att_mag_12g_quick_ext",
       "visible": 566,
       "sha256": "5c0b04b694a5acd42eda94ca1fd2f916a885a0518f7ed93f0dff18edb347e61a",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_545x39_ext",
+      "visible": 404,
+      "sha256": "851e7be6656b7480694607ecde657121f981b7ee77b60161b682927cd5b02cb9",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_545x39_quick",
+      "visible": 396,
+      "sha256": "89f9ea8b4e048c6566efce68e52b81f96a8b44e542e0d247b9c31017e1c290f8",
+      "original": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "id": "att_mag_545x39_quick_ext",
+      "visible": 399,
+      "sha256": "16a2f8421edc6b35bdc362d5222b3d65e69ea5e3282e99e390c959bfed8014b0",
       "original": [
         1254,
         1254

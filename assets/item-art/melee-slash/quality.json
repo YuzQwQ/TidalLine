@@ -1,17 +1,23 @@
 {
   "status": "passed",
-  "sprites": 2,
-  "size": [
+  "sprites": 3,
+  "slashSize": [
     128,
     64
   ],
-  "combinationsPerBuild": 24,
+  "thrustSize": [
+    64,
+    128
+  ],
+  "combinationsPerBuild": 56,
   "development": true,
   "offline": true,
   "sectorClipped": true,
-  "alternating": true,
-  "duration": 0.16,
-  "heightScale": 2.5,
+  "directionalTaper": true,
+  "separateThrust": true,
+  "windupPreview": true,
+  "hold": 0.08,
+  "duration": 0.24,
   "narrow": [
     320,
     390

@@ -1,0 +1,14 @@
+{
+  "id": "aks74u",
+  "name": "AKS-74U",
+  "generator": "image_gen",
+  "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. AKS-74U compact assault rifle, very short barrel with bulbous muzzle booster, reddish-brown short wooden handguard, triangular side-folding metal skeleton stock, strongly curved 5.45 magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+  "source": "assets/item-art/assault-expansion/sources/aks74u.png",
+  "target": "assets/gear/aks74u.png",
+  "size": [
+    48,
+    48
+  ],
+  "safeMargin": 4,
+  "sha256": "1e165bd6ac307d225988c777a37891aac89f326cb6d0218df444477dfe3e7d38"
+}

@@ -4,10 +4,34 @@
   "preload": false,
   "assets": [
     {
+      "key": "gear/ak12",
+      "source": "assets/item-art/assault-batch-03/sources/ak12.png",
+      "target": "assets/item-art/assault-batch-03/sources/ak12.png",
+      "sourceHash": "151fe2714a929c2100ef7be69dae5cea805d2eccf0e8fed0c4a60b9cf97c9bf6",
+      "width": 2172,
+      "height": 724
+    },
+    {
       "key": "gear/akm",
       "source": "design/weapons/arsenal-v1/art/sources/akm.png",
       "target": "design/weapons/arsenal-v1/art/sources/akm.png",
       "sourceHash": "fbbe2b3206a36f5f3f92ded71190a0c771a55f211b36af1dde675c93e2c669b4",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "gear/aks74u",
+      "source": "assets/item-art/assault-expansion/sources/aks74u.png",
+      "target": "assets/item-art/assault-expansion/sources/aks74u.png",
+      "sourceHash": "79af12af840a2dd1b4f69cb1258a059c46ff174875f3b6cfa9c7ea3e7ab701bf",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/an94",
+      "source": "assets/item-art/assault-expansion/sources/an94.png",
+      "target": "assets/item-art/assault-expansion/sources/an94.png",
+      "sourceHash": "f4502822b480a17737a25e33bbfc0a26e88a7015daa7d30a1c04bb6a3ab19244",
       "width": 1536,
       "height": 1024
     },
@@ -88,6 +112,30 @@
       "source": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick_ext.png",
       "target": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick_ext.png",
       "sourceHash": "219e61965c4337cb570e4d11bf2a882d28644da49aa3d9bb0a2441c5d7b9d40e",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_545x39_ext",
+      "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_ext.png",
+      "target": "assets/item-art/assault-expansion/sources/att_mag_545x39_ext.png",
+      "sourceHash": "dd6bd4d96b6d0dcf08d5e68cb8fe727a3ced50ad102d3d93143b0ec6322f53cb",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_545x39_quick",
+      "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick.png",
+      "target": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick.png",
+      "sourceHash": "f74a85d5552bd07c375689bd18907c8fa8d5126ef607a7ada94c2a2e9b80d5e3",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_545x39_quick_ext",
+      "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick_ext.png",
+      "target": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick_ext.png",
+      "sourceHash": "a57548ffceeadcac2fdbf28c64b3e27945faab15358827a396a08841eed088d4",
       "width": 1254,
       "height": 1254
     },
@@ -268,6 +316,14 @@
       "height": 1254
     },
     {
+      "key": "gear/aug_a1",
+      "source": "assets/item-art/assault-expansion/sources/aug_a1.png",
+      "target": "assets/item-art/assault-expansion/sources/aug_a1.png",
+      "sourceHash": "f02d8bcaec4ae6deaf631cade9731a68d186a2e79fe484c0ed6af4804190109b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "gear/bag",
       "source": "assets/item-art/legacy/sources/bag.png",
       "target": "assets/item-art/legacy/sources/bag.png",
@@ -412,12 +468,44 @@
       "height": 1254
     },
     {
+      "key": "gear/fn_fnc",
+      "source": "assets/item-art/assault-expansion/sources/fn_fnc.png",
+      "target": "assets/item-art/assault-expansion/sources/fn_fnc.png",
+      "sourceHash": "20a6f87bea97917a37682dae3f3d9dfb4981ea30ae0c0fdafed1476c81e5f3bd",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "gear/g36c",
+      "source": "assets/item-art/assault-expansion/sources/g36c.png",
+      "target": "assets/item-art/assault-expansion/sources/g36c.png",
+      "sourceHash": "04f4e9e0c0b9c65b298dc7b396dc35a91d5ac27ffa6946190138ff5ded38c365",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "gear/galil_arm",
+      "source": "assets/item-art/assault-expansion/sources/galil_arm.png",
+      "target": "assets/item-art/assault-expansion/sources/galil_arm.png",
+      "sourceHash": "05f6e0438c4fb91984efed4baebb72e8b057e100fca45f0376688c6d0c41c247",
+      "width": 1536,
+      "height": 1024
+    },
+    {
       "key": "gear/glock17",
       "source": "design/weapons/arsenal-v1/art/sources/glock17.png",
       "target": "design/weapons/arsenal-v1/art/sources/glock17.png",
       "sourceHash": "cc5f5b37572af4ec9c93677dc0bd7e76918c95d41aa3b4684bc9eda996e7aab4",
       "width": 1536,
       "height": 1024
+    },
+    {
+      "key": "gear/groza1",
+      "source": "assets/item-art/assault-batch-03/sources/groza1.png",
+      "target": "assets/item-art/assault-batch-03/sources/groza1.png",
+      "sourceHash": "79bab611c4f241a845a33dc2226b346667ad4ad5cb7e4cd2a4772eca86bf531f",
+      "width": 1774,
+      "height": 887
     },
     {
       "key": "gear/helmet1",
@@ -500,6 +588,14 @@
       "height": 1254
     },
     {
+      "key": "gear/m16a1",
+      "source": "assets/item-art/assault-expansion/sources/m16a1.png",
+      "target": "assets/item-art/assault-expansion/sources/m16a1.png",
+      "sourceHash": "4e02486dcc48354b9318c129e48d94bf87eb2ae60a02120f83d28479a2c2299d",
+      "width": 1774,
+      "height": 887
+    },
+    {
       "key": "gear/m1911a1",
       "source": "design/weapons/arsenal-v1/art/sources/m1911a1.png",
       "target": "design/weapons/arsenal-v1/art/sources/m1911a1.png",
@@ -538,6 +634,46 @@
       "sourceHash": "f4ebcec3fda4a9f2e19d882596748f918731af03db029e01df779f79a64ff435",
       "width": 1254,
       "height": 1254
+    },
+    {
+      "key": "gear/melee04",
+      "source": "assets/item-art/melee/sources/melee04.png",
+      "target": "assets/item-art/melee/sources/melee04.png",
+      "sourceHash": "abb86887f546dedd2034c1a14125475f495b99f344d5d258e5ba1e51d4151277",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/melee05",
+      "source": "assets/item-art/melee/sources/melee05.png",
+      "target": "assets/item-art/melee/sources/melee05.png",
+      "sourceHash": "b6e54f4e8bef327265c7169aaf71d8498b6024d72c5727bba5d767797b7119c8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/melee06",
+      "source": "assets/item-art/melee/sources/melee06.png",
+      "target": "assets/item-art/melee/sources/melee06.png",
+      "sourceHash": "8f091d5d6cad40b799e9b0bfb8ad61896e1f75df6cc12f47a441ba6a7fe19fd3",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/melee07",
+      "source": "assets/item-art/melee/sources/melee07.png",
+      "target": "assets/item-art/melee/sources/melee07.png",
+      "sourceHash": "ace169832c8e96e3b5936205e2c4c012a3f34552d75c48308843155671415286",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/mk47_mod2",
+      "source": "assets/item-art/assault-batch-03/sources/mk47_mod2.png",
+      "target": "assets/item-art/assault-batch-03/sources/mk47_mod2.png",
+      "sourceHash": "3fb05792f0133ea06615b2e0cd2fbf4e023b1cd67027bba8b5d18e82c203fed9",
+      "width": 2172,
+      "height": 724
     },
     {
       "key": "gear/mp155",
@@ -580,6 +716,14 @@
       "height": 1254
     },
     {
+      "key": "gear/sig550",
+      "source": "assets/item-art/assault-expansion/sources/sig550.png",
+      "target": "assets/item-art/assault-expansion/sources/sig550.png",
+      "sourceHash": "3ca8b3f54ae823a3eb0d03372d6b90f82ab2e6bf4a2595424efec70da8162679",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "gear/ump45",
       "source": "design/weapons/arsenal-v1/art/sources/ump45.png",
       "target": "design/weapons/arsenal-v1/art/sources/ump45.png",
@@ -600,6 +744,14 @@
       "source": "design/weapons/arsenal-v1/art/sources/ammo_45acp.png",
       "target": "design/weapons/arsenal-v1/art/sources/ammo_45acp.png",
       "sourceHash": "df459b4129560b08b122e8996e7d0d54a27b6f14a8c1c5f792174679f4bf10aa",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ammo_545x39",
+      "source": "assets/item-art/assault-expansion/sources/ammo_545x39.png",
+      "target": "assets/item-art/assault-expansion/sources/ammo_545x39.png",
+      "sourceHash": "a4800496bd81ddf831d97b3347d43104e4aa8ec43037867d60b5475d59f99075",
       "width": 1254,
       "height": 1254
     },

@@ -149,7 +149,7 @@ const GROUPS = [
     rows: [
       {
         name: '脚步', scope: 'raid',
-        where: 'js/entities.js:607（走路）· :524（闪避落地踩实那一步）',
+        where: 'js/entities.js:640（走路）· :552（闪避落地踩实那一步）',
         detail: '采样 <b>×4</b> 随机 · rate 0.94–1.06 · vol 0.5–1.2（越快步子越沉，潜行压到七成）· LOUD.step <b>0.05</b>',
         sounds: ['step_stone_1', 'step_stone_2', 'step_stone_3', 'step_stone_4'],
         btns: [
@@ -160,14 +160,14 @@ const GROUPS = [
       },
       {
         name: '闪避', scope: 'raid',
-        where: 'js/entities.js:541（Player.dodge）',
+        where: 'js/entities.js:572（Player.dodge）',
         detail: '合成破风：带通 600→2600Hz 扫频 0.18s + 低频垫 · LOUD.dodge <b>0.09</b>',
         sounds: [],
         btns: [{ l: '闪避', fn: () => SFX.play('dodge') }]
       },
       {
         name: '冲刺起步', scope: 'raid',
-        where: 'js/entities.js:584（按住 Shift 跑起来的那一帧）',
+        where: 'js/entities.js:617（按住 Shift 跑起来的那一帧）',
         detail: '采样 <b>sprint</b> 0.374s（714258）· 蹬地一声 + 掠过的风 · LOUD.sprint <b>0.065</b><br>' +
           '<b>只响一次，不循环</b>：sprinting 是"按住 Shift"这个状态，站着按住也一样为真，' +
           '所以要 <span class="code">sprinting && moving && !_sprintVoiced</span> —— ' +
@@ -183,7 +183,7 @@ const GROUPS = [
     rows: [
       {
         name: '开火（按型号路由）', scope: 'raid',
-        where: 'js/entities.js:776（玩家）· js/human-ai.js（敌人）',
+        where: 'js/entities.js:756（玩家）· js/human-ai.js（敌人）',
         detail: '先查 <span class="code">SHOT_MODEL</span>（akm/famas_f1/mp5a3 各有专属录音），再退回 gun category；' +
           '手枪三条轮换，霰弹开完自动补一声泵动 · LOUD.shot <b>0.14</b>（全场最响）',
         sounds: ['shot_rifle', 'shot_ak47', 'shot_famas', 'shot_mp5', 'shot_smg', 'shot_shotgun',
@@ -202,7 +202,7 @@ const GROUPS = [
       },
       {
         name: '敌人开火', scope: 'raid',
-        where: 'js/entities.js:1245（敌人 AI 开枪）',
+        where: 'js/entities.js:1240（敌人 AI 开枪）',
         detail: '复用手枪采样但压低并低通 1200Hz —— 听得出是"别人在打"，' +
           '而不是换了个音色 · LOUD.enemyShot <b>0.075</b>',
         sounds: ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
@@ -210,7 +210,7 @@ const GROUPS = [
       },
       {
         name: '命中反馈（打中敌人）', scope: 'raid',
-        where: 'js/entities.js:1421（Bullet.resolveHit）',
+        where: 'js/entities.js:1424（Bullet.resolveHit）',
         detail: '采样 <b>hit</b> 0.202s（660770）· 音高抖 ±3% —— 连打十几发时同一段会听成机械节拍 · ' +
           'LOUD.hit <b>0.085</b><br>' +
           '这个动作以前是合成的一声 2600Hz 高通"啪"，换成录音后金属感更具体；' +
@@ -225,7 +225,7 @@ const GROUPS = [
       },
       {
         name: '爆头', scope: 'raid',
-        where: 'js/entities.js:1421（部位 = head）',
+        where: 'js/entities.js:1424（部位 = head）',
         detail: '采样 <b>headshot</b> 0.212s（660769）· 和命中是两条独立录音，' +
           '更窄更亮，一耳朵分得出来 · LOUD.headshot <b>0.085</b>',
         sounds: ['headshot'],
@@ -239,7 +239,7 @@ const GROUPS = [
       },
       {
         name: '护甲破裂', scope: 'raid',
-        where: 'js/entities.js:884（护甲耐久磨到 broken 的那一瞬）',
+        where: 'js/entities.js:872（护甲耐久磨到 broken 的那一瞬）',
         detail: '采样 <b>break</b> 0.465s（583310）· 硬壳裂开的一串碎响，收在 0.46s · ' +
           'LOUD.break <b>0.10</b>（这条素材峰高 RMS 低，按 0.10 对齐会削波，' +
           '所以实际被峰值压到 0.95 收住）· 只在<b>从完好/破损变成失效</b>时响一次，不是每发都响',
@@ -248,7 +248,7 @@ const GROUPS = [
       },
       {
         name: '挥刀', scope: 'raid',
-        where: 'js/melee.js:26（近战命中）· js/entities.js:1253（敌人近战）',
+        where: 'js/melee.js:26（开始挥刀）· js/entities.js（敌人近战）',
         detail: '采样 <b>×6</b> 每次随机抽一条（875462 本来就是六次挥空，切开就是六个变体，' +
           '同样只避开刚播过的那条）· 0.14–0.29s，音高抖 ±4% · LOUD.melee <b>0.10</b><br>' +
           '旧的 melee.wav 留作兜底：六条都解不出来才轮到它，再不行落回合成风声',
@@ -261,8 +261,22 @@ const GROUPS = [
         ]
       },
       {
+        name: '刀刃命中', scope: 'raid',
+        where: 'js/melee.js（伤害结算后的 hitSfx）',
+        detail: '折叠刀用小型剑、战斗刀用中型剑、砍刀用大型剑；刺击预留给后续刺刀。' +
+          '只在实际造成伤害时播放，一次挥砍命中多人也只响一次；挥空保留原风声。' +
+          'LOUD.meleeHit <b>0.10</b> · 音高抖 ±3%',
+        sounds: ['melee_hit_small', 'melee_hit_medium', 'melee_hit_large', 'melee_hit_stab'],
+        btns: [
+          { l: '小刀命中', fn: () => SFX.play('melee_hit_small') },
+          { l: '中刀命中', fn: () => SFX.play('melee_hit_medium') },
+          { l: '砍刀命中', fn: () => SFX.play('melee_hit_large') },
+          { l: '刺击（预留）', fn: () => SFX.play('melee_hit_stab') }
+        ]
+      },
+      {
         name: '切枪', scope: 'raid',
-        where: 'js/entities.js:423 · js/melee.js（近战武器切换）',
+        where: 'js/entities.js:451 · js/melee.js（近战武器切换）',
         detail: '采样 <b>shot_switch</b> 0.235s；霰弹枪换用 <b>shot_switch_shotgun</b> 0.696s（上膛）· LOUD.switch <b>0.08</b>',
         sounds: ['shot_switch', 'shot_switch_shotgun'],
         btns: [
@@ -272,7 +286,7 @@ const GROUPS = [
       },
       {
         name: '换弹（三段序列 / MP5 整段）', scope: 'raid',
-        where: 'js/gunplay.js:29（主动换弹）· :42（自动装填）· js/entities.js:824',
+        where: 'js/gunplay.js:36（主动换弹）· :49（自动装填）· js/entities.js:805',
         detail: '通用：采样 <b>reload_out → reload_in → reload_rack</b>，按游戏节奏排在 0 / 0.55 / 1.05 秒 · ' +
           'LOUD.reload <b>0.075</b><br>' +
           'MP5A3 有专属整段录音 <b>reload_mp5</b>（616757，1.47s）：退匣 → 插匣 → 拉栓一口气播完，' +
@@ -298,7 +312,7 @@ const GROUPS = [
     rows: [
       {
         name: '拾取', scope: 'both',
-        where: 'js/game-panels.js:251 / :480 / :526 · js/game-update.js:304 · js/medical.js:161,189（医疗品开始/结束）· js/base.js（仓库取物）',
+        where: 'js/game-panels.js:251 / :480 / :526 · js/game-update.js:286 · js/medical.js:247,306（医疗品开始/结束）· js/base.js（仓库取物）',
         detail: '采样 <b>×4</b> 每次随机抽一条（且不重复刚播过的那条）· LOUD.pickup <b>0.06</b>',
         sounds: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
         btns: [
@@ -310,7 +324,7 @@ const GROUPS = [
       },
       {
         name: '容器搜索（一个容器一个声）', scope: 'raid',
-        where: 'js/game-update.js:482（撬开读条起手）· js/game-panels.js:81（直接打开）',
+        where: 'js/game-update.js:464（撬开读条起手）· js/game-panels.js:81（直接打开）',
         detail: '按容器 art 查 <span class="code">CONTAINER_SFX</span>，一个容器一条声：' +
           '包/旅行箱是<b>长拉链</b>、衣服是<b>布料</b>、抽屉是<b>滑轨</b>、' +
           '小保险是<b>锁舌</b>、纸/工具箱各有三种变体；没配到的落回合成音 · ' +
@@ -333,7 +347,7 @@ const GROUPS = [
       },
       {
         name: '逐件搜索（循环底声）', scope: 'raid',
-        where: 'js/game-update.js:313（每帧喂状态）· js/ui.js 的 searchLoop（循环通道）与 SEARCH_SAMPLE（响度对齐）',
+        where: 'js/game-update.js:295（每帧喂状态）· js/ui.js 的 searchLoop（循环通道）与 SEARCH_SAMPLE（响度对齐）',
         detail: '采样 <b>search_rustle</b>（179670 在琴盒里翻找，5.22s 单声道）—— ' +
           '<span class="code">BufferSource.loop = true</span>，淡入 0.18s / 淡出 0.20s，' +
           '每次起播音高抖 ±3%；垫在材质音底下，响度取 LOUD.search × <b>0.7</b><br>' +
@@ -374,7 +388,7 @@ const GROUPS = [
     rows: [
       {
         name: '开门', scope: 'raid',
-        where: 'js/game-update.js:450',
+        where: 'js/game-update.js:437',
         detail: '合成闷响 0.16s（420Hz）· LOUD.door <b>0.08</b>',
         sounds: [],
         btns: [{ l: '开门', fn: () => SFX.play('door') }]
@@ -393,7 +407,7 @@ const GROUPS = [
       },
       {
         name: '死亡', scope: 'raid',
-        where: 'js/game-update.js:577（阵亡）· js/game-panels.js:908（结算）',
+        where: 'js/game-update.js:559（阵亡）· js/game-panels.js:908（结算）',
         detail: '采样 <b>death</b>（618532 走调的吉他扫弦，1.70s）—— 一声就收，' +
           '不拖泥带水 · LOUD.death <b>0.13</b><br>' +
           '素材缺失时退回原来的合成下沉音，不会哑',

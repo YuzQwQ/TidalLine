@@ -662,7 +662,7 @@ const Base = {
     const note = document.getElementById('shopNote');
     if (note) {
       note.innerHTML = '全新枪械，<b>满弹匣</b>出手。当前出售<b>一级、二级</b>弹药；' +
-        '高阶货物与配件渠道预留后续合作，尚未开放。';
+        '新增常规步枪有售；AN-94 与 AUG A1 需在探索中搜获。高阶弹药与紫色配件通过搜刮获得。';
     }
     const hint = document.getElementById('shopHint');
     if (hint) hint.textContent = '买下的东西直接进右边的仓库，回左边装进背包';
@@ -675,7 +675,7 @@ const Base = {
 
       for (const id of Object.keys(WEAPONS)) {
         const d = WEAPONS[id];
-        if (d.slot !== group) continue;
+        if (d.slot !== group || d.shopAvailable === false) continue;
         const item = EQUIP.gun(id, d.mag);          // 崭新：满弹匣
         const cell = document.createElement('div');
         cell.className = 'scell r' + item.r;
@@ -841,7 +841,7 @@ const Base = {
 
   askBuyGun(id, cell) {
     const d = WEAPONS[id];
-    if (!d) return;
+    if (!d || d.shopAvailable === false) return;
     Deal.show({
       kind: 'buy',
       title: '买入',
@@ -858,7 +858,7 @@ const Base = {
 
   buyGun(id) {
     const d = WEAPONS[id];
-    if (!d) return false;
+    if (!d || d.shopAvailable === false) return false;
     if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return false; }
     if (Save.credits < d.price) {
       this.note('买 ' + d.name + ' 还差 ' + formatMoney(d.price - Save.credits), true);

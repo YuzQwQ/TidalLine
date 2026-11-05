@@ -23,7 +23,7 @@
       "weapon": "melee01",
       "mode": "circle",
       "seconds": 8,
-      "hpLost": 56,
+      "hpLost": 42,
       "kills": 0,
       "attackStarts": 15,
       "playerDead": false
@@ -104,6 +104,150 @@
       "weapon": "melee03",
       "mode": "group",
       "seconds": 0.358,
+      "hpLost": 42,
+      "kills": 3,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee04",
+      "mode": "stationary",
+      "seconds": 0.308,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee04",
+      "mode": "backpedal",
+      "seconds": 1.958,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 2,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee04",
+      "mode": "circle",
+      "seconds": 0.308,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee04",
+      "mode": "group",
+      "seconds": 1.958,
+      "hpLost": 70,
+      "kills": 3,
+      "attackStarts": 2,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee05",
+      "mode": "stationary",
+      "seconds": 0.958,
+      "hpLost": 28,
+      "kills": 1,
+      "attackStarts": 3,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee05",
+      "mode": "backpedal",
+      "seconds": 0.958,
+      "hpLost": 28,
+      "kills": 1,
+      "attackStarts": 3,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee05",
+      "mode": "circle",
+      "seconds": 8,
+      "hpLost": 56,
+      "kills": 0,
+      "attackStarts": 19,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee05",
+      "mode": "group",
+      "seconds": 1.533,
+      "hpLost": 100,
+      "kills": 1,
+      "attackStarts": 4,
+      "playerDead": true
+    },
+    {
+      "weapon": "melee06",
+      "mode": "stationary",
+      "seconds": 0.333,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee06",
+      "mode": "backpedal",
+      "seconds": 0.333,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee06",
+      "mode": "circle",
+      "seconds": 0.333,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee06",
+      "mode": "group",
+      "seconds": 0.333,
+      "hpLost": 42,
+      "kills": 3,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee07",
+      "mode": "stationary",
+      "seconds": 0.392,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee07",
+      "mode": "backpedal",
+      "seconds": 0.392,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee07",
+      "mode": "circle",
+      "seconds": 0.392,
+      "hpLost": 14,
+      "kills": 1,
+      "attackStarts": 1,
+      "playerDead": false
+    },
+    {
+      "weapon": "melee07",
+      "mode": "group",
+      "seconds": 0.392,
       "hpLost": 42,
       "kills": 3,
       "attackStarts": 1,

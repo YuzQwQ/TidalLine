@@ -1,0 +1,11 @@
+{
+  "generator": "Built-in image_gen",
+  "purpose": "第一版砍刀范围概念预览，后续由正式v2特效替代",
+  "assets": [
+    {
+      "file": "preview.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-35f00f22-4bb2-455d-b0ab-e081f5d98521.png",
+      "prompts": "../prompts/melee-slash-redraw-v1.json"
+    }
+  ]
+}

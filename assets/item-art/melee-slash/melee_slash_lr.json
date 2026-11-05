@@ -1,7 +1,11 @@
 {
   "id": "melee_slash_lr",
-  "direction": "LEFT TO RIGHT: a delicate thin tail on the left, ending with a wider sharp pointed leading tip on the RIGHT",
-  "prompt": "Use case: stylized-concept. ONE transparent pixel-art knife slash effect for TidalLine, muted retro top-down 1990s survival game. Shape is a wide upward-facing fan-shaped curved slash, symmetrical upper crescent arc, with empty transparent interior and softly pixel-dithered inward streaks. LEFT TO RIGHT: a delicate thin tail on the left, ending with a wider sharp pointed leading tip on the RIGHT. This is a single still slash texture, NOT a sprite sheet. Blade-like cool ivory and pale silver grey, subtle desaturated sage tint in thin trailing edge, readable on dark floor. Limited 8-12 colour chunky pixel clusters with hard crisp edges; subtle translucent trail, no fuzzy bloom. Complete arc fully inside canvas, curve bulges upward; endpoints lower left and lower right, open concave side points DOWN toward an imaginary wielder outside bottom center. Width about twice height. No character, weapon, background, checkerboard, writing, borders, magic, energy orb, neon or flying projectile. Only a restrained short weapon-motion crescent indicating attack range; transparent background.",
-  "source": "sources/melee_slash_lr.png",
-  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a17734-d41d-7462-a06b-323c12c53633\\exec-443f33ea-c4bb-4a76-a721-272999444d21.png"
+  "prompt": "Use case: stylized-concept. Create ONE production-ready transparent PIXEL ART melee visual effect texture for the TidalLine game, based on the provided preview solely as a style and palette reference. A SINGLE UPWARD BULGING circular slash crescent, open concave side faces DOWN toward an imaginary wielder below bottom center. The OUTER TOP boundary is a continuous clean bone-white arc with a slim charcoal underside. LEFT endpoint starts BROAD AND THICK; as you follow the arc from LEFT TO RIGHT its ivory rim and grey inner trail continuously become THINNER, ending in a fine pointed RIGHT tip. Strong obvious directional taper. Broad translucent cool-grey inward-fading fan-like motion afterimages, ground will show through. No disconnected hairs or particles. Arc spans approximately 100 degrees. Landscape 2:1 aspect. Coarse crisp pixel clusters, compact silhouette readable when reduced to 128x64 logical pixels (thrust 64x128), muted bone ivory and silver grey. Preserve real semitransparent alpha in inward afterimages, genuine fully transparent background with generous empty safe margins on all sides. No background, characters, floor, UI, text, grid, checkerboard, glow, magic, sparks, fire, smoke or extra effects. The screenshot is a reference ONLY, do not reproduce it or include any part of the scene. One isolated effect sprite only, not a sheet.",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-438a3995-22c0-48f5-bc65-01f120f24b3a.png",
+  "source": "sources/melee_slash_lr-v2.png",
+  "size": [
+    128,
+    64
+  ],
+  "direction": "左粗→右细"
 }

@@ -1,0 +1,12 @@
+{
+  "id": "player_melee_melee04_s",
+  "type": "sheet",
+  "state": "melee04",
+  "dir": "s",
+  "source": "sources/player_melee_melee04_s.png",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-23274198-235d-498d-8b2d-ecaa7bf2b8ed.png",
+  "atlas": "sources/melee04_atlas.png",
+  "atlasRow": 2,
+  "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a standalone short-handled triangular steel military spike dagger with dark grip, NO gun attachment. A precise straight forward THRUST, narrow attack: ready, arm drawn back, fully extended forward thrust, withdraw. Do not swing overhead. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+  "frames": 4
+}

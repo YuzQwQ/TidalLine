@@ -1,0 +1,14 @@
+{
+  "id": "an94",
+  "name": "AN-94",
+  "generator": "image_gen",
+  "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. AN-94 assault rifle, distinctive asymmetric chunky dark polymer receiver, slanted 5.45 box magazine, long front barrel assembly and fixed-shaped folding stock. Exact recognizable AN-94 profile, no scope. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+  "source": "assets/item-art/assault-expansion/sources/an94.png",
+  "target": "assets/gear/an94.png",
+  "size": [
+    48,
+    48
+  ],
+  "safeMargin": 4,
+  "sha256": "6399822a4ae0f2880f924f6858595ff4b05734f16d551e22f5a4b5a2c52c8202"
+}

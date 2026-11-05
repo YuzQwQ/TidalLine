@@ -1,0 +1,14 @@
+{
+  "id": "ak12",
+  "name": "AK-12",
+  "generator": "image_gen",
+  "prompt": "Create exactly ONE finished inventory weapon sprite for the indie survival game TidalLine. AK-12 modern Russian-style assault rifle in 5.45x39. Worn matte charcoal steel and black polymer. Recognizable AK receiver/dust cover with continuous top picatinny rail, adjustable angular polymer shoulder stock at LEFT, long slim railed handguard at RIGHT with vent slots, narrow gently curved ribbed polymer 30-round magazine, short gas tube, longish barrel ending compact modern slotted muzzle brake at RIGHT. Iron sights only, no scope, no wood, no foregrip attachments. Style: restrained retro pixel art, hard stepped dark outline, coarse deliberate square pixel clusters, small muted palette, cool gunmetal highlights, sparse beige edge wear. Full weapon entirely visible in frame; side-on with very slight top/three-quarter hint, horizontal muzzle pointing RIGHT and 5 degrees upward, buttstock LEFT. Emphasize a clear readable silhouette that survives reduction to 40 pixels wide. Long gun occupies 85% canvas width centered, ample fully transparent empty margin. No labels, letters, typography, rarity frame, gradient background, shadow, fog, glow, vignette or additional objects. True transparent background including all spaces through stock, trigger guard, carry handle and grip gaps. This is a new single weapon bitmap asset, not a sheet, not a photograph or rendered product shot.",
+  "source": "assets/item-art/assault-batch-03/sources/ak12.png",
+  "target": "assets/gear/ak12.png",
+  "size": [
+    48,
+    48
+  ],
+  "safeMargin": 4,
+  "sha256": "621292063d20a0824c3574bbd63c7fcc4e2d391d68d1daef89e4964bd569d1bf"
+}

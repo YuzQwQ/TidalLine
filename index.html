@@ -1051,8 +1051,8 @@ window.addEventListener('error', function (e) {
 .rg-top b { font-size: 12px; letter-spacing: 2px; color: #7fc3ae; }
 .rg-hint { flex: 1; font-size: 9.5px; color: #4a665e; }
 .rg-x { padding: 0 6px !important; line-height: 16px; }
-.rg-guns { display: flex; gap: 4px; margin-bottom: 8px; }
-.rg-guns button { flex: 1; padding: 4px 0; }
+.rg-guns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin-bottom: 8px; }
+.rg-guns button { min-width: 0; padding: 4px 2px; font-size: 10px; letter-spacing: normal; white-space: normal; }
 .rg-read {
   background: #0b1210; border: 1px solid #172620;
   padding: 5px 7px; margin-bottom: 8px;

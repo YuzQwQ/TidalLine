@@ -47,7 +47,7 @@ function levelDist(q) {
   return pct.map((p, i) => LEVEL_NAMES[i] + p + '%').join(' / ');
 }
 function poolNote(type) {
-  if (!type.ammoPool && !type.gearPool) return '';
+  if (!type.ammoPool && !type.gearPool && !type.bonusMeleePool) return '';
   const dist = levelDist(type.q);
   const out = [];
   if (type.ammoPool) out.push('<b>独立弹药池</b>每次抽取 ' +
@@ -57,6 +57,8 @@ function poolNote(type) {
     Math.round(type.gearPool.chance * 100) + '% 走装备池：' +
     type.gearPool.kinds.map(k => GEAR_KIND_NAMES[k] || k).join(' / ') +
     ' 等概率抽一种，等级分布与弹药池一致（' + dist + '）。');
+  if (type.bonusMeleePool) out.push('<b>额外收藏近战</b>每容器独立判定 ' +
+    type.bonusMeleePool.chance * 100 + '% 总概率，触发后等概率额外获得重型丛林砍刀或廓尔喀弯刀一把；不占常规抽取次数。受雇回收员尸体背包也使用同一规则。');
   return out.map(t => '<div class="vis">' + t + '</div>').join('\n      ');
 }
 

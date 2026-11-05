@@ -19,6 +19,7 @@ const ROOT = path.resolve(__dirname, '..');
 const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
   'gear_helmet', 'gear_armor', 'gear_bag',
   'melee_1', 'melee_2', 'melee_3', 'melee_4', 'melee_5', 'melee_6',
+  'melee_hit_small', 'melee_hit_medium', 'melee_hit_large', 'melee_hit_stab',
   'shot_famas', 'shot_mp5', 'reload_mp5'];
 
 (async () => {
@@ -56,7 +57,8 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
 
     /* 峰值安全：播放增益乘上素材峰值不能超过 1，否则这条声音一响就在削波 */
     out.clip = {};
-    for (const id of ['hit', 'headshot', 'break', 'sprint', 'shot_famas', 'shot_mp5', 'reload_mp5']) {
+    for (const id of ['hit', 'headshot', 'break', 'sprint', 'shot_famas', 'shot_mp5', 'reload_mp5',
+      'melee_hit_small', 'melee_hit_medium', 'melee_hit_large', 'melee_hit_stab']) {
       out.clip[id] = +(SFX.gainOf[id] * SFX._peak(SFX.samples[id])).toFixed(3);
     }
 
@@ -80,6 +82,12 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
     out.meleeIds = meleeIds;
     out.meleeUnique = [...new Set(meleeIds)].length;
     out.meleeRepeat = meleeIds.some((id, i) => i > 0 && id === meleeIds[i - 1]);
+
+    played.length = 0;
+    const hitIds = ['melee_hit_small', 'melee_hit_medium', 'melee_hit_large', 'melee_hit_stab'];
+    for (const id of hitIds) SFX.play(id);
+    out.meleeHitIds = played.map(p => p.id);
+    out.meleeHitLoud = hitIds.every(id => SFX._targetFor(id) === SFX.LOUD.meleeHit);
 
     /* 2. 三件装备各自的材质声 */
     played.length = 0;
@@ -144,6 +152,8 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
   assert.equal(b.meleeIds.length, 24, '24 刀都应该走采样，实际 ' + b.meleeIds.length + ' 刀');
   assert(b.meleeUnique >= 5, '六段挥空应该轮起来（24 刀只听到 ' + b.meleeUnique + ' 种）');
   assert(!b.meleeRepeat, '同一段挥空不该连着播两次');
+  assert.deepEqual(b.meleeHitIds, ['melee_hit_small', 'melee_hit_medium', 'melee_hit_large', 'melee_hit_stab']);
+  assert(b.meleeHitLoud, '四类命中声必须使用专属响度档');
 
   assert.deepEqual(b.gearIds, ['gear_helmet', 'gear_armor', 'gear_bag'],
     '头盔 / 护甲 / 背包应该各播各的：' + b.gearIds.join(','));

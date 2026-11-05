@@ -1,0 +1,1888 @@
+{
+  "weapons": {
+    "m4a1": {
+      "id": "m4a1",
+      "name": "M4A1",
+      "short": "M4A1",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 800,
+      "mag": 30,
+      "reloadTime": 2.4,
+      "price": 168000,
+      "rarity": 5,
+      "w": 3.2,
+      "recoilVMul": 1,
+      "recoilHMul": 1,
+      "spreadMul": 1,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "M4A1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色AR式卡宾枪，直线伸缩枪托、短护木、顶部提把和弧形弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_556_1",
+      "dmgMin": 15,
+      "dmgMax": 22,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.4,
+      "spreadBase": 0.04,
+      "spreadMax": 0.26,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.556"
+      ]
+    },
+    "akm": {
+      "id": "akm",
+      "name": "AKM",
+      "short": "AKM",
+      "category": "rifle",
+      "caliber": "762x39",
+      "rpm": 600,
+      "mag": 30,
+      "reloadTime": 2.7,
+      "price": 125000,
+      "rarity": 4,
+      "w": 3.6,
+      "recoilVMul": 1.35,
+      "recoilHMul": 1.2,
+      "spreadMul": 1.1,
+      "recoilPerShot": 0.085,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "AKM，使用7.62×39mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "深色钢制机匣，旧胡桃木枪托与护木，明显弯曲的7.62弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_762x39_1",
+      "dmgMin": 20,
+      "dmgMax": 27,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.4,
+      "spreadBase": 0.044000000000000004,
+      "spreadMax": 0.28600000000000003,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.762x39"
+      ]
+    },
+    "famas_f1": {
+      "id": "famas_f1",
+      "name": "FAMAS F1",
+      "short": "FAMAS F1",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 1000,
+      "mag": 25,
+      "reloadTime": 2.9,
+      "price": 215000,
+      "rarity": 5,
+      "w": 3.7,
+      "recoilVMul": 1.1,
+      "recoilHMul": 1.25,
+      "spreadMul": 1.05,
+      "recoilPerShot": 0.09,
+      "modes": [
+        "semi",
+        "burst3",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "FAMAS F1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色无托步枪，顶部高提把，弹匣位于握把后方，短枪管。",
+      "slot": "primary",
+      "ammo": "ammo_556_1",
+      "dmgMin": 15,
+      "dmgMax": 22,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.4,
+      "spreadBase": 0.042,
+      "spreadMax": 0.273,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": false,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "muzzle.standard",
+        "mag.box",
+        "cal.556"
+      ]
+    },
+    "pp19_01": {
+      "id": "pp19_01",
+      "name": "PP-19-01 Vityaz",
+      "short": "PP-19-01",
+      "category": "smg",
+      "caliber": "9mm",
+      "rpm": 700,
+      "mag": 30,
+      "reloadTime": 2.1,
+      "price": 72000,
+      "rarity": 3,
+      "w": 2.4,
+      "recoilVMul": 0.7,
+      "recoilHMul": 0.8,
+      "spreadMul": 1.05,
+      "recoilPerShot": 0.055,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "PP-19-01 Vityaz，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色短管AK式冲锋枪，三角折叠托，细长弯曲弹匣，不采用螺旋弹筒。",
+      "slot": "primary",
+      "ammo": "ammo_9mm_1",
+      "dmgMin": 11,
+      "dmgMax": 15,
+      "pellets": 1,
+      "speed": 600,
+      "range": 420,
+      "aimTime": 0.3,
+      "spreadBase": 0.052500000000000005,
+      "spreadMax": 0.29400000000000004,
+      "recoilBaseV": 2.6,
+      "recoilBaseH": 1.8,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.9mm"
+      ]
+    },
+    "mp5a3": {
+      "id": "mp5a3",
+      "name": "MP5A3",
+      "short": "MP5A3",
+      "category": "smg",
+      "caliber": "9mm",
+      "rpm": 800,
+      "mag": 30,
+      "reloadTime": 2.3,
+      "price": 115000,
+      "rarity": 4,
+      "w": 2.6,
+      "recoilVMul": 0.6,
+      "recoilHMul": 0.65,
+      "spreadMul": 0.8,
+      "recoilPerShot": 0.06,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "MP5A3，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "圆筒形护木，双导杆伸缩枪托，细弯弹匣，深色滚轮闭锁机匣轮廓。",
+      "slot": "primary",
+      "ammo": "ammo_9mm_1",
+      "dmgMin": 11,
+      "dmgMax": 15,
+      "pellets": 1,
+      "speed": 600,
+      "range": 420,
+      "aimTime": 0.3,
+      "spreadBase": 0.04000000000000001,
+      "spreadMax": 0.22400000000000003,
+      "recoilBaseV": 2.6,
+      "recoilBaseH": 1.8,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.9mm"
+      ]
+    },
+    "ump45": {
+      "id": "ump45",
+      "name": "UMP45",
+      "short": "UMP45",
+      "category": "smg",
+      "caliber": "45acp",
+      "rpm": 600,
+      "mag": 25,
+      "reloadTime": 2.3,
+      "price": 108000,
+      "rarity": 4,
+      "w": 2.3,
+      "recoilVMul": 0.95,
+      "recoilHMul": 0.9,
+      "spreadMul": 1,
+      "recoilPerShot": 0.07,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "UMP45，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "方正深灰聚合物机匣，镂空折叠托，粗直弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_45acp_1",
+      "dmgMin": 15,
+      "dmgMax": 20,
+      "pellets": 1,
+      "speed": 600,
+      "range": 420,
+      "aimTime": 0.3,
+      "spreadBase": 0.05,
+      "spreadMax": 0.28,
+      "recoilBaseV": 2.6,
+      "recoilBaseH": 1.8,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.45acp"
+      ]
+    },
+    "mp155": {
+      "id": "mp155",
+      "name": "MP-155",
+      "short": "MP-155",
+      "category": "shotgun",
+      "caliber": "12g",
+      "rpm": 240,
+      "mag": 5,
+      "reloadTime": 0.65,
+      "price": 78000,
+      "rarity": 3,
+      "w": 3.6,
+      "recoilVMul": 1.85,
+      "recoilHMul": 1.4,
+      "spreadMul": 1,
+      "recoilPerShot": 0.22,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "tube",
+      "cycleTime": 0,
+      "desc": "MP-155，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+      "visual": "长枪管半自动猎枪，胡桃木枪托和前护木，下方细长管式弹仓，无盒式弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_12g_1",
+      "dmgMin": 7,
+      "dmgMax": 10,
+      "pellets": 6,
+      "speed": 560,
+      "range": 300,
+      "aimTime": 0.45,
+      "spreadBase": 0.025,
+      "spreadMax": 0.14,
+      "recoilBaseV": 4.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0.1785,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": false,
+        "stock": true,
+        "muzzle": true,
+        "magazine": false
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "stock.replaceable",
+        "muzzle.shotgun"
+      ]
+    },
+    "rem870": {
+      "id": "rem870",
+      "name": "Remington 870",
+      "short": "R870",
+      "category": "shotgun",
+      "caliber": "12g",
+      "rpm": 75,
+      "mag": 6,
+      "reloadTime": 0.75,
+      "price": 58000,
+      "rarity": 3,
+      "w": 3.4,
+      "recoilVMul": 2.2,
+      "recoilHMul": 1.25,
+      "spreadMul": 0.85,
+      "recoilPerShot": 0.24,
+      "modes": [
+        "pump"
+      ],
+      "defaultMode": "pump",
+      "reloadType": "tube",
+      "cycleTime": 0.8,
+      "desc": "Remington 870，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+      "visual": "深色木枪托，长条肋纹泵动护木，钢制机匣和管式弹仓，无盒式弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_12g_1",
+      "dmgMin": 7,
+      "dmgMax": 10,
+      "pellets": 6,
+      "speed": 560,
+      "range": 300,
+      "aimTime": 0.45,
+      "spreadBase": 0.02125,
+      "spreadMax": 0.11900000000000001,
+      "recoilBaseV": 4.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0.1785,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": false,
+        "stock": true,
+        "muzzle": true,
+        "magazine": false
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "stock.replaceable",
+        "muzzle.shotgun"
+      ]
+    },
+    "saiga12": {
+      "id": "saiga12",
+      "name": "Saiga-12",
+      "short": "Saiga-12",
+      "category": "shotgun",
+      "caliber": "12g",
+      "rpm": 300,
+      "mag": 8,
+      "reloadTime": 3.3,
+      "price": 175000,
+      "rarity": 5,
+      "w": 3.8,
+      "recoilVMul": 2.1,
+      "recoilHMul": 1.75,
+      "spreadMul": 1.2,
+      "recoilPerShot": 0.26,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "Saiga-12，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+      "visual": "黑色AK式霰弹枪，聚合物固定托，较粗枪管，明显的宽盒式弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_12g_1",
+      "dmgMin": 7,
+      "dmgMax": 10,
+      "pellets": 6,
+      "speed": 560,
+      "range": 300,
+      "aimTime": 0.45,
+      "spreadBase": 0.03,
+      "spreadMax": 0.168,
+      "recoilBaseV": 4.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0.1785,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.shotgun",
+        "mag.box",
+        "cal.12g"
+      ]
+    },
+    "glock17": {
+      "id": "glock17",
+      "name": "Glock 17",
+      "short": "Glock",
+      "category": "pistol",
+      "caliber": "9mm",
+      "rpm": 360,
+      "mag": 17,
+      "reloadTime": 1.5,
+      "price": 32000,
+      "rarity": 2,
+      "w": 1.1,
+      "recoilVMul": 0.75,
+      "recoilHMul": 0.8,
+      "spreadMul": 0.95,
+      "recoilPerShot": 0.1,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "Glock 17，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色方形套筒，简洁聚合物枪身与双排弹匣握把，短枪管。",
+      "slot": "secondary",
+      "ammo": "ammo_9mm_1",
+      "dmgMin": 11,
+      "dmgMax": 15,
+      "pellets": 1,
+      "speed": 600,
+      "range": 460,
+      "aimTime": 0.2,
+      "spreadBase": 0.042749999999999996,
+      "spreadMax": 0.209,
+      "recoilBaseV": 2.4,
+      "recoilBaseH": 1.6,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": false,
+        "stock": false,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "muzzle.standard",
+        "mag.box",
+        "cal.9mm"
+      ]
+    },
+    "m1911a1": {
+      "id": "m1911a1",
+      "name": "M1911A1",
+      "short": "M1911A1",
+      "category": "pistol",
+      "caliber": "45acp",
+      "rpm": 300,
+      "mag": 7,
+      "reloadTime": 1.8,
+      "price": 37000,
+      "rarity": 3,
+      "w": 1.2,
+      "recoilVMul": 1.2,
+      "recoilHMul": 1,
+      "spreadMul": 0.9,
+      "recoilPerShot": 0.12,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "M1911A1，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "细长钢制套筒，棕色单排握把，外露击锤与圆弧扳机护圈。",
+      "slot": "secondary",
+      "ammo": "ammo_45acp_1",
+      "dmgMin": 15,
+      "dmgMax": 20,
+      "pellets": 1,
+      "speed": 600,
+      "range": 460,
+      "aimTime": 0.2,
+      "spreadBase": 0.0405,
+      "spreadMax": 0.198,
+      "recoilBaseV": 2.4,
+      "recoilBaseH": 1.6,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": false,
+        "stock": false,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "muzzle.standard",
+        "mag.box",
+        "cal.45acp"
+      ]
+    },
+    "beretta92": {
+      "id": "beretta92",
+      "name": "Beretta 92FS",
+      "short": "92FS",
+      "category": "pistol",
+      "caliber": "9mm",
+      "rpm": 360,
+      "mag": 15,
+      "reloadTime": 1.7,
+      "price": 44000,
+      "rarity": 3,
+      "w": 1.2,
+      "recoilVMul": 0.7,
+      "recoilHMul": 0.65,
+      "spreadMul": 0.8,
+      "recoilPerShot": 0.09,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "Beretta 92FS，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "较长开放式套筒，露出的枪管，深色握把与圆弧护圈。",
+      "slot": "secondary",
+      "ammo": "ammo_9mm_1",
+      "dmgMin": 11,
+      "dmgMax": 15,
+      "pellets": 1,
+      "speed": 600,
+      "range": 460,
+      "aimTime": 0.2,
+      "spreadBase": 0.036,
+      "spreadMax": 0.17600000000000002,
+      "recoilBaseV": 2.4,
+      "recoilBaseH": 1.6,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": false,
+        "stock": false,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "muzzle.standard",
+        "mag.box",
+        "cal.9mm"
+      ]
+    },
+    "m16a1": {
+      "id": "m16a1",
+      "name": "M16A1",
+      "short": "M16A1",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 750,
+      "mag": 20,
+      "w": 3.2,
+      "reloadTime": 2.8,
+      "price": 35000,
+      "rarity": 1,
+      "recoilVMul": 1.1,
+      "recoilHMul": 1.15,
+      "spreadMul": 0.95,
+      "aimTimeMul": 1.15,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "shopAvailable": true,
+      "desc": "枪身上的编号已经磨得模糊，但护木和枪托仍然完整。老式装备并不意味着它已经失去了用途。",
+      "visual": "固定枪托、三角护木、长枪管、提把、20发短弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_556_1",
+      "dmgMin": 15,
+      "dmgMax": 22,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.45999999999999996,
+      "spreadBase": 0.038,
+      "spreadMax": 0.247,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": false,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "muzzle.standard",
+        "mag.box",
+        "cal.556"
+      ]
+    },
+    "galil_arm": {
+      "id": "galil_arm",
+      "name": "Galil ARM",
+      "short": "Galil ARM",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 650,
+      "mag": 35,
+      "w": 4.2,
+      "reloadTime": 3,
+      "price": 30000,
+      "rarity": 1,
+      "recoilVMul": 1.25,
+      "recoilHMul": 1.2,
+      "spreadMul": 1.15,
+      "aimTimeMul": 1.15,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "shopAvailable": true,
+      "desc": "厚实的机匣、沉重的枪身，以及一个比多数同类武器更宽裕的弹匣。它从来不以轻巧著称。",
+      "visual": "钢机匣、木护木、管式折叠枪托、折叠两脚架、大弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_556_1",
+      "dmgMin": 15,
+      "dmgMax": 22,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.45999999999999996,
+      "spreadBase": 0.046,
+      "spreadMax": 0.299,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": false,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "muzzle.standard",
+        "mag.box",
+        "cal.556"
+      ]
+    },
+    "aks74u": {
+      "id": "aks74u",
+      "name": "AKS-74U",
+      "short": "AKS-74U",
+      "category": "rifle",
+      "caliber": "545x39",
+      "rpm": 700,
+      "mag": 30,
+      "w": 2.7,
+      "reloadTime": 2.4,
+      "price": 65000,
+      "rarity": 2,
+      "recoilVMul": 1.25,
+      "recoilHMul": 1.2,
+      "spreadMul": 1.15,
+      "aimTimeMul": 0.8,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "shopAvailable": true,
+      "desc": "短小的枪身和折叠枪托让它很适合狭窄空间。至于连续射击时那股不安分的劲头，最好亲自试试。",
+      "visual": "短枪管、膨大消焰器、短木护木、三角折叠枪托。",
+      "slot": "primary",
+      "ammo": "ammo_545x39_1",
+      "dmgMin": 17,
+      "dmgMax": 24,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.32000000000000006,
+      "spreadBase": 0.046,
+      "spreadMax": 0.299,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.545x39"
+      ]
+    },
+    "g36c": {
+      "id": "g36c",
+      "name": "G36C",
+      "short": "G36C",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 750,
+      "mag": 30,
+      "w": 2.8,
+      "reloadTime": 2.5,
+      "price": 78000,
+      "rarity": 2,
+      "recoilVMul": 0.95,
+      "recoilHMul": 1.1,
+      "spreadMul": 1.1,
+      "aimTimeMul": 0.85,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "shopAvailable": true,
+      "desc": "聚合物枪身减轻了负担，紧凑的结构也方便携行。它原本就是为行动迅速的人设计的。",
+      "visual": "黑色聚合物短枪身、镂空折叠枪托、透明弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_556_1",
+      "dmgMin": 15,
+      "dmgMax": 22,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.34,
+      "spreadBase": 0.044000000000000004,
+      "spreadMax": 0.28600000000000003,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.556"
+      ]
+    },
+    "fn_fnc": {
+      "id": "fn_fnc",
+      "name": "FN FNC",
+      "short": "FN FNC",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 650,
+      "mag": 30,
+      "w": 3.8,
+      "reloadTime": 2.7,
+      "price": 100000,
+      "rarity": 3,
+      "recoilVMul": 0.9,
+      "recoilHMul": 0.95,
+      "spreadMul": 0.95,
+      "aimTimeMul": 1.05,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "shopAvailable": true,
+      "desc": "坚实的结构和朴素的设计让它在制式武器中占有一席之地。没有什么花哨之处，也很少令人失望。",
+      "visual": "朴素钢机匣、深色护木、管式折叠枪托、长枪管。",
+      "slot": "primary",
+      "ammo": "ammo_556_1",
+      "dmgMin": 15,
+      "dmgMax": 22,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.42000000000000004,
+      "spreadBase": 0.038,
+      "spreadMax": 0.247,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.556"
+      ]
+    },
+    "sig550": {
+      "id": "sig550",
+      "name": "SIG SG 550",
+      "short": "SIG SG 550",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 700,
+      "mag": 30,
+      "w": 4.1,
+      "reloadTime": 2.8,
+      "price": 125000,
+      "rarity": 3,
+      "recoilVMul": 0.85,
+      "recoilHMul": 0.8,
+      "spreadMul": 0.8,
+      "aimTimeMul": 1.15,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "shopAvailable": true,
+      "desc": "精密的制造工艺带来了良好的射击一致性。即使经历长时间存放，保养得当的枪械依然值得信赖。",
+      "visual": "橄榄绿护木和镂空折叠枪托、灰色机匣、透明弹匣。",
+      "slot": "primary",
+      "ammo": "ammo_556_1",
+      "dmgMin": 15,
+      "dmgMax": 22,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.45999999999999996,
+      "spreadBase": 0.032,
+      "spreadMax": 0.20800000000000002,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.556"
+      ]
+    },
+    "an94": {
+      "id": "an94",
+      "name": "AN-94",
+      "short": "AN-94",
+      "category": "rifle",
+      "caliber": "545x39",
+      "rpm": 600,
+      "mag": 30,
+      "w": 3.9,
+      "reloadTime": 2.8,
+      "price": 165000,
+      "rarity": 4,
+      "recoilVMul": 1.05,
+      "recoilHMul": 0.95,
+      "spreadMul": 0.9,
+      "aimTimeMul": 1.1,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "burst2",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "shopAvailable": false,
+      "desc": "复杂的内部机构实现了惊人的短时射速。它并不好维护，但对于熟悉它的人而言，那两声几乎重叠的枪响足以说明价值。",
+      "visual": "黑色非对称机匣、倾斜弹匣、长枪管组件。",
+      "burstRPM": 1800,
+      "burstDelayRecoil": true,
+      "slot": "primary",
+      "ammo": "ammo_545x39_1",
+      "dmgMin": 17,
+      "dmgMax": 24,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.44000000000000006,
+      "spreadBase": 0.036000000000000004,
+      "spreadMax": 0.234,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.545x39"
+      ]
+    },
+    "aug_a1": {
+      "id": "aug_a1",
+      "name": "AUG A1",
+      "short": "AUG A1",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 700,
+      "mag": 30,
+      "w": 3.6,
+      "reloadTime": 2.7,
+      "price": 230000,
+      "rarity": 5,
+      "recoilVMul": 0.8,
+      "recoilHMul": 0.75,
+      "spreadMul": 0.75,
+      "aimTimeMul": 1.05,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "shopAvailable": false,
+      "desc": "紧凑的无托结构、独特的外形和一体式光学瞄具，使它即使混在一整排枪械中，也很难被认错。",
+      "visual": "橄榄绿无托枪身、一体式光学提把、垂直折叠握把。",
+      "slot": "primary",
+      "ammo": "ammo_556_1",
+      "dmgMin": 15,
+      "dmgMax": 22,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.42000000000000004,
+      "spreadBase": 0.03,
+      "spreadMax": 0.195,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": false,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "muzzle.standard",
+        "mag.box",
+        "cal.556"
+      ]
+    }
+  },
+  "calibers": {
+    "556": {
+      "id": "556",
+      "name": "5.56×45mm",
+      "short": "5.56",
+      "label": "5.56mm",
+      "damage": [
+        15,
+        22
+      ],
+      "stack": 60,
+      "weight": 0.012,
+      "prices": [
+        60,
+        140,
+        320,
+        800,
+        2000
+      ]
+    },
+    "762x39": {
+      "id": "762x39",
+      "name": "7.62×39mm",
+      "short": "7.62",
+      "label": "7.62mm",
+      "damage": [
+        20,
+        27
+      ],
+      "stack": 60,
+      "weight": 0.016,
+      "prices": [
+        80,
+        180,
+        420,
+        1000,
+        2500
+      ]
+    },
+    "9mm": {
+      "id": "9mm",
+      "name": "9×19mm",
+      "short": "9mm",
+      "label": "9mm",
+      "damage": [
+        11,
+        15
+      ],
+      "stack": 90,
+      "weight": 0.012,
+      "prices": [
+        35,
+        80,
+        180,
+        450,
+        1100
+      ]
+    },
+    "45acp": {
+      "id": "45acp",
+      "name": ".45 ACP",
+      "short": ".45",
+      "label": ".45 ACP",
+      "damage": [
+        15,
+        20
+      ],
+      "stack": 90,
+      "weight": 0.015,
+      "prices": [
+        50,
+        110,
+        250,
+        600,
+        1500
+      ]
+    },
+    "12g": {
+      "id": "12g",
+      "name": "12 Gauge",
+      "short": "12G",
+      "label": "12号",
+      "damage": [
+        7,
+        10
+      ],
+      "stack": 20,
+      "weight": 0.012,
+      "prices": [
+        80,
+        180,
+        400,
+        900,
+        2200
+      ]
+    },
+    "545x39": {
+      "id": "545x39",
+      "name": "5.45×39mm",
+      "short": "5.45",
+      "label": "5.45mm",
+      "damage": [
+        17,
+        24
+      ],
+      "stack": 60,
+      "weight": 0.013,
+      "prices": [
+        70,
+        160,
+        370,
+        900,
+        2250
+      ]
+    }
+  },
+  "attachments": {
+    "att_optic01": {
+      "id": "att_optic01",
+      "name": "微型反射瞄具",
+      "category": "attachment",
+      "subtype": "optic",
+      "r": 2,
+      "price": 7500,
+      "w": 0.08,
+      "description": "微型反射瞄具，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_optic01",
+      "compatibleTags": [
+        "optic.common"
+      ],
+      "statModifiers": {
+        "aimTime": -0.12
+      },
+      "visual": "small open reflex sight, tiny rectangular blue green glass lens, low square metal base, compact black alloy frame"
+    },
+    "att_optic02": {
+      "id": "att_optic02",
+      "name": "全息瞄具",
+      "category": "attachment",
+      "subtype": "optic",
+      "r": 3,
+      "price": 13500,
+      "w": 0.25,
+      "description": "全息瞄具，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_optic02",
+      "compatibleTags": [
+        "optic.common"
+      ],
+      "statModifiers": {
+        "baseSpread": -0.12,
+        "aimTime": 0.02
+      },
+      "visual": "hooded rectangular holographic sight, thick squared dark metal protective hood, subtle teal glass and low mounting foot"
+    },
+    "att_optic03": {
+      "id": "att_optic03",
+      "name": "低倍率光学瞄具",
+      "category": "attachment",
+      "subtype": "optic",
+      "r": 3,
+      "price": 18000,
+      "w": 0.32,
+      "description": "低倍率光学瞄具，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_optic03",
+      "compatibleTags": [
+        "optic.scope"
+      ],
+      "statModifiers": {
+        "baseSpread": -0.2,
+        "aimTime": 0.05
+      },
+      "visual": "short compact tubular low magnification optic, one small top adjustment turret, two mounting clamps, charcoal tube and small green lens"
+    },
+    "att_optic04": {
+      "id": "att_optic04",
+      "name": "精密光学瞄具",
+      "category": "attachment",
+      "subtype": "optic",
+      "r": 4,
+      "price": 30000,
+      "w": 0.48,
+      "description": "精密光学瞄具，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_optic04",
+      "compatibleTags": [
+        "optic.scope"
+      ],
+      "statModifiers": {
+        "baseSpread": -0.3,
+        "aimTime": 0.08
+      },
+      "visual": "long precision rifle scope, enlarged objective bell, smaller eyepiece, two mounting rings, three adjustment turrets, weathered dark steel"
+    },
+    "att_grip01": {
+      "id": "att_grip01",
+      "name": "垂直握把",
+      "category": "attachment",
+      "subtype": "grip",
+      "r": 2,
+      "price": 6750,
+      "w": 0.12,
+      "description": "垂直握把，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_grip01",
+      "compatibleTags": [
+        "grip.common"
+      ],
+      "statModifiers": {
+        "recoilVertical": -0.18,
+        "aimTime": 0.02
+      },
+      "visual": "straight vertical foregrip, black ribbed polymer cylindrical grip, short flat mounting clamp"
+    },
+    "att_grip02": {
+      "id": "att_grip02",
+      "name": "斜角握把",
+      "category": "attachment",
+      "subtype": "grip",
+      "r": 2,
+      "price": 7500,
+      "w": 0.1,
+      "description": "斜角握把，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_grip02",
+      "compatibleTags": [
+        "grip.common"
+      ],
+      "statModifiers": {
+        "recoilHorizontal": -0.16
+      },
+      "visual": "low angled foregrip, triangular sloping open profile, charcoal textured polymer and flat mounting shoe"
+    },
+    "att_grip03": {
+      "id": "att_grip03",
+      "name": "紧凑握把",
+      "category": "attachment",
+      "subtype": "grip",
+      "r": 3,
+      "price": 10500,
+      "w": 0.08,
+      "description": "紧凑握把，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_grip03",
+      "compatibleTags": [
+        "grip.common"
+      ],
+      "statModifiers": {
+        "aimTime": -0.1,
+        "recoilHorizontal": 0.03
+      },
+      "visual": "very short stubby foregrip, compact dark gray polymer thumb stop with rounded end and tiny mounting clamp"
+    },
+    "att_grip04": {
+      "id": "att_grip04",
+      "name": "人体工学握把",
+      "category": "attachment",
+      "subtype": "grip",
+      "r": 3,
+      "price": 13500,
+      "w": 0.14,
+      "description": "人体工学握把，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_grip04",
+      "compatibleTags": [
+        "grip.common"
+      ],
+      "statModifiers": {
+        "recoilHorizontal": -0.08,
+        "recoilVertical": -0.08
+      },
+      "visual": "ergonomic foregrip, contoured olive gray palm shape, finger grooves and rubberized inset panels, solid short mounting base"
+    },
+    "att_stock01": {
+      "id": "att_stock01",
+      "name": "固定枪托",
+      "category": "attachment",
+      "subtype": "stock",
+      "r": 2,
+      "price": 9000,
+      "w": 0.3,
+      "description": "固定枪托，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_stock01",
+      "compatibleTags": [
+        "stock.replaceable"
+      ],
+      "statModifiers": {
+        "recoilHorizontal": -0.12,
+        "recoilVertical": -0.12,
+        "aimTime": 0.03
+      },
+      "visual": "solid fixed buttstock, simple dark olive polymer body, thick black shoulder pad, short metal receiver socket, no complete firearm"
+    },
+    "att_stock02": {
+      "id": "att_stock02",
+      "name": "伸缩枪托",
+      "category": "attachment",
+      "subtype": "stock",
+      "r": 2,
+      "price": 8250,
+      "w": 0.22,
+      "description": "伸缩枪托，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_stock02",
+      "compatibleTags": [
+        "stock.replaceable"
+      ],
+      "statModifiers": {
+        "aimTime": -0.12,
+        "recoilHorizontal": 0.03,
+        "recoilVertical": 0.03
+      },
+      "visual": "telescopic buttstock, slim skeletal charcoal body, exposed short metal adjustment tube and sliding latch, ribbed shoulder pad"
+    },
+    "att_stock03": {
+      "id": "att_stock03",
+      "name": "精密枪托",
+      "category": "attachment",
+      "subtype": "stock",
+      "r": 4,
+      "price": 22500,
+      "w": 0.45,
+      "description": "精密枪托，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_stock03",
+      "compatibleTags": [
+        "stock.replaceable"
+      ],
+      "statModifiers": {
+        "recoilRecovery": 0.25,
+        "baseSpread": -0.08,
+        "aimTime": 0.05
+      },
+      "visual": "precision buttstock, heavy graphite body, raised cheek rest, adjustable flat shoulder pad with two small silver adjustment knobs, restrained 1990s industrial design"
+    },
+    "att_muzzle01": {
+      "id": "att_muzzle01",
+      "name": "标准制退器",
+      "category": "attachment",
+      "subtype": "muzzle",
+      "r": 2,
+      "price": 6000,
+      "w": 0.08,
+      "description": "标准制退器，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_muzzle01",
+      "compatibleTags": [
+        "muzzle.standard"
+      ],
+      "statModifiers": {
+        "recoilVertical": -0.15
+      },
+      "visual": "short cylindrical steel muzzle brake with two large rectangular side ports, threaded collar, weathered gunmetal"
+    },
+    "att_muzzle02": {
+      "id": "att_muzzle02",
+      "name": "横向补偿器",
+      "category": "attachment",
+      "subtype": "muzzle",
+      "r": 3,
+      "price": 10500,
+      "w": 0.1,
+      "description": "横向补偿器，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_muzzle02",
+      "compatibleTags": [
+        "muzzle.standard"
+      ],
+      "statModifiers": {
+        "recoilHorizontal": -0.18,
+        "aimTime": 0.02
+      },
+      "visual": "squat asymmetrical muzzle compensator with distinct side vent cuts, wide steel collar, graphite gray"
+    },
+    "att_muzzle03": {
+      "id": "att_muzzle03",
+      "name": "复合补偿器",
+      "category": "attachment",
+      "subtype": "muzzle",
+      "r": 3,
+      "price": 13500,
+      "w": 0.12,
+      "description": "复合补偿器，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_muzzle03",
+      "compatibleTags": [
+        "muzzle.standard"
+      ],
+      "statModifiers": {
+        "recoilHorizontal": -0.1,
+        "recoilVertical": -0.1,
+        "aimTime": 0.03
+      },
+      "visual": "chunky multiport muzzle compensator, three rows of vent slots across top and sides, dark steel faceted body"
+    },
+    "att_muzzle04": {
+      "id": "att_muzzle04",
+      "name": "精密枪口装置",
+      "category": "attachment",
+      "subtype": "muzzle",
+      "r": 4,
+      "price": 18000,
+      "w": 0.1,
+      "description": "精密枪口装置，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_muzzle04",
+      "compatibleTags": [
+        "muzzle.standard"
+      ],
+      "statModifiers": {
+        "baseSpread": -0.12,
+        "aimTime": 0.04
+      },
+      "visual": "precise short muzzle attachment, concentric machined steel rings, evenly spaced small vent holes, brushed gray rim, no suppressor tube"
+    },
+    "att_muzzle05": {
+      "id": "att_muzzle05",
+      "name": "收束器",
+      "category": "attachment",
+      "subtype": "muzzle",
+      "r": 3,
+      "price": 12000,
+      "w": 0.06,
+      "description": "收束器，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_muzzle05",
+      "compatibleTags": [
+        "muzzle.shotgun"
+      ],
+      "statModifiers": {
+        "pelletSpread": -0.2,
+        "aimTime": 0.02
+      },
+      "visual": "shotgun choke tube, narrow smooth short steel cylinder, slightly tapered outlet, two shallow grip rings and threaded rear"
+    },
+    "att_muzzle06": {
+      "id": "att_muzzle06",
+      "name": "扩散器",
+      "category": "attachment",
+      "subtype": "muzzle",
+      "r": 2,
+      "price": 5250,
+      "w": 0.05,
+      "description": "扩散器，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_muzzle06",
+      "compatibleTags": [
+        "muzzle.shotgun"
+      ],
+      "statModifiers": {
+        "pelletSpread": 0.25
+      },
+      "visual": "shotgun spreader muzzle device, short flared wide mouth steel tube with four broad shallow slots, thicker base collar"
+    },
+    "att_mag_556_ext": {
+      "id": "att_mag_556_ext",
+      "name": "5.56×45mm 扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 2,
+      "price": 10500,
+      "w": 0.12,
+      "description": "5.56×45mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_556_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.556"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3
+      },
+      "visual": "slightly curved narrow rifle magazine, gray aluminum ribbed body, visibly elongated extended lower body with standard flat floorplate"
+    },
+    "att_mag_556_quick": {
+      "id": "att_mag_556_quick",
+      "name": "5.56×45mm 快速弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 3,
+      "price": 13500,
+      "w": 0.1,
+      "description": "5.56×45mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_556_quick",
+      "compatibleTags": [
+        "mag.box",
+        "cal.556"
+      ],
+      "statModifiers": {
+        "reloadTime": -0.15
+      },
+      "visual": "slightly curved narrow rifle magazine, gray aluminum ribbed body, short standard capacity body with distinctive cloth pull tab on base"
+    },
+    "att_mag_556_quick_ext": {
+      "id": "att_mag_556_quick_ext",
+      "name": "5.56×45mm 快速扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 4,
+      "price": 21000,
+      "w": 0.14,
+      "description": "5.56×45mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_556_quick_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.556"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3,
+        "reloadTime": -0.15
+      },
+      "visual": "slightly curved narrow rifle magazine, gray aluminum ribbed body, visibly elongated extended lower body with pronounced rubber pull loop on base"
+    },
+    "att_mag_762x39_ext": {
+      "id": "att_mag_762x39_ext",
+      "name": "7.62×39mm 扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 2,
+      "price": 10500,
+      "w": 0.16,
+      "description": "7.62×39mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_762x39_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.762x39"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3
+      },
+      "visual": "strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, visibly elongated extended lower body with standard flat floorplate"
+    },
+    "att_mag_762x39_quick": {
+      "id": "att_mag_762x39_quick",
+      "name": "7.62×39mm 快速弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 3,
+      "price": 13500,
+      "w": 0.14,
+      "description": "7.62×39mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_762x39_quick",
+      "compatibleTags": [
+        "mag.box",
+        "cal.762x39"
+      ],
+      "statModifiers": {
+        "reloadTime": -0.15
+      },
+      "visual": "strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, short standard capacity body with distinctive cloth pull tab on base"
+    },
+    "att_mag_762x39_quick_ext": {
+      "id": "att_mag_762x39_quick_ext",
+      "name": "7.62×39mm 快速扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 4,
+      "price": 21000,
+      "w": 0.18,
+      "description": "7.62×39mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_762x39_quick_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.762x39"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3,
+        "reloadTime": -0.15
+      },
+      "visual": "strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, visibly elongated extended lower body with pronounced rubber pull loop on base"
+    },
+    "att_mag_9mm_ext": {
+      "id": "att_mag_9mm_ext",
+      "name": "9×19mm 扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 2,
+      "price": 6000,
+      "w": 0.08,
+      "description": "9×19mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_9mm_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.9mm"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3
+      },
+      "visual": "slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, visibly elongated extended lower body with standard flat floorplate"
+    },
+    "att_mag_9mm_quick": {
+      "id": "att_mag_9mm_quick",
+      "name": "9×19mm 快速弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 3,
+      "price": 8250,
+      "w": 0.07,
+      "description": "9×19mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_9mm_quick",
+      "compatibleTags": [
+        "mag.box",
+        "cal.9mm"
+      ],
+      "statModifiers": {
+        "reloadTime": -0.15
+      },
+      "visual": "slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, short standard capacity body with distinctive cloth pull tab on base"
+    },
+    "att_mag_9mm_quick_ext": {
+      "id": "att_mag_9mm_quick_ext",
+      "name": "9×19mm 快速扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 4,
+      "price": 12000,
+      "w": 0.1,
+      "description": "9×19mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_9mm_quick_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.9mm"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3,
+        "reloadTime": -0.15
+      },
+      "visual": "slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, visibly elongated extended lower body with pronounced rubber pull loop on base"
+    },
+    "att_mag_45acp_ext": {
+      "id": "att_mag_45acp_ext",
+      "name": ".45 ACP 扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 2,
+      "price": 6750,
+      "w": 0.1,
+      "description": ".45 ACP 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_45acp_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.45acp"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3
+      },
+      "visual": "broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, visibly elongated extended lower body with standard flat floorplate"
+    },
+    "att_mag_45acp_quick": {
+      "id": "att_mag_45acp_quick",
+      "name": ".45 ACP 快速弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 3,
+      "price": 9000,
+      "w": 0.09,
+      "description": ".45 ACP 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_45acp_quick",
+      "compatibleTags": [
+        "mag.box",
+        "cal.45acp"
+      ],
+      "statModifiers": {
+        "reloadTime": -0.15
+      },
+      "visual": "broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, short standard capacity body with distinctive cloth pull tab on base"
+    },
+    "att_mag_45acp_quick_ext": {
+      "id": "att_mag_45acp_quick_ext",
+      "name": ".45 ACP 快速扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 4,
+      "price": 13500,
+      "w": 0.12,
+      "description": ".45 ACP 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_45acp_quick_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.45acp"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3,
+        "reloadTime": -0.15
+      },
+      "visual": "broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, visibly elongated extended lower body with pronounced rubber pull loop on base"
+    },
+    "att_mag_12g_ext": {
+      "id": "att_mag_12g_ext",
+      "name": "12 Gauge 扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 2,
+      "price": 9000,
+      "w": 0.18,
+      "description": "12 Gauge 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_12g_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.12g"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3
+      },
+      "visual": "very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, visibly elongated extended lower body with standard flat floorplate"
+    },
+    "att_mag_12g_quick": {
+      "id": "att_mag_12g_quick",
+      "name": "12 Gauge 快速弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 3,
+      "price": 12000,
+      "w": 0.16,
+      "description": "12 Gauge 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_12g_quick",
+      "compatibleTags": [
+        "mag.box",
+        "cal.12g"
+      ],
+      "statModifiers": {
+        "reloadTime": -0.15
+      },
+      "visual": "very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, short standard capacity body with distinctive cloth pull tab on base"
+    },
+    "att_mag_12g_quick_ext": {
+      "id": "att_mag_12g_quick_ext",
+      "name": "12 Gauge 快速扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 4,
+      "price": 18000,
+      "w": 0.22,
+      "description": "12 Gauge 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
+      "icon": "att_mag_12g_quick_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.12g"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3,
+        "reloadTime": -0.15
+      },
+      "visual": "very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, visibly elongated extended lower body with pronounced rubber pull loop on base"
+    },
+    "att_mag_545x39_ext": {
+      "id": "att_mag_545x39_ext",
+      "name": "5.45×39mm 扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 2,
+      "price": 11250,
+      "w": 0.14,
+      "description": "5.45×39mm 扩容弹匣，同口径通用，兼容 AKS-74U 与 AN-94。",
+      "icon": "att_mag_545x39_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.545x39"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3
+      },
+      "visual": "upright curved reddish brown bakelite extended magazine, feed lips up, no pull loop"
+    },
+    "att_mag_545x39_quick": {
+      "id": "att_mag_545x39_quick",
+      "name": "5.45×39mm 快速弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 3,
+      "price": 14500,
+      "w": 0.12,
+      "description": "5.45×39mm 快速弹匣，同口径通用，兼容 AKS-74U 与 AN-94。",
+      "icon": "att_mag_545x39_quick",
+      "compatibleTags": [
+        "mag.box",
+        "cal.545x39"
+      ],
+      "statModifiers": {
+        "reloadTime": -0.15
+      },
+      "visual": "upright standard curved reddish brown magazine, cloth pull tab at base"
+    },
+    "att_mag_545x39_quick_ext": {
+      "id": "att_mag_545x39_quick_ext",
+      "name": "5.45×39mm 快速扩容弹匣",
+      "category": "attachment",
+      "subtype": "magazine",
+      "r": 4,
+      "price": 22500,
+      "w": 0.16,
+      "description": "5.45×39mm 快速扩容弹匣，同口径通用，兼容 AKS-74U 与 AN-94。",
+      "icon": "att_mag_545x39_quick_ext",
+      "compatibleTags": [
+        "mag.box",
+        "cal.545x39"
+      ],
+      "statModifiers": {
+        "magazineCapacity": 0.3,
+        "reloadTime": -0.15
+      },
+      "visual": "upright elongated curved reddish brown magazine, large rubber pull loop at base"
+    }
+  }
+}

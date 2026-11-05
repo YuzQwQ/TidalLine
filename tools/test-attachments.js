@@ -2,7 +2,7 @@ const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('ass
 const root=path.resolve(__dirname,'..'),h=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0];
 const c=new Function('require','__dirname',h+'\nreturn ctx;')(require,root),{Game,Save,Base,WEAPONS,CFG,Player,U}=c;
 const {Attachments:A,ATTACHMENT_DEFS:D,ATTACHMENT_SLOTS:S,EQUIP,BACKPACK,ITEM_BY_ID,Bag,STASH_SLOTS,Loot,CONTAINER_TYPES,MAP_CATALOG,Gunplay}=vm.runInContext('({Attachments,ATTACHMENT_DEFS,ATTACHMENT_SLOTS,EQUIP,BACKPACK,ITEM_BY_ID,Bag,STASH_SLOTS,Loot,CONTAINER_TYPES,MAP_CATALOG,Gunplay})',c);
-Game.init();let count=0;const failures=[];function test(name,fn){try{fn();count++;console.log('OK: '+name);}catch(e){failures.push({name,error:e.stack});console.error('FAIL: '+name+'\n'+e.stack);process.exitCode=1;}}
+Game.init();Base.render=()=>{};let count=0;const failures=[];function test(name,fn){try{fn();count++;console.log('OK: '+name);}catch(e){failures.push({name,error:e.stack});console.error('FAIL: '+name+'\n'+e.stack);process.exitCode=1;}}
 const near=(a,b)=>assert(Math.abs(a-b)<1e-7,`${a} != ${b}`),json=x=>JSON.stringify(x);
 function base(id='m4a1',parts={},mag=0){Game.state='base';Game.action=null;Save.stash=[];Save.bag=[];Save.credits=1e7;Save.hp=100;Save.gear={weapons:[EQUIP.gun(id,mag,null,null,{attachments:parts}),null,null],back:BACKPACK.make('bag05'),helmet:null,body:null,melee:EQUIP.melee('melee01')};Save.meleeGiftClaimed=true;return A.targets()[0];}
 function add(id){Save.addGearStash(EQUIP.attachment(id));return Save.stash.at(-1);}
@@ -10,13 +10,13 @@ function raid(id='m4a1',parts={},mag=0){base(id,parts,mag);Game.startRun(null);G
 function part(p,id){p.bag.add(EQUIP.attachment(id),1);return p.bag.slots.at(-1);}
 const state=()=>json({stash:Save.stash,bag:Save.bag,gear:Save.gear,p:Game.player&&{weapons:Game.player.weapons,mag:Game.player.mag,bag:Game.player.bag,cd:Game.player.fireCd,rH:Game.player.rH,rV:Game.player.rV}});
 const still={mx:0,my:0,sneak:false,sprint:false,dodge:false,aimAngle:0};
-test('32 definitions, 24 public offers, fixed prices/weights and full 12×32 compatibility matrix',()=>{
- assert.equal(Object.keys(D).length,32);assert.equal(Object.values(D).filter(d=>d.r<=3).length,24);assert.equal(Object.values(D).filter(d=>d.r===4).length,8);assert.equal(D.att_optic04.price,30000);
+test('35 definitions, 26 public offers, fixed prices/weights and full 23×35 compatibility matrix',()=>{
+ assert.equal(Object.keys(D).length,35);assert.equal(Object.values(D).filter(d=>d.r<=3).length,26);assert.equal(Object.values(D).filter(d=>d.r===4).length,9);assert.equal(D.att_optic04.price,30000);
  for(const w of Object.values(WEAPONS))for(const a of Object.values(D)){
   const pistol=w.category==='pistol',tube=w.reloadType==='tube';let yes;
   if(a.subtype==='optic')yes=!pistol||['att_optic01','att_optic02'].includes(a.id);
   if(a.subtype==='grip')yes=!pistol&&!tube;
-  if(a.subtype==='stock')yes=!pistol&&w.id!=='famas_f1';
+  if(a.subtype==='stock')yes=!pistol&&!['famas_f1','m16a1','galil_arm','aug_a1','groza1'].includes(w.id);
   if(a.subtype==='muzzle')yes=(w.category==='shotgun')===['att_muzzle05','att_muzzle06'].includes(a.id);
   if(a.subtype==='magazine')yes=!tube&&a.id.startsWith('att_mag_'+w.caliber+'_');
   assert.equal(A.compatible(w.id,a.id),yes,w.id+'/'+a.id);
@@ -24,9 +24,9 @@ test('32 definitions, 24 public offers, fixed prices/weights and full 12×32 com
  }
  assert.equal(A.slotState('famas_f1',{},'stock'),'disabled');assert.equal(A.slotState('m4a1',{},'stock'),'empty');assert.equal(A.slotState('m4a1',{stock:'att_stock01'},'stock'),'installed');
 });
-test('bare guns remain identical and 32 individual modifiers apply exactly once',()=>{
+test('bare guns remain identical and 35 individual modifiers apply exactly once',()=>{
  const baseline=require('../design/weapons/attachments-v1/baseline.json');
- for(const w of Object.values(WEAPONS)){const x=A.resolve(w.id,{});for(const k of ['aimTime','spreadBase','spreadMax','recoilPerShot','recoilHMul','recoilVMul','reloadTime','pelletSpread','mag','w','price','rpm','dmgMin','dmgMax'])near(x[k],baseline.weapons[w.id][k]);}
+ for(const w of Object.values(WEAPONS)){const x=A.resolve(w.id,{});for(const k of ['aimTime','spreadBase','spreadMax','recoilPerShot','recoilHMul','recoilVMul','reloadTime','pelletSpread','mag','w','price','rpm','dmgMin','dmgMax'])near(x[k],(baseline.weapons[w.id]||w)[k]);}
  for(const a of Object.values(D)){const w=Object.values(WEAPONS).find(w=>A.compatible(w.id,a.id)),x=A.resolve(w.id,{[a.subtype]:a.id}),m=a.statModifiers;
   near(x.aimTime,w.aimTime*(1+(m.aimTime||0)));near(x.spreadBase,w.spreadBase*(1+(m.baseSpread||0)));near(x.spreadMax,w.spreadMax);near(x.recoilHMul,w.recoilHMul*(1+(m.recoilHorizontal||0)));near(x.recoilVMul,w.recoilVMul*(1+(m.recoilVertical||0)));near(x.reloadTime,w.reloadTime*(1+(m.reloadTime||0)));near(x.w,w.w+a.w);near(x.price,w.price+a.price);assert.equal(x.rarity,w.rarity);assert.equal(x.dmgMin,w.dmgMin);assert.equal(x.dmgMax,w.dmgMax);assert.equal(x.rpm,w.rpm);assert.equal(json(A.resolve(w.id,x.attachments)),json(x));
  }
@@ -87,7 +87,7 @@ test('existing ammo/gear chances, attachment rarity fallback and fixed draw coun
  const rand=c.Math.random;
  try{for(const [v,expected]of [[.1,'ammo'],[.3,'gear'],[.36,'attachment'],[.8,'item']]){c.Math.random=()=>v;assert.equal(Loot.pickPool(CONTAINER_TYPES.Q),expected);}c.Math.random=()=>0;assert(!Loot.rollAttachment('junk',[]).item.equip);}
  finally{c.Math.random=rand;}
- const seen=new Set();for(let i=0;i<3000;i++){const r=Loot.rollAttachment('fine',[]);if(r.item.equip?.kind==='attachment')seen.add(r.item.equip.attachment);}assert.equal(seen.size,32);
+ const seen=new Set();for(let i=0;i<3000;i++){const r=Loot.rollAttachment('fine',[]);if(r.item.equip?.kind==='attachment')seen.add(r.item.equip.attachment);}assert.equal(seen.size,35);
  for(const type of Object.values(CONTAINER_TYPES)){for(let i=0;i<5;i++){const out=Loot.fill(type.q,type.cats,type),bounds=type.rolls||vm.runInContext('CONTAINER_QUALITY',c)[type.q].count;assert(out.length>=bounds[0]&&out.length<=bounds[1]);}}
 });
 test('loose attachment pickup/drop/safe transfer and attached gun death follow existing ownership rules',()=>{
@@ -97,7 +97,11 @@ test('installed parts follow warehouse/bag transfers, resale and raid equip with
  base();const gun=EQUIP.gun('m4a1',39,null,null,{attachments:{magazine:'att_mag_556_ext',optic:'att_optic01'}});Save.addGearStash(gun);const start=Save.credits;
  assert.equal(gun.sell,WEAPONS.m4a1.price/2+(D.att_mag_556_ext.price+D.att_optic01.price)/2);
  assert(Base.toBag(Save.stash[0]));assert.equal(Save.stash.length,0);assert.equal(Save.bag[0].gear.equip.mag,39);assert.equal(Save.bag[0].gear.equip.attachments.optic,'att_optic01');
- assert(Base.toStash(Save.bag[0]));assert.equal(Save.bag.length,0);assert.equal(Save.stash[0].gear.equip.mag,39);Base.sell(Save.stash[0],1);assert.equal(Save.credits,start+gun.sell);assert.equal(Save.stash.length,0);
+ assert(Base.toStash(Save.bag[0]));assert.equal(Save.bag.length,0);assert.equal(Save.stash[0].gear.equip.mag,39);
+ // Warehouse now routes to merchants; resale uses the shared, live sale authority.
+ const sales=vm.runInContext('Sales',c);c.Safehouse={view:'merchant'};c.MerchantUI={key:'gun',mode:'sell'};
+ try{const quote=sales.preview('gun',[{entry:Save.stash[0],n:1}]);assert(sales.commit(sales.authorize(quote)).ok);}finally{delete c.Safehouse;delete c.MerchantUI;}
+ assert.equal(Save.credits,start+gun.sell);assert.equal(Save.stash.length,0);
  const p=raid();p.bag.slots.push({item:gun,n:1});Game.equipFromBag(0);assert(p.weapons.some(w=>w?.attachments.magazine==='att_mag_556_ext'));assert.equal(p.bag.slots.filter(e=>e.item.equip?.attachments?.optic==='att_optic01').length,0);
 });
 test('movement, death and held pump prevent stale or conflicting modification without loss',()=>{
@@ -105,5 +109,5 @@ test('movement, death and held pump prevent stale or conflicting modification wi
  let p=raid();part(p,'att_optic01');t=A.targets()[0];p.dead=true;before=state();assert(!A.commit(t,'optic','att_optic01').ok);assert.equal(state(),before);
  p=raid('rem870');p.weapons[0].cycleRemaining=.2;p.bag.slots.push({item:EQUIP.gun('m4a1',0),n:1});part(p,'att_optic01');t=A.targets().find(x=>x.owner==='raid-bag');before=state();assert(!A.commit(t,'optic','att_optic01').ok);assert.equal(state(),before);
 });
-test('formal map snapshots and armor penetration matrix remain unchanged',()=>{const b=require('../design/weapons/attachments-v1/baseline.json');assert.equal(json(CFG.AMMO.MATRIX),json(b.matrix));for(const m of MAP_CATALOG)assert.equal(crypto.createHash('sha256').update(json(m)).digest('hex'),b.maps.find(x=>x.id===m.id).sha256);});
-fs.writeFileSync(path.join(root,'design/weapons/attachments-v1/verification.json'),JSON.stringify({passed:count,failures,compatibilityPairs:12*32},null,2)+'\n');console.log(`Attachment groups passed ${count}, failed ${failures.length}`);
+test('current build map snapshots and armor penetration matrix remain unchanged',()=>{const b=require('../design/weapons/attachments-v1/baseline.json');assert.equal(json(CFG.AMMO.MATRIX),json(b.matrix));require('./check-elena-map-snapshots.js').check();});
+fs.writeFileSync(path.join(root,'design/weapons/attachments-v1/verification.json'),JSON.stringify({passed:count,failures,compatibilityPairs:Object.keys(WEAPONS).length*Object.keys(D).length},null,2)+'\n');console.log(`Attachment groups passed ${count}, failed ${failures.length}`);

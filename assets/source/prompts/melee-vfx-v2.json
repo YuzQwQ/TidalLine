@@ -1,0 +1,38 @@
+{
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "id": "melee_slash_lr",
+      "prompt": "Use case: stylized-concept. Create ONE production-ready transparent PIXEL ART melee visual effect texture for the TidalLine game, based on the provided preview solely as a style and palette reference. A SINGLE UPWARD BULGING circular slash crescent, open concave side faces DOWN toward an imaginary wielder below bottom center. The OUTER TOP boundary is a continuous clean bone-white arc with a slim charcoal underside. LEFT endpoint starts BROAD AND THICK; as you follow the arc from LEFT TO RIGHT its ivory rim and grey inner trail continuously become THINNER, ending in a fine pointed RIGHT tip. Strong obvious directional taper. Broad translucent cool-grey inward-fading fan-like motion afterimages, ground will show through. No disconnected hairs or particles. Arc spans approximately 100 degrees. Landscape 2:1 aspect. Coarse crisp pixel clusters, compact silhouette readable when reduced to 128x64 logical pixels (thrust 64x128), muted bone ivory and silver grey. Preserve real semitransparent alpha in inward afterimages, genuine fully transparent background with generous empty safe margins on all sides. No background, characters, floor, UI, text, grid, checkerboard, glow, magic, sparks, fire, smoke or extra effects. The screenshot is a reference ONLY, do not reproduce it or include any part of the scene. One isolated effect sprite only, not a sheet.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-438a3995-22c0-48f5-bc65-01f120f24b3a.png",
+      "source": "sources/melee_slash_lr-v2.png",
+      "size": [
+        128,
+        64
+      ],
+      "direction": "左粗→右细"
+    },
+    {
+      "id": "melee_slash_rl",
+      "prompt": "Use case: stylized-concept. Create ONE production-ready transparent PIXEL ART melee visual effect texture for the TidalLine game, based on the provided preview solely as a style and palette reference. A SINGLE UPWARD BULGING circular slash crescent, open concave side faces DOWN toward an imaginary wielder below bottom center. The OUTER TOP boundary is a continuous clean bone-white arc with a slim charcoal underside. RIGHT endpoint starts BROAD AND THICK; as you follow the arc from RIGHT TO LEFT its ivory rim and grey inner trail continuously become THINNER, ending in a fine pointed LEFT tip. Strong obvious directional taper. Broad translucent cool-grey inward-fading fan-like motion afterimages, ground will show through. No disconnected hairs or particles. Arc spans approximately 100 degrees. Landscape 2:1 aspect. Coarse crisp pixel clusters, compact silhouette readable when reduced to 128x64 logical pixels (thrust 64x128), muted bone ivory and silver grey. Preserve real semitransparent alpha in inward afterimages, genuine fully transparent background with generous empty safe margins on all sides. No background, characters, floor, UI, text, grid, checkerboard, glow, magic, sparks, fire, smoke or extra effects. The screenshot is a reference ONLY, do not reproduce it or include any part of the scene. One isolated effect sprite only, not a sheet.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-a219caf7-a915-489c-9974-0a0f124e7ded.png",
+      "source": "sources/melee_slash_rl-v2.png",
+      "size": [
+        128,
+        64
+      ],
+      "direction": "右粗→左细"
+    },
+    {
+      "id": "melee_thrust",
+      "prompt": "Use case: stylized-concept. Create ONE production-ready transparent PIXEL ART melee visual effect texture for the TidalLine game, based on the provided preview solely as a style and palette reference. A SINGLE narrow UPWARD-POINTING triangular spear-tip-shaped melee THRUST motion effect, about 25 degrees wide, centered on canvas. Sharp fine ivory tip at TOP CENTER, two clean ivory tapered edges, wider grey translucent swept base below fading toward an imaginary wielder at BOTTOM CENTER. A long pointed wedge of physical blade motion, not a crescent. A slim dark charcoal under-edge provides contrast. No weapon or object, only the blade's motion afterimage. Portrait 1:2 aspect. Coarse crisp pixel clusters, compact silhouette readable when reduced to 128x64 logical pixels (thrust 64x128), muted bone ivory and silver grey. Preserve real semitransparent alpha in inward afterimages, genuine fully transparent background with generous empty safe margins on all sides. No background, characters, floor, UI, text, grid, checkerboard, glow, magic, sparks, fire, smoke or extra effects. The screenshot is a reference ONLY, do not reproduce it or include any part of the scene. One isolated effect sprite only, not a sheet.",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-b62b96c8-c6ca-4914-acea-2e4d72db2bbb.png",
+      "source": "sources/melee_thrust-v2.png",
+      "size": [
+        64,
+        128
+      ],
+      "direction": "向前尖端刺击"
+    }
+  ]
+}

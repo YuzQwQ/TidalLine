@@ -1,0 +1,14 @@
+{
+  "id": "m16a1",
+  "name": "M16A1",
+  "generator": "image_gen",
+  "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. M16A1 assault rifle, full-length triangular ribbed black polymer handguard, fixed black stock, classic integral carry handle, long barrel, straight short 20-round magazine. No modern rails or attachments. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+  "source": "assets/item-art/assault-expansion/sources/m16a1.png",
+  "target": "assets/gear/m16a1.png",
+  "size": [
+    48,
+    48
+  ],
+  "safeMargin": 4,
+  "sha256": "c46f8b37ccabeb41f126adc04f52f1feeef0c1c5cee16b2ad4cc9a93d9b6d2e1"
+}

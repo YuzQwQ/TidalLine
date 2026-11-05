@@ -1,0 +1,18 @@
+{
+  "passed": 13,
+  "failures": [],
+  "timing": [
+    {
+      "fps": 30,
+      "secondShotSeconds": 0.03333333333333333
+    },
+    {
+      "fps": 60,
+      "secondShotSeconds": 0.03333333333333333
+    },
+    {
+      "fps": 144,
+      "secondShotSeconds": 0.034722222222222224
+    }
+  ]
+}

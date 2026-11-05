@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "pixels": [
+    {
+      "id": "groza1",
+      "visible": 351,
+      "hash": "fa165f928fc3aab0f261077b65ca029eeb854984e2cf3b1eb52208796c501a04"
+    },
+    {
+      "id": "ak12",
+      "visible": 161,
+      "hash": "621292063d20a0824c3574bbd63c7fcc4e2d391d68d1daef89e4964bd569d1bf"
+    },
+    {
+      "id": "mk47_mod2",
+      "visible": 179,
+      "hash": "22ec0d9ef66fc6a74aab358b51f4686cc63db76d6e5bb5bfe3fd78cd6ca76fd1"
+    }
+  ],
+  "reports": [
+    {
+      "file": "index.html",
+      "combat": [
+        {
+          "id": "groza1",
+          "semi": true,
+          "autoRounds": 6,
+          "reload": true,
+          "save": true
+        },
+        {
+          "id": "ak12",
+          "semi": true,
+          "autoRounds": 6,
+          "reload": true,
+          "save": true
+        },
+        {
+          "id": "mk47_mod2",
+          "semi": true,
+          "autoRounds": 5,
+          "reload": true,
+          "save": true
+        }
+      ],
+      "shop": true,
+      "inspectors": true,
+      "caliberMags": true,
+      "stockRestriction": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": [],
+      "externalAssets": 0
+    },
+    {
+      "file": "潮汐线.html",
+      "combat": [
+        {
+          "id": "groza1",
+          "semi": true,
+          "autoRounds": 6,
+          "reload": true,
+          "save": true
+        },
+        {
+          "id": "ak12",
+          "semi": true,
+          "autoRounds": 6,
+          "reload": true,
+          "save": true
+        },
+        {
+          "id": "mk47_mod2",
+          "semi": true,
+          "autoRounds": 5,
+          "reload": true,
+          "save": true
+        }
+      ],
+      "shop": true,
+      "inspectors": true,
+      "caliberMags": true,
+      "stockRestriction": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": [],
+      "externalAssets": 0
+    }
+  ],
+  "rangeAllThree": true
+}

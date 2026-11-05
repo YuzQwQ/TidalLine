@@ -50,12 +50,60 @@
       "visible": 263
     },
     {
+      "id": "m16a1",
+      "visible": 142
+    },
+    {
+      "id": "galil_arm",
+      "visible": 181
+    },
+    {
+      "id": "aks74u",
+      "visible": 226
+    },
+    {
+      "id": "g36c",
+      "visible": 231
+    },
+    {
+      "id": "fn_fnc",
+      "visible": 167
+    },
+    {
+      "id": "sig550",
+      "visible": 179
+    },
+    {
+      "id": "an94",
+      "visible": 146
+    },
+    {
+      "id": "aug_a1",
+      "visible": 274
+    },
+    {
+      "id": "groza1",
+      "visible": 351
+    },
+    {
+      "id": "ak12",
+      "visible": 161
+    },
+    {
+      "id": "mk47_mod2",
+      "visible": 179
+    },
+    {
       "id": "ammo_762x39",
       "visible": 1035
     },
     {
       "id": "ammo_45acp",
       "visible": 946
+    },
+    {
+      "id": "ammo_545x39",
+      "visible": 719
     }
   ],
   "reports": [

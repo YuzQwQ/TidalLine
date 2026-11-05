@@ -1,0 +1,121 @@
+{
+  "passed": true,
+  "pixels": [
+    {
+      "id": "m16a1",
+      "visible": 142,
+      "sha256": "c46f8b37ccabeb41f126adc04f52f1feeef0c1c5cee16b2ad4cc9a93d9b6d2e1"
+    },
+    {
+      "id": "galil_arm",
+      "visible": 181,
+      "sha256": "72056b13ece046ac850d750a19ddec70030b8d7ed7e8516c1e84f03b1076fe42"
+    },
+    {
+      "id": "aks74u",
+      "visible": 226,
+      "sha256": "1e165bd6ac307d225988c777a37891aac89f326cb6d0218df444477dfe3e7d38"
+    },
+    {
+      "id": "g36c",
+      "visible": 231,
+      "sha256": "61335fa19ec6a39c5527bdae9c89ea8b448ac218b86354a68ae292160a42bd25"
+    },
+    {
+      "id": "fn_fnc",
+      "visible": 167,
+      "sha256": "5dc44953e09b0dd7dbaef856a3d0043efebb221c558f423dded69b19cca01465"
+    },
+    {
+      "id": "sig550",
+      "visible": 179,
+      "sha256": "ce18de479f854c5921c797306435014a68e1b22c60e3f3d05d06f793ca0b903c"
+    },
+    {
+      "id": "an94",
+      "visible": 146,
+      "sha256": "6399822a4ae0f2880f924f6858595ff4b05734f16d551e22f5a4b5a2c52c8202"
+    },
+    {
+      "id": "aug_a1",
+      "visible": 274,
+      "sha256": "fd48a845dd59a43e37f53fc9cc6007a719efab6191cdee91361fb5d46b012747"
+    },
+    {
+      "id": "ammo_545x39",
+      "visible": 719,
+      "sha256": "0b4b050a0f817ac4d6f32c838158882784ee405363356a7b907e7fd3c72ef1c8"
+    },
+    {
+      "id": "att_mag_545x39_ext",
+      "visible": 404,
+      "sha256": "851e7be6656b7480694607ecde657121f981b7ee77b60161b682927cd5b02cb9"
+    },
+    {
+      "id": "att_mag_545x39_quick",
+      "visible": 396,
+      "sha256": "89f9ea8b4e048c6566efce68e52b81f96a8b44e542e0d247b9c31017e1c290f8"
+    },
+    {
+      "id": "att_mag_545x39_quick_ext",
+      "visible": 399,
+      "sha256": "16a2f8421edc6b35bdc362d5222b3d65e69ea5e3282e99e390c959bfed8014b0"
+    }
+  ],
+  "reports": [
+    {
+      "file": "index.html",
+      "errors": [],
+      "external": 0,
+      "shots": [
+        {
+          "t": 0.15,
+          "gun": "an94"
+        },
+        {
+          "t": 0.18333333333333332,
+          "gun": "an94"
+        }
+      ],
+      "shop": true,
+      "storage": true,
+      "mod": true,
+      "realInputBurst": true,
+      "reload": true,
+      "save": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ]
+    },
+    {
+      "file": "潮汐线.html",
+      "errors": [],
+      "external": 0,
+      "shots": [
+        {
+          "t": 0.11666666666666665,
+          "gun": "an94"
+        },
+        {
+          "t": 0.15,
+          "gun": "an94"
+        }
+      ],
+      "shop": true,
+      "storage": true,
+      "mod": true,
+      "realInputBurst": true,
+      "reload": true,
+      "save": true,
+      "widths": [
+        1440,
+        390,
+        320
+      ]
+    }
+  ],
+  "rangeAllEight": true,
+  "rangeCountsActualShots": true
+}

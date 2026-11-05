@@ -1,0 +1,14 @@
+{
+  "id": "galil_arm",
+  "name": "Galil ARM",
+  "generator": "image_gen",
+  "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. Galil ARM rifle, heavy dark steel receiver, brown wooden ventilated handguard, distinctive tubular folding stock, long barrel with folded bipod, long curved 35-round 5.56 magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+  "source": "assets/item-art/assault-expansion/sources/galil_arm.png",
+  "target": "assets/gear/galil_arm.png",
+  "size": [
+    48,
+    48
+  ],
+  "safeMargin": 4,
+  "sha256": "72056b13ece046ac850d750a19ddec70030b8d7ed7e8516c1e84f03b1076fe42"
+}

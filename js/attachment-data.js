@@ -613,9 +613,67 @@ const ATTACHMENT_DEFS = {
       "reloadTime": -0.15
     },
     "visual": "very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, visibly elongated extended lower body with pronounced rubber pull loop on base"
+  },
+  "att_mag_545x39_ext": {
+    "id": "att_mag_545x39_ext",
+    "name": "5.45×39mm 扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 11250,
+    "w": 0.14,
+    "description": "5.45×39mm 扩容弹匣，同口径通用，适用于使用可拆卸弹匣的5.45×39mm步枪，兼容性以改装界面显示为准。",
+    "icon": "att_mag_545x39_ext",
+    "compatibleTags": [
+      "mag.box",
+      "cal.545x39"
+    ],
+    "statModifiers": {
+      "magazineCapacity": 0.3
+    },
+    "visual": "upright curved reddish brown bakelite extended magazine, feed lips up, no pull loop"
+  },
+  "att_mag_545x39_quick": {
+    "id": "att_mag_545x39_quick",
+    "name": "5.45×39mm 快速弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 14500,
+    "w": 0.12,
+    "description": "5.45×39mm 快速弹匣，同口径通用，适用于使用可拆卸弹匣的5.45×39mm步枪，兼容性以改装界面显示为准。",
+    "icon": "att_mag_545x39_quick",
+    "compatibleTags": [
+      "mag.box",
+      "cal.545x39"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.15
+    },
+    "visual": "upright standard curved reddish brown magazine, cloth pull tab at base"
+  },
+  "att_mag_545x39_quick_ext": {
+    "id": "att_mag_545x39_quick_ext",
+    "name": "5.45×39mm 快速扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 22500,
+    "w": 0.16,
+    "description": "5.45×39mm 快速扩容弹匣，同口径通用，适用于使用可拆卸弹匣的5.45×39mm步枪，兼容性以改装界面显示为准。",
+    "icon": "att_mag_545x39_quick_ext",
+    "compatibleTags": [
+      "mag.box",
+      "cal.545x39"
+    ],
+    "statModifiers": {
+      "magazineCapacity": 0.3,
+      "reloadTime": -0.15
+    },
+    "visual": "upright elongated curved reddish brown magazine, large rubber pull loop at base"
   }
 };
-const ATTACHMENT_WEAPONS = {"m4a1":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556"]},"akm":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.762x39"]},"famas_f1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556"]},"pp19_01":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.9mm"]},"mp5a3":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.9mm"]},"ump45":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.45acp"]},"mp155":{"slots":{"optic":true,"grip":false,"stock":true,"muzzle":true,"magazine":false},"tags":["optic.common","optic.scope","stock.replaceable","muzzle.shotgun"]},"rem870":{"slots":{"optic":true,"grip":false,"stock":true,"muzzle":true,"magazine":false},"tags":["optic.common","optic.scope","stock.replaceable","muzzle.shotgun"]},"saiga12":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.shotgun","mag.box","cal.12g"]},"glock17":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.9mm"]},"m1911a1":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.45acp"]},"beretta92":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.9mm"]}};
+const ATTACHMENT_WEAPONS = {"m4a1":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556"]},"akm":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.762x39"]},"famas_f1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556"]},"pp19_01":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.9mm"]},"mp5a3":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.9mm"]},"ump45":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.45acp"]},"mp155":{"slots":{"optic":true,"grip":false,"stock":true,"muzzle":true,"magazine":false},"tags":["optic.common","optic.scope","stock.replaceable","muzzle.shotgun"]},"rem870":{"slots":{"optic":true,"grip":false,"stock":true,"muzzle":true,"magazine":false},"tags":["optic.common","optic.scope","stock.replaceable","muzzle.shotgun"]},"saiga12":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.shotgun","mag.box","cal.12g"]},"glock17":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.9mm"]},"m1911a1":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.45acp"]},"beretta92":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.9mm"]},"m16a1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556"]},"galil_arm":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556"]},"aks74u":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.545x39"]},"g36c":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556"]},"fn_fnc":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556"]},"sig550":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556"]},"an94":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.545x39"]},"aug_a1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556"]},"groza1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.762x39"]},"ak12":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.545x39"]},"mk47_mod2":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.762x39"]}};
 const ATTACHMENT_LOOT = {"Q":0.15,"K":0.1,"T":0.08,"R":0.05,"e":0.05,"Z":0.02,"W":0.02,"b":0.02,"U":0.02,"C":0.02,"N":0.02,"m":0.02,"L":0.02,"J":0.02,"F":0.02,"D":0.02};
 for(const [id,a] of Object.entries(ATTACHMENT_WEAPONS))Object.assign(WEAPONS[id],{attachmentSlots:a.slots,attachmentTags:a.tags});
 ART.gear=[...new Set([...ART.gear,...Object.keys(ATTACHMENT_DEFS)])];

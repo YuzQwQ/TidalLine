@@ -47,6 +47,62 @@
       "status": "ready"
     },
     {
+      "id": "melee04",
+      "type": "icon",
+      "source": "sources/melee04.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-7e384423-384f-4809-95bb-7700b3b1f730.png",
+      "prompt": "Use case: stylized-concept. ONE inventory equipment icon for TidalLine. Authentic coarse 48x48 logical-pixel art, muted 16-colour weathered 1990s palette, upper-left light, crisp blocky pixel clusters. An old standalone short-handled military TRIANGULAR SPIKE DAGGER. Long narrow three-ridged steel spike with triangular cross-section, pointed tip, no broad cutting blade; short dark grooved grip and small guard. NOT attached to a firearm. Weathered grey steel. Entire object diagonal lower-left to upper-right, centered, isolated with 10% transparent empty margin all around, readable silhouette when reduced to 40x40. Transparent background. No text, logo, rarity colour, border, glow, shadow, scene, hands or extra items. Square canvas.",
+      "frames": 1,
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "target": "assets/gear/melee04.png",
+      "status": "ready"
+    },
+    {
+      "id": "melee05",
+      "type": "icon",
+      "source": "sources/melee05.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-d15e5ae6-53e1-41e4-ab1e-0b10d5eb30fb.png",
+      "prompt": "Use case: stylized-concept. ONE inventory equipment icon for TidalLine. Authentic coarse 48x48 logical-pixel art, muted 16-colour weathered 1990s palette, upper-left light, crisp blocky pixel clusters. A compact EMERGENCY RESCUE KNIFE. Short practical silver cutting blade and highly visible safety ORANGE nonslip grip, compact proportions, utilitarian worn rescue tool. Entire object diagonal lower-left to upper-right, centered, isolated with 10% transparent empty margin all around, readable silhouette when reduced to 40x40. Transparent background. No text, logo, rarity colour, border, glow, shadow, scene, hands or extra items. Square canvas.",
+      "frames": 1,
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "target": "assets/gear/melee05.png",
+      "status": "ready"
+    },
+    {
+      "id": "melee06",
+      "type": "icon",
+      "source": "sources/melee06.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-b5b6e73d-9b24-471d-882c-eedf37d47a14.png",
+      "prompt": "Use case: stylized-concept. ONE inventory equipment icon for TidalLine. Authentic coarse 48x48 logical-pixel art, muted 16-colour weathered 1990s palette, upper-left light, crisp blocky pixel clusters. A heavy INDUSTRIAL CROWBAR. One solid long forged dark steel pry bar, bent hooked claw with visible nail-pulling split at one end, flattened chisel tip at other. Slight industrial wear, dark steel with restrained rusty brown edges. No knife blade or grip guard. Entire object diagonal lower-left to upper-right, centered, isolated with 10% transparent empty margin all around, readable silhouette when reduced to 40x40. Transparent background. No text, logo, rarity colour, border, glow, shadow, scene, hands or extra items. Square canvas.",
+      "frames": 1,
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "target": "assets/gear/melee06.png",
+      "status": "ready"
+    },
+    {
+      "id": "melee07",
+      "type": "icon",
+      "source": "sources/melee07.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-a00b1a21-8429-4aca-a674-78b0fd032d5b.png",
+      "prompt": "Use case: stylized-concept. ONE inventory equipment icon for TidalLine. Authentic coarse 48x48 logical-pixel art, muted 16-colour weathered 1990s palette, upper-left light, crisp blocky pixel clusters. A GURKHA KUKRI. Distinctive forward-curved broad heavy steel blade, weight concentrated in wide blade front, traditional worn polished brown wood handle, modest brass bolster. No sheath. Entire object diagonal lower-left to upper-right, centered, isolated with 10% transparent empty margin all around, readable silhouette when reduced to 40x40. Transparent background. No text, logo, rarity colour, border, glow, shadow, scene, hands or extra items. Square canvas.",
+      "frames": 1,
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "target": "assets/gear/melee07.png",
+      "status": "ready"
+    },
+    {
       "id": "player_melee_idle_e",
       "type": "sheet",
       "state": "idle",
@@ -806,6 +862,873 @@
         }
       ],
       "target": "assets/anim/player_melee_melee03_s.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee04_e",
+      "type": "sheet",
+      "state": "melee04",
+      "dir": "e",
+      "source": "sources/player_melee_melee04_e.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-23274198-235d-498d-8b2d-ecaa7bf2b8ed.png",
+      "atlas": "sources/melee04_atlas.png",
+      "atlasRow": 0,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a standalone short-handled triangular steel military spike dagger with dark grip, NO gun attachment. A precise straight forward THRUST, narrow attack: ready, arm drawn back, fully extended forward thrust, withdraw. Do not swing overhead. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            16,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            18,
+            17,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            20,
+            18,
+            28,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            16,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee04_e.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee04_n",
+      "type": "sheet",
+      "state": "melee04",
+      "dir": "n",
+      "source": "sources/player_melee_melee04_n.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-23274198-235d-498d-8b2d-ecaa7bf2b8ed.png",
+      "atlas": "sources/melee04_atlas.png",
+      "atlasRow": 1,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a standalone short-handled triangular steel military spike dagger with dark grip, NO gun attachment. A precise straight forward THRUST, narrow attack: ready, arm drawn back, fully extended forward thrust, withdraw. Do not swing overhead. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            23,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            21,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            28,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            23,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee04_n.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee04_s",
+      "type": "sheet",
+      "state": "melee04",
+      "dir": "s",
+      "source": "sources/player_melee_melee04_s.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-23274198-235d-498d-8b2d-ecaa7bf2b8ed.png",
+      "atlas": "sources/melee04_atlas.png",
+      "atlasRow": 2,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a standalone short-handled triangular steel military spike dagger with dark grip, NO gun attachment. A precise straight forward THRUST, narrow attack: ready, arm drawn back, fully extended forward thrust, withdraw. Do not swing overhead. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            18,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            18,
+            19,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            17,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            18,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee04_s.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee05_e",
+      "type": "sheet",
+      "state": "melee05",
+      "dir": "e",
+      "source": "sources/player_melee_melee05_e.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-e6fa858a-04d8-45a3-87f7-c10f14493054.png",
+      "atlas": "sources/melee05_atlas.png",
+      "atlasRow": 0,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a compact short silver emergency rescue knife with bright orange nonslip handle. A very quick close-range small cutting action: ready, small windup, short forward slash, recover. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "alphaEdit": "Use case: background-extraction. Edit this exact twelve-figure 4-column by 3-row sprite atlas. Remove ALL the white background, faint cell lines and soft ground shadows, replacing them with TRUE alpha transparency. Preserve all twelve character figures, orange rescue knives, pixel-art colours, exact poses, row/column positions and entire canvas dimensions. Do not crop, scale, reposition, add or remove figures. Keep crisp dark outlines and silver knife blades. The spaces between sprites and all cell margins must be transparent, not white or checkerboard.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            17,
+            17,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            18,
+            18,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            20,
+            17,
+            25,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            18,
+            17,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee05_e.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee05_n",
+      "type": "sheet",
+      "state": "melee05",
+      "dir": "n",
+      "source": "sources/player_melee_melee05_n.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-e6fa858a-04d8-45a3-87f7-c10f14493054.png",
+      "atlas": "sources/melee05_atlas.png",
+      "atlasRow": 1,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a compact short silver emergency rescue knife with bright orange nonslip handle. A very quick close-range small cutting action: ready, small windup, short forward slash, recover. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "alphaEdit": "Use case: background-extraction. Edit this exact twelve-figure 4-column by 3-row sprite atlas. Remove ALL the white background, faint cell lines and soft ground shadows, replacing them with TRUE alpha transparency. Preserve all twelve character figures, orange rescue knives, pixel-art colours, exact poses, row/column positions and entire canvas dimensions. Do not crop, scale, reposition, add or remove figures. Keep crisp dark outlines and silver knife blades. The spaces between sprites and all cell margins must be transparent, not white or checkerboard.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            22,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            17,
+            18,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            28,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            22,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee05_n.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee05_s",
+      "type": "sheet",
+      "state": "melee05",
+      "dir": "s",
+      "source": "sources/player_melee_melee05_s.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-e6fa858a-04d8-45a3-87f7-c10f14493054.png",
+      "atlas": "sources/melee05_atlas.png",
+      "atlasRow": 2,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a compact short silver emergency rescue knife with bright orange nonslip handle. A very quick close-range small cutting action: ready, small windup, short forward slash, recover. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "alphaEdit": "Use case: background-extraction. Edit this exact twelve-figure 4-column by 3-row sprite atlas. Remove ALL the white background, faint cell lines and soft ground shadows, replacing them with TRUE alpha transparency. Preserve all twelve character figures, orange rescue knives, pixel-art colours, exact poses, row/column positions and entire canvas dimensions. Do not crop, scale, reposition, add or remove figures. Keep crisp dark outlines and silver knife blades. The spaces between sprites and all cell margins must be transparent, not white or checkerboard.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            19,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            18,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            18,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            17,
+            19,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee05_s.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee06_e",
+      "type": "sheet",
+      "state": "melee06",
+      "dir": "e",
+      "source": "sources/player_melee_melee06_e.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-4be88169-3dfd-48b4-a6b5-0812cbf4a517.png",
+      "atlas": "sources/melee06_atlas.png",
+      "atlasRow": 0,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a long dark worn steel industrial crowbar with curved split nail-puller hook. A medium blunt swing: ready, raise crowbar back, forward downward club strike, recover. Crowbar must stay a hooked metal bar, not become a sword. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            22,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            12,
+            19,
+            34
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            18,
+            28,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            20,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee06_e.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee06_n",
+      "type": "sheet",
+      "state": "melee06",
+      "dir": "n",
+      "source": "sources/player_melee_melee06_n.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-4be88169-3dfd-48b4-a6b5-0812cbf4a517.png",
+      "atlas": "sources/melee06_atlas.png",
+      "atlasRow": 1,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a long dark worn steel industrial crowbar with curved split nail-puller hook. A medium blunt swing: ready, raise crowbar back, forward downward club strike, recover. Crowbar must stay a hooked metal bar, not become a sword. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            24,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            13,
+            18,
+            33
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            31,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            24,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee06_n.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee06_s",
+      "type": "sheet",
+      "state": "melee06",
+      "dir": "s",
+      "source": "sources/player_melee_melee06_s.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-4be88169-3dfd-48b4-a6b5-0812cbf4a517.png",
+      "atlas": "sources/melee06_atlas.png",
+      "atlasRow": 2,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a long dark worn steel industrial crowbar with curved split nail-puller hook. A medium blunt swing: ready, raise crowbar back, forward downward club strike, recover. Crowbar must stay a hooked metal bar, not become a sword. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            20,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            22,
+            15,
+            18,
+            31
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            23,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            18,
+            29
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee06_s.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee07_e",
+      "type": "sheet",
+      "state": "melee07",
+      "dir": "e",
+      "source": "sources/player_melee_melee07_e.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-d441c97e-c290-45de-a097-e46069bd458f.png",
+      "atlas": "sources/melee07_atlas.png",
+      "atlasRow": 0,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a heavy forward-curved Gurkha kukri with broad silver front blade and worn brown wooden grip. A broad powerful slash: ready, broad raised windup, wide sweeping forward cut, recover. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            21,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            17,
+            16,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            18,
+            27,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            20,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee07_e.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee07_n",
+      "type": "sheet",
+      "state": "melee07",
+      "dir": "n",
+      "source": "sources/player_melee_melee07_n.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-d441c97e-c290-45de-a097-e46069bd458f.png",
+      "atlas": "sources/melee07_atlas.png",
+      "atlasRow": 1,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a heavy forward-curved Gurkha kukri with broad silver front blade and worn brown wooden grip. A broad powerful slash: ready, broad raised windup, wide sweeping forward cut, recover. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            24,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            16,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            29,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            22,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee07_n.png",
+      "status": "ready"
+    },
+    {
+      "id": "player_melee_melee07_s",
+      "type": "sheet",
+      "state": "melee07",
+      "dir": "s",
+      "source": "sources/player_melee_melee07_s.png",
+      "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-d441c97e-c290-45de-a097-e46069bd458f.png",
+      "atlas": "sources/melee07_atlas.png",
+      "atlasRow": 2,
+      "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a heavy forward-curved Gurkha kukri with broad silver front blade and worn brown wooden grip. A broad powerful slash: ready, broad raised windup, wide sweeping forward cut, recover. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+      "frames": 4,
+      "sourceSize": [
+        1448,
+        362
+      ],
+      "anchors": [
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            21,
+            18,
+            20,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            17,
+            16,
+            29
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            24,
+            18,
+            20,
+            28
+          ]
+        },
+        {
+          "bodyHeight": 28,
+          "feet": [
+            32,
+            46
+          ],
+          "bbox": [
+            23,
+            18,
+            19,
+            28
+          ]
+        }
+      ],
+      "target": "assets/anim/player_melee_melee07_s.png",
       "status": "ready"
     },
     {

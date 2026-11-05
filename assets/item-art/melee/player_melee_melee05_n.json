@@ -1,0 +1,13 @@
+{
+  "id": "player_melee_melee05_n",
+  "type": "sheet",
+  "state": "melee05",
+  "dir": "n",
+  "source": "sources/player_melee_melee05_n.png",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-e6fa858a-04d8-45a3-87f7-c10f14493054.png",
+  "atlas": "sources/melee05_atlas.png",
+  "atlasRow": 1,
+  "prompt": "Use case: stylized-concept. Create a NEW transparent pixel-art character animation atlas for TidalLine, using the attached three strips solely as EXACT CHARACTER IDENTITY and pixel-style references. Character wears blue-grey hood, dark olive coat, tan straps, slate pants and boots. Match reference body and clothing, no guns. Atlas is exactly 4 columns by 3 rows of equally sized square cells, landscape 4:3 aspect ratio, no gaps or labels. Each cell represents 64x64 logical pixels, body about 20x28 logical pixels with boot feet centered consistently at (32,46). Very generous transparent margin inside every cell; never overlap neighbouring cells. Top row all 4 frames face EAST/right profile; middle row all 4 frames face NORTH/back view; bottom row all 4 frames face SOUTH/front view. Left-to-right in EACH row: four distinct sequential attack poses with a compact short silver emergency rescue knife with bright orange nonslip handle. A very quick close-range small cutting action: ready, small windup, short forward slash, recover. Character body/head same scale and same foot anchor in all twelve cells. True transparent background, no grid, no text, no shadows, no weapon trails, no checkerboard. Coarse crisp pixel clusters, muted limited palette, upper-left light, top-down 75-degree game camera. Entire weapon and all limbs stay inside their cell. Twelve complete separate figures total.",
+  "alphaEdit": "Use case: background-extraction. Edit this exact twelve-figure 4-column by 3-row sprite atlas. Remove ALL the white background, faint cell lines and soft ground shadows, replacing them with TRUE alpha transparency. Preserve all twelve character figures, orange rescue knives, pixel-art colours, exact poses, row/column positions and entire canvas dimensions. Do not crop, scale, reposition, add or remove figures. Keep crisp dark outlines and silver knife blades. The spaces between sprites and all cell margins must be transparent, not white or checkerboard.",
+  "frames": 4
+}

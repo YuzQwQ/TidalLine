@@ -1,0 +1,14 @@
+{
+  "id": "ammo_545x39",
+  "name": "5.45×39mm 弹药",
+  "generator": "image_gen",
+  "prompt": "Use case: stylized-concept. ONE equipment icon for TidalLine, coarse crisp retro pixel art matching the reference style and orientation. An open weathered muted brown-khaki ammunition cardboard box containing slender 5.45x39 rifle cartridges, with three loose bottleneck brass cartridges with narrow pointed copper bullets beside it. Same oblique view as the ammunition reference, clear different box colour, no printed text or caliber markings. Entire object centered inside 40x40 logical-pixel safe area of a 48x48 icon, 10% transparent margins all sides. Muted limited palette, upper-left light, binary pixel-like edges. No text, labels, rarity colour, scene, background, hands, extra objects, logos or glow. True transparent background.",
+  "source": "assets/item-art/assault-expansion/sources/ammo_545x39.png",
+  "target": "assets/items/ammo_545x39.png",
+  "size": [
+    48,
+    48
+  ],
+  "safeMargin": 4,
+  "sha256": "0b4b050a0f817ac4d6f32c838158882784ee405363356a7b907e7fd3c72ef1c8"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "g36c",
+  "name": "G36C",
+  "generator": "image_gen",
+  "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. G36C compact assault rifle, dark charcoal polymer body, distinctive skeleton folding stock, compact slotted handguard, low integral carrying rail, short barrel and translucent dark magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+  "source": "assets/item-art/assault-expansion/sources/g36c.png",
+  "target": "assets/gear/g36c.png",
+  "size": [
+    48,
+    48
+  ],
+  "safeMargin": 4,
+  "sha256": "61335fa19ec6a39c5527bdae9c89ea8b448ac218b86354a68ae292160a42bd25"
+}

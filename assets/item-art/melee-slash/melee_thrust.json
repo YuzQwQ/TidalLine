@@ -1,0 +1,11 @@
+{
+  "id": "melee_thrust",
+  "prompt": "Use case: stylized-concept. Create ONE production-ready transparent PIXEL ART melee visual effect texture for the TidalLine game, based on the provided preview solely as a style and palette reference. A SINGLE narrow UPWARD-POINTING triangular spear-tip-shaped melee THRUST motion effect, about 25 degrees wide, centered on canvas. Sharp fine ivory tip at TOP CENTER, two clean ivory tapered edges, wider grey translucent swept base below fading toward an imaginary wielder at BOTTOM CENTER. A long pointed wedge of physical blade motion, not a crescent. A slim dark charcoal under-edge provides contrast. No weapon or object, only the blade's motion afterimage. Portrait 1:2 aspect. Coarse crisp pixel clusters, compact silhouette readable when reduced to 128x64 logical pixels (thrust 64x128), muted bone ivory and silver grey. Preserve real semitransparent alpha in inward afterimages, genuine fully transparent background with generous empty safe margins on all sides. No background, characters, floor, UI, text, grid, checkerboard, glow, magic, sparks, fire, smoke or extra effects. The screenshot is a reference ONLY, do not reproduce it or include any part of the scene. One isolated effect sprite only, not a sheet.",
+  "originalSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-b62b96c8-c6ca-4914-acea-2e4d72db2bbb.png",
+  "source": "sources/melee_thrust-v2.png",
+  "size": [
+    64,
+    128
+  ],
+  "direction": "向前尖端刺击"
+}

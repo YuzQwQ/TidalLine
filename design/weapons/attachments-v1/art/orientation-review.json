@@ -245,6 +245,27 @@
       "perspective": "three-quarter front, slight overhead",
       "passed": true,
       "retained": false
+    },
+    {
+      "id": "att_mag_545x39_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_mag_545x39_quick",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
+    },
+    {
+      "id": "att_mag_545x39_quick_ext",
+      "placement": "upright",
+      "perspective": "three-quarter front, slight overhead",
+      "passed": true,
+      "retained": false
     }
   ],
   "redrawn": [

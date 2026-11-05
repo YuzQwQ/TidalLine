@@ -4,8 +4,8 @@
     {
       "offline": false,
       "slots": 5,
-      "publicStock": 24,
-      "inventoryFilter": 32,
+      "publicStock": 26,
+      "inventoryFilter": 35,
       "install": true,
       "detach": true,
       "disabledSlots": true,
@@ -21,8 +21,8 @@
     {
       "offline": true,
       "slots": 5,
-      "publicStock": 24,
-      "inventoryFilter": 32,
+      "publicStock": 26,
+      "inventoryFilter": 35,
       "install": true,
       "detach": true,
       "disabledSlots": true,

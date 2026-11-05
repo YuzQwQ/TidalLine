@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "batch": 3,
+  "weapons": [
+    {
+      "category": "rifle",
+      "mag": 30,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "id": "groza1",
+      "name": "OTs-14-1A Groza-1「雷暴」",
+      "short": "Groza-1",
+      "caliber": "762x39",
+      "rpm": 700,
+      "w": 3.2,
+      "reloadTime": 2.6,
+      "price": 250000,
+      "rarity": 5,
+      "recoilVMul": 1.4,
+      "recoilHMul": 1.25,
+      "spreadMul": 1.05,
+      "aimTimeMul": 0.75,
+      "recoilPerShot": 0.085,
+      "shopAvailable": false,
+      "desc": "无托结构将7.62毫米火力压进了短小的枪身。抬枪迅速，穿行狭窄通道时也不易磕碰，但连续射击时的跳动需要用力压住。环礁湾的旧装备箱上只给它留了一个简短的译名：雷暴。",
+      "visual": "紧凑黑色无托枪身、高提把、握把后方的弯曲AK弹匣、短枪管与前握把。"
+    },
+    {
+      "category": "rifle",
+      "mag": 30,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "id": "ak12",
+      "name": "AK-12",
+      "short": "AK-12",
+      "caliber": "545x39",
+      "rpm": 700,
+      "w": 3.5,
+      "reloadTime": 2.5,
+      "price": 115000,
+      "rarity": 3,
+      "recoilVMul": 0.9,
+      "recoilHMul": 0.85,
+      "spreadMul": 0.9,
+      "aimTimeMul": 1,
+      "recoilPerShot": 0.075,
+      "shopAvailable": true,
+      "desc": "导轨护木、可调枪托和重新布置的操控部件，让这支现代制式步枪比它的前辈更容易上手。使用5.45×39毫米弹药，连续射击较为平稳，也给携行者留下了充足的改装余地。",
+      "visual": "黑色现代AK机匣、连续顶轨、开槽聚合物护木、可调枪托和较直的5.45弹匣。"
+    },
+    {
+      "category": "rifle",
+      "mag": 30,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "id": "mk47_mod2",
+      "name": "MK47 MOD.2「Mutant」",
+      "short": "MK47 MOD.2",
+      "caliber": "762x39",
+      "rpm": 650,
+      "w": 3.5,
+      "reloadTime": 2.6,
+      "price": 175000,
+      "rarity": 4,
+      "recoilVMul": 1.05,
+      "recoilHMul": 0.9,
+      "spreadMul": 0.8,
+      "aimTimeMul": 1.05,
+      "recoilPerShot": 0.08,
+      "shopAvailable": false,
+      "desc": "环礁湾一家武器工坊基于Mk47构思试制的全自动改型。AR式操控布局配合7.62×39毫米弹药和弯曲弹匣，着重改善射击一致性与后坐力控制。MOD.2是工坊自编的改型编号，现存样枪的零件与加工痕迹并不完全一致。",
+      "visual": "黑色AR式机匣、细长M-LOK护木、可调镂空枪托与明显弯曲的AK式7.62弹匣。"
+    }
+  ],
+  "supply": "AK-12 军火商有售；Groza-1 与 MK47 MOD.2 复用现有枪械战利品池。"
+}

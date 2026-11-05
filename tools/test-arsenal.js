@@ -15,9 +15,9 @@ const input={mx:0,my:0,sneak:false,sprint:false,dodge:false,aimAngle:0};
 function tick(p,dt=1/60,held=false,pressed=false){p.update(dt,input);Gunplay.trigger(p,held,pressed);}
 function advance(p,t,held=false,fps=60){for(let n=0;n<Math.round(t*fps);n++)tick(p,1/fps,held,false);}
 const near=(a,b)=>assert(Math.abs(a-b)<1e-8,`${a} != ${b}`);
-test('12 models / 3 per class / five shared damage profiles / 25 ammo grades',()=>{
- assert.equal(Object.keys(WEAPONS).length,12);assert.equal(Object.keys(CALIBERS).length,5);assert.equal(AMMO_ITEMS.length,25);
- for(const cat of ['rifle','smg','shotgun','pistol'])assert.equal(Object.values(WEAPONS).filter(w=>w.category===cat).length,3);
+test('23 models / 14 rifles / six shared damage profiles / 30 ammo grades',()=>{
+ assert.equal(Object.keys(WEAPONS).length,23);assert.equal(Object.keys(CALIBERS).length,6);assert.equal(AMMO_ITEMS.length,30);
+ for(const cat of ['rifle','smg','shotgun','pistol'])assert.equal(Object.values(WEAPONS).filter(w=>w.category===cat).length,cat==='rifle'?14:3);
  for(const s of spec.weapons){const w=WEAPONS[s.id];assert.equal(w.rpm,s.rpm);assert.equal(w.mag,s.mag);assert.equal(w.reloadTime,s.reloadTime);assert.equal(w.price,s.price);assert.equal(w.dmgMin,CALIBERS[w.caliber].damage[0]);assert.equal(w.dmgMax,CALIBERS[w.caliber].damage[1]);assert.equal(w.slot,w.category==='pistol'?'secondary':'primary');assert.equal(EQUIP.gun(w.id).stack,1);}
 });
 test('semi/pump require a fresh press; automatic only repeats in auto mode',()=>{
@@ -54,8 +54,8 @@ test('tube firing request commits current shell then fires once; interruption ke
  let p=fresh('mp155',0);p.bag.addAmmo('ammo_12g_1',10);p.tryReload();advance(p,.7);assert.equal(p.mag,1);Gunplay.trigger(p,true,true);advance(p,.7);assert.equal(p.reloadPending,false);assert.equal(p.mag,1);assert.equal(p.bag.ammoCount('ammo_12g_1'),8);assert.equal(Game.bullets.length,6);
  p=fresh('mp155',0);p.bag.addAmmo('ammo_12g_1',10);p.tryReload();advance(p,.7);p.dead=true;advance(p,1);assert.equal(p.mag,1);assert.equal(p.bag.ammoCount('ammo_12g_1'),9);
 });
-test('mixed grades and priority work for all five calibers; unloading is exact and repeat-safe',()=>{
- for(const id of ['m4a1','akm','mp5a3','ump45','saiga12']){
+test('mixed grades and priority work for all six calibers; unloading is exact and repeat-safe',()=>{
+ for(const id of ['m4a1','akm','aks74u','mp5a3','ump45','saiga12']){
   const p=fresh(id,0),cal=p.weapon.caliber,a='ammo_'+cal+'_3',b='ammo_'+cal+'_1';p.weapon.ammo=a;p.bag.addAmmo(a,2);p.bag.addAmmo(b,3);p.tryReload();advance(p,p.weapon.reloadTime+.1);assert.equal(p.weapon.rounds.join(','),[a,a,b,b,b].join(','));assert.equal(p.bag.ammoCountByCaliber(cal),0);assert(p.unloadWeapon());assert.equal(p.bag.ammoCount(a),2);assert.equal(p.bag.ammoCount(b),3);assert(p.unloadWeapon());assert.equal(p.bag.ammoCountByCaliber(cal),5);
  }
 });
@@ -65,12 +65,12 @@ test('old IDs, mixed ammo and excess shotgun shell migrate idempotently without 
 });
 test('firing mode persists through warehouse and raid; all shop prices and class-slot restrictions remain valid',()=>{
  let p=fresh();Gunplay.setMode(p,'semi');Game.syncGear();Save.save();Save.flush();Save.load();assert.equal(Save.gear.weapons[0].equip.fireMode,'semi');p.fillWeapons(Save.gear.weapons);assert.equal(p.weapon.fireMode,'semi');
- Save.stash=[];Save.credits=1e7;for(const w of Object.values(WEAPONS)){const cash=Save.credits;assert(Base.buyGun(w.id));const item=Save.stash.at(-1).gear;assert.equal(cash-Save.credits,w.price);assert.equal(item.equip.mag,w.mag);assert.equal(item.sell,Math.floor(w.price/2));assert.equal(Base.equipFromStash(Save.stash.at(-1),w.slot==='secondary'?'w0':'w2'),false);}
+ Save.stash=[];Save.credits=1e7;for(const w of Object.values(WEAPONS)){const cash=Save.credits;if(w.shopAvailable===false){assert.equal(Base.buyGun(w.id),false);assert.equal(Save.credits,cash);continue;}assert(Base.buyGun(w.id));const item=Save.stash.at(-1).gear;assert.equal(cash-Save.credits,w.price);assert.equal(item.equip.mag,w.mag);assert.equal(item.sell,Math.floor(w.price/2));assert.equal(Base.equipFromStash(Save.stash.at(-1),w.slot==='secondary'?'w0':'w2'),false);}
 });
 test('loot only uses existing special pools, with all new calibers and exact tier/color semantics',()=>{
  assert.equal(CONTAINER_TYPES.Q.ammoPool.chance,.25);assert.equal(CONTAINER_TYPES.K.gearPool.chance,.1);assert(!CONTAINER_TYPES.Z.ammoPool);assert(!CONTAINER_TYPES.Z.gearPool);
  const seen=new Set(),cal=new Set();for(let i=0;i<5000;i++){const r=Loot.rollGear('fine',{kinds:['gun']});if(r.item.equip?.kind==='gun'){seen.add(r.item.equip.gun);assert.equal(r.n,1);assert.equal(r.item.equip.mag,0);}const a=Loot.rollAmmo('fine',CONTAINER_TYPES.Q.ammoPool);cal.add(a.item.caliber);assert(a.item.r<=5);}
- assert.equal(seen.size,12);assert.equal(cal.size,5);
+ assert.equal(seen.size,23);assert.equal(cal.size,6);
 });
 test('local recoil axes remain independent; V alone never changes direction, damage or random spread',()=>{
  const p=fresh(),rand=U.rand;U.rand=(a,b)=>(a+b)/2;

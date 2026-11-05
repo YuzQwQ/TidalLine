@@ -1,0 +1,14 @@
+{
+  "id": "att_mag_545x39_ext",
+  "name": "5.45×39mm 扩容弹匣",
+  "generator": "image_gen",
+  "prompt": "Use case: stylized-concept. ONE equipment icon for TidalLine, coarse crisp retro pixel art matching the reference style and orientation. ONE elongated extended-capacity 5.45x39 AK-pattern rifle box magazine. Distinctive curved reddish brown bakelite polymer body with fine longitudinal ribs, no pull loop. UPRIGHT with feed lips at TOP, floorplate at BOTTOM, body curves toward RIGHT. Slight three-quarter front view. Entire object centered inside 40x40 logical-pixel safe area of a 48x48 icon, 10% transparent margins all sides. Muted limited palette, upper-left light, binary pixel-like edges. No text, labels, rarity colour, scene, background, hands, extra objects, logos or glow. True transparent background.",
+  "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_ext.png",
+  "target": "assets/gear/att_mag_545x39_ext.png",
+  "size": [
+    48,
+    48
+  ],
+  "safeMargin": 4,
+  "sha256": "851e7be6656b7480694607ecde657121f981b7ee77b60161b682927cd5b02cb9"
+}

@@ -1,0 +1,173 @@
+{
+  "generator": "image_gen",
+  "assets": [
+    {
+      "id": "m16a1",
+      "name": "M16A1",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. M16A1 assault rifle, full-length triangular ribbed black polymer handguard, fixed black stock, classic integral carry handle, long barrel, straight short 20-round magazine. No modern rails or attachments. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/m16a1.png",
+      "target": "assets/gear/m16a1.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "c46f8b37ccabeb41f126adc04f52f1feeef0c1c5cee16b2ad4cc9a93d9b6d2e1"
+    },
+    {
+      "id": "galil_arm",
+      "name": "Galil ARM",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. Galil ARM rifle, heavy dark steel receiver, brown wooden ventilated handguard, distinctive tubular folding stock, long barrel with folded bipod, long curved 35-round 5.56 magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/galil_arm.png",
+      "target": "assets/gear/galil_arm.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "72056b13ece046ac850d750a19ddec70030b8d7ed7e8516c1e84f03b1076fe42"
+    },
+    {
+      "id": "aks74u",
+      "name": "AKS-74U",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. AKS-74U compact assault rifle, very short barrel with bulbous muzzle booster, reddish-brown short wooden handguard, triangular side-folding metal skeleton stock, strongly curved 5.45 magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/aks74u.png",
+      "target": "assets/gear/aks74u.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "1e165bd6ac307d225988c777a37891aac89f326cb6d0218df444477dfe3e7d38"
+    },
+    {
+      "id": "g36c",
+      "name": "G36C",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. G36C compact assault rifle, dark charcoal polymer body, distinctive skeleton folding stock, compact slotted handguard, low integral carrying rail, short barrel and translucent dark magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/g36c.png",
+      "target": "assets/gear/g36c.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "61335fa19ec6a39c5527bdae9c89ea8b448ac218b86354a68ae292160a42bd25"
+    },
+    {
+      "id": "fn_fnc",
+      "name": "FN FNC",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. FN FNC assault rifle, dark steel upper receiver, muted olive-black polymer handguard, folding tubular metal stock, standard 30-round 5.56 box magazine, full-length barrel and tall front sight. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/fn_fnc.png",
+      "target": "assets/gear/fn_fnc.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "5dc44953e09b0dd7dbaef856a3d0043efebb221c558f423dded69b19cca01465"
+    },
+    {
+      "id": "sig550",
+      "name": "SIG SG 550",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. SIG SG 550 precision service assault rifle, distinctive muted olive green polymer handguard and skeletal folding stock, grey steel receiver, long barrel, translucent ribbed curved magazine. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/sig550.png",
+      "target": "assets/gear/sig550.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "ce18de479f854c5921c797306435014a68e1b22c60e3f3d05d06f793ca0b903c"
+    },
+    {
+      "id": "an94",
+      "name": "AN-94",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. AN-94 assault rifle, distinctive asymmetric chunky dark polymer receiver, slanted 5.45 box magazine, long front barrel assembly and fixed-shaped folding stock. Exact recognizable AN-94 profile, no scope. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/an94.png",
+      "target": "assets/gear/an94.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "6399822a4ae0f2880f924f6858595ff4b05734f16d551e22f5a4b5a2c52c8202"
+    },
+    {
+      "id": "aug_a1",
+      "name": "AUG A1",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE production inventory icon for TidalLine, coarse retro pixel art consistent with the supplied M4A1 reference. Steyr AUG A1 bullpup assault rifle, distinctive olive green integrated polymer bullpup stock, built-in elevated optical carry-handle sight, folding vertical foregrip, magazine behind the pistol grip, black barrel. Complete weapon, stock on LEFT, muzzle pointing RIGHT with a very slight upward tilt, strict near-side profile, same camera as reference. Centered silhouette with at least 8% fully transparent margin all sides. Muted weathered 1990s palette, subtle upper-left highlights, crisp pixel clusters and restrained outlines, clear recognizable parts after downsampling to a 40x40 safe area on a 48x48 icon. Only the gun, no hands, character, scene, text, model name, logos, rarity background, borders, glow, ammunition on the ground or extra objects. Genuine transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/aug_a1.png",
+      "target": "assets/gear/aug_a1.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "fd48a845dd59a43e37f53fc9cc6007a719efab6191cdee91361fb5d46b012747"
+    },
+    {
+      "id": "ammo_545x39",
+      "name": "5.45×39mm 弹药",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE equipment icon for TidalLine, coarse crisp retro pixel art matching the reference style and orientation. An open weathered muted brown-khaki ammunition cardboard box containing slender 5.45x39 rifle cartridges, with three loose bottleneck brass cartridges with narrow pointed copper bullets beside it. Same oblique view as the ammunition reference, clear different box colour, no printed text or caliber markings. Entire object centered inside 40x40 logical-pixel safe area of a 48x48 icon, 10% transparent margins all sides. Muted limited palette, upper-left light, binary pixel-like edges. No text, labels, rarity colour, scene, background, hands, extra objects, logos or glow. True transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/ammo_545x39.png",
+      "target": "assets/items/ammo_545x39.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "0b4b050a0f817ac4d6f32c838158882784ee405363356a7b907e7fd3c72ef1c8"
+    },
+    {
+      "id": "att_mag_545x39_ext",
+      "name": "5.45×39mm 扩容弹匣",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE equipment icon for TidalLine, coarse crisp retro pixel art matching the reference style and orientation. ONE elongated extended-capacity 5.45x39 AK-pattern rifle box magazine. Distinctive curved reddish brown bakelite polymer body with fine longitudinal ribs, no pull loop. UPRIGHT with feed lips at TOP, floorplate at BOTTOM, body curves toward RIGHT. Slight three-quarter front view. Entire object centered inside 40x40 logical-pixel safe area of a 48x48 icon, 10% transparent margins all sides. Muted limited palette, upper-left light, binary pixel-like edges. No text, labels, rarity colour, scene, background, hands, extra objects, logos or glow. True transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_ext.png",
+      "target": "assets/gear/att_mag_545x39_ext.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "851e7be6656b7480694607ecde657121f981b7ee77b60161b682927cd5b02cb9"
+    },
+    {
+      "id": "att_mag_545x39_quick",
+      "name": "5.45×39mm 快速弹匣",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE equipment icon for TidalLine, coarse crisp retro pixel art matching the reference style and orientation. ONE standard-length 5.45x39 AK-pattern quick magazine. Curved reddish brown bakelite polymer body, distinctive short dark cloth pull tab attached to BOTTOM floorplate, brass cartridge at feed lips. UPRIGHT feed lips TOP, floorplate BOTTOM, curved toward RIGHT. Slight three-quarter front view. Entire object centered inside 40x40 logical-pixel safe area of a 48x48 icon, 10% transparent margins all sides. Muted limited palette, upper-left light, binary pixel-like edges. No text, labels, rarity colour, scene, background, hands, extra objects, logos or glow. True transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick.png",
+      "target": "assets/gear/att_mag_545x39_quick.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "89f9ea8b4e048c6566efce68e52b81f96a8b44e542e0d247b9c31017e1c290f8"
+    },
+    {
+      "id": "att_mag_545x39_quick_ext",
+      "name": "5.45×39mm 快速扩容弹匣",
+      "generator": "image_gen",
+      "prompt": "Use case: stylized-concept. ONE equipment icon for TidalLine, coarse crisp retro pixel art matching the reference style and orientation. ONE elongated extended-capacity 5.45x39 AK-pattern quick-extended magazine. Curved reddish brown bakelite polymer body with clear strengthening ribs, distinctive pronounced black rubber pull loop on BOTTOM floorplate. UPRIGHT feed lips TOP, floorplate BOTTOM, curve toward RIGHT. Slight three-quarter front view. Entire object centered inside 40x40 logical-pixel safe area of a 48x48 icon, 10% transparent margins all sides. Muted limited palette, upper-left light, binary pixel-like edges. No text, labels, rarity colour, scene, background, hands, extra objects, logos or glow. True transparent background.",
+      "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick_ext.png",
+      "target": "assets/gear/att_mag_545x39_quick_ext.png",
+      "size": [
+        48,
+        48
+      ],
+      "safeMargin": 4,
+      "sha256": "16a2f8421edc6b35bdc362d5222b3d65e69ea5e3282e99e390c959bfed8014b0"
+    }
+  ]
+}
