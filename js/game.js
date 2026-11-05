@@ -4,6 +4,10 @@
    面板在 game-panels.js，启动在 boot.js。
    ============================================================ */
 
+/* 伤害类型 → 飘字字体。颜色只认类型，不认"谁挨打"：
+   玩家中弹和敌人中弹同色，玩家专属的紫色已经退役。 */
+const DMG_FONT = { normal: 'damage', crit: 'crit', melee: 'melee' };
+
 const Game = {
   canvas: null, ctx: null,
   state: 'menu',
@@ -550,17 +554,19 @@ const Game = {
 
   /* 伤害飘字：在 (x, y) 的正上方冒一个数字。
      y 传给的是"目标顶部"，数字从这点往上长，不会压在头上挡视线。
-     opts.crit 走爆头那一套（橙金、飘得更高、留得更久）。
-     opts.font 直接指定字体（'hurt' = 玩家受伤的紫色），优先于 crit。
+     opts.kind 按伤害类型选字体：normal 骨白 / crit 橙金 / melee 蓝（近战真伤）。
+     opts.crit 是旧的爆头开关，等价于 kind:'crit'（保留给现有调用与测试）。
+     opts.font 直接指定字体，优先级最高，留给特殊场合。
      opts.key  目标对象：同一个目标连着中（间隔 < CFG.DMG_TEXT.MERGE），
                数字并进同一条累加，全自动扫射只看到一条往上跳的数。
      返回这条飘字当前显示的数值。 */
   popDamage(x, y, value, opts) {
     const C = CFG.DMG_TEXT;
     const o = opts || {};
-    const crit = !!o.crit;
+    const kind = o.kind || (o.crit ? 'crit' : 'normal');
+    const crit = kind === 'crit';
+    const font = o.font || DMG_FONT[kind] || 'damage';
     const n = Math.max(0, Math.round(value));
-    const font = o.font || (crit ? 'crit' : 'damage');
 
     /* 全自动一梭子三十发：三十个数字叠在同一个脑袋上，谁也读不出来。
        同一个目标短时间内的连续命中并成一条，数字一路往上跳 ——

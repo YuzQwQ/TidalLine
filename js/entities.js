@@ -840,7 +840,7 @@ class Player {
      部位倍率先并进来，再交给 BALLISTICS 统一算穿透与耐久，别在这里各乘一次。 */
   /* 返回**实际掉的血**（扣完护甲）：伤害飘字按这个数显示，
      不是按枪的纸面伤害 —— 打穿护甲和打在护甲上，玩家看到的数字得不一样。 */
-  hurt(base, part, pen) {
+  hurt(base, part, pen, kind) {
     if (this.dead) return 0;
     part = part || 'body';
     const head = part === 'head';
@@ -849,10 +849,12 @@ class Player {
     const res = BALLISTICS.hit(pre, pen == null ? CFG.AMMO.UNARMED_PEN : pen, gear);
     const dmg = res.health;
 
-    /* 自己挨打也飘字：紫色（hurt 字体），和敌人的骨白、爆头的橙金区分开。
-       写在 hurt 里而不是各个伤害来源，玩家中弹/近战/将来任何掉血都走这一条。
+    /* 自己挨打也飘字，但不再单独配色：按伤害类型走和敌人同一张表
+       （普通枪伤骨白、爆头橙金、近战蓝）。kind 由伤害来源传进来，
+       没传就按部位推：写在 hurt 里，将来任何新的掉血来源都自动覆盖。
        （这里只飘字不发声：受击的音效还在等合适的素材，见 audio-actions 的缺口） */
-    Game.popDamage(this.x, this.y - 20, dmg, { font: 'hurt', key: this });
+    Game.popDamage(this.x, this.y - 20, dmg,
+      { kind: kind || (head ? 'crit' : 'normal'), key: this });
     this.hurtAnimT = PLAYER_ANIMS.hurt.frames / PLAYER_ANIMS.hurt.fps;
     this.hp -= dmg;
     /* 受击不打断治疗：只有死亡才强制中断（下面 hp<=0 那一段处理） */
@@ -1235,7 +1237,7 @@ class Enemy {
       // 近战
       const d = U.dist(this.x, this.y, tgt.x, tgt.y);
       if (d < this.t.range + 8) {
-        if (this.target.kind === 'player') Game.player.hurt(this.t.dmg, 'body', this.penLevel);
+        if (this.target.kind === 'player') Game.player.hurt(this.t.dmg, 'body', this.penLevel, 'melee');
         else tgt.hp -= this.t.dmg;
       }
       Game.sfx('melee');
@@ -1400,7 +1402,8 @@ class Bullet {
     /* 只有玩家打出来的伤害才飘字：敌人互相开火时屏幕上飘一堆数字只是噪声。
        钢板靶另有自己的读数（Range 那边按散布量尺寸，字号更小），不重复画。 */
     if (this.faction === 'player' && !dummy) {
-      Game.popDamage(actor.x, actor.y - 20, dealt, { crit: part === 'head', key: actor });
+      Game.popDamage(actor.x, actor.y - 20, dealt,
+        { kind: part === 'head' ? 'crit' : 'normal', key: actor });
     }
   }
 

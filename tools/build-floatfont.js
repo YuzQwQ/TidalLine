@@ -9,7 +9,8 @@
 
    素材包里的 25 段逐帧动画（"128"、"999!"、"LEVEL UP!" 这些）是定死内容的贴条，
    伤害数字是运行时才知道的数，用不上 —— 真正能用的就是这 8 套可任意排版字体。
-   目前接了两套：damage（骨白，普通命中）、crit（橙金，爆头）。
+   目前接了三套：damage（骨白，普通命中）、crit（橙金，爆头）、
+   melee（蓝，近战真实伤害）。玩家受伤不再单配一套颜色，按伤害类型走同一张表。
 
    用法：node tools/build-floatfont.js */
 const fs = require('fs');
@@ -24,9 +25,10 @@ const OUT_JS = path.join(ROOT, 'js', 'floatfont-data.js');
 const STYLES = {
   damage: 'Damage',
   crit: 'Critical',
-  /* 玩家受伤：素材包里没有红色，Poison 的紫色是唯一和骨白（敌人）、
-     橙金（爆头）都拉得开的三号色，读作"你在掉血"正合适 */
-  hurt: 'Poison'
+  /* 近战真实伤害：护甲不减免的那类单独给蓝色（Mana），
+     和骨白、橙金都拉得开，一眼看出这一下没走护甲结算。
+     原先玩家受伤专用的紫色（Poison）已退役：颜色一律按伤害类型分。 */
+  melee: 'Mana'
 };
 
 function build() {

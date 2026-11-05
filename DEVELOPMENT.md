@@ -101,13 +101,16 @@
 素材是 CC0 的 **Pixel Floating Text & Damage Numbers**（`temp files/PixelFloatingText`，
 不进库）。包里 25 段逐帧动画（"128"、"999!"、"LEVEL UP!"）内容是**定死**的贴条，
 伤害是运行时才知道的数，一个都用不上；真正能用的是 8 套可任意排版的位图字体，
-这里取了两套 Big 档（16px 字形，带描边和投影）：
+这里取了三套 Big 档（16px 字形，带描边和投影）：
 
 | 字体 | 外观 | 用在哪 |
 |---|---|---|
-| `damage` | 骨白 + 深色描边 | 普通命中、近战真伤 |
-| `crit` | 橙金 + 白芯 | 爆头 |
-| `hurt` | 紫罗兰 + 白芯 | **玩家**受伤（素材包没有红色，紫色是和骨白、橙金都拉得开的第三色） |
+| `damage` | 骨白 + 深色描边 | 普通枪伤（敌我同色） |
+| `crit` | 橙金 + 白芯 | 爆头（敌我同色） |
+| `melee` | 蓝（Mana）+ 白芯 | 近战伤害：玩家挥刀的无视护甲真伤，以及敌人近战打玩家 |
+
+颜色**只认伤害类型，不认谁挨打**：玩家曾经单独用一套紫色（Poison）表示自己在掉血，
+那样同一个爆头在敌人头上橙金、在玩家头上紫色，读起来反而要分两套口径，现已退役。
 
 为什么不用 `pixfont.js`：中文必须现场栅格化（字库太大），英文数字没必要——
 现成的点阵图笔画宽窄是画师定的，比栅格化的系统字体更硬，而且零运行时开销。
@@ -118,7 +121,7 @@
 node tools/build-floatfont.js     # 源 → assets/effects/float_*.png + js/floatfont-data.js
 ```
 
-想再加颜色（`Heal` / `Mana` / `Burn` / `Gold` / `XP` 还没用上；`Poison` 已作为 `hurt` 接入）：
+想再加颜色（`Heal` / `Burn` / `Gold` / `XP` / `Poison` 还没用上；`Mana` 已作为 `melee` 接入）：
 在 `tools/build-floatfont.js` 的 `STYLES` 里加一行，跑一次，再把图集名登记进
 `js/data.js` 的 `ART.effects` —— 那是 `Art` 的预加载白名单，漏了会在游戏里静默不显示
 （`ART.effects` 只能追加不能赋值，`melee.js` 曾经整表覆盖过一次，把字体图集挤掉了）。
@@ -132,10 +135,12 @@ node tools/build-floatfont.js     # 源 → assets/effects/float_*.png + js/floa
 ```
 Enemy.hurt()  →  返回**实际掉血**（扣完护甲，不是纸面伤害）
 Bullet.resolveHit()  →  只有 faction === 'player' 才 Game.popDamage()
-                       （敌人互相开火不飘字，否则满屏噪声）
-Player.hurt()  →  玩家挨打也 Game.popDamage（紫色 hurt 字体），写在 hurt 里，
-                  中弹/近战/将来任何掉血来源都自动覆盖
-Game.popDamage()  →  压进 Game.dmgPops，顺手做连打错位
+                       kind = 部位 → normal / crit（敌人互相开火不飘字）
+MeleeSystem.tick()  →  真伤命中 Game.popDamage(kind: 'melee')
+Player.hurt()  →  玩家挨打也 Game.popDamage，kind 由伤害来源传入，
+                   没传就按部位推；中弹/近战/将来任何掉血来源都自动覆盖
+Game.popDamage()  →  DMG_FONT 把 kind 映射到字体图集，压进 dmgPops，
+                       顺手做连打错位与同类型合并
 game-update.js  →  只推进 t，位置和透明度都在渲染时按 t/life 算
 game-render.js  →  renderDamageText：画在雾之后、HUD 之前
 ```

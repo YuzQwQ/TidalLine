@@ -45,7 +45,7 @@ const FONTS = require('../js/floatfont-data.js');
       }
       return out;
     });
-    assert.deepEqual(Object.keys(fontInfo).sort(), ['crit', 'damage', 'hurt'], '接了三套字体（伤害/爆头/玩家受伤）');
+    assert.deepEqual(Object.keys(fontInfo).sort(), ['crit', 'damage', 'melee'], '接了三套字体（普通/爆头/近战真伤）');
     for (const [k, f] of Object.entries(fontInfo)) {
       assert.equal(f.glyphs, 46, k + ' 字形数');
       assert.equal(f.w, 368, k + ' 图集宽');
@@ -81,9 +81,10 @@ const FONTS = require('../js/floatfont-data.js');
       const P = Game.player;
       Game.popDamage(P.x, P.y - 20, 37.4);
       Game.popDamage(P.x, P.y - 20, 128, { crit: true });
-      const a = Game.dmgPops[0], b = Game.dmgPops[1];
+      Game.popDamage(P.x, P.y - 20, 64, { kind: 'melee' });
+      const a = Game.dmgPops[0], b = Game.dmgPops[1], c = Game.dmgPops[2];
       Game.dmgPops = [];
-      return { a, b, C: CFG.DMG_TEXT };
+      return { a, b, c, C: CFG.DMG_TEXT };
     });
     assert.equal(made.a.txt, '37', '伤害四舍五入成整数串');
     assert.equal(made.a.font, 'damage', '普通命中用骨白那套');
@@ -92,6 +93,8 @@ const FONTS = require('../js/floatfont-data.js');
     assert.equal(made.b.txt, '128');
     assert(made.b.life > made.a.life && made.b.rise > made.a.rise, '爆头飘得更高、留得更久');
     assert.equal(made.b.scale, made.a.scale, '字号不放大（放大 1.25 倍像素块会宽窄不一）');
+    assert.equal(made.c.font, 'melee', '近战真伤用蓝色那套');
+    assert.equal(made.c.txt, '64');
 
     /* 连打错位：0.16s 内连续冒出来的数字要逐条抬高，否则一梭子糊成一片 */
     const stair = await page.evaluate(() => {
@@ -180,32 +183,68 @@ const FONTS = require('../js/floatfont-data.js');
     assert.equal(merge.pellets.n, 1, '霰弹八颗弹丸并成一条');
     assert(merge.pellets.val > merge.one, '并起来的是总伤害（' + merge.pellets.val + '）');
 
-    /* ---------- 4.8 玩家受伤也飘字：紫色 hurt 字体 ---------- */
+    /* ---------- 4.8 玩家受伤不再单独配色：按伤害类型走同一张表 ---------- */
     const phurt = await page.evaluate(() => {
       const P = Game.player;
-      const hp0 = P.hp;
+      const hp0 = P.hp, body0 = P.body, helmet0 = P.helmet;
+      P.body = null; P.helmet = null;      // 脱甲，飘出来的就是纸面值
+      const pop = (part, kind) => {
+        Game.dmgPops = [];
+        const before = P.hp;
+        P.hurt(5, part, 0, kind);
+        return {
+          font: Game.dmgPops[0] && Game.dmgPops[0].font,
+          txt: Game.dmgPops[0] && Game.dmgPops[0].txt,
+          lost: Math.round(before - P.hp)
+        };
+      };
+      const normal = pop('body');
+      const melee = pop('body', 'melee');
+      const head = pop('head');
+      /* 连续挨同类打合并成一条 */
       Game.dmgPops = [];
-      P.hurt(30, 'body', 0);
+      const h1 = P.hp;
+      P.hurt(3, 'body', 0);
+      Game.dmgPops.forEach(p => { p.t = 0.05; });
+      P.hurt(3, 'body', 0);
+      const merge = { n: Game.dmgPops.length, val: Game.dmgPops[0].val, lost: Math.round(h1 - P.hp) };
+      Game.dmgPops = [];
+      P.hp = hp0; P.body = body0; P.helmet = helmet0; Save.setHP(hp0);
+      return { normal, melee, head, merge };
+    });
+    assert.equal(phurt.normal.font, 'damage', '玩家中普通弹也用骨白');
+    assert.equal(phurt.normal.txt, String(phurt.normal.lost), '显示实际掉血');
+    assert.equal(phurt.melee.font, 'melee', '玩家挨近战用蓝色');
+    assert.equal(phurt.head.font, 'crit', '玩家被爆头用橙金');
+    assert.equal(phurt.merge.n, 1, '连续挨同类打合并成一条');
+    assert.equal(phurt.merge.val, phurt.merge.lost, '合并累加等于实际掉血');
+
+    /* ---------- 4.85 真实挥砍：近战真伤走蓝色 melee 字体 ---------- */
+    const slash = await page.evaluate(() => {
+      const P = Game.player, e = Game.enemies[0];
+      e.dead = false; e.hp = 500;
+      e.x = P.x + 18; e.y = P.y;         // 正前方、折叠刀够得着
+      P.angle = 0; P.melee = EQUIP.melee('melee01'); P.meleeActive = true;
+      P.meleeReadyAt = 0; P.meleeClock = 0; P.meleeAttack = null;
+      const blockers = MeleeGeometry.blockers;
+      MeleeGeometry.blockers = () => [];  // 只验飘字，地形遮挡不掺和
+      Game.dmgPops = [];
+      const ok = MeleeSystem.attack(P);
+      const a = P.meleeAttack;
+      if (ok && a) { P.meleeClock = a.start + a.weapon.windup + 0.001; MeleeSystem.tick(P, 0.001); }
       const r = {
-        pops: Game.dmgPops.length,
+        ok: !!(ok && a),
         font: Game.dmgPops[0] && Game.dmgPops[0].font,
         txt: Game.dmgPops[0] && Game.dmgPops[0].txt,
-        lost: Math.round(hp0 - P.hp)
+        hp: e.hp
       };
-      /* 连续挨打也走同一套合并 */
-      Game.dmgPops.forEach(p => { p.t = 0.05; });
-      P.hurt(20, 'body', 0);
-      r.mergedN = Game.dmgPops.length;
-      r.mergedVal = Game.dmgPops[0].val;
-      Game.dmgPops = [];
-      P.hp = hp0;                     // 还原，别影响后面的用例
+      Game.dmgPops = []; P.meleeAttack = null; MeleeGeometry.blockers = blockers;
       return r;
     });
-    assert.equal(phurt.pops, 1, '玩家挨打冒一条紫色飘字');
-    assert.equal(phurt.font, 'hurt', '用的是 hurt（Poison 紫）字体');
-    assert.equal(phurt.txt, String(phurt.lost), '显示实际掉血');
-    assert.equal(phurt.mergedN, 1, '连续挨打合并成一条');
-    assert.equal(phurt.mergedVal, phurt.lost + 20, '合并累加（' + phurt.lost + ' + 20）');
+    assert(slash.ok, '能发起一次挥砍');
+    assert(slash.hp < 500, '这一刀确实砍中了');
+    assert.equal(slash.font, 'melee', '近战真伤走蓝色 melee 字体');
+    assert(Number(slash.txt) > 0, '近战飘出实际伤害数字');
 
     /* ---------- 5. 爆头走 crit 字体 ---------- */
     const crit = await page.evaluate(async () => {
@@ -249,10 +288,11 @@ const FONTS = require('../js/floatfont-data.js');
     await page.evaluate(() => {
       const P = Game.player;
       Game.dmgPops = [];
-      /* 摆开一点，别叠在一起——这张图是给人看字号和描边的，不是看堆叠 */
-      Game.popDamage(P.x - 62, P.y - 26, 46);
-      Game.popDamage(P.x - 2, P.y - 30, 138, { crit: true });
-      Game.popDamage(P.x + 58, P.y - 24, 92);
+      /* 摆开一点，别叠在一起——这张图是给人看字号和描边的，不是看堆叠。
+         三条分别落在 P.x-32 / +30 / +96，都避开了左侧 HUD */
+      Game.popDamage(P.x - 32, P.y - 30, 138, { crit: true });
+      Game.popDamage(P.x + 30, P.y - 24, 92, { kind: 'melee' });
+      Game.popDamage(P.x + 96, P.y - 24, 27);
       Game.dmgPops.forEach(p => { p.t = 0.12; p.drift = 0; });   // 跳过弹出，定格在清晰的那一帧
     });
     await page.waitForTimeout(60);
@@ -262,7 +302,7 @@ const FONTS = require('../js/floatfont-data.js');
     const bad = miss.filter(u => /assets\/effects\/float_/.test(u));
     assert.deepEqual(bad, [], '单文件版没有去请求外置字体图集');
 
-    console.log('伤害飘字：字体 3 套 / 排版 / 命中链路 / 玩家受伤 / 合并 / 寿命 / 截图 全部通过');
+    console.log('伤害飘字：字体 3 套 / 按类型分色 / 排版 / 命中链路 / 玩家受伤 / 真实挥砍 / 合并 / 寿命 / 截图 全部通过');
     console.log('  ' + path.relative(ROOT, path.join(SHOT, 'damage-numbers.png')));
   } catch (e) {
     console.error(e);

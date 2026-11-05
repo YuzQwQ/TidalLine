@@ -39,9 +39,9 @@ const MeleeSystem = {
         if(hit.intersects)a.debug.push({x:e.x,y:e.y,r:e.r,point:hit.point});
         if(!hit.point)continue;
         /* 刀是真实伤害：护甲不减免，飘出来的就是纸面值。
-           和枪共用 Game.popDamage，全场只有一种数字样式。 */
+           这类伤害单独用蓝色（Mana）飘字，和骨白的普通命中、橙金的爆头分开。 */
         const dealt = e.hurt(a.weapon.damage,'player','body',null,'trueDamage');
-        Game.popDamage(e.x, e.y-20, dealt, {key:e});
+        Game.popDamage(e.x, e.y-20, dealt, {kind:'melee', key:e});
       }
     }
     if(elapsed+1e-9>=a.weapon.interval)this.cancel(p);

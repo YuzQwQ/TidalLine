@@ -1119,7 +1119,7 @@ const ART = {
 
   /* 飘字用的位图字体图集（assets/effects/float_*.png）。
      由 tools/build-floatfont.js 从素材包生成，键要和 FLOAT_FONTS 里的 sheet 对上。 */
-  effects: ['float_damage', 'float_crit', 'float_hurt']
+  effects: ['float_damage', 'float_crit', 'float_melee']
 };
 /* 容器贴图自动并入预加载表：新增容器只要 CONTAINER_TYPES 写了 art，
    就不会因为忘了登记白名单而在游戏里变成代码画的色块。 */

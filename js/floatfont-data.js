@@ -105,8 +105,8 @@ const FLOAT_FONTS = {
       "Z": [299,50,18,24,-3,-3,14]
     }
   },
-  hurt: {
-    sheet: 'effects/float_hurt', line: 20, glyphH: 16,
+  melee: {
+    sheet: 'effects/float_melee', line: 20, glyphH: 16,
     chars: {
       "0": [0,0,18,24,-3,-3,14],
       "1": [23,0,14,24,-3,-3,10],
