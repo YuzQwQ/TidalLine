@@ -208,18 +208,6 @@ function patchConfig(src, tune, changes, warn) {
     const aOpen = am.index + am[0].length - 1;
     const aEnd = matchBrace(block, aOpen);
     let ax = block.slice(aOpen, aEnd + 1);
-    /* keep 在 axis 顶层（不在 h/v 里），单独处理 */
-    if ('keep' in recoil) {
-      const r = setField(ax, 'keep', recoil.keep);
-      if (r.replaced) {
-        ax = r.text;
-        if (r.from !== Number(recoil.keep)) {
-          changes.push({ file: 'js/config.js', where: 'RECOIL.axis.keep', from: r.from, to: Number(recoil.keep) });
-        }
-      } else {
-        warn('js/config.js 的 RECOIL.axis 里没有 keep 字段，跳过');
-      }
-    }
     for (const key in AXIS_MAP) {
       if (!(key in recoil)) continue;
       const which = AXIS_MAP[key][0], field = AXIS_MAP[key][1];

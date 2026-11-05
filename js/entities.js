@@ -350,30 +350,18 @@ class Player {
     if (typeof mx !== 'number' || typeof my !== 'number' || !isFinite(mx) || !isFinite(my)) return;
     const dx = mx - this.x, dy = my - this.y;
     const d = Math.hypot(dx, dy);
-    /* 死区内不更新方向：鼠标压在角色身上时方向没有意义，
-       而且压枪把鼠标往回拉、一不小心跨过去就会翻转 180°。 */
+    /* 死区内不更新方向：鼠标正好压在角色中心时 atan2 没有稳定解，
+       沿用上一次有效方向免得准星乱抖。鼠标穿过去、离开死区就照常翻向另一侧。 */
     const dead = CFG.P.AIM_DEAD || 12;
     if (d > dead) { this.aimDir.x = dx / d; this.aimDir.y = dy / d; }
     const Dx = this.aimDir.x, Dy = this.aimDir.y;
     const Nx = -Dy, Ny = Dx;
-    /* 偏移量受"鼠标离玩家还剩多少"限制：
-       准星本来就被推向鼠标外侧，鼠标一贴近玩家，推远就会把准星甩到身后。
-       留 keep 的余量（默认 18px），保证准星永远停在玩家前方、不会越过去。 */
-    const keep = CFG.RECOIL.axis.keep || 18;
-    const room = Math.max(0, d - keep);
-    const offLen = Math.hypot(this.rV, this.rH);
-    const k = (offLen > 1e-9 && offLen > room) ? room / offLen : 1;
-    this.aimPoint.x = mx + (Dx * this.rV + Nx * this.rH) * k;
-    this.aimPoint.y = my + (Dy * this.rV + Ny * this.rH) * k;
+    /* 偏移量原样叠加，不再按"鼠标离玩家还剩多少"缩放、也不再给准星设最小半径。
+       那两层夹取会让鼠标穿过玩家时准星被顶回身前：贴身近战要往身后甩枪，
+       光标和准星却卡在身前，操作直接被锁死。现在鼠标想穿就穿，准星跟着走。 */
+    this.aimPoint.x = mx + (Dx * this.rV + Nx * this.rH);
+    this.aimPoint.y = my + (Dy * this.rV + Ny * this.rH);
 
-    /* 鼠标贴到（或跨过）玩家时，准星不能跟着钻进去：
-       按最后一次有效方向把它顶到 keep 远处。这一条是"压枪拉过头就转身"的关键 ——
-       死区里方向不变，准星就稳稳停在身前，不会跳到身后去。 */
-    const rd = Math.hypot(this.aimPoint.x - this.x, this.aimPoint.y - this.y);
-    if (rd < keep) {
-      this.aimPoint.x = this.x + Dx * keep;
-      this.aimPoint.y = this.y + Dy * keep;
-    }
     /* 记住鼠标点：开火累加后要立刻按新位移重算一次，不然这一帧画的还是旧位置 */
     this.aimMouse.x = mx;
     this.aimMouse.y = my;
@@ -484,9 +472,9 @@ class Player {
     this.sinceShot += dt;
     this.finishReloadIfDone();
 
-    /* 朝向：鼠标贴着角色时 atan2 会剧烈抖动；更麻烦的是双轴后坐力把准星推远后，
-       玩家为了压枪会把鼠标往自己身上拉，拉过头就翻 180°。所以给一个死区：
-       鼠标离玩家超过 AIM_DEAD 才改朝向，要转身就得明确移到另一侧。 */
+    /* 朝向：鼠标正好压在角色中心时 atan2 会剧烈抖动，所以留一个死区：
+       离玩家超过 AIM_DEAD 才改朝向。鼠标穿过玩家、到另一侧离开死区就翻向那边，
+       贴身近战要甩枪时不会被卡在身前。 */
     if (input.aimX != null && input.aimY != null) {
       const adx = input.aimX - this.x, ady = input.aimY - this.y;
       if (Math.hypot(adx, ady) > (CFG.P.AIM_DEAD || 12)) this.angle = input.aimAngle;

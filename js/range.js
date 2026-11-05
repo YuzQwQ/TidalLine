@@ -137,7 +137,6 @@ const RANGE_PARAMS = [
   { group: '双轴后坐力', key: 'vMax',        label: '垂直上限',     unit: 'px',  where: 'g', min: 1,   max: 120,  step: 1,    digits: 0 },
   { group: '双轴后坐力', key: 'vDecayDelay', label: '垂直回正延迟', unit: 's',   where: 'g', min: 0,   max: 1,    step: 0.01, digits: 2 },
   { group: '双轴后坐力', key: 'vDecay',      label: '垂直回正速度', unit: '/s',  where: 'g', min: 0.5, max: 30,   step: 0.1,  digits: 1 },
-  { group: '双轴后坐力', key: 'keep',        label: '准星距玩家下限', unit: 'px', where: 'g', min: 8,  max: 80,   step: 1,    digits: 0 },
   { group: '双轴后坐力', key: 'aimDead',     label: '朝向死区',     unit: 'px',  where: 'g', min: 2,   max: 40,   step: 1,    digits: 0 },
 
   // 散布与准星
@@ -172,7 +171,6 @@ const RANGE_DEF_G = {
   moveMult: CFG.RECOIL.moveMult, sprintMult: CFG.RECOIL.sprintMult, sneakMult: CFG.RECOIL.sneakMult,
   kickMin: CFG.RECOIL.kickMin, kickScale: CFG.RECOIL.kickScale, kickDecay: CFG.RECOIL.kickDecay,
   /* 双轴后坐力（像素）。h = 水平（垂线方向），v = 垂直（沿瞄准线推远） */
-  keep: CFG.RECOIL.axis.keep,
   aimDead: CFG.P.AIM_DEAD,
   hKick: CFG.RECOIL.axis.h.kick, hRand: CFG.RECOIL.axis.h.rand, hMax: CFG.RECOIL.axis.h.max,
   hDecayDelay: CFG.RECOIL.axis.h.decayDelay, hDecay: CFG.RECOIL.axis.h.decay,
@@ -339,7 +337,6 @@ const Range = {
     if (!this.savedG) {
       this.savedG = Object.assign({}, R, {
         axis: {
-          keep: R.axis.keep,
           h: Object.assign({}, R.axis.h), v: Object.assign({}, R.axis.v)
         }
       });
@@ -356,7 +353,6 @@ const Range = {
     R.kickDecay = g.kickDecay;
     /* 双轴后坐力 */
     const AX = R.axis;
-    AX.keep = g.keep;
     CFG.P.AIM_DEAD = g.aimDead;
     AX.h.kick = g.hKick;   AX.h.rand = g.hRand;   AX.h.max = g.hMax;
     AX.h.decayDelay = g.hDecayDelay;  AX.h.decay = g.hDecay;

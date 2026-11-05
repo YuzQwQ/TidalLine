@@ -172,24 +172,6 @@ Object.assign(Game, {
     K.wx = K.mx + this.cam.x;
     K.wy = K.my + this.cam.y;
 
-    /* 锁定时虚拟光标不许穿过玩家：这个位置本来就是我们自己累加的，
-       在这里顶住比事后修补准星干净 —— 朝向天然不会翻 180°。
-       非锁定状态不能这么做：系统光标还在屏幕上，改了会"脱节"。 */
-    if (this.pointerLocked) {
-      const keep = (CFG.RECOIL.axis && CFG.RECOIL.axis.keep) || 18;
-      const dx = K.wx - P.x, dy = K.wy - P.y;
-      const d = Math.hypot(dx, dy);
-      if (d < keep) {
-        /* 方向取"上一帧的有效朝向"，不要用当前的 dx/dy：
-           光标贴到玩家身边时，一帧的微小位移就足以让 dx 变号，
-           照当前方向钳会把它甩到背后 —— 正是要避免的那种 180° 翻转。 */
-        const dir = (P.aimDir && (P.aimDir.x || P.aimDir.y)) ? P.aimDir : { x: 1, y: 0 };
-        K.wx = P.x + dir.x * keep;
-        K.wy = P.y + dir.y * keep;
-        K.mx = K.wx - this.cam.x;
-        K.my = K.wy - this.cam.y;
-      }
-    }
     K.aimAngle = Math.atan2(K.wy - P.y, K.wx - P.x);
     if (K.dodgePressed) Medical.cancel();
 

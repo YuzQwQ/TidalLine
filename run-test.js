@@ -1676,35 +1676,57 @@ console.log('\n=== 双轴后坐力 ===');
        (want * 180 / Math.PI).toFixed(3) + '°');
   }
 
-  /* 压枪：鼠标往玩家身上拉、甚至拉过头，准星不能甩到身后 */
+  /* 鼠标可以穿过玩家：偏移量不再按"剩余距离"缩放，准星也不再有最小半径。
+     贴身近战要往身后甩枪，光标与准星都得跟得过去。 */
   {
     aimAt(0, 200);
     PR.rV = AX.v.max; PR.rH = 0;
-    PR.updateAimPoint(PR.aimMouse.x, PR.aimMouse.y);
-
-    let prev = null, maxJump = 0, crossed = false, minDist = 1e9;
-    /* 从玩家右侧 40px 一路拉到左侧 10px：压枪最容易踩到的那一段 */
-    for (let dx = 40; dx >= -10; dx -= 1) {
+    let maxOffErr = 0;
+    /* 从玩家右侧 40px 一路穿过玩家拉到左侧 40px */
+    for (let dx = 40; dx >= -40; dx -= 1) {
       PR.updateAimPoint(PR.x + dx, PR.y);
       const R = PR.aimPoint;
-      if (prev) maxJump = Math.max(maxJump, Math.hypot(R.x - prev.x, R.y - prev.y));
-      prev = { x: R.x, y: R.y };
-      if (R.x < PR.x) crossed = true;
-      minDist = Math.min(minDist, Math.hypot(R.x - PR.x, R.y - PR.y));
+      /* 没有夹取：准星与鼠标点的距离恒等于 rV，贴身、穿过都不会被缩放或顶开 */
+      maxOffErr = Math.max(maxOffErr,
+        Math.abs(Math.hypot(R.x - (PR.x + dx), R.y - PR.y) - PR.rV));
     }
-    ok('压枪拉过玩家时准星不翻到身后', !crossed,
-       '最后停在玩家右侧 ' + (PR.aimPoint.x - PR.x).toFixed(1) + 'px');
-    ok('准星逐像素移动时保持连续（无瞬移）', maxJump < 3.5,
-       '单步最大跳变 ' + maxJump.toFixed(2) + 'px');
-    ok('准星与玩家保持最小距离', minDist >= (AX.keep || 18) - 1e-6,
-       '最近 ' + minDist.toFixed(2) + 'px / 下限 ' + (AX.keep || 18));
-    /* 鼠标确实移到另一侧足够远时才应该转身 */
-    PR.updateAimPoint(PR.x - 60, PR.y);
-    ok('明确移到另一侧后才转身', PR.aimPoint.x < PR.x,
+    ok('偏移量不再被"离玩家还剩多少"缩放', maxOffErr < 1e-6,
+       '最大偏差 ' + maxOffErr.toFixed(3) + 'px');
+    ok('鼠标穿过玩家后准星跟到另一侧', PR.aimPoint.x < PR.x,
        'R 在玩家左侧 ' + (PR.x - PR.aimPoint.x).toFixed(1) + 'px');
+
+    /* 无后坐力、鼠标压在玩家正中心：准星就该落在玩家身上，不再顶回身前 18px */
+    PR.rV = 0; PR.rH = 0;
+    PR.updateAimPoint(PR.x, PR.y);
+    ok('准星可以贴到玩家身上（无最小半径）',
+       Math.hypot(PR.aimPoint.x - PR.x, PR.aimPoint.y - PR.y) < 1e-6,
+       'R 离玩家 ' + Math.hypot(PR.aimPoint.x - PR.x, PR.aimPoint.y - PR.y).toFixed(2) + 'px');
   }
 
-  /* 鼠标贴着玩家时朝向锁定，不会因为手抖/拉过头翻 180° */
+  /* 锁定状态下的虚拟光标同样能穿过玩家：game-update 里不再按 keep 顶回去 */
+  {
+    const K = Game.input;
+    const wasLocked = Game.pointerLocked;
+    const mx0 = K.mx, my0 = K.my;
+    Game.pointerLocked = true;
+    Game.update(1 / 60);          // 先让镜头跟上，后面按稳定后的 cam 反推屏幕坐标
+    K.mx = PR.x - Game.cam.x;
+    K.my = PR.y - Game.cam.y;
+    Game.update(1 / 60);
+    ok('锁定时光标能停在玩家身上',
+       Math.hypot(K.wx - PR.x, K.wy - PR.y) < 1e-6,
+       '光标离玩家 ' + Math.hypot(K.wx - PR.x, K.wy - PR.y).toFixed(2) + 'px');
+    K.mx = PR.x - Game.cam.x - 40;
+    K.my = PR.y - Game.cam.y;
+    Game.update(1 / 60);
+    ok('锁定时光标能穿过玩家到另一侧', K.wx < PR.x - 30,
+       '光标在玩家左侧 ' + (PR.x - K.wx).toFixed(1) + 'px');
+    Game.pointerLocked = wasLocked;
+    K.mx = mx0; K.my = my0;
+  }
+
+  /* 鼠标正好压在角色中心时朝向沿用上一次，避免 atan2 乱抖；
+     离开死区就照常翻向另一侧（这一条不是"不许穿过"，只是防抖） */
   {
     PR.angle = 1.0;
     PR.update(1 / 60, { mx: 0, my: 0, aimAngle: Math.PI, aimX: PR.x + 6, aimY: PR.y });

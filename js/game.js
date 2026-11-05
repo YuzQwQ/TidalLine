@@ -277,7 +277,7 @@ const Game = {
   /* ---------------- 鼠标锁定 ----------------
      锁定之后系统光标消失，光标位置完全由 mousemove 的增量累加而来。
      这样后坐力把准星推远时，"鼠标"跟着准星一起走，玩家眼里只有一个指针；
-     虚拟光标还能钳制在玩家外侧，压枪拉过头也不会翻 180°。 */
+     虚拟光标只夹在画布内，可以随意穿过玩家（贴身近战要能往身后甩枪）。 */
   wantLock() {
     if (typeof document === 'undefined' || !this.canvas) return;
     if (!this.canvas.requestPointerLock) return;      // 老浏览器：退回绝对坐标
