@@ -27,3 +27,6 @@ const SAFEHOUSE_CONFIG = {
 };
 
 SAFEHOUSE_CONFIG.merchants.viktor={name:'维克托·萨伦',role:'贸易商 · 零售、仓储与物资流通',asset:'viktor',quote:'哈哈！没有卖不出去的东西，只有没找对的买家！来来来，看看今天有什么好货！'};
+
+SAFEHOUSE_CONFIG.assets.elena='assets/ui/safehouse/merchant_elena.webp';
+SAFEHOUSE_CONFIG.merchants.elena={name:'伊莲娜·莫罗',role:'私人收藏家 · 地下私人事务所经营者',asset:'elena',quote:'每个人都有想找回的东西。若您愿意相信我，我们或许可以帮上一点忙。'};

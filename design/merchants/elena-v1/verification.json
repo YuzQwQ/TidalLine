@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "checks": 867,
+      "viewports": [
+        1920,
+        1440,
+        1280,
+        390,
+        320
+      ],
+      "uiDelivery": true,
+      "refreshStable": true,
+      "originalMerchants": true,
+      "errors": []
+    },
+    {
+      "offline": true,
+      "checks": 867,
+      "viewports": [
+        1920,
+        1440,
+        1280,
+        390,
+        320
+      ],
+      "uiDelivery": true,
+      "refreshStable": true,
+      "originalMerchants": true,
+      "errors": []
+    }
+  ]
+}

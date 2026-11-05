@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "comparison": "当前运行快照与最终离线构建前记录的快照一致；不读取或编译地图草稿。",
+  "maps": [
+    {
+      "id": "linhai-old-quarter",
+      "sha256": "c1e657f0a4406670af43ffb66969c37a390c11ef20ebad0bc2583f30aa8aa48e"
+    },
+    {
+      "id": "fenced-zone",
+      "sha256": "3005b92662fb02ba6b152c26b79402b4db1c7db1a8932c7bfec1b3de9ec3c778"
+    }
+  ]
+}

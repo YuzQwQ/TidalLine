@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "offline": false,
+      "items": 140,
+      "quotes": 700,
+      "counts": {
+        "shop": 21,
+        "gun": 33,
+        "doctor": 18,
+        "viktor": 32,
+        "elena": 36
+      },
+      "warehouseRoutes": true,
+      "tiers": true,
+      "transactions": true
+    },
+    {
+      "offline": true,
+      "items": 140,
+      "quotes": 700,
+      "counts": {
+        "shop": 21,
+        "gun": 33,
+        "doctor": 18,
+        "viktor": 32,
+        "elena": 36
+      },
+      "warehouseRoutes": true,
+      "tiers": true,
+      "transactions": true
+    }
+  ]
+}

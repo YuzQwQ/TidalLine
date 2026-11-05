@@ -11,11 +11,14 @@ const dir = __dirname;
    而工作区里可能还有别人没提交的改动，不该被顺手卷进来。 */
 const AUDIO_ONLY = process.argv.includes('--audio-only');
 if (!AUDIO_ONLY) {
+  require('./tools/build-arsenal.js').build();
   require('./tools/build-attachments.js').build();
   require('./tools/build-buyback-data.js').build();
   require('child_process').execFileSync(process.execPath,[path.join(dir,'tools/build-detail-art.js')],{cwd:dir,stdio:'inherit'});
   require('./tools/build-scene-library.js').build();
   if (!process.argv.includes('--assets-only')) require('./tools/build-economy.js').build();
+  // Validate against final prices, including any economy regeneration above.
+  require('./tools/check-commissions.js').check();
   // 地图由设计稿编译，避免多文件版与离线版使用不同点位。
   // 纯素材更新沿用已编译的地图快照，不写入或绕过正在编辑的地图草稿。
   if (!process.argv.includes('--assets-only')) require('./tools/build-linhai-map.js').build();
@@ -25,9 +28,9 @@ if (!AUDIO_ONLY) {
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
 const JS_FILES = ['config.js', 'pixfont.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
-  'common.js', 'medical.js', 'detail-art.js', 'art.js', 'ui.js', 'music.js', 'save.js', 'base.js',
+  'common.js', 'medical.js', 'detail-art.js', 'art.js', 'debuff.js', 'ui.js', 'music.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'trader.js', 'merchant-ui.js', 'storage-config.js', 'inventory-view.js', 'storage-ui.js', 'attachment-ui.js', 'gunsmith-page.js', 'merchant-dialogue.js', 'storage-loadout.js', 'base-safe.js', 'buyback-data.js', 'sales.js', 'merchant-sales.js', 'boot.js'];
+  'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'trader.js', 'merchant-ui.js', 'storage-config.js', 'inventory-view.js', 'storage-ui.js', 'attachment-ui.js', 'gunsmith-page.js', 'merchant-dialogue.js', 'storage-loadout.js', 'base-safe.js', 'buyback-data.js', 'sales.js', 'merchant-sales.js', 'commission-data.js', 'commissions.js', 'elena-ui.js', 'boot.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear', 'effects'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */
@@ -103,12 +106,13 @@ if (/assets\/audio\/bundle\.js/.test(out)) {
   process.exit(1);
 }
 const uiAssets = {};
-for (const [id, file] of Object.entries({room:'room',armor:'merchant_armor',guns:'merchant_guns',doctor:'merchant_doctor',viktor:'merchant_viktor',gunsmith:'gunsmith'})) {
+for (const [id, file] of Object.entries({room:'room',armor:'merchant_armor',guns:'merchant_guns',doctor:'merchant_doctor',viktor:'merchant_viktor',elena:'merchant_elena',gunsmith:'gunsmith'})) {
   uiAssets[id] = 'data:image/webp;base64,' + fs.readFileSync(path.join(dir,'assets/ui/safehouse',file+'.webp')).toString('base64');
 }
 out = out.replace('<link rel="stylesheet" href="assets/ui/safehouse.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/safehouse.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/merchant.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/merchant.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/merchant-sales.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/merchant-sales.css'),'utf8')+'\n</style>');
+out = out.replace('<link rel="stylesheet" href="assets/ui/elena.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/elena.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/storage.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/storage.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/attachments.css">','<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/attachments.css'),'utf8')+'\n</style>');
 const inlineTag = '<script>\nwindow.__SELF_CONTAINED__ = true;\nwindow.__UI_ASSETS__ = '+JSON.stringify(uiAssets)+';\nwindow.__SPRITES__ = ' +

@@ -1,0 +1,184 @@
+{
+  "passed": true,
+  "basis": "材料取五商人最高实际回收价；奖励取当前普通回收估价。货架使用运行时常驻收集品供货接口。",
+  "templates": [
+    {
+      "id": "elena_small_memories",
+      "title": "旧日小物",
+      "tier": 1,
+      "materials": [
+        {
+          "id": "life08",
+          "name": "玻璃糖罐",
+          "n": 1,
+          "best": 4600,
+          "availableOnShelf": false
+        },
+        {
+          "id": "life10",
+          "name": "玻璃弹珠袋",
+          "n": 1,
+          "best": 4200,
+          "availableOnShelf": false
+        }
+      ],
+      "cash": 12000,
+      "rewards": [],
+      "materialValue": 8800,
+      "rewardValue": 12000
+    },
+    {
+      "id": "elena_workshop_parts",
+      "title": "工坊备件",
+      "tier": 1,
+      "materials": [
+        {
+          "id": "ind03",
+          "name": "压力表",
+          "n": 1,
+          "best": 14500,
+          "availableOnShelf": false
+        },
+        {
+          "id": "ind07",
+          "name": "绝缘胶带",
+          "n": 1,
+          "best": 4200,
+          "availableOnShelf": true
+        }
+      ],
+      "cash": 25000,
+      "rewards": [],
+      "materialValue": 18700,
+      "rewardValue": 25000
+    },
+    {
+      "id": "elena_clinic_archive",
+      "title": "诊所旧藏",
+      "tier": 2,
+      "materials": [
+        {
+          "id": "med03",
+          "name": "X 光片",
+          "n": 2,
+          "best": 6000,
+          "availableOnShelf": false
+        },
+        {
+          "id": "med02",
+          "name": "注射器",
+          "n": 2,
+          "best": 5800,
+          "availableOnShelf": true
+        }
+      ],
+      "cash": 22000,
+      "rewards": [
+        {
+          "id": "heal03",
+          "name": "家庭急救包",
+          "n": 1,
+          "resale": 12000
+        }
+      ],
+      "materialValue": 23600,
+      "rewardValue": 34000
+    },
+    {
+      "id": "elena_clock_collection",
+      "title": "钟表收藏",
+      "tier": 2,
+      "materials": [
+        {
+          "id": "antiq01",
+          "name": "座钟",
+          "n": 1,
+          "best": 56000,
+          "availableOnShelf": false
+        },
+        {
+          "id": "antiq02",
+          "name": "黄铜怀表",
+          "n": 1,
+          "best": 17000,
+          "availableOnShelf": true
+        }
+      ],
+      "cash": 90000,
+      "rewards": [
+        {
+          "id": "att_optic02",
+          "name": "全息瞄具",
+          "n": 1,
+          "resale": 6750
+        }
+      ],
+      "materialValue": 73000,
+      "rewardValue": 96750
+    },
+    {
+      "id": "elena_evacuation_voices",
+      "title": "撤离之声",
+      "tier": 3,
+      "materials": [
+        {
+          "id": "elec08",
+          "name": "微型录像机",
+          "n": 1,
+          "best": 24000,
+          "availableOnShelf": false
+        },
+        {
+          "id": "intel10",
+          "name": "撤离电台录音带",
+          "n": 1,
+          "best": 220000,
+          "availableOnShelf": false
+        }
+      ],
+      "cash": 310000,
+      "rewards": [
+        {
+          "id": "att_mag_556_quick_ext",
+          "name": "5.56×45mm 快速扩容弹匣",
+          "n": 1,
+          "resale": 10500
+        }
+      ],
+      "materialValue": 244000,
+      "rewardValue": 320500
+    },
+    {
+      "id": "elena_mirror_records",
+      "title": "镜中的记录",
+      "tier": 3,
+      "materials": [
+        {
+          "id": "occ09",
+          "name": "黑曜石卜镜",
+          "n": 1,
+          "best": 78000,
+          "availableOnShelf": false
+        },
+        {
+          "id": "intel11",
+          "name": "异常区域勘测报告",
+          "n": 1,
+          "best": 310000,
+          "availableOnShelf": false
+        }
+      ],
+      "cash": 450000,
+      "rewards": [
+        {
+          "id": "body4",
+          "name": "战术防弹衣",
+          "n": 1,
+          "resale": 42500
+        }
+      ],
+      "materialValue": 388000,
+      "rewardValue": 492500
+    }
+  ]
+}

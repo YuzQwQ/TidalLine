@@ -512,7 +512,7 @@ const Base = {
   renderTabs() {
     const el = document.getElementById('baseTabs');
     if (!el) return;
-    const shop = ['shop','gun','doctor','viktor'].includes(this.tab);
+    const shop = ['shop','gun','doctor','viktor','elena'].includes(this.tab);
     if (!el.dataset.built) {
       const opts = [['stash', '仓库'], ['shop', '护甲商人'], ['gun', '军火商'], ['doctor', '医生'], ['viktor', '贸易商']];
       el.innerHTML = opts.map(([k, name]) =>
@@ -557,6 +557,7 @@ const Base = {
     const clinic = document.getElementById('doctorService');
     if (clinic) clinic.hidden = this.tab !== 'doctor';
 
+    if (this.tab === 'elena') return;
     if (this.tab === 'viktor') return TradeMerchant.render(el);
     if (this.tab === 'doctor') return this.renderDoctor(el);
     if (this.tab === 'gun') return this.renderGunShop(el);
@@ -1142,7 +1143,7 @@ const Base = {
     }
     if (where === 'stash') {
       acts.push({ label: '放入背包', onClick: () => this.toBag(e) });
-      acts.push({ label: '卖出' + (n > 1 ? ' ×' + n : ''), onClick: () => this.askSell(e, n, node) });
+      acts.push({ label: '前往出售', onClick: () => this.goToSell() });
     } else {
       acts.push({ label: '放回仓库', onClick: () => this.toStash(e) });
     }
@@ -1281,7 +1282,7 @@ const Base = {
       cell.title = it.name + (Medical.capOf(it) && Medical.isPartial(e)
           ? ' · ' + Medical.capText(e)
           : ' · ' + it.w.toFixed(2) + 'kg') + ' · ' +
-        formatMoney(unitPrice(it) * n) + ' · 左键看详情';
+        '估价 ' + formatMoney(unitPrice(it) * n) + ' · 成交价以商人报价为准 · 左键看详情';
       cell.onclick = () => this.showItem(e, 'stash', cell);
       cell.oncontextmenu = (ev) => {
         ev.preventDefault();
@@ -1315,9 +1316,10 @@ const Base = {
   },
 
   /* 卖出也要先确认：一格点下去就是一整堆，误点太亏 */
-  askSell(e,n,cell){return Sales.confirmWarehouse([{entry:e,n}],cell?.getBoundingClientRect());},
-  sell(e,n){const p=Sales.preview('warehouse',[{entry:e,n}]);return p.ok?Sales.commit(Sales.authorize(p)).ok:false;},
-  sellJunk(){const p=Sales.preview('warehouse',Save.stash.filter(e=>{const it=stashItem(e);return it&&itemGroup(it)==='collectible'&&it.r===1;}).map(entry=>({entry,n:entry.n||1})));if(!p.ok){this.note('仓库里没有寻常收集品可卖');return false;}return Sales.commit(Sales.authorize(p)).ok;},
+  goToSell(){Tips.hide();Deal.hide();if(typeof Ctx!=='undefined')Ctx.hide();if(typeof Safehouse!=='undefined')Safehouse.route('traders');return false;},
+  askSell(){return this.goToSell();},
+  sell(){return this.goToSell();},
+  sellJunk(){return this.goToSell();},
 
   /* ---- 出发：背包里装了什么就带什么，不再现场买补给 ----
      opts.force：用户已经在出发前提醒里点了「继续出发」，明知有缺口也要走。

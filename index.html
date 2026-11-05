@@ -1121,7 +1121,7 @@ window.addEventListener('error', function (e) {
 </style>
 <link rel="stylesheet" href="assets/ui/safehouse.css">
 <link rel="stylesheet" href="assets/ui/merchant.css">
-<link rel="stylesheet" href="assets/ui/merchant-sales.css"><link rel="stylesheet" href="assets/ui/storage.css">
+<link rel="stylesheet" href="assets/ui/elena.css"><link rel="stylesheet" href="assets/ui/merchant-sales.css"><link rel="stylesheet" href="assets/ui/storage.css">
 <link rel="stylesheet" href="assets/ui/attachments.css"></head>
 <body>
 
@@ -1264,14 +1264,14 @@ window.addEventListener('error', function (e) {
         <div class="store-hd">
           <h3>仓库<em id="stashCount">0 / 90</em></h3>
           <div class="store-acts">
-            <button class="mini" id="btnSellJunk">出售寻常收集品</button>
+            <button class="mini" id="btnSellJunk">前往出售</button>
           </div>
         </div>
 
         <div class="store-filter" id="stashFilter"></div>
         <div class="stash-grid" id="stashGrid"></div>
         <div class="store-ft">
-          <span>库存总价值 <b id="stashValue">¥0</b></span>
+          <span>库存总估价 <b id="stashValue">¥0</b></span>
           <span class="pager" id="stashPager"></span>
           <span>卖出不影响图鉴记录</span>
         </div>
@@ -1373,8 +1373,12 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 <script src="js/merchant-dialogue.js"></script>
 <script src="js/storage-loadout.js"></script>
 <script src="js/base-safe.js"></script>
+<script src="js/buyback-data.js"></script>
 <script src="js/sales.js"></script>
 <script src="js/merchant-sales.js"></script>
+<script src="js/commission-data.js"></script>
+<script src="js/commissions.js"></script>
+<script src="js/elena-ui.js"></script>
 <script src="js/boot.js"></script>
 </body>
 </html>

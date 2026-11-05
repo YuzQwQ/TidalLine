@@ -9,7 +9,7 @@ const STORAGE_UI_CONFIG={
     {id:'medical',name:'医疗物品',icon:'cross'},
     {id:'collectibles',name:'收集品',icon:'archive'}
   ],
-  planned:{lock:'物品锁定尚未开放。绑定赠送刀具仍沿用现有不可出售规则，与手动锁定无关。',repair:'维修与改装服务尚未开放。当前只展示物品实际耐久，不扣除维修费用。',batch:'多选、批量转移等操作尚未开放。本轮可确认出售寻常收集品，不处理医疗、弹药或装备。'},
+  planned:{lock:'物品锁定尚未开放。绑定赠送刀具仍沿用现有不可出售规则，与手动锁定无关。',repair:'维修与改装服务尚未开放。当前只展示物品实际耐久，不扣除维修费用。',batch:'多选、批量转移等操作尚未开放。出售请前往商人总览，按所选商人的报价确认。'},
   demo:[
     {name:'突击步枪',file:'gear/rifle.png',category:'weapons',rarity:3,desc:'演示装备，实际枪械属性由游戏定义提供。'},
     {name:'M-9 制式战斗刀',file:'gear/melee02.png',category:'weapons',rarity:2},

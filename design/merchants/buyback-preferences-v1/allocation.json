@@ -1,0 +1,2353 @@
+{
+  "status": "approved_runtime",
+  "tiers": {
+    "low": 60,
+    "normal": 80,
+    "preferred": 100
+  },
+  "base": "现有收集品参考价值；不改变稀有度与基础价值",
+  "defaultRates": {
+    "life": {
+      "shop": 80,
+      "gun": 60,
+      "doctor": 60,
+      "viktor": 100,
+      "elena": 0
+    },
+    "elec": {
+      "shop": 80,
+      "gun": 100,
+      "doctor": 80,
+      "viktor": 80,
+      "elena": 0
+    },
+    "ind": {
+      "shop": 100,
+      "gun": 80,
+      "doctor": 60,
+      "viktor": 80,
+      "elena": 0
+    },
+    "med": {
+      "shop": 60,
+      "gun": 60,
+      "doctor": 100,
+      "viktor": 80,
+      "elena": 0
+    },
+    "collect": {
+      "shop": 60,
+      "gun": 80,
+      "doctor": 60,
+      "viktor": 80,
+      "elena": 100
+    },
+    "mil": {
+      "shop": 80,
+      "gun": 100,
+      "doctor": 60,
+      "viktor": 60,
+      "elena": 0
+    },
+    "intel": {
+      "shop": 100,
+      "gun": 80,
+      "doctor": 80,
+      "viktor": 60,
+      "elena": 80
+    },
+    "occult": {
+      "shop": 60,
+      "gun": 60,
+      "doctor": 80,
+      "viktor": 80,
+      "elena": 100
+    },
+    "odd": {
+      "shop": 60,
+      "gun": 80,
+      "doctor": 80,
+      "viktor": 80,
+      "elena": 0
+    }
+  },
+  "summary": {
+    "shop": {
+      "name": "玛拉·维恩",
+      "preferred": 21,
+      "normal": 69,
+      "low": 50,
+      "refused": 0
+    },
+    "gun": {
+      "name": "埃德加·洛克",
+      "preferred": 33,
+      "normal": 51,
+      "low": 56,
+      "refused": 0
+    },
+    "doctor": {
+      "name": "林岑",
+      "preferred": 18,
+      "normal": 42,
+      "low": 80,
+      "refused": 0
+    },
+    "viktor": {
+      "name": "维克托·萨伦",
+      "preferred": 32,
+      "normal": 80,
+      "low": 28,
+      "refused": 0
+    },
+    "elena": {
+      "name": "伊莲娜·莫罗",
+      "preferred": 36,
+      "normal": 15,
+      "low": 3,
+      "refused": 86
+    }
+  },
+  "items": [
+    {
+      "id": "life01",
+      "name": "搪瓷缸",
+      "category": "life",
+      "rarity": 1,
+      "referencePrice": 1800,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life06",
+      "name": "铝饭盒",
+      "category": "life",
+      "rarity": 1,
+      "referencePrice": 1400,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life04",
+      "name": "铁皮饼干盒",
+      "category": "life",
+      "rarity": 2,
+      "referencePrice": 5400,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life08",
+      "name": "玻璃糖罐",
+      "category": "life",
+      "rarity": 2,
+      "referencePrice": 4600,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life20",
+      "name": "纪念瓷器套装",
+      "category": "life",
+      "rarity": 4,
+      "referencePrice": 45000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life28",
+      "name": "银餐具一套",
+      "category": "life",
+      "rarity": 5,
+      "referencePrice": 250000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life03",
+      "name": "老式台灯",
+      "category": "life",
+      "rarity": 2,
+      "referencePrice": 4800,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life05",
+      "name": "未拆封的毛巾",
+      "category": "life",
+      "rarity": 2,
+      "referencePrice": 4000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life11",
+      "name": "双铃闹钟",
+      "category": "life",
+      "rarity": 3,
+      "referencePrice": 12000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life15",
+      "name": "古董电熨斗",
+      "category": "life",
+      "rarity": 3,
+      "referencePrice": 11500,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life19",
+      "name": "老式缝纫机头",
+      "category": "life",
+      "rarity": 4,
+      "referencePrice": 48000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life22",
+      "name": "手工丝绸礼服",
+      "category": "life",
+      "rarity": 4,
+      "referencePrice": 62000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life10",
+      "name": "玻璃弹珠袋",
+      "category": "life",
+      "rarity": 2,
+      "referencePrice": 4200,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life13",
+      "name": "铁皮玩具火车",
+      "category": "life",
+      "rarity": 3,
+      "referencePrice": 14500,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life41",
+      "name": "家庭磁带盒",
+      "category": "life",
+      "rarity": 3,
+      "referencePrice": 13000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life43",
+      "name": "发条旋转木马",
+      "category": "life",
+      "rarity": 5,
+      "referencePrice": 110000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "antiq03",
+      "name": "磨损的硬币",
+      "category": "life",
+      "rarity": 1,
+      "referencePrice": 1200,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life36",
+      "name": "折叠城市地图",
+      "category": "life",
+      "rarity": 2,
+      "referencePrice": 4400,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life37",
+      "name": "售票检票钳",
+      "category": "life",
+      "rarity": 3,
+      "referencePrice": 10000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life38",
+      "name": "按键式电话机",
+      "category": "life",
+      "rarity": 3,
+      "referencePrice": 13500,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life47",
+      "name": "经理日程簿",
+      "category": "life",
+      "rarity": 4,
+      "referencePrice": 26000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life44",
+      "name": "船员帆布包",
+      "category": "life",
+      "rarity": 3,
+      "referencePrice": 15000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life45",
+      "name": "旅馆服务铃",
+      "category": "life",
+      "rarity": 2,
+      "referencePrice": 5200,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life46",
+      "name": "旅行洗漱套装",
+      "category": "life",
+      "rarity": 4,
+      "referencePrice": 22000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life39",
+      "name": "旅行保温杯",
+      "category": "life",
+      "rarity": 3,
+      "referencePrice": 11000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life32",
+      "name": "真皮手提箱",
+      "category": "life",
+      "rarity": 5,
+      "referencePrice": 125000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life33",
+      "name": "金丝眼镜",
+      "category": "life",
+      "rarity": 5,
+      "referencePrice": 95000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life48",
+      "name": "便携式打字机",
+      "category": "life",
+      "rarity": 5,
+      "referencePrice": 160000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "life49",
+      "name": "零号打火机",
+      "category": "life",
+      "rarity": 6,
+      "referencePrice": 900000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 60,
+        "doctor": 60,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec01",
+      "name": "收音机",
+      "category": "elec",
+      "rarity": 2,
+      "referencePrice": 7500,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec02",
+      "name": "随身听",
+      "category": "elec",
+      "rarity": 4,
+      "referencePrice": 30000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec03",
+      "name": "计算器",
+      "category": "elec",
+      "rarity": 2,
+      "referencePrice": 5000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec04",
+      "name": "电路板",
+      "category": "elec",
+      "rarity": 2,
+      "referencePrice": 6200,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec05",
+      "name": "掌上电子游戏机",
+      "category": "elec",
+      "rarity": 4,
+      "referencePrice": 36000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec06",
+      "name": "即影相机",
+      "category": "elec",
+      "rarity": 4,
+      "referencePrice": 52000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 60
+      },
+      "override": true
+    },
+    {
+      "id": "elec07",
+      "name": "电子宠物机",
+      "category": "elec",
+      "rarity": 3,
+      "referencePrice": 18000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec08",
+      "name": "微型录像机",
+      "category": "elec",
+      "rarity": 3,
+      "referencePrice": 24000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 60
+      },
+      "override": true
+    },
+    {
+      "id": "elec09",
+      "name": "加密寻呼机",
+      "category": "elec",
+      "rarity": 4,
+      "referencePrice": 48000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec10",
+      "name": "便携式计算机",
+      "category": "elec",
+      "rarity": 4,
+      "referencePrice": 86000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec11",
+      "name": "短波通信电台",
+      "category": "elec",
+      "rarity": 4,
+      "referencePrice": 72000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec12",
+      "name": "航海电子定位仪",
+      "category": "elec",
+      "rarity": 5,
+      "referencePrice": 165000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec13",
+      "name": "多通道数据记录器",
+      "category": "elec",
+      "rarity": 5,
+      "referencePrice": 260000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 60
+      },
+      "override": true
+    },
+    {
+      "id": "elec14",
+      "name": "原型信号分析终端",
+      "category": "elec",
+      "rarity": 6,
+      "referencePrice": 880000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "elec15",
+      "name": "「远望者」深海探测核心",
+      "category": "elec",
+      "rarity": 6,
+      "referencePrice": 2650000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind01",
+      "name": "铜管",
+      "category": "ind",
+      "rarity": 1,
+      "referencePrice": 3000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind02",
+      "name": "轴承",
+      "category": "ind",
+      "rarity": 2,
+      "referencePrice": 5600,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind03",
+      "name": "压力表",
+      "category": "ind",
+      "rarity": 3,
+      "referencePrice": 14500,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind04",
+      "name": "生锈的螺栓",
+      "category": "ind",
+      "rarity": 1,
+      "referencePrice": 1200,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind05",
+      "name": "混凝土试块",
+      "category": "ind",
+      "rarity": 1,
+      "referencePrice": 1600,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind06",
+      "name": "钢筋边角料",
+      "category": "ind",
+      "rarity": 1,
+      "referencePrice": 2400,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind07",
+      "name": "绝缘胶带",
+      "category": "ind",
+      "rarity": 2,
+      "referencePrice": 4200,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind08",
+      "name": "黄铜阀门",
+      "category": "ind",
+      "rarity": 2,
+      "referencePrice": 6800,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind09",
+      "name": "电焊面罩",
+      "category": "ind",
+      "rarity": 2,
+      "referencePrice": 7200,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind10",
+      "name": "精密游标卡尺",
+      "category": "ind",
+      "rarity": 3,
+      "referencePrice": 16000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind11",
+      "name": "工业陶瓷轴套",
+      "category": "ind",
+      "rarity": 3,
+      "referencePrice": 24000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind12",
+      "name": "液压控制阀组",
+      "category": "ind",
+      "rarity": 4,
+      "referencePrice": 58000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind13",
+      "name": "高纯度钛合金锭",
+      "category": "ind",
+      "rarity": 4,
+      "referencePrice": 85000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind14",
+      "name": "精密陀螺组件",
+      "category": "ind",
+      "rarity": 5,
+      "referencePrice": 240000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "ind15",
+      "name": "零号标准量块组",
+      "category": "ind",
+      "rarity": 6,
+      "referencePrice": 720000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med02",
+      "name": "注射器",
+      "category": "med",
+      "rarity": 2,
+      "referencePrice": 5800,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med03",
+      "name": "X 光片",
+      "category": "med",
+      "rarity": 2,
+      "referencePrice": 6000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med06",
+      "name": "组织切片标本盒",
+      "category": "med",
+      "rarity": 4,
+      "referencePrice": 42000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med07",
+      "name": "多参数生命监护仪",
+      "category": "med",
+      "rarity": 4,
+      "referencePrice": 76000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med08",
+      "name": "精密显微镜物镜组",
+      "category": "med",
+      "rarity": 4,
+      "referencePrice": 88000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med13",
+      "name": "便携式心脏除颤仪",
+      "category": "med",
+      "rarity": 4,
+      "referencePrice": 98000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med10",
+      "name": "精密注射泵",
+      "category": "med",
+      "rarity": 3,
+      "referencePrice": 28000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med15",
+      "name": "便携式心电图机",
+      "category": "med",
+      "rarity": 3,
+      "referencePrice": 32000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med09",
+      "name": "人工心脏瓣膜",
+      "category": "med",
+      "rarity": 5,
+      "referencePrice": 175000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med11",
+      "name": "机械循环辅助泵",
+      "category": "med",
+      "rarity": 5,
+      "referencePrice": 360000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med14",
+      "name": "重症呼吸机控制主机",
+      "category": "med",
+      "rarity": 5,
+      "referencePrice": 230000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "med12",
+      "name": "「初生」零号培养样本",
+      "category": "med",
+      "rarity": 6,
+      "referencePrice": 1200000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "antiq01",
+      "name": "座钟",
+      "category": "collect",
+      "rarity": 4,
+      "referencePrice": 56000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "antiq02",
+      "name": "黄铜怀表",
+      "category": "collect",
+      "rarity": 3,
+      "referencePrice": 17000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "antiq04",
+      "name": "错版硬币",
+      "category": "collect",
+      "rarity": 5,
+      "referencePrice": 80000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "antiq05",
+      "name": "门牌铜片",
+      "category": "collect",
+      "rarity": 2,
+      "referencePrice": 5500,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "antiq06",
+      "name": "工业釉色母版",
+      "category": "collect",
+      "rarity": 6,
+      "referencePrice": 400000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 80,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": true
+    },
+    {
+      "id": "antiq07",
+      "name": "手绘航海图",
+      "category": "collect",
+      "rarity": 4,
+      "referencePrice": 96000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "antiq08",
+      "name": "彩绘陶瓷面具",
+      "category": "collect",
+      "rarity": 2,
+      "referencePrice": 7200,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "antiq09",
+      "name": "环礁湾雕刻铜版",
+      "category": "collect",
+      "rarity": 6,
+      "referencePrice": 1650000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "art01",
+      "name": "黑胶唱片",
+      "category": "collect",
+      "rarity": 3,
+      "referencePrice": 16000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "art02",
+      "name": "小幅油画",
+      "category": "collect",
+      "rarity": 4,
+      "referencePrice": 65000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "art04",
+      "name": "限量游戏卡带",
+      "category": "collect",
+      "rarity": 4,
+      "referencePrice": 78000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "art05",
+      "name": "电影首映海报",
+      "category": "collect",
+      "rarity": 3,
+      "referencePrice": 21000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "lux01",
+      "name": "机械腕表",
+      "category": "collect",
+      "rarity": 5,
+      "referencePrice": 220000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "lux02",
+      "name": "金条",
+      "category": "collect",
+      "rarity": 5,
+      "referencePrice": 200000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "lux03",
+      "name": "钢笔",
+      "category": "collect",
+      "rarity": 3,
+      "referencePrice": 18000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "lux04",
+      "name": "珐琅音乐盒",
+      "category": "collect",
+      "rarity": 5,
+      "referencePrice": 268000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "lux05",
+      "name": "蓝宝石胸针",
+      "category": "collect",
+      "rarity": 5,
+      "referencePrice": 340000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "spec01",
+      "name": "贝壳",
+      "category": "collect",
+      "rarity": 1,
+      "referencePrice": 1600,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "spec02",
+      "name": "矿石标本",
+      "category": "collect",
+      "rarity": 2,
+      "referencePrice": 5700,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "spec03",
+      "name": "干燥的植物",
+      "category": "collect",
+      "rarity": 1,
+      "referencePrice": 2000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "spec04",
+      "name": "菊石化石",
+      "category": "collect",
+      "rarity": 3,
+      "referencePrice": 26000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "mil01",
+      "name": "旧弹链盒",
+      "category": "mil",
+      "rarity": 1,
+      "referencePrice": 1800,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil02",
+      "name": "制式军用水壶",
+      "category": "mil",
+      "rarity": 1,
+      "referencePrice": 2300,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil03",
+      "name": "军用身份牌",
+      "category": "mil",
+      "rarity": 2,
+      "referencePrice": 5400,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil04",
+      "name": "制式信号灯",
+      "category": "mil",
+      "rarity": 2,
+      "referencePrice": 6500,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil05",
+      "name": "封锁区标识牌",
+      "category": "mil",
+      "rarity": 2,
+      "referencePrice": 7100,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil06",
+      "name": "军用罗盘",
+      "category": "mil",
+      "rarity": 3,
+      "referencePrice": 19000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil07",
+      "name": "野战电话机",
+      "category": "mil",
+      "rarity": 3,
+      "referencePrice": 28000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil08",
+      "name": "制式枪机组件",
+      "category": "mil",
+      "rarity": 3,
+      "referencePrice": 34000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil09",
+      "name": "单筒夜视仪",
+      "category": "mil",
+      "rarity": 4,
+      "referencePrice": 90000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil10",
+      "name": "通信密钥模块",
+      "category": "mil",
+      "rarity": 4,
+      "referencePrice": 74000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil11",
+      "name": "野战剂量仪",
+      "category": "mil",
+      "rarity": 4,
+      "referencePrice": 68000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": true
+    },
+    {
+      "id": "mil12",
+      "name": "热成像观察仪",
+      "category": "mil",
+      "rarity": 5,
+      "referencePrice": 240000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil13",
+      "name": "光学测距仪",
+      "category": "mil",
+      "rarity": 5,
+      "referencePrice": 190000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil14",
+      "name": "指挥通信主机",
+      "category": "mil",
+      "rarity": 5,
+      "referencePrice": 420000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "mil15",
+      "name": "首潮撤离标图板",
+      "category": "mil",
+      "rarity": 6,
+      "referencePrice": 1600000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 60,
+        "viktor": 60,
+        "elena": 0
+      },
+      "override": false
+    },
+    {
+      "id": "intel01",
+      "name": "港口货运清单",
+      "category": "intel",
+      "rarity": 2,
+      "referencePrice": 5200,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 80,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel02",
+      "name": "旧电话簿",
+      "category": "intel",
+      "rarity": 1,
+      "referencePrice": 1800,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 80,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel03",
+      "name": "撤离登记卡",
+      "category": "intel",
+      "rarity": 2,
+      "referencePrice": 6800,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 80,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel04",
+      "name": "城市建设蓝图",
+      "category": "intel",
+      "rarity": 3,
+      "referencePrice": 24000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 80,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel05",
+      "name": "磁带录音",
+      "category": "intel",
+      "rarity": 3,
+      "referencePrice": 29000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel07",
+      "name": "电报码底稿",
+      "category": "intel",
+      "rarity": 3,
+      "referencePrice": 32000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel06",
+      "name": "潮位观测日志",
+      "category": "intel",
+      "rarity": 4,
+      "referencePrice": 58000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 80,
+        "gun": 80,
+        "doctor": 100,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel08",
+      "name": "封锁区通行名册",
+      "category": "intel",
+      "rarity": 4,
+      "referencePrice": 82000,
+      "preferred": "shop",
+      "rates": {
+        "shop": 100,
+        "gun": 80,
+        "doctor": 80,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel09",
+      "name": "实验原始数据盘",
+      "category": "intel",
+      "rarity": 4,
+      "referencePrice": 96000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 80,
+        "gun": 80,
+        "doctor": 100,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel10",
+      "name": "撤离电台录音带",
+      "category": "intel",
+      "rarity": 5,
+      "referencePrice": 220000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 80,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel11",
+      "name": "异常区域勘测报告",
+      "category": "intel",
+      "rarity": 5,
+      "referencePrice": 310000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 80,
+        "gun": 80,
+        "doctor": 100,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel12",
+      "name": "未公开调查卷宗",
+      "category": "intel",
+      "rarity": 5,
+      "referencePrice": 460000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 80,
+        "gun": 80,
+        "doctor": 100,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "intel13",
+      "name": "首潮原始观测记录",
+      "category": "intel",
+      "rarity": 6,
+      "referencePrice": 1850000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 80,
+        "gun": 80,
+        "doctor": 100,
+        "viktor": 60,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "life02",
+      "name": "旧报纸",
+      "category": "intel",
+      "rarity": 1,
+      "referencePrice": 1000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 80,
+        "doctor": 80,
+        "viktor": 100,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "art03",
+      "name": "摄影底片",
+      "category": "intel",
+      "rarity": 3,
+      "referencePrice": 14000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 80,
+        "gun": 80,
+        "doctor": 80,
+        "viktor": 100,
+        "elena": 80
+      },
+      "override": true
+    },
+    {
+      "id": "occ01",
+      "name": "褪色祈愿绳",
+      "category": "occult",
+      "rarity": 1,
+      "referencePrice": 1800,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ02",
+      "name": "仪式粉笔",
+      "category": "occult",
+      "rarity": 1,
+      "referencePrice": 2400,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ03",
+      "name": "七结护符",
+      "category": "occult",
+      "rarity": 2,
+      "referencePrice": 6800,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ04",
+      "name": "铜制占卜盘",
+      "category": "occult",
+      "rarity": 2,
+      "referencePrice": 8500,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ05",
+      "name": "灰烬香炉",
+      "category": "occult",
+      "rarity": 2,
+      "referencePrice": 9200,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ06",
+      "name": "观星仪式尺",
+      "category": "occult",
+      "rarity": 3,
+      "referencePrice": 22000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ07",
+      "name": "银丝封印针",
+      "category": "occult",
+      "rarity": 3,
+      "referencePrice": 34000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ08",
+      "name": "密仪蜡印",
+      "category": "occult",
+      "rarity": 3,
+      "referencePrice": 38000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ09",
+      "name": "黑曜石卜镜",
+      "category": "occult",
+      "rarity": 4,
+      "referencePrice": 78000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ10",
+      "name": "潮蚀符板",
+      "category": "occult",
+      "rarity": 4,
+      "referencePrice": 95000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ11",
+      "name": "逆序祷文卷",
+      "category": "occult",
+      "rarity": 4,
+      "referencePrice": 110000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ12",
+      "name": "镀金星盘核心",
+      "category": "occult",
+      "rarity": 5,
+      "referencePrice": 260000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ13",
+      "name": "三重誓约戒",
+      "category": "occult",
+      "rarity": 5,
+      "referencePrice": 340000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ14",
+      "name": "无声祈祷铃",
+      "category": "occult",
+      "rarity": 5,
+      "referencePrice": 480000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "occ15",
+      "name": "第零页圣典",
+      "category": "occult",
+      "rarity": 6,
+      "referencePrice": 1800000,
+      "preferred": "elena",
+      "rates": {
+        "shop": 60,
+        "gun": 60,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 100
+      },
+      "override": false
+    },
+    {
+      "id": "odd01",
+      "name": "回响结晶",
+      "category": "odd",
+      "rarity": 4,
+      "referencePrice": 42000,
+      "preferred": "doctor",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 100,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": true
+    },
+    {
+      "id": "odd02",
+      "name": "潮汐仪",
+      "category": "odd",
+      "rarity": 6,
+      "referencePrice": 3000000,
+      "preferred": "gun",
+      "rates": {
+        "shop": 60,
+        "gun": 100,
+        "doctor": 80,
+        "viktor": 80,
+        "elena": 0
+      },
+      "override": true
+    },
+    {
+      "id": "odd03",
+      "name": "停摆的怀表",
+      "category": "odd",
+      "rarity": 4,
+      "referencePrice": 60000,
+      "preferred": "viktor",
+      "rates": {
+        "shop": 60,
+        "gun": 80,
+        "doctor": 80,
+        "viktor": 100,
+        "elena": 0
+      },
+      "override": true
+    }
+  ]
+}

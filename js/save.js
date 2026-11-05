@@ -24,6 +24,7 @@ const Save = {
   },
   meleeGiftClaimed: false,
   attachmentRecovery: [],
+  commissionBoard: null,
   runs: 0,
   bestHaul: 0,        // 单局带出价值的历史最高（结算页的"新纪录"用）
   codexCount() { return ITEMS.filter(item=>!item.noCodex&&itemGroup(item)==='collectible'&&this.codex[item.id]).length; },
@@ -62,10 +63,11 @@ const Save = {
     try {
       this._ammoSpill=[];
       const raw = localStorage.getItem(this.key);
-      if (!raw) { this.bag = this.defaultBag(); this.safe=[]; return; }
+      if (!raw) { this.bag = this.defaultBag(); this.safe=[]; this.commissionBoard=null; return; }
       const d = JSON.parse(raw);
       this._partSpill=[];
       this.attachmentRecovery=Array.isArray(d.attachmentRecovery)?d.attachmentRecovery:[];
+      this.commissionBoard = d.commissionBoard == null ? null : d.commissionBoard;
       this.codex = d.codex || {};
       this.stash = Array.isArray(d.stash) ? d.stash : [];
       this.runs = d.runs || 0;
@@ -166,6 +168,7 @@ const Save = {
         runs: this.runs,
         meleeGiftClaimed: this.meleeGiftClaimed,
         attachmentRecovery: this.attachmentRecovery,
+        commissionBoard: this.commissionBoard,
         bestHaul: this.bestHaul
       }));
       return true;

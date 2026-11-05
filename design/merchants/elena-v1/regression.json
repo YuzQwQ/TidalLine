@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "mainBaseline": { "passed": 402, "failed": 0 },
+  "mainFinal": { "passed": 402, "failed": 0 },
+  "commands": [
+    { "command": "node tools/test-elena.js", "result": "passed", "serviceAssertions": 1734, "targets": ["HTTP development", "file offline"], "viewports": ["1920x1080", "1440x900", "1280x720", "390x844", "320x844"], "narrowDelivery": true },
+    { "command": "node tools/test-buyback-preferences.js", "result": "passed", "items": 140, "quotesPerTarget": 700 },
+    { "command": "node tools/test-merchant-sales.js", "result": "passed" },
+    { "command": "node tools/test-merchant-ui.js", "result": "passed" },
+    { "command": "node tools/test-viktor.js", "result": "passed" },
+    { "command": "node tools/test-storage-ui.js", "result": "passed" },
+    { "command": "node tools/test-storage-loadout.js", "result": "passed" },
+    { "command": "node tools/test-medical.js", "result": "passed", "groups": 24 },
+    { "command": "node tools/test-medical-browser.js", "result": "passed" },
+    { "command": "node tools/test-doctor-dialogue.js", "result": "passed" },
+    { "command": "node tools/test-merchant-dialogue.js", "result": "passed" },
+    { "command": "node tools/test-gunsmith-page.js", "result": "passed" },
+    { "command": "node tools/test-gunsmith-checkout.js", "result": "passed", "groups": 7 },
+    { "command": "node tools/test-attachments.js", "result": "passed", "groups": 19 },
+    { "command": "node tools/check-commissions.js", "result": "passed", "templates": 6 },
+    { "command": "node tools/check-elena-map-snapshots.js", "result": "passed", "maps": 2 },
+    { "command": "node build.js --assets-only", "result": "passed", "draftCompilation": false }
+  ],
+  "testMaintenance": [
+    "商人总览断言从4卡调整至5卡；肖像保持4张，加1个伊莲娜文字占位。",
+    "收购回归从四商人560报价调整到五商人700报价，显式验证0%拒收。",
+    "旧医疗浏览器脚本仍点击已隐藏的data-t导航及旧仓库气泡，已适配当前商人总览、详情确认、仓库操作与出发警告。完整治疗、携带和局内使用断言保留。",
+    "旧清仓与配件回收测试仍假设Base.sell直接出售；按此前已实施的前往商人规则更新，配件实际回收改用共享Sales事务。",
+    "配件历史地图基线已早于当前地图版本；本轮检测到外部同时保存地图，因此保留外部更新，最终构建前显式记录map-baseline.json，并校验assets-only构建后快照不变，不重编草稿。护甲穿透矩阵仍与原基线一致。"
+  ],
+  "deferred": ["portrait", "action-day refresh", "expiry", "abandon or replace", "investigation/recovery/elimination/composite objectives", "reward choices", "personal story quests", "trust progression"]
+}

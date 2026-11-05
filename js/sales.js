@@ -1,10 +1,12 @@
 /* All prices derive from current item data; no inventory mutations during preview. */
 const MERCHANT_BUYBACK={
- gun:{label:'枪械、近战武器、弹药、枪械配件',allow:['gun','melee','ammo','attachment'],multipliers:{},items:{}},
- shop:{label:'头盔、护甲、背包',allow:['armor','bag'],multipliers:{},items:{}},
- doctor:{label:'医疗道具（含效果待开放）',allow:['medical'],multipliers:{},items:{}},
- viktor:{label:'全部九类收集品，含医疗类收集品',allow:['collectible'],multipliers:{},items:{}}
+ elena:{label:'文物藏品、神秘学100%；情报80%；即影相机、微型录像机、多通道数据记录器60%；其他物品不收购',allow:['collectible'],multipliers:{},items:{}},
+ gun:{label:'枪械、弹药与配件；偏好电子产品、军事物资及通信资料',allow:['gun','melee','ammo','attachment'],multipliers:{},items:{}},
+ shop:{label:'防具与背包；偏好工业器材、港务资料和防护检测器材',allow:['armor','bag'],multipliers:{},items:{}},
+ doctor:{label:'医疗道具；偏好医疗收集品及异常观察资料',allow:['medical'],multipliers:{},items:{}},
+ viktor:{label:'收购全部九类收集品；偏好生活用品及历史影像',allow:['collectible'],multipliers:{},items:{}}
 };
+for(const rule of Object.values(MERCHANT_BUYBACK))if(!rule.allow.includes('collectible'))rule.allow.push('collectible');
 const Sales={
  ids:new WeakMap(),serial:0,tokens:new Map(),nonce:0,
  id(e){if(!this.ids.has(e))this.ids.set(e,'sale-'+(++this.serial));return this.ids.get(e);},
@@ -12,11 +14,15 @@ const Sales={
  quote(merchant,e){
   const item=stashItem(e),out={ok:false,item,status:'refused',reason:'物品不可交易',base:0,unit:0,multiplier:1};if(!item)return out;
   if(item.equip?.bound)return {...out,status:'bound',reason:'绑定物品不可出售'};
+  if(merchant==='warehouse')return {...out,reason:'请前往商人处出售，仓库金额仅为估价'};
   const kind=this.kind(item),rule=MERCHANT_BUYBACK[merchant],override=rule?.items?.[item.id];
   if(merchant!=='warehouse'&&(!rule||override?.allowed===false||(!rule.allow.includes(kind)&&override?.allowed!==true)))return {...out,reason:'当前商人不收购此类物品'};
-  const multiplier=override?.multiplier??rule?.multipliers?.[kind]??1,base=unitPrice(item),unit=Math.floor(base*multiplier);
+  const rate=kind==='collectible'?(COLLECTIBLE_BUYBACK.overrides[item.id]?.[merchant]??COLLECTIBLE_BUYBACK.defaultRates[item.cat]?.[merchant]??60):100;
+  if(kind==='collectible'&&rate===0)return {...out,reason:'当前商人不收购此类物品'};
+  const multiplier=override?.multiplier??rule?.multipliers?.[kind]??rate/100,base=unitPrice(item),unit=Math.floor(base*(multiplier*100)/100);
   if(!Number.isFinite(unit)||unit<0||!Number.isFinite(base)||base<0)return out;
-  return {...out,ok:true,status:multiplier<1?'low':'allowed',reason:multiplier<1?'收购价低于现行回收价值':'可出售',base,unit,multiplier};
+  const status=multiplier>=1?'preferred':multiplier>=.8?'normal':'low',label={preferred:'偏好收购',normal:'常规收购',low:'低价收购'}[status];
+  return {...out,ok:true,status,reason:label+' · '+Math.round(multiplier*100)+'%'+(kind==='collectible'?'参考估价':'装备／物资回收估价'),base,unit,multiplier};
  },
  fingerprint(merchant,e){const q=this.quote(merchant,e);return JSON.stringify([e.id,e.n||1,e.cap,e.gear,q.ok,q.base,q.unit,q.multiplier]);},
  preview(merchant,requests){
@@ -31,9 +37,7 @@ const Sales={
  },
  authorize(preview){if(!preview.ok)return null;const token='checkout-'+(++this.nonce);this.tokens.set(token,{merchant:preview.merchant,total:preview.total,junkIds:preview.junkIds,rows:preview.rows.map(r=>({entry:r.entry,n:r.n,fingerprint:r.fingerprint}))});return token;},
  cancel(token){this.tokens.delete(token);},
- confirmWarehouse(requests,rect,allJunk=false){const p=this.preview('warehouse',requests);if(!p.ok){Base.note(p.errors[0]?.reason||'仓库里没有可出售的物品',true);return;}if(allJunk)p.junkIds=requests.map(r=>this.id(r.entry)).sort().join(',');Deal.hide();const token=this.authorize(p);this.warehouseToken=token;const it=p.rows[0].item;
-  Deal.show({kind:'sell',title:p.rows.length===1?'卖出':'确认出售寻常收集品',name:p.rows.length===1?it.name+' ×'+p.units:p.rows.length+' 格 · '+p.units+' 件',sub:'沿用现有回收价值 · 确认前不扣除物品',id:it.id,icon:it.icon,price:p.total,onGo:()=>{const r=this.commit(token);if(!r.ok)Base.note(r.reason,true);}},rect||{left:100,top:100,width:1,height:1,right:101,bottom:101});
- },
+ confirmWarehouse(){return Base.goToSell();},
  commit(token){
   const sale=this.tokens.get(token);this.tokens.delete(token);const fail=reason=>({ok:false,reason});
   if(!sale)return fail('确认已失效，请重新核对');if(Game.state!=='base')return fail('当前无法出售');

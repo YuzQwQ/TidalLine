@@ -34,7 +34,7 @@ const Safehouse = {
     if(this.demo)return {credits:'¥ 2,480,000',storage:'318 / 600',durability:'良好 98%',hp:86,maxHp:100,injury:'轻微伤势 · 状态演示'};
     const protection=[Save.gear.body,Save.gear.helmet].filter(Boolean);
     const ratios=protection.map(i=>{const e=i.equip||i;const defs=e.type==='helmet'?HELMETS:BODIES;const max=e.max || defs.find(d=>e.id?d.id===e.id:d.lv===e.lv)?.dur;return max&&Number.isFinite(e.dur)?Math.max(0,Math.min(1,e.dur/max)):null;}).filter(x=>x!==null);
-    return {credits:formatMoney(Save.credits),storage:Save.stash.length+' / '+STASH_SLOTS,durability:!protection.length?'未装备':ratios.length?Math.round(ratios.reduce((a,b)=>a+b,0)/ratios.length*100)+'%':'查看详情',hp:Save.hp,maxHp:CFG.P.HP,injury:'伤势系统未开放'};
+    return {credits:formatMoney(Save.credits),storage:Save.stash.length+' / '+STASH_SLOTS,durability:!protection.length?'未装备':ratios.length?Math.round(ratios.reduce((a,b)=>a+b,0)/ratios.length*100)+'%':'查看详情',hp:Save.hp,maxHp:CFG.P.HP,injury:'局内损伤不跨局保留'};
   },
   refresh(){
     if(!this.root)return;const s=this.snapshot();
