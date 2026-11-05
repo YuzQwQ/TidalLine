@@ -9,11 +9,15 @@ const BaseSafe={
   if(from==='stash'&&to!=='stash'&&Attachments.carriedWeight()+item.w*n>CFG.BAG.CARRY+1e-6){Base.note('超过携带负重，无法转移',true);return false;}
   const field=k=>k==='safe'?'safe':k==='bag'?'bag':'stash';Save[field(from)]=src.filter(e=>e!==entry);Save[field(to)]=next;Save.save();Save.flush();Tips.hide();Base.render();Base.note('已将'+item.name+'放入'+({safe:'保险箱',bag:'背包',stash:'仓库'}[to]));Game.sfx('pickup');return true;
  },
- render(){const grid=document.getElementById('baseBagGrid');if(!grid)return;let box=document.getElementById('baseSafeSection');if(!box){box=document.createElement('section');box.id='baseSafeSection';box.className='base-safe-section';grid.after(box);}
-  box.innerHTML='<h3>保险箱 <em>'+Save.safe.length+' / '+CFG.BAG.SAFE+' 格</em></h3><div id="baseSafeGrid" class="bag-grid"></div><p>死亡仍可带回 · 点击物品取出或使用</p>';
-  const cells=box.querySelector('#baseSafeGrid');for(let i=0;i<CFG.BAG.SAFE;i++){const entry=Save.safe[i],item=entry&&stashItem(entry),cell=Base.makeBagCell(entry);cell.dataset.safeSlot=i;if(item){cell.title=item.name+' · 点击查看保险箱操作';cell.onclick=()=>this.open(entry,cell);cell.oncontextmenu=e=>{e.preventDefault();this.open(entry,cell);};cell.ondblclick=()=>this.transfer(entry,'safe','bag');}else cell.title='从背包或仓库的物品操作中选择“放入保险箱”';cells.appendChild(cell);}
+  render(){const grid=document.getElementById('baseBagGrid');if(!grid)return;let box=document.getElementById('baseSafeSection');if(!box){box=document.createElement('section');box.id='baseSafeSection';box.className='base-safe-section';grid.after(box);}
+  box.innerHTML='<h3>保险箱 <em>'+Save.safe.length+' / '+CFG.BAG.SAFE+' 格</em></h3><div id="baseSafeGrid" class="bag-grid"></div><p>死亡仍可带回 · 单击看详情，双击回到背包</p>';
+  const cells=box.querySelector('#baseSafeGrid');for(let i=0;i<CFG.BAG.SAFE;i++){const entry=Save.safe[i],item=entry&&stashItem(entry),cell=Base.makeBagCell(entry);cell.dataset.safeSlot=i;if(item){cell.title=item.name+' · 双击移回背包 · 右键更多';cell.onclick=ev=>{if(ev&&(ev.ctrlKey||ev.metaKey)){Tips.hide();this.transfer(entry,'safe','bag');return;}this.open(entry,cell);};cell.ondblclick=ev=>{if(ev&&ev.preventDefault)ev.preventDefault();Tips.hide();this.transfer(entry,'safe','bag');};cell.oncontextmenu=ev=>{ev.preventDefault();ev.stopPropagation();this.menu(entry,cell,ev);};}else cell.title='从背包或仓库的物品操作中选择“放入保险箱”';cells.appendChild(cell);}
  },
- open(entry,node){if(!Save.safe.includes(entry))return;const item=stashItem(entry);Tips.show(item,node.getBoundingClientRect(),'保险箱 · 死亡可带回');Tips.actions([{label:'移回背包',onClick:()=>this.transfer(entry,'safe','bag')},{label:'放回仓库',onClick:()=>this.transfer(entry,'safe','stash')},...(Medical.ready(item)?[{label:Save.hp>=CFG.P.HP?'生命值已满':'使用医疗品',disabled:Save.hp>=CFG.P.HP,onClick:()=>{if(Save.safe.includes(entry))Medical.use(entry,'basesafe');}}]:[])]);},
+ /* 局外详情只有信息；动作全在右键菜单（和背包格同一套口径） */
+ open(entry,node){if(!Save.safe.includes(entry))return;const item=stashItem(entry);const extra=item&&item.healCap?[['当前容量',Math.ceil(Medical.entryCap(entry))+' / '+item.healCap]]:null;Tips.show(item,node.getBoundingClientRect(),'',extra);},
+ menu(entry,node,ev){const item=stashItem(entry);const entries=[{label:'详情',onClick:()=>this.open(entry,node)},{label:'移回背包',onClick:()=>this.transfer(entry,'safe','bag')},{label:'放回仓库',onClick:()=>this.transfer(entry,'safe','stash')}];
+  if(item&&Medical.ready(item))entries.push({label:Save.hp>=CFG.P.HP?'生命值已满':'使用一件',disabled:Save.hp>=CFG.P.HP,onClick:()=>{if(Save.safe.includes(entry))Medical.use(entry,'basesafe');}});
+  Ctx.show(ev.clientX,ev.clientY,entries);},
  addAction(container,entry,from){if(!container||!this.list(from)?.includes(entry))return;const button=document.createElement('button');button.dataset.baseSafeMove=from;button.textContent='放入保险箱';button.onclick=()=>this.transfer(entry,from,'safe');container.appendChild(button);}
 };
 {

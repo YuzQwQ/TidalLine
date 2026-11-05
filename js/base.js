@@ -955,7 +955,7 @@ const Base = {
     cell.innerHTML=Icons.bagTag(it,'ico-bag')+'<span class="cn">'+esc(it.short||it.name)+'</span>'+
       (n>1?'<span class="qty">'+n+'</span>':'')+
       (it.healCap&&Medical.isPartial(e)?'<span class="cap">'+Math.ceil(Medical.entryCap(e))+'</span>':'');
-    cell.title=it.name+' · '+(it.w*n).toFixed(2)+'kg · 左键看详情';
+    cell.title=it.name+' · '+(it.w*n).toFixed(2)+'kg · 单击看详情';
     return cell;
   },
 
@@ -975,8 +975,42 @@ const Base = {
         grid.appendChild(cell);
         continue;
       }
-      cell.onclick = () => this.showItem(e, 'bag', cell);
-      cell.oncontextmenu = ev => { ev.preventDefault(); this.showItem(e, 'bag', cell); };
+      /* 仓库页（下一轮再收）沿用旧手势；藏身处背包走统一手势：
+         单击看详情、双击搬回仓库（医疗品双击=使用）、Ctrl+左键=搬回仓库、右键出菜单。
+         局外详情只给信息，动作全在菜单里 —— 详情卡不该是个按钮面板。 */
+      if (Safehouse.view === 'stash') {
+        cell.onclick = () => this.showItem(e, 'bag', cell);
+        cell.oncontextmenu = ev => { ev.preventDefault(); this.showItem(e, 'bag', cell); };
+      } else {
+        const count = e.n || 1;
+        cell.title = it.name + ' · ' + (it.w * count).toFixed(2) + 'kg · 双击' +
+          (Medical.ready(it) ? '使用' : '搬回仓库') + ' · Ctrl+左键搬回仓库';
+        cell.onclick = ev => {
+          if (ev && (ev.ctrlKey || ev.metaKey)) { Tips.hide(); this.toStash(e); return; }
+          this.showBagItem(e, cell);
+        };
+        cell.ondblclick = ev => {
+          if (ev && ev.preventDefault) ev.preventDefault();
+          Tips.hide();
+          if (Medical.ready(it) && Save.hp < CFG.P.HP) { Medical.use(e, 'basebag'); return; }
+          this.toStash(e);
+        };
+        cell.oncontextmenu = ev => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const entries = [{ label: '详情', onClick: () => this.showBagItem(e, cell) }];
+          if (Medical.ready(it)) {
+            entries.push({
+              label: Save.hp >= CFG.P.HP ? '生命值已满' : '使用一件',
+              disabled: Save.hp >= CFG.P.HP,
+              onClick: () => { if (Save.hp < CFG.P.HP) Medical.use(e, 'basebag'); }
+            });
+          }
+          entries.push({ label: '放入保险箱', onClick: () => BaseSafe.transfer(e, 'bag', 'safe') });
+          entries.push({ label: '放回仓库', onClick: () => this.toStash(e) });
+          Ctx.show(ev.clientX, ev.clientY, entries);
+        };
+      }
       grid.appendChild(cell);
     }
 
@@ -1070,6 +1104,16 @@ const Base = {
     Save.bag = bag.slots.map(s => s.item.equip ? {id:s.item.id,n:1,gear:s.item} : {id:s.item.id,n:s.n,...(s.cap == null ? {} : {cap:s.cap})});
     eq.mag = 0; eq.rounds = []; it.note = '';
     Save.save(); Tips.hide(); this.render(); if(rounds.length)Game.sfx('pickup'); return true;
+  },
+
+  /* 局外背包的详情：只给信息，动作都在右键菜单里。
+     局内的详情才带按钮（那边没有"菜单先选一下"的余地）。 */
+  showBagItem(e, node) {
+    const it = stashItem(e);
+    if (!it || !node || !node.getBoundingClientRect) return;
+    const extra = [];
+    if (it.healCap) extra.push(['当前容量', Math.ceil(Medical.entryCap(e)) + ' / ' + it.healCap]);
+    Tips.show(it, node.getBoundingClientRect(), '', extra);
   },
 
   showItem(e, where, node) {

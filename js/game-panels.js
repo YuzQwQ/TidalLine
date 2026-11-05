@@ -5,6 +5,73 @@
 
 Object.assign(Game, {
 
+  /* ============================================================
+     统一物品交互
+     一个格子只描述"这是什么、点下去能做什么"，四种手势在这里一次绑好：
+       单击        看：弹出详情（局内详情带动作按钮）
+       双击        做：使用 / 换枪 / 换甲 / 拿进背包 / 移回背包
+                   —— 没有动作可做的普通物品，双击还是看详情
+       Ctrl+左键   快速移动（固定语义：背包→安全箱、安全箱→背包、容器→背包）
+       右键        详情 / 使用·装备 / 丢弃（破坏性动作永远排最后）
+     装备槽例外：单击是切枪/切近战（局内高频动作），双击才是看详情。
+     ============================================================ */
+
+  /* 详情：局内 = 信息 + 动作按钮。局外只给信息，别在这里加动作。 */
+  itemDetail(spec) {
+    const it = spec && spec.it, node = spec && spec.node;
+    if (!it || !node || !node.getBoundingClientRect) return;
+    const extra = [];
+    if (it.healCap && spec.entry) {
+      extra.push(['当前容量', Math.ceil(Medical.entryCap(spec.entry)) + ' / ' + it.healCap]);
+    }
+    Tips.show(it, node.getBoundingClientRect(), spec.hint || '', extra);
+    const acts = [];
+    if (spec.act) acts.push({ label: spec.actLabel || '使用', disabled: !!spec.actOff, onClick: spec.act });
+    if (spec.quick) acts.push({ label: spec.quickLabel || '快速移动', onClick: spec.quick });
+    if (spec.extraActs) for (const a of spec.extraActs) acts.push(a);
+    if (spec.drop) acts.push({ label: '丢弃', onClick: spec.drop });
+    Tips.actions(acts);
+  },
+
+  /* 右键菜单：详情 → 使用·装备 → 其它（退弹/改装…）→ 丢弃 */
+  itemMenu(spec, ev) {
+    const entries = [{ label: '详情', onClick: () => this.itemDetail(spec) }];
+    if (spec.act) entries.push({ label: spec.actLabel || '使用', disabled: !!spec.actOff, onClick: spec.act });
+    if (spec.extraActs) for (const a of spec.extraActs) entries.push(a);
+    if (spec.drop) entries.push({ label: '丢弃', hint: spec.dropHint || '', danger: true, onClick: spec.drop });
+    Ctx.show((ev && ev.clientX) || 0, (ev && ev.clientY) || 0, entries);
+  },
+
+  /* 把一个格子按统一手势绑好。
+     spec.click 覆盖"单击=看详情"（只有装备槽需要：单击切枪）；
+     spec.primary 是双击的动作，没写就退回看详情。 */
+  bindItem(node, spec) {
+    if (!node || !spec || !spec.it) return;
+    spec.node = node;
+    node.onclick = ev => {
+      if (ev && (ev.ctrlKey || ev.metaKey) && spec.quick) { Tips.hide(); spec.quick(); return; }
+      if (spec.click) { spec.click(); return; }
+      this.itemDetail(spec);
+    };
+    node.ondblclick = ev => {
+      if (ev && ev.preventDefault) ev.preventDefault();
+      if (!spec.primary) { this.itemDetail(spec); return; }
+      Tips.hide();
+      spec.primary();
+    };
+    node.oncontextmenu = ev => {
+      if (ev) {
+        if (ev.preventDefault) ev.preventDefault();
+        if (ev.stopPropagation) ev.stopPropagation();
+      }
+      this.itemMenu(spec, ev);
+    };
+  },
+
+  /* 装备/物品上的额外动作。配件与改装页在 js/attachment-ui.js 里接上自己的入口，
+     没接就是空数组 —— 核心手势不依赖改装模块。 */
+  extraActsFor(it, where, entry) { return []; },
+
   /* ---------------- 搜刮面板 ---------------- */
   /* opts.silent：这次打开是「刚搜完这个容器」的收尾，声音已经在交互那一刻响过了，
      别再响第二下 —— 一个容器一次交互只该有一声。 */
@@ -167,7 +234,8 @@ Object.assign(Game, {
         '<span class="vv">' + it.w.toFixed(2) + 'kg · ' +
         (it.price > 0 ? formatMoney(it.price) : '—') + '</span>';
 
-      row.onclick = () => {
+      /* 双击（或 Ctrl+左键）= 拿走；单击先看详情，详情里也有「拿走」按钮 */
+      const take = () => {
         const cur = this.lootOpen && this.lootOpen.items[i];
         if (!cur) return;
         /* 装备不占普通格子：能穿就穿上，穿不下才进背包 */
@@ -185,20 +253,19 @@ Object.assign(Game, {
         this.stepAutoSearch();      // 拿东西不打断自动搜索，拿完接着搜
         if (this.bagOpen) this.renderBag();
       };
-      /* 右键看详情：拿之前先确认这东西值不值得占一格 */
-      row.oncontextmenu = (ev) => {
-        ev.preventDefault();
-        const cur2 = this.lootOpen && this.lootOpen.items[i];
-        if (!cur2) return;
-        Tips.show(it, row.getBoundingClientRect(),
-          it.equip ? '左键装备（没有同类就直接穿上）' : '左键装进背包');
-      };
+      this.bindItem(row, {
+        it: it, entry: this.lootOpen.items[i],
+        act: take, actLabel: it.equip ? '拿走' : '拿进背包',
+        quick: take, quickLabel: '拿进背包',
+        primary: take,                       // 双击 = 快速移动（拿进背包）
+        hint: '双击拿进背包'
+      });
       el.appendChild(row);
     });
   },
 
   /* ---------------- 尸体装备：方格布局 ---------------- */
-  /* 和背包顶部同一套方格：头盔 / 护甲 / 背包 / 武器 四格，左键穿上、右键带回 */
+  /* 和背包顶部同一套方格：头盔 / 护甲 / 背包 / 武器 四格，双击拿走、单击看详情 */
   renderLootGear() {
     const bar = document.getElementById('lootGear');
     const tip = document.getElementById('lootGearTip');
@@ -292,33 +359,37 @@ Object.assign(Game, {
     /* 身上已经有同类装备时，这一格点下去是"放进背包"，用角标提示；
        背包例外：只有更大的才换上，小的那只进背包格子（角标同样亮"包"） */
     const hintOf = c => c.isBag
-      ? (c.own ? ' · 比现在这只大就换上，旧包丢在脚边' : ' · 点击背上')
-      : (c.own ? ' · 已有同类，点击放进背包' : ' · 点击穿上');
+      ? (c.own ? ' · 比现在这只大就换上，旧包丢在脚边' : ' · 双击背上')
+      : (c.own ? ' · 已有同类，双击放进背包' : ' · 双击穿上');
     bar.innerHTML = cells.map(c =>
       '<div class="eqs' + (c.icon ? '' : ' empty') + '" title="' +
         esc(c.label) +
-        (c.icon ? hintOf(c) + ' · 右键看详情' : '') + '">' +
+        (c.icon ? hintOf(c) + ' · 右键更多' : '') + '">' +
         (c.icon && c.own ? '<span class="carry">包</span>' : '') +
         '<span class="lbl">' + esc(c.label) + '</span>' +
         '<span class="ic">' + Icons.gearIcon(c.icon, c.fb) + '</span>' +
         (c.tag ? '<span class="tag ' + (c.tagCls || '') + '">' + esc(c.tag) + '</span>' : '') +
       '</div>').join('');
 
-    // 每格绑定点：左键拾取（没有同类装备就穿，有就放包）；右键看详情
+    // 每格绑定点：双击拿走（没有同类装备就穿，有就放包）；单击看详情
     const nodes = bar.children || [];
     for (let n = 0; n < nodes.length; n++) {
       const c = cells[n];
       const node = nodes[n];
       if (!c || c.idx < 0) { node.classList.add('empty'); continue; }
-      node.onclick = () => this.takeGear(this.lootOpen.items[c.idx], c.idx);
-      if (c.item && node.addEventListener) {
-        node.oncontextmenu = (ev) => {
-          ev.preventDefault();
-          Tips.show(c.item, node.getBoundingClientRect(), c.isBag
-            ? (c.own ? '左键背上（比现在这只大才换，旧包丢在脚边）' : '左键直接背上')
-            : (c.own ? '已有同类，左键放进背包' : '左键直接穿上'));
-        };
-      }
+      const take = () => {
+        const entry = this.lootOpen && this.lootOpen.items[c.idx];
+        if (entry) this.takeGear(entry, c.idx);
+      };
+      this.bindItem(node, {
+        it: c.item, entry: this.lootOpen.items[c.idx],
+        act: take, actLabel: '拿走',
+        quick: take, quickLabel: '拿进背包',
+        primary: take,
+        hint: c.isBag
+          ? (c.own ? '双击背上（比现在这只大才换，旧包丢在脚边）' : '双击直接背上')
+          : (c.own ? '已有同类，双击放进背包' : '双击直接穿上')
+      });
     }
   },
 
@@ -492,6 +563,14 @@ Object.assign(Game, {
     /* --- 三个武器位 --- */
     for (let i = 0; i < 3; i++) {
       const w = P.weapons[i];
+      const extraActs = [];
+      if (w) {
+        if (i === P.slot && P.weapon.modes.length > 1) {
+          extraActs.push({ label: '切换射击模式（B）', onClick: () => { Gunplay.nextMode(P); this.renderGearPanel(); } });
+        }
+        extraActs.push({ label: '退弹', onClick: () => P.unloadWeapon(i) });
+        for (const a of this.extraActsFor(w, 'gear', w)) extraActs.push(a);
+      }
       cells.push({
         icon: w ? w.id : null,
         fb: w ? w.short.charAt(0) : '',
@@ -499,7 +578,12 @@ Object.assign(Game, {
         on: i === P.slot,
         /* 手上那把读 P.mag（实时），其它槽读各自记着的余弹 */
         tag: w ? ((i === P.slot ? P.mag : w.magCur) + '/' + w.mag) : '',
-        click: w ? () => { P.switchWeapon(i); this.renderGearPanel(); } : null
+        /* 单击=切枪（局内高频动作保留在左键），双击才是看详情 */
+        click: w ? () => { P.switchWeapon(i); this.renderGearPanel(); } : null,
+        item: w ? Gunplay.snapshot(w, i === P.slot ? P.mag : w.magCur) : null,
+        extraActs: extraActs,
+        drop: w ? () => this.dropWeapon(i) : null,
+        hint: '双击看详情 · 右键更多'
       });
     }
 
@@ -513,7 +597,10 @@ Object.assign(Game, {
         label: g ? g.short : (type === 'helmet' ? '头盔' : '护甲'),
         tag: g ? 'Lv' + g.lv : '',
         tagCls: st === 'ok' ? '' : st,
-        click: null
+        click: null,
+        item: g ? EQUIP.armor(g) : null,
+        drop: g ? () => this.dropArmor(type) : null,
+        hint: '双击看详情 · 右键更多'
       });
     }
 
@@ -524,7 +611,10 @@ Object.assign(Game, {
       fb: '包',
       label: bp ? bp.short : '背包',
       tag: bagSlots() + '格',
-      click: null
+      click: null,
+      item: bp ? EQUIP.bag(bp.id) : null,
+      drop: null,                       // 局内不能扔背包：包里的东西会跟着一起消失
+      hint: '局内不能更换背包'
     });
 
     el.innerHTML = cells.map(c =>
@@ -535,16 +625,74 @@ Object.assign(Game, {
         (c.tag ? '<span class="tag ' + (c.tagCls || '') + '">' + esc(c.tag) + '</span>' : '') +
       '</div>').join('');
 
-    // 点武器格切枪（无头测试里的假 DOM 没有 children，跳过绑定即可）
+    // 装备槽：单击切枪 / 看详情，双击看详情，右键出菜单（无头测试里的假 DOM 没有 children，跳过绑定）
     const nodes = el.children || [];
     for (let n = 0; n < nodes.length; n++) {
       const c = cells[n];
-      if (c && c.click) nodes[n].onclick = c.click;
-      if (n < 3 && P.weapons[n]) nodes[n].oncontextmenu = ev => {
-        ev.preventDefault(); ev.stopPropagation();
-        Ctx.show(ev.clientX, ev.clientY, [{label:'退弹', onClick:() => P.unloadWeapon(n)},...(n===P.slot&&P.weapon.modes.length>1?[{label:'切换射击模式（B）',onClick:()=>{Gunplay.nextMode(P);Game.renderGearPanel();}}]:[])]);
-      };
+      if (!c || !c.item) { if (c && c.click) nodes[n].onclick = c.click; continue; }
+      this.bindItem(nodes[n], {
+        it: c.item,
+        click: c.click || null,
+        quick: c.click || null,          // 装备槽没有"快速移动"，Ctrl+左键和单击同义
+        quickLabel: '切到这把枪',
+        primary: null,                   // 双击 = 看详情
+        extraActs: c.extraActs || null,
+        drop: c.drop || null,
+        hint: c.hint || ''
+      });
     }
+  },
+
+  /* ---- 局内丢弃：装备槽里的东西也能扔，扔下去就是地面上的物品堆 ---- */
+  dropWeapon(i) {
+    const P = this.player;
+    const w = P && P.weapons[i];
+    if (!w) return false;
+    const item = Gunplay.snapshot(w, i === P.slot ? P.mag : w.magCur);
+    if (!this.dropItem(item, 1)) return false;
+    P.weapons[i] = null;
+    /* 扔的是手上那把：换到还有枪的槽位；一把不剩就顺手抄起近战 */
+    if (P.slot === i) {
+      const next = P.weapons.findIndex(Boolean);
+      if (next >= 0) { P.slot = next; P.mag = P.weapons[next].magCur || 0; }
+      else {
+        P.mag = 0;
+        P.slot = i;
+        if (P.melee) P.meleeActive = true;
+      }
+      P.reloadPending = false; P.reloadT = 0;
+    }
+    this.syncGear(); SFX.play('drop');
+    this.toast('丢下 ' + item.name);
+    this.renderBag();
+    return true;
+  },
+
+  dropArmor(type) {
+    const P = this.player;
+    const g = P && P[type];
+    if (!g) return false;
+    const item = EQUIP.armor(g);
+    if (!this.dropItem(item, 1)) return false;
+    P[type] = null;
+    this.syncGear(); SFX.play('drop');
+    this.toast('丢下 ' + item.name);
+    this.renderBag();
+    return true;
+  },
+
+  dropMelee() {
+    const P = this.player;
+    if (!P || !P.melee) return false;
+    const item = P.melee;
+    if (!this.dropItem(item, 1)) return false;
+    P.melee = null;
+    P.meleeActive = false;
+    if (typeof MeleeSystem !== 'undefined') MeleeSystem.cancel(P);
+    this.syncGear(); SFX.play('drop');
+    this.toast('丢下 ' + item.name);
+    this.renderBag();
+    return true;
   },
 
   unloadLooseGun(it) {
@@ -585,41 +733,53 @@ Object.assign(Game, {
           ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '';
         const label = it.short || it.name;
         cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty + capTag;
-        /* 弹药：左键把它设为当前武器的待装填弹种（口径不对会直接提示） */
+        /* 弹药：双击把它设为当前武器的待装填弹种（口径不对会直接提示） */
         const isAmmo = it.cat === 'ammo';
         const isLoaded = isAmmo && P.ammoId === it.id;
+        if (isLoaded) cell.classList.add('loaded');
+
+        /* ---- 四种手势：单击看、双击做、Ctrl+左键移入安全箱、右键菜单 ---- */
+        const spec = {
+          it, entry: s, hint: '',
+          quick: () => this.moveToSafe(i), quickLabel: '移入安全箱',
+          drop: () => this.dropFromBag(i),
+          dropHint: s.n > 1 ? '整叠 ×' + s.n : '脚下'
+        };
+        if (isAmmo) {
+          spec.act = () => this.selectAmmo(i);
+          spec.actLabel = isLoaded ? '当前装填' : '设为待装填';
+          spec.actOff = isLoaded;
+          spec.primary = isLoaded ? null : spec.act;
+        } else if (Medical.is(it)) {
+          const missing = Math.max(0, CFG.P.HP - P.hp);
+          const canHeal = Medical.ready(it) && missing > 0;
+          spec.act = () => Medical.use(s, 'bag');
+          spec.actLabel = !Medical.ready(it) ? '效果待开放'
+            : P.hp >= CFG.P.HP ? '生命值已满'
+            : '使用一件（可恢复 ' + Math.round(Math.min(Medical.entryCap(s), missing)) + ' HP）';
+          spec.actOff = !canHeal;
+          spec.primary = canHeal ? spec.act : null;   // 满血时双击看详情，别弹一句"已满"
+        } else if (it.equip?.kind === 'attachment') {
+          spec.act = () => (typeof ModUI !== 'undefined' ? ModUI.openWithPart(s) : false);
+          spec.actLabel = '安装到枪械';
+          spec.primary = spec.act;
+        } else if (it.equip) {
+          spec.act = () => this.equipFromBag(i);
+          spec.actLabel = it.equip.kind === 'gun' ? '换上这把枪' : it.equip.kind === 'bag' ? '背上' : '替换身上这件';
+          spec.primary = spec.act;
+        }
+        /* 枪的退弹、配件的改装挂在这条钩子上，跟装备槽共用一套 */
+        const extra = [];
+        if (it.equip?.kind === 'gun') extra.push({ label: '退弹', onClick: () => this.unloadLooseGun(it) });
+        for (const a of this.extraActsFor(it, 'bag', s)) extra.push(a);
+        if (extra.length) spec.extraActs = extra;
+
         cell.title = (it.healCap && Medical.isPartial(s)
             ? it.name + ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + it.healCap
-            : it.name + ' · ' + it.w + 'kg') + ' · 右键看详情' +
-          (isAmmo ? (isLoaded ? ' · 当前装填' : ' · 左键设为待装填')
-           : Medical.is(it) ? ' · 左键打开医疗操作'
-           : it.equip ? ' · 左键替换身上那件' : ' · 左键移入安全箱');
-        if (isLoaded) cell.classList.add('loaded');
-        cell.onclick = () => {
-          if (isAmmo) { this.selectAmmo(i); return; }
-          if (Medical.is(it)) Medical.open(s, 'bag', cell);
-          else if (it.equip) this.equipFromBag(i);
-          else this.moveToSafe(i);
-        };
-        /* 右键菜单：详情 / 丢弃。丢弃会整叠落在脚下一格 */
-        cell.oncontextmenu = (ev) => {
-          ev.preventDefault();
-          ev.stopPropagation();
-          Ctx.show(ev.clientX, ev.clientY, [
-            ...(it.equip?.kind === 'gun' ? [{label:'退弹', onClick:() => this.unloadLooseGun(it)}] : []),
-            {
-              label: '查看详情',
-              onClick: () => Tips.show(it, cell.getBoundingClientRect(),
-                it.cat === 'ammo' ? '左键设为待装填' : it.equip ? '左键替换身上那件' : '左键移入安全箱')
-            },
-            {
-              label: '丢弃',
-              hint: s.n > 1 ? '整叠 ×' + s.n : '脚下',
-              danger: true,
-              onClick: () => this.dropFromBag(i)
-            }
-          ]);
-        };
+            : it.name + ' · ' + it.w + 'kg') +
+          ' · 双击' + (spec.primary && spec.actLabel ? spec.actLabel.replace(/（.*/, '') : '看详情') +
+          ' · Ctrl+左键移入安全箱 · 右键更多';
+        this.bindItem(cell, spec);
       } else {
         cell.className = 'cell empty';
         cell.textContent = '·';
@@ -642,17 +802,25 @@ Object.assign(Game, {
             ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '');
         cell.title = s.item.name + (s.item.healCap && Medical.isPartial(s)
             ? ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + s.item.healCap
-            : ' · ' + s.item.w + 'kg') + ' · 左键移回背包 · 右键看详情';
-        cell.onclick = () => {
-          if (Medical.is(s.item)) { Medical.open(s, 'safe', cell); return; }
-          if (P.bag.slots.length >= bagSlots()) { this.toast('背包满了'); return; }
-          P.bag.slots.push(P.bag.safe.splice(i, 1)[0]);
-          this.renderBag();
+            : ' · ' + s.item.w + 'kg') + ' · 双击移回背包 · Ctrl+左键移回背包';
+        /* 安全箱：双击=移回背包（可交互的医疗品是"使用"），右键=详情/使用/丢弃 */
+        const spec = {
+          it: s.item, entry: s, hint: '安全箱 · 死亡也能带回',
+          quick: () => this.moveFromSafe(i), quickLabel: '移回背包',
+          drop: () => this.dropFromSafe(i),
+          dropHint: s.n > 1 ? '整叠 ×' + s.n : '脚下'
         };
-        cell.oncontextmenu = (ev) => {
-          ev.preventDefault();
-          Tips.show(s.item, cell.getBoundingClientRect(), '左键移回背包');
-        };
+        if (Medical.is(s.item)) {
+          const missing = Math.max(0, CFG.P.HP - P.hp);
+          const canHeal = Medical.ready(s.item) && missing > 0;
+          spec.act = () => Medical.use(s, 'safe');
+          spec.actLabel = !Medical.ready(s.item) ? '效果待开放'
+            : P.hp >= CFG.P.HP ? '生命值已满'
+            : '使用一件（可恢复 ' + Math.round(Math.min(Medical.entryCap(s), missing)) + ' HP）';
+          spec.actOff = !canHeal;
+        }
+        spec.primary = spec.act || spec.quick;
+        this.bindItem(cell, spec);
       } else {
         cell.className = 'cell empty safe';
         cell.textContent = '·';
@@ -684,6 +852,30 @@ Object.assign(Game, {
     Medical.cancel();
     P.bag.safe.push(P.bag.slots.splice(i, 1)[0]);
     this.renderBag();
+  },
+
+  /* 安全箱 → 背包（双击 / Ctrl+左键 / 详情里的按钮都走这一条） */
+  moveFromSafe(i) {
+    const P = this.player;
+    const s = P && P.bag.safe[i];
+    if (!s) return false;
+    if (P.bag.slots.length >= bagSlots()) { this.toast('背包满了'); return false; }
+    Medical.cancel();
+    P.bag.slots.push(P.bag.safe.splice(i, 1)[0]);
+    this.renderBag();
+    return true;
+  },
+
+  dropFromSafe(i) {
+    const P = this.player;
+    const s = P && P.bag.safe[i];
+    if (!s || !s.item) return false;
+    if (!this.dropItem(s.item, s.n, s.cap)) return false;
+    P.bag.safe.splice(i, 1);
+    SFX.play('drop');
+    this.toast('丢下 ' + s.item.name + (s.n > 1 ? ' ×' + s.n : ''));
+    this.renderBag();
+    return true;
   },
 
   /* ---------------- 结算 ---------------- */

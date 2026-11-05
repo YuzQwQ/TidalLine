@@ -43,6 +43,7 @@ async function run(file) {
     /* ---- 1. 背包右键出菜单 ---- */
     await page.evaluate(() => {
       Game.player.bag.slots = [{ item: ITEM_BY_ID['heal01'], n: 2 }];
+      Game.player.hp = 60;                  // 不满血，右键才有「使用」
       if (!Game.bagOpen) Game.toggleBag();
       Game.renderBag();
     });
@@ -50,9 +51,44 @@ async function run(file) {
     await page.waitForSelector('#ctxMenu', { state: 'visible' });
     const menuText = await page.locator('#ctxMenu').innerText();
     assert(/丢弃/.test(menuText), '右键菜单里应该有「丢弃」，实际：' + menuText);
-    assert(/查看详情/.test(menuText), '右键菜单里应该保留「详情」');
+    assert(/详情/.test(menuText), '右键菜单里应该有「详情」，实际：' + menuText);
+    assert(/使用/.test(menuText), '可交互物品的右键菜单应该多一条「使用」，实际：' + menuText);
+    assert(await page.locator('#ctxMenu .citem.danger').count() === 1, '「丢弃」应该是唯一的危险项');
+
+    /* ---- 1b. 统一手势：单击看详情、Ctrl+左键移入安全箱、双击移回背包 ---- */
+    await page.evaluate(() => { Ctx.hide(); Game.player.bag.slots = [{ item: ITEM_BY_ID['heal01'], n: 2 }]; Game.player.bag.safe = []; Game.player.hp = 60; Game.renderBag(); });
+    await page.locator('#bagGrid .cell').first().click();
+    const tipButtons = await page.locator('#itemTip .medical-actions button').allInnerTexts();
+    assert(tipButtons.some(t => /使用/.test(t)), '局内详情应该带「使用」按钮，实际：' + tipButtons.join(' / '));
+    assert(tipButtons.some(t => /移入安全箱/.test(t)), '局内详情应该带「移入安全箱」按钮，实际：' + tipButtons.join(' / '));
+    assert(tipButtons.some(t => /丢弃/.test(t)), '局内详情应该带「丢弃」按钮，实际：' + tipButtons.join(' / '));
+
+    await page.locator('#bagGrid .cell').first().click({ modifiers: ['Control'] });
+    let moved = await page.evaluate(() => ({ bag: Game.player.bag.slots.length, safe: Game.player.bag.safe.length }));
+    assert(moved.bag === 0 && moved.safe === 1, 'Ctrl+左键应该把物品移入安全箱，实际 ' + JSON.stringify(moved));
+
+    /* 换成一件普通物品再测"双击=移回背包"（医疗品双击是使用，下面单独测） */
+    await page.evaluate(() => { Game.player.bag.slots = []; Game.player.bag.safe = [{ item: ITEM_BY_ID['ammo_556_1'], n: 20 }]; Game.renderBag(); });
+    await page.locator('#safeGrid .cell').first().dblclick();
+    moved = await page.evaluate(() => ({ bag: Game.player.bag.slots.length, safe: Game.player.bag.safe.length, id: Game.player.bag.slots[0] && Game.player.bag.slots[0].item.id }));
+    assert(moved.bag === 1 && moved.safe === 0 && moved.id === 'ammo_556_1', '双击安全箱里的普通物品应该移回背包，实际 ' + JSON.stringify(moved));
+
+    /* 医疗品在安全箱里双击 = 使用（可交互优先于快速移动），拆出一件后剩下的留在箱里 */
+    await page.evaluate(() => { Game.player.bag.slots = []; Game.player.bag.safe = [{ item: ITEM_BY_ID['heal01'], n: 2 }]; Game.player.hp = 60; Game.renderBag(); });
+    await page.locator('#safeGrid .cell').first().dblclick();
+    const healInSafe = await page.evaluate(() => ({ safe: Game.player.bag.safe.length, action: Game.action && Game.action.type }));
+    assert(healInSafe.action === 'heal', '双击安全箱里的医疗品应该进入治疗，实际 ' + JSON.stringify(healInSafe));
+    assert(healInSafe.safe === 2, '用掉一件后才拆出来的那一件应该留在箱里，实际 ' + healInSafe.safe);
+    await page.evaluate(() => { Medical.cancel(); Game.player.bag.safe = []; Game.renderBag(); });
 
     /* ---- 2. 点丢弃 → 地面生成物品堆 ---- */
+    await page.evaluate(() => {
+      Game.player.bag.slots = [{ item: ITEM_BY_ID['heal01'], n: 2 }];
+      Game.renderBag();
+      if (!Game.bagOpen) Game.toggleBag();
+    });
+    await page.locator('#bagGrid .cell').first().click({ button: 'right' });
+    await page.waitForSelector('#ctxMenu', { state: 'visible' });
     const before = await page.evaluate(() => Game.boxes.length);
     await page.locator('#ctxMenu .citem.danger').click();
     await page.waitForTimeout(60);

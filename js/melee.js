@@ -254,7 +254,13 @@ meleeWrap(Game,'renderGearPanel',function(original){original.call(this);const p=
   if(p.meleeActive)for(const node of el.querySelectorAll('.eqs.on'))node.classList.remove('on');
   const cell=document.createElement('div'),d=MeleeSystem.def(p.melee);cell.className='eqs live'+(p.meleeActive?' on':'');cell.dataset.melee='slot';
   cell.innerHTML='<span class="lbl">近战 [4]</span><span class="ic">'+Icons.gearIcon(d?.id,'刀')+'</span><span class="tag">'+(d?d.damage+' 真伤':'空')+'</span>';
-  cell.onclick=()=>{p.switchMelee();this.renderGearPanel();};cell.oncontextmenu=e=>{e.preventDefault();if(d)Ctx.show(e.clientX,e.clientY,[{label:'查看详情',onClick:()=>Tips.show(p.melee,cell.getBoundingClientRect(),'4 切换近战')},{label:'卸下到背包',onClick:()=>MeleeSystem.unequipRaid()}]);};el.appendChild(cell);
+  /* 和武器格同一套手势：单击切近战，双击看详情，右键出菜单 */
+  const swap=()=>{p.switchMelee();this.renderGearPanel();};
+  if(d)Game.bindItem(cell,{it:p.melee,click:swap,quick:swap,quickLabel:'切到近战',primary:null,
+    extraActs:[{label:'卸下到背包',onClick:()=>MeleeSystem.unequipRaid()}],
+    drop:()=>this.dropMelee(),hint:'双击看详情 · 4 切换近战'});
+  else cell.onclick=swap;
+  el.appendChild(cell);
 });
 
 // Dropped knives follow the existing equipment pickup path, retaining the binding marker.
