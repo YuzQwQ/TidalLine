@@ -7,7 +7,8 @@ const pages = [
   { key: 'items', name: '物品清单', file: '物品清单.html' },
   { key: 'gear', name: '装备清单', file: '装备清单.html' },
   { key: 'containers', name: '容器清单', file: '容器清单.html' },
-  { key: 'merchants', name: '商人档案', file: '商人档案.html', standalone: true }
+  { key: 'merchants', name: '商人档案', file: '商人档案.html', standalone: true },
+  { key: 'updates', name: '更新补遗', file: '更新补遗.html' }
 ];
 
 function navigation(active, combined = false) {

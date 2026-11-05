@@ -57,7 +57,7 @@ const expected = vm.runInContext('({types:CONTAINER_TYPES,rows:MAP_ROWS,quality:
     assert.equal(await page.title(), '潮汐线 Wiki · 容器清单');
     for (const width of [390, 320]) {
       await page.setViewportSize({ width, height: 844 });
-      for (const key of ['items', 'gear', 'containers']) {
+      for (const key of ['items', 'gear', 'containers', 'updates']) {
         await navigate(key);
         assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), key + ' 在 ' + width + 'px 下横向溢出');
       }
@@ -70,10 +70,16 @@ const expected = vm.runInContext('({types:CONTAINER_TYPES,rows:MAP_ROWS,quality:
       await page.locator('[data-wiki-link="containers"]').click();
       await page.waitForFunction(() => document.querySelector('#containers') && !document.querySelector('#containers').hidden);
     }
+    await page.goto(url('更新补遗.html'));
+    assert.equal(await page.locator('[aria-current="page"]').getAttribute('data-wiki-link'), 'updates', '更新补遗独立页导航高亮');
+    assert(await page.locator('.wiki-sheet .item').count() >= 10, '独立页的更新记录条数');
+    await page.goto(url('wiki.html') + '#updates');
+    assert.equal(await active().getAttribute('id'), 'updates', '更新补遗支持深链接');
+    assert((await active().textContent()).includes('数据清单覆盖检查'), '覆盖检查表已录入');
     await page.goto(url('wiki.html') + '#missing');
     assert.equal(await active().getAttribute('id'), 'items');
     assert.deepEqual(errors, []);
-    console.log('OK: 本地 Wiki、三页导航、前进后退、刷新与深链接、全部贴图、容器数据、地图位置、320/390px 布局、独立清单入口');
+    console.log('OK: 本地 Wiki、四页导航、前进后退、刷新与深链接、全部贴图、容器数据、地图位置、更新补遗、320/390px 布局、独立清单入口');
   } finally {
     await browser.close();
   }

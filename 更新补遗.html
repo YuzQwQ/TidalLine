@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>潮汐线 Wiki · 更新补遗</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<nav class="wiki-nav" aria-label="清单导航">
+  <a class="wiki-brand" href="wiki.html">潮汐线 <span>WIKI</span></a>
+  <div class="wiki-links"><a data-wiki-link="items" href="wiki.html#items">物品清单</a><a data-wiki-link="gear" href="wiki.html#gear">装备清单</a><a data-wiki-link="containers" href="wiki.html#containers">容器清单</a><a href="商人档案.html">商人档案</a><a data-wiki-link="updates" href="wiki.html#updates" aria-current="page">更新补遗</a></div>
+  <a class="wiki-game" href="index.html">进入游戏 ↗</a>
+</nav>
+<main class="wiki-sheet">
+<header>
+  <div class="kicker">TIDELINE · UPDATE LOG</div>
+  <h1>更新补遗</h1>
+  <div class="lede">
+    四份清单（物品 / 装备 / 容器 / 商人档案）直接由 <code>js/data.js</code> 等数据文件生成，改完数据重跑
+    <code>node gen-wiki.js</code> 就会同步；本页收录清单装不下的系统更新、设定补充与玩法规则，
+    按提交倒序排列，新增内容往 <code>tools/gen-updates-sheet.js</code> 里加一条即可。
+  </div>
+</header>
+
+<div class="spec">
+  <div class="panel">
+    <h3>数据清单覆盖检查</h3>
+    <p><b>物品清单</b>　183 件（收集品 + 物资）· 源 <code>js/data.js</code> · 已录入</p>
+    <p><b>装备清单</b>　76 张（枪 / 盔 / 甲 / 包 / 近战 / 配件）· 源 <code>js/data.js</code> + <code>attachment-data.js</code> · 已录入</p>
+    <p><b>容器清单</b>　25 种容器 / 当前地图 108 个实例 / 3 类遗留物 · 源 <code>MAP_ROWS</code> + <code>CONTAINER_TYPES</code> · 已录入</p>
+    <p><b>商人档案</b>　4 位（设定稿 + 运行时台词 + 货架 + 收购偏好）· 独立页，导航进入 · 已录入</p>
+    <p><b>系统更新</b>　10 条（本页）· 手工维护 · 已录入</p>
+  </div>
+  <div class="panel">
+    <h3>这一页补的是什么</h3>
+    <p>清单回答「游戏里有什么」，本页回答「后来补了什么、现在怎么用」：地图改版、人物设定，
+    以及音效、交互手势、瞄准与飘字这些不落在数据表里的玩法规则。</p>
+    <p>每条更新都带提交短号与详情落点；下方速查表是这些规则的当前口径，
+    和 <a href="DEVELOPMENT.md">玩法文档</a> / <a href="README.md">操作说明</a> 一致。</p>
+    <p>范围：从「商人档案页」成型到当前的全部已提交更新。更早的改动见 git log 与
+    <a href="DEVELOPMENT.md">DEVELOPMENT.md</a>。</p>
+    <p><b>边界</b>　四份数据清单始终反映当前工作区的数据；本页的更新记录只收录已落地的提交。
+    工作区里还在做的 WIP（新商人、新素材等）不提前写入，等落地后往数组里补一条再重跑生成。</p>
+  </div>
+</div>
+
+<section class="item-group" data-item-group="updates">
+  <h2 class="item-group-title">更新记录<span>10 条</span></h2>
+  <p class="category-description">倒序排列。<b>归类</b>只用来速览，详情点每条下面的链接；带「数据」标签的条目已自动反映在对应清单里。</p>
+  <div class="grid">
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>8299739</b></div>
+      <div class="meta">
+        <div class="name">飘字按伤害类型分色<i class="tag">玩法 / 美术</i></div>
+        <div class="sub">蓝色（Mana）给近战伤害，玩家专属紫色（Poison）退役。normal 骨白 / crit 橙金 / melee 蓝三色只认伤害类型、不认敌我；连击只合并同类型的数字。</div>
+        <div class="vis"><a href="装备清单.html">装备清单</a> · <a href="DEVELOPMENT.md">玩法文档</a> · <a href="assets/audio/manifest.json">素材账</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>8f8d7a4</b></div>
+      <div class="meta">
+        <div class="name">取消鼠标不能穿过玩家的限制<i class="tag">操作</i></div>
+        <div class="sub">拆掉三层 keep=18px 夹取：虚拟光标可停在角色身上、也可穿到另一侧，准星跟着走；只保留 12px 的 AIM_DEAD 防抖死区。贴身近战甩枪不再被卡住。</div>
+        <div class="vis"><a href="DEVELOPMENT.md">玩法文档</a> · <a href="README.md">操作说明</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>becb36a</b></div>
+      <div class="meta">
+        <div class="name">容器逐件搜索的循环翻找底声<i class="tag">音效</i></div>
+        <div class="sub">179670（rustle through chord box）切成 5.224s 的 search_rustle.wav：搜索进行中循环播放，全部搜完、单件搜完或关面板即淡出。容器材质音仍是一容器一声。</div>
+        <div class="vis"><a href="tools/audio-actions.html">音效总览页</a> · <a href="assets/audio/manifest.json">素材账</a> · <a href="DEVELOPMENT.md">玩法文档</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>65001d7</b></div>
+      <div class="meta">
+        <div class="name">统一物品手势<i class="tag">交互</i></div>
+        <div class="sub">单击看详情（局内带动作按钮）、双击做（使用 / 换装 / 拿走）、Ctrl+左键快速移动、右键出菜单（详情 / 使用·装备 / 丢弃）。装备槽保留单击切枪，双击才是详情。仓库页与备战页下一轮再收。</div>
+        <div class="vis"><a href="design/ui/ITEM_INTERACTION_AUDIT.md">交互盘点</a> · <a href="README.md">操作说明</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>e0243dd</b></div>
+      <div class="meta">
+        <div class="name">物品交互现状盘点<i class="tag">设计</i></div>
+        <div class="sub">统计 21 处可点界面、5 种详情载体、10 条不一致，并给出三个统一方向；文末留有统一手势的实施矩阵。</div>
+        <div class="vis"><a href="design/ui/ITEM_INTERACTION_AUDIT.md">交互盘点</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>8b920de</b></div>
+      <div class="meta">
+        <div class="name">IV 级头甲稀有度上调为「稀见」<i class="tag">数据</i></div>
+        <div class="sub">gearRarity 映射从 [1,1,2,3,3,5,6] 改成 [1,1,2,3,4,5,6]，四级头 / 甲由蓝色上乘变为紫色稀见；只影响显示，不动价格与耐久。</div>
+        <div class="vis"><a href="装备清单.html">装备清单</a> · <a href="design/items/RARITY.md">稀有度说明</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>cceb91f</b></div>
+      <div class="meta">
+        <div class="name">玛拉·维恩的设定与台词补齐<i class="tag">设定</i></div>
+        <div class="sub">补人物简介五段、总览、人物核心与 8 条台词风格规范；进店 / 闲置 / 购买 / 出售 / 三档收购共 18 条运行台词接线，另有信任与交易失败预留条目。</div>
+        <div class="vis"><a href="商人档案.html">商人档案</a> · <a href="design/merchants/design-v1.json">设定稿</a> · <a href="design/merchants/DIALOGUE_V1.md">对话规范</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>6b83060</b></div>
+      <div class="meta">
+        <div class="name">银行与钟表店按内容对调命名<i class="tag">地图</i></div>
+        <div class="sub">两栋楼的 id 与内容原本对调：按家具内容修正命名，rooms / portals / windows / region / 高价值掉落全部跟随，几何与家具一格不动。</div>
+        <div class="vis"><a href="design/maps/linhai-old-quarter/layout.json">地图布局</a> · <a href="容器清单.html">容器清单</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>1e48a55</b></div>
+      <div class="meta">
+        <div class="name">载入新版临海路：银行旧址与钟表店<i class="tag">地图</i></div>
+        <div class="sub">右上角银行、右下角钟表铺成型：家具 176→210、容器 97→108、敌人 42→46、门 20→22；同步修敌人间距、地贴压墙与巡逻航点。</div>
+        <div class="vis"><a href="design/maps/linhai-old-quarter/layout.json">地图布局</a> · <a href="MAP_LAYOUT.md">地图说明</a> · <a href="容器清单.html">容器清单</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>85c6429</b></div>
+      <div class="meta">
+        <div class="name">新增商人档案页<i class="tag">Wiki</i></div>
+        <div class="sub">四位商人的设定、职责、货架、收购偏好与全部台词独立成页；数据来自设定稿、运行时配置与交易模块，只进导航不并进 wiki.html。</div>
+        <div class="vis"><a href="商人档案.html">商人档案</a> · <a href="design/merchants/BRIEF_V1.md">设定总则</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <section class="cat">
+    <h2><span class="dot" style="background:#6fa093"></span>物品手势（局内统一）<i>6 条</i></h2>
+    <div class="panel"><p><b>单击</b>　看详情；局内详情带动作按钮，局外只显示信息</p><p><b>双击</b>　做：医疗品使用、弹药设弹种、枪械护甲换装、普通物品看详情；容器 / 尸体是拿走</p><p><b>Ctrl + 左键</b>　快速移动：背包→安全箱、安全箱→背包、容器→背包</p><p><b>右键</b>　菜单：详情 / 使用·装备 / 退弹·改装 / 丢弃</p><p><b>装备槽例外</b>　单击仍是切枪、切近战；双击看详情，右键可把装备丢到脚边</p><p><b>仓库与备战页</b>　暂沿旧手势，下一轮再收</p></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#6fa093"></span>伤害飘字配色<i>4 条</i></h2>
+    <div class="panel"><p><b>normal</b>　骨白（Damage）· 普通枪伤，敌我同色</p><p><b>crit</b>　橙金（Critical）· 爆头，敌我同色</p><p><b>melee</b>　蓝（Mana）· 近战伤害，含玩家挥刀的无视护甲真伤</p><p><b>合并</b>　同一目标短时间连击只合并同类型（字体相同）的数字</p></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#6fa093"></span>搜索与瞄准<i>4 条</i></h2>
+    <div class="panel"><p><b>容器材质音</b>　交互那一刻按容器 art 响一声，不循环</p><p><b>搜索循环底声</b>　逐件搜索进行中循环，全部搜完 / 关面板即淡出</p><p><b>鼠标</b>　可压在角色身上、也可穿过到另一侧，准星跟着走</p><p><b>AIM_DEAD</b>　12px 朝向死区，只防 atan2 在角色中心抖动</p></div>
+  </section>
+
+<footer>潮汐线 Wiki · 更新补遗 ｜ 由 <code>node gen-wiki.js</code> 生成，勿手改 HTML。</footer>
+</main>
+</body>
+</html>

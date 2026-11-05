@@ -9,10 +9,10 @@
 <body>
 <nav class="wiki-nav" aria-label="清单导航">
   <a class="wiki-brand" href="wiki.html">潮汐线 <span>WIKI</span></a>
-  <div class="wiki-links"><a data-wiki-link="items" href="#items" aria-current="page">物品清单</a><a data-wiki-link="gear" href="#gear">装备清单</a><a data-wiki-link="containers" href="#containers">容器清单</a><a href="商人档案.html">商人档案</a></div>
+  <div class="wiki-links"><a data-wiki-link="items" href="#items" aria-current="page">物品清单</a><a data-wiki-link="gear" href="#gear">装备清单</a><a data-wiki-link="containers" href="#containers">容器清单</a><a href="商人档案.html">商人档案</a><a data-wiki-link="updates" href="#updates">更新补遗</a></div>
   <a class="wiki-game" href="index.html">进入游戏 ↗</a>
 </nav>
-<noscript><p class="wiki-noscript">导航切换需要 JavaScript，也可直接打开 <a href="物品清单.html">物品清单</a> · <a href="装备清单.html">装备清单</a> · <a href="容器清单.html">容器清单</a> · <a href="商人档案.html">商人档案</a>。</p></noscript>
+<noscript><p class="wiki-noscript">导航切换需要 JavaScript，也可直接打开 <a href="物品清单.html">物品清单</a> · <a href="装备清单.html">装备清单</a> · <a href="容器清单.html">容器清单</a> · <a href="商人档案.html">商人档案</a> · <a href="更新补遗.html">更新补遗</a>。</p></noscript>
 <main class="wiki-sheet"><section id="items" data-wiki-page="items" aria-label="物品清单">
 
 <header>
@@ -3204,9 +3204,9 @@ M-4。
   <h1>装备清单</h1>
   <div class="lede">
     这一批是新加的装备图标：<b>12 把武器</b> + <b>10 款头盔</b> +
-    <b>10 款身体护甲</b>，另加 <b>5 款背包</b> 和 <b>3 种近战武器</b>及 <b>32 件枪械配件</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
+    <b>10 款身体护甲</b>，另加 <b>5 款背包</b> 和 <b>7 种近战武器</b>及 <b>32 件枪械配件</b>。装备在身上的物品<b>不占背包格</b>，图标显示在：
     局内背包顶部 7 格装备条、尸体面板顶部 3 格装备区（都是 24px 图标），藏身处装备区（34px 图标），以及仓库、装备选择与商人交易面板。背包决定携带容量，未装备时为 6 格。<br>
-    已完成 <b>72 / 72</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
+    已完成 <b>76 / 76</b>。清单直接读 <code>js/data.js</code>，改完数值重跑
     <code>node gen-gear-sheet.js</code> 就会更新。
   </div>
 </header>
@@ -3582,21 +3582,35 @@ M-4。
   </div>
 </section>
 
-<section class="cat"><h2>近战武器<em>melee</em><i>3 张 · 4 切换</i></h2><p><a href="assets/item-art/melee/index.html">持刀动画与原稿</a> · 折叠刀与战斗刀有售，砍刀暂不开放获取。首次赠刀绑定不可出售。</p><div class="grid"><div class="item lv1"><div class="thumb"><img src="assets/gear/melee01.png" width="48" height="48" alt="melee01"></div><div class="meta"><div class="name">旧式折叠刀<i class="tag">寻常</i></div><div class="sub">melee01.png · 0.15kg · ¥3,000</div><div class="desc">一种带锁定机构的普通折叠刀，刀身不长，折叠后能够轻松放进衣袋。
+<section class="cat"><h2>近战武器<em>melee</em><i>7 张 · 4 切换</i></h2><p><a href="assets/item-art/melee/index.html">持刀动画与原稿</a> · 折叠刀、战斗刀、三棱军刺、应急救援刀与工业撬棍有售；重型丛林砍刀与廓尔喀弯刀由受雇回收员背包或防水补给箱以每容器 1% 总概率额外掉落，触发后等概率抽取一把。首次赠刀绑定不可出售。</p><div class="grid"><div class="item lv1"><div class="thumb"><img src="assets/gear/melee01.png" width="48" height="48" alt="melee01"></div><div class="meta"><div class="name">旧式折叠刀<i class="tag">寻常</i></div><div class="sub">melee01.png · 0.15kg · ¥45,000</div><div class="desc">一种带锁定机构的普通折叠刀，刀身不长，折叠后能够轻松放进衣袋。
 
 事故发生后，环礁湾的五金店曾出现过短暂的折叠刀抢购潮。店主们最初以为人们需要它来割断绳索、拆开包装，或者处理其他生活琐事。
 
-直到有人开始询问，刀刃究竟能不能刺穿厚重的冬季外套。</div><div class="vis">真实伤害 12 · 间隔 0.55秒 · 前摇 0.12秒 · 扇角 55° · 半径 0.65格</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/melee02.png" width="48" height="48" alt="melee02"></div><div class="meta"><div class="name">M-9 制式战斗刀<i class="tag">上乘</i></div><div class="sub">melee02.png · 0.35kg · ¥18,000</div><div class="desc">军用标准固定刃刀具，采用一体式刀身与防滑握柄，配有可固定在腰带上的硬质刀鞘。
+直到有人开始询问，刀刃究竟能不能刺穿厚重的冬季外套。</div><div class="vis">真实伤害 12 · 间隔 0.55秒 · 前摇 0.12秒 · 扇角 55° · 半径 0.65格</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/melee02.png" width="48" height="48" alt="melee02"></div><div class="meta"><div class="name">M-9 制式战斗刀<i class="tag">上乘</i></div><div class="sub">melee02.png · 0.35kg · ¥270,000</div><div class="desc">军用标准固定刃刀具，采用一体式刀身与防滑握柄，配有可固定在腰带上的硬质刀鞘。
 
 M-9 的采购报告曾将其定义为「具备多功能野外作业能力的辅助工具」，并特别强调其不应被视作步兵的主要作战武器。
 
-但军需部门始终没有明确解释，为什么这把辅助工具需要在每批产品出厂前接受穿刺性能检验。</div><div class="vis">真实伤害 18 · 间隔 0.85秒 · 前摇 0.2秒 · 扇角 75° · 半径 0.8格</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/melee03.png" width="48" height="48" alt="melee03"></div><div class="meta"><div class="name">重型丛林砍刀<i class="tag">稀见</i></div><div class="sub">melee03.png · 0.85kg · ¥45,000</div><div class="desc">面向热带林地清障与野外作业设计的大型砍刀，采用加厚刀背与宽幅刀身，能够有效处理藤蔓、灌木及较粗的木质枝条。
+但军需部门始终没有明确解释，为什么这把辅助工具需要在每批产品出厂前接受穿刺性能检验。</div><div class="vis">真实伤害 18 · 间隔 0.85秒 · 前摇 0.2秒 · 扇角 75° · 半径 0.8格</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/melee03.png" width="48" height="48" alt="melee03"></div><div class="meta"><div class="name">重型丛林砍刀<i class="tag">稀见</i></div><div class="sub">melee03.png · 0.85kg · ¥675,000</div><div class="desc">面向热带林地清障与野外作业设计的大型砍刀，采用加厚刀背与宽幅刀身，能够有效处理藤蔓、灌木及较粗的木质枝条。
 
 环礁湾沿海植被在灾害发生后出现过几轮异常生长，部分原本需要数月才能恢复的灌木，在短短几周内便重新覆盖了清理过的道路。
 
 林业部门因此采购了一批加重型砍刀。
 
-采购记录显示，最后一批货物的收货单位并非林业部门，而是环礁湾特别治安署。</div><div class="vis">真实伤害 26 · 间隔 1.4秒 · 前摇 0.35秒 · 扇角 100° · 半径 0.95格</div></div></div></div></section>
+采购记录显示，最后一批货物的收货单位并非林业部门，而是环礁湾特别治安署。</div><div class="vis">真实伤害 26 · 间隔 1.4秒 · 前摇 0.35秒 · 扇角 100° · 半径 0.95格</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/melee04.png" width="48" height="48" alt="melee04"></div><div class="meta"><div class="name">三棱军刺<i class="tag">稀见</i></div><div class="sub">melee04.png · 0.45kg · ¥570,000</div><div class="desc">旧式军用穿刺武器，采用狭长的三棱截面刺身，刀尖坚硬，缺乏适合劈砍的刃口。
+
+环礁湾特别治安署的装备清单中，这种武器早已被标注为淘汰品。然而灾害发生后，一批封存多年的军刺重新出现在临时检查站。据说，有些执勤人员发现，面对某些不应该继续活动的东西，刺得足够深，比砍得足够重更重要。</div><div class="vis">远距精准刺击 · 真实伤害 32 · 间隔 1.65秒 · 前摇 0.3秒 · 扇角 25° · 半径 1格</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/melee05.png" width="48" height="48" alt="melee05"></div><div class="meta"><div class="name">应急救援刀<i class="tag">良品</i></div><div class="sub">melee05.png · 0.25kg · ¥127,500</div><div class="desc">专为紧急救援作业设计的短刃工具，配有醒目的橙色防滑握柄。刀刃较短，却能在狭窄空间内快速完成切割动作。
+
+灾害初期，环礁湾的消防与医疗队伍曾大量配发这种刀具。它们原本用于切断安全带、衣物和绳索。后来，有人发现救援现场留下的刀痕并不全在这些东西上。</div><div class="vis">快速贴身反击 · 真实伤害 10 · 间隔 0.42秒 · 前摇 0.1秒 · 扇角 65° · 半径 0.55格</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/melee06.png" width="48" height="48" alt="melee06"></div><div class="meta"><div class="name">工业撬棍<i class="tag">良品</i></div><div class="sub">melee06.png · 1.2kg · ¥165,000</div><div class="desc">采用高强度合金钢锻造的工业撬棍，一端弯曲并设有拔钉槽，广泛用于建筑施工、设备维修与物理学研究。
+
+据说，某位沉默寡言的理论物理学博士曾凭借类似的工具，在一场严重的科研事故中解决了大量超出其专业范畴的问题，也因此它获得了物理学圣剑的称号。
+
+尽管这一传闻的真实性无从考证，但环礁湾某研究所的内部采购清单显示，他们确实曾一次性订购了二十四根撬棍。
+
+采购用途一栏只写着两个字：
+
+<strong>「科研」。</strong></div><div class="vis">中型钝器挥击 · 真实伤害 22 · 间隔 1.2秒 · 前摇 0.32秒 · 扇角 85° · 半径 0.85格</div></div></div><div class="item lv5"><div class="thumb"><img src="assets/gear/melee07.png" width="48" height="48" alt="melee07"></div><div class="meta"><div class="name">廓尔喀弯刀<i class="tag">珍罕</i></div><div class="sub">melee07.png · 0.75kg · ¥1,080,000</div><div class="desc">刀身向前弯曲的传统重型刀具，重心集中于刀刃前段，适合大幅度挥砍。刀柄保留了传统木质结构，经过多次打磨，表面已有明显的使用痕迹。
+
+这把弯刀曾属于一名在环礁湾定居的外籍退役军人。灾害发生后，他拒绝接受治安署提供的制式武器，只带着这把刀离开了安置营。数周后，搜救队在一处废弃哨站找到了它，刀鞘完好，刀身却留下了无法辨认的深色污迹。</div><div class="vis">重型广角挥砍 · 真实伤害 30 · 间隔 1.5秒 · 前摇 0.38秒 · 扇角 110° · 半径 0.85格</div></div></div></div></section>
 <section class="cat" id="attachments"><h2>枪械配件<em>attachments</em><i>32 件 · 五槽位</i></h2><p><a href="design/weapons/attachments-v1/art/index.html">配件原稿、统一视角与预览</a> · 绿蓝军火商有售，紫色通过搜刮获得。局内外均可即时改装。</p><div class="grid"><div class="item lv2"><div class="thumb"><img src="assets/gear/att_optic01.png" width="48" height="48" alt="att_optic01"></div><div class="meta"><div class="name">微型反射瞄具<i class="tag">良品</i></div><div class="sub">att_optic01 · 0.08kg · ¥7,500</div><div class="desc">微型反射瞄具，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">瞄准时间 -12%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_optic02.png" width="48" height="48" alt="att_optic02"></div><div class="meta"><div class="name">全息瞄具<i class="tag">上乘</i></div><div class="sub">att_optic02 · 0.25kg · ¥13,500</div><div class="desc">全息瞄具，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">基础散布 -12% · 瞄准时间 +2%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_optic03.png" width="48" height="48" alt="att_optic03"></div><div class="meta"><div class="name">低倍率光学瞄具<i class="tag">上乘</i></div><div class="sub">att_optic03 · 0.32kg · ¥18,000</div><div class="desc">低倍率光学瞄具，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">基础散布 -20% · 瞄准时间 +5%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_optic04.png" width="48" height="48" alt="att_optic04"></div><div class="meta"><div class="name">精密光学瞄具<i class="tag">稀见</i></div><div class="sub">att_optic04 · 0.48kg · ¥30,000</div><div class="desc">精密光学瞄具，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">基础散布 -30% · 瞄准时间 +8%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_grip01.png" width="48" height="48" alt="att_grip01"></div><div class="meta"><div class="name">垂直握把<i class="tag">良品</i></div><div class="sub">att_grip01 · 0.12kg · ¥6,750</div><div class="desc">垂直握把，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">纵向后坐力 -18% · 瞄准时间 +2%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_grip02.png" width="48" height="48" alt="att_grip02"></div><div class="meta"><div class="name">斜角握把<i class="tag">良品</i></div><div class="sub">att_grip02 · 0.1kg · ¥7,500</div><div class="desc">斜角握把，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -16%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_grip03.png" width="48" height="48" alt="att_grip03"></div><div class="meta"><div class="name">紧凑握把<i class="tag">上乘</i></div><div class="sub">att_grip03 · 0.08kg · ¥10,500</div><div class="desc">紧凑握把，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">瞄准时间 -10% · 横向后坐力 +3%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_grip04.png" width="48" height="48" alt="att_grip04"></div><div class="meta"><div class="name">人体工学握把<i class="tag">上乘</i></div><div class="sub">att_grip04 · 0.14kg · ¥13,500</div><div class="desc">人体工学握把，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -8% · 纵向后坐力 -8%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_stock01.png" width="48" height="48" alt="att_stock01"></div><div class="meta"><div class="name">固定枪托<i class="tag">良品</i></div><div class="sub">att_stock01 · 0.3kg · ¥9,000</div><div class="desc">固定枪托，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -12% · 纵向后坐力 -12% · 瞄准时间 +3%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_stock02.png" width="48" height="48" alt="att_stock02"></div><div class="meta"><div class="name">伸缩枪托<i class="tag">良品</i></div><div class="sub">att_stock02 · 0.22kg · ¥8,250</div><div class="desc">伸缩枪托，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">瞄准时间 -12% · 横向后坐力 +3% · 纵向后坐力 +3%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_stock03.png" width="48" height="48" alt="att_stock03"></div><div class="meta"><div class="name">精密枪托<i class="tag">稀见</i></div><div class="sub">att_stock03 · 0.45kg · ¥22,500</div><div class="desc">精密枪托，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">双轴回正速度 +25% · 基础散布 -8% · 瞄准时间 +5%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_muzzle01.png" width="48" height="48" alt="att_muzzle01"></div><div class="meta"><div class="name">标准制退器<i class="tag">良品</i></div><div class="sub">att_muzzle01 · 0.08kg · ¥6,000</div><div class="desc">标准制退器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">纵向后坐力 -15%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_muzzle02.png" width="48" height="48" alt="att_muzzle02"></div><div class="meta"><div class="name">横向补偿器<i class="tag">上乘</i></div><div class="sub">att_muzzle02 · 0.1kg · ¥10,500</div><div class="desc">横向补偿器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -18% · 瞄准时间 +2%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_muzzle03.png" width="48" height="48" alt="att_muzzle03"></div><div class="meta"><div class="name">复合补偿器<i class="tag">上乘</i></div><div class="sub">att_muzzle03 · 0.12kg · ¥13,500</div><div class="desc">复合补偿器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">横向后坐力 -10% · 纵向后坐力 -10% · 瞄准时间 +3%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_muzzle04.png" width="48" height="48" alt="att_muzzle04"></div><div class="meta"><div class="name">精密枪口装置<i class="tag">稀见</i></div><div class="sub">att_muzzle04 · 0.1kg · ¥18,000</div><div class="desc">精密枪口装置，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">基础散布 -12% · 瞄准时间 +4%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_muzzle05.png" width="48" height="48" alt="att_muzzle05"></div><div class="meta"><div class="name">收束器<i class="tag">上乘</i></div><div class="sub">att_muzzle05 · 0.06kg · ¥12,000</div><div class="desc">收束器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹丸扩散 -20% · 瞄准时间 +2%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_muzzle06.png" width="48" height="48" alt="att_muzzle06"></div><div class="meta"><div class="name">扩散器<i class="tag">良品</i></div><div class="sub">att_muzzle06 · 0.05kg · ¥5,250</div><div class="desc">扩散器，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹丸扩散 +25%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_556_ext.png" width="48" height="48" alt="att_mag_556_ext"></div><div class="meta"><div class="name">5.56×45mm 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_556_ext · 0.12kg · ¥10,500</div><div class="desc">5.56×45mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_556_quick.png" width="48" height="48" alt="att_mag_556_quick"></div><div class="meta"><div class="name">5.56×45mm 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_556_quick · 0.1kg · ¥13,500</div><div class="desc">5.56×45mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_556_quick_ext.png" width="48" height="48" alt="att_mag_556_quick_ext"></div><div class="meta"><div class="name">5.56×45mm 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_556_quick_ext · 0.14kg · ¥21,000</div><div class="desc">5.56×45mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_762x39_ext.png" width="48" height="48" alt="att_mag_762x39_ext"></div><div class="meta"><div class="name">7.62×39mm 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_762x39_ext · 0.16kg · ¥10,500</div><div class="desc">7.62×39mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_762x39_quick.png" width="48" height="48" alt="att_mag_762x39_quick"></div><div class="meta"><div class="name">7.62×39mm 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_762x39_quick · 0.14kg · ¥13,500</div><div class="desc">7.62×39mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_762x39_quick_ext.png" width="48" height="48" alt="att_mag_762x39_quick_ext"></div><div class="meta"><div class="name">7.62×39mm 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_762x39_quick_ext · 0.18kg · ¥21,000</div><div class="desc">7.62×39mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_9mm_ext.png" width="48" height="48" alt="att_mag_9mm_ext"></div><div class="meta"><div class="name">9×19mm 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_9mm_ext · 0.08kg · ¥6,000</div><div class="desc">9×19mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_9mm_quick.png" width="48" height="48" alt="att_mag_9mm_quick"></div><div class="meta"><div class="name">9×19mm 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_9mm_quick · 0.07kg · ¥8,250</div><div class="desc">9×19mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_9mm_quick_ext.png" width="48" height="48" alt="att_mag_9mm_quick_ext"></div><div class="meta"><div class="name">9×19mm 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_9mm_quick_ext · 0.1kg · ¥12,000</div><div class="desc">9×19mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_45acp_ext.png" width="48" height="48" alt="att_mag_45acp_ext"></div><div class="meta"><div class="name">.45 ACP 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_45acp_ext · 0.1kg · ¥6,750</div><div class="desc">.45 ACP 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_45acp_quick.png" width="48" height="48" alt="att_mag_45acp_quick"></div><div class="meta"><div class="name">.45 ACP 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_45acp_quick · 0.09kg · ¥9,000</div><div class="desc">.45 ACP 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_45acp_quick_ext.png" width="48" height="48" alt="att_mag_45acp_quick_ext"></div><div class="meta"><div class="name">.45 ACP 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_45acp_quick_ext · 0.12kg · ¥13,500</div><div class="desc">.45 ACP 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div><div class="item lv2"><div class="thumb"><img src="assets/gear/att_mag_12g_ext.png" width="48" height="48" alt="att_mag_12g_ext"></div><div class="meta"><div class="name">12 Gauge 扩容弹匣<i class="tag">良品</i></div><div class="sub">att_mag_12g_ext · 0.18kg · ¥9,000</div><div class="desc">12 Gauge 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30%</div></div></div><div class="item lv3"><div class="thumb"><img src="assets/gear/att_mag_12g_quick.png" width="48" height="48" alt="att_mag_12g_quick"></div><div class="meta"><div class="name">12 Gauge 快速弹匣<i class="tag">上乘</i></div><div class="sub">att_mag_12g_quick · 0.16kg · ¥12,000</div><div class="desc">12 Gauge 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">装填时间 -15%</div></div></div><div class="item lv4"><div class="thumb"><img src="assets/gear/att_mag_12g_quick_ext.png" width="48" height="48" alt="att_mag_12g_quick_ext"></div><div class="meta"><div class="name">12 Gauge 快速扩容弹匣<i class="tag">稀见</i></div><div class="sub">att_mag_12g_quick_ext · 0.22kg · ¥18,000</div><div class="desc">12 Gauge 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。</div><div class="vis">弹匣容量 +30% · 装填时间 -15%</div></div></div></div></section>
 <footer>
   清单由 <code>gen-gear-sheet.js</code> 生成，数据来自 <code>js/data.js</code> 的 WEAPONS / HELMETS / BODIES / BAGS。<br>
@@ -3962,6 +3976,7 @@ M-9 的采购报告曾将其定义为「具备多功能野外作业能力的辅�
       <div class="desc">2.6 秒，必须站定，读条全程发声。紫金占六成三，值得为它改路线。偏好类别的抽取权重 ×9，也可能获得其他类别物品。</div>
       <div class="vis"><b>独立弹药池</b>每次抽取 25% 走弹药池，其余沿用原有物品池。等级：寻常4% / 良品9% / 上乘22% / 稀见36% / 珍罕29%（红档份额并入金档）；三种口径等概率，5.56mm 与 9mm 每组 10–20 发，12 号霰弹每组 4–8 发。</div>
       <div class="vis"><b>独立装备池</b>每次抽取 10% 走装备池：头盔 / 护甲 / 背包 / gun 等概率抽一种，等级分布与弹药池一致（寻常4% / 良品9% / 上乘22% / 稀见36% / 珍罕29%）。</div>
+      <div class="vis"><b>额外收藏近战</b>每容器独立判定 1% 总概率，触发后等概率额外获得重型丛林砍刀或廓尔喀弯刀一把；不占常规抽取次数。受雇回收员尸体背包也使用同一规则。</div>
       <details class="container-positions"><summary>当前地图 3 个 · 查看位置</summary><p><code>(67, 18)</code> <code>(62, 31)</code> <code>(40, 52)</code></p></details>
       <div class="vis"><b>画什么</b>一格体积的橄榄绿硬质防水补给箱，厚矩形顶盖、深色橡胶密封边、两个黄铜锁扣，短前侧壁带便携把手。顶面占70%以上，朝南短立面可见，稳重方正，旧化且清晰。</div>
     </div>
@@ -4073,6 +4088,142 @@ M-9 的采购报告曾将其定义为「具备多功能野外作业能力的辅�
     </div></article></div>
 </section>
 <footer>由 <code>gen-container-sheet.js</code> 生成。箱柜数据来自 <code>js/data.js</code>，搜刮时间来自 <code>js/config.js</code>，遗留物规则对应 <code>js/entities.js</code>。<br>运行 <code>node gen-wiki.js</code> 可统一更新三份清单与 Wiki；单独重新生成任一清单也会同步更新 Wiki。</footer>
+</section>
+<section id="updates" data-wiki-page="updates" aria-label="更新补遗" hidden>
+<header>
+  <div class="kicker">TIDELINE · UPDATE LOG</div>
+  <h1>更新补遗</h1>
+  <div class="lede">
+    四份清单（物品 / 装备 / 容器 / 商人档案）直接由 <code>js/data.js</code> 等数据文件生成，改完数据重跑
+    <code>node gen-wiki.js</code> 就会同步；本页收录清单装不下的系统更新、设定补充与玩法规则，
+    按提交倒序排列，新增内容往 <code>tools/gen-updates-sheet.js</code> 里加一条即可。
+  </div>
+</header>
+
+<div class="spec">
+  <div class="panel">
+    <h3>数据清单覆盖检查</h3>
+    <p><b>物品清单</b>　183 件（收集品 + 物资）· 源 <code>js/data.js</code> · 已录入</p>
+    <p><b>装备清单</b>　76 张（枪 / 盔 / 甲 / 包 / 近战 / 配件）· 源 <code>js/data.js</code> + <code>attachment-data.js</code> · 已录入</p>
+    <p><b>容器清单</b>　25 种容器 / 当前地图 108 个实例 / 3 类遗留物 · 源 <code>MAP_ROWS</code> + <code>CONTAINER_TYPES</code> · 已录入</p>
+    <p><b>商人档案</b>　4 位（设定稿 + 运行时台词 + 货架 + 收购偏好）· 独立页，导航进入 · 已录入</p>
+    <p><b>系统更新</b>　10 条（本页）· 手工维护 · 已录入</p>
+  </div>
+  <div class="panel">
+    <h3>这一页补的是什么</h3>
+    <p>清单回答「游戏里有什么」，本页回答「后来补了什么、现在怎么用」：地图改版、人物设定，
+    以及音效、交互手势、瞄准与飘字这些不落在数据表里的玩法规则。</p>
+    <p>每条更新都带提交短号与详情落点；下方速查表是这些规则的当前口径，
+    和 <a href="DEVELOPMENT.md">玩法文档</a> / <a href="README.md">操作说明</a> 一致。</p>
+    <p>范围：从「商人档案页」成型到当前的全部已提交更新。更早的改动见 git log 与
+    <a href="DEVELOPMENT.md">DEVELOPMENT.md</a>。</p>
+    <p><b>边界</b>　四份数据清单始终反映当前工作区的数据；本页的更新记录只收录已落地的提交。
+    工作区里还在做的 WIP（新商人、新素材等）不提前写入，等落地后往数组里补一条再重跑生成。</p>
+  </div>
+</div>
+
+<section class="item-group" data-item-group="updates">
+  <h2 class="item-group-title">更新记录<span>10 条</span></h2>
+  <p class="category-description">倒序排列。<b>归类</b>只用来速览，详情点每条下面的链接；带「数据」标签的条目已自动反映在对应清单里。</p>
+  <div class="grid">
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>8299739</b></div>
+      <div class="meta">
+        <div class="name">飘字按伤害类型分色<i class="tag">玩法 / 美术</i></div>
+        <div class="sub">蓝色（Mana）给近战伤害，玩家专属紫色（Poison）退役。normal 骨白 / crit 橙金 / melee 蓝三色只认伤害类型、不认敌我；连击只合并同类型的数字。</div>
+        <div class="vis"><a href="装备清单.html">装备清单</a> · <a href="DEVELOPMENT.md">玩法文档</a> · <a href="assets/audio/manifest.json">素材账</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>8f8d7a4</b></div>
+      <div class="meta">
+        <div class="name">取消鼠标不能穿过玩家的限制<i class="tag">操作</i></div>
+        <div class="sub">拆掉三层 keep=18px 夹取：虚拟光标可停在角色身上、也可穿到另一侧，准星跟着走；只保留 12px 的 AIM_DEAD 防抖死区。贴身近战甩枪不再被卡住。</div>
+        <div class="vis"><a href="DEVELOPMENT.md">玩法文档</a> · <a href="README.md">操作说明</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>becb36a</b></div>
+      <div class="meta">
+        <div class="name">容器逐件搜索的循环翻找底声<i class="tag">音效</i></div>
+        <div class="sub">179670（rustle through chord box）切成 5.224s 的 search_rustle.wav：搜索进行中循环播放，全部搜完、单件搜完或关面板即淡出。容器材质音仍是一容器一声。</div>
+        <div class="vis"><a href="tools/audio-actions.html">音效总览页</a> · <a href="assets/audio/manifest.json">素材账</a> · <a href="DEVELOPMENT.md">玩法文档</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>65001d7</b></div>
+      <div class="meta">
+        <div class="name">统一物品手势<i class="tag">交互</i></div>
+        <div class="sub">单击看详情（局内带动作按钮）、双击做（使用 / 换装 / 拿走）、Ctrl+左键快速移动、右键出菜单（详情 / 使用·装备 / 丢弃）。装备槽保留单击切枪，双击才是详情。仓库页与备战页下一轮再收。</div>
+        <div class="vis"><a href="design/ui/ITEM_INTERACTION_AUDIT.md">交互盘点</a> · <a href="README.md">操作说明</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>e0243dd</b></div>
+      <div class="meta">
+        <div class="name">物品交互现状盘点<i class="tag">设计</i></div>
+        <div class="sub">统计 21 处可点界面、5 种详情载体、10 条不一致，并给出三个统一方向；文末留有统一手势的实施矩阵。</div>
+        <div class="vis"><a href="design/ui/ITEM_INTERACTION_AUDIT.md">交互盘点</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>8b920de</b></div>
+      <div class="meta">
+        <div class="name">IV 级头甲稀有度上调为「稀见」<i class="tag">数据</i></div>
+        <div class="sub">gearRarity 映射从 [1,1,2,3,3,5,6] 改成 [1,1,2,3,4,5,6]，四级头 / 甲由蓝色上乘变为紫色稀见；只影响显示，不动价格与耐久。</div>
+        <div class="vis"><a href="装备清单.html">装备清单</a> · <a href="design/items/RARITY.md">稀有度说明</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>cceb91f</b></div>
+      <div class="meta">
+        <div class="name">玛拉·维恩的设定与台词补齐<i class="tag">设定</i></div>
+        <div class="sub">补人物简介五段、总览、人物核心与 8 条台词风格规范；进店 / 闲置 / 购买 / 出售 / 三档收购共 18 条运行台词接线，另有信任与交易失败预留条目。</div>
+        <div class="vis"><a href="商人档案.html">商人档案</a> · <a href="design/merchants/design-v1.json">设定稿</a> · <a href="design/merchants/DIALOGUE_V1.md">对话规范</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>6b83060</b></div>
+      <div class="meta">
+        <div class="name">银行与钟表店按内容对调命名<i class="tag">地图</i></div>
+        <div class="sub">两栋楼的 id 与内容原本对调：按家具内容修正命名，rooms / portals / windows / region / 高价值掉落全部跟随，几何与家具一格不动。</div>
+        <div class="vis"><a href="design/maps/linhai-old-quarter/layout.json">地图布局</a> · <a href="容器清单.html">容器清单</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>1e48a55</b></div>
+      <div class="meta">
+        <div class="name">载入新版临海路：银行旧址与钟表店<i class="tag">地图</i></div>
+        <div class="sub">右上角银行、右下角钟表铺成型：家具 176→210、容器 97→108、敌人 42→46、门 20→22；同步修敌人间距、地贴压墙与巡逻航点。</div>
+        <div class="vis"><a href="design/maps/linhai-old-quarter/layout.json">地图布局</a> · <a href="MAP_LAYOUT.md">地图说明</a> · <a href="容器清单.html">容器清单</a></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumb"><span>COMMIT</span><b>85c6429</b></div>
+      <div class="meta">
+        <div class="name">新增商人档案页<i class="tag">Wiki</i></div>
+        <div class="sub">四位商人的设定、职责、货架、收购偏好与全部台词独立成页；数据来自设定稿、运行时配置与交易模块，只进导航不并进 wiki.html。</div>
+        <div class="vis"><a href="商人档案.html">商人档案</a> · <a href="design/merchants/BRIEF_V1.md">设定总则</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <section class="cat">
+    <h2><span class="dot" style="background:#6fa093"></span>物品手势（局内统一）<i>6 条</i></h2>
+    <div class="panel"><p><b>单击</b>　看详情；局内详情带动作按钮，局外只显示信息</p><p><b>双击</b>　做：医疗品使用、弹药设弹种、枪械护甲换装、普通物品看详情；容器 / 尸体是拿走</p><p><b>Ctrl + 左键</b>　快速移动：背包→安全箱、安全箱→背包、容器→背包</p><p><b>右键</b>　菜单：详情 / 使用·装备 / 退弹·改装 / 丢弃</p><p><b>装备槽例外</b>　单击仍是切枪、切近战；双击看详情，右键可把装备丢到脚边</p><p><b>仓库与备战页</b>　暂沿旧手势，下一轮再收</p></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#6fa093"></span>伤害飘字配色<i>4 条</i></h2>
+    <div class="panel"><p><b>normal</b>　骨白（Damage）· 普通枪伤，敌我同色</p><p><b>crit</b>　橙金（Critical）· 爆头，敌我同色</p><p><b>melee</b>　蓝（Mana）· 近战伤害，含玩家挥刀的无视护甲真伤</p><p><b>合并</b>　同一目标短时间连击只合并同类型（字体相同）的数字</p></div>
+  </section>
+  <section class="cat">
+    <h2><span class="dot" style="background:#6fa093"></span>搜索与瞄准<i>4 条</i></h2>
+    <div class="panel"><p><b>容器材质音</b>　交互那一刻按容器 art 响一声，不循环</p><p><b>搜索循环底声</b>　逐件搜索进行中循环，全部搜完 / 关面板即淡出</p><p><b>鼠标</b>　可压在角色身上、也可穿过到另一侧，准星跟着走</p><p><b>AIM_DEAD</b>　12px 朝向死区，只防 atan2 在角色中心抖动</p></div>
+  </section>
+
+<footer>潮汐线 Wiki · 更新补遗 ｜ 由 <code>node gen-wiki.js</code> 生成，勿手改 HTML。</footer>
 </section></main>
 <script src="wiki.js"></script>
 </body>
