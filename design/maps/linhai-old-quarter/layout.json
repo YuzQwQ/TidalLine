@@ -128,56 +128,56 @@
     "#............................k~~~~~~k..................................#",
     "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
     "#..rrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrrXXXXXXXXXXX###rrrrrrrrrrr..#",
-    "#..rr###################rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX111111111111#qqqqqqqqqrr..#",
-    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrrX#####i###########//#####..#",
-    "#..rr#iiiii#iiiii#iiiii#rrrrrk~~~~~~krrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
-    "#..rr###+#####+#####/###rrrrr========rrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
-    "#..rr#22222222222222222#rrrrr========rrrrrrr.iiiiiiiiiiiiiiiiiiiiiii#..#",
-    "#..rr#22222222222222222#rrrrr========rrrrrrr.iiiiiiiiiiiiiiiiiiiiiii#..#",
-    "#..rr###+######22#######rrrrr========rrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
-    "#..rr#iii#iiiiiiiiiiii#rrrrrrk~~~~~~krrrrrrr#iiiiiiiiiiii#iiiiiiiiii#..#",
-    "#..rr#iii+iiiiiiiiiiii#rrrrrrk~~~~~~krrrrrr.###############ii########..#",
-    "#..rr#iii#iiiiiiiiiiii+rrrrrrk~~~~~~krrrrrr.w2111#11111#iiiii#111111#..#",
-    "#..rr#####iiiiiiiiiiii#rrrrrrk~~~~~~krrrrrr.w2111111111#iiiii#111111#..#",
-    "#.rrr#333#######+######rrrrrrk~~~~~~krrrrrr.#2111111111#iiiii#111111#..#",
-    "#.rrr#333+222222222222#rrrrrrk~~~~~~krrrrrr.#2111#11111#iiiii#111111#..#",
-    "#rrrr#333#222222222222#rrrrrrk~~~~~~krrrrrr.#2111#######iiiii#####+##..#",
-    "#rrrr#########+########rrrrrrk~~~~~~srrrrrr.w2111#11111#iiiii#111111#..#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~srrrrrr.w2111+11111+iiiii+111111#..#",
-    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~srrrrrr.#2222#11111#iiiii#111111#..#",
-    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrr.#########################..#",
-    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrrrq.qqqqqqqqq.qqqqqqrrrrrrs~~~~~~krrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrrrrrrrrrr#################rr#",
-    "#rrrrqqqqqqqqqqqqqqqqqqrrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
-    "#rrrr########+#########rrrrrrk~~~~~~krrrrrrqqqqqqqq.#444444444444444#rr#",
-    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
-    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
-    "#rrrr#2222222222222222#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
-    "#rrrr########22#####22#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrrqqqqqqqq.#44444#4444#4444#rr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrr.........+44444#4444#4444#rr#",
-    "#rrrr#333333#22#222#22#rrrrrr--------rrrrrr.........#44444#4444#4444#rr#",
-    "#rrrr#333333+22#222#22#rrrrrr--------rrrrrr.........#44444#4444#4444#rr#",
-    "#rrrr#333333#22+222#22+rrrrrr--------rrrrrr.........#44444#4444#4444#rr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~krrrrrr......rrr#44444###########rr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~kkk####++####rrr#444444444444444#rr#",
-    "#rrrr#333333#22#222#22#rrrrrrk~~~~~~kkk#iiiiiiii#rrr#444444444444444#rr#",
-    "#rrrr##################rrrrrrk~~~~~~kkk#iiiiiiii#rrr#444444444444444#rr#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrr##############+##rr#",
-    "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii+rrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii+rrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrqqqqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrq.qqqqqqqqqqqrrrrrrrrrrrrrk~~~~~~kkk#iiiiiiii#rrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~kkk##########rrrrrrrrrrrrrrrrrrrrrr#",
-    "#rrrrrrrrrrrrrrrrrrrrrrrrrrrrk~~~~~~k..................................#",
+    "#..rr###################rqqqrk~~~~~~krqqqrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rqqqrk~~~~~~krqqqrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rqqqrk~~~~~~krqqqrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rqqqrk~~~~~~krqqqrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rqqqrk~~~~~~krqqqrrrX111111111111#qqqqqqqqqrr..#",
+    "#..rr#iiiii#iiiii#iiiii#rqqqrk~~~~~~krqqqrrrX#####i###########//#####..#",
+    "#..rr#iiiii#iiiii#iiiii#rqqqrk~~~~~~krqqqrrs#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr###+#####+#####/###rqqqr========rqqqrrs#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr#22222222222222222#rqqqr========rqqqrrs.iiiiiiiiiiiiiiiiiiiiiii#..#",
+    "#..rr#22222222222222222#rqqqr========rqqqrrs.iiiiiiiiiiiiiiiiiiiiiii#..#",
+    "#..rr###+######22#######rqqqr========rqqqrrs#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr#iii#iiiiiiiiiiii#rrqqqrk~~~~~~krqqqrrs#iiiiiiiiiiii#iiiiiiiiii#..#",
+    "#..rr#iii+iiiiiiiiiiii#rrqqqrk~~~~~~krqqqrr.###############ii########..#",
+    "#..rr#iii#iiiiiiiiiiii+rrqqqrk~~~~~~krqqqrr.w2111#11111#iiiii#111111#..#",
+    "#..rr#####iiiiiiiiiiii#rrqqqrk~~~~~~krqqqrr.w2111111111#iiiii#111111#..#",
+    "#..rr#333#######+######rrqqqrk~~~~~~krqqqrr.#2111111111#iiiii#111111#..#",
+    "#..rr#333+222222222222#rrqqqrk~~~~~~krqqqrr.#2111#11111#iiiii#111111#..#",
+    "#..rr#333#222222222222#rrqqqrk~~~~~~krqqqrr.#2111#######iiiii#####+##..#",
+    "#..rr#########+########rrqqqrk~~~~~~srqqqrr.#2111#11111#iiiii#111111#..#",
+    "#..rrrrrrrrrrrrrrrrrrrrrrqqqrk~~~~~~srqqqrr.#2111+11111+iiiii+111111#..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrk~~~~~~srqqqrr.#2222#11111#iiiii#111111#..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrk~~~~~~krqqqrr.#########################..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrs~~~~~~krqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrs~~~~~~krqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
+    "#..qqq.qqqqqqqqq.qqqqqqqqqqqrs~~~~~~krqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrr..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrk~~~~~~krqqqqqqqqqqqqqr#################..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrk~~~~~~krqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rrrrrrrrrrrrrrrrrrrrrrqqqrk~~~~~~krqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rr########+#########rrqqqrk~~~~~~krqqqqqqqqqqqqq.#444444444444444#..#",
+    "#..rr#2222222222222222#rrqqqrk~~~~~~krqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rr#2222222222222222#rrqqqrk~~~~~~krqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rr#2222222222222222#rrqqqrk~~~~~~krqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rr########22#####22#rrqqqrk~~~~~~krqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rr#333333#22#222#22#rrqqqrk~~~~~~krqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rr#333333#22#222#22#rrqqqrk~~~~~~krqqqqqqqqqqqqq.+44444#4444#4444#..#",
+    "#..rr#333333#22#222#22#rrqqqr--------rqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rr#333333+22#222#22#rrqqqr--------rqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rr#333333#22+222#22+rrqqqr--------rqqqqqqqqqqqqq.#44444#4444#4444#..#",
+    "#..rr#333333#22#222#22#rrqqqrk~~~~~~krqqqqqqqqqqqqqr#44444###########..#",
+    "#..rr#333333#22#222#22#rrqqqrk~~~~~~k######+######rr#444444444444444#..#",
+    "#..rr#333333#22#222#22#rrqqqrk~~~~~~k#iiiiiiiiiii#rr#444444444444444#..#",
+    "#..rr##################rrqqqrk~~~~~~k#iiiiiiiiiii#rr#444444444444444#..#",
+    "#..rrrrrrrrrrrrrrrrrrrrrrqqqrk~~~~~~k#iiiiiiiiiii#rr##############+##..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrk~~~~~~k#iiiiiiiiiii#rrrrrrrrrrrrrrrrrrr..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrk~~~~~~k#iiiiiiiiiii#rrrrrrrrrrrrrrrrrrr..#",
+    "#..q.qqqqqqqqqqqqqqqqqqqqqqqrk~~~~~~k#iiiiiiiiiii+rrrrrrrrrrrrrrrrrrr..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrk~~~~~~k#iiiiiiiiiii#rrrrrrrrrrrrrrrrrrr..#",
+    "#..qqqqqqqqqqqqqqqqqqqqqqqqqrk~~~~~~k#iiiiiiiiiii#rrrrrrrrrrrrrrrrrrr..#",
+    "#...........................rk~~~~~~k#iiiiiiiiiii#.....................#",
+    "#...........................rk~~~~~~k#iiiiiiiiiii#.....................#",
     "#############################k~~~~~~k###################################"
   ],
   "buildings": [
@@ -3885,48 +3885,6 @@
       "width": 1
     },
     {
-      "id": "warehouse.front",
-      "building": "warehouse",
-      "name": "北侧装卸入口",
-      "cells": [
-        [
-          43,
-          44
-        ],
-        [
-          44,
-          44
-        ]
-      ],
-      "connects": [
-        "warehouse.stock",
-        "outside"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
-      "id": "warehouse.side",
-      "building": "warehouse",
-      "name": "东侧侧门",
-      "cells": [
-        [
-          48,
-          49
-        ],
-        [
-          48,
-          50
-        ]
-      ],
-      "connects": [
-        "warehouse.stock",
-        "outside"
-      ],
-      "kind": "door",
-      "width": 2
-    },
-    {
       "id": "outdoor.door1",
       "name": "新门洞",
       "cells": [
@@ -4189,6 +4147,39 @@
       ],
       "kind": "door",
       "width": 1
+    },
+    {
+      "id": "warehouse.door1",
+      "building": "warehouse",
+      "name": "新门洞",
+      "cells": [
+        [
+          43,
+          44
+        ]
+      ],
+      "connects": [
+        "outdoors",
+        "warehouse.stock"
+      ],
+      "kind": "door",
+      "width": 1
+    },
+    {
+      "id": "outdoor.door9",
+      "name": "新门洞",
+      "cells": [
+        [
+          49,
+          50
+        ]
+      ],
+      "connects": [
+        "warehouse",
+        "outdoors"
+      ],
+      "kind": "door",
+      "width": 1
     }
   ],
   "windows": [
@@ -4203,18 +4194,6 @@
         [
           44,
           19
-        ]
-      ],
-      "walkable": false,
-      "opaque": false
-    },
-    {
-      "id": "bank.counter-window",
-      "building": "bank",
-      "cells": [
-        [
-          44,
-          23
         ]
       ],
       "walkable": false,
@@ -4741,13 +4720,14 @@
       "region": "outdoors",
       "type": "bench",
       "name": "前厅长凳",
-      "x": 45,
-      "y": 32,
+      "x": 38,
+      "y": 28,
       "solid": true,
       "footprint": [
-        2,
-        1
-      ]
+        1,
+        2
+      ],
+      "facing": "side"
     },
     {
       "id": "p18",
@@ -4790,11 +4770,11 @@
     },
     {
       "id": "p21",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "desk",
       "name": "办公桌",
-      "x": 40,
-      "y": 50,
+      "x": 38,
+      "y": 52,
       "solid": true,
       "footprint": [
         2,
@@ -4814,19 +4794,6 @@
         1
       ],
       "facing": "side"
-    },
-    {
-      "id": "p23",
-      "region": "warehouse",
-      "type": "shelf",
-      "name": "后勤架",
-      "x": 42,
-      "y": 52,
-      "solid": true,
-      "footprint": [
-        2,
-        1
-      ]
     },
     {
       "id": "p24",
@@ -4926,8 +4893,8 @@
       "region": "outdoors",
       "type": "tree",
       "name": "院落树木",
-      "x": 3,
-      "y": 50,
+      "x": 5,
+      "y": 48,
       "solid": true,
       "footprint": [
         3,
@@ -4965,7 +4932,8 @@
       "canopy": {
         "fadeRows": 2,
         "opacity": 0.3
-      }
+      },
+      "facing": "side"
     },
     {
       "id": "p33",
@@ -4998,21 +4966,22 @@
       "region": "outdoors",
       "type": "bench",
       "name": "庭院长椅",
-      "x": 45,
-      "y": 36,
+      "x": 27,
+      "y": 46,
       "solid": true,
       "footprint": [
-        2,
-        1
-      ]
+        1,
+        2
+      ],
+      "facing": "side"
     },
     {
       "id": "p36",
       "region": "outdoors",
       "type": "bench",
       "name": "庭院长椅",
-      "x": 8,
-      "y": 52,
+      "x": 13,
+      "y": 50,
       "solid": true,
       "footprint": [
         2,
@@ -5131,8 +5100,8 @@
       "region": "outdoors",
       "type": "bench",
       "name": "庭院长椅",
-      "x": 28,
-      "y": 29,
+      "x": 27,
+      "y": 28,
       "solid": true,
       "footprint": [
         1,
@@ -5209,7 +5178,7 @@
       "type": "tree",
       "name": "院落树木",
       "x": 45,
-      "y": 33,
+      "y": 32,
       "solid": true,
       "footprint": [
         3,
@@ -5343,7 +5312,7 @@
       "region": "outdoors",
       "type": "decal_surface_damp_01",
       "name": "潮湿痕迹",
-      "x": 13,
+      "x": 10,
       "y": 27,
       "solid": false,
       "ground": true,
@@ -5552,8 +5521,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 43,
-      "y": 29,
+      "x": 42,
+      "y": 13,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -5632,8 +5601,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 26,
-      "y": 30,
+      "x": 23,
+      "y": 26,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -6032,8 +6001,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 4,
-      "y": 34,
+      "x": 5,
+      "y": 31,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -6096,8 +6065,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 55,
-      "y": 50,
+      "x": 57,
+      "y": 52,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -6712,22 +6681,6 @@
       "collisionCells": []
     },
     {
-      "id": "p150",
-      "region": "outdoors",
-      "type": "decal_surface_crack_01",
-      "name": "细裂纹",
-      "x": 19,
-      "y": 11,
-      "solid": false,
-      "ground": true,
-      "opaque": false,
-      "footprint": [
-        1,
-        1
-      ],
-      "collisionCells": []
-    },
-    {
       "id": "p152",
       "region": "outdoors",
       "type": "decal_surface_crack_01",
@@ -6958,22 +6911,6 @@
       "name": "潮湿痕迹",
       "x": 19,
       "y": 7,
-      "solid": false,
-      "ground": true,
-      "opaque": false,
-      "footprint": [
-        1,
-        1
-      ],
-      "collisionCells": []
-    },
-    {
-      "id": "p176",
-      "region": "outdoors",
-      "type": "decal_surface_damp_01",
-      "name": "潮湿痕迹",
-      "x": 21,
-      "y": 8,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -7674,6 +7611,698 @@
         2
       ],
       "facing": "side"
+    },
+    {
+      "id": "p229",
+      "region": "outdoors",
+      "type": "tree_courtyard_canopy",
+      "name": "院落树木",
+      "x": 38,
+      "y": 22,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      }
+    },
+    {
+      "id": "p230",
+      "region": "outdoors",
+      "type": "tree_courtyard_canopy",
+      "name": "院落树木",
+      "x": 25,
+      "y": 22,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      }
+    },
+    {
+      "id": "p231",
+      "region": "outdoors",
+      "type": "tree_courtyard_canopy",
+      "name": "院落树木",
+      "x": 25,
+      "y": 8,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      }
+    },
+    {
+      "id": "p232",
+      "region": "outdoors",
+      "type": "tree_courtyard_canopy",
+      "name": "院落树木",
+      "x": 38,
+      "y": 8,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      }
+    },
+    {
+      "id": "p233",
+      "region": "outdoors",
+      "type": "tree_courtyard_canopy",
+      "name": "院落树木",
+      "x": 17,
+      "y": 49,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      },
+      "facing": "side"
+    },
+    {
+      "id": "p234",
+      "region": "outdoors",
+      "type": "tree_courtyard_canopy",
+      "name": "院落树木",
+      "x": 39,
+      "y": 32,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      },
+      "facing": "side"
+    },
+    {
+      "id": "p235",
+      "region": "outdoors",
+      "type": "tree_courtyard_canopy",
+      "name": "院落树木",
+      "x": 25,
+      "y": 32,
+      "solid": true,
+      "footprint": [
+        3,
+        3
+      ],
+      "collisionCells": [
+        [
+          1,
+          2
+        ]
+      ],
+      "canopy": {
+        "fadeRows": 2,
+        "opacity": 0.3
+      },
+      "facing": "side"
+    },
+    {
+      "id": "p236",
+      "region": "warehouse",
+      "type": "workbench_industrial",
+      "name": "重型工作台",
+      "x": 48,
+      "y": 52,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p237",
+      "region": "outdoors",
+      "type": "pallet_stack",
+      "name": "木质托盘堆",
+      "x": 38,
+      "y": 49,
+      "solid": true,
+      "footprint": [
+        1,
+        2
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p238",
+      "region": "outdoors",
+      "type": "pallet_stack",
+      "name": "木质托盘堆",
+      "x": 47,
+      "y": 54,
+      "solid": true,
+      "footprint": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "p239",
+      "region": "warehouse",
+      "type": "barrel",
+      "name": "杂物桶",
+      "x": 41,
+      "y": 50,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p240",
+      "region": "warehouse",
+      "type": "barrel",
+      "name": "杂物桶",
+      "x": 44,
+      "y": 52,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p241",
+      "region": "warehouse",
+      "type": "barrel",
+      "name": "杂物桶",
+      "x": 45,
+      "y": 49,
+      "solid": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "p242",
+      "region": "warehouse",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 40,
+      "y": 48,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p243",
+      "region": "warehouse",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 43,
+      "y": 51,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p244",
+      "region": "warehouse",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 45,
+      "y": 47,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p245",
+      "region": "warehouse",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 47,
+      "y": 47,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p246",
+      "region": "warehouse",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 43,
+      "y": 45,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p247",
+      "region": "warehouse",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 39,
+      "y": 53,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p248",
+      "region": "warehouse",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 47,
+      "y": 53,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p249",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 45,
+      "y": 54,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p250",
+      "region": "warehouse",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 47,
+      "y": 45,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p251",
+      "region": "outdoors",
+      "type": "decal_surface_crack_01",
+      "name": "细裂纹",
+      "x": 38,
+      "y": 46,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p252",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 42,
+      "y": 49,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p253",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 40,
+      "y": 47,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p254",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 39,
+      "y": 50,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p255",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 44,
+      "y": 51,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p256",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 48,
+      "y": 50,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p257",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 47,
+      "y": 48,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p258",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 45,
+      "y": 46,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p259",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 43,
+      "y": 46,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p260",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 42,
+      "y": 48,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p261",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 44,
+      "y": 52,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p262",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 41,
+      "y": 54,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p263",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 39,
+      "y": 54,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p264",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 46,
+      "y": 53,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p265",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 47,
+      "y": 53,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p266",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 48,
+      "y": 54,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p267",
+      "region": "warehouse",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 41,
+      "y": 45,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p268",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 38,
+      "y": 46,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
+    },
+    {
+      "id": "p269",
+      "region": "outdoors",
+      "type": "decal_surface_damp_01",
+      "name": "潮湿痕迹",
+      "x": 38,
+      "y": 48,
+      "solid": false,
+      "ground": true,
+      "opaque": false,
+      "footprint": [
+        1,
+        1
+      ],
+      "collisionCells": []
     }
   ],
   "containers": [
@@ -7721,7 +8350,7 @@
       "id": "c08",
       "region": "apartment",
       "type": "D",
-      "x": 17,
+      "x": 18,
       "y": 21,
       "preference": [
         "life"
@@ -7731,8 +8360,8 @@
       "id": "c09",
       "region": "outdoors",
       "type": "F",
-      "x": 3,
-      "y": 41,
+      "x": 6,
+      "y": 47,
       "preference": [
         "med",
         "medical"
@@ -7934,9 +8563,9 @@
     },
     {
       "id": "c32",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "T",
-      "x": 40,
+      "x": 38,
       "y": 45,
       "preference": [
         "ind",
@@ -7947,8 +8576,8 @@
       "id": "c33",
       "region": "warehouse",
       "type": "T",
-      "x": 46,
-      "y": 48,
+      "x": 48,
+      "y": 45,
       "preference": [
         "ind",
         "elec"
@@ -7958,7 +8587,7 @@
       "id": "c34",
       "region": "outdoors",
       "type": "b",
-      "x": 3,
+      "x": 1,
       "y": 47,
       "preference": [
         "ind",
@@ -7967,10 +8596,10 @@
     },
     {
       "id": "c35",
-      "region": "outdoors",
+      "region": "warehouse",
       "type": "b",
-      "x": 49,
-      "y": 48,
+      "x": 48,
+      "y": 49,
       "preference": [
         "ind",
         "elec"
@@ -7978,10 +8607,10 @@
     },
     {
       "id": "c36",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "e",
-      "x": 40,
-      "y": 48,
+      "x": 38,
+      "y": 51,
       "preference": [
         "ind",
         "elec"
@@ -7991,8 +8620,8 @@
       "id": "c37",
       "region": "warehouse",
       "type": "Q",
-      "x": 44,
-      "y": 52,
+      "x": 48,
+      "y": 51,
       "preference": [
         "ind",
         "elec"
@@ -8000,10 +8629,10 @@
     },
     {
       "id": "c38",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "A",
-      "x": 47,
-      "y": 52,
+      "x": 38,
+      "y": 53,
       "preference": [
         "ind",
         "elec"
@@ -8011,10 +8640,10 @@
     },
     {
       "id": "c39",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "K",
-      "x": 40,
-      "y": 52,
+      "x": 38,
+      "y": 54,
       "preference": [
         "ind",
         "elec"
@@ -8035,8 +8664,8 @@
       "id": "c41",
       "region": "outdoors",
       "type": "T",
-      "x": 3,
-      "y": 49,
+      "x": 1,
+      "y": 52,
       "preference": [
         "life",
         "ind"
@@ -8068,8 +8697,8 @@
       "id": "c44",
       "region": "outdoors",
       "type": "W",
-      "x": 7,
-      "y": 52,
+      "x": 5,
+      "y": 54,
       "preference": [
         "life",
         "ind"
@@ -8386,10 +9015,10 @@
     },
     {
       "id": "c75",
-      "region": "apartment",
+      "region": "outdoors",
       "type": "C",
-      "x": 17,
-      "y": 22,
+      "x": 19,
+      "y": 21,
       "preference": [
         "life"
       ]
@@ -8797,10 +9426,10 @@
     },
     {
       "id": "c114",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "Q",
-      "x": 40,
-      "y": 51,
+      "x": 41,
+      "y": 54,
       "preference": [
         "ind",
         "elec"
@@ -8808,10 +9437,10 @@
     },
     {
       "id": "c115",
-      "region": "warehouse",
+      "region": "outdoors",
       "type": "Q",
       "x": 46,
-      "y": 52,
+      "y": 54,
       "preference": [
         "ind",
         "elec"
@@ -8922,30 +9551,6 @@
   },
   "enemies": [
     {
-      "id": "e01",
-      "region": "apartment",
-      "type": "scav",
-      "x": 8,
-      "y": 18,
-      "patrolRadius": 2
-    },
-    {
-      "id": "e02",
-      "region": "apartment",
-      "type": "scav",
-      "x": 15,
-      "y": 17,
-      "patrolRadius": 2
-    },
-    {
-      "id": "e03",
-      "region": "apartment",
-      "type": "scav",
-      "x": 14,
-      "y": 21,
-      "patrolRadius": 2
-    },
-    {
       "id": "e04",
       "region": "clinic",
       "type": "scav",
@@ -9013,8 +9618,8 @@
       "id": "e14",
       "region": "outdoors",
       "type": "scav",
-      "x": 39,
-      "y": 41,
+      "x": 54,
+      "y": 15,
       "patrolRadius": 2
     },
     {
@@ -9043,34 +9648,26 @@
     },
     {
       "id": "e18",
-      "region": "outdoors",
+      "region": "clinic",
       "type": "echo",
-      "x": 18,
-      "y": 31,
+      "x": 11,
+      "y": 35,
       "patrolRadius": 3
     },
     {
       "id": "e19",
       "region": "outdoors",
       "type": "echo",
-      "x": 16,
-      "y": 36,
+      "x": 24,
+      "y": 30,
       "patrolRadius": 3
     },
     {
       "id": "e20",
       "region": "outdoors",
       "type": "echo",
-      "x": 8,
-      "y": 27,
-      "patrolRadius": 3
-    },
-    {
-      "id": "e21",
-      "region": "outdoors",
-      "type": "echo",
       "x": 15,
-      "y": 51,
+      "y": 36,
       "patrolRadius": 3
     },
     {
@@ -9079,14 +9676,6 @@
       "type": "echo",
       "x": 58,
       "y": 28,
-      "patrolRadius": 3
-    },
-    {
-      "id": "e23",
-      "region": "outdoors",
-      "type": "echo",
-      "x": 37,
-      "y": 35,
       "patrolRadius": 3
     },
     {
@@ -9109,8 +9698,8 @@
       "id": "e26",
       "region": "outdoors",
       "type": "scav",
-      "x": 65,
-      "y": 24,
+      "x": 58,
+      "y": 20,
       "patrolRadius": 2
     },
     {
@@ -9126,7 +9715,7 @@
       "region": "outdoors",
       "type": "scav",
       "x": 65,
-      "y": 19,
+      "y": 25,
       "patrolRadius": 2
     },
     {
@@ -9165,56 +9754,24 @@
       "id": "e33",
       "region": "outdoors",
       "type": "scav",
-      "x": 41,
-      "y": 8,
-      "patrolRadius": 2
-    },
-    {
-      "id": "e34",
-      "region": "apartment",
-      "type": "scav",
-      "x": 15,
-      "y": 14,
-      "patrolRadius": 2
-    },
-    {
-      "id": "e35",
-      "region": "outdoors",
-      "type": "scav",
-      "x": 19,
-      "y": 11,
+      "x": 46,
+      "y": 2,
       "patrolRadius": 2
     },
     {
       "id": "e36",
       "region": "outdoors",
       "type": "echo",
-      "x": 25,
-      "y": 38,
+      "x": 24,
+      "y": 45,
       "patrolRadius": 2
     },
     {
       "id": "e37",
       "region": "outdoors",
       "type": "echo",
-      "x": 25,
-      "y": 33,
-      "patrolRadius": 2
-    },
-    {
-      "id": "e38",
-      "region": "outdoors",
-      "type": "scav",
-      "x": 21,
-      "y": 8,
-      "patrolRadius": 2
-    },
-    {
-      "id": "e39",
-      "region": "clinic",
-      "type": "echo",
-      "x": 11,
-      "y": 41,
+      "x": 27,
+      "y": 39,
       "patrolRadius": 2
     },
     {
@@ -9229,24 +9786,16 @@
       "id": "e41",
       "region": "clinic",
       "type": "echo",
-      "x": 8,
+      "x": 10,
       "y": 42,
       "patrolRadius": 2
     },
     {
-      "id": "e42",
+      "id": "e43",
       "region": "outdoors",
       "type": "echo",
-      "x": 17,
-      "y": 41,
-      "patrolRadius": 2
-    },
-    {
-      "id": "e43",
-      "region": "clinic",
-      "type": "echo",
-      "x": 10,
-      "y": 36,
+      "x": 4,
+      "y": 26,
       "patrolRadius": 2
     },
     {
@@ -9269,8 +9818,8 @@
       "id": "e47",
       "region": "warehouse",
       "type": "retriever",
-      "x": 42,
-      "y": 50,
+      "x": 41,
+      "y": 52,
       "patrolRadius": 2,
       "facing": "s"
     },
@@ -9279,7 +9828,7 @@
       "region": "warehouse",
       "type": "retriever",
       "x": 43,
-      "y": 47,
+      "y": 49,
       "patrolRadius": 2,
       "facing": "s"
     },
@@ -9287,8 +9836,44 @@
       "id": "e49",
       "region": "warehouse",
       "type": "retriever",
-      "x": 45,
-      "y": 50,
+      "x": 46,
+      "y": 52,
+      "patrolRadius": 2,
+      "facing": "s"
+    },
+    {
+      "id": "e50",
+      "region": "apartment",
+      "type": "holdout",
+      "x": 12,
+      "y": 17,
+      "patrolRadius": 2,
+      "facing": "s"
+    },
+    {
+      "id": "e51",
+      "region": "outdoors",
+      "type": "holdout",
+      "x": 20,
+      "y": 10,
+      "patrolRadius": 2,
+      "facing": "s"
+    },
+    {
+      "id": "e52",
+      "region": "apartment",
+      "type": "holdout",
+      "x": 16,
+      "y": 16,
+      "patrolRadius": 2,
+      "facing": "s"
+    },
+    {
+      "id": "e53",
+      "region": "apartment",
+      "type": "holdout",
+      "x": 14,
+      "y": 14,
       "patrolRadius": 2,
       "facing": "s"
     }
@@ -9296,8 +9881,8 @@
   "spawn": {
     "id": "spawn",
     "name": "西北入口",
-    "x": 7,
-    "y": 4
+    "x": 6,
+    "y": 3
   },
   "exits": [
     {
@@ -9310,9 +9895,10 @@
     {
       "id": "B",
       "name": "东岸撤离 B",
-      "x": 67,
-      "y": 51,
-      "risk": "较高，接近银行外围"
+      "x": 68,
+      "y": 52,
+      "risk": "较高，接近银行外围",
+      "region": "outdoors"
     }
   ],
   "bridges": [
