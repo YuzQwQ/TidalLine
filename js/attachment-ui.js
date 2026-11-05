@@ -48,10 +48,19 @@ attachmentWrap(Base,'renderGunShop',function(original,el){original.call(this,el)
 Base.buyAttachment=function(id){const d=ATTACHMENT_DEFS[id];if(Game.state!=='base'||!d||d.r>3||Save.credits<d.price||Save.stash.length>=STASH_SLOTS)return false;Save.credits-=d.price;Save.addGearStash(EQUIP.attachment(id));Save.save();Save.flush();this.render();return true;};
 attachmentWrap(MerchantUI,'offer',function(original,meta,cell){if(meta.kind!=='attachment')return original.call(this,meta,cell);const item=EQUIP.attachment(meta.id);return item?{key:JSON.stringify(meta),meta,item,category:'attachment',quantity:1,price:item.price,cell,confirm:cell.onclick}:null;});
 attachmentWrap(StorageUI,'matches',function(original,it,key){return key==='attachments'?it.equip?.kind==='attachment':original.call(this,it,key);});
-function addModActions(box,item,targetOrEntry){if(!box?.insertAdjacentHTML)return;const kind=item?.equip?.kind;if(!['gun','attachment'].includes(kind))return;const b=document.createElement('button');b.className='mod-entry';b.textContent=kind==='gun'?'改装枪械':'安装到枪械';b.onclick=()=>kind==='gun'?ModUI.openTarget(Attachments.findTarget(targetOrEntry)||Attachments.findTarget(item)):ModUI.openWithPart(targetOrEntry);box.appendChild(b);}
-attachmentWrap(StorageUI,'renderDetail',function(original){original.call(this);if(Safehouse.demo||!this.selected)return;const e=this.selected.entry,it=stashItem(e),box=this.el.querySelector('.st-detail-actions');addModActions(box,it,e);if(it?.equip?.kind==='attachment'){const eq=box?.querySelector('[data-st-action="equip"]');if(eq)eq.style.display='none';const desc=this.el.querySelector('.st-detail-body>p');if(desc)desc.textContent=Attachments.describe(it.equip.attachment);}});
-attachmentWrap(Base,'showItem',function(original,e,where,node){const r=original.call(this,e,where,node);if(Safehouse.view!=='stash'||where!=='stash')addModActions(document.querySelector?.('#itemTip .medical-actions'),stashItem(e),e);return r;});
-attachmentWrap(Base,'renderGear',function(original){original.call(this);const rows=document.querySelectorAll?.('#baseGear .slot')||[];for(let i=0;i<3;i++){const it=Save.gear.weapons[i],row=rows[i];if(row&&it)row.oncontextmenu=ev=>{ev.preventDefault();Ctx.show(ev.clientX,ev.clientY,[{label:'改装',onClick:()=>ModUI.openTarget(Attachments.findTarget(it))},{label:'退弹',onClick:()=>Base.unloadGun(it)}]);};}});
+/* 改装入口不再接管任何格子：仓库详情浮窗与装备槽右键都由 base.js 统一生成，
+   这里只往钩子里追加一条动作，菜单顺序（详情 → 卸下 → 使用 → 保险箱 → 改装）不受影响。 */
+function modActs(entry,where){
+  const it=where==='gear'?entry:stashItem(entry),kind=it?.equip?.kind;
+  if(kind==='gun'){
+    const t=Attachments.findTarget(entry)||Attachments.findTarget(it);
+    return t?[{label:'改装枪械',onClick:()=>ModUI.openTarget(t)}]:[];
+  }
+  if(kind==='attachment')return [{label:'安装到枪械',onClick:()=>ModUI.openWithPart(entry)}];
+  return [];
+}
+{const own=Base.extraActsFor;Base.extraActsFor=function(entry,where,node,key){return own.apply(this,arguments).concat(modActs(entry,where));};
+ const ownGear=Base.extraGearActs;Base.extraGearActs=function(key,item){return ownGear.apply(this,arguments).concat(modActs(item,'gear'));};}
 /* 改装入口挂在统一手势的钩子上：装备槽和背包里的枪都多一个「改装」，
    退弹、丢弃、详情由 game-panels 统一处理，这里不再自己接管左右键。 */
 Game.extraActsFor=function(it,where,entry){

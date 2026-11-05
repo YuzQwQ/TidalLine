@@ -27,16 +27,16 @@ const pendingArt=new Set(require('../design/items/classification.json').items.fi
    assert(await page.evaluate(()=>Save.hp===100&&Save.credits===182500));assert(await page.locator('#btnDoctorTreat').isDisabled());
    await page.evaluate(()=>{Save.setHP(85);Safehouse.route('stash');});
    /* 当前仓库通过右侧详情操作，旧医疗气泡只保留在局内。 */
-   const medAction=()=>page.locator('[data-st-action="use"]');
+   const medAction=()=>page.locator('#itemTip .medical-actions button').filter({hasText:/使用一件|使用医疗品|只能在行动中使用/});
    const band=page.locator('#stashGrid .scell').filter({has:page.locator('.cn',{hasText:/^绷带$/})}).first();
-   await band.click();assert(await medAction().isEnabled());assert((await page.locator('.st-detail').innerText()).includes('剩余容量'));
+   await band.click();assert(await medAction().isEnabled());assert((await page.locator('#itemTip').innerText()).includes('当前容量'));
    /* 容量制：用掉 15 点后那卷还剩 5 点，件数不变但多出一条残容量 */
    await medAction().click();assert(await page.evaluate(()=>Save.hp===100&&Save.stashCount('heal01')===5&&Save.stash.some(e=>e.id==='heal01'&&e.cap<20)));
    await page.locator('#stashGrid .scell').filter({has:page.locator('.cn',{hasText:/^止痛片$/})}).click();
    /* 效果品局外按钮仍在，但明确禁用：没有局内损伤可处理 */
    assert.equal(await medAction().count(),1);
    assert(await medAction().isDisabled());
-   assert((await page.locator('.st-detail').innerText()).includes('只能在行动中使用'));
+   assert((await page.locator('#itemTip').innerText()).includes('只能在行动中使用'));
    await page.evaluate(()=>{Save.setHP(40);MerchantUI.open('doctor');});
    await page.screenshot({path:path.join(output,entry==='index.html'?'doctor-desktop.png':'doctor-offline.png')});
    for(const width of [390,320]){
@@ -51,7 +51,7 @@ const pendingArt=new Set(require('../design/items/classification.json').items.fi
    await page.setViewportSize({width:1440,height:1000});await page.evaluate(()=>{Save.gear.back=BACKPACK.make('bag03');Safehouse.route('stash');});
    /* 保证测试携带空间足够，当前仓库在详情中提供「放入背包」。 */
    await page.locator('#stashGrid .scell').filter({hasText:'无菌敷料'}).first().click();
-   await page.locator('[data-st-action="transfer"]').click();
+   await page.locator('#itemTip .medical-actions button').first().click();
    assert(await page.evaluate(()=>Save.bagCount('heal02')===1));
    await page.evaluate(()=>Safehouse.route('maps'));await page.locator('#btnMapStart').click();if(await page.locator('#deployVeil').isVisible())await page.locator('#deployGoAnyway').click();await page.waitForFunction(()=>Game.state==='playing');
    await page.evaluate(()=>{Game.enemies=[];Game.bullets=[];});

@@ -256,7 +256,7 @@ meleeWrap(Base,'stashEquip',function(original,key){return key==='melee'?Save.sta
 meleeWrap(Base,'renderGear',function(original){original.call(this);const el=document.getElementById('baseGear');if(!el)return;
   const it=Save.gear.melee,d=MeleeSystem.def(it),row=document.createElement('div');row.className='slot'+(it?'':' empty');
   row.innerHTML='<div class="slot-ico">'+Icons.gearIcon(d?.id,'刀')+'</div><div class="slot-txt"><b>'+esc(d?.name||'未装备近战武器')+'</b><span>'+(d?'真实伤害 '+d.damage+' · '+d.radius+'格 · '+(it.equip.bound?'绑定 · ':''):'')+'点击从仓库选择</span></div>';
-  row.onclick=()=>this.togglePicker('melee',row);el.appendChild(row);
+  row.onclick=()=>this.togglePicker('melee',row);this.bindGearMenu(row,'melee');el.appendChild(row);
 });
 meleeWrap(Base,'renderPicker',function(original){if(this.picker!=='melee')return original.call(this);
   const box=document.getElementById('gearPicker');box.innerHTML='';box.style.display='';

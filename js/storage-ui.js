@@ -34,24 +34,53 @@ const StorageUI={
     for(const btn of this.el.querySelectorAll('[data-st-category]')){const k=btn.dataset.stCategory;btn.classList.toggle('on',this.category===k);btn.setAttribute('aria-pressed',this.category===k?'true':'false');btn.querySelector('small').textContent=Save.stash.filter(e=>{const it=stashItem(e);return it&&this.matches(it,k);}).length;}
     this.renderDetail();
   },
-  select(entry,node){this.selected={entry,node};for(const c of this.stock.querySelectorAll('#stashGrid .scell'))c.classList.toggle('st-selected',c===node);this.renderDetail();},
+  /* 选中只是视觉标记，详情统一走 Base.showItem 的浮窗，右侧栏固定显示仓库概览 */
+  select(entry,node){this.selected={entry,node};this.markSelected(node);Base.showItem(entry,'stash',node);},
+  markSelected(node){if(!this.stock)return;for(const c of this.stock.querySelectorAll('#stashGrid .scell'))c.classList.toggle('st-selected',c===node);},
   feedback(text,bad=false){if(!this.mounted)return;const p=this.el.querySelector('.st-feedback');p.hidden=false;p.textContent=text;p.classList.toggle('bad',!!bad);},
+  /* 右侧那一栏是「仓库概览」：物品详情统一走浮窗，这里不再复述一遍。
+     数字每次都从 Save 现算，物品进出后立刻是对的。 */
   renderDetail(){
-    if(!this.mounted)return;const box=this.el.querySelector('.st-detail'),s=this.selected;
-    if(!s){box.innerHTML='<small>ITEM INSPECTOR</small><h2>选择一件物品</h2><div class="st-placeholder">'+Safehouse.icon('box')+'</div><p>从库存选择物品，在这里查看属性和可用操作。<br>可在商人处补给，或通过行动搜集物资。</p>';return;}
-    if(Safehouse.demo){const i=s.item;box.innerHTML='<div class="st-detail-body"><small>演示物品 · 不读取游戏存档</small><h2>'+MerchantUI.esc(i.name)+'</h2><div class="st-item-picture"><img src="../../../assets/'+i.file+'" alt=""></div><p>'+MerchantUI.esc(i.desc||'构图与交互位置演示。正式游戏中读取实际物品的品质、描述、容量与参数。')+'</p></div><div class="st-detail-actions"><button data-st-demo>物品操作 · 演示</button></div>';box.querySelector('[data-st-demo]').onclick=()=>Safehouse.explain('视觉演示','请在游戏仓库中使用、转移或出售真实物品。本页不执行库存操作。');return;}
-    const e=s.entry,it=stashItem(e);if(!it)return;const n=e.n||1,eq=it.equip,icon=Icons.detailTag(it,''),category=eq?'装备 / '+({gun:'枪械',melee:'近战武器',armor:'防护装备',bag:'背包'}[eq.kind]||'装备'):itemCategoryLabel(it),rows=[['分类',category],['品质',RARITY[(it.r||1)-1].name],['数量',n+(it.cat==='ammo'?' 发':' 件')],['总重量',(it.w*n).toFixed(2)+' kg'],['参考估价',formatMoney(unitPrice(it)*n)]];
-    if(Medical.capOf(it))rows.push([it.effect?'剩余次数':'剩余容量',Medical.capText(e)]);
-    if(eq?.kind==='gun'){const d=Attachments.resolve(eq.gun,eq.attachments);rows.push(['口径',BALLISTICS.caliberName(d.caliber)],['伤害',d.dmgMin+'–'+d.dmgMax+(d.pellets>1?' ×'+d.pellets:'' )],['射速',d.rpm+' 发/分'],['弹匣',eq.mag+' / '+d.mag],['射击模式',Gunplay.labels[eq.fireMode||d.defaultMode]],['装填',d.reloadTime+'秒／'+(d.reloadType==='tube'?'发':'弹匣')]);if(d.burstRPM)rows.push(['两连发射速',d.burstRPM+' 发/分 · 首发后坐力延迟结算']);}
-    if(eq?.kind==='armor'){const g=eq.gear;rows.push(['防护等级',g.lv],['耐久',Math.ceil(g.dur)+' / '+g.max]);if(g.type==='body')rows.push(['瞄准时间惩罚','+'+(g.aimPenaltyPct||0)+'%']);}
-    if(eq?.kind==='bag')rows.push(['背包容量',eq.slots+' 格']);
-    if(eq?.kind==='melee'){const d=MELEE.find(x=>x.id===eq.melee);rows.push(['真实伤害',d.damage],['攻击范围',d.radius+' 格']);}
-    if(Medical.is(it))rows.push(['使用效果',Medical.summary(it)]);
-    const canMed=Medical.canUse(it,'stash');
-    const why=Base.bagBlock(it,(e.gear||it.healCap)?1:n),bound=!!eq?.bound;
-    box.innerHTML='<div class="st-detail-body"><small>ITEM INSPECTOR'+(bound?' · 绑定':'')+'</small><h2>'+MerchantUI.esc(it.name)+'</h2><div class="st-item-picture">'+icon+'</div><dl>'+rows.map(([k,v])=>'<div><dt>'+MerchantUI.esc(k)+'</dt><dd>'+MerchantUI.esc(v)+'</dd></div>').join('')+'</dl><p>'+itemDescriptionHtml(it,it.desc||'装备属性与状态沿用当前游戏定义。')+'</p></div><div class="st-detail-actions">'+(Medical.is(it)?'<button data-st-action="use" '+(canMed?'':'disabled')+'>'+Safehouse.icon('cross')+(canMed?'使用医疗品':MerchantUI.esc(Medical.actionLabel(it,'stash')))+'</button>':'')+(eq?'<button data-st-action="equip">'+Safehouse.icon('person')+'前往备战装备</button>':'')+'<button data-st-action="transfer" '+(why?'disabled':'')+'>'+Safehouse.icon('box')+'放入背包</button>'+(eq?.kind==='gun'?'<button data-st-action="unload">'+Safehouse.icon('tool')+'退弹到背包</button>':'')+'<button class="st-sell" data-st-action="sell">'+Safehouse.icon('cart')+'前往出售'+'</button><small class="st-action-hint">'+MerchantUI.esc(why||'估价仅供参考，实际成交价以商人报价为准')+'</small><div class="st-future"><button data-st-planned="lock">锁定 · 待开放</button><button data-st-planned="repair">维修 · 待开放</button></div></div>';
-    Icons.bindDetailImages(box);
-    for(const button of box.querySelectorAll('[data-st-action]'))button.onclick=()=>{if(!Save.stash.includes(e)){this.selected=null;this.rerender();return;}const action=button.dataset.stAction;if(action==='use'&&canMed)Medical.use(e,'stash');if(action==='transfer')Base.toBag(e);if(action==='sell')Base.goToSell();if(action==='unload')Base.unloadGun(it);if(action==='equip')Safehouse.route('loadout');};
+    if(!this.mounted)return;const box=this.el.querySelector('.st-detail');if(!box)return;
+    if(Safehouse.demo){box.innerHTML='<small>WAREHOUSE OVERVIEW</small><h2>仓库概览</h2><div class="st-ov"><p>演示界面只展示布局、不读取存档，所以没有统计数字。正式游戏里这里显示占用、估价与分类分布。</p></div>';return;}
+    const stashN=Save.stash.length,bagN=Save.bag.length,bagCap=bagSlots(),safeN=Save.safe.length;
+    let value=0;const byCat={},byRar={},ids=new Set();
+    for(const e of Save.stash){
+      const it=stashItem(e);if(!it)continue;const n=e.n||1;
+      value+=unitPrice(it)*n;ids.add(it.id);
+      for(const c of STORAGE_UI_CONFIG.categories){
+        if(c.id==='all')continue;
+        if(this.matches(it,c.id))byCat[c.id]=(byCat[c.id]||0)+1;
+      }
+      byRar[U.clamp((it.r||1)-1,0,RARITY.length-1)]=(byRar[U.clamp((it.r||1)-1,0,RARITY.length-1)]||0)+1;
+    }
+    const maxCat=Math.max(1,...Object.values(byCat));
+    const bar=(n,cap)=>'<div class="st-capacity"><i style="width:'+Math.min(100,Math.round(n/Math.max(1,cap)*100))+'%"></i></div>';
+    const catRows=STORAGE_UI_CONFIG.categories.filter(c=>c.id!=='all').map(c=>{
+      const n=byCat[c.id]||0;
+      return '<li'+(n?'':' class="zero"')+'><span>'+MerchantUI.esc(c.name)+'</span>'+
+        '<div class="ov-track"><i style="width:'+Math.round(n/maxCat*100)+'%"></i></div><b>'+n+'</b></li>';
+    }).join('');
+    const rarRows=RARITY.map((r,i)=>{
+      const n=byRar[i]||0;
+      return '<li class="rr'+(i+1)+(n?'':' zero')+'"><span>'+MerchantUI.esc(r.name)+'</span><b>'+n+'</b></li>';
+    }).join('');
+    box.innerHTML='<div class="st-detail-body st-ov">'+
+      '<small>WAREHOUSE OVERVIEW</small><h2>仓库概览</h2>'+
+      '<div class="st-ov-bars">'+
+        '<div><span>仓库占用</span><b>'+stashN+' / '+STASH_SLOTS+' 格</b>'+bar(stashN,STASH_SLOTS)+'</div>'+
+        '<div><span>随身背包</span><b>'+bagN+' / '+bagCap+' 格</b>'+bar(bagN,bagCap)+'</div>'+
+        '<div><span>保险箱</span><b>'+safeN+' / '+CFG.BAG.SAFE+' 格</b>'+bar(safeN,CFG.BAG.SAFE)+'</div>'+
+      '</div>'+
+      '<dl class="st-ov-key"><div><dt>总估价</dt><dd>'+formatMoney(value)+'</dd></div><div><dt>物品种类</dt><dd>'+ids.size+' 种</dd></div></dl>'+
+      '<h3>分类占用</h3><ul class="st-ov-cats">'+catRows+'</ul>'+
+      '<h3>品质分布</h3><ul class="st-ov-rar">'+rarRows+'</ul>'+
+      '<p class="st-ov-tip">单击物品看详情，双击放进背包；背包与装备槽右键可卸下。</p>'+
+    '</div>'+
+    '<div class="st-detail-actions"><button data-st-ov-organize>'+Safehouse.icon('box')+'整理视图</button><button data-st-ov-sell>'+Safehouse.icon('cart')+'前往出售</button></div>';
+    const org=box.querySelector('[data-st-ov-organize]'),sell=box.querySelector('[data-st-ov-sell]');
+    if(org)org.onclick=()=>{this.sort='category';const sel=this.el.querySelector('[aria-label="库存排序"]');if(sel)sel.value=this.sort;this.rerender();this.feedback('已按类别整理显示，物品与数量保持原样。');};
+    if(sell)sell.onclick=()=>this.confirmJunk();
   },
   confirmJunk(){return Base.goToSell();},
   renderDemo(){
@@ -66,7 +95,8 @@ const StorageUI={
   const list=Base.stashList,render=Base.renderStash,show=Base.showItem,note=Base.note,metrics=Base.gridMetrics;
   Base.stashList=function(){return StorageUI.mounted&&Safehouse.view==='stash'?StorageUI.list():list.apply(this,arguments);};
   Base.renderStash=function(){const r=render.apply(this,arguments);StorageUI.afterRender();return r;};
-  Base.showItem=function(e,where,node){if(StorageUI.mounted&&Safehouse.view==='stash'&&where==='stash')return StorageUI.select(e,node);return show.apply(this,arguments);};
+  /* 仓库页点物品：先记下选中（保留高亮），再走原来的详情浮窗，别在这里另起一套 */
+  Base.showItem=function(e,where,node){if(StorageUI.mounted&&Safehouse.view==='stash'&&where==='stash'){StorageUI.selected={entry:e,node};StorageUI.markSelected(node);}return show.apply(this,arguments);};
   Base.note=function(msg,bad){const r=note.apply(this,arguments);if(StorageUI.mounted&&Safehouse.view==='stash')StorageUI.feedback(msg,bad);return r;};
   Base.gridMetrics=function(){if(!StorageUI.mounted||Safehouse.view!=='stash')return metrics.apply(this,arguments);const grid=document.getElementById('stashGrid'),style=getComputedStyle(grid),w=Math.max(240,grid.clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight)),h=Math.max(160,grid.clientHeight-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom)),gap=9,cols=Math.max(3,Math.floor((w+gap)/91)),cell=(w-gap*(cols-1))/cols,rows=Math.max(2,Math.floor((h+gap)/(cell+gap)));return{cols,rows,cell};};
  }

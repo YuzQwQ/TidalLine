@@ -21,8 +21,7 @@ const BaseSafe={
  addAction(container,entry,from){if(!container||!this.list(from)?.includes(entry))return;const button=document.createElement('button');button.dataset.baseSafeMove=from;button.textContent='放入保险箱';button.onclick=()=>this.transfer(entry,from,'safe');container.appendChild(button);}
 };
 {
- const bag=Base.renderBag,detail=StorageUI.renderDetail,show=Base.showItem;
+ const bag=Base.renderBag;
  Base.renderBag=function(){const r=bag.apply(this,arguments);BaseSafe.render();return r;};
- StorageUI.renderDetail=function(){const r=detail.apply(this,arguments);if(!Safehouse.demo&&Safehouse.view==='stash'&&this.selected)BaseSafe.addAction(this.el.querySelector('.st-detail-actions'),this.selected.entry,'stash');return r;};
- Base.showItem=function(entry,where){const r=show.apply(this,arguments);if(where==='bag')BaseSafe.addAction(document.querySelector('#itemTip .medical-actions'),entry,'bag');return r;};
+ /* 「存入保险箱」由 Base.showItem 统一放进详情浮窗，不再往右侧面板或浮窗里二次追加 */
 }

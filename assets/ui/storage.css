@@ -45,3 +45,33 @@
 
 /* Insurance uses the same bag-grid and cell components; only its section heading differs. */
 .base-safe-section{margin-top:14px;padding-top:10px;border-top:1px solid #74826555}.base-safe-section h3{margin:0 0 8px!important;padding:0!important;border:0!important;font-size:15px!important;color:#dcd9be}.base-safe-section h3 em{font-size:10px;color:#a9b795;font-style:normal;margin-left:8px}.base-safe-section>p{margin:7px 0;font-size:9px;line-height:1.6;color:#a7b596}
+
+/* ---- 右侧「仓库概览」：物品详情统一走浮窗，这一栏只放统计 ---- */
+.st-ov-bars { display: grid; gap: 11px; margin: 16px 0 18px; }
+.st-ov-bars > div > span { font-size: 11px; color: #a9b995; }
+.st-ov-bars > div > b { float: right; font: 11px Consolas, monospace; color: #d6dfbe; }
+.st-ov-bars .st-capacity { margin-top: 7px; height: 4px; }
+.st-ov-key { margin: 0 0 18px; }
+.st-ov-key dd { font-family: Consolas, monospace; color: #e0cd94; }
+.st-ov h3 {
+  font: 12px system-ui; letter-spacing: 1px; color: #c8d3b2;
+  margin: 16px 0 9px; padding-bottom: 6px; border-bottom: 1px solid #657a4433;
+}
+.st-ov-cats, .st-ov-rar { list-style: none; margin: 0; padding: 0; }
+.st-ov-cats li { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #b8c6a3; padding: 3px 0; }
+.st-ov-cats li > span { flex: 0 0 78px; white-space: nowrap; }
+.st-ov-cats li > .ov-track { flex: 1; min-width: 0; height: 5px; background: #2b3b2a99; }
+.st-ov-cats li > .ov-track > i { display: block; height: 100%; min-width: 0; background: linear-gradient(90deg, #b99b5c, #e5c988); }
+.st-ov-cats li > b { flex: 0 0 28px; text-align: right; font: 11px Consolas, monospace; color: #d6dfbe; }
+.st-ov-cats li.zero, .st-ov-rar li.zero { opacity: .42; }
+.st-ov-rar { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+.st-ov-rar li {
+  display: flex; justify-content: space-between; gap: 8px; font-size: 11px;
+  padding: 3px 0; color: #b8c6a3; border-bottom: 1px solid #657a4422;
+}
+.st-ov-rar li > b { font: 11px Consolas, monospace; color: #d6dfbe; }
+.st-ov-rar li.rr5 > span, .st-ov-rar li.rr6 > span { color: #d8b97f; }
+.st-ov > .st-ov-tip {
+  font-size: 10px; line-height: 1.8; color: #93a381;
+  margin: 14px 0 0; padding-top: 10px; border-top: 1px solid #657a4433; white-space: normal;
+}

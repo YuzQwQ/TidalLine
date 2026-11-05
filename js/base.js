@@ -85,6 +85,22 @@ const Base = {
     else Save.gear[key] = item || null;
   },
 
+  /* 槽里存的是运行时对象（护甲是 GEAR 实例、背包只有 id），详情窗要的是物品字段，
+     这里统一转成"伪物品"。枪和近战本身就是伪物品，原样返回。 */
+  gearItem(key) {
+    const cur = this.getEquip(key);
+    if (!cur) return null;
+    const kind = this.slotKind(key);
+    if (kind === 'bag') return EQUIP.bag(cur.id) || cur;
+    if (kind === 'armor') return EQUIP.armor(cur) || cur;
+    return cur;
+  },
+
+  /* 外部模块往菜单 / 详情里追加动作（改装、退弹…）。核心手势不依赖它们，
+     没接就是空数组 —— 和局内 Game.extraActsFor 同一套写法。 */
+  extraActsFor(entry, where, node, key) { return []; },
+  extraGearActs(key, item) { return []; },
+
   /* ---- 装备：3 个武器位 + 头盔 / 护甲 / 背包 ---- */
   /* ---------------- 备战页的健康状态 ----------------
      血量 + 一个状态词。局内损伤（流血 / 重伤 / 骨折等）不跨局保留，
@@ -162,10 +178,7 @@ const Base = {
           act +
         '</span></div>';
       row.onclick = () => this.togglePicker(key, row);
-      if (it) row.oncontextmenu = ev => {
-        ev.preventDefault(); ev.stopPropagation();
-        Ctx.show(ev.clientX, ev.clientY, [{label:'退弹', onClick:() => this.unloadGun(it)}]);
-      };
+      this.bindGearMenu(row, key);
       el.appendChild(row);
     }
 
@@ -186,6 +199,7 @@ const Base = {
           act +
         '</span></div>';
       row.onclick = () => this.togglePicker(type, row);
+      this.bindGearMenu(row, type);
       el.appendChild(row);
     }
 
@@ -205,8 +219,28 @@ const Base = {
           act +
         '</span></div>';
       row.onclick = () => this.togglePicker('back', row);
+      this.bindGearMenu(row, 'back');
       el.appendChild(row);
     }
+  },
+
+  /* 装备槽右键：详情 + 卸下，改装这类能力由模块往 extraGearActs 里追加。
+     左键仍然是「点开挑一件」—— 换装是这里最高频的动作，别抢它的左键。 */
+  bindGearMenu(row, key) {
+    if (!row) return;
+    row.oncontextmenu = ev => {
+      const item = this.gearItem(key);
+      if (!item) return;                     // 空槽没有可看的东西
+      if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+      const entries = [
+        { label: '详情', onClick: () => this.showItem(item, 'gear', row, key) },
+        { label: '卸下', onClick: () => this.unequip(key) }
+      ];
+      if (item.equip?.kind === 'gun')
+        entries.push({ label: '退弹', onClick: () => this.unloadGun(item) });
+      for (const a of this.extraGearActs(key, item)) entries.push(a);
+      Ctx.show((ev && ev.clientX) || 0, (ev && ev.clientY) || 0, entries);
+    };
   },
 
   /* ---- 装备槽：点开一个列表，从仓库里挑一件 ----
@@ -468,7 +502,8 @@ const Base = {
     return true;
   },
 
-  /* 卸下：放回仓库，不是销毁。所有槽位均可卸下 */
+  /* 卸下：优先回仓库；仓库满了就塞进背包；两边都放不下才拒绝。
+     不是销毁 —— 装备永远是玩家的东西，只是换个地方待着。 */
   unequip(key) {
     if (!this.canUnequip(key)) {
       this.note('副武器必须带一把手枪 —— 空手进去没法打', true);
@@ -477,23 +512,37 @@ const Base = {
     }
     const cur = this.getEquip(key);
     if (!cur) { this.closePicker(); return; }
-    /* 卸背包等于容量掉回 4 格，带的东西放不下就不让卸 */
-    if (this.slotKind(key) === 'bag' && Save.bag.length > BASE_BAG_SLOTS) {
-      this.note('背包空间不足：先清到 ' + BASE_BAG_SLOTS + ' 格以内再卸下。', true);
+    const kind = this.slotKind(key);
+    /* 卸背包等于容量掉回 4 格，带的东西放不下就得先清 */
+    if (kind === 'bag' && Save.bag.length > BASE_BAG_SLOTS) {
+      this.note('背包里还有东西：先清到 ' + BASE_BAG_SLOTS + ' 格以内再卸背包。', true);
       this.closePicker();
       return false;
     }
-    if (Save.stash.length >= STASH_SLOTS) {
-      this.note('仓库满了，先卖点东西', true);
+    const entry = this.gearItem(key);
+    const name = cur.name || (entry && entry.name) || '这件装备';
+
+    if (Save.stash.length < STASH_SLOTS) {
+      Save.addGearStash(entry);
+      this.setEquip(key, null);
+      Save.save();
+      this.closePicker(); this.render();
+      this.note('卸下 ' + name + '，已放回仓库');
+      this.gearVoice(key, true);
+      return true;
+    }
+    /* 仓库满了：背包兜底，别让「满了」变成「卸不下来」 */
+    const why = this.bagBlock(entry, 1);
+    if (why) {
+      this.note('仓库和背包都放不下（' + why + '），先清理再卸下', true);
+      this.closePicker();
       return false;
     }
-    const kind = this.slotKind(key);
-    Save.addGearStash(kind === 'gun' ? cur : kind === 'bag' ? EQUIP.bag(cur.id) : EQUIP.armor(cur));
+    Save.addGearBag(entry);
     this.setEquip(key, null);
     Save.save();
-    this.closePicker();
-    this.render();
-    this.note('卸下' + cur.name + '，已放回仓库');
+    this.closePicker(); this.render();
+    this.note('仓库已满，卸下的 ' + name + ' 放进了背包', false);
     this.gearVoice(key, true);
     return true;
   },
@@ -970,19 +1019,15 @@ const Base = {
         grid.appendChild(cell);
         continue;
       }
-      /* 仓库页（下一轮再收）沿用旧手势；藏身处背包走统一手势：
-         单击看详情、双击搬回仓库（医疗品双击=使用）、Ctrl+左键=搬回仓库、右键出菜单。
-         局外详情只给信息，动作全在菜单里 —— 详情卡不该是个按钮面板。 */
-      if (Safehouse.view === 'stash') {
-        cell.onclick = () => this.showItem(e, 'bag', cell);
-        cell.oncontextmenu = ev => { ev.preventDefault(); this.showItem(e, 'bag', cell); };
-      } else {
+      /* 背包（藏身处与仓库页共用）：单击看详情、双击卸下（医疗品可用就先用）、
+         Ctrl+左键卸下、右键 = 详情 / 卸下 / 按需追加（使用、存入保险箱、改装）。 */
+      {
         const count = e.n || 1;
-        cell.title = it.name + ' · ' + (it.w * count).toFixed(2) + 'kg · 双击' +
-          (Medical.canUse(it, 'basebag') ? '使用' : '搬回仓库') + ' · Ctrl+左键搬回仓库';
+        cell.title = it.name + ' · ' + (it.w * count).toFixed(2) + 'kg · 单击看详情 · 双击' +
+          (Medical.canUse(it, 'basebag') ? '使用' : '卸下');
         cell.onclick = ev => {
           if (ev && (ev.ctrlKey || ev.metaKey)) { Tips.hide(); this.toStash(e); return; }
-          this.showBagItem(e, cell);
+          this.showItem(e, 'bag', cell);
         };
         cell.ondblclick = ev => {
           if (ev && ev.preventDefault) ev.preventDefault();
@@ -993,7 +1038,10 @@ const Base = {
         cell.oncontextmenu = ev => {
           ev.preventDefault();
           ev.stopPropagation();
-          const entries = [{ label: '详情', onClick: () => this.showBagItem(e, cell) }];
+          const entries = [
+            { label: '详情', onClick: () => this.showItem(e, 'bag', cell) },
+            { label: '卸下', onClick: () => this.toStash(e) }
+          ];
           if (Medical.is(it)) {
             const usable = Medical.canUse(it, 'basebag');
             entries.push({
@@ -1002,8 +1050,9 @@ const Base = {
               onClick: () => { if (usable) Medical.use(e, 'basebag'); }
             });
           }
-          entries.push({ label: '放入保险箱', onClick: () => BaseSafe.transfer(e, 'bag', 'safe') });
-          entries.push({ label: '放回仓库', onClick: () => this.toStash(e) });
+          if (typeof BaseSafe !== 'undefined')
+            entries.push({ label: '存入保险箱', onClick: () => BaseSafe.transfer(e, 'bag', 'safe') });
+          for (const a of this.extraActsFor(e, 'bag', cell)) entries.push(a);
           Ctx.show(ev.clientX, ev.clientY, entries);
         };
       }
@@ -1102,44 +1151,58 @@ const Base = {
     Save.save(); Tips.hide(); this.render(); if(rounds.length)Game.sfx('pickup'); return true;
   },
 
-  /* 局外背包的详情：只给信息，动作都在右键菜单里。
-     局内的详情才带按钮（那边没有"菜单先选一下"的余地）。 */
-  showBagItem(e, node) {
-    const it = stashItem(e);
-    if (!it || !node || !node.getBoundingClientRect) return;
-    const extra = [];
-    if (Medical.capOf(it))
-      extra.push([it.effect ? '剩余次数' : '当前容量', Medical.capText(e)]);
-    Tips.show(it, node.getBoundingClientRect(), '', extra);
-  },
+  /* 局外背包的详情：和仓库 / 装备栏共用同一个浮窗，别处不要再写一套。 */
+  showBagItem(e, node) { this.showItem(e, 'bag', node); },
 
-  showItem(e, where, node) {
-    const it = stashItem(e);
+  /* ---------------- 局外统一的物品详情 ----------------
+     仓库 / 背包 / 装备栏所有格子都弹这一个浮窗（#itemTip），不再有第二套详情面板。
+     动作按钮按语境给：卸下（背包、装备栏）、放进背包（仓库）、使用（医疗品）、
+     存入保险箱（背包）、前往出售（仓库）；改装这类模块能力走 extraActsFor 钩子。
+     where: 'stash' | 'bag' | 'gear'；装备栏的 e 是伪物品，key 是槽位名。 */
+  showItem(e, where, node, key) {
+    const inGear = where === 'gear';
+    const it = inGear ? e : stashItem(e);
     if (!it || !node || !node.getBoundingClientRect) return;
-    const n = e.n || 1;
+    const inStash = where === 'stash', inBag = where === 'bag';
+
     const extra = [];
-    if (Medical.capOf(it))
+    /* 堆叠数量在原来的右侧面板里是单独一行，浮窗也得有，不然弹药看不出多少发 */
+    if (!inGear && e && (e.n || 1) > 1)
+      extra.push(['数量', (e.n || 1) + (it.cat === 'ammo' ? ' 发' : ' 件')]);
+    if (!inGear && Medical.capOf(it))
       extra.push([it.effect ? '剩余次数' : '当前容量', Medical.capText(e)]);
-    Tips.show(it, node.getBoundingClientRect(),
-      where === 'stash' ? '左键放入背包' : '左键放回仓库', extra);
+    const hint = inStash ? '双击放进背包 · 右键不额外弹菜单'
+      : inBag ? '双击卸下 · Ctrl+左键同样卸下'
+      : '双击卸下 · 右键有详情与卸下';
+    Tips.show(it, node.getBoundingClientRect(), hint, extra);
 
     const acts = [];
-    if (it.equip?.kind === 'gun') acts.push({label:'退弹到背包', onClick:() => this.unloadGun(it)});
-    if (Medical.is(it)) {
-      const stashWhere = where === 'bag' ? 'basebag' : 'stash';
-      const usable = Medical.canUse(it, stashWhere);
+    /* 第一项永远是「从当前位置挪走」：装备栏/背包是卸下，仓库是放进背包 */
+    if (inGear) acts.push({ label: '卸下', onClick: () => this.unequip(key) });
+    else if (inBag) acts.push({ label: '卸下', onClick: () => this.toStash(e) });
+    else {
+      /* 背包塞不下就别给个能点的按钮，直接说明为什么 */
+      const why = this.bagBlock(it, (e.gear || Medical.capOf(it)) ? 1 : Math.max(1, e.n || 1));
+      acts.push({ label: '放进背包', disabled: !!why, onClick: () => this.toBag(e) });
+    }
+
+    /* 模块动作（装备 / 改装）紧跟主项，否则会被"前往出售"这类页脚按钮挤到最后 */
+    for (const a of this.extraActsFor(e, where, node, key)) acts.push(a);
+
+    if (!inGear && Medical.is(it)) {
+      const w = inBag ? 'basebag' : 'stash';
+      const usable = Medical.canUse(it, w);
       acts.push({
-        label: Medical.actionLabel(it, stashWhere),
+        label: Medical.actionLabel(it, w),
         disabled: !usable,
-        onClick: () => { if (usable) Medical.use(e, stashWhere); }
+        onClick: () => { if (usable) Medical.use(e, w); }
       });
     }
-    if (where === 'stash') {
-      acts.push({ label: '放入背包', onClick: () => this.toBag(e) });
-      acts.push({ label: '前往出售', onClick: () => this.goToSell() });
-    } else {
-      acts.push({ label: '放回仓库', onClick: () => this.toStash(e) });
-    }
+    if (typeof BaseSafe !== 'undefined' && (inBag || inStash))
+      acts.push({ label: '存入保险箱', onClick: () => BaseSafe.transfer(e, where, 'safe') });
+    if (inStash) acts.push({ label: '前往出售', onClick: () => this.goToSell() });
+    if (!inGear && it.equip?.kind === 'gun')
+      acts.push({ label: '退弹到背包', onClick: () => this.unloadGun(it) });
     Tips.actions(acts);
   },
 
@@ -1276,11 +1339,14 @@ const Base = {
           ? ' · ' + Medical.capText(e)
           : ' · ' + it.w.toFixed(2) + 'kg') + ' · ' +
         '估价 ' + formatMoney(unitPrice(it) * n) + ' · 成交价以商人报价为准 · 左键看详情';
+      /* 仓库只有左键看详情、双击放进背包；右键不弹菜单（别让两套入口打架） */
       cell.onclick = () => this.showItem(e, 'stash', cell);
-      cell.oncontextmenu = (ev) => {
-        ev.preventDefault();
-        this.showItem(e, 'stash', cell);
+      cell.ondblclick = (ev) => {
+        if (ev && ev.preventDefault) ev.preventDefault();
+        Tips.hide();
+        this.toBag(e);
       };
+      cell.oncontextmenu = (ev) => { if (ev) ev.preventDefault(); };
       grid.appendChild(cell);
     }
 
