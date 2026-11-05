@@ -57,6 +57,16 @@ const RUNTIME_SCENES = [
   { key: 'procurement', label: '改枪结算', when: '改枪结算页的供应商引言；不进随机语音', wired: true },
   { key: 'beforeTreatment', label: '治疗开单前', when: '诊台结账页上的引言（静态展示）', wired: true },
   { key: 'afterTreatment', label: '治疗付款后', when: '治疗扣款成功后追加到血量卡片下方', wired: true },
+  { key: 'sell', label: '出售结算', when: '卖出成功后的通用口径；整批同一档位时让位给下面的收购反应', wired: true },
+  { key: 'buybackPreferred', label: '收购 · 偏好', when: '整批都是主营／高需求品，按偏好价收下', wired: true },
+  { key: 'buybackNormal', label: '收购 · 常规', when: '整批都是正常行情品', wired: true },
+  { key: 'buybackLow', label: '收购 · 低价', when: '整批都是非主营、需求低的品', wired: true },
+  { key: 'reserved.trust2', label: '信任 II', when: '信誉到 25 且完成首个关键任务时，信任系统尚未实现', wired: false },
+  { key: 'reserved.trust3', label: '信任 III', when: '信誉到 60，信任系统尚未实现', wired: false },
+  { key: 'reserved.trust4', label: '信任 IV', when: '信誉到 85，信任系统尚未实现', wired: false },
+  { key: 'reserved.noFunds', label: '交易失败 · 现金不足', when: '余额不足时本该说的那句；目前只弹一句通用提示', wired: false },
+  { key: 'reserved.noStock', label: '交易失败 · 库存不足', when: '商品售罄时；当前货架没有库存概念', wired: false },
+  { key: 'reserved.noSpace', label: '交易失败 · 仓库空间不足', when: '仓库满格时；目前只弹「仓库空间不足」提示', wired: false },
   { key: 'reserved.sell', label: '收购 · 交出货', when: '贸易商对高价回收的反应', wired: false },
   { key: 'reserved.priceUp', label: '收购 · 行情上涨', when: '贸易商对涨价物品的反应', wired: false },
   { key: 'reserved.priceDown', label: '收购 · 行情下跌', when: '贸易商对跌价物品的反应', wired: false }
@@ -252,6 +262,7 @@ function merchantView(m, idx) {
   <section class="block" id="m-${m.key}-identity">
     <h3><i>01</i>身份与职责</h3>
     <p class="para">${esc(d.publicIdentity || '公开身份未定。')}</p>
+    ${d.overview ? `<p class="mini dim">总览页简介：${esc(d.overview)}</p>` : ''}
     <div class="cols">
       <div class="panel">
         <h4>售卖与经营</h4>
@@ -272,7 +283,7 @@ function merchantView(m, idx) {
 
   <section class="block" id="m-${m.key}-past">
     <h3><i>02</i>背景与过去</h3>
-    <p class="para">${esc(d.biography || '背景未定。这位商人的来历、灾前身份、与第一次潮汐的关系都还没有写。')}</p>
+    ${(d.biography ? String(d.biography).split('\n\n') : ['背景未定。这位商人的来历、灾前身份、与第一次潮汐的关系都还没有写。']).map(p => `<p class="para">${esc(p)}</p>`).join('')}
     ${m.arc ? `<ol class="arc">${m.arc.map((t, i) => `<li><b>${['前期', '中期', '后期'][i]}</b>${esc(t)}</li>`).join('')}</ol>` : '<p class="empty">人物弧光未设计。</p>'}
   </section>
 
@@ -289,6 +300,7 @@ function merchantView(m, idx) {
       <div class="panel"><h4>高信任意味着</h4><p class="mini">${esc(d.trustMeaning || '未定')}</p></div>
     </div>
     ${d.appearance ? `<details class="fold"><summary>外形与立绘参考</summary><p class="mini">${esc(d.appearance)}</p><p class="mini dim">立绘：<code>${esc(m.portrait)}</code> · 要求见 <a href="design/merchants/BRIEF_V1.md">BRIEF_V1.md</a> 第七、八节</p></details>` : ''}
+    ${d.voice ? `<details class="fold" open><summary>台词风格规范</summary><ul class="rules">${d.voice.map(t => `<li>${esc(t)}</li>`).join('')}</ul>${d.coreLine ? `<p class="core-line">人物核心：${esc(d.coreLine)}</p>` : ''}</details>` : ''}
   </section>
 
   <section class="block" id="m-${m.key}-trust">
@@ -341,7 +353,7 @@ const designCoverRows = DESIGN_SCENES.map(([k, label]) => {
 const gapList = merchants.filter(m => !m.design).map(m => `
   <li><b>${esc(m.name)}</b>（${esc(m.tag)}）还没有设定稿：没有年龄、阵营、主题句、背景、性格、信任等级、委托线与八节点台词。
   目前只有藏身处里的姓名/职业/招牌台词、一张立绘（<code>${esc(m.portrait)}</code>）、固定货架（${m.shelf ? m.shelf.rows.length + ' 件，' + Math.round(m.shelf.multiplier * 100) + '% 溢价' : '未配置'}）和 ${totalRuntime(m)} 条运行时语音。
-  收购反应台词 <code>reserved.*</code> 已写但代码里没有调用点。</li>`).join('');
+  收购反应台词 <code>reserved.sell / priceUp / priceDown</code> 已写，但行情涨跌这套机制还没做，代码里没有调用点。</li>`).join('');
 
 const runtimeGaps = merchants.filter(m => !m.runtime.length).map(m =>
   `<li><b>${esc(m.name)}没有运行时语音</b>：<code>js/merchant-config.js</code> 的 <code>MERCHANT_DIALOGUE</code> 只有 <code>gun</code> / <code>doctor</code> / <code>viktor</code> 三组，缺 <code>shop</code>。
@@ -349,6 +361,8 @@ const runtimeGaps = merchants.filter(m => !m.runtime.length).map(m =>
 
 const unwired = '<li><code>procurement</code> 只在改枪结算页当引言用，<code>MerchantSpeech.say()</code> 明确跳过这个键，所以不会在随机语音里出现。</li>'
   + '<li><code>beforeTreatment</code> 是诊台结账页上的静态引言，不经过语音池。</li>'
+  + '<li>玛拉的 <code>sell</code> 与三档 <code>buyback*</code> 已接线：卖出成功当场播报，整批落在同一档位时用收购反应、混着卖才用通用结算口径。</li>'
+  + '<li>玛拉的 <code>reserved.trust2/3/4</code> 与 <code>reserved.noFunds/noStock/noSpace</code> 共 6 条已写未接线：信任系统、库存与结算失败提示都还没做。</li>'
   + '<li>贸易商的 <code>reserved.sell / priceUp / priceDown</code> 三条收购反应没有被任何代码调用。</li>';
 
 const nightRows = [
@@ -423,6 +437,8 @@ const html = `<!DOCTYPE html>
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
   .chip { font-size: 11px; color: #a8c4ba; background: #17241f; border: 1px solid #223a32; padding: 2px 7px; }
   .traits { margin: 0 0 14px; padding-left: 18px; font-size: 12.5px; line-height: 2; color: #a9bdb6; }
+  .rules { margin: 8px 0 10px; padding-left: 18px; font-size: 12.5px; line-height: 1.95; color: #a9bdb6; }
+  .core-line { margin: 10px 0 2px; font-size: 13px; color: #d6c79a; }
   .arc { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; max-width: 980px; }
   .arc li { display: grid; grid-template-columns: 44px 1fr; gap: 10px; font-size: 12.5px; color: #a9bdb6;
     background: #0f1916; border-left: 2px solid #2f5a4b; padding: 8px 12px; }

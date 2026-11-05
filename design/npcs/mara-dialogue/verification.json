@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "greeting": true,
+  "idle": true,
+  "purchase": true,
+  "buyback": {
+    "preferred": "这可是正经的好货。我正缺这一类，价格自然不会亏待你。",
+    "low": "这东西在我手里可不好出货。你要卖，我只能给这个价。",
+    "sell": "嗯，品相还过得去。账我记好了，钱你点清楚。"
+  },
+  "errors": []
+}

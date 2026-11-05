@@ -4,7 +4,7 @@
 
 ## 文件与评审入口
 
-[Wiki 版商人档案（含全部台词）](../../商人档案.html) · [可视化设计总览](index.html) · [结构化设计数据](design-v1.json) · [用户原始方案](BRIEF_V1.md)
+[可视化设计总览](index.html) · [结构化设计数据](design-v1.json) · [用户原始方案](BRIEF_V1.md) · [Wiki 版商人档案（含全部台词）](../../商人档案.html)
 
 [QUEST_LINES_V1.md](QUEST_LINES_V1.md) · [STOCK_UNLOCKS_V1.md](STOCK_UNLOCKS_V1.md) · [DIALOGUE_V1.md](DIALOGUE_V1.md) · [DATA_CONTRACT_V1.md](DATA_CONTRACT_V1.md) · [STORY_LINKS_V1.md](STORY_LINKS_V1.md)
 

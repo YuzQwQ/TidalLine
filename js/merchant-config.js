@@ -1,6 +1,6 @@
 const MERCHANT_UI_CONFIG={
   viktor:{english:'VIKTOR SAREN',tag:'贸易商',icon:'cart',summary:'大型连锁超商集团经营者，拥有广泛的采购与供货渠道。比起坐在办公室里处理文件，他更喜欢亲自与顾客打交道。',description:'“哈哈！没有卖不出去的东西，只有没找对的买家！来来来，看看今天有什么好货！”',categories:[['all','全部商品'],['life','生活用品'],['elec','电子产品'],['ind','工业器材'],['collect','文物藏品'],['med','医疗收集品']],future:'信任、供货条件与更多贸易渠道预留；当前为固定货架。',notice:'维克托：18件白至紫收集品固定供货，购买后进入仓库。'},
-  shop:{english:'MARA VANE',tag:'护甲商人',icon:'box',summary:'防护装备、头盔与背包。',description:'守合同，讲交付。可靠的装备，需要清楚的条件。',categories:[['all','全部'],['armor','防具'],['bag','背包'],['planned','功能组件 · 规划']],future:'高级防护与稀缺背包的货源、调配与预留。',notice:'玛拉：目前可购买 I—III 级防护与前三档背包。'},
+  shop:{english:'MARA VANE',tag:'护甲商人',icon:'box',summary:'防护装备、头盔与背包。',description:'“我卖的是防护装备，不是活命的保证。想平安回来，光肯花钱可不够。”',categories:[['all','全部'],['armor','防具'],['bag','背包'],['planned','功能组件 · 规划']],future:'高级防护与稀缺背包的货源、调配与预留。',notice:'玛拉：目前可购买 I—III 级防护与前三档背包。'},
   gun:{english:'EDGAR LOCKE',tag:'军火商',icon:'tool',summary:'枪械、弹药与近战装备。',description:'“枪不会背叛你。至于卖枪的人……那得看你出多少钱。”',categories:[['all','全部'],['gun','枪械'],['ammo','弹药'],['melee','近战'],['attachment','枪械配件']],future:'高阶弹药、专业军械与配件渠道。',notice:'埃德加：全新枪械与一级、二级弹药可交易。'},
   doctor:{english:'LIN CEN',tag:'医生',icon:'cross',summary:'医疗用品与付费治疗。',description:'“我见过太多人死于本可以治好的伤。至于那些治不好的……我还在想办法。”',categories:[['all','全部'],['recovery','恢复'],['painkiller','止痛'],['trauma','损伤处理'],['injection','针剂'],['anomaly','异常处理']],future:'高阶医疗供应、损伤处理与特殊医疗支持。',notice:'林岑：药品与治疗服务分开收费；部分药效尚未开放。'},
   capabilities:{trust:'planned',quests:'planned',rewards:'planned',additionalContacts:'planned'},
@@ -42,3 +42,15 @@ const MERCHANT_DIALOGUE={gun:{
  purchase:['好！成交！哈哈，跟爽快人做生意就是舒坦！','多谢惠顾！下次来可别忘了找我，保准还有新鲜玩意儿！'],
  reserved:{sell:'嚯！好东西啊！你从哪儿翻出来的？算了算了，生意人的规矩，不该问的不问！',priceUp:'哎哟，这东西现在可抢手！你要是早些时候囤了几件，那我可得夸你有眼光！',priceDown:'生意嘛，有涨就有跌！别急，货在手里，总有机会的！'}
 }};
+
+MERCHANT_DIALOGUE.shop={
+ overview:'我卖的是防护装备，不是活命的保证。想平安回来，光肯花钱可不够。',
+ greeting:['来了？货都在架上，价格也标清楚了。慢慢看。','又要进封锁区？先检查好装备，省得回来找我算账。','今天到了一批新货。质量我验过了，值不值这个价，你自己判断。'],
+ idle:['拿不定主意？买贵了顶多心疼钱，买错了可就不一定了。','护甲不是越重越好。你要是连路都跑不动，穿再厚也没用。'],
+ purchase:['钱货两清。出了这扇门，记得自己对装备负责。','眼光不错。这批货我亲自验过，希望你别太快把它穿坏了。'],
+ sell:['东西我收下了。价格公道，咱们都不用浪费口舌。','嗯，品相还过得去。账我记好了，钱你点清楚。'],
+ buybackLow:['这东西在我手里可不好出货。你要卖，我只能给这个价。'],
+ buybackNormal:['嗯，东西还不错。按正常行情收，咱们都省事。'],
+ buybackPreferred:['这可是正经的好货。我正缺这一类，价格自然不会亏待你。'],
+ reserved:{trust2:'你这人还算守时。下次有合适的货，我可以替你留意。',trust3:'能把事情办妥的人不多。往后有些订单，我会优先考虑你。',trust4:'这些年，我很少把自己的账本交给别人看。你是个例外。',noFunds:'预算不够就别勉强。我不做赊账生意。',noStock:'卖完了。下批什么时候到，我现在也没法保证。',noSpace:'先把你的仓库收拾好。东西买回去，总得有地方放。'}
+};

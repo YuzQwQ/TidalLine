@@ -14,7 +14,19 @@
       "alignment": "守序中立，偏守序邪恶（作者定位，不向玩家显示）",
       "publicIdentity": "原环礁湾港务体系防护物资采购负责人，现经营防护装备生意。",
       "theme": "秩序高于公平。",
-      "biography": "玛拉曾管理港区的防护物资采购。第一次潮汐恶化时，她参与装备调配、运输资源分配与撤离名额审核。她保留了部分账册和供货关系，灾后重新经营防护装备生意。她守合同，也相信稀缺资源应该优先分给能够维持秩序的人；其中一些决定让她获利，另一些决定至今仍有人追问。",
+      "biography": "玛拉·维恩曾负责环礁湾港区的防护装备采购与物资调配。在第一次潮汐爆发期间，她参与了紧急撤离所需的物资与运输资源分配。\n\n面对日益紧缺的资源，她始终坚持严格的调度规则，并作出过一些至今仍存在争议的决定。\n\n灾变后，玛拉凭借保留下来的商业关系与采购渠道重新开展防护装备生意。\n\n她非常重视合同、信用与办事效率。只要双方履行约定，她便是一位可靠的合作伙伴；但如果有人希望凭交情得到特殊照顾，通常只会换来她礼貌而坚定的拒绝。\n\n她保存着不少旧时代的账册，其中某些记录可能比她出售的任何一件护甲都更有价值。",
+      "overview": "原环礁湾港区防护物资采购负责人，如今经营护甲、头盔与背包生意。她以守约和精明著称，掌握着不少稀缺防护装备的供货渠道。至于灾变期间那些被她亲手签署的物资调拨记录，她似乎并不愿多谈。",
+      "coreLine": "她值得合作，却不一定值得原谅。",
+      "voice": [
+        "句子简洁，表达直接。",
+        "语气成熟、沉稳，避免刻意装酷。",
+        "经常从装备品质、价格、风险与责任的角度思考。",
+        "可以有轻微讽刺和职业幽默，但不过分刻薄。",
+        "不会无条件赞美玩家，也不会随意侮辱顾客。",
+        "对守约的熟客会逐渐表现出信任，但不会突然变得热情。",
+        "涉及过去的撤离行动时，态度应更加谨慎。",
+        "尽量减少重复使用“合同”“规矩”“账本”等词语，避免人物性格变成机械化的口头禅。"
+      ],
       "appearance": "48岁，宽肩、结实，短而微卷的深色头发，面部线条清晰，眼神冷静审视。赭黄工作衫、耐磨帆布马甲，旧软尺、钥匙和标签夹。一手扶护甲样品，另一手压住账册。暖棕、橄榄绿，衣着整洁而有磨损。",
       "traits": [
         "礼貌稳重，善于判断履约能力",
@@ -1028,13 +1040,13 @@
       "reservationEligible": true
     },
     {
-      "id": "merchant_guns:rifle",
+      "id": "merchant_guns:m4a1",
       "merchantId": "merchant_guns",
-      "name": "制式步枪",
+      "name": "M4A1",
       "trustLevel": 2,
       "reference": {
         "kind": "gun",
-        "id": "rifle"
+        "id": "m4a1"
       },
       "status": "existing",
       "requiresFeature": null,
@@ -1046,31 +1058,13 @@
       "reservationEligible": false
     },
     {
-      "id": "merchant_guns:shotgun",
+      "id": "merchant_guns:akm",
       "merchantId": "merchant_guns",
-      "name": "短管霰弹枪",
-      "trustLevel": 1,
-      "reference": {
-        "kind": "gun",
-        "id": "shotgun"
-      },
-      "status": "existing",
-      "requiresFeature": null,
-      "price": {
-        "source": "current_game_definition",
-        "multiplier": 1
-      },
-      "quota": null,
-      "reservationEligible": false
-    },
-    {
-      "id": "merchant_guns:smg",
-      "merchantId": "merchant_guns",
-      "name": "冲锋枪",
+      "name": "AKM",
       "trustLevel": 2,
       "reference": {
         "kind": "gun",
-        "id": "smg"
+        "id": "akm"
       },
       "status": "existing",
       "requiresFeature": null,
@@ -1082,13 +1076,175 @@
       "reservationEligible": false
     },
     {
-      "id": "merchant_guns:pistol",
+      "id": "merchant_guns:famas_f1",
       "merchantId": "merchant_guns",
-      "name": "手枪",
-      "trustLevel": 1,
+      "name": "FAMAS F1",
+      "trustLevel": 2,
       "reference": {
         "kind": "gun",
-        "id": "pistol"
+        "id": "famas_f1"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:pp19_01",
+      "merchantId": "merchant_guns",
+      "name": "PP-19-01 Vityaz",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "pp19_01"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:mp5a3",
+      "merchantId": "merchant_guns",
+      "name": "MP5A3",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "mp5a3"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ump45",
+      "merchantId": "merchant_guns",
+      "name": "UMP45",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "ump45"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:mp155",
+      "merchantId": "merchant_guns",
+      "name": "MP-155",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "mp155"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:rem870",
+      "merchantId": "merchant_guns",
+      "name": "Remington 870",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "rem870"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:saiga12",
+      "merchantId": "merchant_guns",
+      "name": "Saiga-12",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "saiga12"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:glock17",
+      "merchantId": "merchant_guns",
+      "name": "Glock 17",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "glock17"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:m1911a1",
+      "merchantId": "merchant_guns",
+      "name": "M1911A1",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "m1911a1"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:beretta92",
+      "merchantId": "merchant_guns",
+      "name": "Beretta 92FS",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "gun",
+        "id": "beretta92"
       },
       "status": "existing",
       "requiresFeature": null,
@@ -1198,6 +1354,104 @@
       "reservationEligible": true
     },
     {
+      "id": "merchant_guns:ammo_762x39_1",
+      "merchantId": "merchant_guns",
+      "name": "7.62mm普通弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_762x39_1"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_762x39_2",
+      "merchantId": "merchant_guns",
+      "name": "7.62mm改良弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_762x39_2"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_762x39_3",
+      "merchantId": "merchant_guns",
+      "name": "7.62mm钢芯弹",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_762x39_3"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_762x39_4",
+      "merchantId": "merchant_guns",
+      "name": "7.62mm穿甲弹",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_762x39_4"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_762x39_5",
+      "merchantId": "merchant_guns",
+      "name": "7.62mm特种穿甲弹",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_762x39_5"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
       "id": "merchant_guns:ammo_9mm_1",
       "merchantId": "merchant_guns",
       "name": "9mm普通弹",
@@ -1281,6 +1535,104 @@
       "reference": {
         "kind": "ammo",
         "id": "ammo_9mm_5"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 1,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": true
+    },
+    {
+      "id": "merchant_guns:ammo_45acp_1",
+      "merchantId": "merchant_guns",
+      "name": ".45 ACP普通弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_45acp_1"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_45acp_2",
+      "merchantId": "merchant_guns",
+      "name": ".45 ACP改良弹",
+      "trustLevel": 1,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_45acp_2"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_45acp_3",
+      "merchantId": "merchant_guns",
+      "name": ".45 ACP钢芯弹",
+      "trustLevel": 2,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_45acp_3"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": null,
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_45acp_4",
+      "merchantId": "merchant_guns",
+      "name": ".45 ACP穿甲弹",
+      "trustLevel": 3,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_45acp_4"
+      },
+      "status": "existing",
+      "requiresFeature": null,
+      "price": {
+        "source": "current_game_definition",
+        "multiplier": 1
+      },
+      "quota": {
+        "quantity": 2,
+        "unit": "full_stack",
+        "refresh": "successful_extraction"
+      },
+      "reservationEligible": false
+    },
+    {
+      "id": "merchant_guns:ammo_45acp_5",
+      "merchantId": "merchant_guns",
+      "name": ".45 ACP特种穿甲弹",
+      "trustLevel": 4,
+      "reference": {
+        "kind": "ammo",
+        "id": "ammo_45acp_5"
       },
       "status": "existing",
       "requiresFeature": null,
