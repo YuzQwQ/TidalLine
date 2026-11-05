@@ -86,9 +86,9 @@ const Base = {
 
   /* ---- 装备：3 个武器位 + 头盔 / 护甲 / 背包 ---- */
   /* ---------------- 备战页的健康状态 ----------------
-     血量 + 一个状态词。状态词目前只按血量分档；debuff 系统上线后
-     往 Save.debuffs 里塞条目（{ id, label } 或直接字符串），这里会自动列成标签，
-     不用再改渲染。 */
+     血量 + 一个状态词。局内损伤（流血 / 重伤 / 骨折等）不跨局保留，
+     战局结束时已清空，所以备战页恒显示「无异常状态」；下面 .lh-debuff 的
+     渲染结构保留给未来真正需要跨局的状态。 */
   healthState() {
     const max = CFG.P.HP;
     const ratio = Save.hp / max;
@@ -113,7 +113,7 @@ const Base = {
     const hp = Math.round(Save.hp * 10) / 10;
     const st = this.healthState();
     const pct = U.clamp(Save.hp / max * 100, 0, 100);
-    /* 未来 debuff：Save.debuffs = ['bleeding', {id:'fracture',label:'骨折'}] */
+    /* 局内状态不写 Save.debuffs；这里读的是给未来跨局状态预留的位置 */
     const debuffs = (Save.debuffs || []).filter(Boolean)
       .map(d => (typeof d === 'string' ? d : (d.label || d.name || d.id)));
     const chips = debuffs.length
@@ -501,7 +501,7 @@ const Base = {
   gearVoice(key, off) {
     if (off) { Game.sfx('pickup'); return; }
     const kind=this.slotKind(key);
-    if(kind==='gun'){const it=this.getEquip(key),w=it&&WEAPONS[it.equip.gun];if(w)Game.sfx(SWITCH_SFX[w.category]||'shot_switch');return;}
+    if(kind==='gun'){const it=this.getEquip(key),w=it&&WEAPONS[it.equip.gun];if(w)Game.sfx(SWITCH_MODEL[w.id]||SWITCH_SFX[w.category]||'shot_switch');return;}
     if(kind==='melee'){Game.sfx('shot_switch',{rate:0.86});return;}
     if(typeof SFX!=='undefined'&&SFX.gear)SFX.gear(key);
   },
@@ -778,7 +778,7 @@ const Base = {
       Math.round(q.missing * 10) / 10 + ' HP</p><p>绷带等效成本 ' + formatMoney(q.medicine) + ' + 服务费 ' + formatMoney(q.service) +
       '</p><button id="btnDoctorTreat"' + (!q.missing || Save.credits < q.total ? ' disabled' : '') + '>' +
       (q.missing ? '立即治疗至满血 · ' + formatMoney(q.total) : '生命值已满') + '</button><p class="medical-muted">' +
-      (q.missing && Save.credits < q.total ? '信用点不足。' : '') + '损伤清除服务待状态系统开放。</p>';
+      (q.missing && Save.credits < q.total ? '信用点不足。' : '') + '局内损伤在战局结束时自动清除，局外不提供损伤清除。</p>';
     document.getElementById('btnDoctorTreat').onclick = ev => {
       const quote = Medical.quote();
       Deal.show({ kind:'buy', title:'治疗服务', name:'立即恢复至满血',
@@ -929,7 +929,8 @@ const Base = {
       /* 整叠走，别按「一件」走：逐件点击时 toStash 一次只搬 1 件（用过的医疗品
          本来就是单件，堆叠的靠玩家多点几次），但这里是**整条删掉**，
          照抄那个 1 就等于把剩下的 n-1 件吞了。只有真的用过的（cap 不满）才是单件。 */
-      const used = !!it.healCap && e.cap != null && e.cap < it.healCap - 1e-6;
+      const maxCap = Medical.capOf(it);
+      const used = !!maxCap && e.cap != null && e.cap < maxCap - 1e-6;
       const n = (e.gear || used) ? 1 : Math.max(1, e.n || 1);
       /* 弹药先问仓库塞不塞得下 —— 和逐件点「放回仓库」是同一条规则，
          塞不下就留在包里，不吞、也不把仓库撑爆 */
@@ -954,7 +955,7 @@ const Base = {
     cell.className='cell '+RARITY[U.clamp((it.r||1)-1,0,RARITY.length-1)].cls+(it.equip?' eq':'');
     cell.innerHTML=Icons.bagTag(it,'ico-bag')+'<span class="cn">'+esc(it.short||it.name)+'</span>'+
       (n>1?'<span class="qty">'+n+'</span>':'')+
-      (it.healCap&&Medical.isPartial(e)?'<span class="cap">'+Math.ceil(Medical.entryCap(e))+'</span>':'');
+      (Medical.capOf(it)&&Medical.isPartial(e)?'<span class="cap">'+Math.ceil(Medical.entryCap(e))+'</span>':'');
     cell.title=it.name+' · '+(it.w*n).toFixed(2)+'kg · 单击看详情';
     return cell;
   },
@@ -984,7 +985,7 @@ const Base = {
       } else {
         const count = e.n || 1;
         cell.title = it.name + ' · ' + (it.w * count).toFixed(2) + 'kg · 双击' +
-          (Medical.ready(it) ? '使用' : '搬回仓库') + ' · Ctrl+左键搬回仓库';
+          (Medical.canUse(it, 'basebag') ? '使用' : '搬回仓库') + ' · Ctrl+左键搬回仓库';
         cell.onclick = ev => {
           if (ev && (ev.ctrlKey || ev.metaKey)) { Tips.hide(); this.toStash(e); return; }
           this.showBagItem(e, cell);
@@ -992,18 +993,19 @@ const Base = {
         cell.ondblclick = ev => {
           if (ev && ev.preventDefault) ev.preventDefault();
           Tips.hide();
-          if (Medical.ready(it) && Save.hp < CFG.P.HP) { Medical.use(e, 'basebag'); return; }
+          if (Medical.canUse(it, 'basebag')) { Medical.use(e, 'basebag'); return; }
           this.toStash(e);
         };
         cell.oncontextmenu = ev => {
           ev.preventDefault();
           ev.stopPropagation();
           const entries = [{ label: '详情', onClick: () => this.showBagItem(e, cell) }];
-          if (Medical.ready(it)) {
+          if (Medical.is(it)) {
+            const usable = Medical.canUse(it, 'basebag');
             entries.push({
-              label: Save.hp >= CFG.P.HP ? '生命值已满' : '使用一件',
-              disabled: Save.hp >= CFG.P.HP,
-              onClick: () => { if (Save.hp < CFG.P.HP) Medical.use(e, 'basebag'); }
+              label: Medical.actionLabel(it, 'basebag'),
+              disabled: !usable,
+              onClick: () => { if (usable) Medical.use(e, 'basebag'); }
             });
           }
           entries.push({ label: '放入保险箱', onClick: () => BaseSafe.transfer(e, 'bag', 'safe') });
@@ -1040,7 +1042,7 @@ const Base = {
     let room = 0;
     for (const e of Save.bag) {
       if (e.gear || e.id !== it.id) continue;
-      if (it.healCap && e.cap != null && e.cap < it.healCap - 1e-6) continue;
+      if (Medical.capOf(it) && e.cap != null && e.cap < Medical.capOf(it) - 1e-6) continue;
       room += Math.max(0, stack - e.n);
     }
     const need = Math.max(0, n - room);
@@ -1053,7 +1055,7 @@ const Base = {
     if (!Save.stash.includes(e)) return false;
     const it = stashItem(e);
     if (!it) return false;
-    const n = (e.gear || it.healCap) ? 1 : Math.max(1, e.n || 1);
+    const n = (e.gear || Medical.capOf(it)) ? 1 : Math.max(1, e.n || 1);
     const why = this.bagBlock(it, n);
     if (why) { this.note('放不进背包：' + why, true); return false; }
     if (e.gear) Save.addGearBag(it);
@@ -1070,7 +1072,7 @@ const Base = {
     if (!Save.bag.includes(e)) return false;
     const it = stashItem(e);
     if (!it) return false;
-    const n = (e.gear || it.healCap) ? 1 : Math.max(1, e.n || 1);
+    const n = (e.gear || Medical.capOf(it)) ? 1 : Math.max(1, e.n || 1);
     if(it.cat==='ammo'&&!Save.canAddStash(it.id,n)){this.note('仓库空间不足',true);return false;}
     if (e.gear) Save.addGearStash(it);
     else Save.addStash(it.id, n, e.cap);
@@ -1112,7 +1114,8 @@ const Base = {
     const it = stashItem(e);
     if (!it || !node || !node.getBoundingClientRect) return;
     const extra = [];
-    if (it.healCap) extra.push(['当前容量', Math.ceil(Medical.entryCap(e)) + ' / ' + it.healCap]);
+    if (Medical.capOf(it))
+      extra.push([it.effect ? '剩余次数' : '当前容量', Medical.capText(e)]);
     Tips.show(it, node.getBoundingClientRect(), '', extra);
   },
 
@@ -1121,18 +1124,20 @@ const Base = {
     if (!it || !node || !node.getBoundingClientRect) return;
     const n = e.n || 1;
     const extra = [];
-    if (it.healCap) extra.push(['当前容量', Math.ceil(Medical.entryCap(e)) + ' / ' + it.healCap]);
+    if (Medical.capOf(it))
+      extra.push([it.effect ? '剩余次数' : '当前容量', Medical.capText(e)]);
     Tips.show(it, node.getBoundingClientRect(),
       where === 'stash' ? '左键放入背包' : '左键放回仓库', extra);
 
     const acts = [];
     if (it.equip?.kind === 'gun') acts.push({label:'退弹到背包', onClick:() => this.unloadGun(it)});
-    const canHeal = Medical.ready(it) && Save.hp < CFG.P.HP;
-    if (Medical.ready(it)) {
+    if (Medical.is(it)) {
+      const stashWhere = where === 'bag' ? 'basebag' : 'stash';
+      const usable = Medical.canUse(it, stashWhere);
       acts.push({
-        label: Save.hp >= CFG.P.HP ? '生命值已满' : '使用一件',
-        disabled: !canHeal,
-        onClick: () => { if (canHeal) Medical.use(e, where === 'bag' ? 'basebag' : 'stash'); }
+        label: Medical.actionLabel(it, stashWhere),
+        disabled: !usable,
+        onClick: () => { if (usable) Medical.use(e, stashWhere); }
       });
     }
     if (where === 'stash') {
@@ -1271,10 +1276,10 @@ const Base = {
         Icons.bagTag(it, '') +
         '<span class="cn">' + esc(it.short || it.name) + '</span>' +
         (n > 1 ? '<span class="qty">' + n + '</span>' : '') +
-        ((it.healCap && Medical.isPartial(e))
+        ((Medical.capOf(it) && Medical.isPartial(e))
           ? '<span class="cap">' + Math.ceil(Medical.entryCap(e)) + '</span>' : '');
-      cell.title = it.name + (it.healCap && Medical.isPartial(e)
-          ? ' · 剩余容量 ' + Math.ceil(Medical.entryCap(e)) + ' / ' + it.healCap
+      cell.title = it.name + (Medical.capOf(it) && Medical.isPartial(e)
+          ? ' · ' + Medical.capText(e)
           : ' · ' + it.w.toFixed(2) + 'kg') + ' · ' +
         formatMoney(unitPrice(it) * n) + ' · 左键看详情';
       cell.onclick = () => this.showItem(e, 'stash', cell);
@@ -1396,7 +1401,7 @@ const DeployGuard = {
   carriesMeds() {
     return Save.bag.concat(Save.safe||[]).some(e => {
       const it = ITEM_BY_ID[e.id];
-      return it && Medical.is(it) && (it.healCap || 0) > 0;
+      return it && Medical.is(it) && Medical.capOf(it) > 0;
     });
   },
 

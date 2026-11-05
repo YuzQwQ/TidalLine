@@ -21,8 +21,8 @@ Object.assign(Game, {
     const it = spec && spec.it, node = spec && spec.node;
     if (!it || !node || !node.getBoundingClientRect) return;
     const extra = [];
-    if (it.healCap && spec.entry) {
-      extra.push(['当前容量', Math.ceil(Medical.entryCap(spec.entry)) + ' / ' + it.healCap]);
+    if (Medical.capOf(it) && spec.entry) {
+      extra.push([it.effect ? '剩余次数' : '当前容量', Medical.capText(spec.entry)]);
     }
     Tips.show(it, node.getBoundingClientRect(), spec.hint || '', extra);
     const acts = [];
@@ -101,7 +101,7 @@ Object.assign(Game, {
     const sub = document.getElementById('lootSub');
     if (isCorpse && obj.bagLv > 0) {
       const n = ((CFG.CORPSE_BAG || {}).itemsByLevel || {})[obj.bagLv] || obj.bagLv;
-      sub.textContent = obj.bagName + ' · 可翻 ' + n + ' 件物品';
+      sub.textContent = obj.bagName + ' · 常规物资 ' + n + ' 件';
       sub.style.display = '';
     } else {
       sub.textContent = '';
@@ -754,14 +754,13 @@ Object.assign(Game, {
           spec.actOff = isLoaded;
           spec.primary = isLoaded ? null : spec.act;
         } else if (Medical.is(it)) {
-          const missing = Math.max(0, CFG.P.HP - P.hp);
-          const canHeal = Medical.ready(it) && missing > 0;
+          /* 文案与可用性统一问 Medical：恢复品受「可恢复上限」限制，
+             效果品（镇痛 / 止血 / 夹板 / 手术）按当前损伤状态判断。 */
+          const usable = Medical.canUse(it, 'bag', P.hp);
           spec.act = () => Medical.use(s, 'bag');
-          spec.actLabel = !Medical.ready(it) ? '效果待开放'
-            : P.hp >= CFG.P.HP ? '生命值已满'
-            : '使用一件（可恢复 ' + Math.round(Math.min(Medical.entryCap(s), missing)) + ' HP）';
-          spec.actOff = !canHeal;
-          spec.primary = canHeal ? spec.act : null;   // 满血时双击看详情，别弹一句"已满"
+          spec.actLabel = Medical.actionLabel(it, 'bag', P.hp);
+          spec.actOff = !usable;
+          spec.primary = usable ? spec.act : null;   // 不可用时双击看详情，别弹一句提示
         } else if (it.equip?.kind === 'attachment') {
           spec.act = () => (typeof ModUI !== 'undefined' ? ModUI.openWithPart(s) : false);
           spec.actLabel = '安装到枪械';
@@ -777,8 +776,8 @@ Object.assign(Game, {
         for (const a of this.extraActsFor(it, 'bag', s)) extra.push(a);
         if (extra.length) spec.extraActs = extra;
 
-        cell.title = (it.healCap && Medical.isPartial(s)
-            ? it.name + ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + it.healCap
+        cell.title = (Medical.capOf(it) && Medical.isPartial(s)
+            ? it.name + ' · ' + Medical.capText(s)
             : it.name + ' · ' + it.w + 'kg') +
           ' · 双击' + (spec.primary && spec.actLabel ? spec.actLabel.replace(/（.*/, '') : '看详情') +
           ' · Ctrl+左键移入安全箱 · 右键更多';
@@ -801,10 +800,10 @@ Object.assign(Game, {
         const ico2 = Icons.bagTag(s.item, 'ico-safe');
         cell.innerHTML = ico2 + '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
           (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '') +
-          ((s.item.healCap && Medical.isPartial(s))
+          ((Medical.capOf(s.item) && Medical.isPartial(s))
             ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '');
-        cell.title = s.item.name + (s.item.healCap && Medical.isPartial(s)
-            ? ' · 剩余容量 ' + Math.ceil(Medical.entryCap(s)) + ' / ' + s.item.healCap
+        cell.title = s.item.name + (Medical.capOf(s.item) && Medical.isPartial(s)
+            ? ' · ' + Medical.capText(s)
             : ' · ' + s.item.w + 'kg') + ' · 双击移回背包 · Ctrl+左键移回背包';
         /* 安全箱：双击=移回背包（可交互的医疗品是"使用"），右键=详情/使用/丢弃 */
         const spec = {
@@ -814,15 +813,12 @@ Object.assign(Game, {
           dropHint: s.n > 1 ? '整叠 ×' + s.n : '脚下'
         };
         if (Medical.is(s.item)) {
-          const missing = Math.max(0, CFG.P.HP - P.hp);
-          const canHeal = Medical.ready(s.item) && missing > 0;
+          const usable = Medical.canUse(s.item, 'safe', P.hp);
           spec.act = () => Medical.use(s, 'safe');
-          spec.actLabel = !Medical.ready(s.item) ? '效果待开放'
-            : P.hp >= CFG.P.HP ? '生命值已满'
-            : '使用一件（可恢复 ' + Math.round(Math.min(Medical.entryCap(s), missing)) + ' HP）';
-          spec.actOff = !canHeal;
+          spec.actLabel = Medical.actionLabel(s.item, 'safe', P.hp);
+          spec.actOff = !usable;
         }
-        spec.primary = spec.act || spec.quick;
+        spec.primary = spec.actOff ? spec.quick : (spec.act || spec.quick);
         this.bindItem(cell, spec);
       } else {
         cell.className = 'cell empty safe';
@@ -905,6 +901,8 @@ Object.assign(Game, {
     if (typeof Music !== 'undefined') Music.play('base');
     if (this.bagOpen) this.toggleBag({ silent: true });
     if (typeof MedHud !== 'undefined') MedHud.reset();   // 收尾：轮盘、快捷栏、进度条一起清
+    /* 死亡 / 撤离 / 超时 / 潮水四条路径都汇聚到这里：局内损伤统一清除，不写 Save */
+    if (typeof Debuff !== 'undefined') Debuff.clearAll();
     if (success || !this._deathSoundPlayed) SFX.play(success ? 'extract' : 'death');
 
     const P = this.player;

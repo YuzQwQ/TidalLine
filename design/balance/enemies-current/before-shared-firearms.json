@@ -1,0 +1,3776 @@
+{
+  "capturedAt": "2026-11-05T08:29:00.205Z",
+  "basis": "current multi-file runtime code; compiled maps and editable drafts listed separately",
+  "sourceHashes": {
+    "js/config.js": "45da8a7f4127251388653ac089438dc36cd69e9d0fe7a335d6de1ed6f074a532",
+    "js/data.js": "316864165cde601a3e4f9c6f8f56427a3c7340b8f7aa0d12c555615ac347de4b",
+    "js/entities.js": "39f8cd8e4d00a9787a8dd224451e8c8d470be7388b6dfe1c7fc43ce0c2f6169b",
+    "js/human-ai.js": "9bd12d71f40dcb61ec911cfc654848e048339c73cc4b1d8bab53576815fa4ca4",
+    "js/debuff.js": "5be81a8f3ac3e9eb51089ab69b39fc5000dea28ff7209a1a7d741c5b98b1a05f",
+    "js/core.js": "f7d93e23496da63cf0933e69dde7c9328db532ce172a9523d5ee6216296fdd4e",
+    "js/game.js": "a7cc868573b133c3f8116f6a456aca2f2d85ec5e273c878053a7409b9ebdf7b2",
+    "js/game-update.js": "5c48dde6f44699931fe7401fd7aee2db86d5ae95df5f5d28eb56dd5ad8b2a22b",
+    "js/game-panels.js": "167c1d150d61c4e7b6dcb8cd41133576f9b2fab422bd117a5872b353c8decd0a",
+    "js/save.js": "066db6725df6e43a173ed65d7ec77e62d521bc0db17dfd8e4aa76828e4a30c90",
+    "js/sales.js": "a89aea69fec76aab7196317c442ae78ea97a6a1c70535baa5f0167145ae637da"
+  },
+  "definitions": {
+    "scav": {
+      "name": "拾荒者",
+      "short": "拾",
+      "color": "#b07a4a",
+      "hp": 34,
+      "speed": 54,
+      "sight": 11,
+      "fov": 1.7,
+      "hear": 1,
+      "dmg": 9,
+      "range": 235,
+      "cd": 0.85,
+      "faction": "scav",
+      "injuryType": "bullet",
+      "arrow": true,
+      "human": true,
+      "desc": "和你一样进来找东西的人，只是他们先到。"
+    },
+    "echo": {
+      "name": "回响体",
+      "short": "响",
+      "color": "#8f5f7a",
+      "hp": 22,
+      "speed": 44,
+      "sight": 0,
+      "fov": 0,
+      "hear": 1.65,
+      "dmg": 14,
+      "range": 30,
+      "cd": 0.75,
+      "faction": "echo",
+      "injuryType": "heavy",
+      "arrow": false,
+      "desc": "溺死者的声音聚成的形体。没有眼睛，只听得见。"
+    },
+    "guard": {
+      "name": "潮汐守卫",
+      "short": "守",
+      "color": "#5f7f9b",
+      "hp": 72,
+      "speed": 36,
+      "sight": 15,
+      "fov": 2,
+      "hear": 0.6,
+      "dmg": 13,
+      "range": 300,
+      "cd": 1.05,
+      "faction": "guard",
+      "injuryType": "bullet",
+      "arrow": true,
+      "desc": "事故当天留下的自动化安保，还在执行早已失效的指令。"
+    },
+    "holdout": {
+      "name": "据点看守",
+      "short": "看",
+      "color": "#b8a26b",
+      "hp": 48,
+      "speed": 42,
+      "sight": 10,
+      "fov": 1.9198621771937625,
+      "hear": 1,
+      "dmg": 4,
+      "range": 192,
+      "cd": 1.5,
+      "faction": "scav",
+      "human": true,
+      "arrow": true,
+      "tactical": true,
+      "injuryType": "shotgun",
+      "weapon": "rem870",
+      "levels": [
+        [
+          2,
+          80
+        ],
+        [
+          3,
+          20
+        ]
+      ],
+      "helmetChance": 0.65,
+      "bodyChance": 0.85,
+      "mag": 6,
+      "reserve": 12,
+      "reload": 3,
+      "aim": 0.65,
+      "warning": 1,
+      "guardRadius": 3,
+      "leash": 8,
+      "chaseLimit": 6,
+      "quietReset": 10,
+      "pump": 0.4,
+      "search": 8,
+      "desc": "守着楼院和物资的人。工装、旧头盔和短霰弹枪，足够让陌生人在门口停一停。"
+    },
+    "retriever": {
+      "name": "受雇回收员",
+      "short": "回",
+      "color": "#7c9684",
+      "hp": 60,
+      "speed": 50,
+      "sight": 13,
+      "fov": 1.9198621771937625,
+      "hear": 1,
+      "bonusMeleePool": {
+        "chance": 0.01,
+        "ids": [
+          "melee03",
+          "melee07"
+        ]
+      },
+      "dmg": 10,
+      "range": 352,
+      "cd": 1.6,
+      "faction": "scav",
+      "human": true,
+      "arrow": true,
+      "tactical": true,
+      "injuryType": "bullet",
+      "weapon": "m4a1",
+      "levels": [
+        [
+          3,
+          80
+        ],
+        [
+          4,
+          20
+        ]
+      ],
+      "helmetChance": 0.9,
+      "bodyChance": 1,
+      "mag": 30,
+      "reserve": 30,
+      "reload": 2.6,
+      "aim": 0.55,
+      "burst": 3,
+      "burstGap": 0.16,
+      "search": 8,
+      "radioRange": 10,
+      "radioGap": 1,
+      "rolePeriod": 6,
+      "coverRadius": 6,
+      "coverPath": 8,
+      "desc": "带着回收清单进入环礁湾的专业人员。先确认目标，再决定带走多少别的东西。"
+    }
+  },
+  "derived": {
+    "scav": {
+      "fovDegrees": 97.40282517223994,
+      "rangeTiles": 7.34375,
+      "baseSpeedTiles": 1.6875,
+      "patrolSpeed": 29.700000000000003,
+      "chaseSpeed": 67.5,
+      "injuryChance": 0.136
+    },
+    "echo": {
+      "fovDegrees": 0,
+      "rangeTiles": 0.9375,
+      "baseSpeedTiles": 1.375,
+      "patrolSpeed": 24.200000000000003,
+      "chaseSpeed": 55,
+      "injuryChance": 0.12
+    },
+    "guard": {
+      "fovDegrees": 114.59155902616465,
+      "rangeTiles": 9.375,
+      "baseSpeedTiles": 1.125,
+      "patrolSpeed": 19.8,
+      "chaseSpeed": 45,
+      "injuryChance": 0.168
+    },
+    "holdout": {
+      "fovDegrees": 110,
+      "rangeTiles": 6,
+      "baseSpeedTiles": 1.3125,
+      "patrolSpeed": 23.1,
+      "chaseSpeed": 42,
+      "injuryChance": 0.24
+    },
+    "retriever": {
+      "fovDegrees": 110,
+      "rangeTiles": 11,
+      "baseSpeedTiles": 1.5625,
+      "patrolSpeed": 27.500000000000004,
+      "chaseSpeed": 50,
+      "injuryChance": 0.256
+    }
+  },
+  "maps": [
+    {
+      "id": "linhai-old-quarter",
+      "title": "临海路旧街区",
+      "total": 46,
+      "counts": {
+        "scav": 24,
+        "guard": 4,
+        "echo": 15,
+        "retriever": 3
+      },
+      "spawns": [
+        {
+          "id": "e01",
+          "region": "apartment",
+          "type": "scav",
+          "x": 8,
+          "y": 18,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e02",
+          "region": "apartment",
+          "type": "scav",
+          "x": 15,
+          "y": 17,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e03",
+          "region": "apartment",
+          "type": "scav",
+          "x": 14,
+          "y": 21,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e04",
+          "region": "clinic",
+          "type": "scav",
+          "x": 14,
+          "y": 44,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e05",
+          "region": "clinic",
+          "type": "scav",
+          "x": 14,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e06",
+          "region": "bank",
+          "type": "scav",
+          "x": 46,
+          "y": 21,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e08",
+          "region": "bank",
+          "type": "scav",
+          "x": 51,
+          "y": 24,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e09",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 60,
+          "y": 38,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e11",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 60,
+          "y": 33,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e12",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 65,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e13",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 65,
+          "y": 35,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e14",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 39,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e15",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 42,
+          "y": 24,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e16",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 13,
+          "y": 28,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e17",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 62,
+          "y": 8,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e18",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 18,
+          "y": 31,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e19",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 16,
+          "y": 36,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e20",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 8,
+          "y": 27,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e21",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 15,
+          "y": 51,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e22",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 58,
+          "y": 28,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e23",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 37,
+          "y": 35,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e24",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 50,
+          "y": 40,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e25",
+          "region": "bank",
+          "type": "scav",
+          "x": 53,
+          "y": 19,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e26",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 65,
+          "y": 24,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e27",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 58,
+          "y": 23,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e28",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 65,
+          "y": 19,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e29",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 54,
+          "y": 12,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e30",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 66,
+          "y": 15,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e31",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 48,
+          "y": 7,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e32",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 53,
+          "y": 6,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e33",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 41,
+          "y": 8,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e34",
+          "region": "apartment",
+          "type": "scav",
+          "x": 15,
+          "y": 14,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e35",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 19,
+          "y": 11,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e36",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 25,
+          "y": 38,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e37",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 25,
+          "y": 33,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e38",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 21,
+          "y": 8,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e39",
+          "region": "clinic",
+          "type": "echo",
+          "x": 11,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e40",
+          "region": "clinic",
+          "type": "echo",
+          "x": 8,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e41",
+          "region": "clinic",
+          "type": "echo",
+          "x": 8,
+          "y": 42,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e42",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 17,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e43",
+          "region": "clinic",
+          "type": "echo",
+          "x": 10,
+          "y": 36,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e45",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 17,
+          "y": 44,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e46",
+          "region": "bank",
+          "type": "scav",
+          "x": 50,
+          "y": 21,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e47",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 42,
+          "y": 50,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e48",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 43,
+          "y": 47,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e49",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 45,
+          "y": 50,
+          "patrolRadius": 2,
+          "facing": "s"
+        }
+      ]
+    },
+    {
+      "id": "fenced-zone",
+      "title": "围栏区",
+      "total": 24,
+      "counts": {
+        "scav": 8,
+        "guard": 5,
+        "echo": 11
+      },
+      "spawns": [
+        {
+          "t": "scav",
+          "x": 7,
+          "y": 11,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 15,
+          "y": 6,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 26,
+          "y": 9,
+          "patrolRadius": 2,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 38,
+          "y": 10,
+          "patrolRadius": 2,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 34,
+          "y": 5,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "guard",
+          "x": 48,
+          "y": 7,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "guard",
+          "x": 56,
+          "y": 11,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "echo",
+          "x": 48,
+          "y": 13,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 58,
+          "y": 6,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "scav",
+          "x": 6,
+          "y": 23,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 11,
+          "y": 27,
+          "patrolRadius": 2,
+          "type": "scav"
+        },
+        {
+          "t": "guard",
+          "x": 32,
+          "y": 23,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "echo",
+          "x": 26,
+          "y": 26,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 34,
+          "y": 28,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "guard",
+          "x": 49,
+          "y": 24,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "guard",
+          "x": 56,
+          "y": 26,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "echo",
+          "x": 50,
+          "y": 20,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 58,
+          "y": 23,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 47,
+          "y": 36,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 52,
+          "y": 37,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 58,
+          "y": 36,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 56,
+          "y": 39,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "scav",
+          "x": 21,
+          "y": 10,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "echo",
+          "x": 21,
+          "y": 27,
+          "patrolRadius": 3,
+          "type": "echo"
+        }
+      ]
+    }
+  ],
+  "drafts": [
+    {
+      "file": "design/maps/linhai-old-quarter/layout.json",
+      "total": 40,
+      "counts": {
+        "scav": 18,
+        "guard": 4,
+        "echo": 11,
+        "retriever": 3,
+        "holdout": 4
+      },
+      "spawns": [
+        {
+          "id": "e04",
+          "region": "clinic",
+          "type": "scav",
+          "x": 14,
+          "y": 44,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e05",
+          "region": "clinic",
+          "type": "scav",
+          "x": 14,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e06",
+          "region": "bank",
+          "type": "scav",
+          "x": 46,
+          "y": 21,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e08",
+          "region": "bank",
+          "type": "scav",
+          "x": 51,
+          "y": 24,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e09",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 60,
+          "y": 38,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e11",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 60,
+          "y": 33,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e12",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 65,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e13",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 65,
+          "y": 35,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e14",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 54,
+          "y": 15,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e15",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 42,
+          "y": 24,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e16",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 13,
+          "y": 28,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e17",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 62,
+          "y": 8,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e18",
+          "region": "clinic",
+          "type": "echo",
+          "x": 11,
+          "y": 35,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e19",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 24,
+          "y": 30,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e20",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 15,
+          "y": 36,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e22",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 58,
+          "y": 28,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e24",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 50,
+          "y": 40,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e25",
+          "region": "bank",
+          "type": "scav",
+          "x": 53,
+          "y": 19,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e26",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 58,
+          "y": 20,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e27",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 58,
+          "y": 23,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e28",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 65,
+          "y": 25,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e29",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 54,
+          "y": 12,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e30",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 66,
+          "y": 15,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e31",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 48,
+          "y": 7,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e32",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 53,
+          "y": 6,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e33",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 46,
+          "y": 2,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e36",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 24,
+          "y": 45,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e37",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 27,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e40",
+          "region": "clinic",
+          "type": "echo",
+          "x": 8,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e41",
+          "region": "clinic",
+          "type": "echo",
+          "x": 10,
+          "y": 42,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e43",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 4,
+          "y": 26,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e45",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 17,
+          "y": 44,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e46",
+          "region": "bank",
+          "type": "scav",
+          "x": 50,
+          "y": 21,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e47",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 41,
+          "y": 52,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e48",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 43,
+          "y": 49,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e49",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 46,
+          "y": 52,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e50",
+          "region": "apartment",
+          "type": "holdout",
+          "x": 12,
+          "y": 17,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e51",
+          "region": "outdoors",
+          "type": "holdout",
+          "x": 20,
+          "y": 10,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e52",
+          "region": "apartment",
+          "type": "holdout",
+          "x": 16,
+          "y": 16,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e53",
+          "region": "apartment",
+          "type": "holdout",
+          "x": 14,
+          "y": 14,
+          "patrolRadius": 2,
+          "facing": "s"
+        }
+      ]
+    }
+  ],
+  "pools": {
+    "scav": {
+      "name": "拾荒者",
+      "eligible": [
+        {
+          "id": "heal01",
+          "name": "绷带",
+          "category": "medical",
+          "rarity": 1,
+          "referencePrice": 2000,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 2000
+        },
+        {
+          "id": "heal02",
+          "name": "安禾无菌敷料",
+          "category": "medical",
+          "rarity": 2,
+          "referencePrice": 5000,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5000
+        },
+        {
+          "id": "heal06",
+          "name": "安禾止痛片",
+          "category": "medical",
+          "rarity": 1,
+          "referencePrice": 2500,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 2500
+        },
+        {
+          "id": "heal07",
+          "name": "复方镇痛胶囊",
+          "category": "medical",
+          "rarity": 2,
+          "referencePrice": 6000,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 6000
+        },
+        {
+          "id": "heal09",
+          "name": "止血带",
+          "category": "medical",
+          "rarity": 1,
+          "referencePrice": 3000,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 3000
+        },
+        {
+          "id": "heal10",
+          "name": "医用夹板",
+          "category": "medical",
+          "rarity": 2,
+          "referencePrice": 6000,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 6000
+        },
+        {
+          "id": "life01",
+          "name": "搪瓷缸",
+          "category": "life",
+          "rarity": 1,
+          "referencePrice": 1800,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1800
+        },
+        {
+          "id": "life06",
+          "name": "铝饭盒",
+          "category": "life",
+          "rarity": 1,
+          "referencePrice": 1400,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1400
+        },
+        {
+          "id": "life04",
+          "name": "铁皮饼干盒",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 5400,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5400
+        },
+        {
+          "id": "life08",
+          "name": "玻璃糖罐",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4600,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 4600
+        },
+        {
+          "id": "life03",
+          "name": "老式台灯",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4800,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 4800
+        },
+        {
+          "id": "life05",
+          "name": "未拆封的毛巾",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4000,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 4000
+        },
+        {
+          "id": "life10",
+          "name": "玻璃弹珠袋",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4200,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 4200
+        },
+        {
+          "id": "antiq03",
+          "name": "磨损的硬币",
+          "category": "life",
+          "rarity": 1,
+          "referencePrice": 1200,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1200
+        },
+        {
+          "id": "life36",
+          "name": "折叠城市地图",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4400,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 4400
+        },
+        {
+          "id": "life45",
+          "name": "旅馆服务铃",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 5200,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5200
+        },
+        {
+          "id": "elec01",
+          "name": "收音机",
+          "category": "elec",
+          "rarity": 2,
+          "referencePrice": 7500,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 7500
+        },
+        {
+          "id": "elec03",
+          "name": "计算器",
+          "category": "elec",
+          "rarity": 2,
+          "referencePrice": 5000,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5000
+        },
+        {
+          "id": "elec04",
+          "name": "电路板",
+          "category": "elec",
+          "rarity": 2,
+          "referencePrice": 6200,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 6200
+        },
+        {
+          "id": "ind01",
+          "name": "铜管",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 3000,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 3000
+        },
+        {
+          "id": "ind02",
+          "name": "轴承",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 5600,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5600
+        },
+        {
+          "id": "ind04",
+          "name": "生锈的螺栓",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 1200,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1200
+        },
+        {
+          "id": "ind05",
+          "name": "混凝土试块",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 1600,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1600
+        },
+        {
+          "id": "ind06",
+          "name": "钢筋边角料",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 2400,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 2400
+        },
+        {
+          "id": "ind07",
+          "name": "绝缘胶带",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 4200,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 4200
+        },
+        {
+          "id": "ind08",
+          "name": "黄铜阀门",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 6800,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 6800
+        },
+        {
+          "id": "ind09",
+          "name": "电焊面罩",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 7200,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 7200
+        },
+        {
+          "id": "med02",
+          "name": "注射器",
+          "category": "med",
+          "rarity": 2,
+          "referencePrice": 5800,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5800
+        },
+        {
+          "id": "med03",
+          "name": "X 光片",
+          "category": "med",
+          "rarity": 2,
+          "referencePrice": 6000,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 6000
+        },
+        {
+          "id": "antiq05",
+          "name": "门牌铜片",
+          "category": "collect",
+          "rarity": 2,
+          "referencePrice": 5500,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5500
+        },
+        {
+          "id": "antiq08",
+          "name": "彩绘陶瓷面具",
+          "category": "collect",
+          "rarity": 2,
+          "referencePrice": 7200,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 7200
+        },
+        {
+          "id": "spec01",
+          "name": "贝壳",
+          "category": "collect",
+          "rarity": 1,
+          "referencePrice": 1600,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1600
+        },
+        {
+          "id": "spec02",
+          "name": "矿石标本",
+          "category": "collect",
+          "rarity": 2,
+          "referencePrice": 5700,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5700
+        },
+        {
+          "id": "spec03",
+          "name": "干燥的植物",
+          "category": "collect",
+          "rarity": 1,
+          "referencePrice": 2000,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 2000
+        },
+        {
+          "id": "mil01",
+          "name": "旧弹链盒",
+          "category": "mil",
+          "rarity": 1,
+          "referencePrice": 1800,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1800
+        },
+        {
+          "id": "mil02",
+          "name": "制式军用水壶",
+          "category": "mil",
+          "rarity": 1,
+          "referencePrice": 2300,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 2300
+        },
+        {
+          "id": "mil03",
+          "name": "军用身份牌",
+          "category": "mil",
+          "rarity": 2,
+          "referencePrice": 5400,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5400
+        },
+        {
+          "id": "mil04",
+          "name": "制式信号灯",
+          "category": "mil",
+          "rarity": 2,
+          "referencePrice": 6500,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 6500
+        },
+        {
+          "id": "mil05",
+          "name": "封锁区标识牌",
+          "category": "mil",
+          "rarity": 2,
+          "referencePrice": 7100,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 7100
+        },
+        {
+          "id": "intel01",
+          "name": "港口货运清单",
+          "category": "intel",
+          "rarity": 2,
+          "referencePrice": 5200,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 5200
+        },
+        {
+          "id": "intel02",
+          "name": "旧电话簿",
+          "category": "intel",
+          "rarity": 1,
+          "referencePrice": 1800,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1800
+        },
+        {
+          "id": "intel03",
+          "name": "撤离登记卡",
+          "category": "intel",
+          "rarity": 2,
+          "referencePrice": 6800,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 6800
+        },
+        {
+          "id": "life02",
+          "name": "旧报纸",
+          "category": "intel",
+          "rarity": 1,
+          "referencePrice": 1000,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1000
+        },
+        {
+          "id": "occ01",
+          "name": "褪色祈愿绳",
+          "category": "occult",
+          "rarity": 1,
+          "referencePrice": 1800,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 1800
+        },
+        {
+          "id": "occ02",
+          "name": "仪式粉笔",
+          "category": "occult",
+          "rarity": 1,
+          "referencePrice": 2400,
+          "firstDrawProbability": 0.035842293906810034,
+          "referenceSale": 2400
+        },
+        {
+          "id": "occ03",
+          "name": "七结护符",
+          "category": "occult",
+          "rarity": 2,
+          "referencePrice": 6800,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 6800
+        },
+        {
+          "id": "occ04",
+          "name": "铜制占卜盘",
+          "category": "occult",
+          "rarity": 2,
+          "referencePrice": 8500,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 8500
+        },
+        {
+          "id": "occ05",
+          "name": "灰烬香炉",
+          "category": "occult",
+          "rarity": 2,
+          "referencePrice": 9200,
+          "firstDrawProbability": 0.011827956989247313,
+          "referenceSale": 9200
+        }
+      ],
+      "excluded": [
+        {
+          "id": "heal16",
+          "name": "镇静香膏",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_556_1",
+          "name": "5.56mm普通弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_556_2",
+          "name": "5.56mm改良弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_762x39_1",
+          "name": "7.62mm普通弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_762x39_2",
+          "name": "7.62mm改良弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_9mm_1",
+          "name": "9mm普通弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_9mm_2",
+          "name": "9mm强化弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_45acp_1",
+          "name": ".45 ACP普通弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_45acp_2",
+          "name": ".45 ACP改良弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_12g_1",
+          "name": "普通鹿弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_12g_2",
+          "name": "强化鹿弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_545x39_1",
+          "name": "5.45mm普通弹",
+          "reason": "noLoot"
+        },
+        {
+          "id": "ammo_545x39_2",
+          "name": "5.45mm改良弹",
+          "reason": "noLoot"
+        }
+      ],
+      "rarityCounts": {
+        "1": 18,
+        "2": 30
+      },
+      "firstDrawRarityProbability": {
+        "1": 0.6451612903225806,
+        "2": 0.3548387096774194
+      },
+      "firstDrawMeanReferencePrice": 3350.322580645162
+    },
+    "echo": {
+      "name": "回响体",
+      "eligible": [
+        {
+          "id": "odd01",
+          "name": "回响结晶",
+          "category": "odd",
+          "rarity": 4,
+          "referencePrice": 42000,
+          "firstDrawProbability": 0.44642857142857145,
+          "referenceSale": 42000
+        },
+        {
+          "id": "odd02",
+          "name": "潮汐仪",
+          "category": "odd",
+          "rarity": 6,
+          "referencePrice": 3000000,
+          "firstDrawProbability": 0.10714285714285715,
+          "referenceSale": 3000000
+        },
+        {
+          "id": "odd03",
+          "name": "停摆的怀表",
+          "category": "odd",
+          "rarity": 4,
+          "referencePrice": 60000,
+          "firstDrawProbability": 0.44642857142857145,
+          "referenceSale": 60000
+        }
+      ],
+      "excluded": [],
+      "rarityCounts": {
+        "4": 2,
+        "6": 1
+      },
+      "firstDrawRarityProbability": {
+        "4": 0.8928571428571429,
+        "6": 0.10714285714285715
+      },
+      "firstDrawMeanReferencePrice": 366964.28571428574
+    },
+    "guard": {
+      "name": "潮汐守卫",
+      "eligible": [
+        {
+          "id": "elec01",
+          "name": "收音机",
+          "category": "elec",
+          "rarity": 2,
+          "referencePrice": 7500,
+          "firstDrawProbability": 0.04088003567712205,
+          "referenceSale": 7500
+        },
+        {
+          "id": "elec02",
+          "name": "随身听",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 30000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 30000
+        },
+        {
+          "id": "elec03",
+          "name": "计算器",
+          "category": "elec",
+          "rarity": 2,
+          "referencePrice": 5000,
+          "firstDrawProbability": 0.04088003567712205,
+          "referenceSale": 5000
+        },
+        {
+          "id": "elec04",
+          "name": "电路板",
+          "category": "elec",
+          "rarity": 2,
+          "referencePrice": 6200,
+          "firstDrawProbability": 0.04088003567712205,
+          "referenceSale": 6200
+        },
+        {
+          "id": "elec05",
+          "name": "掌上电子游戏机",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 36000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 36000
+        },
+        {
+          "id": "elec06",
+          "name": "即影相机",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 52000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 52000
+        },
+        {
+          "id": "elec07",
+          "name": "电子宠物机",
+          "category": "elec",
+          "rarity": 3,
+          "referencePrice": 18000,
+          "firstDrawProbability": 0.020811654526534863,
+          "referenceSale": 18000
+        },
+        {
+          "id": "elec08",
+          "name": "微型录像机",
+          "category": "elec",
+          "rarity": 3,
+          "referencePrice": 24000,
+          "firstDrawProbability": 0.020811654526534863,
+          "referenceSale": 24000
+        },
+        {
+          "id": "elec09",
+          "name": "加密寻呼机",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 48000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 48000
+        },
+        {
+          "id": "elec10",
+          "name": "便携式计算机",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 86000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 86000
+        },
+        {
+          "id": "elec11",
+          "name": "短波通信电台",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 72000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 72000
+        },
+        {
+          "id": "elec12",
+          "name": "航海电子定位仪",
+          "category": "elec",
+          "rarity": 5,
+          "referencePrice": 165000,
+          "firstDrawProbability": 0.01040582726326743,
+          "referenceSale": 165000
+        },
+        {
+          "id": "elec13",
+          "name": "多通道数据记录器",
+          "category": "elec",
+          "rarity": 5,
+          "referencePrice": 260000,
+          "firstDrawProbability": 0.01040582726326743,
+          "referenceSale": 260000
+        },
+        {
+          "id": "elec14",
+          "name": "原型信号分析终端",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 880000,
+          "firstDrawProbability": 0.0020811654526534857,
+          "referenceSale": 880000
+        },
+        {
+          "id": "elec15",
+          "name": "「远望者」深海探测核心",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 2650000,
+          "firstDrawProbability": 0.0020811654526534857,
+          "referenceSale": 2650000
+        },
+        {
+          "id": "ind01",
+          "name": "铜管",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 3000,
+          "firstDrawProbability": 0.1300728407908429,
+          "referenceSale": 3000
+        },
+        {
+          "id": "ind02",
+          "name": "轴承",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 5600,
+          "firstDrawProbability": 0.04088003567712205,
+          "referenceSale": 5600
+        },
+        {
+          "id": "ind03",
+          "name": "压力表",
+          "category": "ind",
+          "rarity": 3,
+          "referencePrice": 14500,
+          "firstDrawProbability": 0.020811654526534863,
+          "referenceSale": 14500
+        },
+        {
+          "id": "ind04",
+          "name": "生锈的螺栓",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 1200,
+          "firstDrawProbability": 0.1300728407908429,
+          "referenceSale": 1200
+        },
+        {
+          "id": "ind05",
+          "name": "混凝土试块",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 1600,
+          "firstDrawProbability": 0.1300728407908429,
+          "referenceSale": 1600
+        },
+        {
+          "id": "ind06",
+          "name": "钢筋边角料",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 2400,
+          "firstDrawProbability": 0.1300728407908429,
+          "referenceSale": 2400
+        },
+        {
+          "id": "ind07",
+          "name": "绝缘胶带",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 4200,
+          "firstDrawProbability": 0.04088003567712205,
+          "referenceSale": 4200
+        },
+        {
+          "id": "ind08",
+          "name": "黄铜阀门",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 6800,
+          "firstDrawProbability": 0.04088003567712205,
+          "referenceSale": 6800
+        },
+        {
+          "id": "ind09",
+          "name": "电焊面罩",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 7200,
+          "firstDrawProbability": 0.04088003567712205,
+          "referenceSale": 7200
+        },
+        {
+          "id": "ind10",
+          "name": "精密游标卡尺",
+          "category": "ind",
+          "rarity": 3,
+          "referencePrice": 16000,
+          "firstDrawProbability": 0.020811654526534863,
+          "referenceSale": 16000
+        },
+        {
+          "id": "ind11",
+          "name": "工业陶瓷轴套",
+          "category": "ind",
+          "rarity": 3,
+          "referencePrice": 24000,
+          "firstDrawProbability": 0.020811654526534863,
+          "referenceSale": 24000
+        },
+        {
+          "id": "ind12",
+          "name": "液压控制阀组",
+          "category": "ind",
+          "rarity": 4,
+          "referencePrice": 58000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 58000
+        },
+        {
+          "id": "ind13",
+          "name": "高纯度钛合金锭",
+          "category": "ind",
+          "rarity": 4,
+          "referencePrice": 85000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 85000
+        },
+        {
+          "id": "ind14",
+          "name": "精密陀螺组件",
+          "category": "ind",
+          "rarity": 5,
+          "referencePrice": 240000,
+          "firstDrawProbability": 0.01040582726326743,
+          "referenceSale": 240000
+        },
+        {
+          "id": "ind15",
+          "name": "零号标准量块组",
+          "category": "ind",
+          "rarity": 6,
+          "referencePrice": 720000,
+          "firstDrawProbability": 0.0020811654526534857,
+          "referenceSale": 720000
+        }
+      ],
+      "excluded": [],
+      "rarityCounts": {
+        "1": 4,
+        "2": 7,
+        "3": 5,
+        "4": 8,
+        "5": 3,
+        "6": 3
+      },
+      "firstDrawRarityProbability": {
+        "1": 0.5202913631633715,
+        "2": 0.2861602497398543,
+        "3": 0.10405827263267431,
+        "4": 0.052029136316337155,
+        "5": 0.03121748178980229,
+        "6": 0.006243496357960458
+      },
+      "firstDrawMeanReferencePrice": 23614.35260888955
+    },
+    "holdout": {
+      "name": "据点看守",
+      "eligible": [
+        {
+          "id": "heal01",
+          "name": "绷带",
+          "category": "medical",
+          "rarity": 1,
+          "referencePrice": 2000,
+          "firstDrawProbability": 0.06503642039542144,
+          "referenceSale": 2000
+        },
+        {
+          "id": "heal02",
+          "name": "安禾无菌敷料",
+          "category": "medical",
+          "rarity": 2,
+          "referencePrice": 5000,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 5000
+        },
+        {
+          "id": "heal03",
+          "name": "家庭急救包",
+          "category": "medical",
+          "rarity": 3,
+          "referencePrice": 12000,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 12000
+        },
+        {
+          "id": "heal04",
+          "name": "制式野战医疗包",
+          "category": "medical",
+          "rarity": 4,
+          "referencePrice": 35000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 35000
+        },
+        {
+          "id": "heal05",
+          "name": "HV-300 精密医疗箱",
+          "category": "medical",
+          "rarity": 5,
+          "referencePrice": 95000,
+          "firstDrawProbability": 0.004459640255686042,
+          "referenceSale": 95000
+        },
+        {
+          "id": "life01",
+          "name": "搪瓷缸",
+          "category": "life",
+          "rarity": 1,
+          "referencePrice": 1800,
+          "firstDrawProbability": 0.06503642039542144,
+          "referenceSale": 1800
+        },
+        {
+          "id": "life06",
+          "name": "铝饭盒",
+          "category": "life",
+          "rarity": 1,
+          "referencePrice": 1400,
+          "firstDrawProbability": 0.06503642039542144,
+          "referenceSale": 1400
+        },
+        {
+          "id": "life04",
+          "name": "铁皮饼干盒",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 5400,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 5400
+        },
+        {
+          "id": "life08",
+          "name": "玻璃糖罐",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4600,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 4600
+        },
+        {
+          "id": "life20",
+          "name": "纪念瓷器套装",
+          "category": "life",
+          "rarity": 4,
+          "referencePrice": 45000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 45000
+        },
+        {
+          "id": "life28",
+          "name": "银餐具一套",
+          "category": "life",
+          "rarity": 5,
+          "referencePrice": 250000,
+          "firstDrawProbability": 0.004459640255686042,
+          "referenceSale": 250000
+        },
+        {
+          "id": "life03",
+          "name": "老式台灯",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4800,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 4800
+        },
+        {
+          "id": "life05",
+          "name": "未拆封的毛巾",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4000,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 4000
+        },
+        {
+          "id": "life11",
+          "name": "双铃闹钟",
+          "category": "life",
+          "rarity": 3,
+          "referencePrice": 12000,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 12000
+        },
+        {
+          "id": "life15",
+          "name": "古董电熨斗",
+          "category": "life",
+          "rarity": 3,
+          "referencePrice": 11500,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 11500
+        },
+        {
+          "id": "life19",
+          "name": "老式缝纫机头",
+          "category": "life",
+          "rarity": 4,
+          "referencePrice": 48000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 48000
+        },
+        {
+          "id": "life22",
+          "name": "手工丝绸礼服",
+          "category": "life",
+          "rarity": 4,
+          "referencePrice": 62000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 62000
+        },
+        {
+          "id": "life10",
+          "name": "玻璃弹珠袋",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4200,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 4200
+        },
+        {
+          "id": "life13",
+          "name": "铁皮玩具火车",
+          "category": "life",
+          "rarity": 3,
+          "referencePrice": 14500,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 14500
+        },
+        {
+          "id": "life41",
+          "name": "家庭磁带盒",
+          "category": "life",
+          "rarity": 3,
+          "referencePrice": 13000,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 13000
+        },
+        {
+          "id": "life43",
+          "name": "发条旋转木马",
+          "category": "life",
+          "rarity": 5,
+          "referencePrice": 110000,
+          "firstDrawProbability": 0.004459640255686042,
+          "referenceSale": 110000
+        },
+        {
+          "id": "antiq03",
+          "name": "磨损的硬币",
+          "category": "life",
+          "rarity": 1,
+          "referencePrice": 1200,
+          "firstDrawProbability": 0.06503642039542144,
+          "referenceSale": 1200
+        },
+        {
+          "id": "life36",
+          "name": "折叠城市地图",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 4400,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 4400
+        },
+        {
+          "id": "life37",
+          "name": "售票检票钳",
+          "category": "life",
+          "rarity": 3,
+          "referencePrice": 10000,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 10000
+        },
+        {
+          "id": "life38",
+          "name": "按键式电话机",
+          "category": "life",
+          "rarity": 3,
+          "referencePrice": 13500,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 13500
+        },
+        {
+          "id": "life47",
+          "name": "经理日程簿",
+          "category": "life",
+          "rarity": 4,
+          "referencePrice": 26000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 26000
+        },
+        {
+          "id": "life44",
+          "name": "船员帆布包",
+          "category": "life",
+          "rarity": 3,
+          "referencePrice": 15000,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 15000
+        },
+        {
+          "id": "life45",
+          "name": "旅馆服务铃",
+          "category": "life",
+          "rarity": 2,
+          "referencePrice": 5200,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 5200
+        },
+        {
+          "id": "life46",
+          "name": "旅行洗漱套装",
+          "category": "life",
+          "rarity": 4,
+          "referencePrice": 22000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 22000
+        },
+        {
+          "id": "life39",
+          "name": "旅行保温杯",
+          "category": "life",
+          "rarity": 3,
+          "referencePrice": 11000,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 11000
+        },
+        {
+          "id": "life32",
+          "name": "真皮手提箱",
+          "category": "life",
+          "rarity": 5,
+          "referencePrice": 125000,
+          "firstDrawProbability": 0.004459640255686042,
+          "referenceSale": 125000
+        },
+        {
+          "id": "life33",
+          "name": "金丝眼镜",
+          "category": "life",
+          "rarity": 5,
+          "referencePrice": 95000,
+          "firstDrawProbability": 0.004459640255686042,
+          "referenceSale": 95000
+        },
+        {
+          "id": "life48",
+          "name": "便携式打字机",
+          "category": "life",
+          "rarity": 5,
+          "referencePrice": 160000,
+          "firstDrawProbability": 0.004459640255686042,
+          "referenceSale": 160000
+        },
+        {
+          "id": "life49",
+          "name": "零号打火机",
+          "category": "life",
+          "rarity": 6,
+          "referencePrice": 900000,
+          "firstDrawProbability": 0.003121748178980229,
+          "referenceSale": 900000
+        },
+        {
+          "id": "ind01",
+          "name": "铜管",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 3000,
+          "firstDrawProbability": 0.06503642039542144,
+          "referenceSale": 3000
+        },
+        {
+          "id": "ind02",
+          "name": "轴承",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 5600,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 5600
+        },
+        {
+          "id": "ind03",
+          "name": "压力表",
+          "category": "ind",
+          "rarity": 3,
+          "referencePrice": 14500,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 14500
+        },
+        {
+          "id": "ind04",
+          "name": "生锈的螺栓",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 1200,
+          "firstDrawProbability": 0.06503642039542144,
+          "referenceSale": 1200
+        },
+        {
+          "id": "ind05",
+          "name": "混凝土试块",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 1600,
+          "firstDrawProbability": 0.06503642039542144,
+          "referenceSale": 1600
+        },
+        {
+          "id": "ind06",
+          "name": "钢筋边角料",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 2400,
+          "firstDrawProbability": 0.06503642039542144,
+          "referenceSale": 2400
+        },
+        {
+          "id": "ind07",
+          "name": "绝缘胶带",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 4200,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 4200
+        },
+        {
+          "id": "ind08",
+          "name": "黄铜阀门",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 6800,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 6800
+        },
+        {
+          "id": "ind09",
+          "name": "电焊面罩",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 7200,
+          "firstDrawProbability": 0.023846687478321194,
+          "referenceSale": 7200
+        },
+        {
+          "id": "ind10",
+          "name": "精密游标卡尺",
+          "category": "ind",
+          "rarity": 3,
+          "referencePrice": 16000,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 16000
+        },
+        {
+          "id": "ind11",
+          "name": "工业陶瓷轴套",
+          "category": "ind",
+          "rarity": 3,
+          "referencePrice": 24000,
+          "firstDrawProbability": 0.008671522719389526,
+          "referenceSale": 24000
+        },
+        {
+          "id": "ind12",
+          "name": "液压控制阀组",
+          "category": "ind",
+          "rarity": 4,
+          "referencePrice": 58000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 58000
+        },
+        {
+          "id": "ind13",
+          "name": "高纯度钛合金锭",
+          "category": "ind",
+          "rarity": 4,
+          "referencePrice": 85000,
+          "firstDrawProbability": 0.006503642039542144,
+          "referenceSale": 85000
+        },
+        {
+          "id": "ind14",
+          "name": "精密陀螺组件",
+          "category": "ind",
+          "rarity": 5,
+          "referencePrice": 240000,
+          "firstDrawProbability": 0.004459640255686042,
+          "referenceSale": 240000
+        },
+        {
+          "id": "ind15",
+          "name": "零号标准量块组",
+          "category": "ind",
+          "rarity": 6,
+          "referencePrice": 720000,
+          "firstDrawProbability": 0.003121748178980229,
+          "referenceSale": 720000
+        }
+      ],
+      "excluded": [],
+      "rarityCounts": {
+        "1": 8,
+        "2": 12,
+        "3": 12,
+        "4": 8,
+        "5": 7,
+        "6": 2
+      },
+      "firstDrawRarityProbability": {
+        "1": 0.5202913631633715,
+        "2": 0.2861602497398543,
+        "3": 0.10405827263267431,
+        "4": 0.052029136316337155,
+        "5": 0.03121748178980229,
+        "6": 0.006243496357960458
+      },
+      "firstDrawMeanReferencePrice": 16191.095584956147
+    },
+    "retriever": {
+      "name": "受雇回收员",
+      "eligible": [
+        {
+          "id": "elec01",
+          "name": "收音机",
+          "category": "elec",
+          "rarity": 2,
+          "referencePrice": 7500,
+          "firstDrawProbability": 0.031795583304428256,
+          "referenceSale": 7500
+        },
+        {
+          "id": "elec02",
+          "name": "随身听",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 30000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 30000
+        },
+        {
+          "id": "elec03",
+          "name": "计算器",
+          "category": "elec",
+          "rarity": 2,
+          "referencePrice": 5000,
+          "firstDrawProbability": 0.031795583304428256,
+          "referenceSale": 5000
+        },
+        {
+          "id": "elec04",
+          "name": "电路板",
+          "category": "elec",
+          "rarity": 2,
+          "referencePrice": 6200,
+          "firstDrawProbability": 0.031795583304428256,
+          "referenceSale": 6200
+        },
+        {
+          "id": "elec05",
+          "name": "掌上电子游戏机",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 36000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 36000
+        },
+        {
+          "id": "elec06",
+          "name": "即影相机",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 52000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 52000
+        },
+        {
+          "id": "elec07",
+          "name": "电子宠物机",
+          "category": "elec",
+          "rarity": 3,
+          "referencePrice": 18000,
+          "firstDrawProbability": 0.011562030292519367,
+          "referenceSale": 18000
+        },
+        {
+          "id": "elec08",
+          "name": "微型录像机",
+          "category": "elec",
+          "rarity": 3,
+          "referencePrice": 24000,
+          "firstDrawProbability": 0.011562030292519367,
+          "referenceSale": 24000
+        },
+        {
+          "id": "elec09",
+          "name": "加密寻呼机",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 48000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 48000
+        },
+        {
+          "id": "elec10",
+          "name": "便携式计算机",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 86000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 86000
+        },
+        {
+          "id": "elec11",
+          "name": "短波通信电台",
+          "category": "elec",
+          "rarity": 4,
+          "referencePrice": 72000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 72000
+        },
+        {
+          "id": "elec12",
+          "name": "航海电子定位仪",
+          "category": "elec",
+          "rarity": 5,
+          "referencePrice": 165000,
+          "firstDrawProbability": 0.005202913631633715,
+          "referenceSale": 165000
+        },
+        {
+          "id": "elec13",
+          "name": "多通道数据记录器",
+          "category": "elec",
+          "rarity": 5,
+          "referencePrice": 260000,
+          "firstDrawProbability": 0.005202913631633715,
+          "referenceSale": 260000
+        },
+        {
+          "id": "elec14",
+          "name": "原型信号分析终端",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 880000,
+          "firstDrawProbability": 0.0015608740894901144,
+          "referenceSale": 880000
+        },
+        {
+          "id": "elec15",
+          "name": "「远望者」深海探测核心",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 2650000,
+          "firstDrawProbability": 0.0015608740894901144,
+          "referenceSale": 2650000
+        },
+        {
+          "id": "ind01",
+          "name": "铜管",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 3000,
+          "firstDrawProbability": 0.08671522719389525,
+          "referenceSale": 3000
+        },
+        {
+          "id": "ind02",
+          "name": "轴承",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 5600,
+          "firstDrawProbability": 0.031795583304428256,
+          "referenceSale": 5600
+        },
+        {
+          "id": "ind03",
+          "name": "压力表",
+          "category": "ind",
+          "rarity": 3,
+          "referencePrice": 14500,
+          "firstDrawProbability": 0.011562030292519367,
+          "referenceSale": 14500
+        },
+        {
+          "id": "ind04",
+          "name": "生锈的螺栓",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 1200,
+          "firstDrawProbability": 0.08671522719389525,
+          "referenceSale": 1200
+        },
+        {
+          "id": "ind05",
+          "name": "混凝土试块",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 1600,
+          "firstDrawProbability": 0.08671522719389525,
+          "referenceSale": 1600
+        },
+        {
+          "id": "ind06",
+          "name": "钢筋边角料",
+          "category": "ind",
+          "rarity": 1,
+          "referencePrice": 2400,
+          "firstDrawProbability": 0.08671522719389525,
+          "referenceSale": 2400
+        },
+        {
+          "id": "ind07",
+          "name": "绝缘胶带",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 4200,
+          "firstDrawProbability": 0.031795583304428256,
+          "referenceSale": 4200
+        },
+        {
+          "id": "ind08",
+          "name": "黄铜阀门",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 6800,
+          "firstDrawProbability": 0.031795583304428256,
+          "referenceSale": 6800
+        },
+        {
+          "id": "ind09",
+          "name": "电焊面罩",
+          "category": "ind",
+          "rarity": 2,
+          "referencePrice": 7200,
+          "firstDrawProbability": 0.031795583304428256,
+          "referenceSale": 7200
+        },
+        {
+          "id": "ind10",
+          "name": "精密游标卡尺",
+          "category": "ind",
+          "rarity": 3,
+          "referencePrice": 16000,
+          "firstDrawProbability": 0.011562030292519367,
+          "referenceSale": 16000
+        },
+        {
+          "id": "ind11",
+          "name": "工业陶瓷轴套",
+          "category": "ind",
+          "rarity": 3,
+          "referencePrice": 24000,
+          "firstDrawProbability": 0.011562030292519367,
+          "referenceSale": 24000
+        },
+        {
+          "id": "ind12",
+          "name": "液压控制阀组",
+          "category": "ind",
+          "rarity": 4,
+          "referencePrice": 58000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 58000
+        },
+        {
+          "id": "ind13",
+          "name": "高纯度钛合金锭",
+          "category": "ind",
+          "rarity": 4,
+          "referencePrice": 85000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 85000
+        },
+        {
+          "id": "ind14",
+          "name": "精密陀螺组件",
+          "category": "ind",
+          "rarity": 5,
+          "referencePrice": 240000,
+          "firstDrawProbability": 0.005202913631633715,
+          "referenceSale": 240000
+        },
+        {
+          "id": "ind15",
+          "name": "零号标准量块组",
+          "category": "ind",
+          "rarity": 6,
+          "referencePrice": 720000,
+          "firstDrawProbability": 0.0015608740894901144,
+          "referenceSale": 720000
+        },
+        {
+          "id": "intel01",
+          "name": "港口货运清单",
+          "category": "intel",
+          "rarity": 2,
+          "referencePrice": 5200,
+          "firstDrawProbability": 0.031795583304428256,
+          "referenceSale": 5200
+        },
+        {
+          "id": "intel02",
+          "name": "旧电话簿",
+          "category": "intel",
+          "rarity": 1,
+          "referencePrice": 1800,
+          "firstDrawProbability": 0.08671522719389525,
+          "referenceSale": 1800
+        },
+        {
+          "id": "intel03",
+          "name": "撤离登记卡",
+          "category": "intel",
+          "rarity": 2,
+          "referencePrice": 6800,
+          "firstDrawProbability": 0.031795583304428256,
+          "referenceSale": 6800
+        },
+        {
+          "id": "intel04",
+          "name": "城市建设蓝图",
+          "category": "intel",
+          "rarity": 3,
+          "referencePrice": 24000,
+          "firstDrawProbability": 0.011562030292519367,
+          "referenceSale": 24000
+        },
+        {
+          "id": "intel05",
+          "name": "磁带录音",
+          "category": "intel",
+          "rarity": 3,
+          "referencePrice": 29000,
+          "firstDrawProbability": 0.011562030292519367,
+          "referenceSale": 29000
+        },
+        {
+          "id": "intel07",
+          "name": "电报码底稿",
+          "category": "intel",
+          "rarity": 3,
+          "referencePrice": 32000,
+          "firstDrawProbability": 0.011562030292519367,
+          "referenceSale": 32000
+        },
+        {
+          "id": "intel06",
+          "name": "潮位观测日志",
+          "category": "intel",
+          "rarity": 4,
+          "referencePrice": 58000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 58000
+        },
+        {
+          "id": "intel08",
+          "name": "封锁区通行名册",
+          "category": "intel",
+          "rarity": 4,
+          "referencePrice": 82000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 82000
+        },
+        {
+          "id": "intel09",
+          "name": "实验原始数据盘",
+          "category": "intel",
+          "rarity": 4,
+          "referencePrice": 96000,
+          "firstDrawProbability": 0.004729921483303378,
+          "referenceSale": 96000
+        },
+        {
+          "id": "intel10",
+          "name": "撤离电台录音带",
+          "category": "intel",
+          "rarity": 5,
+          "referencePrice": 220000,
+          "firstDrawProbability": 0.005202913631633715,
+          "referenceSale": 220000
+        },
+        {
+          "id": "intel11",
+          "name": "异常区域勘测报告",
+          "category": "intel",
+          "rarity": 5,
+          "referencePrice": 310000,
+          "firstDrawProbability": 0.005202913631633715,
+          "referenceSale": 310000
+        },
+        {
+          "id": "intel12",
+          "name": "未公开调查卷宗",
+          "category": "intel",
+          "rarity": 5,
+          "referencePrice": 460000,
+          "firstDrawProbability": 0.005202913631633715,
+          "referenceSale": 460000
+        },
+        {
+          "id": "intel13",
+          "name": "首潮原始观测记录",
+          "category": "intel",
+          "rarity": 6,
+          "referencePrice": 1850000,
+          "firstDrawProbability": 0.0015608740894901144,
+          "referenceSale": 1850000
+        },
+        {
+          "id": "life02",
+          "name": "旧报纸",
+          "category": "intel",
+          "rarity": 1,
+          "referencePrice": 1000,
+          "firstDrawProbability": 0.08671522719389525,
+          "referenceSale": 1000
+        },
+        {
+          "id": "art03",
+          "name": "摄影底片",
+          "category": "intel",
+          "rarity": 3,
+          "referencePrice": 14000,
+          "firstDrawProbability": 0.011562030292519367,
+          "referenceSale": 14000
+        }
+      ],
+      "excluded": [],
+      "rarityCounts": {
+        "1": 6,
+        "2": 9,
+        "3": 9,
+        "4": 11,
+        "5": 6,
+        "6": 4
+      },
+      "firstDrawRarityProbability": {
+        "1": 0.5202913631633715,
+        "2": 0.2861602497398543,
+        "3": 0.10405827263267431,
+        "4": 0.052029136316337155,
+        "5": 0.03121748178980229,
+        "6": 0.006243496357960458
+      },
+      "firstDrawMeanReferencePrice": 26404.3925204175
+    }
+  },
+  "armor": {
+    "helmets": [
+      {
+        "lv": 1,
+        "name": "布面工帽",
+        "short": "工帽",
+        "dur": 20,
+        "w": 0.5,
+        "move": 1,
+        "price": 2000,
+        "id": "helmet1",
+        "icon": "helmet1",
+        "type": "helmet",
+        "aimPenaltyPct": 0
+      },
+      {
+        "lv": 2,
+        "name": "工程安全帽",
+        "short": "安全帽",
+        "dur": 30,
+        "w": 0.8,
+        "move": 1,
+        "price": 6000,
+        "id": "helmet2",
+        "icon": "helmet2",
+        "type": "helmet",
+        "aimPenaltyPct": 0
+      },
+      {
+        "lv": 3,
+        "name": "防撞头盔",
+        "short": "防撞盔",
+        "dur": 45,
+        "w": 1.2,
+        "move": 1,
+        "price": 15000,
+        "id": "helmet3",
+        "icon": "helmet3",
+        "type": "helmet",
+        "aimPenaltyPct": 0
+      },
+      {
+        "lv": 4,
+        "name": "防弹头盔",
+        "short": "防弹盔",
+        "dur": 65,
+        "w": 1.8,
+        "move": 1,
+        "price": 48000,
+        "id": "helmet4",
+        "icon": "helmet4",
+        "type": "helmet",
+        "aimPenaltyPct": 0
+      },
+      {
+        "lv": 5,
+        "name": "重型防弹盔",
+        "short": "重盔",
+        "dur": 85,
+        "w": 2.5,
+        "move": 1,
+        "price": 120000,
+        "id": "helmet5",
+        "icon": "helmet5",
+        "type": "helmet",
+        "aimPenaltyPct": 0
+      },
+      {
+        "lv": 6,
+        "name": "攻坚头盔",
+        "short": "攻坚盔",
+        "dur": 110,
+        "w": 3.5,
+        "move": 1,
+        "price": 350000,
+        "id": "helmet6",
+        "icon": "helmet6",
+        "type": "helmet",
+        "aimPenaltyPct": 0
+      },
+      {
+        "id": "helmet1_motorcycle",
+        "type": "helmet",
+        "lv": 1,
+        "name": "旧式摩托盔",
+        "short": "摩托盔",
+        "dur": 28,
+        "w": 0.85,
+        "price": 2400,
+        "aimPenaltyPct": 0,
+        "desc": "早年常见的开放式摩托车头盔，硬壳下面填着已经变硬的泡棉，耳侧的衬布还能拆下来清洗。\n\n内衬上印着一排尺码，原主人把其中两个划掉，旁边补了一句：戴围巾时用大的。",
+        "visual": "米白色圆鼓硬壳，宽阔的开放面部缺口，短小黑色前檐，耳侧棕色软垫和垂下的下颚带；一道褪色橙条，漆面少量磕碰。没有面罩、导轨或军用附件。与原软布工帽形成圆硬壳／软帽的剪影差别。",
+        "source": "民用骑行用品",
+        "icon": "helmet1_motorcycle",
+        "move": 1
+      },
+      {
+        "id": "helmet2_rescue",
+        "type": "helmet",
+        "lv": 2,
+        "name": "轻型救援盔",
+        "short": "救援盔",
+        "dur": 24,
+        "w": 0.6,
+        "price": 7200,
+        "aimPenaltyPct": 0,
+        "desc": "面向狭窄空间作业的轻型头盔，采用短檐外壳与四点式固定带，蹲下或低头时不容易从头上滑落。\n\n培训说明要求每次使用前检查扣具。实际留在盔上的检查贴纸，已经把能填写的地方全部用完了。",
+        "visual": "褪色暗橙色低矮硬壳，短檐、两道宽散热槽，细黑色四点下颚带，后缘小块米白反光贴。没有医疗十字、不配置现代灯具导轨。比黄色工程帽更贴头、轮廓更低。",
+        "source": "城市救援与检修作业用品",
+        "icon": "helmet2_rescue",
+        "move": 1
+      },
+      {
+        "id": "helmet3_riot",
+        "type": "helmet",
+        "lv": 3,
+        "name": "治安防暴盔",
+        "short": "防暴盔",
+        "dur": 60,
+        "w": 1.7,
+        "price": 18000,
+        "aimPenaltyPct": 0,
+        "desc": "深色防暴头盔，面罩由两侧转轴固定，后方缝着一片可折起的护颈。面罩上的擦痕比盔壳上的多得多。\n\n储藏室的交接表将面罩列作可更换耗材。最后几次记录里，这一栏都写着：缺货，保留旧件。",
+        "visual": "深海军蓝厚圆壳，两侧大圆转轴，透明烟灰面罩抬到额头前上方，后缘短黑色护颈。用粗轮廓与两道冷灰反光表现透明面罩，不把整张脸涂成白块。没有未来电子装备。",
+        "source": "旧公共安全装备库存",
+        "icon": "helmet3_riot",
+        "move": 1
+      },
+      {
+        "id": "helmet4_light",
+        "type": "helmet",
+        "lv": 4,
+        "name": "短沿轻型防弹盔",
+        "short": "轻型弹盔",
+        "dur": 50,
+        "w": 1.35,
+        "price": 57600,
+        "aimPenaltyPct": 0,
+        "desc": "采用较薄壳体与简化悬挂系统的防弹盔，取消了不必要的外部安装座，主要面向需要长时间佩戴的人员。\n\n采购目录将它称作轻型。包装箱的搬运提示却没有随之修改，仍然要求两人共同抬运。",
+        "visual": "砂灰色紧凑圆壳，极短前檐、较低耳侧轮廓、黑色窄包边与细下颚带，侧面露出一颗小固定螺钉；没有导轨、前挂点、耳机和护颈。靠简洁剪影与浅砂色区别原厚重军绿防弹盔。",
+        "source": "专业安保采购与轻装护送装备",
+        "icon": "helmet4_light",
+        "move": 1
+      }
+    ],
+    "bodies": [
+      {
+        "lv": 1,
+        "name": "帆布护胸",
+        "short": "护胸",
+        "dur": 40,
+        "w": 1.5,
+        "move": 1,
+        "price": 3000,
+        "id": "body1",
+        "icon": "body1",
+        "type": "body",
+        "aimPenaltyPct": 0
+      },
+      {
+        "lv": 2,
+        "name": "防刺背心",
+        "short": "防刺",
+        "dur": 60,
+        "w": 2.5,
+        "move": 1,
+        "price": 9000,
+        "id": "body2",
+        "icon": "body2",
+        "type": "body",
+        "aimPenaltyPct": 10
+      },
+      {
+        "lv": 3,
+        "name": "轻型战术背心",
+        "short": "轻甲",
+        "dur": 85,
+        "w": 4,
+        "move": 1,
+        "price": 28000,
+        "id": "body3",
+        "icon": "body3",
+        "type": "body",
+        "aimPenaltyPct": 20
+      },
+      {
+        "lv": 4,
+        "name": "战术防弹衣",
+        "short": "战术甲",
+        "dur": 115,
+        "w": 6,
+        "move": 1,
+        "price": 85000,
+        "id": "body4",
+        "icon": "body4",
+        "type": "body",
+        "aimPenaltyPct": 30
+      },
+      {
+        "lv": 5,
+        "name": "重型防弹衣",
+        "short": "重甲",
+        "dur": 150,
+        "w": 9,
+        "move": 1,
+        "price": 220000,
+        "id": "body5",
+        "icon": "body5",
+        "type": "body",
+        "aimPenaltyPct": 45
+      },
+      {
+        "lv": 6,
+        "name": "攻坚装甲",
+        "short": "攻坚甲",
+        "dur": 190,
+        "w": 13,
+        "move": 1,
+        "price": 650000,
+        "id": "body6",
+        "icon": "body6",
+        "type": "body",
+        "aimPenaltyPct": 60
+      },
+      {
+        "id": "body1_leather",
+        "type": "body",
+        "lv": 1,
+        "name": "皮革作业背心",
+        "short": "皮革背心",
+        "dur": 55,
+        "w": 2,
+        "price": 3600,
+        "aimPenaltyPct": 4,
+        "desc": "用厚皮革和帆布衬里缝成的作业背心，胸前有两片重叠的护片。扣具很大，戴着手套也能解开。\n\n左下角的工具袋被补了三次。最后一次修补的人没有再缝袋口，而是把整只袋子封死了。",
+        "visual": "深红棕皮革，宽肩、深V领、三枚粗金属扣，胸前大块叠皮，腰侧一只扁工具袋；轮廓上宽下直，皮面有折痕与浅色擦伤。区别原土黄帆布护胸，不画成带钢板的重甲。",
+        "source": "船厂、机械维修作业用品",
+        "icon": "body1_leather",
+        "move": 1
+      },
+      {
+        "id": "body2_concealed",
+        "type": "body",
+        "lv": 2,
+        "name": "隐蔽式软甲",
+        "short": "隐蔽软甲",
+        "dur": 45,
+        "w": 1.8,
+        "price": 10800,
+        "aimPenaltyPct": 4,
+        "desc": "可以穿在衬衣下面的薄型防护背心，肩部和侧腰采用宽幅粘扣，外层布套允许单独拆洗。\n\n销售手册特意展示了它藏在西装下面的照片。照片中的人把外套扣得很紧，双臂始终没有放下来。",
+        "visual": "灰白或浅米色薄软甲，圆领、窄肩、两侧宽粘扣片，胸前平整只有一条浅缝；没有外挂袋和硬插板轮廓。紧凑、贴身、短下摆，与黑色厚层防刺背心分开。",
+        "source": "民用安保与通勤防护用品",
+        "icon": "body2_concealed",
+        "move": 1
+      },
+      {
+        "id": "body3_fragmentation",
+        "type": "body",
+        "lv": 3,
+        "name": "旧式军用防片衣",
+        "short": "防片衣",
+        "dur": 110,
+        "w": 5.2,
+        "price": 33600,
+        "aimPenaltyPct": 30,
+        "desc": "上一代军用防护服，厚实的纤维填充层分成数个独立区域，衣领和腹部留有柔软的延伸护片。体积不小，口袋却只有两个。\n\n内侧标签要求在干燥通风处悬挂存放。它被找到时，恰好挂在一间已经没有屋顶的库房里。",
+        "visual": "褪色灰橄榄绿厚布衣，短立领、宽肩、分段绗缝与下腹软护片，胸部仅两个扁平斜袋；整体宽厚、长下摆，不画现代织带矩阵或成排弹匣袋，与原窄身战术背心明显区分。",
+        "source": "退役军用库存与旧式护送装备",
+        "icon": "body3_fragmentation",
+        "move": 1
+      },
+      {
+        "id": "body4_lightplate",
+        "type": "body",
+        "lv": 4,
+        "name": "轻型插板背心",
+        "short": "轻型板甲",
+        "dur": 90,
+        "w": 4.7,
+        "price": 102000,
+        "aimPenaltyPct": 14,
+        "desc": "围绕前后防护板设计的简化载具，只保留必要的固定带和调节扣。侧腰没有厚软垫，活动时会露出里面的衬衣。\n\n卖方附送了一张可另行订购的附件清单。清单上的配件全部装齐以后，它就不再比普通型号轻了。",
+        "visual": "深石墨灰窄身板袋，前部一块清晰的切角矩形插板轮廓，两条宽肩带和侧腰开放式织带扣；短下摆、无腹甲、无护颈、没有密集外挂袋。局部旧卡其色缝线，不与浅砂色头盔做成同色套装。",
+        "source": "专业承包队与高端安保装备",
+        "icon": "body4_lightplate",
+        "move": 1
+      }
+    ]
+  },
+  "bags": [
+    {
+      "id": "bag01",
+      "name": "旧帆布挎包",
+      "short": "挎包",
+      "r": 1,
+      "slots": 8,
+      "w": 0.7,
+      "price": 6000,
+      "desc": "翻盖、金属搭扣，肩带磨得发亮。装不下一趟完整的搜刮，但比口袋强。"
+    },
+    {
+      "id": "bag02",
+      "name": "民用旅行背包",
+      "short": "旅行包",
+      "r": 2,
+      "slots": 12,
+      "w": 1.2,
+      "price": 18000,
+      "desc": "双肩、分层、拉链没坏。灾前它代表“出门几天”，现在只代表“最好真能带点东西回来”。"
+    },
+    {
+      "id": "bag03",
+      "name": "加固登山背包",
+      "short": "登山包",
+      "r": 3,
+      "slots": 16,
+      "w": 1.9,
+      "price": 45000,
+      "desc": "高包体、顶盖、侧袋和束带。它认真考虑过“背着东西走很远会不会累死”。"
+    },
+    {
+      "id": "bag04",
+      "name": "战术突击背包",
+      "short": "突击包",
+      "r": 4,
+      "slots": 20,
+      "w": 2.8,
+      "price": 110000,
+      "desc": "满身织带和压缩结构，跑起来不会摇得东倒西歪。多装两盒弹，或者一件能改变下周计划的东西。"
+    },
+    {
+      "id": "bag05",
+      "name": "远征模块背包",
+      "short": "远征包",
+      "r": 5,
+      "slots": 24,
+      "w": 3.8,
+      "price": 260000,
+      "desc": "外挂仓、压缩带、金属支撑。宣传语说它“能陪你去地图边缘之外”——现在这句话不太好笑了。"
+    }
+  ],
+  "enemyLoadout": {
+    "levelWeights": [
+      42,
+      30,
+      19,
+      9
+    ],
+    "helmetChance": 0.55,
+    "bodyChance": 0.65,
+    "ammoMin": 10,
+    "ammoMax": 30
+  },
+  "shared": {
+    "enemy": {
+      "SUSPECT_TIME": 3,
+      "CHASE_TIME": 8,
+      "REPATH": 0.5,
+      "LOSE_TIME": 4,
+      "BLIND_SENSE": 3
+    },
+    "corpse": {
+      "factions": [
+        "scav",
+        "holdout",
+        "retriever"
+      ],
+      "levelWeights": [
+        52,
+        32,
+        16
+      ],
+      "itemsByLevel": {
+        "1": 1,
+        "2": 2,
+        "3": 3
+      }
+    },
+    "ammo": {
+      "TIERS": [
+        {
+          "lv": 1,
+          "name": "普通",
+          "dmgMul": 0.9,
+          "pen": 1
+        },
+        {
+          "lv": 2,
+          "name": "改良",
+          "dmgMul": 1,
+          "pen": 2
+        },
+        {
+          "lv": 3,
+          "name": "钢芯",
+          "dmgMul": 1.05,
+          "pen": 3
+        },
+        {
+          "lv": 4,
+          "name": "穿甲",
+          "dmgMul": 1.1,
+          "pen": 4
+        },
+        {
+          "lv": 5,
+          "name": "特种穿甲",
+          "dmgMul": 1.15,
+          "pen": 5
+        }
+      ],
+      "MATRIX": {
+        "1": [
+          0.8,
+          0.6,
+          0.4,
+          0.25,
+          0.15,
+          0.15
+        ],
+        "2": [
+          1,
+          0.8,
+          0.6,
+          0.4,
+          0.25,
+          0.15
+        ],
+        "3": [
+          1,
+          1,
+          0.8,
+          0.6,
+          0.4,
+          0.25
+        ],
+        "4": [
+          1,
+          1,
+          1,
+          0.8,
+          0.6,
+          0.4
+        ],
+        "5": [
+          1,
+          1,
+          1,
+          1,
+          0.8,
+          0.6
+        ]
+      },
+      "DURABILITY_FACTOR": 0.5,
+      "UNARMED_PEN": 3
+    },
+    "bullet": {
+      "LIFE": 1.6,
+      "RADIUS": 2.4
+    },
+    "noise": {
+      "sneak": 2,
+      "walk": 5,
+      "sprint": 9,
+      "shoot": 18,
+      "search": 4,
+      "reload": 3,
+      "dodge": 6,
+      "bottle": 9,
+      "door": 4,
+      "waterMult": 2
+    },
+    "combat": {
+      "HEAD_RADIUS": 2,
+      "HEAD_BULLET_ALLOWANCE": 1,
+      "HEAD_MULT": 1.5
+    },
+    "quiet": {
+      "time": 30,
+      "radius": 12,
+      "sense": 0.4
+    },
+    "injury": {
+      "MIN_HEALTH_DMG": 0.5,
+      "DEDUP_WINDOW": 0.2,
+      "INJURY_JUDGE_CD": 0.45,
+      "ATTACK_TYPES": {
+        "bullet": {
+          "chance": 0.18,
+          "weights": {
+            "bleeding": 0.55,
+            "severe": 0.3,
+            "fracture": 0.15
+          }
+        },
+        "shotgun": {
+          "chance": 0.22,
+          "weights": {
+            "bleeding": 0.68,
+            "severe": 0.22,
+            "fracture": 0.1
+          }
+        },
+        "sharp": {
+          "chance": 0.3,
+          "weights": {
+            "bleeding": 0.8,
+            "severe": 0.15,
+            "fracture": 0.05
+          }
+        },
+        "blunt": {
+          "chance": 0.26,
+          "weights": {
+            "bleeding": 0.08,
+            "severe": 0.22,
+            "fracture": 0.7
+          }
+        },
+        "heavy": {
+          "chance": 0.3,
+          "weights": {
+            "bleeding": 0.1,
+            "severe": 0.4,
+            "fracture": 0.5
+          }
+        }
+      },
+      "ENEMY": {
+        "BASE_CHANCE": 0.16,
+        "CD_REF": 1,
+        "MIN": 0.1,
+        "MAX": 0.32
+      },
+      "BLEED": {
+        "DPS": 1.5,
+        "MIN_HP": 1
+      },
+      "SEVERE": {
+        "MAX_LAYERS": 4,
+        "PER_LAYER": 0.15,
+        "TRUNCATE_ENEMIES": false
+      },
+      "FRACTURE": {
+        "ROLL_DMG": 4,
+        "MOVE_MULT": 1,
+        "DODGE_DIST_MULT": 1,
+        "DODGE_CD_MULT": 1,
+        "STACK_WITH_PAIN": false
+      },
+      "PAIN": {
+        "MOVE_MULT": 0.78,
+        "DODGE_DIST_MULT": 0.75,
+        "DODGE_CD_MULT": 1.35,
+        "SWAY": 1.6,
+        "SPREAD_ADD": 0.025
+      },
+      "ANALGESIC": {
+        "WATER_MULT": 1
+      },
+      "INTERRUPT_ON_HIT": [
+        "surgery"
+      ]
+    }
+  },
+  "weapons": {
+    "glock17": {
+      "id": "glock17",
+      "name": "Glock 17",
+      "short": "Glock",
+      "category": "pistol",
+      "caliber": "9mm",
+      "rpm": 360,
+      "mag": 17,
+      "reloadTime": 1.5,
+      "price": 32000,
+      "rarity": 2,
+      "w": 1.1,
+      "recoilVMul": 0.75,
+      "recoilHMul": 0.8,
+      "spreadMul": 0.95,
+      "recoilPerShot": 0.1,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "Glock 17，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色方形套筒，简洁聚合物枪身与双排弹匣握把，短枪管。",
+      "attackType": "bullet",
+      "injuryChanceMul": 1,
+      "slot": "secondary",
+      "ammo": "ammo_9mm_1",
+      "dmgMin": 11,
+      "dmgMax": 15,
+      "pellets": 1,
+      "speed": 600,
+      "range": 460,
+      "aimTime": 0.2,
+      "spreadBase": 0.042749999999999996,
+      "spreadMax": 0.209,
+      "recoilBaseV": 2.4,
+      "recoilBaseH": 1.6,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": false,
+        "stock": false,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "muzzle.standard",
+        "mag.box",
+        "cal.9mm"
+      ]
+    },
+    "pp19_01": {
+      "id": "pp19_01",
+      "name": "PP-19-01 Vityaz",
+      "short": "PP-19-01",
+      "category": "smg",
+      "caliber": "9mm",
+      "rpm": 700,
+      "mag": 30,
+      "reloadTime": 2.1,
+      "price": 72000,
+      "rarity": 3,
+      "w": 2.4,
+      "recoilVMul": 0.7,
+      "recoilHMul": 0.8,
+      "spreadMul": 1.05,
+      "recoilPerShot": 0.055,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "PP-19-01 Vityaz，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色短管AK式冲锋枪，三角折叠托，细长弯曲弹匣，不采用螺旋弹筒。",
+      "attackType": "bullet",
+      "injuryChanceMul": 0.8,
+      "slot": "primary",
+      "ammo": "ammo_9mm_1",
+      "dmgMin": 11,
+      "dmgMax": 15,
+      "pellets": 1,
+      "speed": 600,
+      "range": 420,
+      "aimTime": 0.3,
+      "spreadBase": 0.052500000000000005,
+      "spreadMax": 0.29400000000000004,
+      "recoilBaseV": 2.6,
+      "recoilBaseH": 1.8,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.9mm"
+      ]
+    },
+    "mp155": {
+      "id": "mp155",
+      "name": "MP-155",
+      "short": "MP-155",
+      "category": "shotgun",
+      "caliber": "12g",
+      "rpm": 240,
+      "mag": 5,
+      "reloadTime": 0.65,
+      "price": 78000,
+      "rarity": 3,
+      "w": 3.6,
+      "recoilVMul": 1.85,
+      "recoilHMul": 1.4,
+      "spreadMul": 1,
+      "recoilPerShot": 0.22,
+      "modes": [
+        "semi"
+      ],
+      "defaultMode": "semi",
+      "reloadType": "tube",
+      "cycleTime": 0,
+      "desc": "MP-155，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+      "visual": "长枪管半自动猎枪，胡桃木枪托和前护木，下方细长管式弹仓，无盒式弹匣。",
+      "attackType": "shotgun",
+      "injuryChanceMul": 1,
+      "slot": "primary",
+      "ammo": "ammo_12g_1",
+      "dmgMin": 7,
+      "dmgMax": 10,
+      "pellets": 6,
+      "speed": 560,
+      "range": 300,
+      "aimTime": 0.45,
+      "spreadBase": 0.025,
+      "spreadMax": 0.14,
+      "recoilBaseV": 4.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0.1785,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": false,
+        "stock": true,
+        "muzzle": true,
+        "magazine": false
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "stock.replaceable",
+        "muzzle.shotgun"
+      ]
+    },
+    "rem870": {
+      "id": "rem870",
+      "name": "Remington 870",
+      "short": "R870",
+      "category": "shotgun",
+      "caliber": "12g",
+      "rpm": 75,
+      "mag": 6,
+      "reloadTime": 0.75,
+      "price": 58000,
+      "rarity": 3,
+      "w": 3.4,
+      "recoilVMul": 2.2,
+      "recoilHMul": 1.25,
+      "spreadMul": 0.85,
+      "recoilPerShot": 0.24,
+      "modes": [
+        "pump"
+      ],
+      "defaultMode": "pump",
+      "reloadType": "tube",
+      "cycleTime": 0.8,
+      "desc": "Remington 870，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
+      "visual": "深色木枪托，长条肋纹泵动护木，钢制机匣和管式弹仓，无盒式弹匣。",
+      "attackType": "shotgun",
+      "injuryChanceMul": 1,
+      "slot": "primary",
+      "ammo": "ammo_12g_1",
+      "dmgMin": 7,
+      "dmgMax": 10,
+      "pellets": 6,
+      "speed": 560,
+      "range": 300,
+      "aimTime": 0.45,
+      "spreadBase": 0.02125,
+      "spreadMax": 0.11900000000000001,
+      "recoilBaseV": 4.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0.1785,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": false,
+        "stock": true,
+        "muzzle": true,
+        "magazine": false
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "stock.replaceable",
+        "muzzle.shotgun"
+      ]
+    },
+    "m4a1": {
+      "id": "m4a1",
+      "name": "M4A1",
+      "short": "M4A1",
+      "category": "rifle",
+      "caliber": "556",
+      "rpm": 800,
+      "mag": 30,
+      "reloadTime": 2.4,
+      "price": 168000,
+      "rarity": 5,
+      "w": 3.2,
+      "recoilVMul": 1,
+      "recoilHMul": 1,
+      "spreadMul": 1,
+      "recoilPerShot": 0.075,
+      "modes": [
+        "semi",
+        "auto"
+      ],
+      "defaultMode": "auto",
+      "reloadType": "magazine",
+      "cycleTime": 0,
+      "desc": "M4A1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
+      "visual": "黑色AR式卡宾枪，直线伸缩枪托、短护木、顶部提把和弧形弹匣。",
+      "attackType": "bullet",
+      "injuryChanceMul": 1.1,
+      "slot": "primary",
+      "ammo": "ammo_556_1",
+      "dmgMin": 15,
+      "dmgMax": 22,
+      "pellets": 1,
+      "speed": 620,
+      "range": 640,
+      "aimTime": 0.4,
+      "spreadBase": 0.04,
+      "spreadMax": 0.26,
+      "recoilBaseV": 3.4,
+      "recoilBaseH": 2.4,
+      "pelletSpread": 0,
+      "attachmentSlots": {
+        "optic": true,
+        "grip": true,
+        "stock": true,
+        "muzzle": true,
+        "magazine": true
+      },
+      "attachmentTags": [
+        "optic.common",
+        "optic.scope",
+        "grip.common",
+        "stock.replaceable",
+        "muzzle.standard",
+        "mag.box",
+        "cal.556"
+      ]
+    }
+  },
+  "bonusMelee": [
+    {
+      "id": "melee03",
+      "attackType": "sharp",
+      "lootSource": "受雇回收员背包 / 防水补给箱（1%总概率额外掉落）",
+      "hitSfx": "melee_hit_large",
+      "name": "重型丛林砍刀",
+      "short": "砍刀",
+      "r": 4,
+      "w": 0.85,
+      "price": 675000,
+      "damage": 26,
+      "interval": 1.4,
+      "windup": 0.35,
+      "angle": 100,
+      "radius": 0.95,
+      "available": false,
+      "desc": "面向热带林地清障与野外作业设计的大型砍刀，采用加厚刀背与宽幅刀身，能够有效处理藤蔓、灌木及较粗的木质枝条。\n\n环礁湾沿海植被在灾害发生后出现过几轮异常生长，部分原本需要数月才能恢复的灌木，在短短几周内便重新覆盖了清理过的道路。\n\n林业部门因此采购了一批加重型砍刀。\n\n采购记录显示，最后一批货物的收货单位并非林业部门，而是环礁湾特别治安署。"
+    },
+    {
+      "id": "melee07",
+      "attackType": "sharp",
+      "lootSource": "受雇回收员背包 / 防水补给箱（1%总概率额外掉落）",
+      "name": "廓尔喀弯刀",
+      "short": "弯刀",
+      "r": 5,
+      "w": 0.75,
+      "price": 1080000,
+      "damage": 30,
+      "interval": 1.5,
+      "windup": 0.38,
+      "angle": 110,
+      "radius": 0.85,
+      "available": false,
+      "hitSfx": "melee_hit_large",
+      "positioning": "重型广角挥砍",
+      "desc": "刀身向前弯曲的传统重型刀具，重心集中于刀刃前段，适合大幅度挥砍。刀柄保留了传统木质结构，经过多次打磨，表面已有明显的使用痕迹。\n\n这把弯刀曾属于一名在环礁湾定居的外籍退役军人。灾害发生后，他拒绝接受治安署提供的制式武器，只带着这把刀离开了安置营。数周后，搜救队在一处废弃哨站找到了它，刀鞘完好，刀身却留下了无法辨认的深色污迹。"
+    }
+  ],
+  "observations": {
+    "echoMeleeVsEnemy": {
+      "targetHpBefore": 72,
+      "targetHpAfter": 72
+    },
+    "offlineIncludesDebuff": false,
+    "offlineDefinitionDifferences": [
+      {
+        "id": "scav",
+        "key": "injuryType",
+        "current": "bullet",
+        "offline": null
+      },
+      {
+        "id": "echo",
+        "key": "injuryType",
+        "current": "heavy",
+        "offline": null
+      },
+      {
+        "id": "guard",
+        "key": "injuryType",
+        "current": "bullet",
+        "offline": null
+      },
+      {
+        "id": "holdout",
+        "key": "injuryType",
+        "current": "shotgun",
+        "offline": null
+      },
+      {
+        "id": "retriever",
+        "key": "injuryType",
+        "current": "bullet",
+        "offline": null
+      }
+    ]
+  }
+}

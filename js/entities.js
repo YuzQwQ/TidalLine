@@ -9,6 +9,54 @@ const SWITCH_SFX = {
   shotgun: 'shot_switch_shotgun'
 };
 
+/* 型号 → 专属切枪音（优先于上面的类别映射）。G36C / Groza / UMP45 用
+   各自换弹录音拆出的"最后一段"作为切枪声；其余型号回落到 SWITCH_SFX[类别]，
+   再不行用通用 shot_switch。键是 WEAPONS 里的型号 id。 */
+const SWITCH_MODEL = {
+  g36c: 'switch_g36c',
+  groza1: 'switch_groza',
+  ump45: 'switch_ump45',
+  galil_arm: 'switch_galil'
+};
+
+/* Weapon physics shared by player and human AI. Trigger decisions remain with each controller. */
+const Firearms = {
+  spread(w, recoil) {
+    const R=CFG.RECOIL,lo=w.spreadBase??R.spreadBase,hi=w.spreadMax??R.spreadMax;
+    return lo+(hi-lo)*recoil;
+  },
+  emit(w, o) {
+    const center=o.angle+U.rand(-o.spread,o.spread),pellets=w.pellets||1;
+    for(let i=0;i<pellets;i++){
+      const a=center+(pellets>1?U.rand(-(w.pelletSpread||0),w.pelletSpread||0):0);
+      Game.bullets.push(new Bullet(o.x+Math.cos(a)*14,o.y+Math.sin(a)*14,a,w.speed,o.faction,
+        U.rand(w.dmgMin,w.dmgMax)*(o.ammo?.dmgMul??1),w.range,o.ammo?.penLevel??1,o.meta));
+    }
+    return pellets;
+  },
+  kick(s,w,tuneV=1,tuneH=1) {
+    const R=CFG.RECOIL,AX=R.axis;
+    const mul=s.sprinting?R.sprintMult:s.moving?R.moveMult:s.sneaking?R.sneakMult:1;
+    s.recoil=Math.min(R.max,s.recoil+(w.recoilPerShot||R.perShot)*mul);s.sinceShot=0;
+    const mv=s.sprinting?AX.v.sprintMult:s.moving?AX.v.moveMult:s.sneaking?AX.v.sneakMult:1;
+    const mh=s.sprinting?AX.h.sprintMult:s.moving?AX.h.moveMult:s.sneaking?AX.h.sneakMult:1;
+    s.rV=Math.min(AX.v.max,s.rV+(w.recoilBaseV??AX.v.kick)*(w.recoilVMul??1)*tuneV*mv);
+    const sign=AX.h.bias>0?1:AX.h.bias<0?-1:Math.random()<.5?-1:1;
+    const jitter=(Math.random()+Math.random()-1)*AX.h.rand;
+    s.rH=U.clamp(s.rH+((w.recoilBaseH??AX.h.kick)+jitter)*(w.recoilHMul??1)*tuneH*mh*sign,-AX.h.max,AX.h.max);
+  },
+  recover(s,w,dt) {
+    const R=CFG.RECOIL,AX=R.axis;
+    if(s.sinceShot>R.decayDelay&&s.recoil>0){
+      const rate=R.decay*(s.moving?R.decayMoveMult:1)*(s.sneaking?R.decaySneakMult:1);
+      s.recoil=Math.max(0,s.recoil-rate*dt);
+    }
+    const stance=s.sneaking?1.3:s.moving?.7:1;
+    if(s.rH!==0&&s.sinceShot>AX.h.decayDelay){s.rH*=Math.exp(-AX.h.decay*(w.recoilRecovery||1)*stance*dt);if(Math.abs(s.rH)<.05)s.rH=0;}
+    if(s.rV!==0&&s.sinceShot>AX.v.decayDelay){s.rV*=Math.exp(-AX.v.decay*(w.recoilRecovery||1)*stance*dt);if(s.rV<.05)s.rV=0;}
+  }
+};
+
 /* ---------------- 碰撞 ---------------- */
 function canStand(x, y, r) {
   const size = CFG.TILE;
@@ -248,6 +296,8 @@ class Player {
     this._sprintVoiced = false;  // 这一轮冲刺的起步声已经响过了吗
     this.inWater = false;
     this.dead = false;
+    /* 局内损伤状态：玩家恒有；没有这个字段的实体（机械守卫 / 回响体 / 钢板靶）完全免疫。 */
+    this.debuffs = Debuff.fresh();
     this.anim = { state: 'idle', time: 0 };
     this.shotAnimT = 0;
     this.hurtAnimT = 0;
@@ -408,7 +458,7 @@ class Player {
     this.syncSpread();
     /* 换枪会打断换弹，别让换弹序列的后两段还响在空枪上 */
     if (typeof SFX !== 'undefined') SFX.stopSeq('reload');
-    Game.sfx(SWITCH_SFX[this.weapon.category] || 'shot_switch');
+    Game.sfx(SWITCH_MODEL[this.weapon.id] || SWITCH_SFX[this.weapon.category] || 'shot_switch');
     return true;
   }
 
@@ -499,7 +549,7 @@ class Player {
     if (this.dodgeT > 0) {
       this.resetAim();
       this.dodgeT -= dt;
-      const sp = CFG.P.DODGE_SPEED * (this.dodgeT > 0 ? 1 : 0);
+      const sp = CFG.P.DODGE_SPEED * (this.dodgeT > 0 ? 1 : 0) * (this._dodgeDistMult || 1);
       this.vx = Math.cos(this.dodgeAngle) * sp;
       this.vy = Math.sin(this.dodgeAngle) * sp;
       const x0 = this.x, y0 = this.y;
@@ -520,11 +570,14 @@ class Player {
         this.dodgeDenied(why);          // 闪不动就给个说法，然后照常走移动分支
       } else {
         this.resetAim();
-        this.dodgeCd = CFG.P.DODGE_CD;
+        this.dodgeCd = CFG.P.DODGE_CD * Debuff.dodgeCdMult(this);
         this.dodgeT = CFG.P.DODGE_TIME;
+        this._dodgeDistMult = Debuff.dodgeDistMult(this);  // 开始时快照，途中镇痛到期不突变
         this.dodgeAngle = this.angle;
         this.windupShot = false;      // 闪避会把还没出膛的那一发收掉
         this.spendStamina(this.dodgeCost());
+        /* 骨折翻滚的额外掉血：直扣 HP、无视护甲、不触发致残、镇痛不能免除 */
+        Debuff.onRoll(this);
         Noise.emit(this.x, this.y, CFG.NOISE.dodge, 'dodge');
         Game.sfx('dodge');
         this.updateStamina(dt, false, false);
@@ -550,6 +603,8 @@ class Player {
     if (this.inWater) speed *= CFG.P.WATER_SLOW;
     /* 边打药边走：正常步行的 30% */
     if (Game.action && Game.action.type === 'heal') speed *= 0.3;
+    /* 疼痛（含骨折派生）的操作惩罚，镇痛期间自动归零 */
+    speed *= Debuff.moveMult(this);
 
     const targetVx = mx * speed;
     const targetVy = my * speed;
@@ -610,32 +665,9 @@ class Player {
       this.waterT = 0;
     }
 
-    /* --- 后坐力恢复 --- */
-    // 静止恢复快，移动中只有一半，潜行更快回正
-    const R = CFG.RECOIL;
-    if (this.sinceShot > R.decayDelay && this.recoil > 0) {
-      let rate = R.decay;
-      if (this.moving) rate *= R.decayMoveMult;
-      if (this.sneaking) rate *= R.decaySneakMult;
-      this.recoil = Math.max(0, this.recoil - rate * dt);
-      this.syncSpread();
-    }
-
-    /* --- 双轴后坐力恢复 ---
-       指数衰减：每帧乘 exp(-k*dt)，所以任何帧率下同样时间恢复的比例都相同；
-       天然"先快后慢"，有惯性而不会过冲，也不需要额外做回弹。
-       停火超过各自的 decayDelay 才开始，移动中回正慢一点。 */
-    const AX = R.axis;
-    if (this.rH !== 0 && this.sinceShot > AX.h.decayDelay) {
-      const k = AX.h.decay * (this.weapon.recoilRecovery||1) * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
-      this.rH *= Math.exp(-k * dt);
-      if (Math.abs(this.rH) < 0.05) this.rH = 0;
-    }
-    if (this.rV !== 0 && this.sinceShot > AX.v.decayDelay) {
-      const k = AX.v.decay * (this.weapon.recoilRecovery||1) * (this.sneaking ? 1.30 : (this.moving ? 0.70 : 1));
-      this.rV *= Math.exp(-k * dt);
-      if (this.rV < 0.05) this.rV = 0;
-    }
+    /* 玩家与人类敌人共用散布及双轴后坐力恢复。 */
+    const R=CFG.RECOIL;
+    Firearms.recover(this,this.weapon,dt);this.syncSpread();
 
     /* --- 准星抖动回弹 --- */
     const kd = Math.exp(-R.kickDecay * dt);
@@ -643,6 +675,13 @@ class Player {
     this.crossKick.y *= kd;
     if (Math.abs(this.crossKick.x) < 0.06) this.crossKick.x = 0;
     if (Math.abs(this.crossKick.y) < 0.06) this.crossKick.y = 0;
+    /* 疼痛让准星持续轻微游走：复用现有的 crossKick 回弹与渲染链 */
+    const sway = Debuff.swayMult(this);
+    if (sway > 1) {
+      const k = (sway - 1) * 18 * dt;
+      this.crossKick.x = U.clamp(this.crossKick.x + U.rand(-k, k), -16, 16);
+      this.crossKick.y = U.clamp(this.crossKick.y + U.rand(-k, k), -16, 16);
+    }
 
     /* --- 移动噪声 --- */
     this.noiseT -= dt;
@@ -703,51 +742,14 @@ class Player {
        玩家可能刚被瞬移过（调试入口、测试），所以先按当前坐标重算一次准星。 */
     if (this._aimValid) this.updateAimPoint(this.aimMouse.x, this.aimMouse.y);
     const aimA = this.shootAngle;
-    const pellets = W.pellets || 1;
-    // 霰弹的每颗弹丸再额外散开一点，否则六颗会叠成一束
-    const centerA=aimA+U.rand(-this.spread,this.spread);
-    const sp = W.pelletSpread || 0;
-    /* 弹药属性一次取好：伤害系数进单颗伤害，穿透等级随子弹走。
-       霰弹的六颗弹丸分辨率独立，所以这里每颗都带同一份弹药属性、各自结算。 */
-    const ammo = shotAmmo;
-    const ammoMul = ammo ? ammo.dmgMul : 1;
-    const pen = ammo ? ammo.penLevel : 1;
-    for (let i = 0; i < pellets; i++) {
-      const a = centerA + (pellets>1?U.rand(-sp,sp):0);
-      const mx = this.x + Math.cos(a) * 14;
-      const my = this.y + Math.sin(a) * 14;
-      Game.bullets.push(new Bullet(mx, my, a, W.speed, 'player',
-        U.rand(W.dmgMin, W.dmgMax) * ammoMul, W.range, pen));
-    }
-
-    // 后坐力累加：冲刺 > 移动 > 站立，潜行更稳
-    let mul = 1;
-    if (this.sprinting) mul = R.sprintMult;
-    else if (this.moving) mul = R.moveMult;
-    else if (this.sneaking) mul = R.sneakMult;
-    this.recoil = Math.min(R.max, this.recoil + (W.recoilPerShot || R.perShot) * mul);
-    this.sinceShot = 0;
-    this.syncSpread();
-
-    /* --- 双轴后坐力 ---
-       垂直只加不减：绝不会反向把准星往玩家身上拉。
-       水平每发随机左右，但幅度收敛、且有累计上限，连射会形成稳定的"晃动区间"
-       而不是一路飞走；bias 可以让某把枪固定偏向一侧（枪口上跳的偏斜）。 */
-    const AX = R.axis;
-    let mulH = 1, mulV = 1;
-    if (this.sprinting) { mulH = AX.h.sprintMult; mulV = AX.v.sprintMult; }
-    else if (this.moving) { mulH = AX.h.moveMult; mulV = AX.v.moveMult; }
-    else if (this.sneaking) { mulH = AX.h.sneakMult; mulV = AX.v.sneakMult; }
-
+    /* 致伤元数据与伤害 / 穿透 / 弹药等级解耦：一次开火只生成一次，霰弹六颗共享 */
+    const hitMeta = Debuff.attack(W.attackType || 'bullet',
+      { mul: W.injuryChanceMul == null ? 1 : W.injuryChanceMul });
+    Firearms.emit(W,{x:this.x,y:this.y,angle:aimA,spread:this.spread,ammo:shotAmmo,faction:'player',meta:hitMeta});
+    const AX=R.axis;
     const tuneV=(typeof Range!=='undefined'&&Range.active)?AX.v.kick/3.4:1;
     const tuneH=(typeof Range!=='undefined'&&Range.active)?AX.h.kick/2.4:1;
-    this.rV = Math.min(AX.v.max, this.rV + (W.recoilBaseV??AX.v.kick)*(W.recoilVMul??1)*tuneV*mulV);
-
-    /* 方向：bias 不为 0 固定偏向一侧，否则对半随机。
-       扰动取两次均匀分布的均值（近似三角分布），小扰动更常见，偶尔才来一下大的。 */
-    const sign = AX.h.bias > 0 ? 1 : (AX.h.bias < 0 ? -1 : (Math.random() < 0.5 ? -1 : 1));
-    const jitter = (Math.random() + Math.random() - 1) * AX.h.rand;
-    this.rH = U.clamp(this.rH + ((W.recoilBaseH??AX.h.kick)+jitter)*(W.recoilHMul??1)*tuneH*mulH*sign, -AX.h.max, AX.h.max);
+    Firearms.kick(this,W,tuneV,tuneH);this.syncSpread();
 
     /* 位移变了就立刻重算准星，别等下一帧 update */
     if (this._aimValid) this.updateAimPoint(this.aimMouse.x, this.aimMouse.y);
@@ -770,9 +772,10 @@ class Player {
     const W = this.weapon, R = CFG.RECOIL;
     const lo = W.spreadBase != null ? W.spreadBase : R.spreadBase;
     const hi = W.spreadMax != null ? W.spreadMax : R.spreadMax;
-    const recoilSpread=lo+(hi-lo)*this.recoil;
+    const recoilSpread=Firearms.spread(W,this.recoil);
     const preparationSpread=lo+(hi-lo)*0.35*(1-this.aimProgress);
-    this.spread = this.meleeActive ? recoilSpread : Math.max(recoilSpread,preparationSpread);
+    this.spread = (this.meleeActive ? recoilSpread : Math.max(recoilSpread,preparationSpread))
+      + Debuff.spreadAdd(this);
   }
 
   roundsFor(w, n) {
@@ -840,7 +843,7 @@ class Player {
      部位倍率先并进来，再交给 BALLISTICS 统一算穿透与耐久，别在这里各乘一次。 */
   /* 返回**实际掉的血**（扣完护甲）：伤害飘字按这个数显示，
      不是按枪的纸面伤害 —— 打穿护甲和打在护甲上，玩家看到的数字得不一样。 */
-  hurt(base, part, pen, kind) {
+  hurt(base, part, pen, kind, meta) {
     if (this.dead) return 0;
     part = part || 'body';
     const head = part === 'head';
@@ -859,6 +862,12 @@ class Player {
     this.hp -= dmg;
     /* 受击不打断治疗：只有死亡才强制中断（下面 hp<=0 那一段处理） */
     Save.setHP(this.hp);
+    /* 唯一致伤入口：拿「实际掉血」判定，护甲完全抵挡（0）或蹭伤过小都不触发。
+       放在扣血之后，重伤截断当前 HP 才不会把这一发的伤害再算一遍。 */
+    if (this.hp > 0) Debuff.onHit(this, { dealt: dmg, meta, now: Game.time });
+    /* 手术是长读条，受击打断；其余医疗动作沿用「受击不打断」。 */
+    if (Game.action && Game.action.interruptOnHit && dmg >= CFG.DEBUFF.MIN_HEALTH_DMG)
+      Medical.cancel('受击打断了手术');
     Game.shake(head ? 4.4 : 3.2);
     Game.flash(head ? '#b23f36' : '#8d3a3a', head ? 0.30 : 0.22);
     Game.hitDir = Game.lastHitAngle;
@@ -935,6 +944,8 @@ class Enemy {
     this.seenPlayerT = 0;
     this.alarmPlayed = false;
     this.patrolCd = 0;
+    /* 只有「人」才吃损伤状态；机械与异常体没有这份局内状态。 */
+    if (t.human) this.debuffs = Debuff.fresh();
     if (t.tactical) HumanAI.init(this,spawnConfig);
   }
 
@@ -1024,6 +1035,7 @@ class Enemy {
   }
 
   moveAlongPath(dt, speed) {
+    if (this.debuffs) speed *= Debuff.moveMult(this);
     if (!this.path || this.pathI >= this.path.length) return false;
     const node = this.path[this.pathI];
     if (!M.walkable(node.x, node.y)) { this.path = null; return false; }
@@ -1168,8 +1180,8 @@ class Enemy {
           // 略微保持距离
           if (d < this.t.range * 0.45 && this.t.arrow) {
             const back = Math.atan2(this.y - tgt.y, this.x - tgt.x);
-            moveEntity(this, Math.cos(back) * speed * 0.5 * dt,
-              Math.sin(back) * speed * 0.5 * dt);
+            moveEntity(this, Math.cos(back) * speed * Debuff.moveMult(this) * 0.5 * dt,
+              Math.sin(back) * speed * Debuff.moveMult(this) * 0.5 * dt);
           }
         } else {
           this.repathT -= dt;
@@ -1181,7 +1193,8 @@ class Enemy {
             // 寻路失败，直接朝目标走
             const a = Math.atan2(tgt.y - this.y, tgt.x - this.x);
             this.angle = a;
-            moveEntity(this, Math.cos(a) * speed * dt, Math.sin(a) * speed * dt);
+            moveEntity(this, Math.cos(a) * speed * Debuff.moveMult(this) * dt,
+              Math.sin(a) * speed * Debuff.moveMult(this) * dt);
           }
         }
 
@@ -1224,12 +1237,14 @@ class Enemy {
   attack(tgt) {
     this.atkCd = this.t.cd;
     if (this.t.arrow) {
+      const wobble = Debuff.spreadAdd(this);
       const a = Math.atan2(tgt.y - this.y, tgt.x - this.x)
-        + U.rand(-0.07, 0.07);
+        + U.rand(-0.07 - wobble, 0.07 + wobble);
       Game.bullets.push(new Bullet(
         this.x + Math.cos(a) * 12, this.y + Math.sin(a) * 12,
         a, 480, this.t.faction, this.t.dmg, 460,
-        this.penLevel                               // 人打的弹按他自己那个等级穿透
+        this.penLevel,                             // 人打的弹按他自己那个等级穿透
+        Debuff.enemyAttack(this.t)                    // 致残率按这个敌人的攻击频率归一
       ));
       Noise.emit(this.x, this.y, CFG.NOISE.shoot * 0.8, 'shot');
       Game.sfx('enemyShot');
@@ -1237,14 +1252,15 @@ class Enemy {
       // 近战
       const d = U.dist(this.x, this.y, tgt.x, tgt.y);
       if (d < this.t.range + 8) {
-        if (this.target.kind === 'player') Game.player.hurt(this.t.dmg, 'body', this.penLevel, 'melee');
+        if (this.target.kind === 'player')
+          Game.player.hurt(this.t.dmg, 'body', this.penLevel, 'melee', Debuff.enemyAttack(this.t));
         else tgt.hp -= this.t.dmg;
       }
       Game.sfx('melee');
     }
   }
 
-  hurt(d, fromFaction, part, pen, damageType) {
+  hurt(d, fromFaction, part, pen, damageType, meta) {
     if (this.dead) return 0;
     part = part || 'body';
     const head = part === 'head';
@@ -1252,6 +1268,7 @@ class Enemy {
     const pre = d * (head ? CFG.COMBAT.HEAD_MULT : 1);
     const res = damageType === 'trueDamage' ? {health:d,durabilityLoss:0} : BALLISTICS.hit(pre, pen == null ? CFG.AMMO.UNARMED_PEN : pen, gear);
     this.hp -= res.health;
+    if (this.hp > 0) Debuff.onHit(this, { dealt: res.health, meta, now: Game.time });
     /* 敌人穿着护甲时一样会被打穿、掉耐久，尸体上捡到的就是打剩下的那件 */
     if (gear && res.durabilityLoss > 0) {
       gear.dur = Math.max(0, gear.dur - res.durabilityLoss);
@@ -1278,7 +1295,7 @@ class Enemy {
 
 /* ---------------- 子弹 ---------------- */
 class Bullet {
-  constructor(x, y, angle, speed, faction, dmg, range, pen) {
+  constructor(x, y, angle, speed, faction, dmg, range, pen, meta) {
     this.x = x; this.y = y;
     this.sx = x; this.sy = y;
     this.vx = Math.cos(angle) * speed;
@@ -1289,6 +1306,8 @@ class Bullet {
     /* 穿透等级：玩家子弹带的是那一发弹药的等级；
        没有弹药来源的射击（敌人制式武器）走 UNARMED_PEN。 */
     this.pen = (pen == null) ? CFG.AMMO.UNARMED_PEN : pen;
+    /* 同一次攻击的所有弹丸共享一份 meta（attackId 用于去重） */
+    this.meta = meta || null;
     this.life = CFG.BULLET.LIFE;
     this.dead = false;
     this.angle = angle;
@@ -1336,15 +1355,30 @@ class Bullet {
 
     // 2) 角色：线段到圆心最短距离 ≤ 有效半径就算碰到
     const br = CFG.BULLET.RADIUS;
+    // 正式战局默认使用精准判定；仅靶场的旧版对照按钮可临时关闭。
+    const precise = !(typeof Range !== 'undefined' && Range.active && Range.preciseHits === false);
     let best = null;
     for (const a of this.targets()) {
       if (a.dead) continue;
-      const d = segDist(ax, ay, bx, by, a.x, a.y);
+      let d = segDist(ax, ay, bx, by, a.x, a.y);
       if (d > a.r + br) continue;
-      const t = segT(ax, ay, bx, by, a.x, a.y);
+      let t = segT(ax, ay, bx, by, a.x, a.y);
+      /* 身体按首次接触排序，部位按弹道横向偏差判断。
+         避免短线段还没到头部内圈，就提前结算成身体。 */
+      if (precise && segLen > 1e-9) {
+        const dx = bx - ax, dy = by - ay;
+        const cx = a.x - ax, cy = a.y - ay;
+        const along = (cx * dx + cy * dy) / segLen;
+        d = Math.abs(cx * dy - cy * dx) / segLen;
+        const radius = a.r + br;
+        const entry = along - Math.sqrt(Math.max(0, radius * radius - d * d));
+        t = U.clamp(entry / segLen, 0, 1);
+      }
       if (t >= wallT) continue;                     // 墙挡在人前面
       if (best && t >= best.t) continue;
-      const headR = (a.headR != null ? a.headR : CFG.COMBAT.HEAD_RADIUS) + br;
+      // 头部只扩张 1px，身体仍按完整子弹半径判命中。
+      const headR = (a.headR != null ? a.headR : CFG.COMBAT.HEAD_RADIUS)
+        + (precise ? Math.min(br, CFG.COMBAT.HEAD_BULLET_ALLOWANCE) : br);
       best = { actor: a, t: t, part: d <= headR ? 'head' : 'body' };
     }
 
@@ -1385,7 +1419,7 @@ class Bullet {
 
     if (actor === Game.player) {
       Game.lastHitAngle = Math.atan2(this.vy, this.vx);
-      actor.hurt(base, part, this.pen);
+      actor.hurt(base, part, this.pen, undefined, this.meta);
       Game.impact(actor.x, actor.y, this.angle, true, false);
       return;
     }
@@ -1393,11 +1427,11 @@ class Bullet {
     /* 敌人：部位倍率与护甲穿透都在 hurt 里统一算；
        钢板靶只吃伤害数字，不喷血也算命中音 */
     const dummy = !!actor.isRangeTarget;
-    const dealt = actor.hurt(base, this.faction, part, this.pen);
+    const dealt = actor.hurt(base, this.faction, part, this.pen, undefined, this.meta);
     Game.impact(actor.x, actor.y, this.angle, !dummy, part === 'head');
     /* 命中反馈：打身体和打头是两段录音（660770 / 660769）。
        连打十几发时同一段会听成机械节拍，所以音高抖 ±3% 把重复感散开。 */
-    Game.sfx(dummy ? 'hit' : (part === 'head' ? 'headshot' : 'hit'),
+    Game.sfx(part === 'head' ? 'headshot' : 'hit',
       { rate: 0.97 + Math.random() * 0.06 });
     /* 只有玩家打出来的伤害才飘字：敌人互相开火时屏幕上飘一堆数字只是噪声。
        钢板靶另有自己的读数（Range 那边按散布量尺寸，字号更小），不重复画。 */

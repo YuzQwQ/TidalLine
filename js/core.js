@@ -669,6 +669,13 @@ const Loot = {
     return pool.length?{item:EQUIP.attachment(U.pick(pool).id),n:1}:this.roll(quality,cats);
   },
 
+  /* 额外收藏品独立于物资/装备/弹药抽取，不占轮数，不按稀有度加权。 */
+  rollBonusMelee(options) {
+    if (!options || !options.ids.length || Math.random() >= options.chance) return null;
+    const item = EQUIP.melee(U.pick(options.ids));
+    return item ? { item, n: 1 } : null;
+  },
+
   fill(quality, preferredCats, type) {
     const [a, b] = (type && type.rolls) || BOX_COUNT[quality] || [1, 2];
     const n = U.randInt(a, b);
@@ -688,6 +695,8 @@ const Loot = {
       seen.add(r.item.id);
       out.push(r);
     }
+    const bonus = this.rollBonusMelee(type && type.bonusMeleePool);
+    if (bonus) out.push(bonus);
     return out;
   }
 };

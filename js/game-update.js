@@ -146,6 +146,8 @@ Object.assign(Game, {
     }
     if (this.state !== 'playing') return;
     this.time += dt;
+    /* 损伤状态每帧结账：流血掉血（下限 1 HP），镇痛/短期疼痛由 getter 现算到期 */
+    if (typeof Debuff !== 'undefined') Debuff.tickAll(dt);
     this.updateTide();
     /* 长按 5 的判定：keydown 只立状态，计时在这里走，够 250ms 才开轮盘 */
     if (typeof MedQuick !== 'undefined') MedQuick.tick(dt);
@@ -554,6 +556,7 @@ Object.assign(Game, {
     this.closeLoot();
     if (this.bagOpen) this.toggleBag({ silent: true });
     if (typeof MedHud !== 'undefined') MedHud.reset();   // 死亡：轮盘和按住状态一并清掉
+    if (typeof Debuff !== 'undefined') Debuff.clearAll();  // 死亡动画期间不再 tick，先清状态与图标
     this.player.dodgeT = 0;
     this.player.tickAnimation(0, false);
     SFX.play('death'); this.shake(9);

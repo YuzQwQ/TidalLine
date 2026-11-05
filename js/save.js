@@ -213,7 +213,8 @@ const Save = {
       const item = ITEM_BY_ID[id];
       if (!item) continue;
       const n = Math.max(1, e.n || 1);
-      const max = item.healCap || 0;
+      /* 恢复品的容量是 HP，效果品的容量是次数，用了多少都得存下来 */
+      const max = Medical.capOf(item) || 0;
       if (!max) { push(id, n, item); continue; }
       /* 恢复品要保留"用了多少"：老存档没写 cap 就按满容量初始化，归零的直接丢掉 */
       const cap = typeof e.cap === 'number' ? U.clamp(e.cap, 0, max) : max;

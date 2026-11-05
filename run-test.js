@@ -79,9 +79,9 @@ ctx.globalThis = ctx;
 vm.createContext(ctx);
 
 for (const f of ['config.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
-  'common.js', 'medical.js', 'art.js', 'ui.js', 'save.js', 'base.js',
+  'common.js', 'medical.js', 'art.js', 'debuff.js', 'ui.js', 'save.js', 'base.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'melee.js', 'range.js', 'sales.js', 'boot.js']) {
+  'medhud.js', 'melee.js', 'range.js', 'buyback-data.js', 'sales.js', 'boot.js']) {
   try {
     vm.runInContext(fs.readFileSync(path.join(dir, 'js', f), 'utf8'), ctx, { filename: f });
   } catch (e) {
@@ -99,6 +99,10 @@ vm.runInContext(`
   globalThis.Corpse = Corpse; globalThis.Bullet = Bullet;
   globalThis.GEAR = GEAR; globalThis.WEAPONS = WEAPONS; globalThis.EQUIP = EQUIP; globalThis.HELMETS = HELMETS; globalThis.BODIES = BODIES; globalThis.SIDEARM_SLOT = SIDEARM_SLOT;
   globalThis.START_CREDITS = START_CREDITS;
+  globalThis.Debuff = Debuff; globalThis.DebuffHud = DebuffHud;
+  globalThis.Medical = Medical; globalThis.ITEM_BY_ID = ITEM_BY_ID;
+  globalThis.MEDICAL_ITEMS = MEDICAL_ITEMS; globalThis.MELEE = MELEE;
+  globalThis.ENEMY_TYPES = ENEMY_TYPES; globalThis.BALLISTICS = BALLISTICS;
   globalThis.MedQuick = MedQuick; globalThis.MedWheel = MedWheel;
   globalThis.MedBar = MedBar; globalThis.HealHud = HealHud; globalThis.MedHud = MedHud;
   globalThis.stackLimit = stackLimit; globalThis.isStackable = isStackable;
@@ -470,8 +474,8 @@ Game.state = 'base'; // 仓库交易只允许在局外进行。
 const coin0 = Save.credits;
 const eqEntry = Save.stash.find(e => e.gear);
 Base.sell(eqEntry, 1);
-ok('仓库里能卖装备', Save.credits === coin0 + eqEntry.gear.sell, '+' + eqEntry.gear.sell);
-ok('卖掉的装备从仓库消失', Save.stash.filter(e => e.gear).length === 1);
+ok('仓库出售入口不直接加钱', Save.credits === coin0);
+ok('前往出售不扣除装备', Save.stash.filter(e => e.gear).length === 2);
 ok('卖价没超过买价', eqEntry.gear.sell <= eqEntry.gear.price);
 
 // 撤离：背包里的装备要原样进仓库（不许折算成钱就消失）
@@ -497,7 +501,7 @@ ok('拾荒者身上配了枪', !!scav2.weaponId, scav2.weaponId);
 const realCorpse = new ctx.Corpse(scav2.x, scav2.y, scav2);
 const gunEntry = realCorpse.loot.find(e => e.gun);
 ok('尸体掉落里有枪', !!gunEntry);
-ok('掉落的枪存的是 id 字符串', typeof gunEntry.gun === 'string', String(gunEntry.gun));
+ok('拾荒者掉枪保留实际余弹', gunEntry.gun.id === scav2.weaponId && gunEntry.gun.magCur === scav2.ai.mag, JSON.stringify(gunEntry.gun));
 
 Game.player.weapons = [null, null, null];
 Game.player.slot = 0;
@@ -533,6 +537,7 @@ console.log('\n=== 敌人 AI ===');
 Game.startRun();
 // 放一个拾荒者在玩家附近，看它是否会发现并靠近
 const P7 = Game.player;
+M.load(Array(30).fill('.'.repeat(50)),null,[],null); // Isolate detection from editable map obstacles.
 P7.x = M.cx(23); P7.y = M.cy(13); // 北桥接街，合法站位与连续直线通路。
 const scav = Game.enemies.find(e => e.key === 'scav');
 scav.x = P7.x + 300; scav.y = P7.y;   // 在视野内、射程外
@@ -1040,9 +1045,9 @@ const coin = ITEMS.find(i => i.id === 'antiq03');
 Save.stash = [];
 Save.addStash('antiq03', 3);
 for (const e of Save.stash.slice()) Base.sell(e, e.n || 1);
-ok('出售加钱', Save.credits === credA + coin.price * 3,
+ok('仓库入口不直接成交', Save.credits === credA,
    credA + ' → ' + Save.credits);
-ok('出售后清空', Save.stashCount('antiq03') === 0);
+ok('导航不删除物品', Save.stashCount('antiq03') === 3);
 
 // 卖寻常物
 Save.stash = [];
@@ -1050,8 +1055,8 @@ Save.addStash('antiq03', 1);   // 寻常
 Save.addStash('lux02', 1);     // 珍稀，不该被清
 const c0 = Save.credits;
 Base.sellJunk();
-ok('清寻常物只清 r1', Save.stashCount('antiq03') === 0 && Save.stashCount('lux02') === 1);
-ok('清仓加钱', Save.credits > c0);
+ok('旧快捷出售保留全部物品', Save.stashCount('antiq03') === 1 && Save.stashCount('lux02') === 1);
+ok('快捷入口不改变资金', Save.credits === c0);
 
 // 背包制：带什么完全由包里的东西决定，出发不花钱
 Save.stash = []; Save.credits = 100000;
@@ -1847,6 +1852,51 @@ console.log('\n=== 体力 ===');
   noThrow('体力条绘制不抛错', () => { PR.stamAlpha = 1; Game.drawStamina(ctxMock, 100, 100, PR); });
   PR.stamina = 1; PR.exhausted = true;
   noThrow('力竭时绘制不抛错', () => Game.drawStamina(ctxMock, 100, 100, PR));
+}
+
+console.log('\n=== 损伤状态与医疗 ===');
+{
+  const DB = ctx.Debuff, Med = ctx.Medical, byId = ctx.ITEM_BY_ID;
+  const P = Game.player;
+  ok('玩家有局内损伤状态', !!P.debuffs);
+  ok('机械守卫不吃损伤状态', !new ctx.Enemy('guard', P.x + 60, P.y).debuffs);
+  ok('人形敌人吃损伤状态', !!new ctx.Enemy('scav', P.x + 40, P.y).debuffs);
+
+  P.debuffs = DB.fresh();
+  P.hp = 100;
+  for (let i = 0; i < 6; i++) DB.apply(P, 'severe');
+  ok('重伤最多 4 层、可恢复上限 40%', P.debuffs.severe === 4 &&
+     Math.abs(DB.recoverableMax(P) - 40) < 1e-6, '上限 ' + DB.recoverableMax(P).toFixed(1));
+  ok('重伤截断不致死', P.hp >= 1 && !P.dead);
+
+  P.debuffs.bleeding = true; P.hp = 2;
+  DB.tickAll(10);
+  ok('流血最低保留 1 HP 且不致死', P.hp === 1 && !P.dead);
+
+  DB.applyAnalgesic(P, 90);
+  ok('镇痛屏蔽疼痛与骨折的操作惩罚', DB.analgesicActive(P) &&
+     !DB.penaltyOn(P) && DB.moveMult(P) === 1 && DB.spreadAdd(P) === 0);
+  P.debuffs.fracture = true;
+  const hp0 = P.hp;
+  DB.onRoll(P);
+  ok('骨折翻滚掉血不受镇痛免除', P.hp === Math.max(1, hp0 - CFG.DEBUFF.FRACTURE.ROLL_DMG));
+
+  const opened = ['heal06','heal07','heal08','heal09','heal10','heal12'];
+  ok('六件损伤处理品已开放且进入掉落池',
+     opened.every(id => Med.ready(byId[id]) && !!byId[id].effect && !byId[id].noLoot));
+  ok('未开放的七件仍不可用',
+     ctx.ITEMS.filter(i => i.cat === 'medical' && !i.healCap && !i.effect).length === 7);
+
+  P.debuffs.severe = 2; P.debuffs.fracture = true;
+  const hpBefore = P.hp;
+  ok('手术优先治一层重伤且不回血', DB.surgery(P) === 'severe' &&
+     P.debuffs.severe === 1 && P.debuffs.fracture && P.hp === hpBefore);
+  P.debuffs.severe = 0;
+  ok('无重伤时手术解骨折', DB.surgery(P) === 'fracture' && !P.debuffs.fracture);
+
+  Game.showEnd(true);
+  ok('结算统一清除局内损伤', P.debuffs.severe === 0 && !P.debuffs.bleeding &&
+     !P.debuffs.fracture && DB.recoverableMax(P) === P.maxHp);
 }
 
 console.log('\n---------------------------------------');

@@ -33,6 +33,9 @@ const MeleeSystem = {
     if(a.phase==='windup')a.angle=p.angle;
     if(a.phase==='windup' && elapsed+1e-9>=a.weapon.windup) {
       a.phase='recovery';a.angle=p.angle; // aim and target positions at impact, never at button-down
+      let landed = false;
+      /* 一次挥砍只生成一份致伤元数据；命中多个目标时按 (attackId, 目标) 各判一次 */
+      const hitMeta = Debuff.attack(a.weapon.attackType || 'sharp');
       for(const e of Game.enemies) {
         if(e.dead)continue;
         const hit=MeleeGeometry.hit(p,e,a.weapon,a.angle);
@@ -40,9 +43,13 @@ const MeleeSystem = {
         if(!hit.point)continue;
         /* 刀是真实伤害：护甲不减免，飘出来的就是纸面值。
            这类伤害单独用蓝色（Mana）飘字，和骨白的普通命中、橙金的爆头分开。 */
-        const dealt = e.hurt(a.weapon.damage,'player','body',null,'trueDamage');
+        const dealt = e.hurt(a.weapon.damage,'player','body',null,'trueDamage',hitMeta);
         Game.popDamage(e.x, e.y-20, dealt, {kind:'melee', key:e});
+        if(dealt > 0) landed = true;
       }
+      // 一次挥砍只播一次命中声；挥空、遮挡与取消均不会触发。
+      // 后续刺刀在武器定义中指定 hitSfx: 'melee_hit_stab' 即可接入。
+      if(landed) Game.sfx(a.weapon.hitSfx || 'melee_hit_small', {rate: 0.97 + Math.random() * 0.06});
     }
     if(elapsed+1e-9>=a.weapon.interval)this.cancel(p);
   },
@@ -91,18 +98,48 @@ const MeleeSystem = {
   },
   slashLayout(d) {
     const radius=d.radius*CFG.TILE,half=d.angle*Math.PI/360;
-    return {radius,half,width:2*radius*Math.sin(half),height:radius*(1-Math.cos(half)+.06)*2.5,duration:.16};
+    return {radius,half,width:2*radius*Math.sin(half),height:radius*.85,duration:.24,hold:.08,thrust:d.vfx==='thrust'};
+  },
+  // 外缘固定在半径内；所有厚度向内增长，左右挥砍只改变粗细方向。
+  slashBand(c,r,half,direction,border) {
+    const start=-Math.PI/2-half,end=-Math.PI/2+half,n=Math.max(16,Math.ceil(r*half*2));
+    const inset=border?0:.5,outer=r-inset;
+    c.beginPath();c.arc(0,0,outer,start,end);
+    for(let i=n;i>=0;i--){
+      const u=i/n,t=direction==='rl'?u:1-u;
+      const width=.65+(1.1+r*.055)*Math.pow(t,1.15)+(border?1:0);
+      const a=start+(end-start)*u,inner=Math.max(0,outer-width);
+      c.lineTo(Math.cos(a)*inner,Math.sin(a)*inner);
+    }
+    c.closePath();c.fillStyle=border?'#303c39':'#f2eedc';c.fill();
   },
   drawSlash(c,p,a,camX,camY) {
     const age=p.meleeClock-a.start-a.weapon.windup,layout=this.slashLayout(a.weapon);
-    if(a.phase!=='recovery'||age<0||age>=layout.duration)return;
-    const image=Art.get('effects','melee_slash_'+(a.slashDirection||'lr'));
-    if(!image)return;
+    const preparing=a.phase==='windup';
+    if(!preparing&&(a.phase!=='recovery'||age<0||age>=layout.duration))return;
+    const direction=a.slashDirection||'lr';
+    const image=Art.get('effects',layout.thrust?'melee_thrust':'melee_slash_'+direction);
+    const opacity=preparing ? .19 : age<=layout.hold ? .94 : .94*Math.pow(1-(age-layout.hold)/(layout.duration-layout.hold),.8);
     c.save();c.translate(p.x-camX,p.y-camY);c.rotate(a.angle+Math.PI/2);
-    // Clip to the real sector: stretching a shared crescent can never extend its hit radius.
+    // 模板只负责纹理，轮廓按真实半径和扇角绘制；贴图始终裁切在判定范围内。
     c.beginPath();c.moveTo(0,0);c.arc(0,0,layout.radius,-Math.PI/2-layout.half,-Math.PI/2+layout.half);c.closePath();c.clip();
-    c.globalAlpha=.92*Math.pow(1-age/layout.duration,.65);c.imageSmoothingEnabled=false;
-    c.drawImage(image,4,4,image.naturalWidth-8,image.naturalHeight-8,-layout.width/2,-layout.radius,layout.width,layout.height);
+    c.globalAlpha=opacity;c.fillStyle='rgba(202,213,207,.09)';c.fill();
+    if(!preparing&&image){
+      c.globalAlpha=opacity*.55;c.imageSmoothingEnabled=false;
+      c.drawImage(image,4,4,image.naturalWidth-8,image.naturalHeight-8,-layout.width/2,-layout.radius,layout.width,layout.thrust?layout.radius:layout.height);
+    }
+    c.globalAlpha=opacity;
+    if(layout.thrust){
+      const r=layout.radius,w=r*Math.tan(layout.half)*.42;
+      c.beginPath();c.moveTo(0,-r);c.lineTo(w,-r*.55);c.lineTo(0,-r*.18);c.lineTo(-w,-r*.55);c.closePath();
+      c.fillStyle='rgba(208,218,211,.18)';c.fill();
+      c.strokeStyle='#303c39';c.lineWidth=2;c.stroke();
+      c.beginPath();c.moveTo(-w,-r*.55);c.lineTo(0,-r);c.lineTo(w,-r*.55);
+      c.strokeStyle='#f2eedc';c.lineWidth=.85;c.stroke();
+    }else{
+      this.slashBand(c,layout.radius,layout.half,direction,true);
+      this.slashBand(c,layout.radius,layout.half,direction,false);
+    }
     c.restore();
   }
 };
@@ -110,7 +147,7 @@ const MeleeSystem = {
 // Transient combat effects, not placeable scenery or collision objects.
 /* 追加而不是覆盖：ART.effects 里还挂着别的一次性用图（伤害飘字的位图字体图集），
    直接赋值会把它们从预加载表里挤掉，进游戏后数字永远画不出来。 */
-ART.effects=[...new Set([...(ART.effects||[]),'melee_slash_lr','melee_slash_rl'])];
+ART.effects=[...new Set([...(ART.effects||[]),'melee_slash_lr','melee_slash_rl','melee_thrust'])];
 
 /* Exact sector-circle overlap; angular partitioning tests all visibility-changing boundaries.
    Rectangle corners and rectangle/circle intersections split the target into visible intervals. */
@@ -193,7 +230,7 @@ meleeWrap(Player.prototype,'switchWeapon',function(original,i){
       this.fireCd=Math.max(this.fireCd,.28);
       /* 刀 → 枪：按的是当前枪的槽位时 switchWeapon 会提前返回、什么都不播，
          这个方向以前是全程无声的，这里补上 */
-      if(!r)Game.sfx(SWITCH_SFX[this.weapons[i].category]||'shot_switch');
+      if(!r)Game.sfx(SWITCH_MODEL[this.weapons[i].id]||SWITCH_SFX[this.weapons[i].category]||'shot_switch');
     }
     return true;
   }
@@ -277,7 +314,7 @@ meleeWrap(Game,'takeGear',function(original,entry,index){
 meleeWrap(Base,'toStash',function(original,entry){if(stashItem(entry)?.equip?.kind==='melee' && Save.stash.length>=STASH_SLOTS){this.note('仓库已满',true);return false;}return original.call(this,entry);});
 
 // Animation selection is cosmetic; hit timing is exclusively driven by the combat state.
-for(const state of ['idle','walk','melee01','melee02','melee03']){
+for(const state of ['idle','walk',...MELEE.map(d=>d.id)]){
   const key='melee_'+state;PLAYER_ANIMS[key]={frames:state==='idle'?2:4,fps:state==='idle'?2:8,loop:['idle','walk'].includes(state),size:64};
   // Art.init reads PLAYER_ANIMS at boot and loads the same three direction strips.
 }

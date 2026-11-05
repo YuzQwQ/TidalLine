@@ -221,6 +221,7 @@ window.addEventListener('error', function (e) {
      比原来的两行文字槽省 39px，背包就不爆了。 */
   .eqbar { display: grid; gap: 3px; margin-bottom: 4px; }
   .eqbar.w6 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .eqbar.w4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .eqbar.w3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .eqs {
     position: relative; min-width: 0; box-sizing: border-box;
@@ -884,6 +885,47 @@ window.addEventListener('error', function (e) {
 .deal-acts button.go:hover { background: #1a8577; }
 .deal-acts button.go.no { background: #23302b; color: #6b4a3a; border-color: #3a2626; cursor: default; }
 .deal-acts button.go.no:hover { background: #23302b; }
+
+/* ---- 出发前提醒：生命/枪械/药物有缺口时弹出 ---- */
+#deployVeil { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(5, 9, 8, 0.88); backdrop-filter: blur(3px); z-index: 30; }
+#deployVeil.hidden { display: none; }
+.deploy-modal {
+  width: min(460px, 92vw); box-sizing: border-box;
+  background: #0e1512; border: 1px solid #2a443d;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.78);
+  padding: 22px 24px 20px;
+}
+.deploy-modal h2 {
+  margin: 0 0 4px; font-size: 15px; font-weight: 600; letter-spacing: 1px; color: #e6efeb;
+}
+.deploy-modal .dm-sub { font-size: 11px; color: #779181; margin-bottom: 14px; }
+.deploy-warns { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.deploy-warn {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 11px; border: 1px solid #2b3a34; border-radius: 4px; background: #101a16;
+}
+.deploy-warn .dw-ic { flex: 0 0 18px; text-align: center; font-size: 14px; line-height: 1.2; }
+.deploy-warn .dw-body { flex: 1; min-width: 0; }
+.deploy-warn .dw-body b { display: block; font-size: 12.5px; color: #dbe5e1; font-weight: 600; }
+.deploy-warn .dw-body span { display: block; font-size: 11px; color: #779181; line-height: 1.6; margin-top: 2px; }
+.deploy-warn.warn-hp { border-color: #54321f; background: #1a130e; }
+.deploy-warn.warn-hp .dw-ic { color: #d97a4a; }
+.deploy-warn.warn-gun { border-color: #5a3a1c; background: #18130e; }
+.deploy-warn.warn-gun .dw-ic { color: #d9a94a; }
+.deploy-warn.warn-med { border-color: #1e4a3e; background: #0e1814; }
+.deploy-warn.warn-med .dw-ic { color: #5fd6a8; }
+.deploy-acts { display: flex; gap: 8px; }
+.deploy-acts button {
+  flex: 1; margin: 0; padding: 11px 10px; font-size: 12.5px; letter-spacing: 1px;
+  background: #12201b; color: #a8c4ba; border: 1px solid #2a443d; border-radius: 4px; cursor: pointer;
+  font-family: inherit;
+}
+.deploy-acts button:hover { background: #16241f; color: #dbe5e1; border-color: #3a5a4f; }
+.deploy-acts button.primary { background: #14685C; color: #eaf4f0; border-color: #14685C; }
+.deploy-acts button.primary:hover { background: #1a8577; }
+.deploy-acts button.danger { background: #3a2626; color: #d9a0a0; border-color: #5a3434; }
+.deploy-acts button.danger:hover { background: #4a3030; border-color: #6b3d3d; color: #ecc2c2; }
 .medical-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
 .medical-actions button { flex:1; min-width:105px; margin:0; padding:10px 8px; font-size:12px; letter-spacing:0; }
 .medical-actions button:disabled, #doctorService button:disabled { opacity:.45; cursor:not-allowed; }
@@ -963,6 +1005,27 @@ window.addEventListener('error', function (e) {
 }
 #healHud.start .hh-fill { background: #d9922f; }
 
+/* ---- 损伤状态条：沿用医疗层视觉，不重做 HUD ----
+   层级：背包 10 < 快捷栏 30 < debuffBar 32 < 详情 62 < 菜单 64 < 轮盘 66 < 治疗进度 70 */
+#debuffBar {
+  /* 左下 406~466px 是弹药/射击模式面板，状态条整体放在它上方 */
+  position: absolute; left: 14px; bottom: 84px; z-index: 32;
+  display: none; flex-wrap: wrap; gap: 4px; max-width: 300px;
+  pointer-events: none;
+}
+#debuffBar .db-chip {
+  padding: 1px 6px; font: 10px/1.5 Consolas, monospace; letter-spacing: .5px;
+  border: 1px solid; border-radius: 2px;
+  background: rgba(9, 15, 13, 0.84);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+#debuffBar .db-bleed  { color: #e08585; border-color: #8d3a3a; }
+#debuffBar .db-severe { color: #dfbf7d; border-color: #7d6430; }
+#debuffBar .db-fract  { color: #d9b45f; border-color: #8a7d5a; }
+#debuffBar .db-pain   { color: #c1a3d6; border-color: #907ba8; }
+#debuffBar .db-analg  { color: #9fe4c9; border-color: #3fbf9b; }
+#debuffBar .db-muted  { opacity: .55; }
+
 @media(max-width:720px) {
   .base-hd { padding:10px 12px; flex-wrap:wrap; gap:10px; }
   .hd-vals { flex-wrap:wrap; gap:8px; }
@@ -1009,8 +1072,8 @@ window.addEventListener('error', function (e) {
 .rg-top b { font-size: 12px; letter-spacing: 2px; color: #7fc3ae; }
 .rg-hint { flex: 1; font-size: 9.5px; color: #4a665e; }
 .rg-x { padding: 0 6px !important; line-height: 16px; }
-.rg-guns { display: flex; gap: 4px; margin-bottom: 8px; }
-.rg-guns button { flex: 1; padding: 4px 0; }
+.rg-guns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin-bottom: 8px; }
+.rg-guns button { min-width: 0; padding: 4px 2px; font-size: 10px; letter-spacing: normal; white-space: normal; }
 .rg-read {
   background: #0b1210; border: 1px solid #172620;
   padding: 5px 7px; margin-bottom: 8px;
@@ -1053,10 +1116,13 @@ window.addEventListener('error', function (e) {
 .rg-sfx-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin: 5px 0 4px; }
 .rg-sfx-btns button { padding: 3px 0; font-size: 10px; }
 .rg-sfx-tip { color: #4c665e; font-size: 9.5px; line-height: 1.5; }
+
+.tip-ic img.item-detail-original{image-rendering:auto}
 </style>
-<link rel="stylesheet" href="../../../assets/ui/safehouse.css">
-<link rel="stylesheet" href="../../../assets/ui/merchant.css">
-<link rel="stylesheet" href="../../../assets/ui/merchant-sales.css"><link rel="stylesheet" href="../../../assets/ui/storage.css"></head>
+<link rel="stylesheet" href="assets/ui/safehouse.css">
+<link rel="stylesheet" href="assets/ui/merchant.css">
+<link rel="stylesheet" href="assets/ui/elena.css"><link rel="stylesheet" href="assets/ui/merchant-sales.css"><link rel="stylesheet" href="assets/ui/storage.css">
+<link rel="stylesheet" href="assets/ui/attachments.css"></head>
 <body>
 
 <div id="stage">
@@ -1068,8 +1134,8 @@ window.addEventListener('error', function (e) {
   <div class="box" id="lootBox" style="display:none">
     <div class="ttl"><span id="lootTitle">容器</span><span id="lootHint">E 关闭</span></div>
     <div class="loot-sub" id="lootSub" style="display:none"></div>
-    <div class="eqbar w3" id="lootGear" style="display:none"></div>
-    <div class="loot-tip" id="lootGearTip" style="display:none">左键拾取 · 没有同类装备就直接穿上</div>
+    <div class="eqbar w4" id="lootGear" style="display:none"></div>
+    <div class="loot-tip" id="lootGearTip" style="display:none">双击拾取 · 没有同类装备就直接穿上 · 右键看详情</div>
     <div id="lootList"></div>
   </div>
 
@@ -1089,6 +1155,8 @@ window.addEventListener('error', function (e) {
     <!-- 医疗层：快捷栏 / 轮盘 / 治疗进度。
          三块都不属于背包，开关背包不会卸载它们，治疗也不会因此中断。 -->
     <div id="medBar" style="display:none"></div>
+    <!-- 损伤状态条：流血 / 重伤 / 骨折 / 疼痛 / 镇痛，逐帧刷新 -->
+    <div id="debuffBar" style="display:none"></div>
     <canvas id="medWheel" width="720" height="480" style="display:none"></canvas>
     <div id="healHud" style="display:none">
       <div class="hh-top"></div>
@@ -1116,7 +1184,8 @@ window.addEventListener('error', function (e) {
       <div><kbd>Shift</kbd><span>潜行（噪声最小）</span></div>
       <div><kbd>空格</kbd><span>冲刺（噪声最大）</span></div>
       <div><kbd>E</kbd><span>搜刮 / 开门 / 撤离 / 搜尸体</span></div>
-      <div><kbd>R</kbd><span>换弹</span></div>
+      <div><kbd>R</kbd><span>短按装填 · 长按弹药轮盘</span></div>
+      <div><kbd>B</kbd><span>切换射击模式</span></div>
       <div><kbd>Tab</kbd><span>背包</span></div>
       <div><kbd>5</kbd><span>医疗（长按打开轮盘选药）</span></div>
     </div>
@@ -1173,9 +1242,9 @@ window.addEventListener('error', function (e) {
           <h3>背包<em id="bagMeta">0 / 24 格</em></h3>
           <div class="bag-grid" id="baseBagGrid"></div>
           <div class="bar bag-bar" id="bagBar"><i></i></div>
-          <p class="bag-note">子弹和药物回来还留在包里，其它东西自动入库。点物品可以把仓库里的放进背包，也可以把包里的放回仓库。</p>
+          <p class="bag-note">子弹和药物回来还留在包里，其它东西自动入库。单击看详情，双击把包里的东西搬回仓库，Ctrl+左键同样搬回仓库；右键里还有放入保险箱。</p>
 
-          <button id="btnDeploy">进入游戏</button>
+          <button id="btnDeploy" data-sfx="confirm">进入游戏</button>
           <div class="deploy-hint" id="deployHint"></div>
         </div>
 
@@ -1211,6 +1280,20 @@ window.addEventListener('error', function (e) {
   </div>
 </div>
 
+<!-- 出发前提醒：生命值过低 / 未装备枪械 / 未携带药物 -->
+<div class="veil hidden" id="deployVeil">
+  <div class="deploy-modal" role="dialog" aria-modal="true" aria-labelledby="deployModalTitle">
+    <h2 id="deployModalTitle">出发前检查</h2>
+    <p class="dm-sub">有几项准备可能不足，建议先回藏身处补一补。</p>
+    <div class="deploy-warns" id="deployWarns"></div>
+    <div class="deploy-acts">
+      <button type="button" id="deployGoPrepare" class="primary">前往备战</button>
+      <button type="button" id="deployGoAnyway">继续出发</button>
+      <button type="button" id="deployCancel" class="danger">取消</button>
+    </div>
+  </div>
+</div>
+
 <!-- 地图选择：确认出发后才结算补给 -->
 <div class="veil hidden" id="mapVeil">
   <main class="map-page" aria-labelledby="mapSelectionTitle">
@@ -1221,7 +1304,7 @@ window.addEventListener('error', function (e) {
     <div class="map-choices" id="mapChoices" role="group" aria-label="可选地图"></div>
     <footer class="map-footer">
       <div aria-live="polite"><b id="mapSelectedName"></b><small id="mapSupplyCost"></small><p id="mapSelectionHint"></p></div>
-      <button type="button" id="btnMapStart">出发</button>
+      <button type="button" id="btnMapStart" data-sfx="confirm">出发</button>
     </footer>
   </main>
 </div>
@@ -1240,47 +1323,64 @@ window.addEventListener('error', function (e) {
 <div class="deal" id="dealBox" style="display:none"></div>
 <!-- 右键菜单：背包物品的「查看详情 / 丢弃」 -->
 <div class="ctxmenu" id="ctxMenu" style="display:none"></div>
-<script src="../../../assets/audio/bundle.js"></script>
-<script src="../../../js/config.js"></script>
-<script src="../../../js/pixfont.js"></script>
-<script src="../../../js/data.js"></script>
-<script src="../../../js/attachment-data.js"></script>
-<script src="../../../js/attachments.js"></script>
-<script src="../../../js/core.js"></script>
-<script src="../../../js/entities.js"></script>
-<script src="../../../js/gunplay.js"></script>
-<script src="../../../js/human-ai.js"></script>
-<script src="../../../js/common.js"></script>
-<script src="../../../js/medical.js"></script>
-<script src="../../../js/art.js"></script>
-<script src="../../../js/ui.js"></script>
-<script src="../../../js/save.js"></script>
-<script src="../../../js/base.js"></script>
-<script src="../../../js/game.js"></script>
-<script src="../../../js/game-update.js"></script>
-<script src="../../../js/game-render.js"></script>
-<script src="../../../js/game-panels.js"></script>
-<script src="../../../js/medhud.js"></script>
-<script src="../../../js/melee.js"></script>
-<script src="../../../js/range.js"></script>
-<script src="../../../js/safehouse-config.js"></script>
-<script src="../../../js/safehouse.js"></script>
-<script src="../../../js/merchant-config.js"></script>
-<script src="../../../js/trader.js"></script>
-<script src="../../../js/merchant-ui.js"></script>
-<script src="../../../js/storage-config.js"></script>
-<script src="../../../js/inventory-view.js"></script>
-<script src="../../../js/storage-ui.js"></script>
-<script src="../../../design/enemies/human-units-v1/fixtures.js"></script>
-<script src="../../../js/attachment-ui.js"></script>
-<script src="../../../js/gunsmith-page.js"></script>
-<script src="../../../js/merchant-dialogue.js"></script>
-<script src="../../../js/storage-loadout.js"></script>
-<script src="../../../js/base-safe.js"></script>
-<script src="../../../js/buyback-data.js"></script>
-<script src="../../../js/sales.js"></script>
-<script src="../../../js/merchant-sales.js"></script>
-<script src="../../../js/boot.js"></script>
-<script>window.addEventListener("DOMContentLoaded",()=>{const panel=document.createElement("aside");panel.style.cssText="position:fixed;z-index:900;left:8px;top:8px;max-width:calc(100vw - 16px);padding:12px;background:#15241eee;color:#d9e0ca;font:13px system-ui;border:1px solid #758663";const header=document.createElement("b");header.textContent="人类敌人测试 · 独立存档";const actions=document.createElement("div");actions.style.cssText="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px";panel.appendChild(header);panel.appendChild(actions);for(const [key,name]of Object.entries(HumanFixtures.names)){const b=document.createElement("button");b.textContent=name;b.onclick=()=>HumanFixtures.start(key);panel.lastChild.appendChild(b);}document.body.appendChild(panel);HumanFixtures.start("field");});</script>
+<!-- @@AUDIO_BUNDLE@@ 音频内联包是可选的：build.js 生成、不入库。
+     http 下多文件版走 manifest.json 逐段 fetch（见 SFX.load），根本用不到它；
+     只有直接双击 index.html（file://）时 fetch 被 CORS 拦死，才需要这个包。
+     所以按协议条件插入，避免线上每次加载都白吃一条 404。
+     单文件版由 build.js 把这一整块（含标记）删掉，改注入内联数据。 -->
+<!-- @@AUDIO_BUNDLE_START@@ -->
+<script>
+if (location.protocol === 'file:') document.write('<script src="assets/audio/bundle.js"><\/script>');
+</script>
+<!-- @@AUDIO_BUNDLE_END@@ -->
+<script src="js/config.js"></script>
+<script src="js/pixfont.js"></script>
+<script src="js/floatfont-data.js"></script>
+<script src="js/floattext.js"></script>
+<script src="js/data.js"></script>
+<script src="js/attachment-data.js"></script>
+<script src="js/attachments.js"></script>
+<script src="js/core.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/gunplay.js"></script>
+<script src="js/human-ai.js"></script>
+<script src="js/common.js"></script>
+<script src="js/medical.js"></script>
+<script src="js/detail-art.js"></script>
+<script src="js/art.js"></script>
+<script src="js/debuff.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/music.js"></script>
+<script src="js/save.js"></script>
+<script src="js/base.js"></script>
+<script src="js/game.js"></script>
+<script src="js/game-update.js"></script>
+<script src="js/game-render.js"></script>
+<script src="js/game-panels.js"></script>
+<script src="js/medhud.js"></script>
+<script src="js/melee.js"></script>
+<script src="js/range.js"></script>
+<script src="js/safehouse-config.js"></script>
+<script src="js/safehouse.js"></script>
+<script src="js/merchant-config.js"></script>
+<script src="js/trader.js"></script>
+<script src="js/merchant-ui.js"></script>
+<script src="js/storage-config.js"></script>
+<script src="js/inventory-view.js"></script>
+<script src="js/storage-ui.js"></script>
+<script src="js/attachment-ui.js"></script>
+<script src="js/gunsmith-page.js"></script>
+<script src="js/merchant-dialogue.js"></script>
+<script src="js/storage-loadout.js"></script>
+<script src="js/base-safe.js"></script>
+<script src="js/buyback-data.js"></script>
+<script src="js/sales.js"></script>
+<script src="js/merchant-sales.js"></script>
+<script src="js/commission-data.js"></script>
+<script src="js/commissions.js"></script>
+<script src="js/elena-ui.js"></script>
+<script src="design/enemies/human-units-v1/fixtures.js"></script>
+<script src="js/boot.js"></script>
+<script>window.addEventListener("DOMContentLoaded",()=>{const panel=document.createElement("aside");panel.style.cssText="box-sizing:border-box;position:fixed;z-index:900;left:8px;top:8px;max-width:calc(100vw - 16px);padding:12px;background:#15241eee;color:#d9e0ca;font:13px system-ui;border:1px solid #758663";const header=document.createElement("b");header.textContent="人类敌人测试 · 独立存档";const actions=document.createElement("div");actions.style.cssText="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px";panel.appendChild(header);panel.appendChild(actions);for(const [key,name]of Object.entries(HumanFixtures.names)){const b=document.createElement("button");b.textContent=name;b.onclick=()=>HumanFixtures.start(key);panel.lastChild.appendChild(b);}document.body.appendChild(panel);HumanFixtures.start("field");});</script>
 </body>
 </html>

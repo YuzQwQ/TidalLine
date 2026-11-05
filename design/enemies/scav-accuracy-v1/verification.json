@@ -1,0 +1,91 @@
+{
+  "passed": 4,
+  "failures": [],
+  "weapon": "aks74u",
+  "stationaryTarget": true,
+  "firstShotsOnly": true,
+  "fps": [
+    30,
+    60,
+    144
+  ],
+  "directions": 8,
+  "rows": [
+    {
+      "tiles": 1,
+      "before": {
+        "shots": 6000,
+        "hits": 6000,
+        "heads": 5840,
+        "hitRate": 1,
+        "headRate": 0.9733333333333334,
+        "headShareOfHits": 0.9733333333333334
+      },
+      "after": {
+        "shots": 6000,
+        "hits": 4343,
+        "heads": 1388,
+        "hitRate": 0.7238333333333333,
+        "headRate": 0.23133333333333334,
+        "headShareOfHits": 0.3195947501726917
+      }
+    },
+    {
+      "tiles": 2,
+      "before": {
+        "shots": 6000,
+        "hits": 6000,
+        "heads": 3890,
+        "hitRate": 1,
+        "headRate": 0.6483333333333333,
+        "headShareOfHits": 0.6483333333333333
+      },
+      "after": {
+        "shots": 6000,
+        "hits": 4157,
+        "heads": 1293,
+        "hitRate": 0.6928333333333333,
+        "headRate": 0.2155,
+        "headShareOfHits": 0.3110416165503969
+      }
+    },
+    {
+      "tiles": 4,
+      "before": {
+        "shots": 6000,
+        "hits": 5294,
+        "heads": 2162,
+        "hitRate": 0.8823333333333333,
+        "headRate": 0.36033333333333334,
+        "headShareOfHits": 0.40838685304117867
+      },
+      "after": {
+        "shots": 6000,
+        "hits": 3176,
+        "heads": 1049,
+        "hitRate": 0.5293333333333333,
+        "headRate": 0.17483333333333334,
+        "headShareOfHits": 0.3302896725440806
+      }
+    },
+    {
+      "tiles": 6.25,
+      "before": {
+        "shots": 6000,
+        "hits": 3938,
+        "heads": 1382,
+        "hitRate": 0.6563333333333333,
+        "headRate": 0.23033333333333333,
+        "headShareOfHits": 0.35093956323006603
+      },
+      "after": {
+        "shots": 6000,
+        "hits": 2030,
+        "heads": 709,
+        "hitRate": 0.3383333333333333,
+        "headRate": 0.11816666666666667,
+        "headShareOfHits": 0.34926108374384235
+      }
+    }
+  ]
+}

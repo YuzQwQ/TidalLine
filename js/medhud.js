@@ -46,9 +46,12 @@ const MedQuick = {
       const max = Medical.capOf(g.item) || 1;
       const part = g.entries.find(e => Medical.isPartial(e));
       g.max = max;
-      g.text = g.count > 1
-        ? (part ? '×' + g.count + ' · ' + Math.ceil(Medical.entryCap(part)) + '/' + max : '×' + g.count)
-        : Math.ceil(Medical.entryCap(g.entries[0])) + '/' + max;
+      /* 效果品的「容量」是次数，别显示成 HP 容量那种 N/M */
+      g.text = g.item.effect
+        ? (g.count > 1 ? '×' + g.count + ' · ' + Medical.capText(g.entries[0]) : Medical.capText(g.entries[0]))
+        : (g.count > 1
+            ? (part ? '×' + g.count + ' · ' + Math.ceil(Medical.entryCap(part)) + '/' + max : '×' + g.count)
+            : Math.ceil(Medical.entryCap(g.entries[0])) + '/' + max);
     }
     return out;
   },
@@ -80,8 +83,8 @@ const MedQuick = {
       /* 换药：先按原有规则正常中断，已恢复的 HP 和已扣的容量都保留 */
       Medical.cancel('已切换医疗品');
     }
-    const P = Game.player;
-    if (P && P.hp >= P.maxHp) { Game.toast('生命值已满'); return false; }
+    /* 满血不再硬拦截：镇痛可以提前服，恢复品受「可恢复上限」限制，
+       具体能不能用统一由 Medical.use / canUse 判断并给提示。 */
     return Medical.use(p.entry, 'bag');
   },
 
@@ -417,19 +420,23 @@ const HealHud = {
     const on = !!(a && a.type === 'heal' && Game.state === 'playing' && P && !P.dead);
     if (!on) return { show: false };
     const start = a.phase === 'start';
+    const effect = !!(a.kind && a.kind !== 'heal');
     const max = Medical.capOf(a.item) || 1;
     const left = Medical.entryCap(a.unit);
+    const total = a.useTime || a.item.healStart;
     const pct = start
-      ? U.clamp(a.t / Math.max(0.01, a.item.healStart), 0, 1)
+      ? U.clamp(a.t / Math.max(0.01, total), 0, 1)
       : U.clamp(1 - left / max, 0, 1);
-    const hp = Math.ceil(P.hp) + ' / ' + P.maxHp;
+    const cap = Debuff.recoverableMax(P);
+    const hp = Math.ceil(P.hp) + ' / ' + Math.ceil(cap) +
+      (cap < P.maxHp - 1e-6 ? '（上限 ' + Math.round(cap / P.maxHp * 100) + '%）' : '');
     return {
       show: true,
       start,
       pct,
       hp,
       top: start
-        ? '启动 · ' + Math.max(0, a.item.healStart - a.t).toFixed(1) + ' 秒 · HP ' + hp
+        ? (effect ? '处理' : '启动') + ' · ' + Math.max(0, total - a.t).toFixed(1) + ' 秒 · HP ' + hp
         : '+' + a.item.healRate + ' HP/秒 · HP ' + hp
     };
   },
@@ -455,6 +462,7 @@ const MedHud = {
   frame() {
     MedBar.refresh();
     HealHud.frame();
+    if (typeof DebuffHud !== 'undefined') DebuffHud.frame();
     if (MedWheel.isOpen()) MedWheel.draw();
     if (typeof AmmoWheel !== 'undefined' && AmmoWheel.isOpen()) AmmoWheel.draw();
   },
@@ -462,6 +470,7 @@ const MedHud = {
     MedQuick.reset();
     if (typeof AmmoQuick !== 'undefined') AmmoQuick.cancel();
     MedBar._id = undefined;
+    if (typeof DebuffHud !== 'undefined') DebuffHud.hide();
   },
   /* 给测试和外部用的一个小入口：模拟一次完整的短按/长按 */
   press() { return MedQuick.press(); },

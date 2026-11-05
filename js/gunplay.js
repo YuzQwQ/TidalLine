@@ -1,10 +1,17 @@
 /* Shared trigger/reload/cycle rules; weapon model records own all numerical values. */
 const Gunplay={
-  labels:{semi:'半自动',auto:'全自动',burst3:'三连发',pump:'泵动'},
+  labels:{semi:'半自动',auto:'全自动',burst2:'两连发',burst3:'三连发',pump:'泵动'},
   prepare(p){const w=p.weapons[p.slot];if(w){if(!w.modes.includes(w.fireMode))w.fireMode=w.defaultMode;w.cycleRemaining=Math.max(0,Number(w.cycleRemaining)||0);}return w;},
   blocked(p){return p.dead||p.meleeActive||Game.bagOpen||!!Game.lootOpen||Game.action?.type==='heal'||(typeof AmmoWheel!=='undefined'&&AmmoWheel.isOpen())||(typeof MedWheel!=='undefined'&&MedWheel.isOpen());},
   state(p){const w=p.weapons[p.slot];return p.reloadPending?'reloading':w?.cycleRemaining>0?'cycling':p._burstPending>0||p.windupShot||p.shotAnimT>0?'firing':'ready';},
-  cancel(p,reload=false){p._burstPending=0;p._burstStarting=false;p._tubeShot=false;p._automaticHeld=false;p.windupShot=false;p.windupT=0;if(reload){p.reloadPending=false;p.reloadT=0;SFX.stopSeq('reload');}},
+  flushRecoil(p){
+    const kick=p._deferredBurstRecoil;if(!kick)return;p._deferredBurstRecoil=null;
+    const R=CFG.RECOIL;p.recoil=U.clamp(p.recoil+kick.recoil,0,R.max);
+    p.rV=U.clamp(p.rV+kick.v,0,R.axis.v.max);p.rH=U.clamp(p.rH+kick.h,-R.axis.h.max,R.axis.h.max);
+    p.crossKick.x=U.clamp(p.crossKick.x+kick.x,-16,16);p.crossKick.y=U.clamp(p.crossKick.y+kick.y,-16,16);
+    p.sinceShot=0;p.syncSpread();if(p._aimValid)p.updateAimPoint(p.aimMouse.x,p.aimMouse.y);
+  },
+  cancel(p,reload=false){this.flushRecoil(p);p._burstPending=0;p._burstStarting=false;p._tubeShot=false;p._automaticHeld=false;p.windupShot=false;p.windupT=0;if(reload){p.reloadPending=false;p.reloadT=0;SFX.stopSeq('reload');}},
   trigger(p,held,pressed){
     if(p.meleeActive)return (held||pressed)?p.tryShoot():false;
     if(pressed||held)Medical.cancel();
@@ -21,7 +28,7 @@ const Gunplay={
   },
   after(p){
     if(this.blocked(p)||p.dodgeT>0){this.cancel(p);return;}
-    if(p._burstPending>0&&p.fireCd<=1e-9&&!p.reloadPending&&!p.windupShot){if(p.mag<=0){p._burstPending=0;return;}this.single.call(p);}
+    if(p._burstPending>0&&p.fireCd<=1e-9&&!p.reloadPending&&!p.windupShot){if(p.mag<=0){this.cancel(p);return;}this.single.call(p);}
   },
   startReload(p){
     Medical.cancel();const w=this.prepare(p);if(!w||p.dead||p.meleeActive||w.cycleRemaining>0||p.reloadPending||p.mag>=w.mag)return false;
@@ -51,17 +58,26 @@ Player.prototype.tryShoot=function(){
   if(this.reloadPending&&w.reloadType==='tube'){this._tubeShot=true;return false;}
   if(this._burstPending>0)return false;
   if(this.fireCd>1e-9||this.windupShot)return false;
-  this._burstStarting=w.fireMode==='burst3';
+  this._burstStarting=w.fireMode==='burst3'||w.fireMode==='burst2';
   const fired=Gunplay.single.call(this);if(!this.windupShot)this._burstStarting=false;return fired;
 };
 Player.prototype._fireNow=function(){
   const w=Gunplay.prepare(this);if(!w||Gunplay.blocked(this)||w.cycleRemaining>0){this.windupShot=false;this._burstStarting=false;return false;}
   const continuous=this._automaticHeld||this._burstPending>0;
+  const delaying=this._burstStarting&&w.burstDelayRecoil&&w.fireMode==='burst2';
+  const before=delaying?{recoil:this.recoil,v:this.rV,h:this.rH,x:this.crossKick.x,y:this.crossKick.y}:null;
   const fired=gunOriginal.shoot.call(this);if(!fired)return false;
+  if(typeof Range!=='undefined'&&Range.active)Range.onGunShot();
   if(continuous&&!w.windup&&this._cadenceOvershoot>0)this.fireCd=Math.max((60/w.rpm)*.01,this.fireCd-Math.min(this._cadenceOvershoot,60/w.rpm));
   this._cadenceOvershoot=0;
-  if(this._burstStarting){this._burstPending=Math.min(2,this.mag);this._burstStarting=false;}
+  if(this._burstStarting){this._burstPending=Math.min(w.fireMode==='burst2'?1:2,this.mag);this._burstStarting=false;}
   else if(this._burstPending>0)this._burstPending--;
+  if(w.fireMode==='burst2'&&this._burstPending>0)this.fireCd=60/(w.burstRPM||w.rpm);
+  if(before&&this._burstPending>0){
+    this._deferredBurstRecoil={recoil:this.recoil-before.recoil,v:this.rV-before.v,h:this.rH-before.h,x:this.crossKick.x-before.x,y:this.crossKick.y-before.y};
+    this.recoil=before.recoil;this.rV=before.v;this.rH=before.h;this.crossKick.x=before.x;this.crossKick.y=before.y;
+    this.syncSpread();if(this._aimValid)this.updateAimPoint(this.aimMouse.x,this.aimMouse.y);
+  }else if(this._deferredBurstRecoil)Gunplay.flushRecoil(this);
   if(w.fireMode==='pump')w.cycleRemaining=w.cycleTime;
   Game.syncGear();return true;
 };

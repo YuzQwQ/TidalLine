@@ -15,8 +15,69 @@
 const Medical = {
   canonicalId(id) { return id === 'med01' ? 'heal01' : id; },
   is(item) { return !!item && item.cat === 'medical'; },
-  ready(item) { return this.is(item) && item.use === true && (item.healCap || 0) > 0; },
-  capOf(item) { return (item && item.healCap) || 0; },
+  ready(item) {
+    /* 恢复品看 healCap，效果品（镇痛 / 止血 / 夹板 / 手术）看 effect。
+       七件仍「效果待开放」的物品两者都没有，继续不可用、不进掉落池。 */
+    return this.is(item) && item.use === true && ((item.healCap || 0) > 0 || !!item.effect);
+  },
+  /* 容量语义复用：恢复品是 HP 容量，效果品是「次数」。 */
+  capOf(item) { return (item && (item.healCap || (item.effect && item.effect.uses))) || 0; },
+
+  kindOf(item) {
+    if (!this.is(item)) return null;
+    if (item.effect) return item.effect.kind;
+    return (item.use === true && (item.healCap || 0) > 0) ? 'heal' : null;
+  },
+
+  capText(entry) {
+    const item = entry && (entry.item || stashItem(entry));
+    const cap = Math.ceil(this.entryCap(entry));
+    return item && item.effect ? '剩余 ' + cap + ' 次' : cap + ' / ' + this.capOf(item);
+  },
+
+  /* 统一给七个使用入口与快捷栏用：能不能用、按钮上写什么，都只问这里。 */
+  canUse(item, where, hp) {
+    if (!this.ready(item)) return false;
+    const kind = this.kindOf(item);
+    if (this.stashLike(where)) {
+      /* 局内损伤不跨局保留，效果品在藏身处没有可处理的对象 */
+      return kind === 'heal' && (hp == null ? Save.hp : hp) < CFG.P.HP;
+    }
+    const P = Game.player;
+    if (!P || P.dead) return false;
+    const cur = hp == null ? P.hp : hp;
+    if (kind === 'heal') return cur < Debuff.recoverableMax(P) - 1e-6;
+    if (kind === 'analgesic') return true;              // 满血、没受伤也能提前服药
+    if (kind === 'cure') return Debuff.has(P, item.effect.cures);
+    if (kind === 'surgery') return Debuff.surgeryAvailable(P);
+    return false;
+  },
+
+  actionLabel(item, where, hp) {
+    if (!this.ready(item)) return '效果待开放';
+    const kind = this.kindOf(item);
+    if (this.stashLike(where)) {
+      if (kind !== 'heal') return '只能在行动中使用';
+      const missing = Math.max(0, CFG.P.HP - (hp == null ? Save.hp : hp));
+      return missing > 0 ? '使用一件（可恢复 ' + Math.round(missing) + ' HP）' : '生命值已满';
+    }
+    const P = Game.player;
+    if (kind === 'heal') {
+      const missing = Math.max(0, Debuff.recoverableMax(P) - (hp == null ? P.hp : hp));
+      return missing > 0 ? '使用一件（可恢复 ' + Math.round(missing) + ' HP）' : '已达可恢复上限';
+    }
+    if (kind === 'analgesic') return '服用（镇痛 ' + item.effect.duration + ' 秒）';
+    if (kind === 'cure') {
+      return Debuff.has(P, item.effect.cures)
+        ? '解除' + (item.effect.cures === 'bleeding' ? '流血' : '骨折')
+        : '没有对应的损伤';
+    }
+    if (kind === 'surgery') {
+      if (!Debuff.surgeryAvailable(P)) return '无适用损伤';
+      return '进行手术（' + (P.debuffs.severe > 0 ? '治 1 层重伤' : '解骨折') + '）';
+    }
+    return '使用';
+  },
 
   /* 条目剩余容量：没写 cap 就是满的（老存档、新捡到的都走这条路） */
   entryCap(entry) {
@@ -36,7 +97,12 @@ const Medical = {
     if (!this.ready(item)) {
       return '效果待开放' + (item.reservedEffect ? ' · 预留：' + item.reservedEffect : '');
     }
-    return '启动 ' + item.healStart + ' 秒 · ' + item.healRate + ' HP/秒 · 容量 ' + item.healCap;
+    const kind = this.kindOf(item), e = item.effect;
+    if (kind === 'heal') return '启动 ' + item.healStart + ' 秒 · ' + item.healRate + ' HP/秒 · 容量 ' + item.healCap;
+    if (kind === 'analgesic') return '镇痛 ' + e.duration + ' 秒 · 读条 ' + e.useTime + ' 秒 · ' + e.uses + ' 次';
+    if (kind === 'cure') return (e.cures === 'bleeding' ? '解除流血' : '固定骨折') + ' · 读条 ' + e.useTime + ' 秒 · ' + e.uses + ' 次';
+    if (kind === 'surgery') return '手术（重伤 -1 层 / 解骨折）· 读条 ' + e.useTime + ' 秒 · ' + e.uses + ' 次';
+    return '效果待开放';
   },
 
   /* 诊所报价：按绷带容量折算需要几卷 */
@@ -112,9 +178,11 @@ const Medical = {
   use(entry, where) {
     const item = this.stashLike(where) ? stashItem(entry) : entry && entry.item;
     if (!this.valid(entry, where) || !this.ready(item)) return false;
+    const kind = this.kindOf(item);
 
-    /* 局外（仓库 / 藏身处背包）：立即结算，拆件也不看格子 */
+    /* 局外（仓库 / 藏身处背包）：恢复品立即结算；效果品只在局内有用 */
     if (this.stashLike(where)) {
+      if (kind !== 'heal') { Game.toast('只能在行动中使用'); return false; }
       const hp = Save.hp;
       if (hp >= CFG.P.HP) return false;
       const unit = this.takeUnit(entry, where);
@@ -129,7 +197,12 @@ const Medical = {
 
     const P = Game.player;
     if (!P || P.dead) return false;
-    if (P.hp >= P.maxHp) return false;
+    if (!this.canUse(item, where, P.hp)) {
+      Game.toast(kind === 'heal' ? '已达可恢复上限'
+        : kind === 'cure' ? '没有对应的损伤'
+        : kind === 'surgery' ? '没有需要手术的损伤' : '现在不能使用');
+      return false;
+    }
     /* 同一时间只允许一种治疗；读条、搜刮、闪避、换弹期间也不能开始 */
     if (Game.action || Game.lootOpen || P.dodgeT > 0 || P.reloadT > 0) {
       Game.toast('请先结束当前动作，再开始治疗'); return false;
@@ -137,12 +210,18 @@ const Medical = {
     const unit = this.takeUnit(entry, where);
     if (!unit) return false;
 
+    const e = item.effect || null;
     Game.input.mouseDown = false;
+    /* 统一 type:'heal'，用 kind 区分子类型：cancel / 轮盘 / 读条排除 /
+       开火拦截 / HealHud / updateAction 六处现成判断都自动覆盖。 */
     Game.action = {
-      type: 'heal', phase: 'start', t: 0,
-      item, unit, where, restored: 0
+      type: 'heal', kind, phase: 'start', t: 0,
+      item, unit, where, restored: 0,
+      effect: e, useTime: e ? e.useTime : item.healStart,
+      interruptOnHit: !!e && CFG.DEBUFF.INTERRUPT_ON_HIT.includes(kind)
     };
-    Game.toast('使用' + item.name + '：' + item.healStart + ' 秒后开始恢复 · E / Esc 取消');
+    Game.toast('使用' + item.name + '：' + Game.action.useTime + ' 秒后' +
+      (e ? '生效' : '开始恢复') + ' · E / Esc 取消');
     if (Game.bagOpen) Game.renderBag();
     return true;
   },
@@ -152,6 +231,13 @@ const Medical = {
     const P = Game.player;
     const item = a.item, unit = a.unit;
     if (!P || P.dead || !this.valid(unit, a.where)) { this.cancel('治疗中断'); return; }
+
+    /* 效果类动作：单段读条，到点一次性生效（不回血、不扣 HP 容量） */
+    if (a.kind && a.kind !== 'heal') {
+      a.t += dt;
+      if (a.t >= a.useTime) this.finish(a);
+      return;
+    }
 
     if (a.phase === 'start') {
       a.t += dt;
@@ -164,11 +250,13 @@ const Medical = {
     }
 
     a.t += dt;
-    const room = Math.max(0, P.maxHp - P.hp);
+    /* 普通治疗只能回到「可恢复生命上限」：重伤封锁的那一段回不上去 */
+    const healMax = Debuff.recoverableMax(P);
+    const room = Math.max(0, healMax - P.hp);
     const cap = this.entryCap(unit);
     const gain = Math.min(item.healRate * dt, cap, room);
     if (gain > 0) {
-      P.hp = Math.min(P.maxHp, P.hp + gain);
+      P.hp = Math.min(healMax, P.hp + gain);
       unit.cap = cap - gain;
       a.restored += gain;
       Save.setHP(P.hp);
@@ -180,6 +268,35 @@ const Medical = {
   finish(a) {
     if (!a || a.type !== 'heal') return;
     const unit = a.unit, where = a.where;
+
+    /* 效果类动作：读条走完才真正施加，扣一次使用次数，用完移除 */
+    if (a.kind && a.kind !== 'heal') {
+      const e = a.effect, P = Game.player;
+      let msg = '';
+      if (e.kind === 'analgesic') {
+        Debuff.applyAnalgesic(P, e.duration);
+        msg = '镇痛生效 · 剩余 ' + Math.ceil(Debuff.analgesicLeft(P)) + ' 秒';
+      } else if (e.kind === 'cure') {
+        Debuff.cure(P, e.cures);
+        msg = e.cures === 'bleeding' ? '流血已止住' : '骨折已固定';
+      } else if (e.kind === 'surgery') {
+        const done = Debuff.surgery(P);         // 二选一，不回血
+        msg = done === 'severe' ? '手术完成 · 重伤 -1 层（可恢复上限 +15%）'
+            : done === 'fracture' ? '手术完成 · 骨折已处理' : '';
+      }
+      unit.cap = Math.max(0, this.entryCap(unit) - 1);
+      const emptied = this.entryCap(unit) <= 1e-6;
+      if (emptied) this.dropIfEmpty(unit, where);
+      if (Game.action === a) Game.action = null;
+      if (msg) { Game.toast(msg + (emptied ? ' · ' + a.item.name + ' 用完' : '')); Game.sfx('pickup'); }
+      if (Game.bagOpen) Game.renderBag();
+      /* 用医疗品后当帧刷新状态条、快捷栏和读条，不等下一帧 */
+      DebuffHud.refresh();
+      if (typeof MedBar !== 'undefined') MedBar.refresh();
+      if (typeof HealHud !== 'undefined') HealHud.frame();
+      return;
+    }
+
     const left = this.entryCap(unit);
     const emptied = left <= 1e-6;
     if (emptied) this.dropIfEmpty(unit, where);
@@ -226,12 +343,12 @@ const Medical = {
       : '使用一件（可恢复 ' + Math.round(Math.min(cur, missing)) + ' HP）';
     box.querySelector('.tip-hd').insertAdjacentHTML('afterend', '<div class="medical-actions"><button data-med="use"' +
       (!this.ready(item) || hp >= CFG.P.HP ? ' disabled' : '') + '>' + esc(useLabel) + '</button>' +
-      '<button data-med="move">' + (where === 'stash' ? '出售这一堆' : where === 'safe' ? '移回背包' : '移入安全箱') + '</button></div>');
+      '<button data-med="move">' + (where === 'stash' ? '前往出售' : where === 'safe' ? '移回背包' : '移入安全箱') + '</button></div>');
     box.querySelectorAll('[data-med]').forEach(button => button.onclick = () => {
       if (!this.valid(entry, where)) { Tips.hide(); return; }
       Tips.hide();
       if (button.dataset.med === 'use') this.use(entry, where);
-      else if (where === 'stash') Base.askSell(entry, entry.n, node);
+      else if (where === 'stash') Base.goToSell();
       else if (where === 'bag') Game.moveToSafe(Game.player.bag.slots.indexOf(entry));
       else {
         const bag = Game.player.bag;

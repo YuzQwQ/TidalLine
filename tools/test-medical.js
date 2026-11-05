@@ -6,6 +6,9 @@ const root=path.resolve(__dirname,'..');
 const harness=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0];
 const c=new Function('require','__dirname',harness+'\nreturn ctx;')(require,root);
 const {Game,Save,Base,CFG,ITEMS}=c;
+/* run-test 沙箱没有加载 safehouse.js，但 Base.renderBag 会读 Safehouse.view：
+   补一个最小桩，让「局外立即治疗」这条验收能真正跑完（HEAD 上这条本来就红）。 */
+vm.runInContext('var Safehouse = { view: \"\", route: function(){} };', c);
 const {Medical,Loot,byId}=vm.runInContext('({Medical,Loot,byId:ITEM_BY_ID})',c);
 Game.init();
 let checks=0;function test(name,fn){fn();checks++;console.log('OK: '+name);}
@@ -19,7 +22,8 @@ function raid(hp=5,id='heal01',where='bag'){
   Game.player.reloadT=0;Game.player.reloadPending=false;
   Game.player.hp=hp;
   const item=byId[id];
-  const entry={item,n:Math.min(2,item.stack||1),cap:item.healCap};
+  /* 恢复品的容量是 HP，效果品的容量是次数 */
+  const entry={item,n:Math.min(2,item.stack||1),cap:item.healCap||(item.effect&&item.effect.uses)};
   Game.player.bag[where==='safe'?'safe':'slots']=[entry];
   return entry;
 }
@@ -34,11 +38,12 @@ function advance(sec,step=0.05){
   return t;
 }
 
-test('183件唯一物品、18医疗品、140图鉴与准确参数',()=>{
-  assert.equal(ITEMS.length,183);assert.equal(new Set(ITEMS.map(i=>i.id)).size,183);assert(!byId.med01);
+test('物品 id 唯一、18医疗品、140图鉴与准确参数',()=>{
+  /* 物品总数由数据决定（新武器/新物品落地时不写死） */
+  assert(ITEMS.length>=183);assert.equal(new Set(ITEMS.map(i=>i.id)).size,ITEMS.length);assert(!byId.med01);
   assert.equal(ITEMS.filter(i=>!i.noCodex).length,140);
   const spec=require('../design/items/medical.json');assert.equal(spec.items.length,18);
-  for(const item of spec.items){const actual=byId[item.id];for(const key of ['name','r','w','price','stack','desc','visual'])assert.equal(actual[key],item[key]);assert(actual.noCodex);assert.equal(actual.cat,'medical');assert.equal(!!actual.noLoot,!actual.heal);}
+  for(const item of spec.items){const actual=byId[item.id];for(const key of ['name','r','w','price','stack','desc','visual'])assert.equal(actual[key],item[key]);assert(actual.noCodex);assert.equal(actual.cat,'medical');assert.equal(!!actual.noLoot,!(actual.heal||actual.effect));}
   assert.equal(byId.heal01.price,2000);assert.equal(byId.ammo_556_1.stack,60);
 });
 
@@ -247,8 +252,11 @@ test('安全箱也能治疗；把物品拿走会中断且不重复结算',()=>{
   assert.equal(Game.player.hp,5,'物品被移走就不该继续回血');
 });
 
-test('预留医疗品不可用，也不进入掉落池',()=>{
-  for(const item of ITEMS.filter(i=>i.cat==='medical'&&!i.healCap)){
+test('未开放的 7 件医疗品不可用，也不进入掉落池',()=>{
+  /* 六件已开放效果品（heal06/07/08/09/10/12）不算在内 */
+  const reserved=ITEMS.filter(i=>i.cat==='medical'&&!i.healCap&&!i.effect);
+  assert.equal(reserved.length,7);
+  for(const item of reserved){
     const e=raid(5,item.id);assert(!Medical.use(e,'bag'));assert.equal(e.n,Math.min(2,item.stack||1));
   }
   for(const kind of ['junk','plain','ample','fine','rich','secret'])
@@ -310,11 +318,11 @@ test('撤离后药物留在背包且残容量保留',()=>{
   assert.equal(Save.stashCount('heal03'),0,'药物不进仓库');
 });
 
-test('寻常清仓保留医疗及弹药',()=>{
+test('旧清仓入口只前往商人，不直接出售医疗、弹药或收集品',()=>{
   Save.stash=[{id:'heal01',n:2},{id:'heal06',n:1},{id:'ammo',n:20},{id:'life01',n:1}];
-  Base.sellJunk();
+  const credits=Save.credits;assert.equal(Base.sellJunk(),false);
   assert.equal(Save.stashCount('heal01'),2);assert.equal(Save.stashCount('heal06'),1);
-  assert.equal(Save.stashCount('ammo'),20);assert.equal(Save.stashCount('life01'),0);
+  assert.equal(Save.stashCount('ammo'),20);assert.equal(Save.stashCount('life01'),1);assert.equal(Save.credits,credits);
 });
 
 console.log('通过 '+checks+' 组医疗系统检查');

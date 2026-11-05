@@ -78,24 +78,29 @@ const RANGE_GEO = (() => {
 class RTarget {
   constructor(x, y, label) {
     this.x = x; this.y = y;
-    this.r = 10;
-    this.headR = 0;          // 不区分头身，靶子只报落点
+    this.r = CFG.P.RADIUS;  // 与实战角色同尺寸
+    this.headR = CFG.COMBAT.HEAD_RADIUS;
     this.label = label || '';
     this.dead = false;       // 永远打不坏
     this.isRangeTarget = true;
     this.flash = 0;
     this.hits = 0;
+    this.headHits = 0;
     this.dmg = 0;
     this.pops = [];
   }
 
   hurt(d, fromFaction, part, pen) {
+    const head = part === 'head';
+    const dealt = d * (head ? CFG.COMBAT.HEAD_MULT : 1); // 无头盔、无护甲
     this.flash = 0.13;
     this.hits++;
-    this.dmg += d;
-    this.pops.push({ d: Math.round(d), t: 0.85, x: this.x + U.rand(-3, 3), y: this.y - 13 });
+    if (head) this.headHits++;
+    this.dmg += dealt;
+    this.pops.push({ d: Math.round(dealt), head, t: 0.85, x: this.x + U.rand(-3, 3), y: this.y - 13 });
     if (this.pops.length > 6) this.pops.shift();
-    if (typeof Range !== 'undefined') Range.onTargetHit(this, d, part);
+    if (typeof Range !== 'undefined') Range.onTargetHit(this, dealt, part);
+    return dealt;
   }
 
   update(dt) {
@@ -104,7 +109,7 @@ class RTarget {
     if (this.pops.length && this.pops[0].t <= 0) this.pops = this.pops.filter(p => p.t > 0);
   }
 
-  reset() { this.hits = 0; this.dmg = 0; this.pops.length = 0; this.flash = 0; }
+  reset() { this.headHits = 0; this.hits = 0; this.dmg = 0; this.pops.length = 0; this.flash = 0; }
 }
 
 /* ------------------------------------------------------------
@@ -183,6 +188,7 @@ const RANGE_STORE_KEY = 'tide.range.tune.v1';
 
 const Range = {
   active: false,
+  preciseHits: true, // 默认与实战一致；旧版仅供靶场对照，不写入武器调参
   panel: null,
   visible: true,
   curId: 'm4a1',
@@ -211,6 +217,7 @@ const Range = {
     Game.startRun(null, RANGE_MAP.id);
 
     this.active = true;
+    this.preciseHits = true;
     this.holes = [];
     this.ends = [];
     this._shots = [];
@@ -230,7 +237,7 @@ const Range = {
     this.showPanel(true);
     this.initAudio();
 
-    Game.toast('靶场：F2 面板 / F3 清弹孔');
+    Game.toast('靶场：瞄准金色靶心测试爆头 ×1.5；F2 面板 / F4 复位');
     Game.update(1 / 60);
     Game.render();
   },
@@ -379,6 +386,7 @@ const Range = {
     let idx = -1;
     for (let i = 0; i < P.weapons.length; i++) if (P.weapons[i] && P.weapons[i].id === id) idx = i;
     if (idx < 0) {
+      Gunplay.cancel(P,true);
       if (P.weapons[0]) P.weapons[0].magCur = P.mag;
       P.weapons[0] = this.makeWeapon(id);
       P.slot = 0;
@@ -431,12 +439,9 @@ const Range = {
     for (let i = this.holes.length - 1; i >= 0; i--) if (now - this.holes[i].t > 60) this.holes.splice(i, 1);
     for (let i = this.ends.length - 1; i >= 0; i--) if (now - this.ends[i].t > 12) this.ends.splice(i, 1);
 
-    /* 后坐力遥测：靠值上升判断"这一发打出去了"，不侵入开火逻辑 */
+    /* 后坐力遥测与实际击发计数分开：延迟后坐力的高速两连发仍记两发。 */
     const r = P.recoil;
     if (r > this._lastR + 1e-5) {
-      this._shots.push(now);
-      if (this._shots.length > 30) this._shots.shift();
-      this._lastShotT = now;
       this._peak = Math.max(this._peak, r);
       this._rise = true;
     } else if (this._rise && r <= 1e-4) {
@@ -453,6 +458,11 @@ const Range = {
   },
 
   /* ---------------- 事件 ---------------- */
+  onGunShot() {
+    this._shots.push(Game.time);
+    if(this._shots.length>30)this._shots.shift();
+    this._lastShotT=Game.time;
+  },
   onTargetHit(t, dmg, part) {
     /* 靶子自己记账，这里只留个钩子，方便以后接命中统计 */
   },
@@ -491,6 +501,13 @@ const Range = {
       '</div>',
       '<div class="rg-guns"></div>',
       '<div class="rg-read"></div>',
+      '<details class="rg-grp" open><summary>爆头试验</summary>',
+      '  <div class="rg-sfx">',
+      '    <div class="rg-sfx-btns"><button data-act="hit-mode">判定：新版</button></div>',
+      '    <div class="rg-r"><span>爆头 / 命中</span><b data-out="heads">0 / 0</b></div>',
+      '    <div class="rg-sfx-tip">瞄准金色靶心 · 爆头 ×1.5 · 无盔甲<br>新版与实战一致 · 爆头半径 3px<br>切换判定清空统计 · F4 复位</div>',
+      '  </div>',
+      '</details>',
       '<div class="rg-params"></div>',
       '<details class="rg-grp" open><summary>音效试听</summary>',
       '  <div class="rg-sfx">',
@@ -505,6 +522,10 @@ const Range = {
       '      <button data-sfx="hurt">受伤</button>',
       '      <button data-sfx="dodge">闪避</button>',
       '      <button data-sfx="melee">近战</button>',
+      '      <button data-sfx="melee_hit_small">小刀命中</button>',
+      '      <button data-sfx="melee_hit_medium">中刀命中</button>',
+      '      <button data-sfx="melee_hit_large">砍刀命中</button>',
+      '      <button data-sfx="melee_hit_stab">刺击命中</button>',
       '      <button data-sfx="sell">出售</button>',
       '    </div>',
       '    <div class="rg-sfx-tip">枪声走真实采样轮换，与游戏内同一条链路</div>',
@@ -536,6 +557,8 @@ const Range = {
       }
       const read = el.querySelector('.rg-read');
       if (read) read.innerHTML = this.readoutsHtml();
+      this._headsEl = el.querySelector('[data-out="heads"]');
+      this._hitModeEl = el.querySelector('[data-act="hit-mode"]');
       this._rpmEl = el.querySelector('[data-out="rpm"]');
       this._peakEl = el.querySelector('[data-out="peak"]');
       this._clearEl = el.querySelector('[data-out="clear"]');
@@ -659,6 +682,12 @@ const Range = {
     if (t.dataset.sfx) { this.previewSfx(t.dataset.sfx); return; }
     const act = t.dataset.act;
     if (!act) return;
+    if (act === 'hit-mode') {
+      this.preciseHits = !this.preciseHits;
+      this.clearMarks();
+      this.updateReadouts();
+      Game.toast(this.preciseHits ? '新版判定：按弹道偏差判断爆头' : '旧版判定：按短线段判断爆头');
+    }
     if (act === 'close') this.showPanel(false);
     if (act === 'clear') this.clearMarks();
     if (act === 'reset') {
@@ -757,8 +786,8 @@ const Range = {
     } else if (name === 'step') {
       Game.sfx('step_stone_' + (1 + Math.floor(Math.random() * 4)), { rate: 1, vol: 1 });
     } else if (name === 'switch') {
-      /* 有专属切枪音的枪（霰弹）会命中采样，其余自动回落通用音 */
-      Game.sfx('shot_switch_' + WEAPONS[this.curId].category);
+      /* 有专属切枪音的枪（霰弹、G36C/Groza/UMP45 等）会命中采样，其余自动回落通用音 */
+      Game.sfx(SWITCH_MODEL[this.curId] || ('shot_switch_' + WEAPONS[this.curId].category));
     } else {
       Game.sfx(name);
     }
@@ -780,6 +809,13 @@ const Range = {
     if (!this.panel || !this.visible) return;
     const P = Game.player;
     if (!P) return;
+
+    if (this._hitModeEl) this._hitModeEl.textContent = '判定：' + (this.preciseHits ? '新版' : '旧版');
+    if (this._headsEl) {
+      const hits = this.targets.reduce((n, t) => n + t.hits, 0);
+      const heads = this.targets.reduce((n, t) => n + t.headHits, 0);
+      this._headsEl.textContent = heads + ' / ' + hits + (hits ? ' · ' + Math.round(heads / hits * 100) + '%' : '');
+    }
 
     /* 实测射速：最近 20 发的时间戳反推 */
     let rpm = '—';
@@ -956,8 +992,8 @@ const Range = {
       c.strokeStyle = t.flash > 0 ? '#fff6dc' : '#7d7768';
       c.beginPath(); c.arc(sx, sy, t.r, 0, 6.29); c.stroke();
       /* 靶心 */
-      c.fillStyle = '#8d3a3a';
-      c.beginPath(); c.arc(sx, sy, t.r * 0.34, 0, 6.29); c.fill();
+      c.fillStyle = '#e5ac4b';
+      c.beginPath(); c.arc(sx, sy, t.headR, 0, 6.29); c.fill();
       c.fillStyle = 'rgba(240,236,220,0.9)';
       c.beginPath(); c.arc(sx, sy, t.r * 0.13, 0, 6.29); c.fill();
       /* 距离标 */
@@ -968,9 +1004,9 @@ const Range = {
       /* 命中飘字 */
       for (const p of t.pops) {
         c.globalAlpha = U.clamp(p.t / 0.85, 0, 1);
-        c.fillStyle = '#f0d9a0';
+        c.fillStyle = p.head ? '#ffc45c' : '#eee8d8';
         c.font = 'bold 10px monospace';
-        c.fillText(String(p.d), p.x - camX, p.y - camY);
+        c.fillText((p.head ? '爆头 ' : '') + String(p.d), p.x - camX, p.y - camY);
       }
       c.restore();
       c.globalAlpha = 1;

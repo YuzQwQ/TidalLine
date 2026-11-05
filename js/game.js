@@ -158,7 +158,7 @@ const Game = {
 
     /* 医疗层同样按 720×480 布局，跟着一起缩放；
        轮盘的画布后备尺寸由 MedWheel.sync() 按 _rs 自己对齐 */
-    for (const id of ['medBar', 'healHud', 'medWheel', 'ammoWheel']) {
+    for (const id of ['medBar', 'healHud', 'medWheel', 'ammoWheel', 'debuffBar']) {
       const el = document.getElementById(id);
       if (el) el.style.zoom = String(this._scale);
     }
@@ -407,6 +407,8 @@ const Game = {
     this.extractDone = false;
     /* 新一局：快捷医疗重新按背包顺序选最靠前的那件 */
     if (typeof MedHud !== 'undefined') MedHud.reset();
+    /* 局内损伤不跨局保留：清上一局残留的敌人状态与状态条 */
+    if (typeof Debuff !== 'undefined') Debuff.clearAll();
     this.stats = { kills: 0, found: 0, newItems: [] };
 
     // 重置地图状态

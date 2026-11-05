@@ -85,6 +85,7 @@ const Tips = {
         rows.push(['口径', BALLISTICS.caliberName(w.caliber)]);
         rows.push(['伤害', w.dmgMin + '–' + w.dmgMax + (w.pellets>1?' ×'+w.pellets:'') + ' · 弹匣 ' + w.mag + ' 发']);
         rows.push(['射速', w.rpm + ' 发/分']);
+        if(w.burstRPM)rows.push(['两连发射速',w.burstRPM+' 发/分 · 首发后坐力延迟结算']);
           rows.push(['射击模式',Gunplay.labels[it.equip.fireMode||w.defaultMode]+' · 支持 '+w.modes.map(m=>Gunplay.labels[m]).join('/')]);
           rows.push(['装填',w.reloadType==='tube'?w.reloadTime+'秒／发':w.reloadTime+'秒／弹匣']);
         if (A) {
@@ -95,7 +96,8 @@ const Tips = {
       }
     } else if (it.equip?.kind === 'melee') {
       const d=MELEE.find(x=>x.id===it.equip.melee);
-      rows.push(['真实伤害',d.damage],['攻击间隔 / 前摇',d.interval+' / '+d.windup+'秒'],['扇角 / 半径',d.angle+'° / '+d.radius+'格'],['来源',it.equip.bound?'首次赠送 · 绑定不可出售':d.available?'军火商':'暂不开放获取']);
+      if(d.positioning) rows.push(['定位',d.positioning]);
+      rows.push(['真实伤害',d.damage],['攻击间隔 / 前摇',d.interval+' / '+d.windup+'秒'],['扇角 / 半径',d.angle+'° / '+d.radius+'格'],['来源',it.equip.bound?'首次赠送 · 绑定不可出售':d.available?'军火商':d.lootSource||'暂不开放获取']);
     } else if (it.equip && it.equip.kind === 'bag') {
       rows.push(['容量', it.equip.slots + ' 格']);
       rows.push(['装备槽', '背包']);
@@ -142,7 +144,7 @@ const Tips = {
         '<div class="tip-row"><span>' + esc(k) + '</span><b' +
           (k === '单价' || k === '回收价' ? ' class="gold"' : '') + '>' + esc(v) + '</b></div>'
       ).join('') + '</div>' +
-      (desc ? '<div class="tip-desc">' + esc(desc) + '</div>' : '') +
+      (desc ? '<div class="tip-desc">' + itemDescriptionHtml(it,desc) + '</div>' : '') +
       ((foot || hint) ? '<div class="tip-foot">' + esc(foot) +
         (foot && hint ? ' · ' : '') + esc(hint || '') + '</div>' : '');
 
@@ -240,6 +242,11 @@ const Ctx = {
 
 
 /* 装备没有写死的文案，按数值拼一句人话 */
+// 描述保持纯文本，仅允许数据中明确指定的一段加粗；所有内容先转义。
+function itemDescriptionHtml(it, desc) {
+  const text = esc(desc || ''), mark = it.descEmphasis;
+  return mark ? text.replace(esc(mark), '<strong>' + esc(mark) + '</strong>') : text;
+}
 function equipDesc(it) {
   if (!it.equip) return '';
   if (it.equip.kind === 'armor') {
@@ -351,6 +358,7 @@ const SFX = {
     shot: 0.14,
     enemyShot: 0.075,  // 敌人枪声要能听出方位，但不能盖过自己的枪
     melee: 0.10,       // 挥刀的风声
+    meleeHit: 0.10,    // 刀刃命中的实感，与挥空分开归一
     hit: 0.085,
     headshot: 0.085,
     break: 0.10,
@@ -465,17 +473,38 @@ const SFX = {
     pistol: {
       ids: ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
       rate: 1.00, jitter: 0.020, vol: 1.00
-    }
+    },
+
+    /* —— 用户收集的专属枪声（2026-11-05 一批）——
+       键直接用 WEAPONS 里的型号 id，SHOT_MODEL 同键映射即可。rate/jitter/vol
+       按口径与枪型取：步枪基准 1.00；短管 PDW（AKS-74U）略升调更尖；UMP45 是
+       .45 冲锋枪，沿用 smg 的 1.10 升调更急更薄；AK 系 7.62 金属味重、vol 略高。 */
+    m16a1:    { ids: ['shot_m16'],   rate: 1.00, jitter: 0.045, vol: 1.00 },  // 5.56 步枪
+    ak12:     { ids: ['shot_ak12'],  rate: 1.00, jitter: 0.035, vol: 1.02 },  // 5.45 AK
+    aks74u:   { ids: ['shot_aks74u'],rate: 1.05, jitter: 0.045, vol: 0.98 },  // 5.45 短管 PDW
+    an94:     { ids: ['shot_an94'],  rate: 1.00, jitter: 0.040, vol: 1.00 },  // 5.45，2 发点放
+    aug_a1:   { ids: ['shot_aug'],   rate: 1.00, jitter: 0.045, vol: 1.00 },  // 5.56 无托
+    fn_fnc:   { ids: ['shot_fnfnc'], rate: 1.00, jitter: 0.045, vol: 1.00 },  // 5.56
+    g36c:     { ids: ['shot_g36c'],  rate: 1.02, jitter: 0.045, vol: 1.00 },  // 5.56 卡宾
+    groza1:   { ids: ['shot_groza'], rate: 1.00, jitter: 0.040, vol: 1.00 },  // 7.62/9mm
+    mk47_mod2:{ ids: ['shot_mk47'],  rate: 1.00, jitter: 0.035, vol: 1.02 },  // 7.62×39
+    sig550:   { ids: ['shot_sg550'], rate: 1.00, jitter: 0.040, vol: 1.00 },  // 5.56 步枪（武器 id sig550：SIG SG 550）
+    galil_arm:{ ids: ['shot_galil'], rate: 1.00, jitter: 0.040, vol: 1.00 },  // 5.56 步枪
+    ump45:    { ids: ['shot_ump45'], rate: 1.10, jitter: 0.045, vol: 0.95 }   // .45 冲锋枪
   },
   /* 型号 → 专属枪声。键是 WEAPONS 里的 id，值是 SHOT_SAMPLE 的键。
      没登记的型号自动按 category 走通用那条（m4a1 走 rifle、其余 9mm 冲锋枪走 smg…）。
      枪和声是两件事：同口径的两把枪可以有完全不同的录音，所以按型号分而不是按口径。 */
-  SHOT_MODEL: { akm: 'ak47', famas_f1: 'famas', mp5a3: 'mp5' },
+  SHOT_MODEL: { akm: 'ak47', famas_f1: 'famas', mp5a3: 'mp5',
+    m16a1: 'm16a1', ak12: 'ak12', aks74u: 'aks74u', an94: 'an94', aug_a1: 'aug_a1',
+    fn_fnc: 'fn_fnc', g36c: 'g36c', groza1: 'groza1', mk47_mod2: 'mk47_mod2',
+    sig550: 'sig550', galil_arm: 'galil_arm', ump45: 'ump45' },
 
   /* 型号 → 专属换弹。没登记的走上面 SEQ 那套三段拼接；
      登记了就播整段原生录音——动作节奏是录音里自带的，不重排时间轴。
-     调用方（tryReload / Gunplay.startReload）把武器 id 用 opts.model 传进来。 */
-  RELOAD_SAMPLE: { mp5a3: 'reload_mp5' },
+     调用方（tryReload / Gunplay.startReload）把武器 id 用 opts.model 传进来。
+     G36C / Groza / UMP45 用了用户收集的整段换弹录音（与切枪尾段同源）。 */
+  RELOAD_SAMPLE: { mp5a3: 'reload_mp5', g36c: 'reload_g36c', groza1: 'reload_groza', ump45: 'reload_ump45', galil_arm: 'reload_galil' },
 
   shotCursor: {},     // 枪型 → 下一个该用第几条变体
 
@@ -640,14 +669,16 @@ const SFX = {
     if (/^step_stone/.test(id)) return this.LOUD.step;
     /* shot_switch 与各枪专属的 shot_switch_* 都算"切枪"，响度一视同仁 */
     if (/^shot_switch/.test(id)) return this.LOUD.switch;
+    if (/^switch_/.test(id)) return this.LOUD.switch;   // 用户收集的切枪尾段（switch_g36c 等）
     if (/^reload_/.test(id)) return this.LOUD.reload;
     /* 开火采样：各枪（含手枪的三个变体）和预留的 AK 都按枪声档对齐。
        这样换哪把枪、换哪段录音，最终 RMS 都一样，不会出现某把枪特别响。 */
-    if (/^shot_(rifle|smg|shotgun|pistol_[123]|ak47|famas|mp5)$/.test(id)) return this.LOUD.shot;
+    if (/^shot_(rifle|smg|shotgun|pistol_[123]|ak47|famas|mp5|m16a1|ak12|aks74u|an94|aug_a1|fn_fnc|g36c|groza1|mk47_mod2|sg550|galil|ump45)$/.test(id)) return this.LOUD.shot;
     if (id === 'shot_pistol_silent') return this.LOUD.shot * 0.55;
     if (id === 'shot_shotgun_pump') return this.LOUD.switch;
     /* 近战挥砍与出售结算走自己的档，别落进 0.08 的默认值 */
     if (id === 'melee' || /^melee_[1-6]$/.test(id)) return this.LOUD.melee;
+    if (/^melee_hit_(small|medium|large|stab)$/.test(id)) return this.LOUD.meleeHit;
     if (id === 'sell') return this.LOUD.sell;
     /* 装备穿脱：头盔 / 护甲 / 背包三件同一个档，换哪件都一样响 */
     if (/^gear_(helmet|armor|bag)$/.test(id)) return this.LOUD.gear;

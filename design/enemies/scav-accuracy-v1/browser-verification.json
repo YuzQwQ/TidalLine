@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "rows": [
+        {
+          "tiles": 1,
+          "shots": 1200,
+          "hits": 873,
+          "heads": 284,
+          "hitRate": 0.7275,
+          "headRate": 0.23666666666666666
+        },
+        {
+          "tiles": 2,
+          "shots": 1200,
+          "hits": 827,
+          "heads": 270,
+          "hitRate": 0.6891666666666667,
+          "headRate": 0.225
+        },
+        {
+          "tiles": 4,
+          "shots": 1200,
+          "hits": 636,
+          "heads": 212,
+          "hitRate": 0.53,
+          "headRate": 0.17666666666666667
+        },
+        {
+          "tiles": 6.25,
+          "shots": 1200,
+          "hits": 402,
+          "heads": 120,
+          "hitRate": 0.335,
+          "headRate": 0.1
+        }
+      ],
+      "scav": {
+        "aimError": 0.14,
+        "aimErrorMinPx": 14
+      },
+      "holdoutAim": 0.05,
+      "retrieverAim": 0.04,
+      "mapsAndSquadsUnchanged": true,
+      "errors": [],
+      "external": 0
+    },
+    {
+      "file": "潮汐线.html",
+      "rows": [
+        {
+          "tiles": 1,
+          "shots": 1200,
+          "hits": 873,
+          "heads": 284,
+          "hitRate": 0.7275,
+          "headRate": 0.23666666666666666
+        },
+        {
+          "tiles": 2,
+          "shots": 1200,
+          "hits": 827,
+          "heads": 270,
+          "hitRate": 0.6891666666666667,
+          "headRate": 0.225
+        },
+        {
+          "tiles": 4,
+          "shots": 1200,
+          "hits": 636,
+          "heads": 212,
+          "hitRate": 0.53,
+          "headRate": 0.17666666666666667
+        },
+        {
+          "tiles": 6.25,
+          "shots": 1200,
+          "hits": 402,
+          "heads": 120,
+          "hitRate": 0.335,
+          "headRate": 0.1
+        }
+      ],
+      "scav": {
+        "aimError": 0.14,
+        "aimErrorMinPx": 14
+      },
+      "holdoutAim": 0.05,
+      "retrieverAim": 0.04,
+      "mapsAndSquadsUnchanged": true,
+      "errors": [],
+      "external": 0
+    }
+  ]
+}

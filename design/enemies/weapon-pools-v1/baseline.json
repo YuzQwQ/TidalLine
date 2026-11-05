@@ -1,0 +1,734 @@
+{
+  "profiles": {
+    "scav": {
+      "name": "拾荒者",
+      "short": "拾",
+      "color": "#b07a4a",
+      "hp": 60,
+      "speed": 54,
+      "sight": 11,
+      "fov": 1.7,
+      "hear": 1,
+      "range": 235,
+      "cd": 0.85,
+      "faction": "scav",
+      "injuryType": "bullet",
+      "arrow": true,
+      "human": true,
+      "desc": "和你一样进来找东西的人，只是他们先到。",
+      "tactical": true,
+      "weaponPool": [
+        "glock17",
+        "glock17",
+        "pp19_01",
+        "mp155"
+      ],
+      "levels": [
+        [
+          1,
+          42
+        ],
+        [
+          2,
+          30
+        ],
+        [
+          3,
+          19
+        ],
+        [
+          4,
+          9
+        ]
+      ],
+      "helmetChance": 0.55,
+      "bodyChance": 0.65,
+      "condition": [
+        1,
+        1
+      ],
+      "reserve": [
+        10,
+        30
+      ],
+      "aim": 0.85,
+      "aimError": 0.065,
+      "burst": [
+        2,
+        3
+      ],
+      "pause": [
+        1.8,
+        2.4
+      ],
+      "search": 8
+    },
+    "holdout": {
+      "name": "据点看守",
+      "short": "看",
+      "color": "#b8a26b",
+      "hp": 80,
+      "speed": 42,
+      "sight": 10,
+      "fov": 1.9198621771937625,
+      "hear": 1,
+      "range": 192,
+      "cd": 1.5,
+      "faction": "scav",
+      "human": true,
+      "arrow": true,
+      "tactical": true,
+      "injuryType": "shotgun",
+      "weapon": "rem870",
+      "levels": [
+        [
+          2,
+          80
+        ],
+        [
+          3,
+          20
+        ]
+      ],
+      "helmetChance": 0.65,
+      "bodyChance": 0.85,
+      "reserve": 12,
+      "aim": 0.75,
+      "aimError": 0.05,
+      "burst": 1,
+      "pause": [
+        1.5,
+        1.8
+      ],
+      "warning": 1,
+      "guardRadius": 3,
+      "leash": 8,
+      "chaseLimit": 6,
+      "quietReset": 10,
+      "search": 8,
+      "desc": "守着楼院和物资的人。工装、旧头盔和短霰弹枪，足够让陌生人在门口停一停。"
+    },
+    "retriever": {
+      "name": "受雇回收员",
+      "short": "回",
+      "color": "#7c9684",
+      "hp": 100,
+      "speed": 50,
+      "sight": 13,
+      "fov": 1.9198621771937625,
+      "hear": 1,
+      "bonusMeleePool": {
+        "chance": 0.01,
+        "ids": [
+          "melee03",
+          "melee07"
+        ]
+      },
+      "range": 352,
+      "cd": 1.6,
+      "faction": "scav",
+      "human": true,
+      "arrow": true,
+      "tactical": true,
+      "injuryType": "bullet",
+      "weapon": "m4a1",
+      "levels": [
+        [
+          3,
+          80
+        ],
+        [
+          4,
+          20
+        ]
+      ],
+      "helmetChance": 0.9,
+      "bodyChance": 1,
+      "reserve": 30,
+      "aim": 0.65,
+      "aimError": 0.04,
+      "burst": 3,
+      "pause": [
+        1.6,
+        2
+      ],
+      "search": 8,
+      "radioRange": 10,
+      "radioGap": 1,
+      "rolePeriod": 6,
+      "coverRadius": 6,
+      "coverPath": 8,
+      "desc": "带着回收清单进入环礁湾的专业人员。先确认目标，再决定带走多少别的东西。"
+    }
+  },
+  "armorAmmo": {
+    "levelWeights": [
+      42,
+      30,
+      19,
+      9
+    ],
+    "helmetChance": 0.55,
+    "bodyChance": 0.65,
+    "ammoMin": 10,
+    "ammoMax": 30
+  },
+  "mapHash": "25ef2acad292047b88f45c27c41fe6a580638efff62f340d0ab00329bc0814c6",
+  "spawns": [
+    {
+      "id": "linhai-old-quarter",
+      "enemies": [
+        {
+          "id": "e01",
+          "region": "apartment",
+          "type": "scav",
+          "x": 8,
+          "y": 18,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e02",
+          "region": "apartment",
+          "type": "scav",
+          "x": 15,
+          "y": 17,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e03",
+          "region": "apartment",
+          "type": "scav",
+          "x": 14,
+          "y": 21,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e04",
+          "region": "clinic",
+          "type": "scav",
+          "x": 14,
+          "y": 44,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e05",
+          "region": "clinic",
+          "type": "scav",
+          "x": 14,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e06",
+          "region": "bank",
+          "type": "scav",
+          "x": 46,
+          "y": 21,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e08",
+          "region": "bank",
+          "type": "scav",
+          "x": 51,
+          "y": 24,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e09",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 60,
+          "y": 38,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e11",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 60,
+          "y": 33,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e12",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 65,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e13",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 65,
+          "y": 35,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e14",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 39,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e15",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 42,
+          "y": 24,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e16",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 13,
+          "y": 28,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e17",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 62,
+          "y": 8,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e18",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 18,
+          "y": 31,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e19",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 16,
+          "y": 36,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e20",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 8,
+          "y": 27,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e21",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 15,
+          "y": 51,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e22",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 58,
+          "y": 28,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e23",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 37,
+          "y": 35,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e24",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 50,
+          "y": 40,
+          "patrolRadius": 3
+        },
+        {
+          "id": "e25",
+          "region": "bank",
+          "type": "scav",
+          "x": 53,
+          "y": 19,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e26",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 65,
+          "y": 24,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e27",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 58,
+          "y": 23,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e28",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 65,
+          "y": 19,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e29",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 54,
+          "y": 12,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e30",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 66,
+          "y": 15,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e31",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 48,
+          "y": 7,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e32",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 53,
+          "y": 6,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e33",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 41,
+          "y": 8,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e34",
+          "region": "apartment",
+          "type": "scav",
+          "x": 15,
+          "y": 14,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e35",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 19,
+          "y": 11,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e36",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 25,
+          "y": 38,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e37",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 25,
+          "y": 33,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e38",
+          "region": "outdoors",
+          "type": "scav",
+          "x": 21,
+          "y": 8,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e39",
+          "region": "clinic",
+          "type": "echo",
+          "x": 11,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e40",
+          "region": "clinic",
+          "type": "echo",
+          "x": 8,
+          "y": 39,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e41",
+          "region": "clinic",
+          "type": "echo",
+          "x": 8,
+          "y": 42,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e42",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 17,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e43",
+          "region": "clinic",
+          "type": "echo",
+          "x": 10,
+          "y": 36,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e45",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 17,
+          "y": 44,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e46",
+          "region": "bank",
+          "type": "scav",
+          "x": 50,
+          "y": 21,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e47",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 42,
+          "y": 50,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e48",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 43,
+          "y": 47,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e49",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 45,
+          "y": 50,
+          "patrolRadius": 2,
+          "facing": "s"
+        }
+      ]
+    },
+    {
+      "id": "fenced-zone",
+      "enemies": [
+        {
+          "t": "scav",
+          "x": 7,
+          "y": 11,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 15,
+          "y": 6,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 26,
+          "y": 9,
+          "patrolRadius": 2,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 38,
+          "y": 10,
+          "patrolRadius": 2,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 34,
+          "y": 5,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "guard",
+          "x": 48,
+          "y": 7,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "guard",
+          "x": 56,
+          "y": 11,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "echo",
+          "x": 48,
+          "y": 13,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 58,
+          "y": 6,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "scav",
+          "x": 6,
+          "y": 23,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "scav",
+          "x": 11,
+          "y": 27,
+          "patrolRadius": 2,
+          "type": "scav"
+        },
+        {
+          "t": "guard",
+          "x": 32,
+          "y": 23,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "echo",
+          "x": 26,
+          "y": 26,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 34,
+          "y": 28,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "guard",
+          "x": 49,
+          "y": 24,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "guard",
+          "x": 56,
+          "y": 26,
+          "patrolRadius": 2,
+          "type": "guard"
+        },
+        {
+          "t": "echo",
+          "x": 50,
+          "y": 20,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 58,
+          "y": 23,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 47,
+          "y": 36,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 52,
+          "y": 37,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 58,
+          "y": 36,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "echo",
+          "x": 56,
+          "y": 39,
+          "patrolRadius": 2,
+          "type": "echo"
+        },
+        {
+          "t": "scav",
+          "x": 21,
+          "y": 10,
+          "patrolRadius": 3,
+          "type": "scav"
+        },
+        {
+          "t": "echo",
+          "x": 21,
+          "y": 27,
+          "patrolRadius": 3,
+          "type": "echo"
+        }
+      ]
+    }
+  ],
+  "files": {
+    "design/maps/linhai-old-quarter/layout.json": "fbe7b49b6f02d9791ac19779cdca62ecad7533df78c698b2481718fa810e2dbd",
+    "design/maps/fenced-zone/runtime.json": "7dbfc7b03949c9198de91e01056b29e7762bb06d567cfa7d7d9c000f62b053b2",
+    "js/entities.js": "7d5ea5885726470438973acb68c092a4d2d66fe7a9610e2d4c9cc08a196728c4",
+    "js/gunplay.js": "91b61ca207bcb11f8de14fd31fb3056c9ff7a62f83babd0f44dfe8cbcc98a87d"
+  }
+}

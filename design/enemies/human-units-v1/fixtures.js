@@ -1,10 +1,11 @@
 /* Isolated manual arenas; never registered in the production map catalog. */
 (function(root){
-  const names={field:'开阔地',hall:'门厅',loop:'双出口房间',pair:'双人交叉射界'};
+  const names={scav:'拾荒者 · 短点射',field:'开阔地',hall:'门厅',loop:'双出口房间',pair:'双人交叉射界'};
   function make(kind='field'){
     const width=50,height=36,g=Array.from({length:height},(_,y)=>Array.from({length:width},(_,x)=>x===0||y===0||x===width-1||y===height-1?'#':'.'));
     let spawn={x:10,y:18},enemies=[];
     const line=(x1,y1,x2,y2)=>{for(let y=y1;y<=y2;y++)for(let x=x1;x<=x2;x++)g[y][x]='#';};
+    if(kind==='scav')enemies=[{id:'scav-1',type:'scav',x:20,y:18,facing:'w',patrolRadius:2}];
     if(kind==='field')enemies=[{id:'watch-1',type:'holdout',x:20,y:18,facing:'w',patrolRadius:2,guardAnchor:[20,18]}];
     if(kind==='hall'){
       line(20,10,34,10);line(20,26,34,26);line(20,10,20,26);line(34,10,34,26);g[18][20]='+';
@@ -26,8 +27,8 @@
     Save.hp=100;Save.stash=[];Save.meleeGiftClaimed=true;
     Save.gear={weapons:[EQUIP.gun('rifle',30,'ammo_556_2'),EQUIP.gun('shotgun',6,'ammo_12g_2'),EQUIP.gun('pistol',12,'ammo_9mm_2')],helmet:GEAR.make('helmet',2),body:GEAR.make('body',2),back:BACKPACK.make('bag03'),melee:EQUIP.melee('melee02')};
     Save.bag=[{id:'ammo_556_2',n:60},{id:'ammo_9mm_2',n:90},{id:'ammo_12g_2',n:20},...Array.from({length:3},()=>({id:'heal01',n:1,cap:ITEM_BY_ID.heal01.healCap}))];Save.save();Save.flush();
-    const map=make(kind);MAP_CATALOG.push(map);
-    try{Game.startRun(null,map.id);}finally{MAP_CATALOG.pop();}
+    const map=make(kind);if(typeof Base!=='undefined')Base.close();MAP_CATALOG.push(map);
+    try{Game.startRun(null,map.id);if(kind==='scav'){const e=Game.enemies[0];e.weaponId='pp19_01';e.gun=null;e.ai.mag=WEAPONS.pp19_01.mag;e.ai.reserve=30;e.ammoId='ammo_9mm_'+e.gearLv;}}finally{MAP_CATALOG.pop();}
     document.getElementById('startVeil')?.classList.add('hidden');
     Game.toast('测试存档独立 · F1查看状态与最后目击点');
   }

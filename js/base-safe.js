@@ -14,9 +14,9 @@ const BaseSafe={
   const cells=box.querySelector('#baseSafeGrid');for(let i=0;i<CFG.BAG.SAFE;i++){const entry=Save.safe[i],item=entry&&stashItem(entry),cell=Base.makeBagCell(entry);cell.dataset.safeSlot=i;if(item){cell.title=item.name+' · 双击移回背包 · 右键更多';cell.onclick=ev=>{if(ev&&(ev.ctrlKey||ev.metaKey)){Tips.hide();this.transfer(entry,'safe','bag');return;}this.open(entry,cell);};cell.ondblclick=ev=>{if(ev&&ev.preventDefault)ev.preventDefault();Tips.hide();this.transfer(entry,'safe','bag');};cell.oncontextmenu=ev=>{ev.preventDefault();ev.stopPropagation();this.menu(entry,cell,ev);};}else cell.title='从背包或仓库的物品操作中选择“放入保险箱”';cells.appendChild(cell);}
  },
  /* 局外详情只有信息；动作全在右键菜单（和背包格同一套口径） */
- open(entry,node){if(!Save.safe.includes(entry))return;const item=stashItem(entry);const extra=item&&item.healCap?[['当前容量',Math.ceil(Medical.entryCap(entry))+' / '+item.healCap]]:null;Tips.show(item,node.getBoundingClientRect(),'',extra);},
+ open(entry,node){if(!Save.safe.includes(entry))return;const item=stashItem(entry);const extra=item&&Medical.capOf(item)?[[item.effect?'剩余次数':'当前容量',Medical.capText(entry)]]:null;Tips.show(item,node.getBoundingClientRect(),'',extra);},
  menu(entry,node,ev){const item=stashItem(entry);const entries=[{label:'详情',onClick:()=>this.open(entry,node)},{label:'移回背包',onClick:()=>this.transfer(entry,'safe','bag')},{label:'放回仓库',onClick:()=>this.transfer(entry,'safe','stash')}];
-  if(item&&Medical.ready(item))entries.push({label:Save.hp>=CFG.P.HP?'生命值已满':'使用一件',disabled:Save.hp>=CFG.P.HP,onClick:()=>{if(Save.safe.includes(entry))Medical.use(entry,'basesafe');}});
+  if(item&&Medical.is(item)){const usable=Medical.canUse(item,'basesafe');entries.push({label:Medical.actionLabel(item,'basesafe'),disabled:!usable,onClick:()=>{if(usable&&Save.safe.includes(entry))Medical.use(entry,'basesafe');}});}
   Ctx.show(ev.clientX,ev.clientY,entries);},
  addAction(container,entry,from){if(!container||!this.list(from)?.includes(entry))return;const button=document.createElement('button');button.dataset.baseSafeMove=from;button.textContent='放入保险箱';button.onclick=()=>this.transfer(entry,from,'safe');container.appendChild(button);}
 };

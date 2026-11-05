@@ -1005,6 +1005,27 @@ window.addEventListener('error', function (e) {
 }
 #healHud.start .hh-fill { background: #d9922f; }
 
+/* ---- 损伤状态条：沿用医疗层视觉，不重做 HUD ----
+   层级：背包 10 < 快捷栏 30 < debuffBar 32 < 详情 62 < 菜单 64 < 轮盘 66 < 治疗进度 70 */
+#debuffBar {
+  /* 左下 406~466px 是弹药/射击模式面板，状态条整体放在它上方 */
+  position: absolute; left: 14px; bottom: 84px; z-index: 32;
+  display: none; flex-wrap: wrap; gap: 4px; max-width: 300px;
+  pointer-events: none;
+}
+#debuffBar .db-chip {
+  padding: 1px 6px; font: 10px/1.5 Consolas, monospace; letter-spacing: .5px;
+  border: 1px solid; border-radius: 2px;
+  background: rgba(9, 15, 13, 0.84);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+#debuffBar .db-bleed  { color: #e08585; border-color: #8d3a3a; }
+#debuffBar .db-severe { color: #dfbf7d; border-color: #7d6430; }
+#debuffBar .db-fract  { color: #d9b45f; border-color: #8a7d5a; }
+#debuffBar .db-pain   { color: #c1a3d6; border-color: #907ba8; }
+#debuffBar .db-analg  { color: #9fe4c9; border-color: #3fbf9b; }
+#debuffBar .db-muted  { opacity: .55; }
+
 @media(max-width:720px) {
   .base-hd { padding:10px 12px; flex-wrap:wrap; gap:10px; }
   .hd-vals { flex-wrap:wrap; gap:8px; }
@@ -1134,6 +1155,8 @@ window.addEventListener('error', function (e) {
     <!-- 医疗层：快捷栏 / 轮盘 / 治疗进度。
          三块都不属于背包，开关背包不会卸载它们，治疗也不会因此中断。 -->
     <div id="medBar" style="display:none"></div>
+    <!-- 损伤状态条：流血 / 重伤 / 骨折 / 疼痛 / 镇痛，逐帧刷新 -->
+    <div id="debuffBar" style="display:none"></div>
     <canvas id="medWheel" width="720" height="480" style="display:none"></canvas>
     <div id="healHud" style="display:none">
       <div class="hh-top"></div>
@@ -1325,6 +1348,7 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 <script src="js/medical.js"></script>
 <script src="js/detail-art.js"></script>
 <script src="js/art.js"></script>
+<script src="js/debuff.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/music.js"></script>
 <script src="js/save.js"></script>

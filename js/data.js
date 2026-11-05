@@ -212,13 +212,18 @@ const MEDICAL_ITEMS = [
     "medicalGroup": "painkiller",
     "source": "安禾制药",
     "reservedEffect": "基础镇痛，持续90秒。",
+    "effect": {
+      "kind": "analgesic",
+      "duration": 90,
+      "useTime": 1,
+      "uses": 1
+    },
     "desc": "安禾制药最畅销的非处方药物之一，适用于常见的轻度疼痛症状。\n\n其早期电视广告因一句过于朗朗上口的宣传语而广为人知：\n\n「头疼？牙疼？哪儿都疼？安禾止痛，轻轻松松！」\n\n广告中的男演员在服药后立刻从病床上跳起，并连续完成了三个后空翻。\n\n卫生部门后来要求制造商撤下这一画面，理由是其可能对药物效果产生误导。",
     "visual": "银色六粒装药板，外包装为橙白配色，印有安禾的绿色叶形标志。",
     "iconId": "heal06",
     "cat": "medical",
     "noCodex": true,
-    "use": false,
-    "noLoot": true
+    "use": true
   },
   {
     "id": "heal07",
@@ -230,13 +235,18 @@ const MEDICAL_ITEMS = [
     "medicalGroup": "painkiller",
     "source": "广谱仿制药",
     "reservedEffect": "中等镇痛，持续180秒。",
+    "effect": {
+      "kind": "analgesic",
+      "duration": 180,
+      "useTime": 1.2,
+      "uses": 1
+    },
     "desc": "一种采用缓释工艺生产的复方镇痛制剂，曾广泛供应工厂医疗站与职业健康机构。\n\n在工业化快速发展的年代，许多企业将缓解职业性肌肉疼痛视为提高生产效率的重要手段。某家大型机械厂甚至制定过专门的药品发放标准：\n\n「因连续作业而出现疼痛者，可向医务室领取两粒胶囊。若症状反复，应由车间主管决定是否调整工作岗位。」\n\n这项制度后来被废止。\n\n废止的不是药品发放标准，而是调整岗位的部分。",
     "visual": "棕色塑料药瓶，橙白双色胶囊，瓶身贴有蓝色条纹标签和通用药品编号。",
     "iconId": "heal07",
     "cat": "medical",
     "noCodex": true,
-    "use": false,
-    "noLoot": true
+    "use": true
   },
   {
     "id": "heal08",
@@ -248,13 +258,18 @@ const MEDICAL_ITEMS = [
     "medicalGroup": "painkiller",
     "source": "医院专供制剂",
     "reservedEffect": "强效镇痛，持续300秒。",
+    "effect": {
+      "kind": "analgesic",
+      "duration": 300,
+      "useTime": 1.5,
+      "uses": 1
+    },
     "desc": "专供医疗机构使用的强效镇痛制剂，包装标有受控药物识别条纹。\n\n在一项临床观察中，一名受试者表示，药物让他能够平静地观察自己的伤口。\n\n研究人员询问他的疼痛程度，他回答：\n\n「我知道它应该很疼，但那似乎是另一个人的事情。」\n\n研究人员认为这是一次值得记录的主观体验变化，而不是异常现象。另一位研究者则在报告边缘批注：\n\n「请确认他说的『另一个人』是否仅为比喻。」",
     "visual": "深蓝色医药纸盒，白色药瓶，红色受控药物条纹与防误开瓶盖。",
     "iconId": "heal08",
     "cat": "medical",
     "noCodex": true,
-    "use": false,
-    "noLoot": true
+    "use": true
   },
   {
     "id": "heal09",
@@ -265,13 +280,18 @@ const MEDICAL_ITEMS = [
     "medicalGroup": "trauma",
     "source": "北辰医械",
     "reservedEffect": "控制严重肢体出血。",
+    "effect": {
+      "kind": "cure",
+      "cures": "bleeding",
+      "useTime": 2.5,
+      "uses": 1
+    },
     "desc": "北辰医械生产的标准应急止血带，采用高强度织带与金属旋紧机构。\n\n其产品手册的扉页引用了一位战地外科医生的话：\n\n「医学的首要任务并不是让人免于痛苦，而是让人活到能够讨论痛苦的时候。」\n\n这句话后来成为北辰医械的非正式企业格言。\n\n据说董事会曾提议把它印在公司年报封面上，最终因为市场部门认为「不够积极」而遭到否决。",
     "visual": "黑色止血带，暗银色旋杆，红色拉环，侧面有北辰的蓝色十字标志。",
     "iconId": "heal09",
     "cat": "medical",
     "noCodex": true,
-    "use": false,
-    "noLoot": true
+    "use": true
   },
   {
     "id": "heal10",
@@ -282,13 +302,18 @@ const MEDICAL_ITEMS = [
     "medicalGroup": "trauma",
     "source": "北辰医械",
     "reservedEffect": "临时固定骨折部位。",
+    "effect": {
+      "kind": "cure",
+      "cures": "fracture",
+      "useTime": 3,
+      "uses": 1
+    },
     "desc": "采用柔性铝合金骨架与高密度泡棉制成的通用固定夹板。\n\n北辰医械曾邀请二百名普通市民参加产品测试，要求他们在没有专业指导的情况下完成模拟固定操作。\n\n最终测试表明，绝大多数受试者都能正确理解产品的基本用途。\n\n但有七人将夹板固定在了假人的另一条腿上，还有一人将它卷起来当作了枕头。",
     "visual": "蓝色泡棉包覆的长条夹板，银色金属边缘，附两条灰色固定带。",
     "iconId": "heal10",
     "cat": "medical",
     "noCodex": true,
-    "use": false,
-    "noLoot": true
+    "use": true
   },
   {
     "id": "heal11",
@@ -318,13 +343,17 @@ const MEDICAL_ITEMS = [
     "medicalGroup": "trauma",
     "source": "北辰医械专业系列",
     "reservedEffect": "处理严重创伤，可能需要安全环境。",
+    "effect": {
+      "kind": "surgery",
+      "useTime": 8,
+      "uses": 2
+    },
     "desc": "专门为偏远地区医务人员开发的便携外科器械套装，配备多种无菌器械和基础手术用品。\n\n随箱手册的第一章并不介绍任何手术技巧，而是列举了十七种不应当在缺乏正规医疗条件的情况下实施手术的情形。\n\n第十八条写道：\n\n「如果您正在阅读本条，以判断自己是否具备手术资格，请立即寻求专业医疗援助。」",
     "visual": "深绿色手提式金属器械箱，内部排列着独立密封的外科工具和医用耗材。",
     "iconId": "heal12",
     "cat": "medical",
     "noCodex": true,
-    "use": false,
-    "noLoot": true
+    "use": true
   },
   {
     "id": "heal13",
@@ -1017,8 +1046,8 @@ const BOX_COUNT = Object.fromEntries(Object.entries(CONTAINER_QUALITY).map(([k, 
 const ENEMY_TYPES = {
   scav: {
     name: '拾荒者', short: '拾', color: '#b07a4a',
-    hp: 34, speed: 54, sight: 11, fov: 1.7, hear: 1.0,
-    dmg: 9, range: 235, cd: 0.85, faction: 'scav',
+    hp: 60, speed: 54, sight: 11, fov: 1.7, hear: 1.0,
+    range: 235, cd: 0.85, faction: 'scav', injuryType: 'bullet',
     arrow: true,            // 远程
     human: true,            // 人：会自己穿戴头甲、配对应等级的弹
     desc: '和你一样进来找东西的人，只是他们先到。'
@@ -1026,14 +1055,14 @@ const ENEMY_TYPES = {
   echo: {
     name: '回响体', short: '响', color: '#8f5f7a',
     hp: 22, speed: 44, sight: 0, fov: 0, hear: 1.65,
-    dmg: 14, range: 30, cd: 0.75, faction: 'echo',
+    dmg: 14, range: 30, cd: 0.75, faction: 'echo', injuryType: 'heavy',
     arrow: false,
     desc: '溺死者的声音聚成的形体。没有眼睛，只听得见。'
   },
   guard: {
     name: '潮汐守卫', short: '守', color: '#5f7f9b',
     hp: 72, speed: 36, sight: 15, fov: 2.0, hear: 0.6,
-    dmg: 13, range: 300, cd: 1.05, faction: 'guard',
+    dmg: 13, range: 300, cd: 1.05, faction: 'guard', injuryType: 'bullet',
     arrow: true,
     desc: '事故当天留下的自动化安保，还在执行早已失效的指令。'
   }

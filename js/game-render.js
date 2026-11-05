@@ -738,14 +738,26 @@ Object.assign(Game, {
     const TS = CFG.TILE;
 
     /* --- 左上：血量 + 负重 --- */
+    /* 有重伤时多一行「可恢复上限」，面板跟着长高 12px */
+    const cap = Debuff.recoverableMax(P);
+    const capR = U.clamp(cap / P.maxHp, 0, 1);
     c.fillStyle = 'rgba(8,14,12,0.78)';
-    c.fillRect(14, 14, 176, 58);
+    c.fillRect(14, 14, 176, 70);
 
     c.fillStyle = 'rgba(30,45,40,0.9)';
     c.fillRect(24, 24, 156, 8);
+    /* 被重伤封锁的那一段：暗红实色，直观看出「回不上去」的部分 */
+    if (capR < 1 - 1e-6) {
+      c.fillStyle = 'rgba(141,58,58,0.55)';
+      c.fillRect(24 + 156 * capR, 24, 156 * (1 - capR), 8);
+    }
     const hpR = P.hp / P.maxHp;
     c.fillStyle = hpR > 0.5 ? '#3f8b78' : hpR > 0.25 ? '#b5883a' : '#8d3a3a';
     c.fillRect(24, 24, 156 * hpR, 8);
+    if (capR < 1 - 1e-6) {
+      c.fillStyle = '#dbe5e1';
+      c.fillRect(24 + 156 * capR - 1, 22, 1, 12);
+    }
 
     c.fillStyle = '#9fb5ae';
     c.font = '10px monospace';
@@ -755,9 +767,13 @@ Object.assign(Game, {
     const tier = P.tier;
     c.fillStyle = tier.i >= 2 ? '#c98a5e' : '#6f8a82';
     c.fillText(tier.name + '  ' + P.totalWeight.toFixed(1) + 'kg', 26, 62);
+    if (capR < 1 - 1e-6) {
+      c.fillStyle = '#c98a5e'; c.font = '9px monospace';
+      c.fillText('可恢复上限 ' + Math.ceil(cap) + ' (' + Math.round(capR * 100) + '%)', 26, 76);
+    }
 
     /* --- 左上追加：头盔 / 护甲耐久 --- */
-    const ay0 = 76;
+    const ay0 = 88;
     c.fillStyle = 'rgba(8,14,12,0.78)';
     c.fillRect(14, ay0, 176, 40);
     this.gearBar(c, 24, ay0 + 8, 156, '头盔', P.helmet);

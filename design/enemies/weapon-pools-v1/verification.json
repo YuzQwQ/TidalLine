@@ -1,0 +1,38 @@
+{
+  "passed": 6,
+  "failures": [],
+  "spawnsPerProfile": 6000,
+  "samples": {
+    "scav": {
+      "pp19_01": 297,
+      "galil_arm": 1062,
+      "m16a1": 1065,
+      "m1911a1": 191,
+      "glock17": 1079,
+      "ak12": 112,
+      "aks74u": 680,
+      "g36c": 646,
+      "beretta92": 176,
+      "mp155": 237,
+      "sig550": 111,
+      "rem870": 176,
+      "fn_fnc": 168
+    },
+    "holdout": {
+      "rem870": 3001,
+      "mp155": 2372,
+      "saiga12": 627
+    },
+    "retriever": {
+      "aug_a1": 290,
+      "m4a1": 624,
+      "akm": 1470,
+      "mp5a3": 757,
+      "famas_f1": 363,
+      "ump45": 611,
+      "mk47_mod2": 749,
+      "an94": 883,
+      "groza1": 253
+    }
+  }
+}

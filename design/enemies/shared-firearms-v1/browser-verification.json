@@ -1,0 +1,159 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "profiles": [
+        {
+          "key": "scav",
+          "hp": 60,
+          "firstGroup": [
+            {
+              "t": 0.8833333333333344,
+              "key": "scav",
+              "mag": 29,
+              "recoil": 0.055
+            },
+            {
+              "t": 0.9833333333333347,
+              "key": "scav",
+              "mag": 28,
+              "recoil": 0.11
+            }
+          ],
+          "gap": {
+            "seconds": 2.8333333333333233,
+            "min": 2.65
+          }
+        },
+        {
+          "key": "holdout",
+          "hp": 80,
+          "firstGroup": [
+            {
+              "t": 0.7833333333333341,
+              "key": "holdout",
+              "mag": 5,
+              "recoil": 0.24
+            }
+          ],
+          "gap": {
+            "seconds": 2.399999999999993,
+            "min": 2.25
+          }
+        },
+        {
+          "key": "retriever",
+          "hp": 100,
+          "firstGroup": [
+            {
+              "t": 0.6833333333333338,
+              "key": "retriever",
+              "mag": 29,
+              "recoil": 0.075
+            },
+            {
+              "t": 0.7666666666666674,
+              "key": "retriever",
+              "mag": 28,
+              "recoil": 0.15
+            },
+            {
+              "t": 0.850000000000001,
+              "key": "retriever",
+              "mag": 27,
+              "recoil": 0.22499999999999998
+            }
+          ],
+          "gap": {
+            "seconds": 2.333333333333326,
+            "min": 2.25
+          }
+        }
+      ],
+      "corpseAndSave": true,
+      "errors": [],
+      "external": 0
+    },
+    {
+      "file": "潮汐线.html",
+      "profiles": [
+        {
+          "key": "scav",
+          "hp": 60,
+          "firstGroup": [
+            {
+              "t": 0.8833333333333344,
+              "key": "scav",
+              "mag": 29,
+              "recoil": 0.055
+            },
+            {
+              "t": 0.9833333333333347,
+              "key": "scav",
+              "mag": 28,
+              "recoil": 0.11
+            },
+            {
+              "t": 1.0833333333333344,
+              "key": "scav",
+              "mag": 27,
+              "recoil": 0.165
+            }
+          ],
+          "gap": {
+            "seconds": 2.8999999999999897,
+            "min": 2.65
+          }
+        },
+        {
+          "key": "holdout",
+          "hp": 80,
+          "firstGroup": [
+            {
+              "t": 0.7833333333333341,
+              "key": "holdout",
+              "mag": 5,
+              "recoil": 0.24
+            }
+          ],
+          "gap": {
+            "seconds": 2.5499999999999923,
+            "min": 2.25
+          }
+        },
+        {
+          "key": "retriever",
+          "hp": 100,
+          "firstGroup": [
+            {
+              "t": 0.6833333333333338,
+              "key": "retriever",
+              "mag": 29,
+              "recoil": 0.075
+            },
+            {
+              "t": 0.7666666666666674,
+              "key": "retriever",
+              "mag": 28,
+              "recoil": 0.15
+            },
+            {
+              "t": 0.850000000000001,
+              "key": "retriever",
+              "mag": 27,
+              "recoil": 0.22499999999999998
+            }
+          ],
+          "gap": {
+            "seconds": 2.3999999999999924,
+            "min": 2.25
+          }
+        }
+      ],
+      "corpseAndSave": true,
+      "errors": [],
+      "external": 0
+    }
+  ]
+}
