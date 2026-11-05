@@ -28,6 +28,7 @@ const Base = {
   },
 
   close() {
+    AmmoPurchase.close();
     this.picker = null;
     this._anchor = null;
     document.getElementById('baseVeil').classList.add('hidden');
@@ -701,16 +702,15 @@ const Base = {
     this.renderAmmoShop(el);
   },
 
-  /* 弹药柜：五种口径 × 一~二级，一盒 30 发。
+  /* 弹药柜：六种口径 × 一~二级，按发购买，每次最多六组。
      三级以上没有渠道 —— 那才是下海一趟的理由。 */
   SHOP_AMMO_MAX_LV: 2,
-  SHOP_AMMO_PACK: 30,
+  SHOP_AMMO_MAX_STACKS: 6,
 
   renderAmmoShop(el) {
-    const pack = this.SHOP_AMMO_PACK;
     const title = document.createElement('div');
     title.className = 'shop-cat';
-    title.textContent = '弹药（一盒 ' + pack + ' 发）';
+    title.textContent = '弹药（按发购买）';
     el.appendChild(title);
 
     for (const cal of Object.keys(CALIBERS)) {
@@ -719,48 +719,41 @@ const Base = {
         if (!it) continue;
         const cell = document.createElement('div');
         cell.className = 'scell r' + it.r;
-        cell.dataset.offer = JSON.stringify({kind:'ammo',id:it.id,quantity:pack});
+        cell.dataset.offer = JSON.stringify({kind:'ammo',id:it.id});
         const ico = Icons.get(it.id)
           ? '<img src="' + Icons.get(it.id).src + '" alt="">'
           : '<span class="gl">Lv' + it.level + '</span>';
         cell.innerHTML = ico +
-          '<span class="cn">' + esc(it.short) + ' ×' + pack + '</span>' +
-          '<span class="pr">' + formatMoney(it.price * pack) + '</span>';
+          '<span class="cn">' + esc(it.short) + '</span>' +
+          '<span class="pr">' + formatMoney(it.price) + ' / 发</span>';
         cell.title = it.name + ' · 穿透 Lv' + it.penLevel + ' · 伤害系数 ×' + it.dmgMul.toFixed(2) +
-          ' · 一盒 ' + pack + ' 发';
-        cell.onclick = () => this.askBuyAmmo(it.id, pack, cell);
+          ' · 单次最多 ' + this.SHOP_AMMO_MAX_STACKS + ' 组（' + stackLimit(it)*this.SHOP_AMMO_MAX_STACKS + ' 发）';
+        cell.onclick = () => this.askBuyAmmo(it.id);
         cell.oncontextmenu = (ev) => {
           ev.preventDefault();
-          Tips.show(it, cell.getBoundingClientRect(), '左键买一盒 ' + pack + ' 发');
+          Tips.show(it, cell.getBoundingClientRect(), '选择弹药后，点击购买选择数量');
         };
         el.appendChild(cell);
       }
     }
   },
 
-  askBuyAmmo(id, pack, cell) {
-    const it = ITEM_BY_ID[id];
-    if (!it) return;
-    Deal.show({
-      kind: 'buy',
-      title: '买入弹药',
-      name: it.name + ' ×' + pack,
-      id: it.id,
-      short: it.short,
-      sub: '穿透 Lv' + it.penLevel + ' · 一盒 ' + pack + ' 发',
-      price: it.price * pack,
-      can: Save.credits >= it.price * pack && Save.canAddStash(id,pack),
-      onGo: () => this.buyAmmo(id, pack)
-    }, cell.getBoundingClientRect());
+  askBuyAmmo(id) { return AmmoPurchase.open(id); },
+
+  ammoQuote(id, quantity) {
+    const item=ITEM_BY_ID[id];
+    if(!item||item.cat!=='ammo'||item.level>this.SHOP_AMMO_MAX_LV)return {ok:false,reason:'该弹药暂不出售',total:0};
+    const max=stackLimit(item)*this.SHOP_AMMO_MAX_STACKS;
+    if(!Number.isInteger(quantity)||quantity<1||quantity>max)return {ok:false,item,max,total:0,reason:'请选择1–'+max+'发弹药'};
+    const total=item.price*quantity;
+    const reason=Save.credits<total?'信用点不足':!Save.canAddStash(id,quantity)?'仓库空间不足，无法放入这批弹药':'';
+    return {ok:!reason,item,max,quantity,total,reason};
   },
 
   buyAmmo(id, pack) {
-    const it = ITEM_BY_ID[id];
-    if (!it || it.cat !== 'ammo' || it.level > this.SHOP_AMMO_MAX_LV) return false;
-    if(!Number.isInteger(pack)||pack<=0)return false;
-    if(!Save.canAddStash(id,pack)){this.note('仓库空间不足，无法放入这批弹药',true);return false;}
-    const price = it.price * pack;
-    if (Save.credits < price) { this.note('信用点不够', true); return false; }
+    const quote=this.ammoQuote(id,pack);
+    if(!quote.ok){this.note(quote.reason,true);return false;}
+    const it=quote.item,price=quote.total;
     Save.credits -= price;
     Save.addStash(id, pack);
     Save.save();
@@ -1341,6 +1334,52 @@ const Base = {
     Game.startRun(null, map.id);
   }
 };
+
+/* Quantity selection is a preview. Only the current dialog can commit once. */
+const AmmoPurchase={
+  el:null,id:null,quantity:0,
+  inShop(){return Game.state==='base'&&Base.tab==='gun'&&(typeof Safehouse==='undefined'||Safehouse.view==='merchant'&&MerchantUI.mode==='buy');},
+  open(id){
+    if(!this.inShop())return false;
+    const quote=Base.ammoQuote(id,1);if(!quote.item)return false;
+    Tips.hide();Deal.hide();this.close();this.id=id;this.quantity=stackLimit(quote.item);
+    const it=quote.item,max=quote.max,dlg=document.createElement('dialog');this.el=dlg;dlg.className='ammo-checkout';dlg.setAttribute('aria-labelledby','ammoPurchaseTitle');
+    dlg.innerHTML='<header><small>AMMUNITION / 弹药补给</small><h2 id="ammoPurchaseTitle">购买弹药</h2></header>'+ 
+      '<section class="ammo-purchase-item">'+Icons.bagTag(it,'')+'<div><h3>'+esc(it.name)+'</h3><p>单价 '+formatMoney(it.price)+' / 发</p></div></section>'+
+      '<label class="ammo-purchase-quantity">购买数量 <span><input data-ammo-count aria-label="弹药购买数量" type="number" min="1" max="'+max+'" step="1" value="'+this.quantity+'"> 发</span></label>'+
+      '<input data-ammo-range aria-label="滑动选择弹药数量" type="range" min="1" max="'+max+'" step="1" value="'+this.quantity+'">'+
+      '<div class="ammo-purchase-limits"><span>1发</span><span>最多'+Base.SHOP_AMMO_MAX_STACKS+'组 · '+max+'发</span></div>'+
+      '<p class="ammo-purchase-stack">每组'+stackLimit(it)+'发 · 购买后放入仓库</p>'+
+      '<footer><div class="ammo-purchase-total"><span>共计金额</span><strong data-ammo-total></strong></div><p data-ammo-wallet></p><p class="ammo-purchase-error" role="status" aria-live="polite"></p>'+ 
+      '<div class="ammo-purchase-actions"><button type="button" data-ammo-pay>确定购买</button><button type="button" data-ammo-cancel>取消</button></div></footer>';
+    document.body.appendChild(dlg);
+    dlg.addEventListener('cancel',ev=>{ev.preventDefault();if(this.el===dlg)this.close();});
+    dlg.querySelector('[data-ammo-cancel]').onclick=()=>{if(this.el===dlg)this.close();};
+    const range=dlg.querySelector('[data-ammo-range]'),count=dlg.querySelector('[data-ammo-count]');
+    range.oninput=()=>{if(this.el!==dlg)return;this.quantity=Number(range.value);count.value=range.value;this.refresh();};
+    count.oninput=()=>{if(this.el!==dlg)return;this.quantity=count.value===''?NaN:Number(count.value);if(Number.isInteger(this.quantity)&&this.quantity>=1&&this.quantity<=max)range.value=String(this.quantity);this.refresh();};
+    dlg.querySelector('[data-ammo-pay]').onclick=()=>this.pay(dlg);
+    this.refresh();dlg.showModal();range.focus();return true;
+  },
+  refresh(){
+    if(!this.el)return;const q=Base.ammoQuote(this.id,this.quantity);
+    this.el.querySelector('[data-ammo-total]').textContent=q.quantity?formatMoney(q.total):'—';
+    this.el.querySelector('[data-ammo-wallet]').textContent='当前余额 '+formatMoney(Save.credits);
+    this.el.querySelector('.ammo-purchase-error').textContent=q.reason;
+    this.el.querySelector('[data-ammo-pay]').disabled=!q.ok;
+  },
+  pay(dlg){
+    if(this.el!==dlg||!dlg.open)return false;
+    if(!this.inShop()){this.close();return false;}
+    const q=Base.ammoQuote(this.id,this.quantity);if(!q.ok){this.refresh();return false;}
+    const id=this.id,quantity=this.quantity;this.close();return Base.buyAmmo(id,quantity);
+  },
+  close(){const dlg=this.el;this.el=null;this.id=null;this.quantity=0;if(dlg){if(dlg.open)dlg.close();dlg.remove();}}
+};
+{
+  const hide=Deal.hide;
+  Deal.hide=function(){AmmoPurchase.close();return hide.apply(this,arguments);};
+}
 
 /* 地图选择：浏览/返回不消耗补给，确认出发才结算。 */
 const MapSelect = {

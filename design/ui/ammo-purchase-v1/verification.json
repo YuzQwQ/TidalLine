@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "types": 12,
+      "limits": [
+        120,
+        360,
+        540
+      ],
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "sliderAndExactInput": true,
+      "cancelAndEscape": true,
+      "singleCommit": true,
+      "revalidateFundsAndSpace": true,
+      "saveReload": true,
+      "errors": [],
+      "external": 0
+    },
+    {
+      "file": "潮汐线.html",
+      "types": 12,
+      "limits": [
+        120,
+        360,
+        540
+      ],
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "sliderAndExactInput": true,
+      "cancelAndEscape": true,
+      "singleCommit": true,
+      "revalidateFundsAndSpace": true,
+      "saveReload": true,
+      "errors": [],
+      "external": 0
+    }
+  ]
+}
