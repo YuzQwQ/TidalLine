@@ -509,8 +509,11 @@ const SFX = {
     'search_zipper', 'search_lock', 'search_drawer',
     'search_toolbox', 'search_toolbox2', 'search_toolbox3',
     'search_paper', 'search_paper2', 'search_paper3',
-    'search_cloth', 'search_purse'
+    'search_cloth', 'search_purse', 'search_rustle'
   ],
+  /* 逐件搜索的循环底声（179670 在琴盒里翻找）：材质音只在交互那一刻响一声，
+     之后十几秒的持续翻找靠它垫底 —— 循环播，全部搜完（或关面板）即停。
+     播放控制在 searchLoop()，状态由局内每帧喂进来。 */
   /* 容器搜索音：一个容器一个声，**交互容器时只响一次**。
      以前是「开箱音 + 逐件翻找」两套，还套了循环 —— 一个箱子听着像有人在里面一直翻。
      现在统一成一件事：碰到容器，响一声，然后安静地搜。
@@ -660,7 +663,7 @@ const SFX = {
     /* 拾取的四条变体都按拾取档对齐，四条之间响度一致 */
     if (/^pickup_[1-4]$/.test(id)) return this.LOUD.pickup;
     /* 搜索的各条材质按同一档对齐，碰到哪个容器都一样响 */
-    if (/^search_(zipper|lock|drawer|toolbox\d?|paper\d?|cloth|purse)$/.test(id)) return this.LOUD.search;
+    if (/^search_(zipper|lock|drawer|toolbox\d?|paper\d?|cloth|purse|rustle)$/.test(id)) return this.LOUD.search;
     /* 拉链只剩玩家背包开合用 */
     if (id === 'bag_zip') return this.LOUD.bagZip;
     /* 结算两段：阵亡一声扫弦、撤离一段吉他 */
@@ -896,6 +899,55 @@ const SFX = {
     if (!at) return null;
     const id = this.CONTAINER_SFX[at];
     return (id && this.samples[id]) ? id : null;
+  },
+
+  /* ---------------- 搜索循环底声 ----------------
+     材质音只负责"碰到容器那一下"，可逐件搜索是十几秒的持续动作 ——
+     179670 这段"在盒子里翻"的窸窣声垫在底下循环，搜完、关面板、
+     走远了自动关，只要"正在搜"这个状态消失就淡出。
+     状态由局内每帧喂进来（game-update 的搜索推进块后面一行）：
+     开始、停止、以及意外路径（死亡、撤离）都会被下一帧或 closeLoot
+     里的显式 stop 纠正，不会出现循环挂在耳边不放的情况。 */
+  _searchLoop: null,
+
+  searchLoop(active) {
+    if (!this.on || !this.ctx) return;
+    if (active && !this._searchLoop) {
+      const buf = this.samples.search_rustle;
+      if (!buf) return;                 // 素材没加载上就安静地搜，不出合成杂音
+      const c = this.ctx;
+      const s = c.createBufferSource();
+      s.buffer = buf;
+      s.loop = true;
+      /* 每次起播抖一点音高：循环一停一起，每次都一模一样就露馅 */
+      s.playbackRate.value = 0.97 + Math.random() * 0.06;
+      const g = c.createGain();
+      const base = this.gainOf.search_rustle != null ? this.gainOf.search_rustle : 0.4;
+      /* 循环是垫底的层，比一次性的材质音再压三成 —— 翻找感有了，不抢戏 */
+      g.gain.setValueAtTime(0, c.currentTime);
+      g.gain.linearRampToValueAtTime(base * 0.7, c.currentTime + 0.18);
+      s.connect(g);
+      g.connect(this.master || c.destination);
+      s.start();
+      this._searchLoop = { s, g };
+    } else if (!active && this._searchLoop) {
+      const { s, g } = this._searchLoop;
+      this._searchLoop = null;
+      const c = this.ctx;
+      let fade = 0.2;
+      try {
+        const now = c.currentTime;
+        g.gain.cancelScheduledValues(now);
+        g.gain.setValueAtTime(g.gain.value, now);
+        g.gain.linearRampToValueAtTime(0, now + fade);
+      } catch (e) {}
+      const t = setTimeout(() => {
+        try { s.stop(); } catch (e) {}
+        try { s.disconnect(); } catch (e) {}
+        try { g.disconnect(); } catch (e) {}
+      }, fade * 1000 + 80);
+      if (t && t.unref) t.unref();
+    }
   },
 
   /* 界面音：有采样播采样，没有就落回合成的一声短音 ——

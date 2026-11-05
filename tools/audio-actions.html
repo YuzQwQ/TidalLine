@@ -210,7 +210,7 @@ const GROUPS = [
       },
       {
         name: '命中反馈（打中敌人）', scope: 'raid',
-        where: 'js/entities.js:1410（Bullet.resolveHit）',
+        where: 'js/entities.js:1421（Bullet.resolveHit）',
         detail: '采样 <b>hit</b> 0.202s（660770）· 音高抖 ±3% —— 连打十几发时同一段会听成机械节拍 · ' +
           'LOUD.hit <b>0.085</b><br>' +
           '这个动作以前是合成的一声 2600Hz 高通"啪"，换成录音后金属感更具体；' +
@@ -225,7 +225,7 @@ const GROUPS = [
       },
       {
         name: '爆头', scope: 'raid',
-        where: 'js/entities.js:1410（部位 = head）',
+        where: 'js/entities.js:1421（部位 = head）',
         detail: '采样 <b>headshot</b> 0.212s（660769）· 和命中是两条独立录音，' +
           '更窄更亮，一耳朵分得出来 · LOUD.headshot <b>0.085</b>',
         sounds: ['headshot'],
@@ -298,7 +298,7 @@ const GROUPS = [
     rows: [
       {
         name: '拾取', scope: 'both',
-        where: 'js/game-panels.js:406 / :452 · js/game-update.js:304 · js/medical.js:161,189（医疗品开始/结束）· js/base.js（仓库取物）',
+        where: 'js/game-panels.js:251 / :480 / :526 · js/game-update.js:304 · js/medical.js:161,189（医疗品开始/结束）· js/base.js（仓库取物）',
         detail: '采样 <b>×4</b> 每次随机抽一条（且不重复刚播过的那条）· LOUD.pickup <b>0.06</b>',
         sounds: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
         btns: [
@@ -310,12 +310,12 @@ const GROUPS = [
       },
       {
         name: '容器搜索（一个容器一个声）', scope: 'raid',
-        where: 'js/game-update.js:477（撬开读条起手）· js/game-panels.js:14（直接打开）',
+        where: 'js/game-update.js:482（撬开读条起手）· js/game-panels.js:81（直接打开）',
         detail: '按容器 art 查 <span class="code">CONTAINER_SFX</span>，一个容器一条声：' +
           '包/旅行箱是<b>长拉链</b>、衣服是<b>布料</b>、抽屉是<b>滑轨</b>、' +
           '小保险是<b>锁舌</b>、纸/工具箱各有三种变体；没配到的落回合成音 · ' +
           'LOUD.search <b>0.055</b><br>' +
-          '<b>一次交互只响一声，不循环</b>：撬开读条一开始响，读条结束开面板不再补第二声；' +
+          '<b>材质音一次交互只响一声</b>：撬开读条一开始响，读条结束开面板不再补第二声；' +
           '拉链（bag_zip）只留给玩家自己的背包，容器不再借用',
         sounds: ['search_zipper', 'search_lock', 'search_drawer',
                  'search_toolbox', 'search_toolbox2', 'search_toolbox3',
@@ -332,8 +332,24 @@ const GROUPS = [
         ]
       },
       {
+        name: '逐件搜索（循环底声）', scope: 'raid',
+        where: 'js/game-update.js:313（每帧喂状态）· js/ui.js 的 searchLoop（循环通道）与 SEARCH_SAMPLE（响度对齐）',
+        detail: '采样 <b>search_rustle</b>（179670 在琴盒里翻找，5.22s 单声道）—— ' +
+          '<span class="code">BufferSource.loop = true</span>，淡入 0.18s / 淡出 0.20s，' +
+          '每次起播音高抖 ±3%；垫在材质音底下，响度取 LOUD.search × <b>0.7</b><br>' +
+          '<b>跟着"正在搜"这个状态走</b>：起搜即播，全部搜完、单件手动搜完或关面板即停；' +
+          '自动搜下一件是同一帧衔接的，循环不会在件与件之间断开；' +
+          '素材没加载上就安静地搜，不落合成杂音',
+        sounds: ['search_rustle'],
+        btns: [
+          { l: '开始翻', fn: () => SFX.searchLoop(true) },
+          { l: '停', ghost: true, fn: () => SFX.searchLoop(false),
+            say: '局内由搜索状态自动控制，这里只是试听' }
+        ]
+      },
+      {
         name: '背包开合', scope: 'both',
-        where: 'js/game-panels.js:481（toggleBag）· js/game.js:192（Tab 键）',
+        where: 'js/game-panels.js:555（toggleBag）· js/game.js:192（Tab 键）',
         detail: '采样 <b>bag_zip</b> · 开 1.06 / 关 0.90 —— 拉开比拉上略快，' +
           '这是个"打开了"的触感，不该盖过局内的脚步 · LOUD.bagZip <b>0.045</b><br>' +
           '<b>只有玩家自己按出来的那一下才响</b>：搜容器时搜刮面板会把背包一起带出来，' +
@@ -365,7 +381,7 @@ const GROUPS = [
       },
       {
         name: '撤离成功', scope: 'raid',
-        where: 'js/game-panels.js:713（结算面板）',
+        where: 'js/game-panels.js:908（结算面板）',
         detail: '采样 <b>extract</b>（47635 颤音吉他，2.85s）—— 一段慢慢收尾的演奏，' +
           '从撤离面板出现一直铺到玩家读完结算 · LOUD.extract <b>0.09</b><br>' +
           '素材缺失时退回原来的合成上行音，不会哑',
@@ -377,7 +393,7 @@ const GROUPS = [
       },
       {
         name: '死亡', scope: 'raid',
-        where: 'js/game-update.js:572（阵亡）· js/game-panels.js:713（结算）',
+        where: 'js/game-update.js:577（阵亡）· js/game-panels.js:908（结算）',
         detail: '采样 <b>death</b>（618532 走调的吉他扫弦，1.70s）—— 一声就收，' +
           '不拖泥带水 · LOUD.death <b>0.13</b><br>' +
           '素材缺失时退回原来的合成下沉音，不会哑',
@@ -392,21 +408,21 @@ const GROUPS = [
     rows: [
       {
         name: '点击', scope: 'both',
-        where: 'js/ui.js:926（全局事件委托，所有按钮的默认点击音）',
+        where: 'js/ui.js:986（全局事件委托，所有按钮的默认点击音）',
         detail: '采样 <b>ui_click</b> 0.068s 清脆一声 · LOUD.uiClick <b>0.05</b>',
         sounds: ['ui_click'],
         btns: [{ l: '点击', fn: () => SFX.ui('click') }]
       },
       {
         name: '悬停', scope: 'both',
-        where: 'js/ui.js:936（鼠标经过按钮，90ms 节流）',
+        where: 'js/ui.js:991（鼠标经过按钮，90ms 节流）',
         detail: '采样 <b>ui_tap</b> 0.127s 短提示 · LOUD.uiTap <b>0.028</b>（最轻的一档）',
         sounds: ['ui_tap'],
         btns: [{ l: '悬停', fn: () => SFX.ui('tap') }]
       },
       {
         name: '确认（出发 / 进入游戏）', scope: 'base',
-        where: 'index.html:1223, 1283（标签上写 data-sfx="confirm"）',
+        where: 'js/ui.js:989（读 data-sfx）· index.html 1224 / 1284（出发按钮标了 confirm）',
         detail: '采样 <b>ui_confirm</b> 0.453s 高调一句 · LOUD.uiConfirm <b>0.085</b>',
         sounds: ['ui_confirm'],
         btns: [{ l: '确认', fn: () => SFX.ui('confirm') }]
@@ -442,7 +458,7 @@ const GROUPS = [
       },
       {
         name: '出售结算', scope: 'base',
-        where: 'js/sales.js:48（出售结算，单件与批量合一）, js/base.js:1599（治疗结算）',
+        where: 'js/sales.js:52（出售结算，单件与批量合一）· js/base.js:1645（出售结算）· js/base.js:1461（治疗结算）',
         detail: '采样 <b>sell</b> 0.84s 老式收银机 —— 和拾取区分开 · LOUD.sell <b>0.07</b>',
         sounds: ['sell'],
         btns: [{ l: '出售', fn: () => SFX.play('sell') }]

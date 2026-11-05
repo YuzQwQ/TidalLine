@@ -307,6 +307,11 @@ Object.assign(Game, {
       }
     }
 
+    /* 搜索循环底声跟着"正在搜"这个状态走：起搜就起、搜完或关面板即停。
+       自动搜下一件是同一帧衔接的，循环中间不会断；手动搜完一件、
+       没有下一件在搜，这一帧就把它淡出。 */
+    if (typeof SFX !== 'undefined') SFX.searchLoop(!!(this.search && this.lootOpen));
+
     /* 面板跟随检查：走远了自动关 */
     if (this.lootOpen) {
       const d = U.dist(P.x, P.y, this.lootOpen.x, this.lootOpen.y);

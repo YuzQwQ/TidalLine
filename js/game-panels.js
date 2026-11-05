@@ -126,6 +126,9 @@ Object.assign(Game, {
     this.search = null;
     this.autoSearch = false;
     this._searchBar = null;
+    /* 搜索循环底声在这里显式停一次：死亡、撤离这些不再进 update 的路径，
+       也要保证翻找声不挂在耳边（update 里每帧喂状态只覆盖正常游玩） */
+    if (typeof SFX !== 'undefined' && SFX.searchLoop) SFX.searchLoop(false);
     document.getElementById('lootBox').style.display = 'none';
     if (this.bagWasAuto) {
       this.bagWasAuto = false;

@@ -320,6 +320,14 @@
       "site": "Freesound",
       "sid": 616757,
       "license": "TODO"
+    },
+    {
+      "id": "hank-richard-chordbox",
+      "name": "Rustle through chord box",
+      "author": "hank_richard",
+      "site": "Freesound",
+      "sid": 179670,
+      "license": "TODO"
     }
   ],
   "assets": [
@@ -1134,6 +1142,20 @@
       "rms": 0.0702,
       "bytes": 129698,
       "sha256_16": "2a02b6cf81cc5907"
+    },
+    {
+      "id": "search_rustle",
+      "file": "search_rustle.wav",
+      "from": "hank-richard-chordbox",
+      "note": "容器逐件搜索的循环翻找底声：搜索进行中持续播放，全部搜完或关面板即停",
+      "dur": 5.224,
+      "sampleRate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "peak": 0.95,
+      "rms": 0.0695,
+      "bytes": 501594,
+      "sha256_16": "a36060f680930103"
     }
   ],
   "mix": {
