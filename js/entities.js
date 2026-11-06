@@ -1249,12 +1249,15 @@ class Enemy {
       Noise.emit(this.x, this.y, CFG.NOISE.shoot * 0.8, 'shot');
       Game.sfx('enemyShot');
     } else {
-      // 近战
-      const d = U.dist(this.x, this.y, tgt.x, tgt.y);
-      if (d < this.t.range + 8) {
-        if (this.target.kind === 'player')
-          Game.player.hurt(this.t.dmg, 'body', this.penLevel, 'melee', Debuff.enemyAttack(this.t));
-        else tgt.hp -= this.t.dmg;
+      // tgt is a position snapshot, not the actor: resolve the actual melee victim.
+      const playerTarget = this.target?.kind === 'player';
+      const victim = playerTarget ? Game.player : this.target?.ref;
+      if (victim && !victim.dead && (playerTarget || victim.t.faction !== this.t.faction) &&
+          U.dist(this.x, this.y, victim.x, victim.y) < this.t.range + 8 &&
+          M.lineOfSight(M.tx(this.x), M.ty(this.y), M.tx(victim.x), M.ty(victim.y))) {
+        const meta = Debuff.enemyAttack(this.t);
+        if (playerTarget) victim.hurt(this.t.dmg, 'body', this.penLevel, 'melee', meta);
+        else victim.hurt(this.t.dmg, this.t.faction, 'body', this.penLevel, 'melee', meta);
       }
       Game.sfx('melee');
     }

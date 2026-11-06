@@ -1,0 +1,178 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "entry": "HTTP index",
+      "hits": [
+        {
+          "scav": 0,
+          "before": 60,
+          "after": 48.8,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 60,
+          "after": 46,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 0,
+          "before": 48.8,
+          "after": 37.599999999999994,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 46,
+          "after": 32,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 0,
+          "before": 37.599999999999994,
+          "after": 26.39999999999999,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 32,
+          "after": 18,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 0,
+          "before": 26.39999999999999,
+          "after": 15.19999999999999,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 18,
+          "after": 4,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 0,
+          "before": 15.19999999999999,
+          "after": 3.9999999999999893,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 4,
+          "after": 0,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 0,
+          "before": 3.9999999999999893,
+          "after": 0,
+          "part": "body",
+          "type": "melee"
+        }
+      ],
+      "playerUntouched": true,
+      "lethal": {
+        "dead": true,
+        "hp": 0,
+        "corpses": 1,
+        "gunDrop": true
+      },
+      "errors": []
+    },
+    {
+      "entry": "file:// offline",
+      "hits": [
+        {
+          "scav": 0,
+          "before": 60,
+          "after": 46,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 60,
+          "after": 46,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 0,
+          "before": 46,
+          "after": 32,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 46,
+          "after": 32,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 0,
+          "before": 32,
+          "after": 18,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 32,
+          "after": 18,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 0,
+          "before": 18,
+          "after": 4,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 18,
+          "after": 4,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 0,
+          "before": 4,
+          "after": 0,
+          "part": "body",
+          "type": "melee"
+        },
+        {
+          "scav": 1,
+          "before": 4,
+          "after": 0,
+          "part": "body",
+          "type": "melee"
+        }
+      ],
+      "playerUntouched": true,
+      "lethal": {
+        "dead": true,
+        "hp": 0,
+        "corpses": 1,
+        "gunDrop": true
+      },
+      "errors": []
+    }
+  ]
+}
