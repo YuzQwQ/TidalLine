@@ -4,8 +4,8 @@ const harness=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let p
 const c=new Function('require','__dirname',harness+'\nreturn ctx;')(require,root);
 const {Game,Save,Base,ITEMS,GEAR,EQUIP,WEAPONS,WEAPON_ALIASES}=c;
 const {Medical,formatMoney}=vm.runInContext('({Medical,formatMoney})',c);Game.init();
-const medical=[2000,5000,12000,35000,95000,2500,6000,18000,3000,6000,40000,110000,25000,65000,180000,7000,55000,150000];
-assert.equal(ITEMS.length,218);
+const medical=[2000,5000,12000,35000,95000,2500,6000,18000,3000,20000,40000,195000,25000,65000,180000,7000,55000,150000];
+assert.equal(ITEMS.length,221);
 for(const item of ITEMS){
  if(item.cat==='ammo')continue;   // 弹药价格在 AMMO_TABLE 里单独定，不跟着 economy.json 走
  if(item.cat==='medical')continue; // 医疗品的字段快照由 test-medical.js 校，这里只管价
@@ -18,7 +18,8 @@ assert.equal(ITEMS.find(i=>i.id==='odd02').price,6000000);
 for(const [type,prices]of [['helmet',[2000,6000,15000,48000,120000,350000]],['body',[3000,9000,28000,85000,220000,650000]]]){
  for(let lv=1;lv<=6;lv++){
   const g=GEAR.def(type,lv),old=spec.baseline[type==='helmet'?'helmets':'bodies'][lv-1];assert.equal(g.price,prices[lv-1]);
-  const {price,...a}=JSON.parse(JSON.stringify(g)),{price:_old,...b}=old;delete b.dr;assert.deepEqual(a,b,'防护数值不随价格变化');
+  // Repairability was introduced after the economy snapshot; validate it separately.
+  const {price,rep,...a}=JSON.parse(JSON.stringify(g)),{price:_old,rep:_oldRep,...b}=old;assert(Number.isFinite(rep)&&rep>=0&&rep<=100);delete b.dr;assert.deepEqual(a,b,'防护数值不随价格变化');
  }
 }
 /* 武器价格与各字段的权威校验在 test-arsenal（对着 design/weapons 规格表逐把核）。
@@ -54,6 +55,8 @@ assert.equal(Save.stash.find(e=>e.gear&&e.gear.equip&&e.gear.equip.kind==='gun')
 Base.open();Save.credits=100000;Save.stash=[];Save.bag=[];Save.addBag('ammo_556_1',30);Save.addBag('ammo_9mm_1',20);Save.addBag('ammo_12g_1',10);Save.addBag('heal01',3);
 assert.equal(Save.bagWeight()>0,true);assert.equal(Save.bag.length>=4,true);
 Save.credits=100000;Base.buyArmor('helmet',2);assert.equal(Save.credits,94000);assert.equal(Save.stash[0].gear.price,6000);
-Base.sell(Save.stash[0],1);assert.equal(Save.credits,97000);
-Base.buyMedical('heal01');assert.equal(Save.credits,95000);assert.equal(Save.stashCount('heal01'),1);
-console.log('OK: 140件收集品价格带 / 18件指定医疗价 / 12件防具与4枪 / 属性与稀有度不变 / 医生报价 / 新档6万 / 背包负重 / 旧余额保留 / 旧装备按新价估值且耐久余弹保留 / 实际买卖');
+const armorEntry=Save.stash[0],Sales=vm.runInContext('Sales',c);assert.equal(Sales.quote('shop',armorEntry).unit,3000);
+// The old warehouse sell entry now redirects to merchants, without granting cash.
+Base.sell(armorEntry,1);assert.equal(Save.credits,94000);assert(Save.stash.includes(armorEntry));
+Base.buyMedical('heal01');assert.equal(Save.credits,92000);assert.equal(Save.stashCount('heal01'),1);
+console.log('OK: 收集品价格带 / 医疗价 / 防具与枪械别名 / 属性与稀有度不变 / 医生报价 / 新档6万 / 背包负重 / 旧余额保留 / 旧装备按新价估值且耐久余弹保留 / 实际购买与商人出售报价');
