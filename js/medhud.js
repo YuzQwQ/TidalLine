@@ -252,6 +252,48 @@ const MedWheel = {
     return c;
   },
 
+  /* 扇区里画的是物品图，不再用「稀有度色圆 + 等级数字」占位。
+     图来自 Icons（和仓库格子同一份 48px 资源）；没加载好或确实缺图时
+     才退回简称首字，且绝不退回数字。 */
+  iconFor(item) {
+    if (typeof Icons === 'undefined' || !Icons || !Icons.get || !item) return null;
+    const img = Icons.get(item.id) || (item.iconId ? Icons.get(item.iconId) : null);
+    return img && (img.naturalWidth || img.width) ? img : null;
+  },
+
+  /* 图标底板：圆角方格对齐仓库格子，稀有度只留在细边框上；
+     像素图关掉平滑，免得 48px 图标被双线性糊成一团。 */
+  tile(c, item, x, y, size, on) {
+    const rc = RARITY[U.clamp((item.r || 1) - 1, 0, RARITY.length - 1)].color;
+    const h = size / 2, rad = Math.max(2, 5 * size / 42);
+    c.globalAlpha = on ? 1 : 0.82;
+    c.beginPath();
+    c.moveTo(x - h + rad, y - h);
+    c.lineTo(x + h - rad, y - h); c.quadraticCurveTo(x + h, y - h, x + h, y - h + rad);
+    c.lineTo(x + h, y + h - rad); c.quadraticCurveTo(x + h, y + h, x + h - rad, y + h);
+    c.lineTo(x - h + rad, y + h); c.quadraticCurveTo(x - h, y + h, x - h, y + h - rad);
+    c.lineTo(x - h, y - h + rad); c.quadraticCurveTo(x - h, y - h, x - h + rad, y - h);
+    c.closePath();
+    c.fillStyle = on ? 'rgba(20,44,37,0.95)' : 'rgba(8,14,12,0.92)';
+    c.fill();
+    c.lineWidth = on ? 2 : 1.2;
+    c.strokeStyle = on ? rc : rc + '88';
+    c.stroke();
+
+    const img = this.iconFor(item);
+    if (img) {
+      const s = size - 6, prev = c.imageSmoothingEnabled;
+      c.imageSmoothingEnabled = false;
+      try { c.drawImage(img, x - s / 2, y - s / 2, s, s); }
+      finally { c.imageSmoothingEnabled = prev; }
+    } else {
+      c.fillStyle = rc;
+      c.font = 'bold ' + Math.round(size * 0.42) + 'px "Microsoft YaHei", sans-serif';
+      c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.fillText((item.short || item.name || '·').charAt(0), x, y + 0.5);
+    }
+  },
+
   draw() {
     if (!this.open_) return;
     const c = this.sync();
@@ -289,30 +331,20 @@ const MedWheel = {
       c.strokeStyle = on ? 'rgba(150,236,208,0.95)' : 'rgba(58,88,80,0.9)';
       c.stroke();
 
-      /* 标签：稀有度圆标 → 简称 → 剩余容量/数量，整块竖排在扇区中线处 */
+      /* 标签：物品图 → 简称 → 剩余容量/次数，整块竖排在扇区中线处 */
       const lx = cx + Math.cos(mid) * rLabel;
       const ly = cy + Math.sin(mid) * rLabel;
       const it = this.sectors[i].item;
-      const rc = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)].color;
-      const br = 12 * k;
 
-      c.globalAlpha = on ? 1 : 0.72;
-      c.beginPath();
-      c.arc(lx, ly - 26 * k, br, 0, Math.PI * 2);
-      c.fillStyle = rc;
-      c.fill();
-      c.fillStyle = '#0c1412';
-      c.font = 'bold ' + Math.round(12 * k) + 'px Consolas, monospace';
-      c.textAlign = 'center';
-      c.textBaseline = 'middle';
-      c.fillText(String(it.r || 1), lx, ly - 26 * k + 0.5);
-
+      this.tile(c, it, lx, ly - 26 * k, 40 * k, on);
       c.fillStyle = on ? '#f0f7f4' : '#b8ccc4';
       c.font = Math.round(12 * k) + 'px "Microsoft YaHei", sans-serif';
-      c.fillText(it.name.length <= 6 ? it.name : (it.short || it.name), lx, ly + 1);
+      c.textAlign = 'center';
+      c.textBaseline = 'middle';
+      c.fillText(it.name.length <= 5 ? it.name : (it.short || it.name), lx, ly + 10 * k);
       c.fillStyle = on ? '#9fe4c9' : '#6f8a82';
       c.font = Math.round(10 * k) + 'px Consolas, monospace';
-      c.fillText(this.sectors[i].text, lx, ly + 17 * k);
+      c.fillText(this.sectors[i].text, lx, ly + 26 * k);
       c.globalAlpha = 1;
     }
 
@@ -329,12 +361,30 @@ const MedWheel = {
     c.fill();
     c.textAlign = 'center';
     c.textBaseline = 'middle';
-    c.fillStyle = '#dbe5e1';
-    c.font = 'bold 14px "Microsoft YaHei", sans-serif';
-    c.fillText(this.title || '医疗物品', cx, cy - 6);
-    c.fillStyle = '#6f8a82';
-    c.font = '10px "Microsoft YaHei", sans-serif';
-    c.fillText(this.sel >= 0 ? (this.confirmText || '松开 5 使用') : '移动鼠标选择', cx, cy + 13);
+    const sec = this.sel >= 0 ? this.sectors[this.sel] : null;
+    if (sec) {
+      /* 选中时中心给一张放大图，鼠标扫到哪就看清是哪一件 */
+      const img = this.iconFor(sec.item), s = 44;
+      if (img) {
+        const prev = c.imageSmoothingEnabled;
+        c.imageSmoothingEnabled = false;
+        try { c.drawImage(img, cx - s / 2, cy - 42, s, s); }
+        finally { c.imageSmoothingEnabled = prev; }
+      }
+      c.fillStyle = '#e6f2ec';
+      c.font = 'bold 12px "Microsoft YaHei", sans-serif';
+      c.fillText(sec.item.name.length <= 8 ? sec.item.name : (sec.item.short || sec.item.name), cx, cy + 16);
+      c.fillStyle = '#9fe4c9';
+      c.font = '10px "Microsoft YaHei", sans-serif';
+      c.fillText(this.confirmText || '松开 5 使用', cx, cy + 34);
+    } else {
+      c.fillStyle = '#dbe5e1';
+      c.font = 'bold 14px "Microsoft YaHei", sans-serif';
+      c.fillText(this.title || '医疗物品', cx, cy - 6);
+      c.fillStyle = '#6f8a82';
+      c.font = '10px "Microsoft YaHei", sans-serif';
+      c.fillText('移动鼠标选择', cx, cy + 13);
+    }
   }
 };
 

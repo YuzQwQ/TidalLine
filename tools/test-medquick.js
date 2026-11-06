@@ -407,6 +407,53 @@ test('背包打开时也能开轮盘、选药、用药', () => {
   Game.toggleBag();
 });
 
+test('轮盘扇区画物品图，不再画等级数字圆牌', () => {
+  raid(30, [['heal01', 1], ['heal02', 1], ['heal03', 1], ['heal04', 1], ['heal05', 1]]);
+  const Icons = vm.runInContext('Icons', c);
+  const savedMap = Icons.map;
+  /* 沙箱里没有浏览器 Image，直接塞假图进 Icons.map 即可验证绘制路径 */
+  Icons.map = Object.fromEntries(
+    ['heal01', 'heal02', 'heal03', 'heal04', 'heal05']
+      .map(id => [id, { naturalWidth: 48, naturalHeight: 48 }]));
+  const calls = { img: [], text: [] };
+  const noop = () => {};
+  const fake = {
+    setTransform: noop, clearRect: noop, fillRect: noop, beginPath: noop,
+    moveTo: noop, lineTo: noop, quadraticCurveTo: noop, closePath: noop,
+    fill: noop, stroke: noop, arc: noop, measureText: () => ({ width: 12 }),
+    fillText(t) { calls.text.push(String(t)); },
+    drawImage(...a) { calls.img.push(a); },
+    imageSmoothingEnabled: true, globalAlpha: 1, lineWidth: 1,
+    font: '', fillStyle: '', strokeStyle: '', textAlign: '', textBaseline: ''
+  };
+  const origSync = MedWheel.sync;
+  MedWheel.sync = () => fake;
+  try {
+    MedWheel.open();
+    const ids = MedWheel.sectors.map(s => s.id);
+    assert.equal(ids.length, 5);
+    /* open() 自己会画一次，这里只统计接下来这一帧 */
+    calls.img.length = 0; calls.text.length = 0;
+    MedWheel.sel = 1;
+    MedWheel.draw();
+    assert.equal(calls.img.length, ids.length + 1, '每件一张扇区图 + 中心一张预览');
+    for (const a of calls.img) assert.equal(a[0] && a[0].naturalWidth, 48, '画的是物品图不是色块');
+    assert(!calls.text.some(t => /^[1-6]$/.test(t)), '不再写稀有度等级数字');
+
+    /* 缺图时退回简称首字，仍然不回退到数字占位 */
+    Icons.map = {};
+    calls.img.length = 0; calls.text.length = 0;
+    MedWheel.draw();
+    assert.equal(calls.img.length, 0);
+    assert(!calls.text.some(t => /^[1-6]$/.test(t)), '缺图也不写等级数字');
+    assert(calls.text.includes('无'), '缺图退回简称首字（安禾无菌敷料 → 无）');
+    MedWheel.close();
+  } finally {
+    MedWheel.sync = origSync;
+    Icons.map = savedMap;
+  }
+});
+
 test('满血短按不空转：提示而不扣容量', () => {
   const P = raid(100, [['heal05', 1, 400]]);
   assert.equal(MedQuick.use(), false);
