@@ -1,6 +1,11 @@
 {
-  "passed": 6,
-  "failures": [],
+  "passed": 5,
+  "failures": [
+    {
+      "name": "equipment pools plus approved scav accuracy tuning; HP, timing, armor/ammo policy, weapon physics and every map/squad remain identical",
+      "error": "AssertionError [ERR_ASSERTION]: js/entities.js changed\n+ actual - expected\n\n+ '196e3962a5f0befc2b77e19e447f9f33865fc689d9fe972acb667afd1de319db'\n- '7d5ea5885726470438973acb68c092a4d2d66fe7a9610e2d4c9cc08a196728c4'\n\n    at D:\\develop\\project\\tide\\tools\\test-human-weapon-pools.js:34:58\n    at test (D:\\develop\\project\\tide\\tools\\test-human-weapon-pools.js:5:70)\n    at Object.<anonymous> (D:\\develop\\project\\tide\\tools\\test-human-weapon-pools.js:31:1)\n    at Module._compile (node:internal/modules/cjs/loader:1705:14)\n    at Object..js (node:internal/modules/cjs/loader:1838:10)\n    at Module.load (node:internal/modules/cjs/loader:1441:32)\n    at Function._load (node:internal/modules/cjs/loader:1263:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)"
+    }
+  ],
   "spawnsPerProfile": 6000,
   "samples": {
     "scav": {

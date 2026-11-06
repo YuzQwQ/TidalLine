@@ -40,9 +40,9 @@
         "fadeOutPause": {
           "id": "no_one_answers",
           "volume": 0,
-          "time": 45.946986
+          "time": 45.946941
         },
-        "lobbyRestoredAt": 45.946986,
+        "lobbyRestoredAt": 45.946941,
         "shopLoop": true,
         "shopPositionResume": true,
         "pauseRespected": true,
@@ -89,9 +89,9 @@
         "fadeOutPause": {
           "id": "no_one_answers",
           "volume": 0,
-          "time": 45.970121
+          "time": 45.929839
         },
-        "lobbyRestoredAt": 45.970121,
+        "lobbyRestoredAt": 45.929839,
         "shopLoop": true,
         "shopPositionResume": true,
         "pauseRespected": true,
