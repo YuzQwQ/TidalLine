@@ -868,10 +868,10 @@ Object.assign(Game, {
     c.fillStyle = 'rgba(8,14,12,0.78)';
     c.fillRect(tx0, 14, TW, TH);
 
-    const left = Math.max(0, CFG.TIDE.ROUND - this.time);
+    const left = Math.max(0, this.roundDuration() - this.time);
     const phaseName = this.rangeMode ? (M.map ? M.map.title : '靶场')
       : M.tideEnabled ? ['退潮', '平潮', '涨潮', '已满'][this.tidePhase] : '临海路 · 稳定水位';
-    c.fillStyle = this.tidePhase === 2 ? '#c98a5e' : '#9fb5ae';
+    c.fillStyle = !this.rangeMode && left <= 60 ? '#ee8877' : !this.rangeMode && left <= 300 ? '#e4b767' : this.tidePhase === 2 ? '#c98a5e' : '#9fb5ae';
     c.font = 'bold 17px monospace';
     c.textAlign = 'right';
     c.fillText(this.rangeMode ? this.fmtTime(this.time) : this.fmtTime(left), tx0 + TW - 14, 40);

@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "entry": "HTTP index",
+      "duration": 1200,
+      "warningMinutes": [
+        5,
+        3,
+        1
+      ],
+      "beeps": 3,
+      "bagOverlay": true,
+      "mobileWidths": [
+        390,
+        320
+      ],
+      "noticePersists": true,
+      "clearedAtSettlement": true,
+      "timeout": true,
+      "errors": []
+    },
+    {
+      "entry": "file offline",
+      "duration": 1200,
+      "warningMinutes": [
+        5,
+        3,
+        1
+      ],
+      "beeps": 3,
+      "bagOverlay": true,
+      "mobileWidths": [
+        390,
+        320
+      ],
+      "noticePersists": true,
+      "clearedAtSettlement": true,
+      "timeout": true,
+      "errors": []
+    }
+  ]
+}

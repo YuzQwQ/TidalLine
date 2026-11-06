@@ -207,6 +207,10 @@ const CFG = {
     PHASE: 240,             // 每阶段 4 分钟
     LEVEL: [0.0, 1.55, 3.0] // 三阶段结束时的水位
   },
+  RAID: {
+    DURATION: { 'linhai-old-quarter': 1200 },
+    WARN_REMAINING: [300, 180, 60]
+  },
 
   /* ---------- 背包 ----------
      携带容量不在这里：它取决于装的是哪个背包（data.js 的 BAGS，

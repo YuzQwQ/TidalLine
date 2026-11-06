@@ -157,6 +157,7 @@ Object.assign(Game, {
     /* 损伤状态每帧结账：流血掉血（下限 1 HP），镇痛/短期疼痛由 getter 现算到期 */
     if (typeof Debuff !== 'undefined') Debuff.tickAll(dt);
     this.updateTide();
+    if (this.state !== 'playing') return;
     /* 长按 5 的判定：keydown 只立状态，计时在这里走，够 250ms 才开轮盘 */
     if (typeof MedQuick !== 'undefined') MedQuick.tick(dt);
     AmmoQuick.tick(dt);
@@ -318,15 +319,32 @@ Object.assign(Game, {
     if (typeof Range !== 'undefined' && Range.active) Range.tick(dt);
   },
 
+  updateRaidWarnings() {
+    if (this.rangeMode || this.mapId !== 'linhai-old-quarter') return;
+    const left = this.roundDuration() - this.time;
+    if (left <= 0) return;
+    this.raidWarnings ||= new Set();
+    const crossed = CFG.RAID.WARN_REMAINING.filter(seconds => left <= seconds && !this.raidWarnings.has(seconds));
+    for (const seconds of crossed) this.raidWarnings.add(seconds);
+    if (!crossed.length) return;
+    const seconds = crossed[crossed.length - 1], minutes = seconds / 60;
+    this.raidNotice = { seconds,
+      message: '环礁湾行动播报：剩余' + minutes + '分钟，请尽快前往撤离点！' };
+    if (typeof SFX !== 'undefined' && SFX.ui) SFX.ui('notify');
+    this.renderRaidNotice();
+  },
+
   updateTide() {
     const T = CFG.TIDE;
     const t = this.time;
-    /* 靶场不计时：没有涨潮，也没有 12 分钟的强制收场 */
+    /* 靶场不计时：没有涨潮，也没有强制收场 */
     if (this.rangeMode) { this.tideLevel = M.tideLevel = 0; this.tidePhase = 0; return; }
+    const duration = this.roundDuration();
+    this.updateRaidWarnings();
     if (!M.tideEnabled) {
       this.tideLevel = M.tideLevel = 0;
       this.tidePhase = 0;
-      if (t >= T.ROUND && !this.player.dead) {
+      if (t >= duration && !this.player.dead) {
         this.state = 'ended';
         this.showEnd(false, '行动时间已结束');
       }
@@ -338,7 +356,7 @@ Object.assign(Game, {
     } else if (t < T.PHASE * 2) {
       this.tidePhase = 1;
       this.tideLevel = U.lerp(T.LEVEL[0], T.LEVEL[1], (t - T.PHASE) / T.PHASE);
-    } else if (t < T.ROUND) {
+    } else if (t < duration) {
       this.tidePhase = 2;
       this.tideLevel = U.lerp(T.LEVEL[1], T.LEVEL[2], (t - T.PHASE * 2) / T.PHASE);
     } else {
@@ -543,6 +561,9 @@ Object.assign(Game, {
     }
 
     if (it.type === 'corpse') {
+      /* 搜过的尸体只是"打开看看"，和掀开过的箱子一样不再读条；
+         只要里面还有东西就能一直开回来，摸空了才从候选表里消失。 */
+      if (it.obj.searched) { this.openLoot(it.obj, true); return; }
       this.action = { type: 'corpse', t: 0, total: 0.35, target: it.obj };
       /* 翻尸体是翻衣服口袋：和衣服容器同一段布料声，同样只响一次 */
       if (typeof SFX !== 'undefined') SFX.play('search', { at: 'corpse' });
@@ -561,9 +582,6 @@ Object.assign(Game, {
       return;
     }
     a.t += dt;
-      /* 搜过的尸体只是"打开看看"，和掀开过的箱子一样不再读条；
-         只要里面还有东西就能一直开回来，摸空了才从候选表里消失。 */
-      if (it.obj.searched) { this.openLoot(it.obj, true); return; }
 
     // 移动会打断（撤离和需要站定的容器）
     if (a.type === 'extract' || (a.type === 'search' && a.still)) {

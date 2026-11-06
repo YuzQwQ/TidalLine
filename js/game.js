@@ -337,6 +337,23 @@ const Game = {
     try { document.exitPointerLock(); } catch (e) {}
   },
 
+  roundDuration(mapId = this.mapId) { return CFG.RAID.DURATION[mapId] || CFG.TIDE.ROUND; },
+
+  clearRaidNotice() {
+    this.raidNotice = null;
+    const el = document.getElementById('raidNotice');
+    if (el) { el.hidden = true; el.textContent = ''; el.classList.remove('urgent'); }
+  },
+
+  renderRaidNotice() {
+    const el = document.getElementById('raidNotice');
+    if (!el) return;
+    const notice = this.raidNotice;
+    const hidden = !((this.state === 'playing' || this.state === 'dying') && notice);
+    if (el.hidden !== hidden) el.hidden = hidden;
+    if (!hidden) { if (el.textContent !== notice.message) el.textContent = notice.message; el.classList.toggle('urgent', notice.seconds <= 60); }
+  },
+
   bindUI() {
     document.getElementById('btnStart').onclick = () => {
       SFX.init();
@@ -426,6 +443,8 @@ const Game = {
     this.deathElapsed = 0;
     this._deathSoundPlayed = false;
     this.time = 0;
+    this.raidWarnings = new Set();
+    this.clearRaidNotice();
     this.tideLevel = 0;
     this.tidePhase = 0;
     this.enemies = [];
@@ -439,6 +458,11 @@ const Game = {
     this.action = null;
     this.lootOpen = null;
     this.extractDone = false;
+    this.interactList = [];
+    this.interactIndex = 0;
+    this.interactKey = null;
+    this._interactAnchor = null;
+    this._interactWheelAcc = 0;
     /* 新一局：快捷医疗重新按背包顺序选最靠前的那件 */
     if (typeof MedHud !== 'undefined') MedHud.reset();
     /* 局内损伤不跨局保留：清上一局残留的敌人状态与状态条 */
@@ -458,11 +482,6 @@ const Game = {
     this.player = new Player(start.x,start.y);
     this.player.hp = Save.hp;
     /* 默认从藏身处的背包里装（没传 loadout 就是这条路）；
-    this.interactList = [];
-    this.interactIndex = 0;
-    this.interactKey = null;
-    this._interactAnchor = null;
-    this._interactWheelAcc = 0;
        传了旧式 loadout（{ammo556:30,...}）的调用点按老规矩发东西，
        调试入口和测试还在用这种写法。 */
     if (loadout) {
@@ -498,6 +517,7 @@ const Game = {
 
     // 预热一帧：即使浏览器还没来得及跑 requestAnimationFrame，画面也不是黑的
     this.update(1 / 60);
+    this.renderRaidNotice();
     this.render();
   },
 
@@ -541,6 +561,7 @@ const Game = {
        结算、地图页、藏身处都要能点按钮。 */
     if (this.pointerLocked && this.state !== 'playing') this.releaseLock();
 
+    this.renderRaidNotice();
     this.render();
     if (typeof MedHud !== 'undefined') MedHud.frame();
     this.scheduleFrame();

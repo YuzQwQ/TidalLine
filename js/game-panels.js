@@ -923,6 +923,7 @@ Object.assign(Game, {
   },
 
   showEnd(success, reason) {
+    this.clearRaidNotice();
     this.action = null;
     this.closeLoot();
     /* 结算页已经算局外了，大厅音乐接着响 —— 死回来不至于一片死寂 */
