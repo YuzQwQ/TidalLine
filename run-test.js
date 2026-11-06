@@ -365,6 +365,64 @@ ok('物品堆搜空后消失', !Game.boxes.includes(pile));
 ok('搜空后自动关掉面板', Game.lootOpen === null);
 ok('格子上的引用也清掉了', M.at(pile.tx, pile.ty).box !== pile);
 
+console.log('\n=== 尸体容器反复打开 · 交互滚轮选项 ===');
+Game.startRun();
+{
+  const P = Game.player;
+  Game.input.keys = {};
+  Game.input.interactPressed = false;
+  Game.enemies = [];
+  Game.boxes = [];
+  Game.corpses = [];
+  Game.action = null;
+  Game.closeLoot();
+  const prize = ITEMS.find(i => i.id === 'life01');
+  const cp = { x: P.x, y: P.y, opened: false, searched: false, enemy: null,
+               loot: [{ item: prize, n: 1 }] };
+  Game.corpses.push(cp);
+
+  /* 同一格再放一扇开着的门：旧逻辑里「关门」会把尸体永久挡住 */
+  M.at(M.tx(P.x), M.ty(P.y)).door = { open: true };
+  const list = Game.findInteractables();
+  ok('门和尸体同时进候选表', list.some(o => o.type === 'door') && list.some(o => o.type === 'corpse'));
+  ok('尸体在未搜过时可交互', list.some(o => o.type === 'corpse' && o.obj === cp));
+
+  Game.interactKey = Game.interactKeyOf(list[0]);
+  Game.findInteractable();
+  ok('默认选中项仍是旧优先级的第一项', Game.interactIndex === 0);
+  ok('滚轮往下换一项', Game.scrollInteract(1) === true && Game.interactIndex === 1);
+  ok('滚轮往上换回来', Game.scrollInteract(-1) === true && Game.interactIndex === 0);
+  ok('滚到表头不循环', Game.scrollInteract(-1) === false && Game.interactIndex === 0);
+  Game.interactKey = Game.interactKeyOf(list[list.length - 1]);
+  ok('滚到表尾不循环', Game.scrollInteract(1) === false);
+
+  /* 滚轮选到尸体后按 E：门不再抢走这次交互 */
+  Game.interactKey = Game.interactKeyOf(list.find(o => o.type === 'corpse'));
+  Game.handleInteract();
+  ok('有门也能搜到尸体', !!Game.action && Game.action.type === 'corpse' && Game.action.target === cp);
+  for (let i = 0; i < 40; i++) Game.update(1 / 60);
+  ok('尸体首次搜完打开面板', Game.lootOpen === cp);
+  ok('尸体标记为搜过但没摸空', cp.searched === true && cp.opened === false);
+  Game.closeLoot();
+
+  const again = Game.findInteractables().find(o => o.type === 'corpse');
+  ok('关掉面板后尸体仍可交互', !!again && again.obj === cp);
+  Game.interactKey = Game.interactKeyOf(again);
+  Game.handleInteract();
+  ok('第二次打开不再读条', Game.lootOpen === cp && !Game.action);
+  Game.closeLoot();
+
+  /* 尸体的装备格不带 item，剩下枪 / 头甲时也不能被误判成空 */
+  cp.items = cp.loot = [{ gun: 'rifle' }];
+  ok('只剩枪的尸体仍算有东西', Game.containerHasItems(cp));
+  ok('只剩枪仍可交互', Game.findInteractables().some(o => o.type === 'corpse' && o.obj === cp));
+
+  cp.items = cp.loot = [null];
+  Game.syncBoxState(cp);
+  ok('摸空后 opened 才置真', cp.opened === true);
+  ok('摸空后才从候选表消失', !Game.findInteractables().some(o => o.type === 'corpse' && o.obj === cp));
+}
+
 console.log('\n=== 装备拾取 ===');
 Game.startRun();
 const PG = Game.player;

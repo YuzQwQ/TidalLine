@@ -46,6 +46,10 @@ const Game = {
      准星就是唯一的指针；后坐力把准星推远时，"鼠标"也跟着一起走。 */
   pointerLocked: false,
 
+  /* 附近可交互目标的候选表；滚轮在表里换选中的那一项。
+     interactKey 用坐标字符串记，门每帧都是新建对象，不能存引用。 */
+  interactList: [], interactIndex: 0, interactKey: null, _interactWheelAcc: 0,
+
 
   init() {
     if (this._initialized) return;
@@ -248,11 +252,37 @@ const Game = {
     window.addEventListener('mouseup', e => {
       if (e.button === 0) K.mouseDown = false;
     });
+
+    /* 交互滚轮：同一点叠了门 / 箱子 / 尸体时，用滚轮换选中的目标。
+       E 作用于当前选中项，所以门再也不会把尸体永久挡住。
+       触控板一次滑动会连发好几个 wheel，按 40px 折算一格、单次最多两格；
+       到表头 / 表尾就停住，不循环。 */
+    window.addEventListener('wheel', e => {
+      if (this.state !== 'playing' || this.lootOpen || this.bagOpen || this.action) return;
+      if (typeof Range !== 'undefined' && Range.active) return;
+      if (typeof MedWheel !== 'undefined' && MedWheel.isOpen && MedWheel.isOpen()) return;
+      if (typeof AmmoWheel !== 'undefined' && AmmoWheel.isOpen && AmmoWheel.isOpen()) return;
+      const t = e.target;
+      /* 面板 / 输入框 / 弹窗里的滚轮是它们自己的，别抢 */
+      if (t && t.closest && t.closest(
+        '#lootBox, #bagBox, #itemTip, #dealBox, dialog, input, select, textarea, [type="range"]')) return;
+      if (this.findInteractables().length < 2) { this._interactWheelAcc = 0; return; }
+      e.preventDefault();
+      let dy = e.deltaY;
+      if (e.deltaMode === 1) dy *= 16;                    // 按行滚动
+      else if (e.deltaMode === 2) dy *= CFG.VIEW_H;      // 按页滚动
+      this._interactWheelAcc = (this._interactWheelAcc || 0) + dy;
+      let steps = 0;
+      while (Math.abs(this._interactWheelAcc) >= 40 && steps < 2) {
+        const dir = this._interactWheelAcc > 0 ? 1 : -1;
+        this._interactWheelAcc -= dir * 40;
+        steps++;
+        if (!this.scrollInteract(dir)) { this._interactWheelAcc = 0; break; }
+      }
+    }, { passive: false });
+
     // Suppress only browser defaults; inventory and shop context-menu handlers still run.
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    for (const type of ['mousedown', 'mouseup', 'auxclick']) document.addEventListener(type, e => {
-      if (e.button === 3 || e.button === 4) e.preventDefault();
-    }, true);
+    document.addEventListener('contextmenu', e => e.preventDefault(), true);
 
     /* 锁定状态变了：Esc 会由浏览器强制解锁，这时候得告诉玩家点一下继续，
        否则光标回到绝对位置、准星突然跟上鼠标，看起来像"跳"了。 */
@@ -287,7 +317,6 @@ const Game = {
      这样后坐力把准星推远时，"鼠标"跟着准星一起走，玩家眼里只有一个指针；
      虚拟光标只夹在画布内，可以随意穿过玩家（贴身近战要能往身后甩枪）。 */
   wantLock() {
-    if (typeof PagePointer !== 'undefined') { PagePointer.lock(); return; }
     if (typeof document === 'undefined' || !this.canvas) return;
     if (!this.canvas.requestPointerLock) return;      // 老浏览器：退回绝对坐标
     if (document.pointerLockElement === this.canvas) return;
@@ -302,7 +331,6 @@ const Game = {
   },
 
   releaseLock() {
-    if (typeof PagePointer !== 'undefined' && PagePointer.locked) return;
     if (typeof document === 'undefined' || !document.exitPointerLock) return;
     if (!document.pointerLockElement) return;
     this._lockVoluntary = true;    // 主动放开的不提示"点画面继续"
@@ -430,6 +458,11 @@ const Game = {
     this.player = new Player(start.x,start.y);
     this.player.hp = Save.hp;
     /* 默认从藏身处的背包里装（没传 loadout 就是这条路）；
+    this.interactList = [];
+    this.interactIndex = 0;
+    this.interactKey = null;
+    this._interactAnchor = null;
+    this._interactWheelAcc = 0;
        传了旧式 loadout（{ammo556:30,...}）的调用点按老规矩发东西，
        调试入口和测试还在用这种写法。 */
     if (loadout) {

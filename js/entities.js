@@ -1461,7 +1461,8 @@ class Corpse {
     this.key = (enemy && enemy.key) || 'scav';   // 画哪种尸体
     // 倒地朝向：按 90° 取随机，避免一地尸体全都朝同一个方向
     this.rot = U.pick([0, Math.PI / 2, Math.PI, -Math.PI / 2]);
-    this.opened = false;
+    this.opened = false;           // 是否已摸空（只有空了才不再可交互）
+    this.searched = false;         // 是否已翻过（决定要不要读 0.35 秒的条）
     this.loot = [];
     this.bagLv = 0;        // 人型敌人的背包等级（1~3）；0 = 没有背包（回响体）
     this.bagName = '';

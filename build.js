@@ -31,7 +31,7 @@ const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 const JS_FILES = ['config.js', 'pixfont.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
   'common.js', 'medical.js', 'detail-art.js', 'art.js', 'durabar.js', 'slotdots.js', 'debuff.js', 'ui.js', 'music.js', 'music-player.js', 'save.js', 'base.js', 'repair.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'trader.js', 'merchant-ui.js', 'storage-config.js', 'inventory-view.js', 'storage-ui.js', 'attachment-ui.js', 'gunsmith-page.js', 'merchant-dialogue.js', 'storage-loadout.js', 'base-safe.js', 'buyback-data.js', 'sales.js', 'merchant-sales.js', 'commission-data.js', 'commissions.js', 'elena-ui.js', 'page-pointer.js', 'boot.js'];
+  'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'trader.js', 'merchant-ui.js', 'storage-config.js', 'inventory-view.js', 'storage-ui.js', 'attachment-ui.js', 'gunsmith-page.js', 'merchant-dialogue.js', 'storage-loadout.js', 'base-safe.js', 'buyback-data.js', 'sales.js', 'merchant-sales.js', 'commission-data.js', 'commissions.js', 'elena-ui.js', 'boot.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear', 'effects'];
 
 /* ---------- 1. 收集图片并转 base64 ---------- */

@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "entry": "HTTP index",
+      "noPageLock": true,
+      "nativeFirstClick": true,
+      "nativeInputAndSelect": true,
+      "blankRightClickNoOp": true,
+      "trustedBrowserMenuPrevented": true,
+      "itemContextMenuAndAction": true,
+      "eventPassThrough": true,
+      "errors": []
+    },
+    {
+      "entry": "file offline",
+      "noPageLock": true,
+      "nativeFirstClick": true,
+      "nativeInputAndSelect": true,
+      "blankRightClickNoOp": true,
+      "trustedBrowserMenuPrevented": true,
+      "itemContextMenuAndAction": true,
+      "eventPassThrough": true,
+      "errors": []
+    }
+  ]
+}

@@ -5,6 +5,35 @@
 
 Object.assign(Game, {
 
+  /* 候选表里每一项的文案。multi=true 时补上区分用的名字 / 方位，
+     只有一个候选时文案和旧版逐字一致。 */
+  interactLabel(it, multi) {
+    if (it.type === 'extract') return '[E] 撤离（6 秒，站定）';
+    if (it.type === 'box') {
+      const b = it.obj;
+      const q = CONTAINER_QUALITY[b.kind] || CONTAINER_QUALITY.plain;
+      const nm = b.name || '容器';
+      return b.searched
+        ? '[E] ' + (b.pile ? '查看 ' : '继续翻 ') + nm
+        : '[E] 打开 ' + nm + (q.time > 0 ? '（' + q.time.toFixed(1) + ' 秒' + (q.still ? '，站定' : '') + '）' : '');
+    }
+    if (it.type === 'corpse') {
+      const c = it.obj;
+      const nm = multi && c.enemy && c.enemy.t ? c.enemy.t.name + '的尸体' : '尸体';
+      return '[E] ' + (c.searched ? '继续搜 ' : '搜 ') + nm;
+    }
+    if (it.type === 'door') {
+      let dir = '';
+      if (multi) {
+        const dx = it.obj.x - M.tx(this.player.x), dy = it.obj.y - M.ty(this.player.y);
+        dir = (dy < 0 ? '北' : dy > 0 ? '南' : '') + (dx < 0 ? '西' : dx > 0 ? '东' : '') || '脚下';
+        dir = '（' + dir + '）';
+      }
+      return '[E] ' + (it.obj.t.door.open ? '关门' : '开门') + dir;
+    }
+    return '';
+  },
+
   render() {
     // 全屏仓库/选图页不提交隐藏画布，避免每帧清屏触发合成和背景模糊。
     if (this.state === 'base' || this.state === 'map-select') return;
@@ -387,14 +416,15 @@ Object.assign(Game, {
       const cpImg = Art.corpse(cp.key);
       if (cpImg) {
         c.save();
-        c.globalAlpha = cp.opened ? 0.45 : 0.9;
+        c.globalAlpha = cp.opened ? 0.45 : (cp.searched ? 0.72 : 0.9);
         c.translate(sx, sy);
         c.rotate(cp.rot || 0);
         c.drawImage(cpImg, -TS / 2, -TS / 2, TS, TS);
         c.restore();
         continue;
       }
-      c.fillStyle = cp.opened ? 'rgba(60,70,66,0.5)' : 'rgba(110,70,80,0.75)';
+      c.fillStyle = cp.opened ? 'rgba(60,70,66,0.5)'
+        : cp.searched ? 'rgba(96,66,76,0.66)' : 'rgba(110,70,80,0.75)';
       c.beginPath();
       c.ellipse(sx, sy, 9, 6, 0.5, 0, 6.29);
       c.fill();
@@ -873,34 +903,43 @@ Object.assign(Game, {
     c.fillStyle = '#4f665f';
     c.fillText('Tab 打开', CFG.VIEW_W - 26, CFG.VIEW_H - 18);
 
-    /* --- 交互提示 --- */
+    /* --- 交互提示：多个可交互目标时是一条上下滚的选项带 ---
+       选中项的位置 / 字号 / 底板和旧版完全一致；其余项上下各最多两条，
+       越靠边越小越淡。往上滚选中上面一项，刚才那项就滑到下方变小变淡。 */
     c.textAlign = 'center';
-    const it = this.findInteractable();
-    let prompt = '';
-    if (this.action) {
-      prompt = '';
-    } else if (it) {
-      if (it.type === 'extract') prompt = '[E] 撤离（6 秒，站定）';
-      else if (it.type === 'box') {
-        const b = it.obj;
-        const q = CONTAINER_QUALITY[b.kind] || CONTAINER_QUALITY.plain;
-        const nm = b.name || '容器';
-        /* 掀开过的箱子不用再撬，提示也不该再报秒数 */
-        prompt = b.searched
-          ? '[E] ' + (b.pile ? '查看 ' : '继续翻 ') + nm
-          : '[E] 打开 ' + nm + (q.time > 0 ? '（' + q.time.toFixed(1) + ' 秒' + (q.still ? '，站定' : '') + '）' : '');
+    this.findInteractable();                    // 顺带刷新候选表与当前下标
+    const opts = this.interactList || [];
+    const sel = this.interactIndex || 0;
+    if (!this.action && opts.length) {
+      const cy = CFG.VIEW_H - 102;
+      const multi = opts.length > 1;
+      if (multi) {
+        c.globalAlpha = 0.5;
+        c.fillStyle = '#8fa39b';
+        c.font = '9px "Microsoft YaHei", sans-serif';
+        c.fillText('滚轮切换 · ' + (sel + 1) + ' / ' + opts.length, CFG.VIEW_W / 2, cy - 3 * 22);
+        c.globalAlpha = 1;
       }
-      else if (it.type === 'corpse') prompt = '[E] 搜尸体';
-      else if (it.type === 'door') prompt = '[E] ' + (it.obj.t.door.open ? '关门' : '开门');
-    }
-
-    if (prompt) {
-      c.fillStyle = 'rgba(8,14,12,0.8)';
-      const w = c.measureText(prompt).width + 28;
-      c.fillRect(CFG.VIEW_W / 2 - w / 2, CFG.VIEW_H - 118, w, 24);
-      c.fillStyle = '#b9cac4';
-      c.font = '12px monospace';
-      c.fillText(prompt, CFG.VIEW_W / 2, CFG.VIEW_H - 102);
+      /* 先画远的、再画近的，选中项最后画，保证它压在最上层 */
+      for (const off of [-2, 2, -1, 1, 0]) {
+        const idx = sel + off;
+        if (idx < 0 || idx >= opts.length) continue;
+        const k = Math.abs(off);
+        const scale = 1 - k * 0.18;             // 1 / 0.82 / 0.64
+        const alpha = 1 - k * 0.34;             // 1 / 0.66 / 0.32
+        const font = Math.max(8, Math.round(12 * scale));
+        const y = cy + off * 22;
+        const label = this.interactLabel(opts[idx], multi);
+        if (!label) continue;
+        c.globalAlpha = alpha;
+        c.font = font + 'px monospace';
+        const w = c.measureText(label).width + 28 * scale;
+        c.fillStyle = 'rgba(8,14,12,0.8)';
+        c.fillRect(CFG.VIEW_W / 2 - w / 2, y - 16 * scale, w, 24 * scale);
+        c.fillStyle = off === 0 ? '#b9cac4' : '#9fb5ae';
+        c.fillText(label, CFG.VIEW_W / 2, y);
+        c.globalAlpha = 1;
+      }
     }
 
     /* --- 读条 ---

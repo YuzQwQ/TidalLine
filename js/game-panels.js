@@ -82,7 +82,12 @@ Object.assign(Game, {
     }
     this.lootOpen = obj;
     this.lootIsCorpse = !!isCorpse;
-    if (isCorpse && !obj.items) obj.items = obj.loot;
+    /* 尸体的 loot / items 是同一份数组；打开过一次就记住"翻过了"，
+       之后只是重新查看，不再读条。是否还能交互只看里面有没有东西。 */
+    if (isCorpse) {
+      if (!obj.items) obj.items = obj.loot;
+      obj.searched = true;
+    }
 
     // 第一次打开时每一件都是"未搜索"。搜过的容器再打开会记住状态。
     for (const e of (obj.items || [])) {
@@ -485,6 +490,10 @@ Object.assign(Game, {
     SFX.play('pickup');
     this.toast(msg);
     this.syncGear();                 // 穿上的东西直接写回存档
+    /* 装备格也会被拿走：尸体的枪 / 头甲拿完同样要按"是否摸空"刷新 opened，
+       否则会出现"明明还有东西却再也打不开"或"空了还一直提示"。 */
+    this.syncBoxState(this.lootOpen);
+    if (!this.lootOpen) { this.renderBag(); return true; }   // 空物品堆会连带关面板
     this.renderLootList();
     if (this.bagOpen) this.renderBag();
     return true;

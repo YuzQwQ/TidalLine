@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "types": [
+        "door",
+        "box",
+        "box",
+        "box",
+        "corpse"
+      ],
+      "maxVisible": 5,
+      "fonts": [
+        8,
+        8,
+        10,
+        10,
+        12
+      ],
+      "alphas": [
+        0.32,
+        0.32,
+        0.66,
+        0.66,
+        1
+      ],
+      "corpseReopen": true,
+      "scrollBothWays": true,
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "types": [
+        "door",
+        "box",
+        "box",
+        "box",
+        "corpse"
+      ],
+      "maxVisible": 5,
+      "fonts": [
+        8,
+        8,
+        10,
+        10,
+        12
+      ],
+      "alphas": [
+        0.32,
+        0.32,
+        0.66,
+        0.66,
+        1
+      ],
+      "corpseReopen": true,
+      "scrollBothWays": true,
+      "errors": []
+    }
+  ]
+}

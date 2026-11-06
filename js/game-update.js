@@ -36,11 +36,19 @@ Object.assign(Game, {
     return !!(b && b.items && b.items.some(e => e && e.item));
   },
 
+  /* 尸体在第一次打开前只有 loot，打开后 openLoot 把 items 指向同一个数组；
+     而且尸体的装备格是 {gear} / {gun}，不带 item —— 只按 item 判空会把
+     "还剩一把枪"的尸体误判成空，然后永久关掉。 */
+  containerHasItems(b) {
+    const arr = b && (b.items || b.loot);
+    return !!(arr && arr.some(e => e && (e.item || e.gear || e.gun)));
+  },
+
   /* 拿完一件后同步状态；返回是否还有东西 */
   syncBoxState(b) {
     if (!b) return false;
-    const has = this.boxHasItems(b);
-    b.opened = !has;
+    const has = this.containerHasItems(b);
+    b.opened = !has;                 // opened = 已清空，和"搜过没有"分开记
     if (b.pile && !has) this.removePile(b);
     return has;
   },
@@ -365,16 +373,21 @@ Object.assign(Game, {
     }
   },
 
-  /* ---------------- 交互 ---------------- */
-  findInteractable() {
+  /* ---------------- 交互 ----------------
+     附近所有能交互的东西都进候选表；同一点叠了门和尸体时，滚轮在表里换项，
+     不再让门把尸体永久挤掉。列表按距离排，门的旧优先级和撤离点的绝对优先
+     仍然保留，所以只有一个候选时行为和以前完全一样。 */
+  findInteractables() {
     const P = this.player;
-    let best = null, bd = CFG.INTERACT_RANGE;
+    if (!P) return [];
+    const out = [];
+    const range = CFG.INTERACT_RANGE;
 
     // 撤离点
     for (const ex of M.extracts) {
       const d = U.dist(P.x, P.y, M.cx(ex.x), M.cy(ex.y));
-      if (d < CFG.EXTRACT_RADIUS && d < bd + 6) {
-        return { type: 'extract', obj: ex, dist: d };
+      if (d < CFG.EXTRACT_RADIUS && d < range + 6) {
+        out.push({ type: 'extract', obj: ex, dist: d });
       }
     }
 
@@ -382,21 +395,21 @@ Object.assign(Game, {
     for (const b of this.boxes) {
       if (!this.boxHasItems(b)) continue;
       const d = U.dist(P.x, P.y, b.x, b.y);
-      if (d < bd && M.lineOfSight(M.tx(P.x), M.ty(P.y), b.tx, b.ty)) {
-        bd = d; best = { type: 'box', obj: b, dist: d };
+      if (d < range && M.lineOfSight(M.tx(P.x), M.ty(P.y), b.tx, b.ty)) {
+        out.push({ type: 'box', obj: b, dist: d });
       }
     }
 
-    // 尸体
+    // 尸体：和普通容器一样，除非里面全空，否则一直可打开
     for (const c of this.corpses) {
-      if (c.opened) continue;
+      if (!this.containerHasItems(c)) continue;
       const d = U.dist(P.x, P.y, c.x, c.y);
-      if (d < bd) { bd = d; best = { type: 'corpse', obj: c, dist: d }; }
+      if (d < range) out.push({ type: 'corpse', obj: c, dist: d });
     }
 
     // 门（独立阈值，避免被更近的容器挤掉）
     const ptx = M.tx(P.x), pty = M.ty(P.y);
-    let bestDoor = null, bdDoor = CFG.INTERACT_RANGE + 14;
+    let bestDoor = null, bdDoor = range + 14;
     for (let dy = -1; dy <= 1; dy++) {
       for (let dx = -1; dx <= 1; dx++) {
         const t = M.at(ptx + dx, pty + dy);
@@ -408,8 +421,70 @@ Object.assign(Game, {
         }
       }
     }
-    if (bestDoor && (!best || bestDoor.dist < best.dist + 10)) best = bestDoor;
-    return best;
+    if (bestDoor) out.push(bestDoor);
+
+    out.sort((a, b) => a.dist - b.dist || (a.type < b.type ? -1 : a.type > b.type ? 1 : 0));
+    /* 门沿用旧的 "比最近容器近 10px 内就优先" 规则 */
+    const di = out.findIndex(o => o.type === 'door');
+    if (di >= 0) {
+      const other = out.find(o => o.type !== 'door');
+      if (!other || out[di].dist < other.dist + 10) {
+        const [door] = out.splice(di, 1);
+        out.unshift(door);
+      }
+    }
+    /* 撤离点默认永远排第一（旧逻辑是命中即返回） */
+    const ei = out.findIndex(o => o.type === 'extract');
+    if (ei > 0) { const [ex] = out.splice(ei, 1); out.unshift(ex); }
+    return out;
+  },
+
+  /* 候选表的稳定键：obj 每帧对门是新建的，所以用坐标而不是引用 */
+  interactKeyOf(it) {
+    if (!it) return '';
+    const o = it.obj;
+    if (it.type === 'door') return 'door:' + o.x + ',' + o.y;
+    if (it.type === 'extract') return 'extract:' + o.x + ',' + o.y;
+    if (it.type === 'corpse') return 'corpse:' + o.x.toFixed(3) + ',' + o.y.toFixed(3);
+    return 'box:' + (o.id || (o.tx + ',' + o.ty));
+  },
+
+  /* 当前选中的那一项；滚轮换的就是这个下标 */
+  findInteractable() {
+    /* 走动之后候选表变了，滚轮的临时选择就作废，重新回到最近的默认项；
+       站着不动滚过的选择则一直保留，方便连着按 E。 */
+    if (this._interactAnchor && this.player &&
+        U.dist(this.player.x, this.player.y, this._interactAnchor.x, this._interactAnchor.y) > 14) {
+      this._interactAnchor = null;
+      this.interactKey = null;
+    }
+    const list = this.findInteractables();
+    this.interactList = list;
+    if (!list.length) {
+      this.interactKey = null;
+      this.interactIndex = 0;
+      return null;
+    }
+    let idx = list.findIndex(o => this.interactKeyOf(o) === this.interactKey);
+    if (idx < 0) idx = 0;             // 选中项消失（拿空了 / 走远了）就回到默认项
+    this.interactIndex = idx;
+    this.interactKey = this.interactKeyOf(list[idx]);
+    return list[idx];
+  },
+
+  /* 滚轮：dir 为 -1 往上（选上面一项），+1 往下。到头就停住，不循环。 */
+  scrollInteract(dir) {
+    const list = this.findInteractables();
+    if (list.length < 2) return false;
+    const cur = this.interactKey;
+    let idx = list.findIndex(o => this.interactKeyOf(o) === cur);
+    if (idx < 0) idx = 0;
+    const next = U.clamp(idx + (dir > 0 ? 1 : -1), 0, list.length - 1);
+    this.interactList = list;
+    this.interactIndex = next;
+    this.interactKey = this.interactKeyOf(list[next]);
+    this._interactAnchor = { x: this.player.x, y: this.player.y };
+    return next !== idx;
   },
 
   handleInteract() {
@@ -486,6 +561,9 @@ Object.assign(Game, {
       return;
     }
     a.t += dt;
+      /* 搜过的尸体只是"打开看看"，和掀开过的箱子一样不再读条；
+         只要里面还有东西就能一直开回来，摸空了才从候选表里消失。 */
+      if (it.obj.searched) { this.openLoot(it.obj, true); return; }
 
     // 移动会打断（撤离和需要站定的容器）
     if (a.type === 'extract' || (a.type === 'search' && a.still)) {
@@ -515,7 +593,10 @@ Object.assign(Game, {
         this.openLoot(a.target, false, { silent: true });
         this.stats.found++;
       } else if (a.type === 'corpse') {
-        a.target.opened = true;
+        /* searched 只记"搜过没有"，opened 留给"是否摸空"——和箱子一致。
+           旧代码在这里把 opened 写成 true，之后 findInteractable 就永远跳过这具尸体。 */
+        a.target.searched = true;
+        this.syncBoxState(a.target);
         this.openLoot(a.target, true, { silent: true });
       } else if (a.type === 'extract') {
         this.action = null;
