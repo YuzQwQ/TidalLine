@@ -248,7 +248,11 @@ const Game = {
     window.addEventListener('mouseup', e => {
       if (e.button === 0) K.mouseDown = false;
     });
-    this.canvas.addEventListener('contextmenu', e => e.preventDefault());
+    // Suppress only browser defaults; inventory and shop context-menu handlers still run.
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    for (const type of ['mousedown', 'mouseup', 'auxclick']) document.addEventListener(type, e => {
+      if (e.button === 3 || e.button === 4) e.preventDefault();
+    }, true);
 
     /* 锁定状态变了：Esc 会由浏览器强制解锁，这时候得告诉玩家点一下继续，
        否则光标回到绝对位置、准星突然跟上鼠标，看起来像"跳"了。 */
@@ -283,6 +287,7 @@ const Game = {
      这样后坐力把准星推远时，"鼠标"跟着准星一起走，玩家眼里只有一个指针；
      虚拟光标只夹在画布内，可以随意穿过玩家（贴身近战要能往身后甩枪）。 */
   wantLock() {
+    if (typeof PagePointer !== 'undefined') { PagePointer.lock(); return; }
     if (typeof document === 'undefined' || !this.canvas) return;
     if (!this.canvas.requestPointerLock) return;      // 老浏览器：退回绝对坐标
     if (document.pointerLockElement === this.canvas) return;
@@ -297,6 +302,7 @@ const Game = {
   },
 
   releaseLock() {
+    if (typeof PagePointer !== 'undefined' && PagePointer.locked) return;
     if (typeof document === 'undefined' || !document.exitPointerLock) return;
     if (!document.pointerLockElement) return;
     this._lockVoluntary = true;    // 主动放开的不提示"点画面继续"
