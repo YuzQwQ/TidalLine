@@ -19,6 +19,7 @@
       "singleCommit": true,
       "revalidateFundsAndSpace": true,
       "saveReload": true,
+      "modalClickRegression": true,
       "errors": [],
       "external": 0
     },
@@ -40,6 +41,7 @@
       "singleCommit": true,
       "revalidateFundsAndSpace": true,
       "saveReload": true,
+      "modalClickRegression": true,
       "errors": [],
       "external": 0
     }

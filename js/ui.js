@@ -28,23 +28,38 @@ const Tips = {
     box.style.maxHeight = Math.max(100, vh - top - 12) + 'px';
   },
 
-  /* 点别处 / 滚动 / 改窗口大小就收起，和装备选择窗一个脾气 */
+  /* 点别处 / 滚动 / 改窗口大小就收起，和装备选择窗一个脾气。
+     例外：任何打开的模态 <dialog>（弹药购买数量、改装结算、出售确认、诊所等）。
+     弹窗内的 mousedown 会冒泡到 document，若照常 Deal.hide()，而 Deal.hide 又挂着
+     AmmoPurchase.close()，弹窗会在 click 派发之前被移除 —— 表现就是「点哪里都关掉」。
+     这些全局监听一旦装上就不再卸载，所以是否触发取决于玩家此前有没有看过物品详情，
+     看起来像偶发 bug。scroll / resize 同理，也要给模态弹窗让路。 */
   bindClose() {
     if (this._bound) return;
     this._bound = true;
     if (typeof document === 'undefined' || !document.addEventListener) return;
+    /* 无 DOM 的测试桩里 querySelector 会返回占位对象，用 .open 再确认一次 */
+    const modalOpen = () => {
+      const d = document.querySelector('dialog[open]');
+      return !!(d && d.open);
+    };
+    const inFloating = t => t && t.closest && (
+      t.closest('#itemTip') || t.closest('#dealBox') || t.closest('dialog[open]')
+    );
     document.addEventListener('mousedown', ev => {
-      const t = ev.target;
-      if (t && t.closest && (t.closest('#itemTip') || t.closest('#dealBox'))) return;
+      if (inFloating(ev.target) || modalOpen()) return;
       this.hide();
       Deal.hide();
     });
     document.addEventListener('scroll', ev => {
-      if (ev.target?.closest?.('#itemTip, #dealBox')) return;
+      if (inFloating(ev.target) || modalOpen()) return;
       this.hide(); Deal.hide();
     }, true);
     if (typeof window !== 'undefined' && window.addEventListener) {
-      window.addEventListener('resize', () => { this.hide(); Deal.hide(); });
+      window.addEventListener('resize', () => {
+        if (modalOpen()) return;
+        this.hide(); Deal.hide();
+      });
     }
   },
 
