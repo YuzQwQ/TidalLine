@@ -31,8 +31,7 @@ test('五档背包的容量与稀有度单调递增', () => {
     assert.ok(BAGS[i].slots > BAGS[i - 1].slots, '容量要递增');
     assert.equal(BAGS[i].r, i + 1, '稀有度按白绿蓝紫金');
   }
-  assert.equal(BAGS[0].slots, 8);
-  assert.equal(BAGS[4].slots, 24);
+  assert.deepEqual(Array.from(BAGS,b=>b.slots),[14,18,22,26,30]);
   assert.equal(BASE_BAG_SLOTS, 6);
 });
 
@@ -44,9 +43,9 @@ test('未装备背包时容量是基础 6 格', () => {
 test('装备后的容量就是背包容量，不叠加基础格', () => {
   fresh();
   Save.gear.back = BACKPACK.make('bag03');
-  assert.equal(bagSlots(), 16, '不是 6 + 16');
+  assert.equal(bagSlots(), 22, '不是 6 + 22');
   Save.gear.back = BACKPACK.make('bag05');
-  assert.equal(bagSlots(), 24);
+  assert.equal(bagSlots(), 30);
 });
 
 /* ---------- 2. 伪物品与价格 ---------- */
@@ -54,7 +53,7 @@ test('EQUIP.bag 生成的伪物品字段齐全', () => {
   const it = EQUIP.bag('bag04');
   assert.equal(it.id, 'g_bag04');
   assert.equal(it.equip.kind, 'bag');
-  assert.equal(it.equip.slots, 20);
+  assert.equal(it.equip.slots, 26);
   assert.equal(it.name, '战术突击背包');
   assert.equal(it.stack, 1);
   assert.equal(it.sell, Math.floor(110000 * 0.5), '回收价是半价');
@@ -64,35 +63,35 @@ test('EQUIP.bag 生成的伪物品字段齐全', () => {
 /* ---------- 3. 更换规则 ---------- */
 test('从仓库装上一个更大的背包：成功，旧的回仓库', () => {
   fresh();
-  Save.gear.back = BACKPACK.make('bag01');           // 8 格
-  Save.addGearStash(EQUIP.bag('bag04'));             // 仓库里有个 20 格的
+  Save.gear.back = BACKPACK.make('bag01');           // 14 格
+  Save.addGearStash(EQUIP.bag('bag04'));             // 仓库里有个 26 格的
   const entry = Save.stash.find(e => e.gear && e.gear.equip.kind === 'bag');
   assert.ok(Base.equipFromStash(entry, 'back'));
-  assert.equal(Save.gear.back.slots, 20);
+  assert.equal(Save.gear.back.slots, 26);
   const left = Save.stash.filter(e => e.gear && e.gear.equip.kind === 'bag');
   assert.equal(left.length, 1, '换下来的旧包回到仓库');
-  assert.equal(left[0].gear.equip.slots, 8);
+  assert.equal(left[0].gear.equip.slots, 14);
 });
 
 test('身上东西超过新容量时，禁止换更小的背包', () => {
   fresh();
-  Save.gear.back = BACKPACK.make('bag04');           // 20 格
-  for (let i = 0; i < 10; i++) Save.bag.push({ id: 'life01', n: 1 });
-  Save.addGearStash(EQUIP.bag('bag01'));             // 想换成 8 格
+  Save.gear.back = BACKPACK.make('bag04');           // 26 格
+  for (let i = 0; i < 15; i++) Save.bag.push({ id: 'life01', n: 1 });
+  Save.addGearStash(EQUIP.bag('bag01'));             // 想换成 14 格
   const entry = Save.stash.find(e => e.gear && e.gear.equip.kind === 'bag');
   assert.equal(Base.equipFromStash(entry, 'back'), false, '被拦下，不换');
-  assert.equal(Save.gear.back.slots, 20, '槽位保持原样');
+  assert.equal(Save.gear.back.slots, 26, '槽位保持原样');
   assert.equal(Save.stash.length, 1, '仓库那件没被动');
 });
 
 test('东西正好等于新容量时可以换', () => {
   fresh();
   Save.gear.back = BACKPACK.make('bag04');
-  for (let i = 0; i < 8; i++) Save.bag.push({ id: 'life01', n: 1 });
-  Save.addGearStash(EQUIP.bag('bag01'));             // 8 格，刚好装下
+  for (let i = 0; i < 14; i++) Save.bag.push({ id: 'life01', n: 1 });
+  Save.addGearStash(EQUIP.bag('bag01'));             // 14 格，刚好装下
   const entry = Save.stash.find(e => e.gear && e.gear.equip.kind === 'bag');
   Base.equipFromStash(entry, 'back');
-  assert.equal(Save.gear.back.slots, 8);
+  assert.equal(Save.gear.back.slots, 14);
 });
 
 /* ---------- 4. 卸下 ---------- */
@@ -112,7 +111,7 @@ test('卸下背包：东西超过基础格数时拒绝', () => {
   for (let i = 0; i < 7; i++) Save.bag.push({ id: 'life01', n: 1 });
   Base.unequip('back');
   assert.ok(Save.gear.back, '还在身上');
-  assert.equal(Save.gear.back.slots, 12);
+  assert.equal(Save.gear.back.slots, 18);
 });
 
 /* ---------- 5. 不套娃 ---------- */
@@ -149,13 +148,30 @@ test('存档往返保留背包槽', () => {
   Save.load();
   assert.ok(Save.gear.back, '读回来还在');
   assert.equal(Save.gear.back.id, 'bag04');
-  assert.equal(Save.gear.back.slots, 20);
+  assert.equal(Save.gear.back.slots, 26);
 });
 
 test('老存档没有背包槽时回落到基础容量', () => {
   fresh();
   Save.gear.back = null;
   assert.equal(bagSlots(), 6);
+});
+
+test('旧容量存档按型号扩容，仓库背包同步更新，物品和余额保留', () => {
+  for(const d of BAGS){
+    fresh();Save.gear.back=BACKPACK.make(d.id);Save.addGearStash(EQUIP.bag(d.id));
+    const oldSlots=d.slots-6;Save.bag=Array.from({length:oldSlots},()=>({id:'life01',n:1}));
+    Save.save();Save.flush();const raw=JSON.parse(c.localStorage.getItem(Save.key));
+    raw.gear.back.slots=oldSlots;raw.stash[0].gear.equip.slots=oldSlots;
+    c.localStorage.setItem(Save.key,JSON.stringify(raw));Save.load();
+    assert.equal(bagSlots(),oldSlots+6);assert.equal(Save.gear.back.id,d.id);
+    assert.equal(Save.stash[0].gear.equip.slots,d.slots);assert.equal(Save.bag.length,oldSlots);
+    assert.equal(Save.credits,10000000);assert.equal(Save.stash.length,1);
+    assert(Save.addBag('heal01',6));assert.equal(Save.bag.length,d.slots);
+    Save.addStash('heal01',1);const extra=Save.stash.find(e=>e.id==='heal01');Base.toBag(extra);
+    assert.equal(Save.bag.length,d.slots,'新增六格用满后仍正确拦截超容');assert(Save.stash.includes(extra));
+    Save.save();Save.flush();Save.load();assert.equal(Save.bag.length,d.slots);
+  }
 });
 
 /* ---------- 8. 商人供货 ---------- */
@@ -186,10 +202,10 @@ test('局内携带容量跟着装备走，且不因拾取而变', () => {
   fresh();
   Save.gear.back = BACKPACK.make('bag02');
   Game.startRun(null, 'linhai-old-quarter');
-  assert.equal(bagSlots(), 12);
+  assert.equal(bagSlots(), 18);
   assert.equal(Game.player.bag.slots.length, 0);
   const before = bagSlots();
-  Game.player.bag.add(EQUIP.bag('bag05'), 1);        // 想塞个 24 格的进去
+  Game.player.bag.add(EQUIP.bag('bag05'), 1);        // 想塞个 30 格的进去
   assert.equal(bagSlots(), before, '塞不进去，容量不变');
 });
 

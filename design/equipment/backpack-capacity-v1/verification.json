@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "entry": "HTTP index",
+      "counts": [
+        {
+          "id": "bag01",
+          "slots": 14,
+          "baseCells": 14
+        },
+        {
+          "id": "bag02",
+          "slots": 18,
+          "baseCells": 18
+        },
+        {
+          "id": "bag03",
+          "slots": 22,
+          "baseCells": 22
+        },
+        {
+          "id": "bag04",
+          "slots": 26,
+          "baseCells": 26
+        },
+        {
+          "id": "bag05",
+          "slots": 30,
+          "baseCells": 30
+        }
+      ],
+      "mobileWidths": [
+        390,
+        320
+      ],
+      "raidCells": 30,
+      "errors": []
+    },
+    {
+      "entry": "file offline",
+      "counts": [
+        {
+          "id": "bag01",
+          "slots": 14,
+          "baseCells": 14
+        },
+        {
+          "id": "bag02",
+          "slots": 18,
+          "baseCells": 18
+        },
+        {
+          "id": "bag03",
+          "slots": 22,
+          "baseCells": 22
+        },
+        {
+          "id": "bag04",
+          "slots": 26,
+          "baseCells": 26
+        },
+        {
+          "id": "bag05",
+          "slots": 30,
+          "baseCells": 30
+        }
+      ],
+      "mobileWidths": [
+        390,
+        320
+      ],
+      "raidCells": 30,
+      "errors": []
+    }
+  ]
+}

@@ -2501,15 +2501,15 @@ ART.gear=[...new Set([...ART.gear,...ARMOR_VARIANTS.map(d=>d.id)])];
 const BASE_BAG_SLOTS = 6;
 
 const BAGS = [
-  { id: 'bag01', name: '旧帆布挎包',   short: '挎包',  r: 1, slots: 8,  w: 0.7, price: 6000,
+  { id: 'bag01', name: '旧帆布挎包',   short: '挎包',  r: 1, slots: 14, w: 0.7, price: 6000,
     desc: '翻盖、金属搭扣，肩带磨得发亮。装不下一趟完整的搜刮，但比口袋强。' },
-  { id: 'bag02', name: '民用旅行背包', short: '旅行包', r: 2, slots: 12, w: 1.2, price: 18000,
+  { id: 'bag02', name: '民用旅行背包', short: '旅行包', r: 2, slots: 18, w: 1.2, price: 18000,
     desc: '双肩、分层、拉链没坏。灾前它代表“出门几天”，现在只代表“最好真能带点东西回来”。' },
-  { id: 'bag03', name: '加固登山背包', short: '登山包', r: 3, slots: 16, w: 1.9, price: 45000,
+  { id: 'bag03', name: '加固登山背包', short: '登山包', r: 3, slots: 22, w: 1.9, price: 45000,
     desc: '高包体、顶盖、侧袋和束带。它认真考虑过“背着东西走很远会不会累死”。' },
-  { id: 'bag04', name: '战术突击背包', short: '突击包', r: 4, slots: 20, w: 2.8, price: 110000,
+  { id: 'bag04', name: '战术突击背包', short: '突击包', r: 4, slots: 26, w: 2.8, price: 110000,
     desc: '满身织带和压缩结构，跑起来不会摇得东倒西歪。多装两盒弹，或者一件能改变下周计划的东西。' },
-  { id: 'bag05', name: '远征模块背包', short: '远征包', r: 5, slots: 24, w: 3.8, price: 260000,
+  { id: 'bag05', name: '远征模块背包', short: '远征包', r: 5, slots: 30, w: 3.8, price: 260000,
     desc: '外挂仓、压缩带、金属支撑。宣传语说它“能陪你去地图边缘之外”——现在这句话不太好笑了。' }
 ];
 
