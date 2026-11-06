@@ -188,8 +188,10 @@ game-render.js  →  renderDamageText：画在雾之后、HUD 之前
   开箱 0 / 0.6 / 1.2 / 1.8 / 2.6 / 3.6 秒，后两档必须站定且全程发声；每箱抽 1–2 或 2–3 件，秘藏固定 3 件。
   25 种容器（每档 3–5 种）用 `cats` 声明类别偏好，强度由 CFG.LOOT.catPref 统一控制（当前 ×9）；
   同品质的稀有度曲线完全一致，偏好只改"出哪一类"。六条曲线见 design/items/CONTAINER_QUALITY.md
-- 218 件物品分为 170 件收集品和 48 件物资（30 种弹药 + 18 件医疗品）；收集品九类，六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 31 件，见 design/items/LIFE_COLLECTIBLES.md；电子产品 17 件，见 design/items/ELECTRONICS.md；工业器材 17 件，见 design/items/INDUSTRIAL.md；医疗收集品 14 件，见 design/items/MEDICAL_COLLECTIBLES.md；文物藏品 22 件，见 design/items/COLLECTIBLES.md；军事收集品 17 件，见 design/items/MILITARY_COLLECTIBLES.md；情报收集品 17 件，见 design/items/INTEL_COLLECTIBLES.md；神秘学物品 17 件，见 design/items/OCCULT_COLLECTIBLES.md；异常遗物 14 件，见 design/items/ODD_COLLECTIBLES.md；
+- 221 件物品分为 170 件收集品和 51 件物资（30 种弹药 + 21 件医疗品）；收集品九类，六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 31 件，见 design/items/LIFE_COLLECTIBLES.md；电子产品 17 件，见 design/items/ELECTRONICS.md；工业器材 17 件，见 design/items/INDUSTRIAL.md；医疗收集品 14 件，见 design/items/MEDICAL_COLLECTIBLES.md；文物藏品 22 件，见 design/items/COLLECTIBLES.md；军事收集品 17 件，见 design/items/MILITARY_COLLECTIBLES.md；情报收集品 17 件，见 design/items/INTEL_COLLECTIBLES.md；神秘学物品 17 件，见 design/items/OCCULT_COLLECTIBLES.md；异常遗物 14 件，见 design/items/ODD_COLLECTIBLES.md；
   逐条数值（编号 / 类别 / 名称 / 稀有度 / 重量 / 价值 / 简称 / 描述 / 画什么）见 design/items/ITEM_INDEX.md，由 `node tools/gen-item-index.js` 从 ITEMS 生成
+- 手术包拆成绿 / 蓝 / 紫 / 金四档（12 / 8 / 5 / 3 秒每层，2 / 4 / 6 / 8 次，紫金术后带 30 / 90 秒镇痛），
+  绿蓝进医生货架、紫金靠探索；夹板改为 3 次 / ¥20,000。见 [手术包重构](design/items/SURGERY_V1.md)。
 - 异常遗物补到 14 件（不含 4 件彩蛋）：新增 `odd04`–`odd12` 九件，覆盖寻常到珍罕五档，
   解决"这一类只有紫/红、偏好它的容器抽低档只能回落"的问题。见 [异常遗物补充](design/items/ODD_COLLECTIBLES.md)。
   同日两件红档样本让号（逆流沙漏 `odd04→odd17`、瓶中风暴 `odd05→odd18`），存档版本从 `v3` 升到 `v4`：
@@ -1452,7 +1454,7 @@ node tools/audio-slice.js <输入> <输出> <起> <止> [--trim=0.05] [--rms=0.1
 | `js/game-update.js` | 516 | 每帧逻辑：`update` / `updateTide` / `updateCamera`、交互判定、容器与遗落堆、击杀与死亡、撤离 |
 | `js/game-render.js` | 818 | 绘制：地形、抬升墙、物件、树冠、实体、粒子、噪声边、HUD |
 | `js/game-panels.js` | 800 | 面板：搜刮列表、背包、装备面板、弹药选择、结算两页 |
-| `js/medhud.js` | 467 | 医疗 HUD：轮盘、快捷栏、顶层进度条 |
+| `js/medhud.js` | 581 | 医疗 HUD：轮盘、快捷栏、顶层进度条 |
 | `js/boot.js` | 69 | 启动：读存档、加载贴图、按 URL hash 进藏身处 / 直接开局 |
 
 全是普通 classic script，**顶层 `const` 跨文件共享**，没有 IIFE 也没有打包器 —— 双击 `file://` 直接能玩是硬约束，别为了模块化引入构建步骤。
@@ -1590,7 +1592,7 @@ node run-test.js     # mock 浏览器环境跑完整游戏流程和动画状态�
 | 模块 | 干什么 |
 |---|---|
 | `MedQuick` | `5` 键的按下/松开状态机：按住 <250ms 是短按（直接用当前药），≥250ms 开轮盘；记住的是物品 **id**，不是格子或实例 |
-| `MedWheel` | 圆形轮盘：按背包顺序分种类，同 id 合并一个扇区，首扇区中心朝正上方顺时针均分；命中只看「圆心→鼠标」的方向不看距离，半径 30px 内是死区 |
+| `MedWheel` | 圆形轮盘：按背包顺序分种类，同 id 合并一个扇区，首扇区中心朝正上方顺时针均分；命中只看「圆心→鼠标」的方向不看距离，半径 30px 内是死区。扇区里直接画 `Icons.get(item.id)` 的 48px 物品图（稀有度只留一圈细边框），选中时中心再放大一张预览；缺图退回简称首字，不再用等级数字圆牌 |
 | `MedBar` | 屏幕下方快捷栏：`[5] 图标 ×5 / 320/400`，药名和数字每帧现取自 `Medical.entryCap` |
 | `HealHud` | 治疗进度条，独立顶层 DOM（z70）。启动橙、持续绿，两行：阶段+实时 HP / 进度条 |
 
