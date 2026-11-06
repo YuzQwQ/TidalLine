@@ -89,7 +89,8 @@ const Medical = {
     }
     if (kind === 'surgery') {
       if (!Debuff.surgeryAvailable(P)) return '无适用损伤';
-      return '进行手术（' + (P.debuffs.severe > 0 ? '治 1 层重伤' : '解骨折') + '）';
+      return '进行手术（' + (P.debuffs.severe > 0 ? '治 1 层重伤' : '解骨折') + '）' +
+        (item.effect.analgesic ? ' · 术后镇痛 ' + item.effect.analgesic + ' 秒' : '');
     }
     return '使用';
   },
@@ -117,7 +118,8 @@ const Medical = {
       (item.healCap >= CFG.DEBUFF.BLEED.HEAL_CAP_COST ? ' · 流血时先消耗' + CFG.DEBUFF.BLEED.HEAL_CAP_COST + '容量止血' : ' · 容量不足以止血');
     if (kind === 'analgesic') return '镇痛 ' + e.duration + ' 秒 · 读条 ' + e.useTime + ' 秒 · ' + e.uses + ' 次';
     if (kind === 'cure') return (e.cures === 'bleeding' ? '解除流血' : '固定骨折') + ' · 读条 ' + e.useTime + ' 秒 · ' + e.uses + ' 次';
-    if (kind === 'surgery') return '手术（重伤 -1 层 / 解骨折）· 读条 ' + e.useTime + ' 秒 · ' + e.uses + ' 次';
+    if (kind === 'surgery') return '手术（重伤 -1 层 / 解骨折）· 读条 ' + e.useTime + ' 秒 · ' + e.uses + ' 次' +
+      (e.analgesic ? ' · 术后镇痛 ' + e.analgesic + ' 秒' : '');
     return '效果待开放';
   },
 
@@ -314,6 +316,11 @@ const Medical = {
         const done = Debuff.surgery(P);         // 二选一，不回血
         msg = done === 'severe' ? '手术完成 · 重伤 -1 层（可恢复上限 +15%）'
             : done === 'fracture' ? '手术完成 · 骨折已处理' : '';
+        /* 紫 / 金两档术后自带镇痛：治疗成功才算数，被打断或被取消不发放。 */
+        if (done && e.analgesic) {
+          Debuff.applyAnalgesic(P, e.analgesic);
+          msg += ' · 镇痛 ' + e.analgesic + ' 秒';
+        }
       }
       unit.cap = Math.max(0, this.entryCap(unit) - 1);
       const emptied = this.entryCap(unit) <= 1e-6;

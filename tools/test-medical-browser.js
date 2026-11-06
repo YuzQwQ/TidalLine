@@ -18,7 +18,7 @@ const pendingArt=new Set(require('../design/items/classification.json').items.fi
    await page.waitForFunction(()=>Game.state==='base'&&Icons.get('heal01')&&Object.keys(Icons.map).length===ITEMS.length);
    assert(await page.evaluate(()=>Save.hp===1&&Save.stashCount('heal01')===5&&!Save.stash.some(e=>e.id==='med01')));
    await page.locator('.sh-top [data-sh="traders"]').click();await page.locator('[data-mb-open="doctor"]').click();
-   assert.equal(await page.locator('#shopGrid [data-medical]').count(),10);assert.equal(await page.locator('#shopGrid .pending-mark').count(),2,'六件损伤处理品已开放，货架只剩 2 件待开放');
+   assert.equal(await page.locator('#shopGrid [data-medical]').count(),12,'绿蓝两档手术包上架后医生共 12 件');assert.equal(await page.locator('#shopGrid .pending-mark').count(),2,'九件损伤处理品已开放，货架只剩 2 件待开放');
    assert((await page.locator('#doctorService').innerText()).includes('¥12,500'));
    await page.locator('[data-medical="heal02"]').click();await page.locator('[data-mb-confirm]').click();await page.locator('#dealBox [data-a="go"]').click();
    assert(await page.evaluate(()=>Save.stashCount('heal02')===2&&Save.credits===195000));
@@ -73,7 +73,7 @@ const pendingArt=new Set(require('../design/items/classification.json').items.fi
    await page.waitForFunction(()=>Math.round(Game.player.hp)===80&&!Game.action);assert(await page.evaluate(()=>Game.player.bag.slots.filter(e=>e.item.id==='heal01').reduce((n,e)=>n+e.n,0)===1));
    await page.reload();await page.waitForFunction(()=>Game.state==='base');assert(await page.evaluate(()=>Math.round(Save.hp)===80),'刷新保留治疗后HP');
    assert.deepEqual(errors,[]);await context.close();
-   console.log('OK: '+entry+' 医生10件/2件预留、实际购买/治疗/防重复、库存使用、医疗携带、局内读条与移动/Esc取消、关闭背包继续、刷新、320/390px');
+   console.log('OK: '+entry+' 医生12件/2件预留、实际购买/治疗/防重复、库存使用、医疗携带、局内读条与移动/Esc取消、关闭背包继续、刷新、320/390px');
   }
   const page=await browser.newPage({viewport:{width:390,height:844}});
   for(const entry of ['wiki.html','物品清单.html']){

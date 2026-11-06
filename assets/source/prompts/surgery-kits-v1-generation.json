@@ -1,0 +1,59 @@
+{
+  "batch": "手术包三档立绘 V1.0",
+  "date": "2026-11-06",
+  "mode": "built-in image_gen",
+  "styleReference": "assets/source/archive/surgery-kits-v1/reference.png",
+  "delivery": {
+    "detailCanvas": [
+      1536,
+      1536
+    ],
+    "subjectMax": [
+      1268,
+      1268
+    ],
+    "subjectRatio": 0.8255,
+    "iconCanvas": [
+      48,
+      48
+    ],
+    "iconSubjectMax": [
+      40,
+      40
+    ],
+    "iconTransparentMargin": 4,
+    "iconResize": "lanczos3",
+    "iconPaletteColours": 64,
+    "iconAlpha": "binary"
+  },
+  "note": "统一向上开盖、向下锁扣、右侧面可见。生成原图完整存档；详情立绘仅按透明边界裁切、统一缩放与透明留边。保留用户医疗重构的数值和功能，仅替换三件占位图及登记图片。",
+  "items": [
+    {
+      "id": "heal19",
+      "name": "简易手术包",
+      "prompt": "Use case: stylized-concept. Asset: a SINGLE transparent medical item illustration for Chinese 2D survival game 潮汐线, with a readable 48x48 inventory derivative. Reference sheet is STYLE ONLY, not edit target: match restrained realistic painted game prop materials, clean silhouette, subtle fine pixel-art texture, muted 1990s materials. Keep detail readable as a large inspection illustration. Subject: A 1990s simple civilian outdoor surgery kit. A worn OLIVE GREEN CANVAS medical pouch, square soft flexible fabric body, COMPLETELY OPEN with folded-back fabric flap toward top. Coarse weave, worn edges, visible seams. Inside: several rolled white sterile gauze bandages, ONE simple steel surgical scissors, hemostat forceps, needle and thread card, tiny disinfectant bottle. Supplies tightly crowded but recognizable. Inexpensive practical civilian first-aid equipment, humble fabric construction visibly different from a hard case. No military hard shell, no decorative emblems. UNIFIED CAMERA REQUIRED: square canvas, centered object fills 80–85% of canvas, exactly same 45-degree overhead three-quarter camera for the series, view from FRONT and slightly RIGHT: front face faces LOWER edge, right side face visible, lid hinges at FAR edge, open lid stands toward TOP of image, latches toward BOTTOM; never mirrored, no leftward or rightward side-opening lid. Fully show all contents and silhouette, soft upper-left ambient lighting. Genuinely transparent background, no floor, scene, external drop shadow, person, text, labels, lettering, watermark, colored rarity panel, rarity border, aura, modern touchscreen or sci-fi machinery.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-b23d07a2-ed86-4e62-9b50-e751bd1f64eb.png",
+      "source": "assets/item-art/surgery-kits-v1/sources/heal19.png",
+      "generatedArchive": "assets/source/archive/surgery-kits-v1/generated/heal19.png",
+      "output": "assets/items/heal19.png"
+    },
+    {
+      "id": "heal20",
+      "name": "野战手术包",
+      "prompt": "Use case: stylized-concept. Asset: a SINGLE transparent medical item illustration for Chinese 2D survival game 潮汐线, with a readable 48x48 inventory derivative. Reference sheet is STYLE ONLY, not edit target: match restrained realistic painted game prop materials, clean silhouette, subtle fine pixel-art texture, muted 1990s materials. Keep detail readable as a large inspection illustration. Subject: A 1990s military standard FIELD SURGERY CASE, compact DEEP BLUE-GRAY hard polymer case. Reinforced metal corners, folding carry handle, mechanical latch pair. Lid OPEN backward to top. Inside black foam partitioned trays neatly hold several stainless steel surgical tools, separate wrapped suture tools, syringe, hemostat forceps, disinfectant and sealed gauze. Sturdy standardized mass-produced military medical equipment, slight use wear. Box is compact almost square, NOT long flat luxury aluminum case. Predominantly blue-gray polymer, no red or green exterior. UNIFIED CAMERA REQUIRED: square canvas, centered object fills 80–85% of canvas, exactly same 45-degree overhead three-quarter camera for the series, view from FRONT and slightly RIGHT: front face faces LOWER edge, right side face visible, lid hinges at FAR edge, open lid stands toward TOP of image, latches toward BOTTOM; never mirrored, no leftward or rightward side-opening lid. Fully show all contents and silhouette, soft upper-left ambient lighting. Genuinely transparent background, no floor, scene, external drop shadow, person, text, labels, lettering, watermark, colored rarity panel, rarity border, aura, modern touchscreen or sci-fi machinery.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-7197d944-6f87-4b6f-82f4-1411196d725c.png",
+      "source": "assets/item-art/surgery-kits-v1/sources/heal20.png",
+      "generatedArchive": "assets/source/archive/surgery-kits-v1/generated/heal20.png",
+      "output": "assets/items/heal20.png"
+    },
+    {
+      "id": "heal21",
+      "name": "专业手术包",
+      "prompt": "Use case: stylized-concept. Asset: a SINGLE transparent medical item illustration for Chinese 2D survival game 潮汐线, with a readable 48x48 inventory derivative. Reference sheet is STYLE ONLY, not edit target: match restrained realistic painted game prop materials, clean silhouette, subtle fine pixel-art texture, muted 1990s materials. Keep detail readable as a large inspection illustration. Subject: A 1990s high-end professional portable surgery kit. DEEP GRAPHITE GRAY precision anodized ALUMINUM instrument case with visibly FLAT WIDE RECTANGULAR shape, refined metal corner guards, double latches and reinforced handle. Completely OPEN lid backward to top. Deep PURPLE-GRAY high-density cushioning lining. Many precisely arranged groups of polished stainless surgery tools and specialized suturing instruments, sterile individually wrapped consumables, transparent glass medicine ampoules, compact rapid hemostasis components. Rich contents but rigorous organized layout. Premium precision metal equipment in good condition with tiny wear. Make wide flat metallic case clearly distinct from smaller blue-gray polymer field case. No touchscreen, no science fiction. UNIFIED CAMERA REQUIRED: square canvas, centered object fills 80–85% of canvas, exactly same 45-degree overhead three-quarter camera for the series, view from FRONT and slightly RIGHT: front face faces LOWER edge, right side face visible, lid hinges at FAR edge, open lid stands toward TOP of image, latches toward BOTTOM; never mirrored, no leftward or rightward side-opening lid. Fully show all contents and silhouette, soft upper-left ambient lighting. Genuinely transparent background, no floor, scene, external drop shadow, person, text, labels, lettering, watermark, colored rarity panel, rarity border, aura, modern touchscreen or sci-fi machinery.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-1373ebba-c037-4d67-b516-36680bce7403.png",
+      "source": "assets/item-art/surgery-kits-v1/sources/heal21.png",
+      "generatedArchive": "assets/source/archive/surgery-kits-v1/generated/heal21.png",
+      "output": "assets/items/heal21.png"
+    }
+  ]
+}

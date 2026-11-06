@@ -260,6 +260,28 @@ test('夹板解骨折；手术包有重伤时优先治重伤',()=>{
   assert.equal(P.debuffs.fracture,true,'还有重伤时手术不碰骨折');
   assert.equal(kit.cap,1,'一件手术包用掉一次');
 });
+test('四档手术包梯度与术后镇痛',()=>{
+  const spec=[['heal19',12,2,0],['heal20',8,4,0],['heal21',5,6,30],['heal12',3,8,90]];
+  for(const [id,useTime,uses,analgesic] of spec){
+    const it=ITEM_BY_ID[id];
+    assert(it&&it.effect&&it.effect.kind==='surgery',id+' 必须是手术包');
+    assert.equal(it.effect.useTime,useTime,id+' 读条');
+    assert.equal(it.effect.uses,uses,id+' 次数');
+    assert.equal(it.effect.analgesic||0,analgesic,id+' 术后镇痛');
+  }
+  const P=fresh();P.debuffs.severe=2;
+  const kit=bag('heal21',6);
+  assert(Medical.canUse(ITEM_BY_ID.heal21,'bag',P.hp));
+  assert(Medical.use(kit,'bag'));finishAction(6);
+  assert.equal(P.debuffs.severe,1,'治掉一层重伤');
+  assert(Math.abs(Debuff.analgesicLeft(P)-30)<0.2,'紫档术后镇痛 30 秒');
+  assert.equal(kit.cap,5,'用掉一次');
+  const gold=bag('heal12',8);
+  assert(Medical.use(gold,'bag'));finishAction(4);
+  assert.equal(P.debuffs.severe,0);
+  assert(Math.abs(Debuff.analgesicLeft(P)-90)<0.2,'金档术后镇痛 90 秒');
+  assert.equal(gold.cap,7);
+});
 test('止痛药可满血提前服；镇痛不治愈损伤也不恢复上限',()=>{
   const P=fresh();P.hp=100;
   P.debuffs.bleeding=true;P.debuffs.severe=2;P.debuffs.fracture=true;

@@ -1,0 +1,107 @@
+{
+  "passed": true,
+  "meta": [
+    {
+      "id": "heal19",
+      "icon": [
+        48,
+        48
+      ],
+      "original": [
+        1536,
+        1536
+      ],
+      "subjectRatio": 0.8255208333333334
+    },
+    {
+      "id": "heal20",
+      "icon": [
+        48,
+        48
+      ],
+      "original": [
+        1536,
+        1536
+      ],
+      "subjectRatio": 0.8255208333333334
+    },
+    {
+      "id": "heal21",
+      "icon": [
+        48,
+        48
+      ],
+      "original": [
+        1536,
+        1536
+      ],
+      "subjectRatio": 0.8255208333333334
+    }
+  ],
+  "reports": [
+    {
+      "offline": false,
+      "seen": [
+        {
+          "id": "heal19",
+          "width": 1536,
+          "height": 1536,
+          "original": true,
+          "src": "assets/item-art/surgery-kits-v1/sources/heal19.png"
+        },
+        {
+          "id": "heal20",
+          "width": 1536,
+          "height": 1536,
+          "original": true,
+          "src": "assets/item-art/surgery-kits-v1/sources/heal20.png"
+        },
+        {
+          "id": "heal21",
+          "width": 1536,
+          "height": 1536,
+          "original": true,
+          "src": "assets/item-art/surgery-kits-v1/sources/heal21.png"
+        }
+      ],
+      "doctorStock": [
+        "heal19",
+        "heal20"
+      ],
+      "professionalNotOnShelf": true,
+      "pageErrors": []
+    },
+    {
+      "offline": true,
+      "seen": [
+        {
+          "id": "heal19",
+          "width": 48,
+          "height": 48,
+          "original": false,
+          "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAADAFBMVEVMaXFMSjVEQy8/QC07Oyg3OCdIRjI9PSs5"
+        },
+        {
+          "id": "heal20",
+          "width": 48,
+          "height": 48,
+          "original": false,
+          "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAADAFBMVEVMaXEuLS0jIiEoJyccHBwrLzg/PTs2NDQk"
+        },
+        {
+          "id": "heal21",
+          "width": 48,
+          "height": 48,
+          "original": false,
+          "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAADAFBMVEVMaXFIP0RcU1hKQUg4Nzg7MDpDOkFCN0FG"
+        }
+      ],
+      "doctorStock": [
+        "heal19",
+        "heal20"
+      ],
+      "professionalNotOnShelf": true,
+      "pageErrors": []
+    }
+  ]
+}

@@ -1180,6 +1180,30 @@
       "height": 1254
     },
     {
+      "key": "items/heal19",
+      "source": "assets/item-art/surgery-kits-v1/sources/heal19.png",
+      "target": "assets/item-art/surgery-kits-v1/sources/heal19.png",
+      "sourceHash": "e57719b1296e2a5b76bafd025c57239b55363da89ea2722336ee5c5815d6161a",
+      "width": 1536,
+      "height": 1536
+    },
+    {
+      "key": "items/heal20",
+      "source": "assets/item-art/surgery-kits-v1/sources/heal20.png",
+      "target": "assets/item-art/surgery-kits-v1/sources/heal20.png",
+      "sourceHash": "ff58728a77c50917c1071e2a74f02ec1d07acc8aa4cb98989d4564f681cd3de2",
+      "width": 1536,
+      "height": 1536
+    },
+    {
+      "key": "items/heal21",
+      "source": "assets/item-art/surgery-kits-v1/sources/heal21.png",
+      "target": "assets/item-art/surgery-kits-v1/sources/heal21.png",
+      "sourceHash": "7c97e65996b41ae57123d9c2dc30f3055e1523a946fb982d283714fd81b18509",
+      "width": 1536,
+      "height": 1536
+    },
+    {
       "key": "items/ind01",
       "source": "assets/item-art/legacy/sources/ind01.png",
       "target": "assets/item-art/legacy/sources/ind01.png",
@@ -2284,9 +2308,5 @@
       "height": 1254
     }
   ],
-  "missing": [
-    "items/heal19",
-    "items/heal20",
-    "items/heal21"
-  ]
+  "missing": []
 }

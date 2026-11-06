@@ -38,11 +38,11 @@ function advance(sec,step=0.05){
   return t;
 }
 
-test('物品 id 唯一、18医疗品、140图鉴与准确参数',()=>{
+test('物品 id 唯一、21医疗品、170图鉴与准确参数',()=>{
   /* 物品总数由数据决定（新武器/新物品落地时不写死） */
   assert(ITEMS.length>=183);assert.equal(new Set(ITEMS.map(i=>i.id)).size,ITEMS.length);assert(!byId.med01);
-  assert.equal(ITEMS.filter(i=>!i.noCodex).length,140);
-  const spec=require('../design/items/medical.json');assert.equal(spec.items.length,18);
+  assert.equal(ITEMS.filter(i=>!i.noCodex).length,170);
+  const spec=require('../design/items/medical.json');assert.equal(spec.items.length,21);
   for(const item of spec.items){const actual=byId[item.id];for(const key of ['name','r','w','price','stack','desc','visual'])assert.equal(actual[key],item[key]);assert(actual.noCodex);assert.equal(actual.cat,'medical');assert.equal(!!actual.noLoot,!(actual.heal||actual.effect));}
   assert.equal(byId.heal01.price,2000);assert.equal(byId.ammo_556_1.stack,60);
 });
@@ -253,7 +253,7 @@ test('安全箱也能治疗；把物品拿走会中断且不重复结算',()=>{
 });
 
 test('未开放的 7 件医疗品不可用，也不进入掉落池',()=>{
-  /* 六件已开放效果品（heal06/07/08/09/10/12）不算在内 */
+  /* 九件已开放效果品（heal06/07/08/09/10/12/19/20/21）不算在内 */
   const reserved=ITEMS.filter(i=>i.cat==='medical'&&!i.healCap&&!i.effect);
   assert.equal(reserved.length,7);
   for(const item of reserved){
@@ -281,9 +281,9 @@ test('诊费示例、全区间贵于绷带、余额不足与重复治疗不扣�
   assert(!Base.treat(12500));assert.equal(Save.credits,7500);
 });
 
-test('医生白绿蓝10件、购买单件与金额、高级品拒售',()=>{
+test('医生白绿蓝12件、购买单件与金额、高级品拒售',()=>{
   Base.open();Save.credits=1000000;Save.stash=[];const stock=ITEMS.filter(i=>i.cat==='medical'&&i.r<=3);
-  assert.equal(stock.length,10);
+  assert.equal(stock.length,12);
   for(const it of stock){const old=Save.credits;assert(Base.buyMedical(it.id));assert.equal(Save.stashCount(it.id),1);assert.equal(Save.credits,old-it.price);}
   const credits=Save.credits;assert(!Base.buyMedical('heal04'));assert.equal(Save.credits,credits);
 });
