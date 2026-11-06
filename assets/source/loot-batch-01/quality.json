@@ -1,0 +1,286 @@
+{
+  "status": "passed",
+  "scope": "loot sprite and container outline integration",
+  "results": [
+    {
+      "entry": "HTTP index",
+      "pixelChecks": [
+        {
+          "id": "crate_trash",
+          "grayPixels": 108,
+          "cached": true
+        },
+        {
+          "id": "crate_wastepaper",
+          "grayPixels": 116,
+          "cached": true
+        },
+        {
+          "id": "crate_cardboard",
+          "grayPixels": 113,
+          "cached": true
+        },
+        {
+          "id": "crate_workwear",
+          "grayPixels": 111,
+          "cached": true
+        },
+        {
+          "id": "crate_fast",
+          "grayPixels": 84,
+          "cached": true
+        },
+        {
+          "id": "crate_tool",
+          "grayPixels": 101,
+          "cached": true
+        },
+        {
+          "id": "crate_bedside",
+          "grayPixels": 100,
+          "cached": true
+        },
+        {
+          "id": "crate_staff",
+          "grayPixels": 95,
+          "cached": true
+        },
+        {
+          "id": "crate_satchel",
+          "grayPixels": 155,
+          "cached": true
+        },
+        {
+          "id": "crate_std",
+          "grayPixels": 114,
+          "cached": true
+        },
+        {
+          "id": "crate_luggage",
+          "grayPixels": 97,
+          "cached": true
+        },
+        {
+          "id": "crate_filing",
+          "grayPixels": 103,
+          "cached": true
+        },
+        {
+          "id": "crate_schoolbag",
+          "grayPixels": 106,
+          "cached": true
+        },
+        {
+          "id": "crate_med",
+          "grayPixels": 116,
+          "cached": true
+        },
+        {
+          "id": "crate_elec",
+          "grayPixels": 117,
+          "cached": true
+        },
+        {
+          "id": "crate_emergency",
+          "grayPixels": 92,
+          "cached": true
+        },
+        {
+          "id": "crate_military_supply",
+          "grayPixels": 104,
+          "cached": true
+        },
+        {
+          "id": "crate_rescuevest",
+          "grayPixels": 112,
+          "cached": true
+        },
+        {
+          "id": "crate_heavy",
+          "grayPixels": 82,
+          "cached": true
+        },
+        {
+          "id": "crate_supply",
+          "grayPixels": 115,
+          "cached": true
+        },
+        {
+          "id": "crate_jewelry",
+          "grayPixels": 90,
+          "cached": true
+        },
+        {
+          "id": "crate_leatherbag",
+          "grayPixels": 95,
+          "cached": true
+        },
+        {
+          "id": "crate_safe_big",
+          "grayPixels": 108,
+          "cached": true
+        },
+        {
+          "id": "crate_sealed",
+          "grayPixels": 106,
+          "cached": true
+        },
+        {
+          "id": "crate_diplomatic",
+          "grayPixels": 98,
+          "cached": true
+        },
+        {
+          "id": "loot_pile",
+          "grayPixels": 96,
+          "cached": true
+        }
+      ],
+      "containerTypes": 25,
+      "pileDrawn": true,
+      "hiddenPileSkipped": true,
+      "errors": []
+    },
+    {
+      "entry": "file offline",
+      "pixelChecks": [
+        {
+          "id": "crate_trash",
+          "grayPixels": 108,
+          "cached": true
+        },
+        {
+          "id": "crate_wastepaper",
+          "grayPixels": 116,
+          "cached": true
+        },
+        {
+          "id": "crate_cardboard",
+          "grayPixels": 113,
+          "cached": true
+        },
+        {
+          "id": "crate_workwear",
+          "grayPixels": 111,
+          "cached": true
+        },
+        {
+          "id": "crate_fast",
+          "grayPixels": 84,
+          "cached": true
+        },
+        {
+          "id": "crate_tool",
+          "grayPixels": 101,
+          "cached": true
+        },
+        {
+          "id": "crate_bedside",
+          "grayPixels": 100,
+          "cached": true
+        },
+        {
+          "id": "crate_staff",
+          "grayPixels": 95,
+          "cached": true
+        },
+        {
+          "id": "crate_satchel",
+          "grayPixels": 155,
+          "cached": true
+        },
+        {
+          "id": "crate_std",
+          "grayPixels": 114,
+          "cached": true
+        },
+        {
+          "id": "crate_luggage",
+          "grayPixels": 97,
+          "cached": true
+        },
+        {
+          "id": "crate_filing",
+          "grayPixels": 103,
+          "cached": true
+        },
+        {
+          "id": "crate_schoolbag",
+          "grayPixels": 106,
+          "cached": true
+        },
+        {
+          "id": "crate_med",
+          "grayPixels": 116,
+          "cached": true
+        },
+        {
+          "id": "crate_elec",
+          "grayPixels": 117,
+          "cached": true
+        },
+        {
+          "id": "crate_emergency",
+          "grayPixels": 92,
+          "cached": true
+        },
+        {
+          "id": "crate_military_supply",
+          "grayPixels": 104,
+          "cached": true
+        },
+        {
+          "id": "crate_rescuevest",
+          "grayPixels": 112,
+          "cached": true
+        },
+        {
+          "id": "crate_heavy",
+          "grayPixels": 82,
+          "cached": true
+        },
+        {
+          "id": "crate_supply",
+          "grayPixels": 115,
+          "cached": true
+        },
+        {
+          "id": "crate_jewelry",
+          "grayPixels": 90,
+          "cached": true
+        },
+        {
+          "id": "crate_leatherbag",
+          "grayPixels": 95,
+          "cached": true
+        },
+        {
+          "id": "crate_safe_big",
+          "grayPixels": 108,
+          "cached": true
+        },
+        {
+          "id": "crate_sealed",
+          "grayPixels": 106,
+          "cached": true
+        },
+        {
+          "id": "crate_diplomatic",
+          "grayPixels": 98,
+          "cached": true
+        },
+        {
+          "id": "loot_pile",
+          "grayPixels": 96,
+          "cached": true
+        }
+      ],
+      "containerTypes": 25,
+      "pileDrawn": true,
+      "hiddenPileSkipped": true,
+      "errors": []
+    }
+  ],
+  "localIndexWithoutPixelReads": true,
+  "legacySceneTest": "BLOCKED: pre-existing formal map draft SHA mismatch; independent editor self-test also reports 4 failures in map validation/two-cell door fixtures. Baselines and map unchanged."
+}

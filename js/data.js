@@ -1299,7 +1299,7 @@ const ART = {
      尸体按敌人种类分开：corpse_{scav|echo|guard}，缺图退回通用 corpse。 */
   props: ['crate_fast', 'crate_std', 'crate_heavy', 'crate_tool', 'crate_med', 'crate_elec', 'crate_supply',
           /* 第二批容器（2026-10）：废弃 4 / 普通 3 / 充实 3 / 优质 3 / 贵重 2 / 秘藏 2 */
-          'crate_trash', 'crate_wastepaper', 'crate_cardboard', 'crate_workwear',
+    'crate_trash', 'crate_wastepaper', 'crate_cardboard', 'crate_workwear', 'loot_pile',
           'crate_bedside', 'crate_staff', 'crate_satchel',
           'crate_luggage', 'crate_filing', 'crate_schoolbag',
           'crate_emergency', 'crate_comms', 'crate_rescuevest',

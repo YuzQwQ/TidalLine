@@ -110,9 +110,11 @@ const Icons = {
    -------------------------------------------------- */
 const Art = {
   map: {},
+  containerOutlines: new WeakMap(),
 
   init(inlineMap) {
     this.map = {};
+    this.containerOutlines = new WeakMap();
     const jobs = [];
     const load = (key) => {
       jobs.push(new Promise(resolve => {
@@ -145,6 +147,27 @@ const Art = {
   },
 
   get(group, id) { return this.map[group + '/' + id] || null; },
+
+  /* Cache an outer-only 1px silhouette. No pixel reads: file:// images work too. */
+  containerOutline(image) {
+    if(this.containerOutlines.has(image))return this.containerOutlines.get(image);
+    if(!(image.naturalWidth||image.width)||!(image.naturalHeight||image.height))return null;
+    const w=CFG.TILE,h=CFG.TILE;
+    const mask=document.createElement('canvas');mask.width=w;mask.height=h;
+    const m=mask.getContext('2d');m.imageSmoothingEnabled=false;m.drawImage(image,0,0,w,h);m.globalCompositeOperation='source-in';m.fillStyle='#9da59f';m.fillRect(0,0,w,h);
+    const halo=document.createElement('canvas');halo.width=w+2;halo.height=h+2;
+    const c=halo.getContext('2d');c.imageSmoothingEnabled=false;
+    for(let y=-1;y<=1;y++)for(let x=-1;x<=1;x++)if(x||y)c.drawImage(mask,1+x,1+y);
+    c.globalCompositeOperation='destination-out';c.drawImage(mask,1,1);c.globalCompositeOperation='source-over';
+    this.containerOutlines.set(image,halo);return halo;
+  },
+
+  drawContainerOutline(c,image,x,y,size,opened) {
+    const halo=this.containerOutline(image);if(!halo)return;
+    const px=size/(halo.width-2),py=size/(halo.height-2);
+    c.save();c.globalAlpha*=opened ? 0.65 : 0.9;c.imageSmoothingEnabled=false;
+    c.drawImage(halo,x-px,y-py,size+2*px,size+2*py);c.restore();
+  },
 
   // 家具方向使用独立重绘图，固定相机和光照，不旋转或镜像正面贴图。
   prop(prop) {

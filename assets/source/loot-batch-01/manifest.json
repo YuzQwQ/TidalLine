@@ -1,0 +1,25 @@
+{
+  "id": "loot-batch-01",
+  "generator": "built-in image_gen",
+  "assets": [
+    {
+      "id": "loot_pile",
+      "name": "散落物品堆",
+      "source": "sources/loot_pile.png",
+      "target": "assets/props/loot_pile.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleFit": [
+        26,
+        17
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "processing": "alpha>=160 crop; nearest contain26x24; 16 colors; binary alpha; native32 transparent centered"
+    }
+  ]
+}

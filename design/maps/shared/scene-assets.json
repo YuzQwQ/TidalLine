@@ -1634,6 +1634,17 @@
       "usage": "不可搜索实体家具；按footprint阻挡通行、弹道与视线。",
       "variantOf": "pallet_stack",
       "facing": "back"
+    },
+    {
+      "group": "props",
+      "id": "loot_pile",
+      "name": "散落物品堆",
+      "role": "scene-component",
+      "footprint": [
+        1,
+        1
+      ],
+      "usage": "运行时动态生成的遗落物品堆，占1格；不作为静态家具放置。"
     }
   ]
 }

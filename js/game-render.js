@@ -335,8 +335,14 @@ Object.assign(Game, {
 
       const sx = b.tx * TS - camX, sy = b.ty * TS - camY;
 
-      /* 遗落物品堆：不借用箱子贴图，画一小摊杂物，露出来的几件用品色标出来 */
+      /* 动态物品堆使用独立贴图，与其它容器共用外轮廓描边。 */
       if (b.pile) {
+        const pileImage=Art.get('props','loot_pile');
+        if(pileImage){
+          Art.drawContainerOutline(c,pileImage,sx,sy,TS,false);
+          c.drawImage(pileImage,sx,sy,TS,TS);continue;
+        }
+        // Loading/missing-image fallback only.
         c.fillStyle = 'rgba(6,10,9,0.42)';
         c.beginPath();
         c.ellipse(sx + TS / 2, sy + TS - 6, 11, 5.5, 0, 0, 6.29);
@@ -372,12 +378,13 @@ Object.assign(Game, {
           c.fillStyle = 'rgba(6,12,10,0.30)';
           c.fillRect(sx, sy, TS, TS);
         }
+        Art.drawContainerOutline(c,bImg,sx,sy,TS,b.opened);
         continue;
       }
 
       c.fillStyle = b.opened ? '#1e2a26' : cols;
       c.fillRect(sx + (TS - sz) / 2, sy + (TS - sz) / 2, sz, sz);
-      c.strokeStyle = b.opened ? 'rgba(90,120,110,0.3)' : 'rgba(240,235,200,0.8)';
+      c.strokeStyle = b.opened ? 'rgba(157,165,159,0.65)' : 'rgba(157,165,159,0.9)';
       c.lineWidth = 1.6;
       c.strokeRect(sx + (TS - sz) / 2 + 0.5, sy + (TS - sz) / 2 + 0.5, sz - 1, sz - 1);
 
