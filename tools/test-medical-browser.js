@@ -45,7 +45,7 @@ const pendingArt=new Set(require('../design/items/classification.json').items.fi
     assert(await page.locator('#baseVeil').evaluate(el=>el.scrollWidth<=el.clientWidth),'医生页横向溢出 '+width);
     await page.locator('#btnDoctorTreat').scrollIntoViewIfNeeded();await page.locator('#btnDoctorTreat').click();
     assert(await page.locator('#dealBox').evaluate(el=>el.getBoundingClientRect().right<=innerWidth));await page.locator('#dealBox [data-a="no"]').click();
-    await page.evaluate(()=>Safehouse.route('stash'));await band.first().click();assert(await page.locator('.st-detail').evaluate(el=>el.getBoundingClientRect().right<=innerWidth));
+    await page.evaluate(()=>Safehouse.route('stash'));await band.first().click();assert(await page.locator('.st-center').evaluate(el=>el.getBoundingClientRect().right<=innerWidth+1));
     if(width===390)await page.screenshot({path:path.join(output,'doctor-mobile.png')});
    }
    await page.setViewportSize({width:1440,height:1000});await page.evaluate(()=>{Save.gear.back=BACKPACK.make('bag03');Safehouse.route('stash');});

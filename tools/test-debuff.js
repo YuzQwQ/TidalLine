@@ -231,10 +231,10 @@ test('手术二选一且不回血；无适用损伤时不可用',()=>{
   assert.equal(Medical.canUse(ITEM_BY_ID.heal12,'bag',P.hp),false);
   assert.equal(Medical.use(e,'bag'),false);
 });
-test('只有止血带解流血；绷带与高阶恢复品只回血',()=>{
+test('止血带直接解流血；不足50容量的绷带仍可回血但不止血',()=>{
   const P=fresh();P.debuffs.bleeding=true;
   for(const id of ['heal01','heal02','heal03','heal04','heal05']){
-    assert(!ITEM_BY_ID[id].effect,id+' 不解损伤');
+    assert(!ITEM_BY_ID[id].effect,id+' 恢复品沿用容量规则');
   }
   P.hp=60;
   const band=bag('heal01',20);

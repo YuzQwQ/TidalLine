@@ -488,6 +488,13 @@
       "site": "用户提供（本地文件）",
       "sid": null,
       "license": "TODO"
+    },
+    {
+      "id": "user-lobby-music",
+      "name": "用户创作的局外音乐",
+      "site": "用户提供",
+      "license": "用户原作，供本项目使用",
+      "originalDirectory": "assets/audio/_source/音乐"
     }
   ],
   "assets": [
@@ -1671,5 +1678,72 @@
     },
     "check": "node tools/audio-levels.js",
     "audition": "tools/audio-guns.html"
-  }
+  },
+  "music": [
+    {
+      "id": "base",
+      "file": "bgm_base.mp3",
+      "from": "user-lobby-music",
+      "note": "用户创作的局外音乐；原稿保留；192kbps、44.1kHz、双声道MP3，保留完整时长",
+      "title": "退潮之后",
+      "english": "After the Ebb",
+      "original": "assets/audio/_source/音乐/退潮之后 _ After the Ebb.wav",
+      "format": "mp3",
+      "dur": 203.174,
+      "sampleRate": 44100,
+      "channels": 2,
+      "bitrate": 192000,
+      "bytes": 4877681,
+      "sha256_16": "a9bb5411793d0599"
+    },
+    {
+      "id": "no_one_answers",
+      "file": "bgm_no_one_answers.mp3",
+      "from": "user-lobby-music",
+      "note": "用户创作的局外音乐；原稿保留；192kbps、44.1kHz、双声道MP3，保留完整时长",
+      "title": "无人应答",
+      "english": "No One Answers",
+      "original": "assets/audio/_source/音乐/《无人应答 _ No One Answers》.wav",
+      "format": "mp3",
+      "dur": 229.214,
+      "sampleRate": 44100,
+      "channels": 2,
+      "bitrate": 192000,
+      "bytes": 5502741,
+      "sha256_16": "40730c3842b473f1"
+    },
+    {
+      "id": "beyond_the_grey",
+      "file": "bgm_beyond_the_grey.mp3",
+      "from": "user-lobby-music",
+      "note": "用户创作的局外音乐；原稿保留；192kbps、44.1kHz、双声道MP3，保留完整时长",
+      "title": "越过灰色地带",
+      "english": "Beyond the Grey",
+      "original": "assets/audio/_source/音乐/《越过灰色地带 _ Beyond the Grey》.wav",
+      "format": "mp3",
+      "dur": 189.614,
+      "sampleRate": 44100,
+      "channels": 2,
+      "bitrate": 192000,
+      "bytes": 4552308,
+      "sha256_16": "e286bfcd4b8d8995"
+    },
+    {
+      "id": "business_as_usual",
+      "file": "bgm_business_as_usual.mp3",
+      "from": "user-lobby-music",
+      "note": "用户创作的局外音乐；原稿保留；192kbps、44.1kHz、双声道MP3，保留完整时长",
+      "title": "照常营业",
+      "english": "Business as Usual",
+      "scene": "shop",
+      "original": "assets/audio/_source/音乐/《照常营业 _ Business as Usual》.wav",
+      "format": "mp3",
+      "dur": 183.214,
+      "sampleRate": 44100,
+      "channels": 2,
+      "bitrate": 192000,
+      "bytes": 4398708,
+      "sha256_16": "330a974c19f96d31"
+    }
+  ]
 }

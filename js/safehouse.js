@@ -28,7 +28,7 @@ const Safehouse = {
     root.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.sh-stat[role="button"]')){e.preventDefault();this.route(e.target.dataset.sh);}});
     const dialog=root.querySelector('dialog');dialog.querySelector('.sh-dialog-close').onclick=()=>dialog.close();dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
     document.addEventListener('visibilitychange',()=>this.syncTimer());
-    this.refresh();this.route('home');
+    this.refresh();this.route('home');if(!demo&&typeof Music!=='undefined'&&typeof Music.mount==='function')Music.mount(root);
   },
   snapshot(){
     if(this.demo)return {credits:'¥ 2,480,000',storage:'318 / 600',durability:'良好 98%',hp:86,maxHp:100,injury:'轻微伤势 · 状态演示'};
@@ -46,6 +46,7 @@ const Safehouse = {
   },
   applyView(){
     if(!this.root)return;
+    if(!this.demo&&typeof Music!=='undefined'&&typeof Music.setScene==='function')Music.setScene(this.view==='merchant'||this.view==='doctor'?'shop':'lobby');
     const home=this.view==='home';this.root.dataset.view=this.view;
     this.root.querySelector('.sh-home').hidden=!home;this.root.querySelector('.sh-work').hidden=home;
     const merchant=['traders','doctor'].includes(this.view);
@@ -83,6 +84,6 @@ const Safehouse = {
 if(typeof Base!=='undefined'){
   const open=Base.open,close=Base.close,render=Base.render;
   Base.open=function(){if(!Safehouse.root)Safehouse.mount(document.querySelector('#baseVeil .base'));Safehouse.view='home';open.apply(this,arguments);Safehouse.refresh();};
-  Base.close=function(){Safehouse.stopTimer();return close.apply(this,arguments);};
+  Base.close=function(){Safehouse.stopTimer();if(typeof Music!=='undefined'&&typeof Music.closePlayer==='function'){Music.closePlayer();if(typeof Music.setScene==='function')Music.setScene('lobby');}return close.apply(this,arguments);};
   Base.render=function(){const r=render.apply(this,arguments);Safehouse.refresh();return r;};
 }

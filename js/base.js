@@ -24,7 +24,7 @@ const Base = {
     this.ensureSidearm();     // 不自动补发死亡损失
     this.render();
     /* 大厅 BGM：进藏身处就起，离开时由 close()/startRun 淡出 */
-    if (typeof Music !== 'undefined') Music.play('base');
+    if (typeof Music !== 'undefined') Music.enterBase();
   },
 
   close() {
@@ -169,14 +169,16 @@ const Base = {
         : (own ? '点击从仓库挑选（' + own + ' 把）'
                : '点击挑选 · 仓库里没有');
 
+      const dots = it ? SlotDots.html(it) : '';   // 一把枪有几个配件槽，就画几个点
       const row = document.createElement('div');
-      row.className = 'slot' + (w ? '' : ' empty') + (this.picker === key ? ' open' : '');
+      row.className = 'slot' + (w ? '' : ' empty') + (dots ? ' has-dots' : '') + (this.picker === key ? ' open' : '');
       row.innerHTML =
         '<div class="slot-ico">' + Icons.gearIcon(w ? w.id : null, i < 2 ? '主' : '副') + '</div>' +
         '<div class="slot-txt"><b>' + (w ? w.name : '空') + '</b><span>' +
           (w ? w.dmgMin + '–' + w.dmgMax + ' 伤害 · 弹匣 ' + ammo + '/' + w.mag + ' · ' : '') +
           act +
-        '</span></div>';
+        '</span></div>' +
+        dots;
       row.onclick = () => this.togglePicker(key, row);
       this.bindGearMenu(row, key);
       el.appendChild(row);
@@ -190,14 +192,15 @@ const Base = {
         : (own ? '点击从仓库挑选（' + own + ' 件）' : '点击挑选 · 仓库里没有');
 
       const row = document.createElement('div');
-      row.className = 'slot' + (g ? '' : ' empty') + (this.picker === type ? ' open' : '');
+      row.className = 'slot' + (g ? ' has-dbar' : ' empty') + (this.picker === type ? ' open' : '');
       row.innerHTML =
         '<div class="slot-ico">' + Icons.gearIcon(GEAR.icon(g), GEAR[type].short) + '</div>' +
         '<div class="slot-txt"><b>' + (g ? g.name + ' Lv' + g.lv : '未装备' + GEAR[type].label) + '</b><span>' +
           (g ? '防护 Lv' + g.lv + ' · 耐久 ' +
                Math.ceil(g.dur) + '/' + g.max + ' · ' : '') +
           act +
-        '</span></div>';
+        '</span></div>' +
+        (g ? DuraBar.html(g) : '');
       row.onclick = () => this.togglePicker(type, row);
       this.bindGearMenu(row, type);
       el.appendChild(row);
@@ -238,7 +241,7 @@ const Base = {
       ];
       if (item.equip?.kind === 'gun')
         entries.push({ label: '退弹', onClick: () => this.unloadGun(item) });
-      for (const a of this.extraGearActs(key, item)) entries.push(a);
+      for (const a of this.extraGearActs(key, item, row)) entries.push(a);
       Ctx.show((ev && ev.clientX) || 0, (ev && ev.clientY) || 0, entries);
     };
   },
@@ -486,7 +489,7 @@ const Base = {
     } else {
       const g = it.equip.gear;
       if (!g || it.equip.kind !== 'armor') return false;
-      next = GEAR.make(key, g.id || g.lv, g.dur);                   // 拷一份，仓库那件要移除
+      next = GEAR.make(key, g.id || g.lv, g.dur, g.max);            // 拷一份（含修理后的上限），仓库那件要移除
       name = g.name; verb = '穿上 ';
     }
 
@@ -734,8 +737,11 @@ const Base = {
         const ico = Icons.gear[id]
           ? '<img src="' + Icons.gear[id].src + '" alt="">'
           : '<span class="gl">' + esc(d.short) + '</span>';
+        /* 货架上的新枪没有任何配件，也是「全空」的信息：照样把槽位画出来 */
+        const dots = SlotDots.html(item);
+        if (dots) cell.classList.add('has-dots');
         cell.innerHTML = ico +
-          '<span class="cn">' + esc(d.short) + '</span>' +
+          '<span class="cn">' + esc(d.short) + '</span>' + dots +
           '<span class="pr">' + formatMoney(d.price) + '</span>';
         cell.title = d.name + ' · ' + d.dmgMin + '–' + d.dmgMax + ' 伤害 · 弹匣 ' + d.mag +
           ' · ' + d.rpm + ' 发/分 · ' + d.w + 'kg · 右键看详情';
@@ -994,11 +1000,13 @@ const Base = {
   makeBagCell(e) {
     const cell=document.createElement('div'),it=e?stashItem(e):null;
     if(!it){cell.className='cell empty';cell.textContent='·';return cell;}
-    const n=e.n||1;
-    cell.className='cell '+RARITY[U.clamp((it.r||1)-1,0,RARITY.length-1)].cls+(it.equip?' eq':'');
+    const n=e.n||1,armor=DuraBar.of(it),dots=SlotDots.html(it);
+    cell.className='cell '+RARITY[U.clamp((it.r||1)-1,0,RARITY.length-1)].cls+(it.equip?' eq':'')+
+      (armor?' has-dbar':'')+(dots?' has-dots':'');
     cell.innerHTML=Icons.bagTag(it,'ico-bag')+'<span class="cn">'+esc(it.short||it.name)+'</span>'+
       (n>1?'<span class="qty">'+n+'</span>':'')+
-      (Medical.capOf(it)&&Medical.isPartial(e)?'<span class="cap">'+Math.ceil(Medical.entryCap(e))+'</span>':'');
+      (Medical.capOf(it)&&Medical.isPartial(e)?'<span class="cap">'+Math.ceil(Medical.entryCap(e))+'</span>':'')+
+      (armor?DuraBar.html(armor):'')+dots;
     cell.title=it.name+' · '+(it.w*n).toFixed(2)+'kg · 单击看详情';
     return cell;
   },
@@ -1328,13 +1336,17 @@ const Base = {
       }
       const it = stashItem(e);
       const n = e.n || 1;
-      cell.className = 'scell r' + (it.r || 1) + (it.equip ? ' eq' : '');
+      const armor = DuraBar.of(it);      // 护甲在格子底边挂一条耐久条
+      const dots = SlotDots.html(it);    // 枪在底边挂一排配件槽点
+      cell.className = 'scell r' + (it.r || 1) + (it.equip ? ' eq' : '') +
+        (armor ? ' has-dbar' : '') + (dots ? ' has-dots' : '');
       cell.innerHTML =
         Icons.bagTag(it, '') +
         '<span class="cn">' + esc(it.short || it.name) + '</span>' +
         (n > 1 ? '<span class="qty">' + n + '</span>' : '') +
         ((Medical.capOf(it) && Medical.isPartial(e))
-          ? '<span class="cap">' + Math.ceil(Medical.entryCap(e)) + '</span>' : '');
+          ? '<span class="cap">' + Math.ceil(Medical.entryCap(e)) + '</span>' : '') +
+        (armor ? DuraBar.html(armor) : '') + dots;
       cell.title = it.name + (Medical.capOf(it) && Medical.isPartial(e)
           ? ' · ' + Medical.capText(e)
           : ' · ' + it.w.toFixed(2) + 'kg') + ' · ' +

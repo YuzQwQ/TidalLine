@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "strips": 15,
+  "frames": 39,
+  "reports": [
+    {
+      "file": "index.html",
+      "rendered": 52,
+      "states": [
+        "walk",
+        "aim",
+        "shoot",
+        "reload",
+        "pump"
+      ],
+      "directions": [
+        "s",
+        "e",
+        "n",
+        "w"
+      ],
+      "realStateDispatch": true,
+      "unchangedProfiles": true,
+      "unchangedMapsAndSquads": true,
+      "errors": [],
+      "external": 0
+    },
+    {
+      "file": "潮汐线.html",
+      "rendered": 52,
+      "states": [
+        "walk",
+        "aim",
+        "shoot",
+        "reload",
+        "pump"
+      ],
+      "directions": [
+        "s",
+        "e",
+        "n",
+        "w"
+      ],
+      "realStateDispatch": true,
+      "unchangedProfiles": true,
+      "unchangedMapsAndSquads": true,
+      "errors": [],
+      "external": 0
+    }
+  ],
+  "gallery": {
+    "strips": 15,
+    "mobileWidth": 390
+  }
+}

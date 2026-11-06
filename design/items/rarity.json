@@ -1,6 +1,6 @@
 {
-  "version": 5,
-  "date": "2026-10-27",
+  "version": 7,
+  "date": "2026-11-06",
   "basis": "结合世界观v0.1、现有物品描述、原有设计定位与本轮六级稀有度要求重评；不凭未知设定提高等级。",
   "tiers": [
     {
@@ -517,6 +517,123 @@
       "batch": "first",
       "previousRarity": 3,
       "previousName": "稀见"
+    },
+    {
+      "id": "odd04",
+      "name": "潮盐团块",
+      "rarity": 1,
+      "reason": "异常性质明确、可稳定复现，但来源常见、量级小，列寻常。",
+      "batch": "odd-v1",
+      "previousRarity": 1,
+      "previousName": "寻常"
+    },
+    {
+      "id": "odd05",
+      "name": "余温灰烬",
+      "rarity": 1,
+      "reason": "异常性质明确、可稳定复现，但来源常见、量级小，列寻常。",
+      "batch": "odd-v1",
+      "previousRarity": 1,
+      "previousName": "寻常"
+    },
+    {
+      "id": "odd06",
+      "name": "逆生鳞片",
+      "rarity": 2,
+      "reason": "异常生物产出物，性质稳定且可重复取得，列良品。",
+      "batch": "odd-v1",
+      "previousRarity": 2,
+      "previousName": "良品"
+    },
+    {
+      "id": "odd07",
+      "name": "畸光薄膜",
+      "rarity": 2,
+      "reason": "异常生物产出物，性质稳定且可重复取得，列良品。",
+      "batch": "odd-v1",
+      "previousRarity": 2,
+      "previousName": "良品"
+    },
+    {
+      "id": "odd08",
+      "name": "漂浮铁砂",
+      "rarity": 3,
+      "reason": "反常物理表现清晰、样本完整，但尚不构成孤本，列上乘。",
+      "batch": "odd-v1",
+      "previousRarity": 3,
+      "previousName": "上乘"
+    },
+    {
+      "id": "odd09",
+      "name": "逆潮琥珀",
+      "rarity": 3,
+      "reason": "反常物理表现清晰、样本完整，但尚不构成孤本，列上乘。",
+      "batch": "odd-v1",
+      "previousRarity": 3,
+      "previousName": "上乘"
+    },
+    {
+      "id": "odd10",
+      "name": "冷燃蜡块",
+      "rarity": 3,
+      "reason": "反常物理表现清晰、样本完整，但尚不构成孤本，列上乘。",
+      "batch": "odd-v1",
+      "previousRarity": 3,
+      "previousName": "上乘"
+    },
+    {
+      "id": "odd11",
+      "name": "折光晶核",
+      "rarity": 5,
+      "reason": "观测结果直接违背常规物理或空间规律，样本极难保存，列珍罕。",
+      "batch": "odd-v1",
+      "previousRarity": 5,
+      "previousName": "珍罕"
+    },
+    {
+      "id": "odd12",
+      "name": "相位脊针",
+      "rarity": 5,
+      "reason": "观测结果直接违背常规物理或空间规律，样本极难保存，列珍罕。",
+      "batch": "odd-v1",
+      "previousRarity": 5,
+      "previousName": "珍罕"
+    },
+    {
+      "id": "odd13",
+      "name": "捧腹者雕像",
+      "rarity": 6,
+      "reason": "隐藏彩蛋，统一红色孤品；掉落由独立彩蛋权重控制，不参与常规红色物品池。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "odd14",
+      "name": "极端应激姿态猫科标本",
+      "rarity": 6,
+      "reason": "隐藏彩蛋，孤立样本且伴随未证实的异常现象，统一红色孤品，走独立彩蛋权重。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "odd15",
+      "name": "颂乐玩偶",
+      "rarity": 6,
+      "reason": "隐藏彩蛋，出处与玩偶本体均无法追溯，统一红色孤品，走独立彩蛋权重。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "odd16",
+      "name": "持械木质拟人塑像",
+      "rarity": 6,
+      "reason": "隐藏彩蛋，已知完整样本极少，与特定异常传说高度吻合，统一红色孤品。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
     },
     {
       "id": "elec07",
@@ -1091,6 +1208,159 @@
       "rarity": 6,
       "reason": "已知唯一的早期原始残页，具有可追溯的文献传承关系；价值来自难以替代的历史身份及对整个仪式传统的研究意义，不以超自然能力为前提。",
       "batch": "occ-1"
+    },
+    {
+      "id": "life50",
+      "name": "黄金怀炉",
+      "rarity": 6,
+      "reason": "红档扩充：普通红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "life51",
+      "name": "御用茶宴瓷器组",
+      "rarity": 6,
+      "reason": "红档扩充：稀有红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "elec16",
+      "name": "典藏晶体管收音机",
+      "rarity": 6,
+      "reason": "红档扩充：普通红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "elec17",
+      "name": "辉光管潮位计时器",
+      "rarity": 6,
+      "reason": "红档扩充：稀有红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "ind16",
+      "name": "黄铜深潜头盔",
+      "rarity": 6,
+      "reason": "红档扩充：良好红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "ind17",
+      "name": "机械差分计算核心",
+      "rarity": 6,
+      "reason": "红档扩充：稀有红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "med16",
+      "name": "镀银外科器械组",
+      "rarity": 6,
+      "reason": "红档扩充：普通红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "med17",
+      "name": "透明人体心脏标本",
+      "rarity": 6,
+      "reason": "红档扩充：稀有红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "antiq10",
+      "name": "灯塔珠宝彩蛋",
+      "rarity": 6,
+      "reason": "红档扩充：稀有红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "mil16",
+      "name": "转轮密码机",
+      "rarity": 6,
+      "reason": "红档扩充：普通红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "mil17",
+      "name": "失事航机黑匣子",
+      "rarity": 6,
+      "reason": "红档扩充：稀有红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "intel14",
+      "name": "绝密行动令",
+      "rarity": 6,
+      "reason": "红档扩充：普通红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "intel15",
+      "name": "月面摄影原片",
+      "rarity": 6,
+      "reason": "红档扩充：良好红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "occ16",
+      "name": "古代封印戒",
+      "rarity": 6,
+      "reason": "红档扩充：普通红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "occ17",
+      "name": "双文祭祀碑",
+      "rarity": 6,
+      "reason": "红档扩充：良好红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "odd17",
+      "name": "逆流沙漏",
+      "rarity": 6,
+      "reason": "红档扩充：普通红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "odd18",
+      "name": "瓶中风暴",
+      "rarity": 6,
+      "reason": "红档扩充：良好红，与同类其它红件共同构成该品类的三档梯度。",
+      "batch": "first",
+      "previousRarity": 6,
+      "previousName": "孤品"
     }
   ]
 }

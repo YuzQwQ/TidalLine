@@ -1,0 +1,95 @@
+{
+  "batch": "异常遗物补充设计 V1.0",
+  "date": "2026-11-06",
+  "mode": "built-in image_gen",
+  "styleReference": "assets/source/archive/red-collectibles-v1/reference.png",
+  "delivery": {
+    "canvas": [
+      48,
+      48
+    ],
+    "subjectMax": [
+      40,
+      40
+    ],
+    "transparentMargin": 4,
+    "resize": "lanczos3",
+    "paletteColours": 64,
+    "alpha": "binary"
+  },
+  "note": "仅绘制图片，替换odd04-odd12问号占位图；odd17/odd18两件红品保持不变。原稿与提示词归档，不修改代码、数值或离线构建。",
+  "items": [
+    {
+      "id": "odd04",
+      "name": "潮盐团块",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Input image is STYLE REFERENCE ONLY, never reproduce its objects. Match its restrained realistic survival-game pixel art: crisp small square pixel clusters, thin dark contour, muted material colors, upper-left highlights, 3/4 view slightly from above. Subject: an irregular low wide GRAY-WHITE SALT CLUMP, damp glistening surface, fresh small white frost salt crystal crusts around parts of it, scattered black sand grains and two or three tiny broken seashell fragments embedded in the clump. A single cohesive material lump, no bottle, no holder, no gemstones, no ice. Composition: ONE centered item occupying 80 percent of a square, genuinely transparent alpha background. Designed to read as a 40x40-pixel subject in a 48x48 icon, silhouette and distinctive material first. Enlarged pixel artwork with readable shapes, no smoothing or painterly brushwork. No ground, shadow outside object, scene, labels, text, UI, colored rarity background, magical aura or exaggerated glow.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-f5c5a7e8-358c-4fca-9ee7-7e8035946a2a.png",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd04.png",
+      "output": "assets/items/odd04.png"
+    },
+    {
+      "id": "odd05",
+      "name": "余温灰烬",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Input image is STYLE REFERENCE ONLY, never reproduce its objects. Match its restrained realistic survival-game pixel art: crisp small square pixel clusters, thin dark contour, muted material colors, upper-left highlights, 3/4 view slightly from above. Subject: one SLENDER SMALL TRANSPARENT GLASS VIAL with a visibly chipped cracked open mouth. A SMALL amount of gray-black fine ASH rests at the BOTTOM of vial, occupying lower third. Faint mist on glass inner walls, subtle warm gray glass reflection. No cork, no cap, no fire, no red embers, no smoke outside, no floating material. Bottle tilted diagonally gently in 3/4 view, fully visible. Composition: ONE centered item occupying 80 percent of a square, genuinely transparent alpha background. Designed to read as a 40x40-pixel subject in a 48x48 icon, silhouette and distinctive material first. Enlarged pixel artwork with readable shapes, no smoothing or painterly brushwork. No ground, shadow outside object, scene, labels, text, UI, colored rarity background, magical aura or exaggerated glow.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-e7d6839a-f639-4ea3-81df-d24b06071eb3.png",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd05.png",
+      "output": "assets/items/odd05.png"
+    },
+    {
+      "id": "odd06",
+      "name": "逆生鳞片",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Input image is STYLE REFERENCE ONLY, never reproduce its objects. Match its restrained realistic survival-game pixel art: crisp small square pixel clusters, thin dark contour, muted material colors, upper-left highlights, 3/4 view slightly from above. Subject: a compact overlapping fan pile of FOUR or FIVE dark TEAL semi-transparent BIOLOGICAL SCALES. All scale edges curl INWARD like little cupped plates, fine natural growth ridges on surfaces, topmost scale lifts at one edge. Distinct fish/reptile scale shapes with rounded tapered tips, subtle translucency, NOT leaves, no branch, no creature, no glow. Composition: ONE centered item occupying 80 percent of a square, genuinely transparent alpha background. Designed to read as a 40x40-pixel subject in a 48x48 icon, silhouette and distinctive material first. Enlarged pixel artwork with readable shapes, no smoothing or painterly brushwork. No ground, shadow outside object, scene, labels, text, UI, colored rarity background, magical aura or exaggerated glow.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-9a45edf5-00a6-42b6-81e9-20616c93f7a1.png",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd06.png",
+      "output": "assets/items/odd06.png"
+    },
+    {
+      "id": "odd07",
+      "name": "畸光薄膜",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Input image is STYLE REFERENCE ONLY, never reproduce its objects. Match its restrained realistic survival-game pixel art: crisp small square pixel clusters, thin dark contour, muted material colors, upper-left highlights, 3/4 view slightly from above. Subject: ONE wrinkled thin semi-transparent biological MEMBRANE peeled from an anomalous creature, irregular asymmetrical sheet like damp tissue paper. Mostly pearl gray-white, delicate curled edges and soft creases, alternating pale violet and cold green iridescent reflections over folds. Thin translucent sheet, NOT a gem, NOT a scale pile, no blood, no creature, no aura. Restrained subtle violet/green highlights that remain visible at small size. Composition: ONE centered item occupying 80 percent of a square, genuinely transparent alpha background. Designed to read as a 40x40-pixel subject in a 48x48 icon, silhouette and distinctive material first. Enlarged pixel artwork with readable shapes, no smoothing or painterly brushwork. No ground, shadow outside object, scene, labels, text, UI, colored rarity background, magical aura or exaggerated glow.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-57f9ae2e-21b0-4f24-afa3-7e2f645ac9a4.png",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd07.png",
+      "output": "assets/items/odd07.png"
+    },
+    {
+      "id": "odd08",
+      "name": "漂浮铁砂",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Input image is STYLE REFERENCE ONLY, never reproduce its objects. Match its restrained realistic survival-game pixel art: crisp small square pixel clusters, thin dark contour, muted material colors, upper-left highlights, 3/4 view slightly from above. Subject: one upright THICK-WALLED TRANSPARENT TEST TUBE with a silver gray metal screw cap and rounded glass bottom, slightly diagonal 3/4 angle. A compact toroidal horizontal RING OF BLACK IRON SAND visibly floats midway INSIDE tube, with empty clear SPACE BELOW ring above the bottom and clear space above below cap. Fine black grains trace a rotating donut orbit around invisible vertical axis. Dark granular floating ring is unmistakable, not liquid, not a spring or solid metal washer. No exterior particles, no pedestal. Composition: ONE centered item occupying 80 percent of a square, genuinely transparent alpha background. Designed to read as a 40x40-pixel subject in a 48x48 icon, silhouette and distinctive material first. Enlarged pixel artwork with readable shapes, no smoothing or painterly brushwork. No ground, shadow outside object, scene, labels, text, UI, colored rarity background, magical aura or exaggerated glow.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-0cdba00a-3cdb-4b9f-b808-3b46ac87afc9.png",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd08.png",
+      "output": "assets/items/odd08.png"
+    },
+    {
+      "id": "odd09",
+      "name": "逆潮琥珀",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Input image is STYLE REFERENCE ONLY, never reproduce its objects. Match its restrained realistic survival-game pixel art: crisp small square pixel clusters, thin dark contour, muted material colors, upper-left highlights, 3/4 view slightly from above. Subject: one irregular honey-yellow translucent AMBER-LIKE RESIN LUMP. A darker closed curved concentric tide-like band clearly visible INSIDE the amber, a few cloudy inclusions, faceted but softened uneven top. Base visibly slightly slumped, soft flattened sagging foot joined to solid upper lump. Warm honey and brown, material has glassy highlights but is turbid resin, not bright yellow crystal, no insect, no holder, no glow. Composition: ONE centered item occupying 80 percent of a square, genuinely transparent alpha background. Designed to read as a 40x40-pixel subject in a 48x48 icon, silhouette and distinctive material first. Enlarged pixel artwork with readable shapes, no smoothing or painterly brushwork. No ground, shadow outside object, scene, labels, text, UI, colored rarity background, magical aura or exaggerated glow.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-5e6ae0db-91ad-4fff-86b1-213e191b4b6e.png",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd09.png",
+      "output": "assets/items/odd09.png"
+    },
+    {
+      "id": "odd10",
+      "name": "冷燃蜡块",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Input image is STYLE REFERENCE ONLY, never reproduce its objects. Match its restrained realistic survival-game pixel art: crisp small square pixel clusters, thin dark contour, muted material colors, upper-left highlights, 3/4 view slightly from above. Subject: one irregular squat gray-white WAX CHUNK that melted and re-solidified. Uneven blunt lumpy top, distinctive thick rounded frozen DRIPS over sides, a few sagging wax lobes and little folds at lower edge. Waxy matte ivory gray surface with restrained cold white-blue reflections in recesses. Not a candle, NO wick, NO flame, NO crystal facets, NO vapor, NO frost crust, no luminous aura. Composition: ONE centered item occupying 80 percent of a square, genuinely transparent alpha background. Designed to read as a 40x40-pixel subject in a 48x48 icon, silhouette and distinctive material first. Enlarged pixel artwork with readable shapes, no smoothing or painterly brushwork. No ground, shadow outside object, scene, labels, text, UI, colored rarity background, magical aura or exaggerated glow.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-2b3492d0-89d8-4054-9d87-167cc5cf93fc.png",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd10.png",
+      "output": "assets/items/odd10.png"
+    },
+    {
+      "id": "odd11",
+      "name": "折光晶核",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Input image is STYLE REFERENCE ONLY, never reproduce its objects. Match its restrained realistic survival-game pixel art: crisp small square pixel clusters, thin dark contour, muted material colors, upper-left highlights, 3/4 view slightly from above. Subject: one dense sharply edged PALE CYAN TRANSPARENT CRYSTAL CORE shaped approximately like an irregular six-sided cuboid, tilted 3/4 view. Angular crisp faceted corners, INSIDE are multiple visibly offset stacked glass planes like displaced transparent sheets creating mismatched refractions and doubled internal edges. Very faint misty center, colorless to pale cyan with darker teal edge accents. Compact single polyhedral crystal, not a quartz cluster, not a diamond jewel setting, not a glowing fantasy orb. No background scenery reflected inside. Composition: ONE centered item occupying 80 percent of a square, genuinely transparent alpha background. Designed to read as a 40x40-pixel subject in a 48x48 icon, silhouette and distinctive material first. Enlarged pixel artwork with readable shapes, no smoothing or painterly brushwork. No ground, shadow outside object, scene, labels, text, UI, colored rarity background, magical aura or exaggerated glow.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-c1b4784f-57d0-413c-8183-fa10d3108a67.png",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd11.png",
+      "output": "assets/items/odd11.png"
+    },
+    {
+      "id": "odd12",
+      "name": "相位脊针",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Input image is STYLE REFERENCE ONLY, never reproduce its objects. Match its restrained realistic survival-game pixel art: crisp small square pixel clusters, thin dark contour, muted material colors, upper-left highlights, 3/4 view slightly from above. Subject: one LONG SLENDER SLIGHTLY CURVED SILVER-GRAY BONE SPINE NEEDLE, diagonal from lower left to upper right. Natural segmented ridges along shaft and pointed tapering tip, broader irregular bone root at opposite end, hard silver gray outer coating. In the MIDDLE a SHORT SECTION IS INVISIBLE: a small clean visible gap of about 1/14 total length interrupts shaft, then the continuation resumes along same curved alignment shifted very slightly sideways, reading as one phase-discontinuous spine. Both visible parts remain a single unified silhouette trajectory, not two separate tools. No handle, no blade, no magic sparkles, no ghost trail. Composition: ONE centered item occupying 80 percent of a square, genuinely transparent alpha background. Designed to read as a 40x40-pixel subject in a 48x48 icon, silhouette and distinctive material first. Enlarged pixel artwork with readable shapes, no smoothing or painterly brushwork. No ground, shadow outside object, scene, labels, text, UI, colored rarity background, magical aura or exaggerated glow.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-6f4c60b6-4c06-407d-8a60-839cb3393d3d.png",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd12.png",
+      "output": "assets/items/odd12.png"
+    }
+  ]
+}

@@ -65,6 +65,15 @@ const Save = {
       const raw = localStorage.getItem(this.key);
       if (!raw) { this.bag = this.defaultBag(); this.safe=[]; this.commissionBoard=null; return; }
       const d = JSON.parse(raw);
+      /* 2026-11 异常遗物补充批次把两件红品让出编号：逆流沙漏 odd04→odd17、瓶中风暴 odd05→odd18。
+         旧存档（v<4）里的 odd04/05 指的是这两件红品，必须搬过去；v4 起 odd04/05 是新的一级样本，
+         不能再映射，所以按存档版本而不是按 id 无条件迁移。 */
+      if ((Number(d.v) || 0) < 4) {
+        const moved = { odd04: 'odd17', odd05: 'odd18' };
+        const fix = list => Array.isArray(list) ? list.map(e => e && moved[e.id] ? { ...e, id: moved[e.id] } : e) : list;
+        d.stash = fix(d.stash); d.bag = fix(d.bag); d.safe = fix(d.safe);
+        if (d.codex) for (const [from, to] of Object.entries(moved)) if (d.codex[from]) { d.codex[to] = true; delete d.codex[from]; }
+      }
       this._partSpill=[];
       this.attachmentRecovery=Array.isArray(d.attachmentRecovery)?d.attachmentRecovery:[];
       this.commissionBoard = d.commissionBoard == null ? null : d.commissionBoard;
@@ -86,8 +95,8 @@ const Save = {
       this.gear = {
         weapons: this.migrateWeapons(g.weapons),
         melee: g.melee?.equip?.kind === 'melee' ? EQUIP.melee(g.melee.equip.melee,g.melee.equip.bound) : null,
-        helmet: g.helmet ? GEAR.make('helmet', g.helmet.id || g.helmet.lv, g.helmet.dur) : null,
-        body: g.body ? GEAR.make('body', g.body.id || g.body.lv, g.body.dur) : null,
+        helmet: g.helmet ? GEAR.make('helmet', g.helmet.id || g.helmet.lv, g.helmet.dur, g.helmet.max) : null,
+        body: g.body ? GEAR.make('body', g.body.id || g.body.lv, g.body.dur, g.body.max) : null,
         /* 老存档没有背包槽：保持 null，容量回落到基础 4 格 */
         back: (g.back && BACKPACK.def(g.back.id)) ? BACKPACK.make(g.back.id) : null
       };
@@ -156,7 +165,7 @@ const Save = {
     this._dirty = false;
     try {
       localStorage.setItem(this.key, JSON.stringify({
-        v: 3,
+        v: 4,
         codex: this.codex,
         /* 仓库不再叠放，条目数会变多；整份存，别再截尾丢东西 */
         stash: this.stash,

@@ -1,0 +1,104 @@
+{
+  "status": "passed",
+  "localIndexBundle": true,
+  "results": [
+    {
+      "entry": "HTTP index",
+      "songs": [
+        {
+          "id": "base",
+          "duration": 203.173515,
+          "source": "mp3"
+        },
+        {
+          "id": "no_one_answers",
+          "duration": 229.213515,
+          "source": "mp3"
+        },
+        {
+          "id": "beyond_the_grey",
+          "duration": 189.613515,
+          "source": "mp3"
+        },
+        {
+          "id": "business_as_usual",
+          "duration": 183.213515,
+          "source": "mp3"
+        }
+      ],
+      "viewports": [
+        1440,
+        1280,
+        390,
+        320
+      ],
+      "realPlayback": true,
+      "controls": true,
+      "preferences": true,
+      "raidSilenceAndReturn": true,
+      "shop": {
+        "fadeOutPause": {
+          "id": "no_one_answers",
+          "volume": 0,
+          "time": 45.946986
+        },
+        "lobbyRestoredAt": 45.946986,
+        "shopLoop": true,
+        "shopPositionResume": true,
+        "pauseRespected": true,
+        "rapidNavigation": true,
+        "raidDuringFade": true
+      },
+      "errors": []
+    },
+    {
+      "entry": "file:// offline",
+      "songs": [
+        {
+          "id": "base",
+          "duration": 203.173515,
+          "source": "inline"
+        },
+        {
+          "id": "no_one_answers",
+          "duration": 229.213515,
+          "source": "inline"
+        },
+        {
+          "id": "beyond_the_grey",
+          "duration": 189.613515,
+          "source": "inline"
+        },
+        {
+          "id": "business_as_usual",
+          "duration": 183.213515,
+          "source": "inline"
+        }
+      ],
+      "viewports": [
+        1440,
+        1280,
+        390,
+        320
+      ],
+      "realPlayback": true,
+      "controls": true,
+      "preferences": true,
+      "raidSilenceAndReturn": true,
+      "shop": {
+        "fadeOutPause": {
+          "id": "no_one_answers",
+          "volume": 0,
+          "time": 45.970121
+        },
+        "lobbyRestoredAt": 45.970121,
+        "shopLoop": true,
+        "shopPositionResume": true,
+        "pauseRespected": true,
+        "rapidNavigation": true,
+        "raidDuringFade": true
+      },
+      "errors": []
+    }
+  ]
+}

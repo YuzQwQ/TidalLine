@@ -188,8 +188,12 @@ game-render.js  →  renderDamageText：画在雾之后、HUD 之前
   开箱 0 / 0.6 / 1.2 / 1.8 / 2.6 / 3.6 秒，后两档必须站定且全程发声；每箱抽 1–2 或 2–3 件，秘藏固定 3 件。
   25 种容器（每档 3–5 种）用 `cats` 声明类别偏好，强度由 CFG.LOOT.catPref 统一控制（当前 ×9）；
   同品质的稀有度曲线完全一致，偏好只改"出哪一类"。六条曲线见 design/items/CONTAINER_QUALITY.md
-- 183 件物品分为 140 件收集品和 43 件物资（25 种弹药 + 18 件医疗品）；收集品九类，六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 29 件，见 design/items/LIFE_COLLECTIBLES.md；电子产品 15 件，见 design/items/ELECTRONICS.md；工业器材 15 件，见 design/items/INDUSTRIAL.md；医疗收集品 12 件，见 design/items/MEDICAL_COLLECTIBLES.md；文物藏品 21 件，见 design/items/COLLECTIBLES.md；军事收集品 15 件，见 design/items/MILITARY_COLLECTIBLES.md；情报收集品 15 件，见 design/items/INTEL_COLLECTIBLES.md；神秘学物品 15 件，见 design/items/OCCULT_COLLECTIBLES.md；
+- 218 件物品分为 170 件收集品和 48 件物资（30 种弹药 + 18 件医疗品）；收集品九类，六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 31 件，见 design/items/LIFE_COLLECTIBLES.md；电子产品 17 件，见 design/items/ELECTRONICS.md；工业器材 17 件，见 design/items/INDUSTRIAL.md；医疗收集品 14 件，见 design/items/MEDICAL_COLLECTIBLES.md；文物藏品 22 件，见 design/items/COLLECTIBLES.md；军事收集品 17 件，见 design/items/MILITARY_COLLECTIBLES.md；情报收集品 17 件，见 design/items/INTEL_COLLECTIBLES.md；神秘学物品 17 件，见 design/items/OCCULT_COLLECTIBLES.md；异常遗物 14 件，见 design/items/ODD_COLLECTIBLES.md；
   逐条数值（编号 / 类别 / 名称 / 稀有度 / 重量 / 价值 / 简称 / 描述 / 画什么）见 design/items/ITEM_INDEX.md，由 `node tools/gen-item-index.js` 从 ITEMS 生成
+- 异常遗物补到 14 件（不含 4 件彩蛋）：新增 `odd04`–`odd12` 九件，覆盖寻常到珍罕五档，
+  解决"这一类只有紫/红、偏好它的容器抽低档只能回落"的问题。见 [异常遗物补充](design/items/ODD_COLLECTIBLES.md)。
+  同日两件红档样本让号（逆流沙漏 `odd04→odd17`、瓶中风暴 `odd05→odd18`），存档版本从 `v3` 升到 `v4`：
+  `v<4` 的旧档在读档时把仓库 / 背包 / 保险箱 / 图鉴里的旧 ID 搬过去，`v4` 起不再迁移。
 - 统一单格背包 24 格 + 安全箱 4 格 + 45kg 负重上限，负重四档影响移速和噪声
 - 未录入的物品在搜刮面板里有橙色「新」角标
 
@@ -361,6 +365,72 @@ B切换射击模式；短按R装填，长按R选择优先弹种。半自动每�
 头盔只管爆头，护甲只管身体，互不参与。
 
 敌人（拾荒者）身上的 Lv1–2 盔甲走同一套逻辑，尸体上捡到的就是打剩下的耐久。
+
+### 修理与耐修程度
+
+每件护甲模板带一个 `rep`（耐修程度，0~100，写在 `js/data.js` 的护甲表里，变体款来自
+`design/equipment/armor-variants-v1/design.json` 的 `proposed.repair`）。修理只在藏身处开放：
+
+- 装备槽右键：`详情 / 卸下 / 修理`
+- 详情浮窗（装备栏 / 仓库 / 背包共用）：底部多一个「修理」按钮
+
+点开后是一个确认浮窗（`Deal.show`，带 `bar` / `priceLabel` / `hideBalance`）：护甲名字、防护等级、
+一条耐久条、一行小字（`耐久 20 → 78 · 上限 94 → 78`）和修理费。确认才扣钱；钱不够按钮变灰，
+满耐久或上限见底时只给一句说明，不弹窗。耐修程度只作为内部参数参与结算，不再占页面一行。
+
+每次修理把耐久补满到「当前上限」，同时削掉一截上限：
+
+| 项 | 公式 |
+|---|---|
+| 上限损耗 | `round(缺失耐久 × (1 − rep/100) × CFG.REPAIR.WEAR)` |
+| 修理费 | `护甲原价 ÷ 原厂耐久 × 缺失耐久 × CFG.REPAIR.COST`（取整到 10，最低 `MIN_FEE`） |
+
+- 缺失耐久 = 当前上限 − 当前耐久；上限跌到 `CFG.REPAIR.MIN_MAX`（4）就不再接受修理
+- 费用分母是**原厂耐久**：当前上限越修越低，拿它折算会让同一件甲越修越便宜
+- 实例多一个 `max`（当前上限）：`GEAR.make(type, id, dur, max)`、`EQUIP.armor`、`Base.equipFromStash`、
+  `Save.load` 都会原样带过去 —— 换装、卸下、读档都不会把修理痕迹抹回模板值
+- 回收价改成 `耐久 / 原厂耐久` 折算，修掉一半上限的甲不会按满值回收
+- 耐修范围 50（攻坚系）~76（皮革背心）：六级甲从 20/115 修回满要掉 21 点上限、花 ¥31,600，
+  一级布帽掉 3 点
+
+**耐久条**（`js/durabar.js`）是这套系统的读图：整条按**原厂上限**铺满 ——
+
+| 颜色 | 含义 |
+|---|---|
+| 绿 | 当前耐久 |
+| 灰 | 已经打掉、还在当前上限以内的耐久 |
+| 红 | 被修理吃掉的上限（修过才有） |
+
+从右往左掉：满耐久整条绿，挨打时绿色右端退、灰色补上来，修过以后右边多出一截永久红色。
+它挂在仓库格、背包格、保险箱格、备战页装备槽、局内背包格、局内装备槽、尸体装备格，
+以及详情浮窗（名字正下方）和修理确认窗。确认窗里画的是**修完的样子**：`cap` 传修完的上限，
+灰色因此变成“这一下要修回来的部分”，红色是修完之后的累计上限损耗。
+
+### 枪械槽位点
+
+枪没有耐久，同一个位置改画配件槽（`js/slotdots.js`）：一颗点一个槽，顺序固定
+`瞄具 → 握把 → 枪托 → 枪口 → 弹匣`，所以不同枪之间能横向比。
+
+| 点 | 含义 |
+|---|---|
+| 灰点 | 这个槽位空着 |
+| 彩点 | 装了配件，颜色取配件的稀有度（`RARITY[].color`，和格子左侧的色条同一套） |
+
+- **点数按“真能装”算**，不按数据表：23 把枪的 `attachmentSlots` 全都标了 5 个槽，
+  但手枪没有握把/枪托配件、泵动霰弹没有握把/弹匣槽。直接照槽位表画会给出永远灰着的死点，
+  所以 `slots()` 要求该槽至少有一件 `Attachments.compatible()` 通过的配件——手枪因此是 3 点，
+  带枪托的步枪 5 点，Groza/M16 这类不可换托的是 4 点。结果按枪 id 缓存。
+- 每颗点自带 `title`（`瞄具：全息瞄具（上乘）` / `握把：空槽`），整排也有
+  `配件 3/5 · 瞄具 握把空 …` 的汇总；详情浮窗里再用一行小字只列**装了**的槽位，
+  全空时写“尚未安装配件”，不重复四个“空”。
+- 挂的位置和耐久条一致：仓库格、背包格、保险箱格、备战页装备槽（文字下面）、
+  局内背包格、局内安全箱、局内装备槽、尸体装备格、详情浮窗（名字下方、按钮上方），
+  以及**商人货架**——全新枪一件配件都没有，那也是信息：照样把全部槽位画成灰点，
+  玩家在挑枪时就能看出这把能不能换托、能不能换弹匣。货架卡片是竖排文字，
+  点在名称与价格之间（`margin:auto` 居中），不绝对定位，免得压住价格。
+- 格子底边很挤，规则各不相同：仓库格把名称抬到 `bottom:14px` 给点让位；备战背包格
+  （`storage.css` 里 `.cn` 是绝对定位）抬到 9px；局内装备槽条最矮，点缩到 3px、间距 1px，
+  正好和右侧弹药数字并排不打架。
 
 ### 爆头是打出来的，不是随机的
 
@@ -661,6 +731,56 @@ B切换射击模式；短按R装填，长按R选择优先弹种。半自动每�
 足够别人从两个房间外走过来。这就是"搜到哪一件就走"成为真决定的原因。
 
 数值都在 `js/config.js` 的 `SEARCH` 和 `ITEM_SEARCH` 两段。
+
+### 红色价值档位
+
+红色（`r:6`、孤品）内部再分三档，只用于抽取与策划，不在局内显示：
+
+| tier | 档位 | 价格带 | 件数 | 红内权重 |
+| --- | --- | --- | --- | --- |
+| 1 | 普通红 | 40–80 万 | 9 | 45 |
+| 2 | 良好红 | 100–200 万 | 9 | 35 |
+| 3 | 稀有红 | 300–600 万 | 10 | 18 |
+
+- 每件红带 `tier: 1|2|3`；权重在 `CFG.LOOT.redTiers`，三档合计 98，正好给彩蛋留 2%。
+- `Loot.roll` 的档内分母从「件数」改成「档位权重和」：
+  `v = pct × catW / cellW × tierW / ΣtierW(该档该类)`。稀有度曲线与类别占比都不受影响，
+  只有同档同类里「哪种红更容易出」变了。`Loot.pickFromPool` 同样按档位加权。
+- 为什么每类都要有三档：`roll` 先定稀有度、再按类别平分；容器还能带 `cats` 偏好（`catPref=9`）。
+  如果某类只有稀有红，偏好该类的容器抽到红就只会出稀有档，分档在它身上失效。
+  现在九个类别各 3 件（电子 4 件），矩阵见 `design/items/RED_ROSTER.md`。
+- 实测（秘藏箱 30 万抽）：红 8%，红内普通 44.7% / 良好 34.0% / 稀有 19.4% / 彩蛋 2.0%；
+  稀有略高于 18%，因为电子类有两件稀有红，类别内归一后多占一点。
+- 单件可用 `item.lootW` 微调（默认 1）；没写 `tier` 的红按三档均值兜底，不会被判成抽不到。
+- 17 件新增红品的美术已交付：1254px 原稿在 `assets/item-art/red-collectibles-v1/sources/`，
+  `node tools/prepare-red-collectibles-icons.js` 出 48px 图标（Lanczos + 二值 alpha + 4px 边），
+  再跑 `node tools/build-detail-art.js` 把原稿登记进 `DETAIL_ART`（现 276 张、0 回落）。
+  这批原稿是放大过的大图，别用最近邻——40px 上细节会碎成噪点。
+
+### 彩蛋藏品
+
+四件隐藏藏品（`odd13`–`odd16`）走一条独立支线，不参与任何常规抽取池：
+
+```
+容器抽一件 ──→ 是红色（r6）吗？
+                 ├─ 否 → 就是它
+                 └─ 是 → 再掷 CFG.LOOT.eggChance（2%）
+                           ├─ 没中 → 还是原来的红件
+                           └─ 中了 → 从四件彩蛋里等概率换一件
+```
+
+- 数据侧只多一个 `egg: true` 标记：`Loot.roll` 与 `Loot.pickFromPool` 都按它过滤，
+  所以彩蛋不会挤进红色池把其它孤品的概率摊薄；回声体、拾荒者背包、商人货架自然也不会出。
+- 彩蛋本身也是 r6，所以 `CONTAINER_QUALITY` 的六档曲线**一格不动**——
+  `test-item-rarity.js` 的实测分布断言仍然精确通过。秘藏箱单件 8% × 2% = 0.16%，
+  普通箱 0.1% × 2% = 0.002%；四件均分。
+- 想关掉就把 `eggChance` 改 0；想再加一件，只在 `ITEMS` 里补一条带 `egg: true` 的红色条目即可，
+  池过滤和均分都按数据走。
+- 详情浮窗在「异常遗物 · 孤品」后面多一枚金色 `彩蛋` 标签（`.tip-egg`）；格子、背包、搜刮界面
+  不加任何记号——彩蛋该由玩家自己发现。立绘走 `DETAIL_ART` 原图通道，
+  背包图标由 `tools/prepare-easter-egg-icons.js` 从同一张原稿缩出来。
+
+完整规则与概率表见 [design/items/EASTER_EGGS.md](design/items/EASTER_EGGS.md)。
 
 ## 丢弃与遗落物品堆
 
@@ -1221,8 +1341,10 @@ UI 是背景层，翻一下仓库不该盖住局内的脚步：
 
 ### 背景音乐（局外）
 
-大厅放的是《退潮之后 / After the Ebb》（Suno 生成），`assets/audio/bgm_base.mp3`，
-**2.3MB / 3 分 23 秒 / 96kbps**，比全部 28 段音效加起来还大一倍多，所以它走自己的一条路：
+当前曲库是《退潮之后》《无人应答》《越过灰色地带》与商店主题《照常营业》，均从用户提供的完整WAV导出为
+**192kbps / 44.1kHz / 双声道MP3**，合计18.44MiB。原稿保留在 `assets/audio/_source/音乐/`。
+藏身处顶部「局外音乐」提供选曲、暂停、进度、音量、顺序/单曲/随机循环，并独立保存设置。
+具体曲目、大小、导入及验证流程见 [局外音乐说明](design/audio/lobby-music-v1/README.md)。
 
 | | 音效 SFX | 音乐 Music |
 |---|---|---|
@@ -1234,34 +1356,30 @@ UI 是背景层，翻一下仓库不该盖住局内的脚步：
 直接输出静音，而单文件版正是 `file://` 跑的。所以音乐自己管音量，不进压缩器——
 本来也不该和枪声一起被压。
 
-**为什么单文件版会大 3MB**：音乐也内联成了 data URI（`window.__MUSIC__`），
-`file://` 下 fetch 不到本地 mp3。build.js 里有 6MB 的上限，超了就跳过内联、
-单文件版安静地没有 BGM。多文件版 `file://` 打开时靠 `assets/audio/bundle.js`
+**离线版体积**：四首压缩音乐内联成data URI（`window.__MUSIC__`），base64约24.58MiB。
+build.js 的单曲上限是6MiB，超限报错，需先压缩；不会静默漏掉曲目。
+多文件版 `file://` 打开时靠 `assets/audio/bundle.js`
 （构建产物，同样带 `__MUSIC__`）拿到 data URI。
 
 进出规则：`Base.open()` 起音乐，`Game.startRun()` 掐掉——**选图页不算局外之外**，
 `Base.close()` 不停，免得每次选图音乐断一下。结算页 `showEnd()` 会重新起，
-死回来不至于一片死寂。换歌只要改 `js/music.js` 里 `TRACKS` 的 `file` 和 `vol`。
+死回来不至于一片死寂。保持所选曲目；手动暂停会跨页面刷新保持。
+曲库来源是 `manifest.json.music`，`tools/build-music-data.js` 生成 `js/music-player.js`
+的曲库块，列表自动生成；`js/music.js` 保留底层单实例播放和淡入淡出。
+`Safehouse.applyView()` 按具体商店/普通局外切换音乐场景；场景改变采用先淡出暂停、再载入恢复进度并淡入的顺序，取消过期切换回调，商店页内刷新不会重播。`scene: shop` 曲目不混入普通局外自动播放池。
 
-**换一首歌怎么转**（Sun o 导出的 wav 通常 34MB 起，必须压）：
+**导出音乐成品**（原稿保留，不在运行时使用大体积WAV）：
 
 ```bash
-# ffmpeg 没预装：npm i @ffmpeg-installer/ffmpeg（自带二进制，别装到项目依赖里）
 ffmpeg -i "源.wav" \
-  -af "atrim=start=<头部静音秒数>,afade=t=in:st=0:d=1.2,afade=t=out:st=<时长-3>:d=3,loudnorm=I=-17:TP=-1.5:LRA=11" \
-  -c:a libmp3lame -b:a 96k -ar 44100 -ac 2 \
-  -metadata title="..." -metadata album="TidalLine OST" \
+  -map 0:a:0 -vn -c:a libmp3lame -b:a 192k -ar 44100 -ac 2 \
+  -map_metadata -1 -id3v2_version 3 -metadata title="中文 / English" \
   -y assets/audio/bgm_名字.mp3
 ```
 
-四件事一次做完：**裁掉头部静音**（Suno 导出常在正式起音前留 100~200ms 死寂，
-`atrim=start=` 那段秒数自己测——不裁的话循环接缝前会多出一拍空白）、
-**首尾淡入淡出**（`loop` 时才不会咔一下）、**响度归一到 -17 LUFS**
-（比流媒体 -14 低一档，游戏里垫在音效下面）、**降到 96kbps**（128k 只是白白多 800KB）。
-34MB → 2.3MB，听感上基本没有区别。
-
-转完拿 `ffmpeg -i 成品.mp3 -af ebur128=peak=true -f null -` 复核 `I` 是不是 -17 LUFS——
-换歌时最要紧的是**新旧两版一样响**，不然玩家一更新就被音量跳一下。
+当前四首不裁切、不额外改变原曲响度，保留完整时长，音量由播放器控制。
+用 `tools/audio-add.js --music` 登记MP3，再运行 `node build.js --audio-only` 和
+`node build.js --assets-only`。`tools/prepare-lobby-music.js` 可重导入当前四首。
 
 ### 目录与构建
 

@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "active": {
+        "spent": 50,
+        "cap": 70,
+        "hp": 37.50000000000014,
+        "label": "+15 HP/秒 · HP 38 / 100"
+      },
+      "controlled": {
+        "lowDisabled": true,
+        "enoughEnabled": true,
+        "safeEnabled": true,
+        "chosen": 50,
+        "used": true,
+        "bleeding": false,
+        "hp": 100,
+        "items": 1,
+        "lowCap": 49,
+        "lowStillBleeds": true,
+        "lowAfterCap": 34,
+        "lowAfterHp": 55,
+        "cancelCap": 120,
+        "cancelStillBleeds": true
+      },
+      "saveCapacity": 55,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": [],
+      "external": 0
+    },
+    {
+      "file": "潮汐线.html",
+      "active": {
+        "spent": 50,
+        "cap": 70,
+        "hp": 37.625000000000135,
+        "label": "+15 HP/秒 · HP 38 / 100"
+      },
+      "controlled": {
+        "lowDisabled": true,
+        "enoughEnabled": true,
+        "safeEnabled": true,
+        "chosen": 50,
+        "used": true,
+        "bleeding": false,
+        "hp": 100,
+        "items": 1,
+        "lowCap": 49,
+        "lowStillBleeds": true,
+        "lowAfterCap": 34,
+        "lowAfterHp": 55,
+        "cancelCap": 120,
+        "cancelStillBleeds": true
+      },
+      "saveCapacity": 55,
+      "widths": [
+        1440,
+        390,
+        320
+      ],
+      "errors": [],
+      "external": 0
+    }
+  ]
+}

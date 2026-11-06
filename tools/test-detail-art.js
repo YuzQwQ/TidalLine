@@ -1,7 +1,9 @@
 const fs=require('fs'),path=require('path'),assert=require('assert/strict'),crypto=require('crypto'),http=require('http'),{pathToFileURL}=require('url'),{chromium}=require('playwright');
 const root=path.resolve(__dirname,'..'),catalog=require('../assets/item-details/catalog.json'),out=path.join(root,'output/detail-art');
 for(const a of catalog.assets){const b=fs.readFileSync(path.join(root,a.source));assert.equal(b.readUInt32BE(16),a.width);assert.equal(b.readUInt32BE(20),a.height);assert(a.width>48&&a.height>48,a.key);assert.equal(crypto.createHash('sha256').update(b).digest('hex'),a.sourceHash);assert.equal(a.target,a.source,'must use actual original');}
-assert.equal(catalog.missing.length,0);
+/* 正在绘制的红档新件：图标是占位图、详情原图还没交，允许它们暂时缺失 */
+const pending=new Set(require('../design/items/classification.json').items.filter(i=>i.pendingArt).map(i=>'items/'+i.id));
+assert.deepEqual(catalog.missing.filter(k=>!pending.has(k)),[],'缺详情原图');
 const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));if(!file.startsWith(root+path.sep))return res.writeHead(403).end();fs.readFile(file,(e,b)=>e?res.writeHead(404).end():res.writeHead(200,{'Content-Type':file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.png')?'image/png':'text/html;charset=utf-8'}).end(b));});
 (async()=>{
  fs.mkdirSync(out,{recursive:true});await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({channel:'msedge',headless:true}),reports=[];
@@ -15,7 +17,7 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+deco
   for(const name of ['life01','heal01','odd02','ammo_556_2','g_m4a1','g_helmet1','g_body3_fragmentation','g_bag03','g_melee01']){
    const id=await p.evaluate(name=>{const entry=Save.stash.find(e=>e.id===name||e.gear?.id===name);if(!entry)return null;StorageUI.select(entry,document.querySelector('#stashGrid .scell'));return stashItem(entry).id;},name);
    if(!id)throw new Error('Missing fixture '+name);
-   const img=p.locator('.st-item-picture img');await img.scrollIntoViewIfNeeded();await img.evaluate(i=>i.decode());
+   const img=p.locator('#itemTip img');await img.scrollIntoViewIfNeeded();await img.evaluate(i=>i.decode());
    const s=await img.evaluate(i=>({w:i.naturalWidth,h:i.naturalHeight,render:getComputedStyle(i).imageRendering,original:i.hasAttribute('data-detail-image')}));
    /* 单文件版（潮汐线.html）是自包含分发物：身边没有 assets/，按设计文档只带 48px 图标，
       不发必然失败的请求。开发版（http / file 多文件）才用 native 尺寸原图。 */

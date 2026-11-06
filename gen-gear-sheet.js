@@ -115,7 +115,7 @@ function armorCard(type, g) {
       <div class="thumb">${thumb(id)}</div>
       <div class="meta">
         <div class="name">${esc(g.name)}<i class="tag">Lv${g.lv} ${tag} · ${esc(RARITY[rarity-1].name)}</i><i class="tag dim">${esc(g.short)}</i></div>
-        <div class="sub"><code>${esc(id)}.png</code> · 防护 <b class="dr">Lv${g.lv}</b> · 耐久 ${g.dur} · ${g.w}kg${move} · ${money(g.price)}</div>
+        <div class="sub"><code>${esc(id)}.png</code> · 防护 <b class="dr">Lv${g.lv}</b> · 耐久 ${g.dur} · 耐修 ${g.rep ?? 50} · ${g.w}kg${move} · ${money(g.price)}</div>
         <div class="vis"><b>画什么</b>${esc(g.visual || VISUAL[id] || '')}</div><div class="desc">${esc(g.desc || '')}</div>
       </div>
     </div>`;
@@ -177,7 +177,7 @@ const html = `<!DOCTYPE html>
 </section>
 
 <section class="cat">
-  <p><a href="assets/item-art/armor-variants/index.html">新增8款图标与缩小预览</a> · 同级装备通过耐久、重量与瞄准准备时间取舍；不再直接降低移速，负重分档仍有效。</p><h2>身体护甲<em>body armor</em><i>${BODIES.length} 张 · Lv1–Lv6</i></h2>
+  <p><a href="assets/item-art/armor-variants/index.html">新增8款图标与缩小预览</a> · 同级装备通过耐久、耐修程度、重量与瞄准准备时间取舍（耐修越高，修理时掉的上限越少）；不再直接降低移速，负重分档仍有效。</p><h2>身体护甲<em>body armor</em><i>${BODIES.length} 张 · Lv1–Lv6</i></h2>
   <div class="grid">${BODIES.map(g => armorCard('body', g)).join('')}</div>
 </section>
 

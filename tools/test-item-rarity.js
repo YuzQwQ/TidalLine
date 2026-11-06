@@ -5,10 +5,18 @@ for(const f of ['config.js','data.js','core.js'])vm.runInContext(fs.readFileSync
 const {items,tiers,cfg,loot,groupOf}=vm.runInContext('({items:ITEMS,tiers:RARITY,cfg:CFG,loot:Loot,groupOf:itemGroup})',c),review=require('../design/items/rarity.json');
 assert.deepEqual(Array.from(tiers,t=>t.name),['寻常','良品','上乘','稀见','珍罕','孤品']);
 assert.deepEqual(Array.from(tiers,t=>t.color),['#c6ceca','#3f8b78','#3f6d9b','#9165b3','#a8862a','#8d3a3a']);
-assert.equal(review.items.length,140);assert.equal(new Set(review.items.map(i=>i.id)).size,140);
+assert.equal(review.items.length,170);assert.equal(new Set(review.items.map(i=>i.id)).size,170);
 for(const r of review.items){const item=items.find(i=>i.id===r.id);assert.equal(groupOf(item),'collectible');assert.equal(item.r,r.rarity);assert(r.reason.length>12);}
-assert.deepEqual(Array.from(tiers,t=>items.filter(i=>groupOf(i)==='collectible'&&i.r===t.k).length),[15,27,30,32,25,11]);
-assert.equal(items.filter(i=>i.r===6).length,11);assert(items.filter(i=>i.r===6).some(i=>i.id==='odd02'));
+assert.deepEqual(Array.from(tiers,t=>items.filter(i=>groupOf(i)==='collectible'&&i.r===t.k).length),[17,29,33,32,27,32]);
+assert.equal(items.filter(i=>i.r===6).length,32);assert(items.filter(i=>i.r===6).some(i=>i.id==='odd02'));
+/* 红档内部必须有价值档位：每件非彩蛋红都带 tier，且三档都有人 */
+const reds=items.filter(i=>i.r===6&&!i.egg);
+assert(reds.every(i=>[1,2,3].includes(i.tier)),'红档缺 tier');
+assert.deepEqual([1,2,3].map(t=>reds.filter(i=>i.tier===t).length),[9,9,10]);
+const L=vm.runInContext('Loot',c);assert.equal(cfg.LOOT.redTiers[1]+cfg.LOOT.redTiers[2]+cfg.LOOT.redTiers[3],98);
+assert(L.tierWeight(reds.find(i=>i.tier===1))>L.tierWeight(reds.find(i=>i.tier===2)));
+assert(L.tierWeight(reds.find(i=>i.tier===2))>L.tierWeight(reds.find(i=>i.tier===3)));
+assert.equal(L.tierWeight(reds.find(i=>i.id==='odd02')),cfg.LOOT.redTiers[3]);
 for(const i of items){assert(Number.isInteger(i.r)&&i.r>=1&&i.r<=6);if(i.id==='ammo'||i.id==='heal01')assert.equal(i.r,1);}
 const times=Array.from(cfg.ITEM_SEARCH.timeByRarity);assert.equal(times.length,6);assert.equal(times[5],3);assert(times.every((t,i)=>i===0||t>times[i-1]));
 // 六档容器：配置层不得有任何"绝对拿不到"的稀有度，且实测分布必须等于目标值。
@@ -54,4 +62,4 @@ for(let i=0;i<10000;i++){
  echoCounts.set(item.id,(echoCounts.get(item.id)||0)+1);
 }
 assert(echoCounts.get('odd02')>0&&echoCounts.get('odd02')<echoCounts.get('odd01')/4,'异常遗物池不可等概率掉孤品');
-console.log('OK: 六级名称与白绿蓝紫金红 / 140件逐项评级 / 15-27-30-32-25-11分布 / 六档容器实测=目标 / '+Object.keys(CT).length+' 种容器字模与贴图 / 物资不变 / 六级搜索 / 紫级与孤品掉落');
+console.log('OK: 六级名称与白绿蓝紫金红 / 170件逐项评级 / 17-29-33-32-27-32分布 / 六档容器实测=目标 / '+Object.keys(CT).length+' 种容器字模与贴图 / 物资不变 / 六级搜索 / 紫级与孤品掉落');

@@ -13,6 +13,7 @@ ctx.globalThis = ctx;
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/config.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/data.js'), 'utf8'), ctx);
+vm.runInContext(fs.readFileSync(path.join(dir, 'js/medical.js'), 'utf8') + '\nglobalThis.Medical=Medical;', ctx);
 vm.runInContext('globalThis.ITEMS=ITEMS;globalThis.CATS=CATS;globalThis.RARITY=RARITY;globalThis.COLLECTION_CATS=COLLECTION_CATS;globalThis.ITEM_GROUPS=ITEM_GROUPS;globalThis.itemGroup=itemGroup;globalThis.itemCategoryLabel=itemCategoryLabel;globalThis.MEDICAL_GROUPS=MEDICAL_GROUPS;', ctx);
 
 const { ITEMS, CATS, RARITY, COLLECTION_CATS, ITEM_GROUPS, itemGroup, itemCategoryLabel } = ctx;
@@ -177,7 +178,16 @@ const VISUAL = {
   occ15:  '一页不规则浅灰黄色古老文献，装在细窄的暗金色保护框中，纸面数行黑褐色古文字，顶部三重圆环符号，左侧一排细小装订孔，底部文字在边缘突然中断',
   odd01:  '半透明的青色不规则结晶，内部有像声波一样的纹路',
   odd02:  '精致的复古黄铜天文仪，三重交错金属圆环，外环有刻度、齿轮和机械装饰，略带锈蚀与海盐结晶。中央悬浮深海蓝透明水球，内部可见微缩海洋、弯曲银白浪线和极小的白色灯塔剪影，下方为三足机械底座。古铜金、深海蓝、银白色为主，少量冷青反光；完整呈现、透明背景，不加文字、场景或大面积发光。',
-  odd03:  '银色怀表，表盖敞开，指针停在同一个位置，表面有水痕'
+  odd03:  '银色怀表，表盖敞开，指针停在同一个位置，表面有水痕',
+  odd04:  '不规则灰白色盐团，表面湿润发亮，局部结着新鲜白霜，夹杂少量黑砂和贝壳碎屑',
+  odd05:  '细长透明小玻璃瓶，瓶口有裂纹，内部装着灰黑色灰烬，瓶壁微微起雾，带一点暖灰反光',
+  odd06:  '四五片深青色半透明鳞片叠放，边缘卷曲向内，表面有细密纹理，最上方一片微微翘起',
+  odd07:  '一片皱缩的半透明薄膜，整体偏灰白，边缘卷起，表面浮现紫绿交错的虹彩反光',
+  odd08:  '一根透明厚壁试管，内部悬浮着一团黑色细砂，呈环形盘旋状态，试管带金属封盖',
+  odd09:  '一块不规则蜜黄色半透明琥珀状凝块，内部有一圈较深色纹路，底部略微塌软',
+  odd10:  '一团灰白色不规则蜡块，边缘有凝固的垂流形态，局部泛着冷白色微光，但不夸张发光',
+  odd11:  '一块棱角分明的淡青透明晶核，内部呈层层折射结构，边角锐利，中心带轻微雾状核心',
+  odd12:  '一根细长略弯的银灰色骨质脊针，表面有分节状棱脊，中段有一小段视觉上像被截断又接续'
 };
 
 const byCat = {};
@@ -204,7 +214,7 @@ function card(it) {
         <div class="name">${esc(it.name)}${isStack ? '<i class="tag">可堆叠 ' + it.stack + '</i>' : ''}${it.noCodex ? '<i class="tag dim">不进图鉴</i>' : ''}</div>
         <div class="sub"><code>${esc(it.id)}</code> · <span style="color:${cat.color}">${itemCategoryLabel(it)}</span> · <span style="color:${r.color}">${r.name}</span> · ${it.w}kg · ${it.price > 0 ? money(it.price) : '不定价'}${it.short ? ' · 背包简称 <b style="color:#a8c4ba">' + esc(it.short) + '</b>' : ''}</div>
         <div class="desc">${esc(it.desc)}</div>
-        ${it.medicalGroup ? `<div class="vis"><b>${esc(ctx.MEDICAL_GROUPS[it.medicalGroup])} · ${esc(it.source)}</b>${it.healCap ? `启动 ${it.healStart} 秒 · ${it.healRate} HP/秒 · 容量 ${it.healCap} · 局内持续治疗 / 局外立即` : `效果待开放 · 预留：${esc(it.reservedEffect)} · 本轮不掉落`}<br>品牌与历史叙事来自医疗产业提案，尚未并入正式世界观。</div>` : ''}
+        ${it.medicalGroup ? `<div class="vis"><b>${esc(ctx.MEDICAL_GROUPS[it.medicalGroup])} · ${esc(it.source)}</b>${esc(ctx.Medical.summary(it))}${it.healCap ? ' · 局内持续治疗 / 局外立即' : !ctx.Medical.ready(it) ? ' · 本轮不掉落' : ' · 仅行动中使用'}<br>品牌与历史叙事来自医疗产业提案，尚未并入正式世界观。</div>` : ''}
         ${classificationById.has(it.id)?`<div class="vis"><b>分类依据</b>${esc(classificationById.get(it.id).reason)}</div>`:''}
         ${vis ? `<div class="vis"><b>画什么</b>${esc(vis)}</div>` : ''}
       </div>
@@ -255,7 +265,7 @@ const html = `<!DOCTYPE html>
     和游戏里的数据完全一致；改完物品表重跑 <code>node gen-item-sheet.js</code> 就会更新。<br>
     <a href="design/weapons/arsenal-v1/art/index.html">枪械与新增弹药图标</a> · 已配置图标 <b>${iconCount} / ${ITEMS.length}</b>，下方预览与游戏共用 <code>assets/items/</code> 中的贴图。<a href="assets/item-art/collectibles/index.html">新增收集品图标总览</a> · <a href="assets/item-art/electronics/index.html">新增电子产品9件</a> · <a href="assets/item-art/medical-collectibles/index.html">新增医疗收集品10件</a> · <a href="assets/item-art/industrial/index.html">新增工业器材12件</a> · <a href="assets/item-art/heritage/index.html">新增文物藏品8件</a> · <a href="assets/item-art/military/index.html">新增军事物资15件</a> · <a href="assets/item-art/intel/index.html">新增情报资料13件</a> · <a href="assets/item-art/occult/index.html">新增神秘学物品15件</a>。
     <br>收集品保留九类，物资单独分为弹药类与医疗物品。<a href="design/items/CLASSIFICATION.md">逐件分类与世界观依据</a>。
-    <br>医疗品18件图标已全部绘制，5件开放恢复HP，其余效果待开放。<a href="assets/item-art/medical/index.html">查看医疗图标总览</a>。<a href="design/items/MEDICAL.md">医疗系统说明</a> · <a href="design/world setting/医疗产业提案.md">医疗产业提案（非正式历史）</a>。
+    <br>医疗品18件图标已全部绘制，5件恢复HP、6件处理损伤，7件效果待开放。恢复药剩余容量足50时优先读条止血，再继续回血。<a href="assets/item-art/medical/index.html">查看医疗图标总览</a>。<a href="design/items/MEDICAL.md">医疗系统说明</a> · <a href="design/world setting/医疗产业提案.md">医疗产业提案（非正式历史）</a>。
     <br>稀有度采用白、绿、蓝、紫、金、红六级。<a href="design/items/RARITY.md">查看 ${ITEMS.filter(i=>itemGroup(i)==='collectible').length} 件收集品的稀有度评级</a>；
     生活用品按"工业通用 / 多传统交汇 / 环礁湾独有"三层收敛为 ${ITEMS.filter(i=>i.cat==='life').length} 件，说明见 <a href="design/items/LIFE_COLLECTIBLES.md">生活器物</a>。
   </div>

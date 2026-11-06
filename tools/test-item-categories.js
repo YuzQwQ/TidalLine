@@ -11,7 +11,7 @@ assert.deepEqual(Array.from(order,k=>cats[k].name),['生活用品','电子产品
 /* 弹药是三口径×五等级派生出来的家族，不进分类评审表（它没有"归类"这回事），
    单独在下面对照需求表逐条校验。 */
 const curated=items.filter(i=>i.cat!=='ammo');
-assert.equal(new Set(review.items.map(r=>r.id)).size,curated.length);assert.equal(curated.length,158);
+assert.equal(new Set(review.items.map(r=>r.id)).size,curated.length);assert.equal(curated.length,188);
 for(const item of curated){
  const record=review.items.find(r=>r.id===item.id);assert(record&&record.reason);assert.equal(item.cat,record.category);assert.equal(groupOf(item),record.group);assert(groups[record.group].cats.includes(item.cat));
  const original={...record.original,cat:record.category};
@@ -23,23 +23,23 @@ for(const item of curated){
  const pendingArt=new Set(review.items.filter(r=>r.pendingArt).map(r=>r.id));
  assert((item.cat==='medical'&&!item.iconId)||fs.existsSync(path.join(root,'assets/items',hasIcon+'.png'))||pendingArt.has(item.id),'缺贴图 '+item.id);
 }
-assert.equal(items.filter(i=>!i.noCodex).length,140);assert.equal(items.filter(i=>i.cat==='occult').length,15);
-assert.equal(items.filter(i=>groupOf(i)==='collectible').length,140);assert.equal(items.filter(i=>groupOf(i)==='supply').length,43);
+assert.equal(items.filter(i=>!i.noCodex).length,170);assert.equal(items.filter(i=>i.cat==='occult').length,17);
+assert.equal(items.filter(i=>groupOf(i)=='collectible').length,170);assert.equal(items.filter(i=>groupOf(i)==='supply').length,48);
 for(const id of ['life02','art03'])assert.equal(items.find(i=>i.id===id).cat,'intel');
 assert.equal(items.find(i=>i.id==='antiq03').cat,'life');assert.equal(items.find(i=>i.id==='elec01').cat,'elec');
-/* 弹药：25 种（五口径 × 五等级），id 只有 ammo_{口径}_{等级} 这一种写法，全部不进图鉴与掉落 */
+/* 弹药：30 种（六口径 × 五等级），id 只有 ammo_{口径}_{等级} 这一种写法，全部不进图鉴与掉落 */
 const ammo=items.filter(i=>i.cat==='ammo');
-assert.equal(ammo.length,25);
-assert.equal(new Set(ammo.map(a=>a.id)).size,25);
+assert.equal(ammo.length,30);
+assert.equal(new Set(ammo.map(a=>a.id)).size,30);
 for(const a of ammo){
   assert.equal(a.id,'ammo_'+a.caliber+'_'+a.level);
-  assert(['556','762x39','9mm','45acp','12g'].includes(a.caliber));
+  assert(['556','762x39','9mm','45acp','12g','545x39'].includes(a.caliber));
   assert(a.level>=1&&a.level<=5);
   assert(a.noCodex&&a.noLoot);
   assert.equal(a.penLevel,a.level);
   assert(a.stack>0&&a.w>0&&a.price>0);
 }
-for(const cal of ['556','9mm','12g'])assert.equal(ammo.filter(a=>a.caliber===cal).length,5);
+for(const cal of ['556','9mm','12g','545x39'])assert.equal(ammo.filter(a=>a.caliber===cal).length,5);
 assert(items.filter(i=>i.id==='ammo').length===0,'老的通用弹药应该已经去掉');
 const bandage=items.find(i=>i.id==='heal01');assert.equal(bandage.cat,'medical');assert(bandage.use&&bandage.noCodex&&!bandage.noLoot);
 assert(types.M.cats.includes('med')&&types.M.cats.includes('medical'));
@@ -47,4 +47,4 @@ for(const k of ['antiq','art','lux','spec'])assert(!cats[k],'旧分类不应留�
 for(const box of map.containers)for(const cat of box.preference)assert(cats[cat],'地图掉落偏好失效 '+box.id);
 for(const box of Object.values(types))for(const cat of box.cats||[])assert(cats[cat]);
 for(const kind of ['junk','plain','ample','fine','rich','secret'])for(let i=0;i<200;i++){const drop=loot.fill(kind,['collect']);assert(drop.length);for(const d of drop){assert(cats[d.item.cat]);assert(!d.item.noLoot);}}
-console.log('OK: 文物藏品 / 140收集品与19物资 / 弹药和医疗子类 / 140图鉴 / ID贴图及原值不变 / 绷带治疗掉落语义 / 医疗偏好');
+console.log('OK: 文物藏品 / 170收集品与48物资 / 弹药和医疗子类 / 170图鉴 / ID贴图及原值不变 / 绷带治疗掉落语义 / 医疗偏好');

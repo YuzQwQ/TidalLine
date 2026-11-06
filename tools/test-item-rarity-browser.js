@@ -27,8 +27,8 @@ const root=path.resolve(__dirname,'..'),review=require('../design/items/rarity.j
    await page.reload();await page.waitForFunction(()=>Game.state==='base'&&Object.keys(Icons.map).length===ITEMS.length);
    assert(await page.evaluate(()=>Save.stash.some(e=>e.id==='odd02')&&Save.stash.find(e=>e.id==='g_helmet5').gear.r===5&&Save.stash.find(e=>e.id==='g_helmet6').gear.r===6&&Save.stash.find(e=>e.id==='g_helmet5').gear.equip.gear.dur===37&&Save.stash.find(e=>e.id==='g_helmet6').gear.equip.gear.dur===42),'旧装备金红等级或耐久变化');
    for(let n=1;n<=6;n++){
-    const style=await page.locator('#stashGrid .scell.r'+n).first().evaluate(el=>({color:getComputedStyle(el).borderLeftColor,width:getComputedStyle(el).borderLeftWidth,bg:getComputedStyle(el).backgroundImage}));
-    assert.equal(style.color,rgb[n-1],entry+' 仓库颜色 '+n);assert.equal(style.width,'3px');assert.notEqual(style.bg,'none');
+    const style=await page.locator('#stashGrid .scell.r'+n).first().evaluate(el=>({color:getComputedStyle(el).borderLeftColor,width:getComputedStyle(el).borderLeftWidth,paint:getComputedStyle(el).backgroundImage==='none'?getComputedStyle(el).backgroundColor:getComputedStyle(el).backgroundImage}));
+    assert.equal(style.color,rgb[n-1],entry+' 仓库颜色 '+n);assert.equal(style.width,'3px');assert(style.paint!=='none',entry+' 格子没有底色');
    }
    await page.screenshot({path:path.join(output,entry==='index.html'?'source-warehouse.png':'offline-warehouse.png')});
    await page.evaluate(()=>{

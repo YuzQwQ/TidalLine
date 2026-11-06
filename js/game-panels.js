@@ -364,15 +364,20 @@ Object.assign(Game, {
     const hintOf = c => c.isBag
       ? (c.own ? ' · 比现在这只大就换上，旧包丢在脚边' : ' · 双击背上')
       : (c.own ? ' · 已有同类，双击放进背包' : ' · 双击穿上');
-    bar.innerHTML = cells.map(c =>
-      '<div class="eqs' + (c.icon ? '' : ' empty') + '" title="' +
+    bar.innerHTML = cells.map(c => {
+      const armor = c.item && c.item.equip && c.item.equip.kind === 'armor' ? c.item.equip.gear : null;
+      const dots = SlotDots.html(c.item);
+      return '<div class="eqs' + (c.icon ? '' : ' empty') + (armor ? ' has-dbar' : '') +
+        (dots ? ' has-dots' : '') + '" title="' +
         esc(c.label) +
         (c.icon ? hintOf(c) + ' · 右键更多' : '') + '">' +
         (c.icon && c.own ? '<span class="carry">包</span>' : '') +
         '<span class="lbl">' + esc(c.label) + '</span>' +
         '<span class="ic">' + Icons.gearIcon(c.icon, c.fb) + '</span>' +
         (c.tag ? '<span class="tag ' + (c.tagCls || '') + '">' + esc(c.tag) + '</span>' : '') +
-      '</div>').join('');
+        (armor ? DuraBar.html(armor) : '') + dots +
+      '</div>';
+    }).join('');
 
     // 每格绑定点：双击拿走（没有同类装备就穿，有就放包）；单击看详情
     const nodes = bar.children || [];
@@ -601,6 +606,7 @@ Object.assign(Game, {
         tag: g ? 'Lv' + g.lv : '',
         tagCls: st === 'ok' ? '' : st,
         click: null,
+        armor: g || null,
         item: g ? EQUIP.armor(g) : null,
         drop: g ? () => this.dropArmor(type) : null,
         hint: '双击看详情 · 右键更多'
@@ -620,13 +626,18 @@ Object.assign(Game, {
       hint: '局内不能更换背包'
     });
 
-    el.innerHTML = cells.map(c =>
-      '<div class="eqs' + (c.on ? ' on' : '') + (c.icon ? '' : ' empty') +
-        (c.click ? ' live' : '') + '" title="' + esc(c.label) + '">' +
+    el.innerHTML = cells.map(c => {
+      /* 枪：底边一排配件槽点；护甲：底边耐久条。两者不会同时出现 */
+      const dots = SlotDots.html(c.item);
+      return '<div class="eqs' + (c.on ? ' on' : '') + (c.icon ? '' : ' empty') +
+        (c.click ? ' live' : '') + (c.armor ? ' has-dbar' : '') + (dots ? ' has-dots' : '') +
+        '" title="' + esc(c.label) + '">' +
         '<span class="lbl">' + esc(c.label) + '</span>' +
         '<span class="ic">' + Icons.gearIcon(c.icon, c.fb) + '</span>' +
         (c.tag ? '<span class="tag ' + (c.tagCls || '') + '">' + esc(c.tag) + '</span>' : '') +
-      '</div>').join('');
+        (c.armor ? DuraBar.html(c.armor) : '') + dots +
+      '</div>';
+    }).join('');
 
     // 装备槽：单击切枪 / 看详情，双击看详情，右键出菜单（无头测试里的假 DOM 没有 children，跳过绑定）
     const nodes = el.children || [];
@@ -735,7 +746,12 @@ Object.assign(Game, {
         const capTag = (it.healCap && Medical.isPartial(s))
           ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '';
         const label = it.short || it.name;
-        cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty + capTag;
+        /* 护甲：底边一条耐久条，局内也一眼看出还能扛几下 */
+        const armor = DuraBar.of(it), dots = SlotDots.html(it);
+        if (armor) cell.classList.add('has-dbar');
+        if (dots) cell.classList.add('has-dots');
+        cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty + capTag +
+          (armor ? DuraBar.html(armor) : '') + dots;
         /* 弹药：双击把它设为当前武器的待装填弹种（口径不对会直接提示） */
         const isAmmo = it.cat === 'ammo';
         const isLoaded = isAmmo && P.ammoId === it.id;
@@ -756,9 +772,9 @@ Object.assign(Game, {
         } else if (Medical.is(it)) {
           /* 文案与可用性统一问 Medical：恢复品受「可恢复上限」限制，
              效果品（镇痛 / 止血 / 夹板 / 手术）按当前损伤状态判断。 */
-          const usable = Medical.canUse(it, 'bag', P.hp);
+          const usable = Medical.canUse(it, 'bag', P.hp, s);
           spec.act = () => Medical.use(s, 'bag');
-          spec.actLabel = Medical.actionLabel(it, 'bag', P.hp);
+          spec.actLabel = Medical.actionLabel(it, 'bag', P.hp, s);
           spec.actOff = !usable;
           spec.primary = usable ? spec.act : null;   // 不可用时双击看详情，别弹一句提示
         } else if (it.equip?.kind === 'attachment') {
@@ -798,10 +814,13 @@ Object.assign(Game, {
         cell.className = 'cell safe ' + RARITY[s.item.r - 1].cls;
         cell.style.color = '#b9cac4';
         const ico2 = Icons.bagTag(s.item, 'ico-safe');
+        /* 安全箱只有 38px 高，枪也常塞在这儿 —— 点缩到 18px 图标那一档才塞得下 */
+        const dots = SlotDots.html(s.item);
+        if (dots) cell.classList.add('has-dots');
         cell.innerHTML = ico2 + '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
           (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '') +
           ((Medical.capOf(s.item) && Medical.isPartial(s))
-            ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '');
+            ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '') + dots;
         cell.title = s.item.name + (Medical.capOf(s.item) && Medical.isPartial(s)
             ? ' · ' + Medical.capText(s)
             : ' · ' + s.item.w + 'kg') + ' · 双击移回背包 · Ctrl+左键移回背包';
@@ -813,9 +832,9 @@ Object.assign(Game, {
           dropHint: s.n > 1 ? '整叠 ×' + s.n : '脚下'
         };
         if (Medical.is(s.item)) {
-          const usable = Medical.canUse(s.item, 'safe', P.hp);
+          const usable = Medical.canUse(s.item, 'safe', P.hp, s);
           spec.act = () => Medical.use(s, 'safe');
-          spec.actLabel = Medical.actionLabel(s.item, 'safe', P.hp);
+          spec.actLabel = Medical.actionLabel(s.item, 'safe', P.hp, s);
           spec.actOff = !usable;
         }
         spec.primary = spec.actOff ? spec.quick : (spec.act || spec.quick);
@@ -898,7 +917,7 @@ Object.assign(Game, {
     this.action = null;
     this.closeLoot();
     /* 结算页已经算局外了，大厅音乐接着响 —— 死回来不至于一片死寂 */
-    if (typeof Music !== 'undefined') Music.play('base');
+    if (typeof Music !== 'undefined') Music.enterBase();
     if (this.bagOpen) this.toggleBag({ silent: true });
     if (typeof MedHud !== 'undefined') MedHud.reset();   // 收尾：轮盘、快捷栏、进度条一起清
     /* 死亡 / 撤离 / 超时 / 潮水四条路径都汇聚到这里：局内损伤统一清除，不写 Save */

@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "strips": 15,
+  "frames": 39,
+  "hardAlpha": true,
+  "maxPaletteEntries": 16,
+  "noClipping": true,
+  "feet": [
+    32,
+    44
+  ],
+  "browserFramesPerBuild": 52,
+  "report": "design/enemies/scav-animation-v1/verification.json"
+}

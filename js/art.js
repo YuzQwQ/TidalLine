@@ -137,7 +137,7 @@ const Art = {
     for (const state of Object.keys(PLAYER_ANIMS)) {
       for (const dir of ART.charDirs) load('anim/player_' + state + '_' + dir);
     }
-    if(typeof HUMAN_ANIMS!=='undefined')for(const id of ['holdout','retriever'])for(const state of Object.keys(HUMAN_ANIMS)){
+    if(typeof HUMAN_ANIMS!=='undefined')for(const id of ['scav','holdout','retriever'])for(const state of Object.keys(HUMAN_ANIMS)){
       if(id==='retriever'&&state==='pump')continue;
       for(const dir of ART.charDirs)load('anim/'+id+'_'+state+'_'+dir);
     }

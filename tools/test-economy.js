@@ -5,7 +5,7 @@ const c=new Function('require','__dirname',harness+'\nreturn ctx;')(require,root
 const {Game,Save,Base,ITEMS,GEAR,EQUIP,WEAPONS,WEAPON_ALIASES}=c;
 const {Medical,formatMoney}=vm.runInContext('({Medical,formatMoney})',c);Game.init();
 const medical=[2000,5000,12000,35000,95000,2500,6000,18000,3000,6000,40000,110000,25000,65000,180000,7000,55000,150000];
-assert.equal(ITEMS.length,183);
+assert.equal(ITEMS.length,218);
 for(const item of ITEMS){
  if(item.cat==='ammo')continue;   // 弹药价格在 AMMO_TABLE 里单独定，不跟着 economy.json 走
  if(item.cat==='medical')continue; // 医疗品的字段快照由 test-medical.js 校，这里只管价
@@ -14,7 +14,7 @@ for(const item of ITEMS){
  if(row.group==='collectible'){const band=spec.collectionBands.find(b=>b.rarity===item.r);assert(price>=band.min&&(band.max===null||price<=band.max));}
 }
 medical.forEach((price,n)=>assert.equal(ITEMS.find(i=>i.id==='heal'+String(n+1).padStart(2,'0')).price,price));
-assert.equal(ITEMS.find(i=>i.id==='odd02').price,3000000);
+assert.equal(ITEMS.find(i=>i.id==='odd02').price,6000000);
 for(const [type,prices]of [['helmet',[2000,6000,15000,48000,120000,350000]],['body',[3000,9000,28000,85000,220000,650000]]]){
  for(let lv=1;lv<=6;lv++){
   const g=GEAR.def(type,lv),old=spec.baseline[type==='helmet'?'helmets':'bodies'][lv-1];assert.equal(g.price,prices[lv-1]);

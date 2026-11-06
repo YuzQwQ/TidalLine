@@ -76,7 +76,8 @@
       "proposed": {
         "durability": 28,
         "weight": 0.85,
-        "price": 2400
+        "price": 2400,
+        "repair": 70
       },
       "role": "I级耐用选择，以更高重量换取持续使用能力。",
       "source": "民用骑行用品",
@@ -100,7 +101,8 @@
       "proposed": {
         "durability": 55,
         "weight": 2,
-        "price": 3600
+        "price": 3600,
+        "repair": 76
       },
       "aimHandlingProposal": "瞄准准备时间 +4%；不直接降低移速，不影响收束后的稳定精度。",
       "role": "I级较耐用的工装防护，重量更高。",
@@ -125,7 +127,8 @@
       "proposed": {
         "durability": 24,
         "weight": 0.6,
-        "price": 7200
+        "price": 7200,
+        "repair": 66
       },
       "role": "II级轻便选择，以较少耐久换取更低携带重量。",
       "source": "城市救援与检修作业用品",
@@ -149,7 +152,8 @@
       "proposed": {
         "durability": 45,
         "weight": 1.8,
-        "price": 10800
+        "price": 10800,
+        "repair": 72
       },
       "aimHandlingProposal": "瞄准准备时间 +4%；不直接降低移速，不影响收束后的稳定精度。",
       "role": "II级低负担选择，缩短连续承伤余量。",
@@ -174,7 +178,8 @@
       "proposed": {
         "durability": 60,
         "weight": 1.7,
-        "price": 18000
+        "price": 18000,
+        "repair": 62
       },
       "role": "III级耐用选择，重量显著增加。",
       "source": "旧公共安全装备库存",
@@ -198,7 +203,8 @@
       "proposed": {
         "durability": 110,
         "weight": 5.2,
-        "price": 33600
+        "price": 33600,
+        "repair": 58
       },
       "aimHandlingProposal": "瞄准准备时间 +30%；不直接降低移速，不影响收束后的稳定精度。",
       "role": "III级持续防护选择，牺牲负重余量。",
@@ -223,7 +229,8 @@
       "proposed": {
         "durability": 50,
         "weight": 1.35,
-        "price": 57600
+        "price": 57600,
+        "repair": 60
       },
       "role": "IV级轻便选择，保持等级但减少可消耗耐久。",
       "source": "专业安保采购与轻装护送装备",
@@ -247,7 +254,8 @@
       "proposed": {
         "durability": 90,
         "weight": 4.7,
-        "price": 102000
+        "price": 102000,
+        "repair": 55
       },
       "aimHandlingProposal": "瞄准准备时间 +14%；不直接降低移速，不影响收束后的稳定精度。",
       "role": "IV级轻装主力替代品，减少承伤余量换取携带空间。",

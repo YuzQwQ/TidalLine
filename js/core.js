@@ -553,11 +553,16 @@ const Loot = {
   },
   /* 指定物品池也按稀有度加权，尸体不能绕过新等级规则等概率产出孤品。 */
   pickFromPool(pool) {
-    const available=pool.filter(item=>!item.noLoot&&RARITY_WEIGHT[item.r]>0);
+    /* egg 与 noLoot 一样不进常规池：彩蛋只能从 roll() 里那条 2% 的支线出来，
+       否则它会挤进同类池、把其它红色物品的概率按数量摊薄。 */
+    const available=pool.filter(item=>!item.noLoot&&!item.egg&&RARITY_WEIGHT[item.r]>0);
     if(!available.length)return null;
     /* 同一档里再多几件，只是多几种长相，不该把这一档的总概率抬上去 */
-    const cnt=rarityCounts(available);
-    const w=available.map(item=>RARITY_WEIGHT[item.r]/cnt[item.r]);
+    /* 同一稀有度里再按价值档位加权：否则红档会退回「按件数平分」，
+       新补的普通红会把稀有红的概率摊薄。档位权重不影响该稀有度的总量。 */
+    const sum={};
+    for(const item of available)sum[item.r]=(sum[item.r]||0)+this.tierWeight(item);
+    const w=available.map(item=>RARITY_WEIGHT[item.r]*this.tierWeight(item)/sum[item.r]);
     let roll=Math.random()*w.reduce((sum,v)=>sum+v,0);
     for(let i=0;i<available.length;i++){roll-=w[i];if(roll<=0)return available[i];}
     return available[0];
@@ -574,7 +579,7 @@ const Loot = {
     const pct = Q ? Q.pct : null;
     const bias = r => pct ? (pct[r - 1] || 0) : RARITY_WEIGHT[r];
 
-    const pool = ITEMS.filter(it => !it.noLoot && bias(it.r) > 0);
+    const pool = ITEMS.filter(it => !it.noLoot && !it.egg && bias(it.r) > 0);
 
     /* 类别偏好倍率：容器只声明"偏爱哪几类"，具体强度在这里统一控制。
        取值越大，同品质容器之间的内容差异越明显；受该类别在各档的件数限制，
@@ -592,21 +597,26 @@ const Loot = {
       return v;
     };
 
-    /* 每个 (稀有度, 类别) 格子里的件数，以及每个档的类别权重和 */
-    const cell = {};          // r -> { cat: 件数 }
+    /* 每个 (稀有度, 类别) 格子里的档位权重和。
+       原来这里除以「件数」，等于同档同类按件平分；现在除以「档位权重和」，
+       于是红档内部按 45/35/18 分，其它稀有度因为 tierWeight 恒为 1，
+       除以的仍是件数，行为完全不变。 */
+    const cell = {};          // r -> { cat: true }  仅用于判断该类是否已在档内
     const cellW = {};         // r -> 该档类别权重之和
+    const cellT = {};         // r -> { cat: 该类别的档位权重之和 }
     for (const it of pool) {
-      if (!cell[it.r]) { cell[it.r] = {}; cellW[it.r] = 0; }
+      if (!cell[it.r]) { cell[it.r] = {}; cellW[it.r] = 0; cellT[it.r] = {}; }
       if (cell[it.r][it.cat] == null) {
-        cell[it.r][it.cat] = 0;
+        cell[it.r][it.cat] = true;
         cellW[it.r] += catW(it);
+        cellT[it.r][it.cat] = 0;
       }
-      cell[it.r][it.cat]++;
+      cellT[it.r][it.cat] += this.tierWeight(it);
     }
 
     let total = 0;
     const w = pool.map(it => {
-      const v = bias(it.r) * catW(it) / cellW[it.r] / cell[it.r][it.cat];
+      const v = bias(it.r) * catW(it) / cellW[it.r] * this.tierWeight(it) / cellT[it.r][it.cat];
       total += v;
       return v;
     });
@@ -614,9 +624,36 @@ const Loot = {
     let r = Math.random() * total;
     for (let i = 0; i < pool.length; i++) {
       r -= w[i];
-      if (r <= 0) return { item: pool[i], n: 1 };
+      if (r <= 0) return this.eggSwap({ item: pool[i], n: 1 });
     }
-    return { item: pool[0], n: 1 };
+    return this.eggSwap({ item: pool[0], n: 1 });
+  },
+
+  /* 价值档位的单件权重。没有配档位的红色按三档均值兜底，
+     免得以后补红件忘了写 tier 就被判成几乎抽不到。 */
+  tierWeight(item) {
+    const L = CFG.LOOT || {}, RT = L.redTiers;
+    if (!RT || !item || item.r !== (L.eggRarity || 6) || !item.tier) return 1;
+    const w = RT[item.tier];
+    const base = (w == null)
+      ? ((RT[1] || 0) + (RT[2] || 0) + (RT[3] || 0)) / 3
+      : w;
+    return base * (item.lootW == null ? 1 : item.lootW);
+  },
+
+  /* 彩蛋池：数据里带 egg 标记的收集品（当前四件，等概率）。 */
+  eggPool() { return ITEMS.filter(it => it.egg); },
+
+  /* 抽到红色物品之后再掷一次：中签就把这件换成彩蛋池里的一件。
+     因为彩蛋本身也是 r6，稀有度分布一格不动，只是「红色里有两成是彩蛋之外的东西」。
+     chance 为 0 或没有彩蛋数据时原样返回，所以关掉功能不需要改调用点。 */
+  eggSwap(pick) {
+    const L = CFG.LOOT || {}, chance = L.eggChance == null ? 0 : L.eggChance;
+    const eggs = chance > 0 ? this.eggPool() : null;
+    if (!pick || !pick.item || !eggs || !eggs.length) return pick;
+    if (pick.item.r !== (L.eggRarity || 6)) return pick;
+    if (Math.random() >= chance) return pick;
+    return { item: U.pick(eggs), n: 1 };
   },
 
   /* 一次抽取走哪个池。弹药与装备各判各的，弹药优先；

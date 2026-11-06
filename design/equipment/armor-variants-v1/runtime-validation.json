@@ -2523,6 +2523,2316 @@
       "fps": 144,
       "expected": 0.22800000000000004,
       "elapsed": 0.22916666666666666
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.45999999999999996,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.45999999999999996,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.45999999999999996,
+      "elapsed": 0.4652777777777778
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.506,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.506,
+      "elapsed": 0.5166666666666667
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.506,
+      "elapsed": 0.5069444444444444
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.5519999999999999,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.5519999999999999,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.5519999999999999,
+      "elapsed": 0.5555555555555556
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.598,
+      "elapsed": 0.6041666666666666
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.6669999999999999,
+      "elapsed": 0.7
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.6669999999999999,
+      "elapsed": 0.6833333333333333
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.6669999999999999,
+      "elapsed": 0.6736111111111112
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.736,
+      "elapsed": 0.7666666666666667
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.736,
+      "elapsed": 0.75
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.736,
+      "elapsed": 0.7361111111111112
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.4784,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.4784,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.4784,
+      "elapsed": 0.4791666666666667
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.4784,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.4784,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.4784,
+      "elapsed": 0.4791666666666667
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.598,
+      "elapsed": 0.6041666666666666
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.5244,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.5244,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "m16a1",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.5244,
+      "elapsed": 0.5277777777777778
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.45999999999999996,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.45999999999999996,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.45999999999999996,
+      "elapsed": 0.4652777777777778
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.506,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.506,
+      "elapsed": 0.5166666666666667
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.506,
+      "elapsed": 0.5069444444444444
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.5519999999999999,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.5519999999999999,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.5519999999999999,
+      "elapsed": 0.5555555555555556
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.598,
+      "elapsed": 0.6041666666666666
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.6669999999999999,
+      "elapsed": 0.7
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.6669999999999999,
+      "elapsed": 0.6833333333333333
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.6669999999999999,
+      "elapsed": 0.6736111111111112
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.736,
+      "elapsed": 0.7666666666666667
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.736,
+      "elapsed": 0.75
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.736,
+      "elapsed": 0.7361111111111112
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.4784,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.4784,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.4784,
+      "elapsed": 0.4791666666666667
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.4784,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.4784,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.4784,
+      "elapsed": 0.4791666666666667
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.598,
+      "elapsed": 0.6041666666666666
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.5244,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.5244,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "galil_arm",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.5244,
+      "elapsed": 0.5277777777777778
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.32000000000000006,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.32000000000000006,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.32000000000000006,
+      "elapsed": 0.3263888888888889
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.3520000000000001,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.3520000000000001,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.3520000000000001,
+      "elapsed": 0.3541666666666667
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.38400000000000006,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.38400000000000006,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.38400000000000006,
+      "elapsed": 0.3888888888888889
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.4160000000000001,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.4160000000000001,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.4160000000000001,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.4640000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.4640000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.4640000000000001,
+      "elapsed": 0.4652777777777778
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.5120000000000001,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.5120000000000001,
+      "elapsed": 0.5166666666666667
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.5120000000000001,
+      "elapsed": 0.5138888888888888
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.3328000000000001,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.3328000000000001,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.3328000000000001,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.3328000000000001,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.3328000000000001,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.3328000000000001,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.4160000000000001,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.4160000000000001,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.4160000000000001,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.3648000000000001,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.3648000000000001,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "aks74u",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.3648000000000001,
+      "elapsed": 0.3680555555555556
+    },
+    {
+      "weapon": "g36c",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.34,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "g36c",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.34,
+      "elapsed": 0.35
+    },
+    {
+      "weapon": "g36c",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.34,
+      "elapsed": 0.3402777777777778
+    },
+    {
+      "weapon": "g36c",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.37400000000000005,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "g36c",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.37400000000000005,
+      "elapsed": 0.38333333333333336
+    },
+    {
+      "weapon": "g36c",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.37400000000000005,
+      "elapsed": 0.375
+    },
+    {
+      "weapon": "g36c",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.40800000000000003,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "g36c",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.40800000000000003,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "g36c",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.40800000000000003,
+      "elapsed": 0.4097222222222222
+    },
+    {
+      "weapon": "g36c",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.44200000000000006,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "g36c",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.44200000000000006,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "g36c",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.44200000000000006,
+      "elapsed": 0.4444444444444444
+    },
+    {
+      "weapon": "g36c",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.493,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "g36c",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.493,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "g36c",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.493,
+      "elapsed": 0.4930555555555556
+    },
+    {
+      "weapon": "g36c",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.544,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "g36c",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.544,
+      "elapsed": 0.55
+    },
+    {
+      "weapon": "g36c",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.544,
+      "elapsed": 0.5486111111111112
+    },
+    {
+      "weapon": "g36c",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.3536,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "g36c",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.3536,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "g36c",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.3536,
+      "elapsed": 0.3541666666666667
+    },
+    {
+      "weapon": "g36c",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.3536,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "g36c",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.3536,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "g36c",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.3536,
+      "elapsed": 0.3541666666666667
+    },
+    {
+      "weapon": "g36c",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.44200000000000006,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "g36c",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.44200000000000006,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "g36c",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.44200000000000006,
+      "elapsed": 0.4444444444444444
+    },
+    {
+      "weapon": "g36c",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.38760000000000006,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "g36c",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.38760000000000006,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "g36c",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.38760000000000006,
+      "elapsed": 0.3888888888888889
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.42000000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.42000000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.42000000000000004,
+      "elapsed": 0.4236111111111111
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.4620000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.4620000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.4620000000000001,
+      "elapsed": 0.4652777777777778
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.504,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.504,
+      "elapsed": 0.5166666666666667
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.504,
+      "elapsed": 0.5069444444444444
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.546,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.546,
+      "elapsed": 0.55
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.546,
+      "elapsed": 0.5486111111111112
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.609,
+      "elapsed": 0.6333333333333333
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.609,
+      "elapsed": 0.6166666666666667
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.609,
+      "elapsed": 0.6111111111111112
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.6720000000000002,
+      "elapsed": 0.7
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.6720000000000002,
+      "elapsed": 0.6833333333333333
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.6720000000000002,
+      "elapsed": 0.6736111111111112
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4375
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4375
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.546,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.546,
+      "elapsed": 0.55
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.546,
+      "elapsed": 0.5486111111111112
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.4788000000000001,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.4788000000000001,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "fn_fnc",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.4788000000000001,
+      "elapsed": 0.4791666666666667
+    },
+    {
+      "weapon": "sig550",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.45999999999999996,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "sig550",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.45999999999999996,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "sig550",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.45999999999999996,
+      "elapsed": 0.4652777777777778
+    },
+    {
+      "weapon": "sig550",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.506,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "sig550",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.506,
+      "elapsed": 0.5166666666666667
+    },
+    {
+      "weapon": "sig550",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.506,
+      "elapsed": 0.5069444444444444
+    },
+    {
+      "weapon": "sig550",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.5519999999999999,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "sig550",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.5519999999999999,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "sig550",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.5519999999999999,
+      "elapsed": 0.5555555555555556
+    },
+    {
+      "weapon": "sig550",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "sig550",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "sig550",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.598,
+      "elapsed": 0.6041666666666666
+    },
+    {
+      "weapon": "sig550",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.6669999999999999,
+      "elapsed": 0.7
+    },
+    {
+      "weapon": "sig550",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.6669999999999999,
+      "elapsed": 0.6833333333333333
+    },
+    {
+      "weapon": "sig550",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.6669999999999999,
+      "elapsed": 0.6736111111111112
+    },
+    {
+      "weapon": "sig550",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.736,
+      "elapsed": 0.7666666666666667
+    },
+    {
+      "weapon": "sig550",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.736,
+      "elapsed": 0.75
+    },
+    {
+      "weapon": "sig550",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.736,
+      "elapsed": 0.7361111111111112
+    },
+    {
+      "weapon": "sig550",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.4784,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "sig550",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.4784,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "sig550",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.4784,
+      "elapsed": 0.4791666666666667
+    },
+    {
+      "weapon": "sig550",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.4784,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "sig550",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.4784,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "sig550",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.4784,
+      "elapsed": 0.4791666666666667
+    },
+    {
+      "weapon": "sig550",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "sig550",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.598,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "sig550",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.598,
+      "elapsed": 0.6041666666666666
+    },
+    {
+      "weapon": "sig550",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.5244,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "sig550",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.5244,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "sig550",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.5244,
+      "elapsed": 0.5277777777777778
+    },
+    {
+      "weapon": "an94",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.44000000000000006,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "an94",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.44000000000000006,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "an94",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.44000000000000006,
+      "elapsed": 0.4444444444444444
+    },
+    {
+      "weapon": "an94",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.4840000000000001,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "an94",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.4840000000000001,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "an94",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.4840000000000001,
+      "elapsed": 0.4861111111111111
+    },
+    {
+      "weapon": "an94",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.528,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "an94",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.528,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "an94",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.528,
+      "elapsed": 0.5347222222222222
+    },
+    {
+      "weapon": "an94",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.5720000000000001,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "an94",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.5720000000000001,
+      "elapsed": 0.5833333333333334
+    },
+    {
+      "weapon": "an94",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.5720000000000001,
+      "elapsed": 0.5763888888888888
+    },
+    {
+      "weapon": "an94",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.638,
+      "elapsed": 0.6666666666666666
+    },
+    {
+      "weapon": "an94",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.638,
+      "elapsed": 0.65
+    },
+    {
+      "weapon": "an94",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.638,
+      "elapsed": 0.6388888888888888
+    },
+    {
+      "weapon": "an94",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.7040000000000002,
+      "elapsed": 0.7333333333333333
+    },
+    {
+      "weapon": "an94",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.7040000000000002,
+      "elapsed": 0.7166666666666667
+    },
+    {
+      "weapon": "an94",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.7040000000000002,
+      "elapsed": 0.7083333333333334
+    },
+    {
+      "weapon": "an94",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.45760000000000006,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "an94",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.45760000000000006,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "an94",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.45760000000000006,
+      "elapsed": 0.4583333333333333
+    },
+    {
+      "weapon": "an94",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.45760000000000006,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "an94",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.45760000000000006,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "an94",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.45760000000000006,
+      "elapsed": 0.4583333333333333
+    },
+    {
+      "weapon": "an94",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.5720000000000001,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "an94",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.5720000000000001,
+      "elapsed": 0.5833333333333334
+    },
+    {
+      "weapon": "an94",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.5720000000000001,
+      "elapsed": 0.5763888888888888
+    },
+    {
+      "weapon": "an94",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.5016000000000002,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "an94",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.5016000000000002,
+      "elapsed": 0.5166666666666667
+    },
+    {
+      "weapon": "an94",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.5016000000000002,
+      "elapsed": 0.5069444444444444
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.42000000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.42000000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.42000000000000004,
+      "elapsed": 0.4236111111111111
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.4620000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.4620000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.4620000000000001,
+      "elapsed": 0.4652777777777778
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.504,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.504,
+      "elapsed": 0.5166666666666667
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.504,
+      "elapsed": 0.5069444444444444
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.546,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.546,
+      "elapsed": 0.55
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.546,
+      "elapsed": 0.5486111111111112
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.609,
+      "elapsed": 0.6333333333333333
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.609,
+      "elapsed": 0.6166666666666667
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.609,
+      "elapsed": 0.6111111111111112
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.6720000000000002,
+      "elapsed": 0.7
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.6720000000000002,
+      "elapsed": 0.6833333333333333
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.6720000000000002,
+      "elapsed": 0.6736111111111112
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4375
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4375
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.546,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.546,
+      "elapsed": 0.55
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.546,
+      "elapsed": 0.5486111111111112
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.4788000000000001,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.4788000000000001,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "aug_a1",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.4788000000000001,
+      "elapsed": 0.4791666666666667
+    },
+    {
+      "weapon": "groza1",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.30000000000000004,
+      "elapsed": 0.3
+    },
+    {
+      "weapon": "groza1",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.30000000000000004,
+      "elapsed": 0.3
+    },
+    {
+      "weapon": "groza1",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.30000000000000004,
+      "elapsed": 0.3055555555555556
+    },
+    {
+      "weapon": "groza1",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.33000000000000007,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "groza1",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.33000000000000007,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "groza1",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.33000000000000007,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "groza1",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.36000000000000004,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "groza1",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.36000000000000004,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "groza1",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.36000000000000004,
+      "elapsed": 0.3611111111111111
+    },
+    {
+      "weapon": "groza1",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.39000000000000007,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "groza1",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.39000000000000007,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "groza1",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.39000000000000007,
+      "elapsed": 0.3958333333333333
+    },
+    {
+      "weapon": "groza1",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.43500000000000005,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "groza1",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.43500000000000005,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "groza1",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.43500000000000005,
+      "elapsed": 0.4375
+    },
+    {
+      "weapon": "groza1",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.4800000000000001,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "groza1",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.4800000000000001,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "groza1",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.4800000000000001,
+      "elapsed": 0.4861111111111111
+    },
+    {
+      "weapon": "groza1",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.31200000000000006,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "groza1",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.31200000000000006,
+      "elapsed": 0.31666666666666665
+    },
+    {
+      "weapon": "groza1",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.31200000000000006,
+      "elapsed": 0.3125
+    },
+    {
+      "weapon": "groza1",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.31200000000000006,
+      "elapsed": 0.3333333333333333
+    },
+    {
+      "weapon": "groza1",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.31200000000000006,
+      "elapsed": 0.31666666666666665
+    },
+    {
+      "weapon": "groza1",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.31200000000000006,
+      "elapsed": 0.3125
+    },
+    {
+      "weapon": "groza1",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.39000000000000007,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "groza1",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.39000000000000007,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "groza1",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.39000000000000007,
+      "elapsed": 0.3958333333333333
+    },
+    {
+      "weapon": "groza1",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.3420000000000001,
+      "elapsed": 0.36666666666666664
+    },
+    {
+      "weapon": "groza1",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.3420000000000001,
+      "elapsed": 0.35
+    },
+    {
+      "weapon": "groza1",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.3420000000000001,
+      "elapsed": 0.3472222222222222
+    },
+    {
+      "weapon": "ak12",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.4,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "ak12",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.4,
+      "elapsed": 0.4
+    },
+    {
+      "weapon": "ak12",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.4,
+      "elapsed": 0.4027777777777778
+    },
+    {
+      "weapon": "ak12",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.44000000000000006,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "ak12",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.44000000000000006,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "ak12",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.44000000000000006,
+      "elapsed": 0.4444444444444444
+    },
+    {
+      "weapon": "ak12",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.48,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "ak12",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.48,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "ak12",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.48,
+      "elapsed": 0.4861111111111111
+    },
+    {
+      "weapon": "ak12",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.52,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "ak12",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.52,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "ak12",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.52,
+      "elapsed": 0.5208333333333334
+    },
+    {
+      "weapon": "ak12",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.58,
+      "elapsed": 0.6
+    },
+    {
+      "weapon": "ak12",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.58,
+      "elapsed": 0.5833333333333334
+    },
+    {
+      "weapon": "ak12",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.58,
+      "elapsed": 0.5833333333333334
+    },
+    {
+      "weapon": "ak12",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.6400000000000001,
+      "elapsed": 0.6666666666666666
+    },
+    {
+      "weapon": "ak12",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.6400000000000001,
+      "elapsed": 0.65
+    },
+    {
+      "weapon": "ak12",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.6400000000000001,
+      "elapsed": 0.6458333333333334
+    },
+    {
+      "weapon": "ak12",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "ak12",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "ak12",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "ak12",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "ak12",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "ak12",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.41600000000000004,
+      "elapsed": 0.4166666666666667
+    },
+    {
+      "weapon": "ak12",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.52,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "ak12",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.52,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "ak12",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.52,
+      "elapsed": 0.5208333333333334
+    },
+    {
+      "weapon": "ak12",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.45600000000000007,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "ak12",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.45600000000000007,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "ak12",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.45600000000000007,
+      "elapsed": 0.4583333333333333
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body1",
+      "fps": 30,
+      "expected": 0.42000000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body1",
+      "fps": 60,
+      "expected": 0.42000000000000004,
+      "elapsed": 0.43333333333333335
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body1",
+      "fps": 144,
+      "expected": 0.42000000000000004,
+      "elapsed": 0.4236111111111111
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body2",
+      "fps": 30,
+      "expected": 0.4620000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body2",
+      "fps": 60,
+      "expected": 0.4620000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body2",
+      "fps": 144,
+      "expected": 0.4620000000000001,
+      "elapsed": 0.4652777777777778
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body3",
+      "fps": 30,
+      "expected": 0.504,
+      "elapsed": 0.5333333333333333
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body3",
+      "fps": 60,
+      "expected": 0.504,
+      "elapsed": 0.5166666666666667
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body3",
+      "fps": 144,
+      "expected": 0.504,
+      "elapsed": 0.5069444444444444
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body4",
+      "fps": 30,
+      "expected": 0.546,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body4",
+      "fps": 60,
+      "expected": 0.546,
+      "elapsed": 0.55
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body4",
+      "fps": 144,
+      "expected": 0.546,
+      "elapsed": 0.5486111111111112
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body5",
+      "fps": 30,
+      "expected": 0.609,
+      "elapsed": 0.6333333333333333
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body5",
+      "fps": 60,
+      "expected": 0.609,
+      "elapsed": 0.6166666666666667
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body5",
+      "fps": 144,
+      "expected": 0.609,
+      "elapsed": 0.6111111111111112
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body6",
+      "fps": 30,
+      "expected": 0.6720000000000002,
+      "elapsed": 0.7
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body6",
+      "fps": 60,
+      "expected": 0.6720000000000002,
+      "elapsed": 0.6833333333333333
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body6",
+      "fps": 144,
+      "expected": 0.6720000000000002,
+      "elapsed": 0.6736111111111112
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body1_leather",
+      "fps": 30,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body1_leather",
+      "fps": 60,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body1_leather",
+      "fps": 144,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4375
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body2_concealed",
+      "fps": 30,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4666666666666667
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body2_concealed",
+      "fps": 60,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.45
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body2_concealed",
+      "fps": 144,
+      "expected": 0.4368000000000001,
+      "elapsed": 0.4375
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body3_fragmentation",
+      "fps": 30,
+      "expected": 0.546,
+      "elapsed": 0.5666666666666667
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body3_fragmentation",
+      "fps": 60,
+      "expected": 0.546,
+      "elapsed": 0.55
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body3_fragmentation",
+      "fps": 144,
+      "expected": 0.546,
+      "elapsed": 0.5486111111111112
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body4_lightplate",
+      "fps": 30,
+      "expected": 0.4788000000000001,
+      "elapsed": 0.5
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body4_lightplate",
+      "fps": 60,
+      "expected": 0.4788000000000001,
+      "elapsed": 0.48333333333333334
+    },
+    {
+      "weapon": "mk47_mod2",
+      "body": "body4_lightplate",
+      "fps": 144,
+      "expected": 0.4788000000000001,
+      "elapsed": 0.4791666666666667
     }
   ],
   "limits": "Unit/engine checks, not a substitute for the paired combat probe or manual playtesting."

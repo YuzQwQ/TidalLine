@@ -44,14 +44,15 @@ const MedQuick = {
     }
     for (const g of out) {
       const max = Medical.capOf(g.item) || 1;
-      const part = g.entries.find(e => Medical.isPartial(e));
+      const chosen = Medical.preferredEntry(g.entries);
+      const part = Medical.isPartial(chosen) ? chosen : null;
       g.max = max;
       /* 效果品的「容量」是次数，别显示成 HP 容量那种 N/M */
       g.text = g.item.effect
-        ? (g.count > 1 ? '×' + g.count + ' · ' + Medical.capText(g.entries[0]) : Medical.capText(g.entries[0]))
+        ? (g.count > 1 ? '×' + g.count + ' · ' + Medical.capText(chosen) : Medical.capText(chosen))
         : (g.count > 1
             ? (part ? '×' + g.count + ' · ' + Math.ceil(Medical.entryCap(part)) + '/' + max : '×' + g.count)
-            : Math.ceil(Medical.entryCap(g.entries[0])) + '/' + max);
+            : Math.ceil(Medical.entryCap(chosen)) + '/' + max);
     }
     return out;
   },
@@ -62,8 +63,7 @@ const MedQuick = {
     if (!gs.length) return null;
     let g = this.typeId ? gs.find(x => x.id === this.typeId) : null;
     if (!g) g = gs[0];
-    const part = g.entries.find(e => Medical.isPartial(e));
-    return { group: g, entry: part || g.entries[0] };
+    return { group: g, entry: Medical.preferredEntry(g.entries) };
   },
 
   /* 真正使用。id 传了就先改默认类型（轮盘确认走这条） */
@@ -419,7 +419,8 @@ const HealHud = {
     const P = Game.player;
     const on = !!(a && a.type === 'heal' && Game.state === 'playing' && P && !P.dead);
     if (!on) return { show: false };
-    const start = a.phase === 'start';
+    const stoppingBleed = a.phase === 'stopBleed';
+    const start = a.phase === 'start' || stoppingBleed;
     const effect = !!(a.kind && a.kind !== 'heal');
     const max = Medical.capOf(a.item) || 1;
     const left = Medical.entryCap(a.unit);
@@ -435,7 +436,9 @@ const HealHud = {
       start,
       pct,
       hp,
-      top: start
+      top: stoppingBleed
+        ? '止血 · ' + Math.max(0, total - a.t).toFixed(1) + ' 秒 · 消耗' + CFG.DEBUFF.BLEED.HEAL_CAP_COST + '容量'
+        : start
         ? (effect ? '处理' : '启动') + ' · ' + Math.max(0, total - a.t).toFixed(1) + ' 秒 · HP ' + hp
         : '+' + a.item.healRate + ' HP/秒 · HP ' + hp
     };

@@ -562,7 +562,7 @@
       "name": "零号打火机",
       "category": "life",
       "rarity": 6,
-      "referencePrice": 900000,
+      "referencePrice": 1200000,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -786,7 +786,7 @@
       "name": "原型信号分析终端",
       "category": "elec",
       "rarity": 6,
-      "referencePrice": 880000,
+      "referencePrice": 1100000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -802,7 +802,7 @@
       "name": "「远望者」深海探测核心",
       "category": "elec",
       "rarity": 6,
-      "referencePrice": 2650000,
+      "referencePrice": 4500000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1042,7 +1042,7 @@
       "name": "零号标准量块组",
       "category": "ind",
       "rarity": 6,
-      "referencePrice": 720000,
+      "referencePrice": 800000,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1234,7 +1234,7 @@
       "name": "「初生」零号培养样本",
       "category": "med",
       "rarity": 6,
-      "referencePrice": 1200000,
+      "referencePrice": 1300000,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1362,7 +1362,7 @@
       "name": "环礁湾雕刻铜版",
       "category": "collect",
       "rarity": 6,
-      "referencePrice": 1650000,
+      "referencePrice": 1800000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2018,7 +2018,7 @@
       "name": "首潮原始观测记录",
       "category": "intel",
       "rarity": 6,
-      "referencePrice": 1850000,
+      "referencePrice": 3200000,
       "preferred": "doctor",
       "rates": {
         "shop": 80,
@@ -2290,7 +2290,7 @@
       "name": "第零页圣典",
       "category": "occult",
       "rarity": 6,
-      "referencePrice": 1800000,
+      "referencePrice": 3600000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2322,7 +2322,7 @@
       "name": "潮汐仪",
       "category": "odd",
       "rarity": 6,
-      "referencePrice": 3000000,
+      "referencePrice": 6000000,
       "preferred": "gun",
       "rates": {
         "shop": 60,

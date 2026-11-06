@@ -77,6 +77,9 @@ const Tips = {
       rows.push(['部位', GEAR[g.type].label]);
       rows.push(['防护等级', 'Lv' + g.lv + (st === 'broken' ? ' · 已失效' : '')]);
       rows.push(['耐久', Math.ceil(g.dur) + ' / ' + g.max]);
+      const adef = GEAR.def(g.type, g.id || g.lv) || {};
+      if (adef.dur && g.max < adef.dur)
+        rows.push(['耐久上限', Math.round(g.max) + ' / ' + adef.dur + '（已修）']);
     } else if (it.equip && it.equip.kind === 'gun') {
       if(it.equip.kind === 'melee')return MELEE.find(x=>x.id===it.equip.melee)?.desc || '';
   const w = Attachments.resolve(it.equip.gun,it.equip.attachments);
@@ -124,6 +127,7 @@ const Tips = {
     const original=typeof Game!=='undefined'&&Game.state==='base';
 
     box.innerHTML =
+      '<div class="tip-top">' +
       '<div class="tip-hd">' +
         '<span class="tip-ic' + (it.icon ? '' : ' gl') + '">' +
           (original?Icons.detailTag(it,''):(it.icon && Icons.gear[it.icon]
@@ -137,8 +141,15 @@ const Tips = {
             '<i style="color:' + cat.color + '">' + cat.name + '</i> · ' +
             '<i style="color:' + r.color + '">' +
               (it.cat === 'ammo' ? 'Lv' + it.level : r.name) + '</i>' +
+            /* 彩蛋：品类与稀有度照常显示，只在后面多一枚标签 */
+            (it.egg ? '<i class="tip-egg">彩蛋</i>' : '') +
           '</span>' +
         '</span>' +
+      '</div>' +
+      (it.equip && it.equip.kind === 'armor'
+        ? '<div class="tip-dura">' + DuraBar.html(it.equip.gear) + '</div>' : '') +
+      /* 枪：名字下面一排配件槽点，装了什么一眼可见 */
+      (it.equip && it.equip.kind === 'gun' ? SlotDots.line(it) : '') +
       '</div>' +
       '<div class="tip-rows">' + rows.map(([k, v]) =>
         '<div class="tip-row"><span>' + esc(k) + '</span><b' +
@@ -159,7 +170,7 @@ const Tips = {
   actions(list) {
     const box = this._box('itemTip');
     if (!box || !box.querySelector || !list || !list.length) return;
-    const hd = box.querySelector('.tip-hd');
+    const hd = box.querySelector('.tip-top') || box.querySelector('.tip-hd');
     if (!hd || !hd.insertAdjacentHTML) return;
     hd.insertAdjacentHTML('afterend', '<div class="medical-actions">' +
       list.map((a, i) => '<button data-act="' + i + '"' + (a.disabled ? ' disabled' : '') + '>' +
@@ -253,7 +264,8 @@ function equipDesc(it) {
     const g = it.equip.gear;
     return (it.desc ? it.desc+'\n\n' : '')+'Lv' + g.lv + ' 的' + GEAR[g.type].label +
       '。能挡下多少取决于打过来的是几级弹：同级以下基本能挡住，高一级就漏一半，' +
-      '高两级往上基本挡不住。耐久磨穿以后就只剩自重。';
+      '高两级往上基本挡不住。耐久磨穿以后就只剩自重。\n\n' +
+      '打坏的甲可以在藏身处修理，补满耐久的同时会削掉一截上限 —— 修得越多，能扛的越少。';
   }
   if (it.equip.kind === 'bag') {
     const extra = it.equip.slots - BASE_BAG_SLOTS;
@@ -280,6 +292,9 @@ const Deal = {
     const price = Math.abs(o.price || 0);
     const left = sell ? Save.credits + price : Save.credits - price;
     const can = o.can !== false && (sell || left >= 0);
+    /* 修理这类交易要在金额上面再列几行（当前耐久、修完的上限…），
+       传 rows: [[标签, 值], …] 就行，不用另起一个确认框 */
+    const rows = Array.isArray(o.rows) ? o.rows : [];
     const ico = (typeof Game!=='undefined'&&Game.state==='base')
       ? Icons.detailTag(o.icon?{icon:o.icon,name:o.name,short:o.short}:(ITEM_BY_ID[o.id]||{id:o.id,name:o.name,short:o.short}),'')
       : (o.icon && Icons.gear[o.icon])
@@ -295,15 +310,19 @@ const Deal = {
         '<span class="tip-ic' + (o.icon ? '' : ' gl') + '">' + ico + '</span>' +
         '<span class="deal-nm">' + esc(o.name) + '<i>' + esc(o.sub || '') + '</i></span>' +
       '</div>' +
+      (o.bar || '') +
       '<div class="deal-sum">' +
-        '<span>' + (sell ? '回收价' : '售价') + '<b class="gold">' + formatMoney(price) + '</b></span>' +
-        '<span>当前信用点<b>' + formatMoney(Save.credits) + '</b></span>' +
-        '<span>' + (sell ? '成交后' : '成交后') +
-          '<b class="' + (left >= 0 ? '' : 'warn') + '">' + formatMoney(left) + '</b></span>' +
+        '<span>' + esc(o.priceLabel || (sell ? '回收价' : '售价')) +
+          '<b class="gold">' + formatMoney(price) + '</b></span>' +
+        rows.map(r => '<span>' + esc(r[0]) + '<b>' + esc(r[1]) + '</b></span>').join('') +
+        (o.hideBalance ? '' :
+          '<span>当前信用点<b>' + formatMoney(Save.credits) + '</b></span>' +
+          '<span>成交后' +
+            '<b class="' + (left >= 0 ? '' : 'warn') + '">' + formatMoney(left) + '</b></span>') +
       '</div>' +
       '<div class="deal-acts">' +
         '<button class="go' + (can ? '' : ' no') + '" data-a="go">' +
-          (left < 0 ? '钱不够' : (sell ? '卖出' : '买下')) + '</button>' +
+          (left < 0 ? '钱不够' : (o.goLabel || (sell ? '卖出' : '买下'))) + '</button>' +
         '<button data-a="no">取消</button>' +
       '</div>';
 

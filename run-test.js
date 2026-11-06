@@ -79,7 +79,7 @@ ctx.globalThis = ctx;
 vm.createContext(ctx);
 
 for (const f of ['config.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
-  'common.js', 'medical.js', 'art.js', 'debuff.js', 'ui.js', 'save.js', 'base.js',
+  'common.js', 'medical.js', 'art.js', 'durabar.js', 'slotdots.js', 'debuff.js', 'ui.js', 'save.js', 'base.js', 'repair.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
   'medhud.js', 'melee.js', 'range.js', 'buyback-data.js', 'sales.js', 'boot.js']) {
   try {
@@ -101,6 +101,9 @@ vm.runInContext(`
   globalThis.START_CREDITS = START_CREDITS;
   globalThis.Debuff = Debuff; globalThis.DebuffHud = DebuffHud;
   globalThis.Medical = Medical; globalThis.ITEM_BY_ID = ITEM_BY_ID;
+  globalThis.Repair = Repair; globalThis.ARMOR_VARIANTS = ARMOR_VARIANTS;
+  globalThis.DuraBar = DuraBar;
+  globalThis.SlotDots = SlotDots; globalThis.ATTACHMENT_SLOTS = ATTACHMENT_SLOTS; globalThis.ATTACHMENT_DEFS = ATTACHMENT_DEFS; globalThis.Attachments = Attachments; globalThis.RARITY = RARITY;
   globalThis.MEDICAL_ITEMS = MEDICAL_ITEMS; globalThis.MELEE = MELEE;
   globalThis.ENEMY_TYPES = ENEMY_TYPES; globalThis.BALLISTICS = BALLISTICS;
   globalThis.MedQuick = MedQuick; globalThis.MedWheel = MedWheel;
@@ -1897,6 +1900,166 @@ console.log('\n=== 损伤状态与医疗 ===');
   Game.showEnd(true);
   ok('结算统一清除局内损伤', P.debuffs.severe === 0 && !P.debuffs.bleeding &&
      !P.debuffs.fracture && DB.recoverableMax(P) === P.maxHp);
+}
+
+console.log('\n=== 护甲修理 ===');
+{
+  const Repair = ctx.Repair, ARMOR_VARIANTS = ctx.ARMOR_VARIANTS;
+  const defs = HELMETS.concat(BODIES, ARMOR_VARIANTS);
+  ok('所有护甲都带耐修程度', defs.every(d => Number.isFinite(d.rep) && d.rep > 0 && d.rep <= 100),
+     '共 ' + defs.length + ' 件，' + Math.min(...defs.map(d => d.rep)) + '~' + Math.max(...defs.map(d => d.rep)));
+
+  /* 战术防弹衣：115 上限、耐修 60，掉到 20 再修 */
+  const g = GEAR.make('body', 4, 20);
+  const q = Repair.quote(g);
+  ok('缺失耐久按上限减当前耐久结算', q.max === 115 && q.dur === 20 && q.lost === 95);
+  ok('上限损耗 = 缺失耐久 ×(1-rep/100)×WEAR',
+     q.capLoss === Math.max(1, Math.round(q.lost * (1 - q.rep / 100) * CFG.REPAIR.WEAR)) && q.newMax === q.max - q.capLoss,
+     '-' + q.capLoss + ' → 上限 ' + q.newMax);
+  ok('修理费按原价 ÷ 原厂耐久 × 缺失耐久',
+     q.fee === Math.max(CFG.REPAIR.MIN_FEE, Math.round(g.price / 115 * q.lost * CFG.REPAIR.COST / 10) * 10),
+     '¥' + q.fee);
+  ok('修一次的上限损耗远小于补回的耐久', q.capLoss > 0 && q.capLoss < q.lost / 2);
+
+  /* 缺口一样、耐修不同：耐修高的那件掉得更少 */
+  const soft = Repair.quote(GEAR.make('body', 1, 20));      // 帆布护胸 rep 74，缺口 20
+  const hard = Repair.quote(GEAR.make('helmet', 6, 90));    // 攻坚头盔 rep 50，缺口 20
+  ok('耐修越高，同样缺口掉的上限越少', soft.lost === hard.lost && soft.capLoss < hard.capLoss,
+     soft.capLoss + ' vs ' + hard.capLoss);
+
+  ok('满耐久不需要修', !Repair.quote(GEAR.make('helmet', 3)).ok);
+  ok('上限见底不再接受修理', !Repair.quote(GEAR.make('helmet', 3, 0, 4)).ok);
+
+  const carried = GEAR.make('body', 4, 20, 77);
+  ok('GEAR.make 带得住修理后的上限', carried.max === 77 && carried.dur === 20);
+  const pseudo = EQUIP.armor(carried);
+  ok('伪物品不把上限冲回模板值', pseudo.equip.gear.max === 77 && pseudo.equip.gear.dur === 20);
+  ok('回收价按原厂上限折算', pseudo.sell === EQUIP.sellPrice(carried.price, 20, 77, 115) && pseudo.sell < 85000 * 0.5);
+
+  Save.gear.body = GEAR.make('body', 4, 30, 70);
+  Save.save(); Save.load();
+  ok('读档后修理痕迹还在', Save.gear.body.max === 70 && Save.gear.body.dur === 30);
+
+  /* 装回身上再卸下来，也不能把上限洗掉 */
+  Save.stash = [{ id: 'g_body4', n: 1, gear: EQUIP.armor(GEAR.make('body', 4, 30, 70)) }];
+  Save.gear.body = null;
+  Base.equipFromStash(Save.stash[0], 'body');
+  ok('从仓库穿上时保留上限', Save.gear.body && Save.gear.body.max === 70);
+  const back = Base.gearItem('body');
+  ok('卸下时伪物品保留上限', back.equip.gear.max === 70);
+}
+
+console.log('\n=== 异常遗物编号迁移 ===');
+{
+  /* 异常遗物补充批次把两件红品从 odd04/05 挪到 odd17/18。
+     v3 存档里的 odd04/05 指的是红品，读档要搬；v4 起 odd04/05 是新样本，不能再搬。 */
+  localStorageMock.setItem(Save.key, JSON.stringify({
+    v: 3, stash: [{ id: 'odd04', n: 1 }, { id: 'odd05', n: 1 }], bag: [], safe: [], codex: { odd04: true }, gear: {}
+  }));
+  Save.load();
+  ok('v3 存档把旧 odd04/05 迁到 odd17/18',
+     Save.stash.length === 2 && Save.stash.every(e => e.id === 'odd17' || e.id === 'odd18'));
+  ok('旧图鉴键跟着搬', Save.codex.odd17 === true && !Save.codex.odd04);
+
+  localStorageMock.setItem(Save.key, JSON.stringify({
+    v: 4, stash: [{ id: 'odd04', n: 1 }], bag: [], safe: [], codex: {}, gear: {}
+  }));
+  Save.load();
+  ok('v4 存档不再迁移，odd04 仍是潮盐团块', Save.stash[0] && Save.stash[0].id === 'odd04');
+}
+
+console.log('\n=== 护甲耐久条 ===');
+{
+  const D = ctx.DuraBar;
+  const segs = html => [...html.matchAll(/class="(dg|ds|dr)" style="width:([\d.]+)%"/g)].map(m => [m[1], +m[2]]);
+  const full = segs(D.html(GEAR.make('body',3)));            // 85/85，没修过
+  ok('满耐久整条绿、无灰无红', full.length === 3 && full[0][1] === 100 && full[1][1] === 0 && full[2][1] === 0);
+
+  const worn = segs(D.html(GEAR.make('body',3,10)));         // 10/85
+  ok('打掉的部分变灰', Math.abs(worn[0][1] - 10 / 85 * 100) < 0.02 && Math.abs(worn[1][1] - 75 / 85 * 100) < 0.02 && worn[2][1] === 0);
+
+  const fixed = segs(D.html(GEAR.make('body',4,20,94)));     // 20/94，原厂 115
+  ok('修掉的上限占红色', Math.abs(fixed[2][1] - 21 / 115 * 100) < 0.02);
+  ok('三段合计正好铺满一条', Math.abs(fixed.reduce((n, s) => n + s[1], 0) - 100) < 0.02);
+
+  const preview = segs(D.html(GEAR.make('body',4,20,94), {cap: 78, dur: 20}));
+  ok('修理预览按修完的上限画红色', Math.abs(preview[0][1] - 20 / 115 * 100) < 0.02 &&
+     Math.abs(preview[1][1] - 58 / 115 * 100) < 0.02 && Math.abs(preview[2][1] - 37 / 115 * 100) < 0.02);
+
+  ok('非护甲不画条', D.html(EQUIP.gun('rifle')) === '' && D.of(EQUIP.gun('rifle')) === null);
+}
+
+console.log('\n=== 枪械槽位点 ===');
+{
+  const D = ctx.SlotDots;
+  const dots = html => [...html.matchAll(/<b class="(on|off)"(?: style="background:([^"]+)")?/g)]
+    .map(m => [m[1], m[2] || '']);
+
+  ok('步枪按 5 个可装槽位画点', D.slots('m4a1').join(',') === 'optic,grip,stock,muzzle,magazine');
+  /* 手枪没有握把/枪托配件，数据里却标了这两槽 —— 不能画成永远灰的死点 */
+  ok('手枪只画真能装的槽位', D.slots('glock17').join(',') === 'optic,muzzle,magazine', D.slots('glock17').join(','));
+  ok('泵动霰弹没有握把/弹匣槽', D.slots('mp155').join(',') === 'optic,stock,muzzle', D.slots('mp155').join(','));
+  ok('不认识的枪不画点', D.html({equip:{kind:'gun',gun:'不存在的枪'}}) === '' && D.slots('不存在的枪').length === 0);
+
+  const bare = dots(D.html(EQUIP.gun('m4a1', 30)));
+  ok('空枪每个槽一颗灰点', bare.length === 5 && bare.every(d => d[0] === 'off'));
+
+  const one = dots(D.html(EQUIP.gun('m4a1', 30, null, null, {attachments:{optic:'att_optic04'}})));
+  ok('装了配件的槽换成稀有度色', one[0][0] === 'on' && one[0][1] === ctx.RARITY[3].color && one.slice(1).every(d => d[0] === 'off'),
+     '瞄具 ' + one[0][1]);
+  ok('槽位顺序固定：瞄具在最左', one.length === 5);
+
+  /* 三种输入都该画出同一排点：伪物品 / 解析后的枪 / 枪 id */
+  const item = EQUIP.gun('akm', 30, null, null, {attachments:{stock:'att_stock01'}});
+  const a = D.html(item), b = D.html(ctx.Attachments.resolve('akm', item.equip.attachments)), c = D.html('akm');
+  ok('伪物品与解析后的枪点法一致', dots(a).length === 5 && dots(b).filter(d => d[0] === 'on').length === 1);
+  ok('只传 id 也能画出槽位数（不认识具体配件）', dots(c).length === 5 && dots(c).every(d => d[0] === 'off'));
+
+  ok('非枪不画点', D.html(EQUIP.armor(GEAR.make('body', 4))) === '' && D.of(EQUIP.gun('m4a1')) !== null);
+  ok('点自带说明（悬停能看出装的是哪件）', D.html(item).includes('枪托：') && D.html(item).includes('空槽'));
+  ok('详情那一行只列已装槽位', D.line(item).includes('枪托 ') && D.line(item).includes('配件 1/5') &&
+     D.line(EQUIP.gun('m4a1',30)).includes('尚未安装配件'));
+}
+
+console.log('\n=== 彩蛋藏品 ===');
+{
+  const L = vm.runInContext('Loot', ctx), CFG = ctx.CFG;
+  const eggs = ctx.ITEMS.filter(i => i.egg);
+  ok('四件彩蛋都在物品表里', eggs.length === 4 && eggs.map(e => e.id).join(',') === 'odd13,odd14,odd15,odd16');
+  ok('彩蛋仍是红色孤品', eggs.every(e => e.r === 6 && e.cat === 'odd'));
+  ok('彩蛋带齐名称/简称/重量/价格/正文',
+     eggs.every(e => e.name && e.short && e.w > 0 && e.price > 0 && e.desc.length > 80));
+  ok('立绘与图标都在', eggs.every(e => fs.existsSync(path.join(dir, 'assets/items', e.id + '.png')) &&
+     fs.existsSync(path.join(dir, 'assets/item-art/easter-eggs-v1/sources', e.id + '.png'))));
+
+  /* 常规池必须过滤彩蛋：把概率关掉，抽一万次也不该出现 */
+  const keep = CFG.LOOT.eggChance;
+  CFG.LOOT.eggChance = 0;
+  let leaked = 0;
+  for (let i = 0; i < 20000; i++) if (L.roll('secret').item.egg) leaked++;
+  ok('关掉概率后常规池永不出彩蛋', leaked === 0, leaked + ' 次泄漏');
+  ok('尸体/敌人专属池也过滤彩蛋', L.pickFromPool(eggs) === null);
+  CFG.LOOT.eggChance = keep;
+
+  /* 概率拉满：红件必换彩蛋，非红件不动 */
+  CFG.LOOT.eggChance = 1;
+  ok('红色物品会换成彩蛋', L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}).item.egg === true);
+  ok('非红物品不会被换掉', L.eggSwap({item: ctx.ITEM_BY_ID['life01'], n: 1}).item.id === 'life01');
+  ok('四件均分（拉满时都会出现）', (() => {
+    const seen = new Set();
+    for (let i = 0; i < 400; i++) seen.add(L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}).item.id);
+    return seen.size === 4;
+  })());
+  CFG.LOOT.eggChance = keep;
+
+  /* 实测：秘藏箱 8% 红 × 2% = 0.16% 的彩蛋；红档总量不变 */
+  const N = 120000, r = [0, 0, 0, 0, 0, 0];
+  let egg = 0;
+  for (let i = 0; i < N; i++) { const d = L.roll('secret'); if (d.item.egg) egg++; r[d.item.r - 1]++; }
+  const eggPct = egg / N * 100, redPct = r[5] / N * 100;
+  ok('秘藏箱彩蛋率 ≈ 8% × 2%', Math.abs(eggPct - 0.16) < 0.05, eggPct.toFixed(3) + '%');
+  ok('红色总量仍是 8%（彩蛋从红里分，不额外增加）', Math.abs(redPct - 8) < 0.35, redPct.toFixed(2) + '%');
+  ok('红里约 2% 是彩蛋', Math.abs(egg / Math.max(1, r[5]) * 100 - 2) < 0.6);
 }
 
 console.log('\n---------------------------------------');

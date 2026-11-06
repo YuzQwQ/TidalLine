@@ -14,6 +14,7 @@ if (!AUDIO_ONLY) {
   require('./tools/build-arsenal.js').build();
   require('./tools/build-attachments.js').build();
   require('./tools/build-buyback-data.js').build();
+  require('./tools/build-music-data.js').build();
   require('child_process').execFileSync(process.execPath,[path.join(dir,'tools/build-detail-art.js')],{cwd:dir,stdio:'inherit'});
   require('./tools/build-scene-library.js').build();
   if (!process.argv.includes('--assets-only')) require('./tools/build-economy.js').build();
@@ -28,7 +29,7 @@ if (!AUDIO_ONLY) {
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 
 const JS_FILES = ['config.js', 'pixfont.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
-  'common.js', 'medical.js', 'detail-art.js', 'art.js', 'debuff.js', 'ui.js', 'music.js', 'save.js', 'base.js',
+  'common.js', 'medical.js', 'detail-art.js', 'art.js', 'durabar.js', 'slotdots.js', 'debuff.js', 'ui.js', 'music.js', 'music-player.js', 'save.js', 'base.js', 'repair.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
   'medhud.js', 'melee.js', 'range.js', 'safehouse-config.js', 'safehouse.js', 'merchant-config.js', 'trader.js', 'merchant-ui.js', 'storage-config.js', 'inventory-view.js', 'storage-ui.js', 'attachment-ui.js', 'gunsmith-page.js', 'merchant-dialogue.js', 'storage-loadout.js', 'base-safe.js', 'buyback-data.js', 'sales.js', 'merchant-sales.js', 'commission-data.js', 'commissions.js', 'elena-ui.js', 'boot.js'];
 const SPRITE_DIRS = ['items', 'chars', 'props', 'tiles', 'anim', 'gear', 'effects'];
@@ -60,22 +61,20 @@ if (fs.existsSync(AUDIO_DIR)) {
   }
 }
 
-/* 背景音乐另外走一张表：整首 MP3 比全部音效加起来还大，所以单独设上限，
-   超了就不内联 —— 单文件版安安静静没有 BGM，好过把它撑到十几 MB。
-   没超的话单文件版双击也有音乐（file:// 下同样只能靠 data URI）。 */
+/* 背景音乐按独立登记表内联，不解码进SFX缓冲；单曲压缩后最多6MiB。
+   超限应先压缩成品，不能让播放器显示曲目却在离线版静默丢失。 */
 const BGM_INLINE_MAX = 6 * 1024 * 1024;
 const bgm = {};
 if (fs.existsSync(AUDIO_DIR)) {
-  for (const f of fs.readdirSync(AUDIO_DIR)) {
-    if (!/^bgm_.*\.mp3$/i.test(f)) continue;
+  const registered=JSON.parse(fs.readFileSync(path.join(AUDIO_DIR,'manifest.json'),'utf8')).music;
+  const tracks=registered?.length?registered:fs.readdirSync(AUDIO_DIR).filter(f=>/^bgm_.*\.mp3$/i.test(f)).map(file=>({file,id:file.replace(/^bgm_/i,'').replace(/\.mp3$/i,'')}));
+  for (const {file:f,id} of tracks) {
     const buf = fs.readFileSync(path.join(AUDIO_DIR, f));
     if (buf.length > BGM_INLINE_MAX) {
-      console.log('单文件版跳过 ' + f + '（' + (buf.length / 1048576).toFixed(1) +
-        'MB，超过内联上限 ' + (BGM_INLINE_MAX / 1048576) + 'MB）');
-      continue;
+      throw Error(f+' 超过音乐成品内联上限，请先压缩到6MiB以内');
     }
     /* key 去掉 bgm_ 前缀：这里存的是曲目 id（Music.TRACKS 的键） */
-    bgm[f.replace(/^bgm_/i, '').replace(/\.mp3$/i, '')] =
+    bgm[id] =
       'data:audio/mp3;base64,' + buf.toString('base64');
   }
 }
@@ -110,6 +109,7 @@ for (const [id, file] of Object.entries({room:'room',armor:'merchant_armor',guns
   uiAssets[id] = 'data:image/webp;base64,' + fs.readFileSync(path.join(dir,'assets/ui/safehouse',file+'.webp')).toString('base64');
 }
 out = out.replace('<link rel="stylesheet" href="assets/ui/safehouse.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/safehouse.css'),'utf8')+'\n</style>');
+out = out.replace('<link rel="stylesheet" href="assets/ui/music.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/music.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/merchant.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/merchant.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/merchant-sales.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/merchant-sales.css'),'utf8')+'\n</style>');
 out = out.replace('<link rel="stylesheet" href="assets/ui/elena.css">', '<style>\n'+fs.readFileSync(path.join(dir,'assets/ui/elena.css'),'utf8')+'\n</style>');

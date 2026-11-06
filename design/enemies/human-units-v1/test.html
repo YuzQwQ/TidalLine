@@ -832,6 +832,8 @@ window.addEventListener('error', function (e) {
   image-rendering: pixelated;
 }
 .tip-ic img { width: 57px; height: 57px; object-fit: contain; image-rendering: pixelated; }
+/* 详情原图是高分辨率插画，按正常重采样看，别用像素放大 */
+.tip-ic img.item-detail-original { image-rendering: auto; }
 .tip-ic.gl { font-size: 18px; color: #7f9c93; border-style: dashed; }
 .tip-ttl { min-width: 0; flex: 1; }
 /* 名字和下面那行类别必须各占一行，否则大字号下会黏成一句 */
@@ -852,6 +854,58 @@ window.addEventListener('error', function (e) {
 .tip-foot {
   margin-top: 12px; font-size: 15px; color: #47645c; line-height: 1.6;
 }
+
+/* ---- 护甲耐久条：绿=当前耐久 灰=已损失 红=修理吃掉的上限 ----
+   整条按「原厂上限」铺满，所以修过的甲右边会多出一截红色。 */
+.dbar { display: flex; width: 100%; height: 4px; background: #0a1210; box-shadow: inset 0 0 0 1px #1b2b26; overflow: hidden; box-sizing: border-box; }
+.dbar > b { display: block; height: 100%; min-width: 0; }
+.dbar > .dg { background: #74b477; }
+.dbar > .ds { background: #47534e; }
+.dbar > .dr { background: #a85248; }
+/* 物品格：压在底边上，不挤内容 */
+.cell .dbar { position: absolute; left: 2px; right: 2px; bottom: 1px; width: auto; height: 2px; }
+.cell.has-dbar { padding-bottom: 4px; }
+.scell .dbar { position: absolute; left: 0; right: 0; bottom: 0; width: auto; height: 3px; }
+/* 局内装备槽：底边一条，Lv 角标让开 */
+.eqs .dbar { position: absolute; left: 1px; right: 1px; bottom: 0; width: auto; height: 2px; }
+.eqs.has-dbar .tag { bottom: 2px; }
+/* 备战页装备槽是竖排的，条接在文字下面 */
+.slot .dbar { flex: none; margin-top: 4px; height: 3px; }
+/* 详情浮窗 / 修理确认窗 */
+.tip-dura { margin: 10px 0 2px; }
+.dbar-box { margin: 11px 0 1px; }
+.dbar-cap { display: block; margin-top: 5px; font: 10px Consolas, monospace; color: #7d948c; letter-spacing: 0; }
+/* ---- 枪械槽位点：灰=空槽 彩点=已装配件（取配件稀有度色）----
+   点数就是这把枪支持的槽位数，顺序固定瞄具→握把→枪托→枪口→弹匣。 */
+.sdots { display: flex; align-items: center; gap: 3px; height: 6px; }
+.sdots > b { display: block; width: 4px; height: 4px; border-radius: 50%; box-sizing: border-box; }
+.sdots > b.off { background: #4d5c57; box-shadow: inset 0 0 0 1px rgba(6,12,10,0.55); }
+/* 稀有度色在深色格子上偏暗，叠一层白光提亮，红色/蓝色才分得出来 */
+.sdots > b.on { background-image: linear-gradient(rgba(255,255,255,0.18),rgba(255,255,255,0.18)); box-shadow: 0 0 0 1px rgba(6,12,10,0.75); }
+/* 物品格：压在名称下方那条空白上，不挤名字 */
+.cell .sdots { position: absolute; left: 3px; bottom: 1px; }
+/* 格子是竖排 flex：名称在图标下面，点再往下，所以给底边留出 9px。
+   图标缩一点，窄屏（390）也不会把内容顶出格子。 */
+.cell.has-dots { padding-bottom: 9px; }
+#bagGrid .cell.has-dots .ico-bag { width: 18px; height: 18px; margin-bottom: 0; }
+/* 安全箱格子只有 38px 高，点和图标都得收一档 */
+#safeGrid .cell.has-dots { padding-bottom: 6px; }
+#safeGrid .cell.has-dots .ico-safe { width: 18px; height: 18px; }
+.scell .sdots { position: absolute; left: 3px; bottom: 3px; }
+.stash-grid .scell.has-dots .cn { bottom: 11px; }
+/* 局内装备槽最矮（战局 HUD 那条只有一行高），底边要同时放点数和弹药数字：
+   点缩到 3px、间距 1px，5 颗 + 角标正好挤满一行，互不遮挡。 */
+.eqs .sdots { position: absolute; left: 2px; bottom: 1px; gap: 1px; }
+.eqs .sdots > b { width: 3px; height: 3px; }
+/* 备战页装备槽是竖排的，点接在文字下面 */
+.slot .sdots { flex: none; margin-top: 4px; }
+/* 详情浮窗 */
+.tip-slots { display: flex; align-items: center; gap: 8px; margin: 9px 0 0; }
+.tip-slots .sdots { height: 8px; gap: 4px; }
+.tip-slots .sdots > b { width: 7px; height: 7px; }
+.tip-slots small { font: 10px Consolas, monospace; color: #7d948c; letter-spacing: 0; }
+.tip-slot-list { margin-top: 4px; font: 10px/1.5 Consolas, monospace; color: #6d857d; letter-spacing: 0; }
+
 
 /* 交易确认悬浮窗 */
 .deal {
@@ -1120,6 +1174,7 @@ window.addEventListener('error', function (e) {
 .tip-ic img.item-detail-original{image-rendering:auto}
 </style>
 <link rel="stylesheet" href="assets/ui/safehouse.css">
+<link rel="stylesheet" href="assets/ui/music.css">
 <link rel="stylesheet" href="assets/ui/merchant.css">
 <link rel="stylesheet" href="assets/ui/elena.css"><link rel="stylesheet" href="assets/ui/merchant-sales.css"><link rel="stylesheet" href="assets/ui/storage.css">
 <link rel="stylesheet" href="assets/ui/attachments.css"></head>
@@ -1348,11 +1403,15 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 <script src="js/medical.js"></script>
 <script src="js/detail-art.js"></script>
 <script src="js/art.js"></script>
+<script src="js/durabar.js"></script>
+<script src="js/slotdots.js"></script>
 <script src="js/debuff.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/music.js"></script>
+<script src="js/music-player.js"></script>
 <script src="js/save.js"></script>
 <script src="js/base.js"></script>
+<script src="js/repair.js"></script>
 <script src="js/game.js"></script>
 <script src="js/game-update.js"></script>
 <script src="js/game-render.js"></script>

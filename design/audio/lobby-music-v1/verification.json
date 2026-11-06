@@ -1,0 +1,34 @@
+{
+  "passed": 10,
+  "tracks": [
+    {
+      "id": "base",
+      "title": "退潮之后",
+      "duration": 203.174,
+      "bytes": 4877681,
+      "bitrate": 192000
+    },
+    {
+      "id": "no_one_answers",
+      "title": "无人应答",
+      "duration": 229.214,
+      "bytes": 5502741,
+      "bitrate": 192000
+    },
+    {
+      "id": "beyond_the_grey",
+      "title": "越过灰色地带",
+      "duration": 189.614,
+      "bytes": 4552308,
+      "bitrate": 192000
+    },
+    {
+      "id": "business_as_usual",
+      "title": "照常营业",
+      "duration": 183.214,
+      "bytes": 4398708,
+      "bitrate": 192000
+    }
+  ],
+  "mp3Bytes": 19331438
+}

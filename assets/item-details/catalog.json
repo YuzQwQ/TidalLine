@@ -852,6 +852,14 @@
       "height": 1117
     },
     {
+      "key": "items/antiq10",
+      "source": "assets/item-art/red-collectibles-v1/sources/antiq10.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/antiq10.png",
+      "sourceHash": "b050bb50174724fcd4e4d8ec3698b600daba5c0abab60e2d49c9011e844639b8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "items/art01",
       "source": "assets/item-art/legacy/sources/art01.png",
       "target": "assets/item-art/legacy/sources/art01.png",
@@ -1008,6 +1016,22 @@
       "source": "assets/item-art/electronics/sources/elec15.png",
       "target": "assets/item-art/electronics/sources/elec15.png",
       "sourceHash": "4f0056fc7dbbfee30521f5e8d99ce70db11ebeeebc41b5d160fe8fc509c82039",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec16",
+      "source": "assets/item-art/red-collectibles-v1/sources/elec16.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/elec16.png",
+      "sourceHash": "9950d9c87448bfff7313370d21532f0a78a3d5b7321366f00886235c92bfb6ad",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec17",
+      "source": "assets/item-art/red-collectibles-v1/sources/elec17.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/elec17.png",
+      "sourceHash": "6178981bae03158d29c33bf00f2855d61685bbebc02a4f7a8868684ac7cdd0bd",
       "width": 1254,
       "height": 1254
     },
@@ -1276,6 +1300,22 @@
       "height": 1254
     },
     {
+      "key": "items/ind16",
+      "source": "assets/item-art/red-collectibles-v1/sources/ind16.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/ind16.png",
+      "sourceHash": "8ea2cd49a6af19752995c6beeb54a1d9d2aab503e923f2f755ae8b36f8c677b8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ind17",
+      "source": "assets/item-art/red-collectibles-v1/sources/ind17.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/ind17.png",
+      "sourceHash": "dce91cbab9d81216a9058dce67921f8dcb632318d03c9b81ba16d9c0ffeace09",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "items/intel01",
       "source": "assets/item-art/intel/sources/intel01.png",
       "target": "assets/item-art/intel/sources/intel01.png",
@@ -1376,6 +1416,22 @@
       "source": "assets/item-art/intel/sources/intel13.png",
       "target": "assets/item-art/intel/sources/intel13.png",
       "sourceHash": "5eae5a243c6df7d898466be290d14beb8d40356960be2167c877e07eb8a17652",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel14",
+      "source": "assets/item-art/red-collectibles-v1/sources/intel14.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/intel14.png",
+      "sourceHash": "9c9a9ba3c19674c592f3854e4f94022a7dc45cf717b9f4a6abaf4a5dd5cc3193",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/intel15",
+      "source": "assets/item-art/red-collectibles-v1/sources/intel15.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/intel15.png",
+      "sourceHash": "9a0057a2c2b94454ab531b31af77d4242a7814ae766f833906e05b1e4009191f",
       "width": 1254,
       "height": 1254
     },
@@ -1612,6 +1668,22 @@
       "height": 1254
     },
     {
+      "key": "items/life50",
+      "source": "assets/item-art/red-collectibles-v1/sources/life50.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/life50.png",
+      "sourceHash": "828773962d56f94bd51b8455f1308cc0f5f82b3a9ee4b0004d316848d4289d73",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/life51",
+      "source": "assets/item-art/red-collectibles-v1/sources/life51.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/life51.png",
+      "sourceHash": "61be400673d012fb8f31c625aa1cbd219b9f07794024c6caf3fcdc81198a4656",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "items/lux01",
       "source": "assets/item-art/legacy/sources/lux01.png",
       "target": "assets/item-art/legacy/sources/lux01.png",
@@ -1748,6 +1820,22 @@
       "height": 1254
     },
     {
+      "key": "items/med16",
+      "source": "assets/item-art/red-collectibles-v1/sources/med16.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/med16.png",
+      "sourceHash": "cbde7f31e441c5ed2425184810bcced2abde7ec7abc0b9331ea2edfb97eec0d7",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/med17",
+      "source": "assets/item-art/red-collectibles-v1/sources/med17.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/med17.png",
+      "sourceHash": "cb129d34aa9774312d1292772433e70be610aad8ad818fd01fda29220f65bb8a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "items/mil01",
       "source": "assets/item-art/military/sources/mil01.png",
       "target": "assets/item-art/military/sources/mil01.png",
@@ -1866,6 +1954,22 @@
       "sourceHash": "ca1c1d29db58567c101a431123a982267c04d87571acc0ebe12b3e29c86708d8",
       "width": 1536,
       "height": 1024
+    },
+    {
+      "key": "items/mil16",
+      "source": "assets/item-art/red-collectibles-v1/sources/mil16.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/mil16.png",
+      "sourceHash": "fe184a2c4a50e990051ef93413c3c0b4aff55f011c945f4b00fb2d8e9747898c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/mil17",
+      "source": "assets/item-art/red-collectibles-v1/sources/mil17.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/mil17.png",
+      "sourceHash": "d80c636be761f494bb4edf5f9fe3a9d519dcb5309de5ddc5ef1a4fb01dfa01e9",
+      "width": 1254,
+      "height": 1254
     },
     {
       "key": "items/occ01",
@@ -1988,6 +2092,22 @@
       "height": 1254
     },
     {
+      "key": "items/occ16",
+      "source": "assets/item-art/red-collectibles-v1/sources/occ16.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/occ16.png",
+      "sourceHash": "0bf409a319bfb75572013f227b098095eea1de99000426719ada6cb30e7f21f2",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/occ17",
+      "source": "assets/item-art/red-collectibles-v1/sources/occ17.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/occ17.png",
+      "sourceHash": "b59c79f93df84aa290d7acad1289e06d79572cb18179b6396c90a915d15a2caf",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "items/odd01",
       "source": "assets/item-art/legacy/sources/odd01.png",
       "target": "assets/item-art/legacy/sources/odd01.png",
@@ -2008,6 +2128,126 @@
       "source": "assets/item-art/legacy/sources/odd03.png",
       "target": "assets/item-art/legacy/sources/odd03.png",
       "sourceHash": "4194e426d2204a1dc92592da6b77791b4ad2a9fd2590983d92d55aba3c469323",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd04",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd04.png",
+      "target": "assets/item-art/anomalous-relics-v1/sources/odd04.png",
+      "sourceHash": "945ce722ee4f7de742ae2559cdcc6244d70e431cf78f45b32fdcfeaac04f727a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd05",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd05.png",
+      "target": "assets/item-art/anomalous-relics-v1/sources/odd05.png",
+      "sourceHash": "751b2de7ce23d15ea6c5b13fd4d41cb092b2683ef79615689c01ef7a32fc3666",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd06",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd06.png",
+      "target": "assets/item-art/anomalous-relics-v1/sources/odd06.png",
+      "sourceHash": "53b059f60110be3b666d4247bf004fdbb9adab7e82a469de1e0b17846c06f9ef",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd07",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd07.png",
+      "target": "assets/item-art/anomalous-relics-v1/sources/odd07.png",
+      "sourceHash": "8480223ade1946cad7259a60d12799e81a750f0f2e76f724c6d0d39bcca077dd",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd08",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd08.png",
+      "target": "assets/item-art/anomalous-relics-v1/sources/odd08.png",
+      "sourceHash": "d48e39e102d604b039ac6b08cab9c9b3bbe7b2b747d1c7f6c0bf1f0508d870d0",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd09",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd09.png",
+      "target": "assets/item-art/anomalous-relics-v1/sources/odd09.png",
+      "sourceHash": "756c536706290e209b5849ddacaf8a2d63b81272c59655fbb244c706dc4f53ad",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd10",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd10.png",
+      "target": "assets/item-art/anomalous-relics-v1/sources/odd10.png",
+      "sourceHash": "1100dd354eb8ae0fb1ec47446acc20ae21c388fd1b1cf33857a47e279617bf63",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd11",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd11.png",
+      "target": "assets/item-art/anomalous-relics-v1/sources/odd11.png",
+      "sourceHash": "ea9490233bfbc2c1d0cd9c263d954ca01c75ee9497593d7d29c20f574371943a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd12",
+      "source": "assets/item-art/anomalous-relics-v1/sources/odd12.png",
+      "target": "assets/item-art/anomalous-relics-v1/sources/odd12.png",
+      "sourceHash": "2d4b19b0215c6041b7b60f50f0b26429150f08159b1a10fb0aa01479df5bda4e",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd13",
+      "source": "assets/item-art/easter-eggs-v1/sources/odd13.png",
+      "target": "assets/item-art/easter-eggs-v1/sources/odd13.png",
+      "sourceHash": "acd56cabdb6873e72ad6af8fb0faca47f849fba6b2568e82dcc421393041e540",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd14",
+      "source": "assets/item-art/easter-eggs-v1/sources/odd14.png",
+      "target": "assets/item-art/easter-eggs-v1/sources/odd14.png",
+      "sourceHash": "1b6a83200b61d7065c9e06d070270c04e6d72c81b3804e7e9b01257ade073913",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd15",
+      "source": "assets/item-art/easter-eggs-v1/sources/odd15.png",
+      "target": "assets/item-art/easter-eggs-v1/sources/odd15.png",
+      "sourceHash": "25e5c00b2f7177de08ffed2755046705d5bb85c73b08de9b19fbc902682f8e2c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd16",
+      "source": "assets/item-art/easter-eggs-v1/sources/odd16.png",
+      "target": "assets/item-art/easter-eggs-v1/sources/odd16.png",
+      "sourceHash": "7a811bb88218a26ec0933ee351719970dfb925693c0d54952be79eba5c11ae33",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd17",
+      "source": "assets/item-art/red-collectibles-v1/sources/odd17.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/odd17.png",
+      "sourceHash": "f7d3cb406214368597615794034804d6c883cc793b0a510db627b6d2a5e33f25",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/odd18",
+      "source": "assets/item-art/red-collectibles-v1/sources/odd18.png",
+      "target": "assets/item-art/red-collectibles-v1/sources/odd18.png",
+      "sourceHash": "1cf051eb67a8d19d0e36b2e0be61829eb98f5be601e68ad1b9c49426a89be658",
       "width": 1254,
       "height": 1254
     },
@@ -2044,5 +2284,9 @@
       "height": 1254
     }
   ],
-  "missing": []
+  "missing": [
+    "items/heal19",
+    "items/heal20",
+    "items/heal21"
+  ]
 }

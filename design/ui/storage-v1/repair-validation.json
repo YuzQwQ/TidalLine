@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "menu": 3,
+      "fee": 31600,
+      "capLoss": 21,
+      "after": {
+        "credits": 468400,
+        "dur": 94,
+        "max": 94
+      }
+    },
+    {
+      "file": "潮汐线.html",
+      "menu": 3,
+      "fee": 31600,
+      "capLoss": 21,
+      "after": {
+        "credits": 468400,
+        "dur": 94,
+        "max": 94
+      }
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 /* ============================================================
-   背景音乐（当前只有局外大厅一首：《退潮之后 / After the Ebb》）
+   背景音乐基础播放与淡入淡出；局外曲库与控制界面由 music-player.js 扩展。
    ------------------------------------------------------------
    和 SFX 两条路：SFX 是 WebAudio 现场合成 + 短采样，音乐是整首流式播放。
 
    为什么不用 decodeAudioData 喂给 AudioBuffer：三分多钟的双声道浮点缓冲
    要 70MB 常驻内存，换来的只是"能接进 SFX 总线"——而音乐本来就不需要
-   和枪声一起进压缩器。用 <audio> 流式播，内存是几十 KB。
+   和枪声一起进压缩器。用 <audio> 按需播放当前曲目，避免整份曲库常驻PCM缓冲。
 
    为什么不用 createMediaElementSource 接进 SFX.ctx：file:// 打开时浏览器把
    本地音频当跨域，MediaElementSource 会直接输出静音。单文件版就是 file:// 跑的，
@@ -31,7 +31,7 @@ const Music = {
     el.volume = 0;
     el.crossOrigin = 'anonymous';
     el.addEventListener('error', () => {
-      /* 单文件版没有内联音乐（太大），加载不到就安静算了，别刷控制台 */
+      /* 播放器负责显示错误；这里只留一条轻量日志。 */
       if (typeof console !== 'undefined' && console.info) console.info('[music] 曲目不可用，跳过背景音乐');
     });
     this.el = el;
@@ -45,6 +45,9 @@ const Music = {
     const t = this.TRACKS[id];
     return t ? t.file : '';
   },
+
+  /* Older standalone previews can still load just the single-track engine. */
+  enterBase() { this.play('base'); },
 
   play(id) {
     const t = this.TRACKS[id];

@@ -1,0 +1,161 @@
+{
+  "batch": "高价值红色收集品扩充 V1.0",
+  "date": "2026-11-06",
+  "mode": "built-in image_gen",
+  "styleReference": "assets/source/archive/red-collectibles-v1/reference.png",
+  "delivery": {
+    "canvas": [
+      48,
+      48
+    ],
+    "subjectMax": [
+      40,
+      40
+    ],
+    "transparentMargin": 4,
+    "resize": "lanczos3",
+    "paletteColours": 64,
+    "alpha": "binary"
+  },
+  "note": "原稿为 1254px 大图，交接入库时按 alpha 裁主体、Lanczos 缩到 40px、alpha 二值化后四周补 4px，由 tools/prepare-red-collectibles-icons.js 生成 assets/items/{id}.png；详情原图由 tools/build-detail-art.js 登记到 DETAIL_ART。原占位图与审核图归档于 assets/source/archive/red-collectibles-v1/。",
+  "items": [
+    {
+      "id": "life50",
+      "name": "黄金怀炉",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: 黄金怀炉, a squat flattened oval egg-shaped GOLD pocket hand warmer. Ornate pierced vine pattern on its domed top lid, tiny deep crimson enamel accents around its warm gold shell, dark metal rim around bottom. Shape is a broad rounded flat pebble, not a tall egg or lantern. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is never to be reproduced.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-109c30f5-57ab-4d47-865a-1d6e633ce0fb.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/life50.png",
+      "output": "assets/items/life50.png"
+    },
+    {
+      "id": "life51",
+      "name": "御用茶宴瓷器组",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: A luxurious royal porcelain tea SERVICE arranged compactly: a large cobalt-blue and ivory teapot with gold trim as main silhouette, two small matching cups and one small lidded sugar bowl grouped in front. Blue glaze, creamy porcelain and delicate gold landscape hints. No case. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, ground, text labels, UI, rarity frame, aura, realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-472ea341-5b5b-41d5-a89d-19a2f46ea27e.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/life51.png",
+      "output": "assets/items/life51.png"
+    },
+    {
+      "id": "elec16",
+      "name": "典藏晶体管收音机",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: A civilian modernist vintage transistor RADIO: wide horizontal walnut wood rectangular cabinet, warm gold metal speaker grille across front, one large ivory tuning knob on right, a very narrow green frequency window above. Premium restrained industrial design, no military styling. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, ground, text labels, UI, rarity frame, aura, realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-6667ede6-586f-4b7b-bbac-dbc8bd264245.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/elec16.png",
+      "output": "assets/items/elec16.png"
+    },
+    {
+      "id": "elec17",
+      "name": "辉光管潮位计时器",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: A desktop NIXIE TUBE tide timer, horizontal dark metal base with brass frame. Exactly SIX individual upright transparent glass tubes in a row on top, each visibly contains ONE glowing warm orange-red curved WIRE NUMERAL electrode (digits 2 3 0 5 4 1). Real rounded separate glass vacuum tubes, fine wire numerals, NOT seven-segment LEDs, NOT a flat digital screen. Small narrow tide scale window and two tiny precision levers on base below. Tube digits are primary focus; subdued glass reflections, no neon aura. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, ground, text labels, UI, rarity frame, aura, realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-fc3d06b9-e7bd-447f-b51c-cafd42cd8c92.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/elec17.png",
+      "output": "assets/items/elec17.png"
+    },
+    {
+      "id": "ind16",
+      "name": "黄铜深潜头盔",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: An antique brass deep-sea DIVE HELMET: round spherical old golden copper shell, HUGE circular dark glass front porthole with bolted ring, two smaller round side portholes visible in perspective. Broad shoulder connecting collar at bottom, side air-hose fitting, subtle handworked and aged brass. A diving helmet, not a combat helmet. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, ground, text labels, UI, rarity frame, aura, realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-467f5721-7acb-4e7e-9590-39eff21a60a6.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/ind16.png",
+      "output": "assets/items/ind16.png"
+    },
+    {
+      "id": "ind17",
+      "name": "机械差分计算核心",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: Mechanical DIFFERENCE ENGINE calculating core: dense multi-tier brass gears, stepped cylindrical numbered wheels and precision shafts tightly arranged within a dark metal rectangular base. Visible digit bands on front wheels, short side crank handle. Entirely mechanical, rich depth, no electronics, no fantasy glow. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-c0cf22fa-c24c-4b2c-b7df-3d26abf7da3a.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/ind17.png",
+      "output": "assets/items/ind17.png"
+    },
+    {
+      "id": "med16",
+      "name": "镀银外科器械组",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: Antique silver decorated surgical INSTRUMENT SET, five to six distinct slender tools fanned out over a small folded deep navy velvet cloth: scalpel, scissors, hemostat forceps, long fine probe, dissection tool. Cold silver highlights, engraved ornamental silver handles. Clear individual silhouettes. No bulky case, no blood. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-16764f00-859f-42db-bd6b-ae81561c300e.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/med16.png",
+      "output": "assets/items/med16.png"
+    },
+    {
+      "id": "med17",
+      "name": "透明人体心脏标本",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: Medical museum cleared human HEART specimen, anatomically plausible asymmetric human heart silhouette (not love heart symbol), translucent pale pink tissue, visible branching red and blue coronary vessels, aorta and major vessel stubs above. Mounted on thin narrow transparent stand with small clear foot. Clean educational anatomical display, non-gory, no blood, no horror. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-dab9161c-2623-4066-b050-c6a4b09d3855.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/med17.png",
+      "output": "assets/items/med17.png"
+    },
+    {
+      "id": "antiq10",
+      "name": "灯塔珠宝彩蛋",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: Original exquisite jeweled EGG with its navy-blue enamel upper eggshell hinged OPEN to the left, revealing a miniature GOLD LIGHTHOUSE inside lower half. Oval deep ocean blue enamel shell, golden wave filigree, tiny blue and white gemstones, gold openwork stand and three delicate feet. Lighthouse has a distinct small lantern room on top. Compact silhouette, original design, no replica of an existing famous jewel. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-315c45fb-5283-4c2f-a851-689f3392302d.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/antiq10.png",
+      "output": "assets/items/antiq10.png"
+    },
+    {
+      "id": "mil16",
+      "name": "转轮密码机",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: Compact military ROTOR CIPHER MACHINE in dark gray olive metal, shown from above at 3/4 angle: front stepped rows of round black letter typewriter keys, behind them small round letter indicator lamp panel, rear row of FOUR exposed metallic cipher rotors with numeric rings. Old electromechanical design. Distinct from a radio or modern computer keyboard. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-0b50452d-6cfe-41fb-9cd8-235070b5010b.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/mil16.png",
+      "output": "assets/items/mil16.png"
+    },
+    {
+      "id": "mil17",
+      "name": "失事航机黑匣子",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: Recovered aircraft FLIGHT DATA RECORDER: thick squat rectangular orange-red metal industrial box, reinforced ribs and metal end plate with circular industrial connector ports at one end. Black scorched patches, scrapes exposing metal, a few small white stencil identification marks. Heavy rugged casing, no glow, no scene, no aircraft. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-0a7e90d9-1097-4233-8d57-f45eb61b54e6.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/mil17.png",
+      "output": "assets/items/mil17.png"
+    },
+    {
+      "id": "intel14",
+      "name": "绝密行动令",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: ONE off-white typed TOP SECRET OPERATION ORDER sheet lying diagonally in 3/4 overhead view, slight curled corner. A prominent rectangular red classification stamp near top, sparse short black typed lines in center, handwritten signature and thick black redaction strokes at bottom right. No envelope or folder. Text is tiny graphical marks rather than large captions. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-dfd18814-2ee1-428f-8d26-120ccc1550ce.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/intel14.png",
+      "output": "assets/items/intel14.png"
+    },
+    {
+      "id": "intel15",
+      "name": "月面摄影原片",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: Small group of TWO or THREE overlapping black-and-white original LUNAR PHOTOGRAPHS, a short strip of brown-black negative film with sprocket holes in front, pale blue archival envelope peeking from behind. Photos show lunar crater terrain, distant horizon and tiny lunar robotic lander silhouette plus a few calibration cross marks. All shown together diagonally from overhead, no space background. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-ef97c727-9b2f-4f4b-8866-c112e96fcf5a.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/intel15.png",
+      "output": "assets/items/intel15.png"
+    },
+    {
+      "id": "occ16",
+      "name": "古代封印戒",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: One wide ancient GOLD SIGNET RING, three quarter view tilted so its broad face and side are visible, black stone or enamel signet face with original engraved concentric circles and crossing geometric lines. Tiny old glyph incisions densely along gold band sides, warm antique gold highlights. A single ring with visible band hole, no magic aura. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-f60b2402-d488-4e63-a8ec-e179f4f92bbb.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/occ16.png",
+      "output": "assets/items/occ16.png"
+    },
+    {
+      "id": "occ17",
+      "name": "双文祭祀碑",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: An irregular dark charcoal gray STONE STELE FRAGMENT, upright tapering trapezoid with broken corners, tilted in three quarter top view showing thick edge. Two clearly separated inscription zones: left neat rows of angular ancient glyphs, right circular and zigzag geometric ritual symbols. Sparse muted moss, chisel wear. Marks carved into stone, no glowing runes, no stand. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-efc7e86d-9095-46e5-959c-d8e8402250ae.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/occ17.png",
+      "output": "assets/items/occ17.png"
+    },
+    {
+      "id": "odd17",
+      "name": "逆流沙漏",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: One slender BRASS HOURGLASS upright, round top and bottom frame discs connected by thin brass columns, clear pinched-waist glass. Pale golden fine sand visibly streams UPWARD from a small bottom mound through neck into a much FULLER UPPER bulb sand mass. Tiny rising grains follow upward thin stream, upper sand mass wraps around top of stream. No arrow, no text, no magic glow, no swirling exterior particles. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-ab8dfa06-2b37-4844-8644-35415d05a617.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/odd17.png",
+      "output": "assets/items/odd17.png",
+      "requestSlot": "odd17"
+    },
+    {
+      "id": "odd18",
+      "name": "瓶中风暴",
+      "prompt": "Use case: stylized-concept. Create ONE finished inventory sprite for the Chinese survival game 潮汐线. Match the provided reference sheet STYLE ONLY: tiny restrained realistic pixel-art objects, deliberate crisp square pixel clusters, dark fine outlines, muted weathered material shading with upper-left highlights, 3/4 view slightly from above. Subject: A heavy thick clear GLASS LABORATORY BOTTLE, large round bulbous body and short narrow neck with sealed slightly rusted metal cap. Inside the glass is a complete miniature storm: swirling dark blue-gray thundercloud in upper belly, one or two tiny white lightning forks within clouds, fine rain over a shallow dark blue water surface at bottom. Glass edge reflections and transparent margin around clouds, no outside storm, no glow aura, no scenery. Single item centered, occupies 80% of square canvas, isolated on genuinely transparent alpha. Intended final icon 48x48 with 40x40 subject: draw simplified readable low-resolution sprite equivalent to 40x40 logical pixels, displayed enlarged without smoothing. No background, no ground, no text labels, no UI, no rarity frame, no aura, no realistic photo or smooth 3D render. Reference sheet is style reference only.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-c4ce131d-d5ef-4b3d-b91e-58a0e6bb6d97.png",
+      "source": "assets/item-art/red-collectibles-v1/sources/odd18.png",
+      "output": "assets/items/odd18.png",
+      "requestSlot": "odd18"
+    }
+  ]
+}
