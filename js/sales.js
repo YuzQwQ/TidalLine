@@ -17,13 +17,13 @@ const Sales={
   if(merchant==='warehouse')return {...out,reason:'请前往商人处出售，仓库金额仅为估价'};
   const kind=this.kind(item),rule=MERCHANT_BUYBACK[merchant],override=rule?.items?.[item.id];
   if(merchant!=='warehouse'&&(!rule||override?.allowed===false||(!rule.allow.includes(kind)&&override?.allowed!==true)))return {...out,reason:'当前商人不收购此类物品'};
-  /* 钥匙：原价 × 剩余耐久% × 75% 回收；耐久耗尽（cap≤0）不可回收，随规范化直接销毁。 */
+  /* 钥匙：现值（原价 × 剩余耐久%）× 75% 回收；耐久耗尽（cap≤0）不可回收，随规范化直接销毁。 */
   if(kind==='key'){
    const max=ItemCapacity.max(item),rem=ItemCapacity.remaining(e);
    if(!(max>0)||!(rem>0))return {...out,status:'refused',reason:'耐久耗尽，钥匙已无法回收'};
-   const base=unitPrice(item),unit=Math.floor(base*(rem/max)*0.75);
+   const base=entryValue(item,e),unit=Math.floor(base*0.75);
    if(!Number.isFinite(unit)||unit<0)return out;
-   return {...out,ok:true,status:'normal',reason:'钥匙回收 · 原价75% × 剩余耐久 '+rem+'/'+max,base,unit,multiplier:0.75*rem/max};
+   return {...out,ok:true,status:'normal',reason:'钥匙回收 · 现值75%（剩余耐久 '+rem+'/'+max+'）',base,unit,multiplier:0.75};
   }
   const rate=kind==='collectible'?(COLLECTIBLE_BUYBACK.overrides[item.id]?.[merchant]??COLLECTIBLE_BUYBACK.defaultRates[item.cat]?.[merchant]??60):100;
   if(kind==='collectible'&&rate===0)return {...out,reason:'当前商人不收购此类物品'};

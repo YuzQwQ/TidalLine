@@ -10787,13 +10787,16 @@ const Tips = {
   },
 
   /* 物品详情。it 可以是普通物品，也可以是装备伪物品；extra 是调用方补的额外行 */
-  show(it, rect, hint, extra) {
+  show(it, rect, hint, extra, entry) {
     const box = this._box('itemTip');
     if (!box || !it) return;
 
     const r = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)];
     const cat = {...(CATS[it.cat] || CATS.ind),name:itemCategoryLabel(it)};
     const price = it.price || 0;
+    /* 钥匙按剩余耐久折算：调用方传了 entry 就显示现值，否则还是标价 */
+    const cur = entry ? entryValue(it, entry) : price;
+    const partial = entry && cur !== price;
     const rows = [];
 
     if (it.cat === 'ammo') {
@@ -10853,7 +10856,8 @@ const Tips = {
       const g = it.equip.gear;
       if(g.type==='body') rows.push(['瞄准时间','+'+(g.aimPenaltyPct||0)+'%']);
     }
-    rows.push(['单价', formatMoney(price)]);
+    rows.push([partial ? '现值' : '单价', formatMoney(cur)]);
+    if (partial) rows.push(['原价', formatMoney(price) + ' · 按剩余耐久折算']);
     if (it.sell != null) rows.push(['回收价', formatMoney(it.sell)]);
 
     /* 图鉴：只登记真正的收藏品，消耗品和装备不算 */
@@ -12947,6 +12951,18 @@ function unitPrice(it) {
   return (it.sell != null) ? it.sell : it.price;
 }
 
+/* 当前价值：钥匙按剩余耐久折算，其余沿用 unitPrice。
+   3000 万的十次钥匙开过一次，现值就是 2700 万 —— 仓库总估价、
+   排序、结算清单和商人报价都走这里，别各自算一遍。 */
+function entryValue(it, entry) {
+  const base = unitPrice(it) || 0;
+  if (!it || it.cat !== 'key') return base;
+  const max = ItemCapacity.max(it);
+  if (!(max > 0)) return base;
+  const rem = entry ? ItemCapacity.remaining(entry) : max;
+  return Math.round(base * Math.max(0, Math.min(rem, max)) / max);
+}
+
 </script>
 <script>
 /* ===== base.js ===== */
@@ -14134,7 +14150,7 @@ const Base = {
     const hint = inStash ? '双击放进背包 · 右键不额外弹菜单'
       : inBag ? '双击卸下 · Ctrl+左键同样卸下'
       : '双击卸下 · 右键有详情与卸下';
-    Tips.show(it, node.getBoundingClientRect(), hint, extra);
+    Tips.show(it, node.getBoundingClientRect(), hint, extra, inGear ? null : e);
 
     const acts = [];
     /* 第一项永远是「从当前位置挪走」：装备栏/背包是卸下，仓库是放进背包 */
@@ -14261,7 +14277,7 @@ const Base = {
       Save.stash.length + ' / ' + STASH_SLOTS + ' 格';
     const total = Save.stash.reduce((a, e) => {
       const it = stashItem(e);
-      return a + (it ? unitPrice(it) * (e.n || 1) : 0);
+      return a + (it ? entryValue(it, e) * (e.n || 1) : 0);
     }, 0);
     document.getElementById('stashValue').textContent = formatMoney(total);
 
@@ -14302,7 +14318,7 @@ const Base = {
       cell.title = it.name + (ItemCapacity.max(it) && (it.cat==='key' || ItemCapacity.isPartial(e))
           ? ' · ' + ItemCapacity.text(e)
           : ' · ' + it.w.toFixed(2) + 'kg') + ' · ' +
-        '估价 ' + formatMoney(unitPrice(it) * n) + ' · 成交价以商人报价为准 · 左键看详情';
+        '估价 ' + formatMoney(entryValue(it, e) * n) + ' · 成交价以商人报价为准 · 左键看详情';
       /* 仓库只有左键看详情、双击放进背包；右键不弹菜单（别让两套入口打架） */
       cell.onclick = () => this.showItem(e, 'stash', cell);
       cell.ondblclick = (ev) => {
@@ -17316,7 +17332,7 @@ Object.assign(Game, {
     if (ItemCapacity.max(it) && spec.entry) {
       extra.push([ItemCapacity.label(it), ItemCapacity.text(spec.entry)]);
     }
-    Tips.show(it, node.getBoundingClientRect(), spec.hint || '', extra);
+    Tips.show(it, node.getBoundingClientRect(), spec.hint || '', extra, spec.entry || null);
     const acts = [];
     if (spec.act) acts.push({ label: spec.actLabel || '使用', disabled: !!spec.actOff, onClick: spec.act });
     if (spec.quick) acts.push({ label: spec.quickLabel || '快速移动', onClick: spec.quick });
@@ -18260,7 +18276,7 @@ Object.assign(Game, {
         Save.codex[it.id] = { first: Date.now(), count: 1 };
       }
       lines.push({
-        it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n,
+        it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: entryValue(it, s) * s.n,
         isNew: newIds.has(it.id)
       });
     }
@@ -20770,7 +20786,7 @@ const InventoryView={
   if(category==='collectibles')return itemGroup(item)==='collectible';return item.cat===category;
  },
  list(entries,state){const {category='all',quality='all',query='',sort='value'}=state;
-  const value=e=>unitPrice(stashItem(e))*(e.n||1);
+  const value=e=>entryValue(stashItem(e),e)*(e.n||1);
   return entries.filter(e=>{const it=stashItem(e);return it&&this.matches(it,category)&&(quality==='all'||it.r===Number(quality))&&it.name.toLowerCase().includes(query.trim().toLowerCase());}).sort((a,b)=>{const ia=stashItem(a),ib=stashItem(b);if(sort==='priceUp')return value(a)-value(b);if(sort==='rarity')return (ib.r||1)-(ia.r||1)||value(b)-value(a);if(sort==='name')return ia.name.localeCompare(ib.name,'zh-CN');if(sort==='category')return itemCategoryLabel(ia).localeCompare(itemCategoryLabel(ib),'zh-CN')||value(b)-value(a);return value(b)-value(a);});
  }
 };
@@ -21065,7 +21081,7 @@ const BaseSafe={
   const cells=box.querySelector('#baseSafeGrid');for(let i=0;i<CFG.BAG.SAFE;i++){const entry=Save.safe[i],item=entry&&stashItem(entry),cell=Base.makeBagCell(entry);cell.dataset.safeSlot=i;if(item){cell.title=item.name+' · 双击移回背包 · 右键更多';cell.onclick=ev=>{if(ev&&(ev.ctrlKey||ev.metaKey)){Tips.hide();this.transfer(entry,'safe','bag');return;}this.open(entry,cell);};cell.ondblclick=ev=>{if(ev&&ev.preventDefault)ev.preventDefault();Tips.hide();this.transfer(entry,'safe','bag');};cell.oncontextmenu=ev=>{ev.preventDefault();ev.stopPropagation();this.menu(entry,cell,ev);};}else cell.title='从背包或仓库的物品操作中选择“放入保险箱”';cells.appendChild(cell);}
  },
  /* 局外详情只有信息；动作全在右键菜单（和背包格同一套口径） */
- open(entry,node){if(!Save.safe.includes(entry))return;const item=stashItem(entry);const extra=item&&ItemCapacity.max(item)?[[ItemCapacity.label(item),ItemCapacity.text(entry)]]:null;Tips.show(item,node.getBoundingClientRect(),'',extra);},
+ open(entry,node){if(!Save.safe.includes(entry))return;const item=stashItem(entry);const extra=item&&ItemCapacity.max(item)?[[ItemCapacity.label(item),ItemCapacity.text(entry)]]:null;Tips.show(item,node.getBoundingClientRect(),'',extra,entry);},
  menu(entry,node,ev){const item=stashItem(entry);const entries=[{label:'详情',onClick:()=>this.open(entry,node)},{label:'移回背包',onClick:()=>this.transfer(entry,'safe','bag')},{label:'放回仓库',onClick:()=>this.transfer(entry,'safe','stash')}];
   if(item&&Medical.is(item)){const usable=Medical.canUse(item,'basesafe');entries.push({label:Medical.actionLabel(item,'basesafe'),disabled:!usable,onClick:()=>{if(usable&&Save.safe.includes(entry))Medical.use(entry,'basesafe');}});}
   Ctx.show(ev.clientX,ev.clientY,entries);},
@@ -21105,13 +21121,13 @@ const Sales={
   if(merchant==='warehouse')return {...out,reason:'请前往商人处出售，仓库金额仅为估价'};
   const kind=this.kind(item),rule=MERCHANT_BUYBACK[merchant],override=rule?.items?.[item.id];
   if(merchant!=='warehouse'&&(!rule||override?.allowed===false||(!rule.allow.includes(kind)&&override?.allowed!==true)))return {...out,reason:'当前商人不收购此类物品'};
-  /* 钥匙：原价 × 剩余耐久% × 75% 回收；耐久耗尽（cap≤0）不可回收，随规范化直接销毁。 */
+  /* 钥匙：现值（原价 × 剩余耐久%）× 75% 回收；耐久耗尽（cap≤0）不可回收，随规范化直接销毁。 */
   if(kind==='key'){
    const max=ItemCapacity.max(item),rem=ItemCapacity.remaining(e);
    if(!(max>0)||!(rem>0))return {...out,status:'refused',reason:'耐久耗尽，钥匙已无法回收'};
-   const base=unitPrice(item),unit=Math.floor(base*(rem/max)*0.75);
+   const base=entryValue(item,e),unit=Math.floor(base*0.75);
    if(!Number.isFinite(unit)||unit<0)return out;
-   return {...out,ok:true,status:'normal',reason:'钥匙回收 · 原价75% × 剩余耐久 '+rem+'/'+max,base,unit,multiplier:0.75*rem/max};
+   return {...out,ok:true,status:'normal',reason:'钥匙回收 · 现值75%（剩余耐久 '+rem+'/'+max+'）',base,unit,multiplier:0.75};
   }
   const rate=kind==='collectible'?(COLLECTIBLE_BUYBACK.overrides[item.id]?.[merchant]??COLLECTIBLE_BUYBACK.defaultRates[item.cat]?.[merchant]??60):100;
   if(kind==='collectible'&&rate===0)return {...out,reason:'当前商人不收购此类物品'};

@@ -24,7 +24,7 @@ Object.assign(Game, {
     if (ItemCapacity.max(it) && spec.entry) {
       extra.push([ItemCapacity.label(it), ItemCapacity.text(spec.entry)]);
     }
-    Tips.show(it, node.getBoundingClientRect(), spec.hint || '', extra);
+    Tips.show(it, node.getBoundingClientRect(), spec.hint || '', extra, spec.entry || null);
     const acts = [];
     if (spec.act) acts.push({ label: spec.actLabel || '使用', disabled: !!spec.actOff, onClick: spec.act });
     if (spec.quick) acts.push({ label: spec.quickLabel || '快速移动', onClick: spec.quick });
@@ -968,7 +968,7 @@ Object.assign(Game, {
         Save.codex[it.id] = { first: Date.now(), count: 1 };
       }
       lines.push({
-        it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n,
+        it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: entryValue(it, s) * s.n,
         isNew: newIds.has(it.id)
       });
     }

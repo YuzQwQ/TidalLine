@@ -31,6 +31,13 @@ async function main(){
     check(qb(5).ok&&qb(5).unit===Math.floor(k2.price*0.5*0.75),'key buyback half durability');
     check(qb(7).unit===Math.floor(k2.price*0.7*0.75),'key buyback fractional durability');
     check(!qb(0).ok,'broken key not sellable');
+    /* 价值随耐久折算：3000 万十次钥匙开过一次 = 2700 万 */
+    check(entryValue(k2,{id:k2.id,n:1,cap:10})===k2.price,'key value at full durability');
+    check(entryValue(k2,{id:k2.id,n:1,cap:9})===k2.price*0.9,'key value after one open');
+    check(entryValue(k2,{id:k2.id,n:1,cap:1})===k2.price*0.1,'key value at last use');
+    check(entryValue(k2,{item:k2,n:1,cap:3})===k2.price*0.3,'key value from bag slot');
+    check(entryValue(ITEM_BY_ID.art01,null)===ITEM_BY_ID.art01.price,'non-key value unchanged');
+    check(qb(9).unit===Math.floor(k2.price*0.9*0.75),'buyback follows current value');
     check(roomKeys.every(it=>Loot.pickFromPool([it])===null&&itemGroup(it)==='supply'),'room keys not in loot / supply group');
     check(Loot.pickFromPool([k2])===null&&itemGroup(k2)==='supply'&&stackLimit(k2)===1,'top tier key pool/category');
     check(!Medical.is(k)&&itemGroup(k)==='supply'&&stackLimit(k)===1,'key category');

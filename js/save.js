@@ -400,3 +400,15 @@ function unitPrice(it) {
   if (!it) return 0;
   return (it.sell != null) ? it.sell : it.price;
 }
+
+/* 当前价值：钥匙按剩余耐久折算，其余沿用 unitPrice。
+   3000 万的十次钥匙开过一次，现值就是 2700 万 —— 仓库总估价、
+   排序、结算清单和商人报价都走这里，别各自算一遍。 */
+function entryValue(it, entry) {
+  const base = unitPrice(it) || 0;
+  if (!it || it.cat !== 'key') return base;
+  const max = ItemCapacity.max(it);
+  if (!(max > 0)) return base;
+  const rem = entry ? ItemCapacity.remaining(entry) : max;
+  return Math.round(base * Math.max(0, Math.min(rem, max)) / max);
+}

@@ -1182,7 +1182,7 @@ const Base = {
     const hint = inStash ? '双击放进背包 · 右键不额外弹菜单'
       : inBag ? '双击卸下 · Ctrl+左键同样卸下'
       : '双击卸下 · 右键有详情与卸下';
-    Tips.show(it, node.getBoundingClientRect(), hint, extra);
+    Tips.show(it, node.getBoundingClientRect(), hint, extra, inGear ? null : e);
 
     const acts = [];
     /* 第一项永远是「从当前位置挪走」：装备栏/背包是卸下，仓库是放进背包 */
@@ -1309,7 +1309,7 @@ const Base = {
       Save.stash.length + ' / ' + STASH_SLOTS + ' 格';
     const total = Save.stash.reduce((a, e) => {
       const it = stashItem(e);
-      return a + (it ? unitPrice(it) * (e.n || 1) : 0);
+      return a + (it ? entryValue(it, e) * (e.n || 1) : 0);
     }, 0);
     document.getElementById('stashValue').textContent = formatMoney(total);
 
@@ -1350,7 +1350,7 @@ const Base = {
       cell.title = it.name + (ItemCapacity.max(it) && (it.cat==='key' || ItemCapacity.isPartial(e))
           ? ' · ' + ItemCapacity.text(e)
           : ' · ' + it.w.toFixed(2) + 'kg') + ' · ' +
-        '估价 ' + formatMoney(unitPrice(it) * n) + ' · 成交价以商人报价为准 · 左键看详情';
+        '估价 ' + formatMoney(entryValue(it, e) * n) + ' · 成交价以商人报价为准 · 左键看详情';
       /* 仓库只有左键看详情、双击放进背包；右键不弹菜单（别让两套入口打架） */
       cell.onclick = () => this.showItem(e, 'stash', cell);
       cell.ondblclick = (ev) => {

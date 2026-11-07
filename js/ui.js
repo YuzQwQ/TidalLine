@@ -64,13 +64,16 @@ const Tips = {
   },
 
   /* 物品详情。it 可以是普通物品，也可以是装备伪物品；extra 是调用方补的额外行 */
-  show(it, rect, hint, extra) {
+  show(it, rect, hint, extra, entry) {
     const box = this._box('itemTip');
     if (!box || !it) return;
 
     const r = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)];
     const cat = {...(CATS[it.cat] || CATS.ind),name:itemCategoryLabel(it)};
     const price = it.price || 0;
+    /* 钥匙按剩余耐久折算：调用方传了 entry 就显示现值，否则还是标价 */
+    const cur = entry ? entryValue(it, entry) : price;
+    const partial = entry && cur !== price;
     const rows = [];
 
     if (it.cat === 'ammo') {
@@ -130,7 +133,8 @@ const Tips = {
       const g = it.equip.gear;
       if(g.type==='body') rows.push(['瞄准时间','+'+(g.aimPenaltyPct||0)+'%']);
     }
-    rows.push(['单价', formatMoney(price)]);
+    rows.push([partial ? '现值' : '单价', formatMoney(cur)]);
+    if (partial) rows.push(['原价', formatMoney(price) + ' · 按剩余耐久折算']);
     if (it.sell != null) rows.push(['回收价', formatMoney(it.sell)]);
 
     /* 图鉴：只登记真正的收藏品，消耗品和装备不算 */
