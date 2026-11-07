@@ -23,19 +23,34 @@ for (const f of ['config.js', 'data.js', 'core.js']) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, 'js', f), 'utf8'), ctx);
 }
 const G = vm.runInContext(
-  '({ITEMS, CONTAINER_TYPES, CONTAINER_QUALITY, QUALITY_ORDER, RARITY, RARITY_WEIGHT, CATS, BOX_COUNT, CAT_PREF: CFG.LOOT.catPref, MAP: RAID_MAP})',
+  '({ITEMS, CONTAINER_TYPES, CONTAINER_QUALITY, QUALITY_ORDER, RARITY, RARITY_WEIGHT, CATS, BOX_COUNT, CAT_PREF: CFG.LOOT.catPref, MAP: RAID_MAP, Loot, CFG, itemGroup})',
   ctx
 );
-const { ITEMS, CONTAINER_TYPES, CONTAINER_QUALITY, QUALITY_ORDER, RARITY, CATS, BOX_COUNT, CAT_PREF, MAP } = G;
+const { ITEMS, CONTAINER_TYPES, CONTAINER_QUALITY, QUALITY_ORDER, RARITY, CATS, BOX_COUNT, CAT_PREF, MAP,
+        Loot, CFG, itemGroup } = G;
+const RED_R = (CFG.LOOT && CFG.LOOT.eggRarity) || 6;
+const EGG_CHANCE = (CFG.LOOT && CFG.LOOT.eggChance) || 0;
+const EGGS = ITEMS.filter(i => i.egg);
 
-/* ---------- 复刻 Loot.roll 的权重 ---------- */
-function weightTable(quality, prefCats) {
+/* ---------- 复刻 Loot.roll 的权重 ----------
+   与 js/core.js 保持同源：品类权重按 cellW 归一、红档内部再按 tierWeight 归一，
+   抽到红档之后还有 eggChance 的彩蛋支线（红档总量不变，只把 2% 分给彩蛋）。
+   itemPool 是容器声明的专属池：非红只放行 cats 里的类别，红档放行全部收集品；
+   池内类别等权，点位偏好 catPref 与高级容器的 collect ×1.35 都不再生效。 */
+function weightTable(quality, prefCats, itemPool) {
   const Q = CONTAINER_QUALITY[quality];
   if (!Q) throw new Error('未知品质 ' + quality);
   const bias = r => Q.pct[r - 1] || 0;
-  const pool = ITEMS.filter(it => !it.noLoot && bias(it.r) > 0);
+  const inPool = it => {
+    if (!itemPool) return true;
+    if (itemPool.redAllCollectibles && it.r === RED_R)
+      return itemGroup(it) === 'collectible';
+    return itemPool.cats.indexOf(it.cat) >= 0;
+  };
+  const pool = ITEMS.filter(it => !it.noLoot && !it.egg && bias(it.r) > 0 && inPool(it));
 
   const catW = it => {
+    if (itemPool) return 1;
     let v = prefCats && prefCats.includes(it.cat) ? CAT_PREF : 1;
     if (Q.lv >= 5) {
       if (it.cat === 'collect') v *= 1.35;
@@ -45,26 +60,39 @@ function weightTable(quality, prefCats) {
     return v;
   };
 
-  const cell = {}, cellW = {};
+  const cell = {}, cellW = {}, cellT = {};
   for (const it of pool) {
-    if (!cell[it.r]) { cell[it.r] = {}; cellW[it.r] = 0; }
-    if (cell[it.r][it.cat] == null) { cell[it.r][it.cat] = 0; cellW[it.r] += catW(it); }
-    cell[it.r][it.cat]++;
+    if (!cell[it.r]) { cell[it.r] = {}; cellW[it.r] = 0; cellT[it.r] = {}; }
+    if (cell[it.r][it.cat] == null) {
+      cell[it.r][it.cat] = true;
+      cellW[it.r] += catW(it);
+      cellT[it.r][it.cat] = 0;
+    }
+    cellT[it.r][it.cat] += Loot.tierWeight(it);
   }
 
   let total = 0;
   const rows = pool.map(it => {
-    const v = bias(it.r) * catW(it) / cellW[it.r] / cell[it.r][it.cat];
+    const v = bias(it.r) * catW(it) / cellW[it.r] * Loot.tierWeight(it) / cellT[it.r][it.cat];
     total += v;
     return { id: it.id, name: it.name, short: it.short || it.name, cat: it.cat, r: it.r, price: it.price, p: v };
   });
   for (const row of rows) row.p /= total;
+  /* 彩蛋：从红档总量里切走 eggChance，均分给彩蛋池 */
+  if (EGG_CHANCE > 0 && EGGS.length) {
+    const redP = rows.filter(r => r.r === RED_R).reduce((s, r) => s + r.p, 0);
+    for (const row of rows) if (row.r === RED_R) row.p *= (1 - EGG_CHANCE);
+    for (const e of EGGS) rows.push({
+      id: e.id, name: e.name, short: e.short || e.name, cat: e.cat, r: e.r,
+      price: e.price, p: redP * EGG_CHANCE / EGGS.length
+    });
+  }
   rows.sort((a, b) => b.p - a.p || a.r - b.r);
 
   /* 类别与稀有度汇总 */
   const byCat = {}, byR = {};
   for (const row of rows) { byCat[row.cat] = (byCat[row.cat] || 0) + row.p; byR[row.r] = (byR[row.r] || 0) + row.p; }
-  return { quality, prefCats: prefCats || null, rows, byCat, byR };
+  return { quality, prefCats: prefCats || null, itemPool: itemPool || null, rows, byCat, byR };
 }
 
 /* ---------- 蒙特卡洛校验：用真实 Loot.roll 抽样比对 ---------- */
@@ -84,7 +112,7 @@ function verify(tables, samples = 40000) {
   const worst = [];
   for (const t of tables.slice(0, 8)) {
     const counts = {};
-    const call = `Loot.roll(${JSON.stringify(t.quality)}, ${JSON.stringify(t.prefCats)})`;
+    const call = `Loot.roll(${JSON.stringify(t.quality)}, ${JSON.stringify(t.prefCats)}, ${JSON.stringify(t.itemPool || null)})`;
     for (let i = 0; i < samples; i++) {
       const r = vm.runInContext(call, simCtx);
       counts[r.item.id] = (counts[r.item.id] || 0) + 1;
@@ -94,7 +122,7 @@ function verify(tables, samples = 40000) {
       const d = Math.abs((counts[row.id] || 0) / samples - row.p);
       if (d > maxDiff) { maxDiff = d; at = row.name; }
     }
-    worst.push({ key: t.quality + '/' + (t.prefCats ? t.prefCats.join('+') : '通用'), maxDiff, at });
+    worst.push({ key: t.quality + '/' + (t.itemPool ? '专属池' : (t.prefCats ? t.prefCats.join('+') : '通用')), maxDiff, at });
   }
   return worst;
 }
@@ -108,22 +136,26 @@ const instances = MAP.containers.map(b => {
   return {
     id: b.id, ch: b.type, x: b.x, y: b.y, region: b.region,
     name: type.name, art: type.art, quality: type.q,
-    prefCats, prefSource: fromType ? 'type' : (prefCats ? 'spot' : 'none'),
+    /* itemPool 一旦声明，点位偏好就不再参与权重（池内类别等权） */
+    itemPool: type.itemPool || null,
+    prefCats: type.itemPool ? null : prefCats,
+    prefSource: type.itemPool ? 'pool' : fromType ? 'type' : (prefCats ? 'spot' : 'none'),
     declared: type.cats || null, spotPref: b.preference || null
   };
 }).filter(Boolean);
 
-/* ---------- 组合表：同一 (品质, 偏好) 只算一次 ---------- */
-const keyOf = (q, cats) => q + '|' + (cats && cats.length ? [...cats].sort().join('+') : '-');
+/* ---------- 组合表：同一 (品质, 偏好, 专属池) 只算一次 ---------- */
+const keyOf = (q, cats, pool) => q + '|' + (cats && cats.length ? [...cats].sort().join('+') : '-') +
+  (pool ? '|pool:' + pool.cats.join('+') + (pool.redAllCollectibles ? '+redAll' : '') : '');
 const tables = new Map();
-function tableFor(q, cats) {
-  const k = keyOf(q, cats);
-  if (!tables.has(k)) tables.set(k, weightTable(q, cats));
+function tableFor(q, cats, pool) {
+  const k = keyOf(q, cats, pool);
+  if (!tables.has(k)) tables.set(k, weightTable(q, cats, pool));
   return tables.get(k);
 }
 for (const inst of instances) {
-  inst.table = tableFor(inst.quality, inst.prefCats);
-  inst.key = keyOf(inst.quality, inst.prefCats);
+  inst.table = tableFor(inst.quality, inst.prefCats, inst.itemPool);
+  inst.key = keyOf(inst.quality, inst.prefCats, inst.itemPool);
 }
 
 /* ---------- 容器类型汇总 ---------- */
@@ -133,7 +165,7 @@ const types = Object.entries(CONTAINER_TYPES).map(([ch, type]) => {
   /* 地图上没放的容器也要能查它"本来会掉什么"，按类型声明算一套参考表 */
   const tbls = keys.length
     ? keys.map(k => tables.get(k))
-    : [tableFor(type.q, Array.isArray(type.cats) && type.cats.length ? type.cats : null)];
+    : [tableFor(type.q, type.itemPool ? null : (Array.isArray(type.cats) && type.cats.length ? type.cats : null), type.itemPool || null)];
   return {
     ch, ...type,
     count: mine.length,
@@ -141,8 +173,9 @@ const types = Object.entries(CONTAINER_TYPES).map(([ch, type]) => {
     keys,
     tables: tbls,
     unplaced: keys.length === 0,
-    /* 只写在地图上、但类型本身没有 cats 时，偏好完全来自点位 */
-    spotDriven: !Array.isArray(type.cats) || !type.cats.length
+    /* 只写在地图上、但类型本身没有 cats 时，偏好完全来自点位；
+       声明了 itemPool 的容器点位偏好不生效，不算点位驱动 */
+    spotDriven: !type.itemPool && (!Array.isArray(type.cats) || !type.cats.length)
   };
 });
 
@@ -151,7 +184,7 @@ const itemSources = new Map();
 for (const type of types) {
   if (type.unplaced) continue;
   for (const t of type.tables) {
-    const label = type.name + (type.tables.length > 1 ? '（' + (t.prefCats ? t.prefCats.map(c => CATS[c].name).join('/') : '通用') + '）' : '');
+    const label = type.name + (type.tables.length > 1 ? '（' + (t.prefCats ? t.prefCats.map(c => CATS[c].name).join('/') : (t.itemPool ? poolLabel(t.itemPool) : '通用')) + '）' : '');
     for (const row of t.rows) {
       if (row.p <= 0) continue;
       if (!itemSources.has(row.id)) itemSources.set(row.id, []);
@@ -328,6 +361,14 @@ function catChips(cats) {
   if (!cats) return '<span class="chip muted">通用（无偏好）</span>';
   return cats.map(c => `<span class="chip" style="--c:${CATS[c].color}">${esc(CATS[c].name)}</span>`).join('');
 }
+/* 保险箱专属池：非红三类 + 红档全收集品，点位偏好不参与 */
+function poolChips(pool) {
+  if (!pool) return '';
+  const cats = pool.cats.map(c => esc(CATS[c].name)).join(' / ');
+  return `<span class="chip" style="--c:#8d3a3a">专属池 · 非红 ${cats}</span>` +
+    (pool.redAllCollectibles ? '<span class="chip" style="--c:#8d3a3a">红档 · 全部收集品</span>' : '');
+}
+const poolLabel = pool => pool ? '专属池（非红三类 + 全部红品）' : '通用';
 function bar(byCat) {
   const segs = catOrder.filter(c => byCat[c] > 0.001)
     .map(c => `<i style="width:${(byCat[c] * 100).toFixed(2)}%;background:${CATS[c].color}" title="${CATS[c].name} ${pct(byCat[c])}"></i>`).join('');
@@ -349,9 +390,10 @@ function typeCard(type) {
   const [ca, cb] = BOX_COUNT[type.q];
   /* 点位驱动且有多套表时，把各套偏好取并集展示，再单独标「按点位」 */
   const prefUnion = [...new Set(type.tables.flatMap(t => t.prefCats || []))];
+  const pool = type.tables.find(t => t.itemPool)?.itemPool || null;
   const tablesHtml = type.tables.map(t => {
     const label = type.tables.length > 1
-      ? `<div class="subtable-head">${t.prefCats ? t.prefCats.map(c => CATS[c].name).join(' / ') : '通用'} <span class="dim">· ${instances.filter(i => i.ch === type.ch && i.key === keyOf(t.quality, t.prefCats)).length} 个</span></div>`
+      ? `<div class="subtable-head">${t.prefCats ? t.prefCats.map(c => CATS[c].name).join(' / ') : (t.itemPool ? poolLabel(t.itemPool) : '通用')} <span class="dim">· ${instances.filter(i => i.ch === type.ch && i.key === keyOf(t.quality, t.prefCats, t.itemPool)).length} 个</span></div>`
       : '';
     const live = t.rows.filter(r => r.p > 0);
     return `${label}${bar(t.byCat)}
@@ -368,7 +410,7 @@ function typeCard(type) {
         <div class="meta">${q.lv} 级 ${q.name} · 开箱 ${q.time === 0 ? '即时' : q.time + 's'} · ${ca}–${cb} 件 · 地图 ${type.count} 个</div>
       </div>
     </header>
-    <div class="chips">${catChips(prefUnion.length ? prefUnion : null)}
+    <div class="chips">${pool ? poolChips(pool) : catChips(prefUnion.length ? prefUnion : null)}
       ${type.spotDriven ? '<span class="chip warn">偏好来自地图点位</span>' : ''}</div>
     ${type.unplaced ? '<p class="empty">当前地图未放置。下表按类型声明计算，仅供参考。</p>' : ''}
     ${tablesHtml}
@@ -571,8 +613,10 @@ const html = `<!DOCTYPE html>
   <div class="kicker">TIDELINE · CONTAINER LOOT AUDIT</div>
   <h1>容器掉落勘察</h1>
   <p class="lead">按运行时真实逻辑计算：容器品质决定稀有度曲线，<code>cats</code> 把偏好类别权重抬到 ×${CAT_PREF}。
-  抽屉、储物柜、遗弃纸箱、垃圾桶、保险箱没有内置 <code>cats</code>，实际偏好来自地图点位——
-  同名容器在不同房间掉的东西并不一样，下面按实例分别列出。</p>
+  抽屉、储物柜、遗弃纸箱、垃圾桶没有内置 <code>cats</code>，实际偏好来自地图点位——
+  同名容器在不同房间掉的东西并不一样，下面按实例分别列出。
+  <b>大小保险箱改用专属池</b>：非红只出文物藏品 / 情报资料 / 神秘学物品（三类等权），
+  红档放开到全部九个收集类别；点位偏好对它们不生效，稀有度曲线仍由品质决定。</p>
   <div class="stats">
     <div class="stat"><b>${Object.keys(CONTAINER_TYPES).length}</b><span>容器类型</span></div>
     <div class="stat"><b>${totalContainers}</b><span>地图实例</span></div>
@@ -735,6 +779,9 @@ md.push('');
 md.push('> 由 `tools/report-container-loot.js` 从 `js/data.js` / `js/config.js` / `js/core.js` 生成，不要手改。');
 md.push('> 概率 = 单件容器单次抽取落入该项/该类别的概率，按 `Loot.roll` 的权重解析计算。');
 md.push('> 运行时生效偏好是 `type.cats || spot.preference`；标「点位」的容器同名不同房间掉不同东西。');
+md.push('> `B` 小型保险箱与 `V` 大型保险箱用**专属池**（偏好来源列标「专属池」）：');
+md.push('> 非红只出文物藏品 / 情报资料 / 神秘学物品且三类等权，红档放开到全部九个收集类别，');
+md.push('> 点位偏好对它们不生效；稀有度曲线仍由品质 `pct` 锁死。');
 md.push('');
 md.push(`地图：${MAP.title}（${MAP.width}×${MAP.height}）· 容器实例 ${totalContainers} 个 · 可掉落物品 ${droppable.length} 件 · 单局期望 ${totalItems.toFixed(0)} 件`);
 md.push('');
@@ -745,16 +792,17 @@ md.push('| --- | --- | --- | --- | --- | --- | --- | --- | --- |');
 for (const q of QUALITY_ORDER) {
   for (const t of types.filter(x => x.q === q)) {
     const Q = CONTAINER_QUALITY[q];
-    const pref = t.tables.length === 1
-      ? (t.tables[0].prefCats ? t.tables[0].prefCats.map(c => CATS[c].name).join('/') : '通用')
-      : t.tables.map(tb => tb.prefCats ? tb.prefCats.map(c => CATS[c].name).join('/') : '通用').join(' ‖ ');
+    const prefOf = tb => tb.itemPool ? poolLabel(tb.itemPool)
+      : (tb.prefCats ? tb.prefCats.map(c => CATS[c].name).join('/') : '通用');
+    const pref = t.tables.length === 1 ? prefOf(t.tables[0]) : t.tables.map(prefOf).join(' ‖ ');
     /* 多套掉落表逐套给前三类别，不要混在一起取最大值 */
     const top3 = t.tables.map(tb => {
       const pairs = Object.entries(tb.byCat).filter(([, v]) => v > 0.001).sort((a, b) => b[1] - a[1]).slice(0, 3);
-      const head = t.tables.length > 1 ? `(${tb.prefCats ? tb.prefCats.map(c => CATS[c].name).join('/') : '通用'}) ` : '';
+      const head = t.tables.length > 1 ? `(${prefOf(tb)}) ` : '';
       return head + (pairs.length ? pairs.map(([c, v]) => `${CATS[c].name} ${(v * 100).toFixed(0)}%`).join('、') : '—');
     }).join(' ‖ ');
-    md.push(`| \`${t.ch}\` | ${t.name} | ${Q.lv} ${Q.name} | ${BOX_COUNT[q].join('–')} | ${Q.time === 0 ? '即时' : Q.time + 's'} | ${t.count}${t.unplaced ? ' *' : ''} | ${pref} | ${t.spotDriven ? '点位' : '类型'} | ${top3} |`);
+    const source = t.tables.some(tb => tb.itemPool) ? '专属池' : (t.spotDriven ? '点位' : '类型');
+    md.push(`| \`${t.ch}\` | ${t.name} | ${Q.lv} ${Q.name} | ${BOX_COUNT[q].join('–')} | ${Q.time === 0 ? '即时' : Q.time + 's'} | ${t.count}${t.unplaced ? ' *' : ''} | ${pref} | ${source} | ${top3} |`);
   }
 }
 md.push('');

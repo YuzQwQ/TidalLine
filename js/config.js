@@ -431,7 +431,14 @@ const CFG = {
        权重只作用于「同一稀有度、同一类别」内部：稀有度曲线由 pct 锁死，
        类别占比由 cellW 锁死，所以调这里不会影响出货率，只影响「摸到哪一种红」。
        单件还可以用 item.lootW 做微调（默认 1）。 */
-    redTiers: { 1: 45, 2: 35, 3: 18 }
+    redTiers: { 1: 45, 2: 35, 3: 18 },
+
+    /* 钥匙内部档位权重：只决定「摸到的是哪一档钥匙」，
+       不影响「会不会摸到钥匙」—— 后者由容器自己的 keyPool.chance 决定。
+       权重是**按单把**计的，同档有多把会叠加：当前紫档 1 把、金档 1 把、
+       红档 2 把（老公寓 + 银行），所以红档合计 8/104 ≈ 7.7%，两把各 ≈3.8%。
+       同档内等权；单把可用 key.lootW 微调（默认 1）。 */
+    keyTiers: { 4: 65, 5: 27, 6: 4 }
   },
 
   /* ---------- 尸体容器 ----------
@@ -494,10 +501,11 @@ const CATS = {
   odd:    { name: '异常遗物', color: '#a05050', theme:'无法通过常规规律解释的事物', desc:'受潮汐或其他超自然现象影响的器物、特殊物质和不明产物；可以稳定存在、周期性变化或尚未被充分理解。' },
   ammo:   { name:'弹药类', color:'#a58e61', theme:'武器弹药', desc:'用于武器装填的物资。当前为通用弹药，后续可按枪械与口径扩充分型。' },
   medical:{ name:'医疗物品', color:'#7a9b85', theme:'治疗与应急救护', desc:'恢复治疗、止痛、损伤处理、针剂和异常处理；仅恢复类已开放使用，与收集品中的医疗物资分开。' },
+  key:    { name: '钥匙', color: '#b39a63' },
   gear:   { name: '装备', color: '#5f7f9b' }
 };
 const COLLECTION_CATS = ['life','elec','ind','med','collect','mil','intel','occult','odd'];
-const SUPPLY_CATS = ['ammo','medical'];
+const SUPPLY_CATS = ['ammo','medical','key'];
 const ITEM_GROUPS = {
   collectible:{name:'收集品',cats:COLLECTION_CATS},
   supply:{name:'物资',cats:SUPPLY_CATS}
@@ -531,6 +539,7 @@ const STASH_FILTERS = [
   { k: 'col',   name: '收集品' },
   { k: 'ammo',  name: '子弹' },
   { k: 'med',   name: '药物' },
+  { k: 'key',   name: '钥匙' },
   { k: 'gun',   name: '枪械' },
   { k: 'armor', name: '护甲' }
 ];
@@ -540,6 +549,7 @@ function stashFilterMatch(item, f) {
     case 'col':   return itemGroup(item) === 'collectible';
     case 'ammo':  return item.cat === 'ammo';
     case 'med':   return item.cat === 'medical';
+    case 'key':   return item.cat === 'key';
     case 'gun':   return !!(item.equip && item.equip.kind === 'gun');
     case 'armor': return !!(item.equip && item.equip.kind === 'armor');
     default:      return true;

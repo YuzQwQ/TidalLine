@@ -88,7 +88,7 @@ test('existing ammo/gear chances, attachment rarity fallback and fixed draw coun
  try{for(const [v,expected]of [[.1,'ammo'],[.3,'gear'],[.36,'attachment'],[.8,'item']]){c.Math.random=()=>v;assert.equal(Loot.pickPool(CONTAINER_TYPES.Q),expected);}c.Math.random=()=>0;assert(!Loot.rollAttachment('junk',[]).item.equip);}
  finally{c.Math.random=rand;}
  const seen=new Set();for(let i=0;i<3000;i++){const r=Loot.rollAttachment('fine',[]);if(r.item.equip?.kind==='attachment')seen.add(r.item.equip.attachment);}assert.equal(seen.size,35);
- for(const type of Object.values(CONTAINER_TYPES)){for(let i=0;i<5;i++){const out=Loot.fill(type.q,type.cats,type),bounds=type.rolls||vm.runInContext('CONTAINER_QUALITY',c)[type.q].count;assert(out.length>=bounds[0]&&out.length<=bounds[1]);}}
+ for(const type of Object.values(CONTAINER_TYPES)){for(let i=0;i<5;i++){const out=Loot.fill(type.q,type.cats,type),bounds=type.rolls||vm.runInContext('CONTAINER_QUALITY',c)[type.q].count,extra=type.keyPool?1:0;assert(out.length>=bounds[0]&&out.length<=bounds[1]+extra);}}
 });
 test('loose attachment pickup/drop/safe transfer and attached gun death follow existing ownership rules',()=>{
  const p=raid('m4a1',{optic:'att_optic01'},3),item=EQUIP.attachment('att_grip02'),box={items:[{item,n:1,known:true}],kind:'plain'};Game.openLoot(box);assert(Game.takeGear(box.items[0],0));assert.equal(p.bag.slots[0].item.equip.attachment,'att_grip02');Game.moveToSafe(0);assert.equal(p.bag.safe[0].item.equip.attachment,'att_grip02');const lost=Game.applyEquipmentLoss();assert.equal(lost[0].equip.attachments.optic,'att_optic01');assert.equal(p.bag.safe.length,1);assert.equal(Save.gear.weapons[0],null);

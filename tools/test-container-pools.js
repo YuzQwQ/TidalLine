@@ -42,7 +42,7 @@ test('两个容器都挂上了弹药池与装备池', () => {
 
 test('其它容器保持原样：没有 rolls / 池', () => {
   for (const [ch, t] of Object.entries(CONTAINER_TYPES)) {
-    if (ch === 'K' || ch === 'Q') continue;
+    if (ch === 'K' || ch === 'Q' || ch === 'g' || ch === 'h') continue;
     assert.equal(t.rolls, undefined, ch);
     assert.equal(t.ammoPool, undefined, ch);
     assert.equal(t.gearPool, undefined, ch);
@@ -50,7 +50,7 @@ test('其它容器保持原样：没有 rolls / 池', () => {
 });
 
 /* ---------- 弹药池 ---------- */
-test('弹药池五种口径等概率，发数落在区间内', () => {
+test('弹药池所有口径等概率，发数落在区间内', () => {
   const cal = {};
   for (let i = 0; i < 30000; i++) {
     const r = Loot.rollAmmo('rich', K.ammoPool);
@@ -60,8 +60,9 @@ test('弹药池五种口径等概率，发数落在区间内', () => {
     assert.ok(r.n >= range[0] && r.n <= range[1], '发数越界 ' + r.n);
     cal[r.item.caliber] = (cal[r.item.caliber] || 0) + 1;
   }
-  assert.equal(Object.keys(cal).length, 5);
-  for (const n of Object.values(cal)) assert(Math.abs(n / 30000 - 1 / 5) < 0.015);
+  const count=Object.keys(K.ammoPool.count).length;
+  assert.equal(Object.keys(cal).length, count);
+  for (const n of Object.values(cal)) assert(Math.abs(n / 30000 - 1 / count) < 0.015);
 });
 
 test('防水补给箱弹药等级分布 = rich 稀有度（红档并入金档）', () => {
@@ -113,7 +114,7 @@ test('防具背包子池稀有度分布与同容器的弹药池一致', () => {
 /* ---------- 整体产出 ---------- */
 test('容器实际抽取次数落在 rolls 区间内，且每次都出东西', () => {
   for (let i = 0; i < 2000; i++) {
-    const r = Loot.fill('rich', K.cats, K);
+    const r = Loot.fill('rich', K.cats, {...K,bonusMeleePool:null});
     assert.ok(r.length >= 3 && r.length <= 6, '次数越界 ' + r.length);
     for (const e of r) assert.ok(e && e.item, '空条目');
   }

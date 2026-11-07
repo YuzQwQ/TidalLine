@@ -567,25 +567,45 @@ const Loot = {
     for(let i=0;i<available.length;i++){roll-=w[i];if(roll<=0)return available[i];}
     return available[0];
   },
+  /* 容器专属奖池的准入判断（B 小型保险箱 / V 大型保险箱）。
+     非红档：只放行 cats 里声明的类别；
+     红  档：redAllCollectibles 为真时放行全部收集品（九个收集类别），
+             物资类（弹药 / 医疗品 / 钥匙）与彩蛋都不进 —— 彩蛋只走 eggSwap。
+     池内类别等权，所以某类物品多只会让「摸到哪一种」更分散，
+     不会把该类别的总概率抬上去。 */
+  inItemPool(it, rule, redRarity) {
+    if (!rule) return true;
+    if (rule.redAllCollectibles && it.r === redRarity)
+      return typeof itemGroup === 'function' && itemGroup(it) === 'collectible';
+    return rule.cats.indexOf(it.cat) >= 0;
+  },
+
   /* 按容器品质抽一件。
      品质直接给出六档目标概率（CONTAINER_QUALITY[q].pct），档内再按「类别」平分、
      同一类别里按件数平分。因为档内权重会被 cellW 归一，最终 P(稀有度) 恰好等于
      pct/Σpct —— 与类别偏好、物品数量都无关。所以这里绝不能再乘一层 RARITY_WEIGHT，
      否则曲线会被拉回白绿。
      某一档在池子里没有物品时，那一档的份额会按比例让给其余档（通用回退），
-     缺档不会让容器抽不出东西，只会把曲线整体抬向仍在池子里的档位。 */
-  roll(quality, preferredCats) {
+     缺档不会让容器抽不出东西，只会把曲线整体抬向仍在池子里的档位。
+     itemPool 是容器声明的专属池：按稀有度分支限定物品表，
+     因为 cellW 仍按「池内该档实际存在的类别」归一，六档概率一格不动。 */
+  roll(quality, preferredCats, itemPool) {
     const Q = CONTAINER_QUALITY[quality] || null;
     const pct = Q ? Q.pct : null;
     const bias = r => pct ? (pct[r - 1] || 0) : RARITY_WEIGHT[r];
+    const redRarity = (CFG.LOOT && CFG.LOOT.eggRarity) || 6;
 
-    const pool = ITEMS.filter(it => !it.noLoot && !it.egg && bias(it.r) > 0);
+    const pool = ITEMS.filter(it => !it.noLoot && !it.egg && bias(it.r) > 0
+      && this.inItemPool(it, itemPool, redRarity));
 
     /* 类别偏好倍率：容器只声明"偏爱哪几类"，具体强度在这里统一控制。
        取值越大，同品质容器之间的内容差异越明显；受该类别在各档的件数限制，
-       空缺的档会自动把份额让给其它类别（不会抽空）。 */
+       空缺的档会自动把份额让给其它类别（不会抽空）。
+       声明了 itemPool 的容器不走偏好：池本身就是筛选结果，类别一律等权，
+       否则点位偏好（collect ×9）和高级容器的 collect ×1.35 会把另外两类压没。 */
     const CAT_PREF = (CFG.LOOT && CFG.LOOT.catPref) || 9;
     const catW = it => {
+      if (itemPool) return 1;
       let v = (preferredCats && preferredCats.includes(it.cat)) ? CAT_PREF : 1;
       // 高级容器偏向"收藏感强"的类别，低级容器偏向顺手能拿的工具与日用品。
       // 这个系数只改档内类别占比，不改稀有度曲线。
@@ -624,9 +644,9 @@ const Loot = {
     let r = Math.random() * total;
     for (let i = 0; i < pool.length; i++) {
       r -= w[i];
-      if (r <= 0) return this.eggSwap({ item: pool[i], n: 1 });
+      if (r <= 0) return itemPool?.allowEggs===false ? { item: pool[i], n: 1 } : this.eggSwap({ item: pool[i], n: 1 });
     }
-    return this.eggSwap({ item: pool[0], n: 1 });
+    return itemPool?.allowEggs===false ? { item: pool[0], n: 1 } : this.eggSwap({ item: pool[0], n: 1 });
   },
 
   /* 价值档位的单件权重。没有配档位的红色按三档均值兜底，
@@ -660,6 +680,12 @@ const Loot = {
      都没中就是原来的通用物品池。没挂池的容器永远是 'item'。 */
   pickPool(type) {
     if (!type) return 'item';
+    if(type.poolWeights){
+      const pools=Object.entries(type.poolWeights).filter(([,w])=>w>0);
+      let roll=Math.random()*pools.reduce((sum,[,w])=>sum+w,0);
+      for(const [pool,weight] of pools){roll-=weight;if(roll<0)return pool;}
+      return pools[pools.length-1][0];
+    }
     const a = (type.ammoPool && type.ammoPool.chance) || 0;
     const g = (type.gearPool && type.gearPool.chance) || 0;
     const attachment=typeof ATTACHMENT_LOOT!=='undefined'?(ATTACHMENT_LOOT[Object.keys(CONTAINER_TYPES).find(k=>CONTAINER_TYPES[k]===type)]||0):0;
@@ -682,7 +708,7 @@ const Loot = {
 
   /* 按容器品质的稀有度曲线掷一件装备，等级分布与同容器的弹药池一致
      （红档份额并入金档）；种类在 kinds 之间等概率抽。 */
-  rollGear(quality, options) {
+  rollGear(quality, options, itemPool) {
     const src = CONTAINER_QUALITY[quality].pct;
     const pct = src.slice(0, 5);
     pct[4] += src[5] || 0;
@@ -695,15 +721,25 @@ const Loot = {
     const guns=kind==='gun'?Object.values(WEAPONS).filter(w=>w.rarity===lv):[];
     const item = kind === 'gun' ? (guns.length ? EQUIP.gun(U.pick(guns).id,0) : null)
       : kind === 'bag' ? EQUIP.bag('bag0' + lv) : EQUIP.armor(GEAR.random(kind, lv));
-    if (!item) return this.roll(quality, null);
+    if (!item) return this.roll(quality, null, itemPool);
     return { item, n: 1 };
   },
 
-  rollAttachment(quality,cats){
+  rollAttachment(quality,cats,itemPool){
     const pct=CONTAINER_QUALITY[quality].pct;let r=Math.random()*pct.reduce((a,b)=>a+b,0),level=6;
     for(let i=0;i<pct.length;i++){r-=pct[i];if(r<0){level=i+1;break;}}
     const pool=Object.values(ATTACHMENT_DEFS).filter(a=>a.r===level);
-    return pool.length?{item:EQUIP.attachment(U.pick(pool).id),n:1}:this.roll(quality,cats);
+    return pool.length?{item:EQUIP.attachment(U.pick(pool).id),n:1}:this.roll(quality,cats,itemPool);
+  },
+
+  /* Dedicated crates retain their accessory share even when a rarity has no parts. */
+  rollAvailableAttachment(quality){
+    const pct=CONTAINER_QUALITY[quality].pct;
+    const groups=pct.map((weight,i)=>({weight,pool:Object.values(ATTACHMENT_DEFS).filter(a=>a.r===i+1)})).filter(g=>g.weight>0&&g.pool.length);
+    if(!groups.length)throw Error('武器箱的配件池为空');
+    let roll=Math.random()*groups.reduce((sum,g)=>sum+g.weight,0),chosen=groups[groups.length-1];
+    for(const group of groups){roll-=group.weight;if(roll<0){chosen=group;break;}}
+    return{item:EQUIP.attachment(U.pick(chosen.pool).id),n:1};
   },
 
   /* 额外收藏品独立于物资/装备/弹药抽取，不占轮数，不按稀有度加权。 */
@@ -713,11 +749,33 @@ const Loot = {
     return item ? { item, n: 1 } : null;
   },
 
+  /* 钥匙池：挂了 keyPool 的容器每次开启判一次，独立于抽取轮数。
+     只认 drop:true 的钥匙 —— 占位钥匙（price 0）、001 测试钥匙、
+     没有对应房间的通用模板钥匙都不在池里，所以不会掉出"开不了任何门"的废卡。
+     档位权重决定"掉哪一档"，同档等权，单把可用 lootW 微调。 */
+  rollKey(options) {
+    if (!options || !(options.chance > 0)) return null;
+    if (Math.random() >= options.chance) return null;
+    const pool = (typeof KEY_ITEMS !== 'undefined' ? KEY_ITEMS : [])
+      .filter(k => k && k.cat === 'key' && k.drop === true && k.price > 0);
+    if (!pool.length) return null;
+    const tiers = options.tiers || (CFG.LOOT && CFG.LOOT.keyTiers) || { 4: 65, 5: 27, 6: 8 };
+    const w = pool.map(k => (tiers[k.r] || 0) * (k.lootW == null ? 1 : k.lootW));
+    const total = w.reduce((s, v) => s + v, 0);
+    if (!(total > 0)) return null;
+    let roll = Math.random() * total;
+    for (let i = 0; i < pool.length; i++) { roll -= w[i]; if (roll <= 0) return { item: pool[i], n: 1 }; }
+    return { item: pool[0], n: 1 };
+  },
+
   fill(quality, preferredCats, type) {
     const [a, b] = (type && type.rolls) || BOX_COUNT[quality] || [1, 2];
     const n = U.randInt(a, b);
     const out = [];
     const seen = new Set();
+    /* 专属物品池挂在容器类型上，跟随 type 一路传进 roll。
+       弹药 / 装备 / 配件分支走各自的池，不受 itemPool 影响。 */
+    const itemPool = (type && type.itemPool) || null;
     for (let i = 0; i < n; i++) {
       /* 先定这次走哪个池。通用池尽量不出重复条目（重抽几次仍撞上就照收，
          否则"抽 3–6 件"会被悄悄打折）；弹药与装备不去重，
@@ -725,15 +783,20 @@ const Loot = {
       const pool = this.pickPool(type);
       const special = pool !== 'item';
       let r = pool === 'ammo' ? this.rollAmmo(quality, type.ammoPool)
-            : pool === 'gear' ? this.rollGear(quality, type.gearPool)
-            : pool === 'attachment' ? this.rollAttachment(quality,preferredCats)
-            : this.roll(quality, preferredCats);
-      for (let k = 0; !special && k < 8 && seen.has(r.item.id); k++) r = this.roll(quality, preferredCats);
+            : pool === 'gear' ? this.rollGear(quality, type.gearPool, itemPool)
+            : ['gun','helmet','body','bag'].includes(pool) ? this.rollGear(quality,{kinds:[pool]},itemPool)
+            : pool === 'attachment' && type.poolWeights ? this.rollAvailableAttachment(quality)
+            : pool === 'attachment' ? this.rollAttachment(quality,preferredCats,itemPool)
+            : this.roll(quality, preferredCats, itemPool);
+      for (let k = 0; !special && k < 8 && seen.has(r.item.id); k++) r = this.roll(quality, preferredCats, itemPool);
       seen.add(r.item.id);
       out.push(r);
     }
     const bonus = this.rollBonusMelee(type && type.bonusMeleePool);
     if (bonus) out.push(bonus);
+    /* 钥匙是"额外一件"，不参与上面的去重与轮数，所以件数可能比 rolls 多 1。 */
+    const key = this.rollKey(type && type.keyPool);
+    if (key) out.push(key);
     return out;
   }
 };
