@@ -900,6 +900,46 @@
       "height": 1254
     },
     {
+      "key": "items/door_key_bank_vault",
+      "source": "assets/item-art/keys-v1/sources/door_key_bank_vault.png",
+      "target": "assets/item-art/keys-v1/sources/door_key_bank_vault.png",
+      "sourceHash": "1450fd3ce04a90ae83640184d922aa806e3e5f27fb7dff8acdde447e9608c9b4",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/door_key_clinic",
+      "source": "assets/item-art/keys-v1/sources/door_key_clinic.png",
+      "target": "assets/item-art/keys-v1/sources/door_key_clinic.png",
+      "sourceHash": "77c30b9562b8e2f3b237ba3df12eedfa891e9102b2a80931e6770d931ae75dac",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/door_key_old_apt",
+      "source": "assets/item-art/keys-v1/sources/door_key_old_apt.png",
+      "target": "assets/item-art/keys-v1/sources/door_key_old_apt.png",
+      "sourceHash": "4b88f4d8fca0108783caf0e8a9c4ef5e9709f4fe8fb7a4b483ed775e55fbe0b8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/door_key_warehouse",
+      "source": "assets/item-art/keys-v1/sources/door_key_warehouse.png",
+      "target": "assets/item-art/keys-v1/sources/door_key_warehouse.png",
+      "sourceHash": "4b2b62272878854f55b1336bcc5fc4f78baf764fa788f46de51ff26438632b1f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/door_key_watchshop",
+      "source": "assets/item-art/keys-v1/sources/door_key_watchshop.png",
+      "target": "assets/item-art/keys-v1/sources/door_key_watchshop.png",
+      "sourceHash": "7eb71c4b291b875130b14d93a8c5d3c56840c939066aba034dc40469a66f6b02",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "items/elec01",
       "source": "assets/item-art/legacy/sources/elec01.png",
       "target": "assets/item-art/legacy/sources/elec01.png",
@@ -2308,5 +2348,9 @@
       "height": 1254
     }
   ],
-  "missing": []
+  "missing": [
+    "items/door_key_test",
+    "items/door_key_tier_1",
+    "items/door_key_tier_2"
+  ]
 }

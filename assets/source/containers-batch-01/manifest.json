@@ -1,0 +1,55 @@
+{
+  "id": "containers-batch-01",
+  "generator": "built-in image_gen",
+  "promptFile": "assets/source/prompts/specialized-containers-v1.json",
+  "assets": [
+    {
+      "id": "crate_weapons",
+      "name": "武器箱",
+      "type": "g",
+      "fit": [
+        28,
+        24
+      ],
+      "source": "sources/crate_weapons.png",
+      "target": "assets/props/crate_weapons.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "visibleSize": [
+        28,
+        12
+      ],
+      "processing": "alpha>=160 crop; nearest resize; 16-color palette; binary alpha; bottom aligned with 2px padding"
+    },
+    {
+      "id": "crate_equipment",
+      "name": "装备箱",
+      "type": "h",
+      "fit": [
+        26,
+        28
+      ],
+      "source": "sources/crate_equipment.png",
+      "target": "assets/props/crate_equipment.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "visibleSize": [
+        26,
+        27
+      ],
+      "processing": "alpha>=160 crop; nearest resize; 16-color palette; binary alpha; bottom aligned with 2px padding"
+    }
+  ]
+}

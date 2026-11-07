@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "results": {
+    "g": {
+      "draws": 47911,
+      "poolPercent": {
+        "gun": 30.16,
+        "ammo": 29.7,
+        "attachment": 30.05,
+        "military": 10.09
+      },
+      "rollCounts": {
+        "3": 4035,
+        "4": 4019,
+        "5": 3946
+      },
+      "gearRarityPercent": [
+        10.11,
+        18.2,
+        32.19,
+        29.57,
+        9.92
+      ],
+      "colors": 15
+    },
+    "h": {
+      "draws": 36154,
+      "poolPercent": {
+        "helmet": 30.16,
+        "body": 29.97,
+        "bag": 29.63,
+        "military": 10.24
+      },
+      "rollCounts": {
+        "2": 3908,
+        "3": 4030,
+        "4": 4062
+      },
+      "gearRarityPercent": [
+        9.91,
+        18.31,
+        31.84,
+        29.69,
+        10.26
+      ],
+      "colors": 15
+    }
+  }
+}

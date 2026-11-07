@@ -7,132 +7,158 @@
       "pixelChecks": [
         {
           "id": "crate_trash",
-          "grayPixels": 108,
+          "whitePixels": 212,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_wastepaper",
-          "grayPixels": 116,
+          "whitePixels": 256,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_cardboard",
-          "grayPixels": 113,
+          "whitePixels": 228,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_workwear",
-          "grayPixels": 111,
+          "whitePixels": 224,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_fast",
-          "grayPixels": 84,
+          "whitePixels": 164,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_tool",
-          "grayPixels": 101,
+          "whitePixels": 200,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_bedside",
-          "grayPixels": 100,
+          "whitePixels": 196,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_staff",
-          "grayPixels": 95,
+          "whitePixels": 192,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_satchel",
-          "grayPixels": 155,
+          "whitePixels": 336,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_std",
-          "grayPixels": 114,
+          "whitePixels": 224,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_luggage",
-          "grayPixels": 97,
+          "whitePixels": 192,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_filing",
-          "grayPixels": 103,
+          "whitePixels": 204,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_schoolbag",
-          "grayPixels": 106,
+          "whitePixels": 228,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_med",
-          "grayPixels": 116,
+          "whitePixels": 228,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_elec",
-          "grayPixels": 117,
+          "whitePixels": 232,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_emergency",
-          "grayPixels": 92,
+          "whitePixels": 180,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_military_supply",
-          "grayPixels": 104,
+          "whitePixels": 204,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_rescuevest",
-          "grayPixels": 112,
+          "whitePixels": 220,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_heavy",
-          "grayPixels": 82,
+          "whitePixels": 160,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_supply",
-          "grayPixels": 115,
+          "whitePixels": 228,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_jewelry",
-          "grayPixels": 90,
+          "whitePixels": 180,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_leatherbag",
-          "grayPixels": 95,
+          "whitePixels": 188,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_safe_big",
-          "grayPixels": 108,
+          "whitePixels": 212,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_sealed",
-          "grayPixels": 106,
+          "whitePixels": 208,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_diplomatic",
-          "grayPixels": 98,
+          "whitePixels": 192,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "loot_pile",
-          "grayPixels": 96,
+          "whitePixels": 192,
+          "logicalWidth": 0.5,
           "cached": true
         }
       ],
@@ -146,132 +172,158 @@
       "pixelChecks": [
         {
           "id": "crate_trash",
-          "grayPixels": 108,
+          "whitePixels": 212,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_wastepaper",
-          "grayPixels": 116,
+          "whitePixels": 256,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_cardboard",
-          "grayPixels": 113,
+          "whitePixels": 228,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_workwear",
-          "grayPixels": 111,
+          "whitePixels": 224,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_fast",
-          "grayPixels": 84,
+          "whitePixels": 164,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_tool",
-          "grayPixels": 101,
+          "whitePixels": 200,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_bedside",
-          "grayPixels": 100,
+          "whitePixels": 196,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_staff",
-          "grayPixels": 95,
+          "whitePixels": 192,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_satchel",
-          "grayPixels": 155,
+          "whitePixels": 336,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_std",
-          "grayPixels": 114,
+          "whitePixels": 224,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_luggage",
-          "grayPixels": 97,
+          "whitePixels": 192,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_filing",
-          "grayPixels": 103,
+          "whitePixels": 204,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_schoolbag",
-          "grayPixels": 106,
+          "whitePixels": 228,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_med",
-          "grayPixels": 116,
+          "whitePixels": 228,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_elec",
-          "grayPixels": 117,
+          "whitePixels": 232,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_emergency",
-          "grayPixels": 92,
+          "whitePixels": 180,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_military_supply",
-          "grayPixels": 104,
+          "whitePixels": 204,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_rescuevest",
-          "grayPixels": 112,
+          "whitePixels": 220,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_heavy",
-          "grayPixels": 82,
+          "whitePixels": 160,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_supply",
-          "grayPixels": 115,
+          "whitePixels": 228,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_jewelry",
-          "grayPixels": 90,
+          "whitePixels": 180,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_leatherbag",
-          "grayPixels": 95,
+          "whitePixels": 188,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_safe_big",
-          "grayPixels": 108,
+          "whitePixels": 212,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_sealed",
-          "grayPixels": 106,
+          "whitePixels": 208,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "crate_diplomatic",
-          "grayPixels": 98,
+          "whitePixels": 192,
+          "logicalWidth": 0.5,
           "cached": true
         },
         {
           "id": "loot_pile",
-          "grayPixels": 96,
+          "whitePixels": 192,
+          "logicalWidth": 0.5,
           "cached": true
         }
       ],

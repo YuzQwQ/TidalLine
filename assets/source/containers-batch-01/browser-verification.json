@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "file": "index.html",
+      "spritePreload": true,
+      "collision": true,
+      "loot": true,
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "spritePreload": true,
+      "collision": true,
+      "loot": true,
+      "errors": []
+    }
+  ],
+  "editorOldMapPalette": true,
+  "placementUndoRedoSaveReopen": true
+}

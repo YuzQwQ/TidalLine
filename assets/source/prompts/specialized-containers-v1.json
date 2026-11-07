@@ -1,0 +1,13 @@
+{
+  "generator": "built-in image_gen",
+  "assets": [
+    {
+      "id": "crate_weapons",
+      "prompt": "Create a single production game sprite for TidalLine, a dark muted survival extraction game. Subject: a CLOSED military WEAPONS CASE, long horizontal hard-sided gun transport box, dark olive green steel, a worn but well-maintained hinged lid, two recessed metal latches on the front lower edge, reinforced corner caps, subtle short diagonal yellow identification marks, a small simple rifle-shaped pale stencil on the top lid (no letters). Distinct silhouette: low wide rectangular case, width approximately 1.6 times depth. Style: crisp low-resolution pixel art, designed to be reduced to a 32x32 tile with only 16 colors; large readable pixel clusters, no tiny noise. Orthographic 75 degree top-down view, looking mostly at lid with a narrow front vertical face visible at bottom, NO isometric skew or exaggerated perspective, horizontal parallel edges. Light from upper left. Center the isolated box with transparent margins, no ground, NO cast shadow, no environment, no text, no extra objects, no open lid or gun outside. Transparent background, binary hard alpha edges. The actual box fits within the central 80 percent of canvas. This is an in-world searchable loot container, not an inventory UI icon. Deliver one sprite only."
+    },
+    {
+      "id": "crate_equipment",
+      "prompt": "Create a single production game sprite for TidalLine, a dark muted survival extraction game. Subject: a CLOSED military EQUIPMENT CRATE, compact almost square heavy transport trunk for helmets body armor and tactical backpacks, desaturated slate blue-gray reinforced shell, sturdy muted steel rims, two front recessed latches, two broad olive fabric retaining straps over the lid, a simple pale helmet-shaped stencil on the top lid (no letters). Distinct silhouette: a taller stout square crate, width approximately 1.1 times depth, easily distinguished from a long green gun case. Style: crisp low-resolution pixel art, designed to be reduced to a 32x32 tile with only 16 colors; large readable pixel clusters, no tiny noise. Orthographic 75 degree top-down view, looking mostly at lid with a narrow front vertical face visible at bottom, NO isometric skew or exaggerated perspective, horizontal parallel edges. Light from upper left. Center the isolated box with transparent margins, no ground, NO cast shadow, no environment, no text, no extra objects, no open lid or equipment outside. Transparent background, binary hard alpha edges. The actual crate fits within the central 80 percent of canvas. This is an in-world searchable loot container, not an inventory UI icon. Deliver one sprite only."
+    }
+  ]
+}
