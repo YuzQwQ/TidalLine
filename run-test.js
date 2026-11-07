@@ -556,6 +556,37 @@ ok('仓库里的装备保留耐久',
   stashedGear ? '耐久 ' + stashedGear.gear.equip.gear.dur : '没进仓库');
 ok('装备没被偷偷换成钱', Save.credits === 500, '余额 ' + Save.credits);
 
+/* 带入的东西不算收获：带一把 3000 万的钥匙进去、原样带出来，结算价值必须是 0 */
+Game.startRun();
+{
+  const PY = Game.player, K = ctx.ITEM_BY_ID.door_key_old_apt, ART = ctx.ITEM_BY_ID.art01;
+  PY.bag.slots.length = 0; PY.bag.safe.length = 0;
+  PY.bag.slots.push({ item: K, n: 1, cap: 9 });
+  Game.broughtIn = Game.snapshotBroughtIn();      // 只带了一把剩 9 次的钥匙
+  PY.bag.slots.push({ item: ART, n: 1 });         // 局内又捡到一件藏品
+  Save.stash = []; Save.bag = []; Save.codex = {}; Save.credits = 0;
+  Game.showEnd(true);
+  ok('带入的钥匙不计收获价值', Game._end.total === ART.price,
+    '结算 ' + Game._end.total + '，期望只剩藏品 ' + ART.price);
+  ok('带入的钥匙仍保留在背包', Save.bag.some(e => e.id === K.id));
+  ok('新捡到的藏品照常计入', Game._end.lines.some(l => l.it.id === ART.id));
+  ok('带入的钥匙不进结算清单', !Game._end.lines.some(l => l.it.id === K.id));
+  ok('带出件数只算新捡的', Game._end.keptCount === 1, '件数 ' + Game._end.keptCount);
+}
+/* 同 id 堆叠（子弹）按数量抵扣：带 30 发、又捡 30 发，只该记 30 发 */
+Game.startRun();
+{
+  const PY = Game.player, A = ctx.ITEMS.find(i => i.cat === 'ammo');
+  PY.bag.slots.length = 0; PY.bag.safe.length = 0;
+  PY.bag.slots.push({ item: A, n: 30 });
+  Game.broughtIn = Game.snapshotBroughtIn();
+  PY.bag.slots.push({ item: A, n: 30 });
+  Save.stash = []; Save.bag = []; Save.codex = {};
+  Game.showEnd(true);
+  const line = Game._end.lines.find(l => l.it.id === A.id);
+  ok('堆叠子弹只记新捡的那部分', !!line && line.n === 30, line ? '记了 ' + line.n + ' 发' : '没有结算行');
+}
+
 // 真实尸体：拾荒者手里那把枪要能掉出来、能捡起来
 const scav2 = Game.enemies.find(e => e.key === 'scav');
 ok('拾荒者身上配了枪', !!scav2.weaponId, scav2.weaponId);

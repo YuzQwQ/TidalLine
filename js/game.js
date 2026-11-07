@@ -383,6 +383,21 @@ const Game = {
     Ctx.bindClose();
   },
 
+  /* 开局盘点：背包 + 安全箱里每件东西各几份。
+     结算时按 id 逐份抵扣，扣完的那几份就是"自己带进来的"，不计收获价值
+     （钥匙看剩余耐久也照样扣，因为带进来时它就在身上）。
+     同 id 堆叠（子弹）按数量抵扣，所以捡到的部分仍然会被算进收益。 */
+  snapshotBroughtIn() {
+    const counts = {};
+    const take = s => {
+      const id = s && s.item && s.item.id;
+      if (id) counts[id] = (counts[id] || 0) + (s.n || 1);
+    };
+    this.player.bag.slots.forEach(take);
+    this.player.bag.safe.forEach(take);
+    return counts;
+  },
+
   fillBagFromSave() {
     Save.normalizeBag();
     const stay = [];
@@ -489,6 +504,9 @@ const Game = {
     } else {
       this.fillBagFromSave();
     }
+    /* 带入清单：结算时要把「自己背进来的东西」从收获价值里扣掉，
+       否则带一把 3000 万的钥匙进去、原样带出来，结算就凭空多 3000 万。 */
+    this.broughtIn = this.snapshotBroughtIn();
 
     // 武器与护甲：护甲拷一份实例出来，耐久变化写回 Save.gear
     this.player.fillWeapons(Save.gear.weapons);

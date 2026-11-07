@@ -946,31 +946,51 @@ Object.assign(Game, {
        背包实在塞不下的时候退回仓库，宁可多走一步也不吞东西。 */
     Save.normalizeBag();
     const newIds = new Set((this.stats.newItems || []).map(x => x.id));
+    /* 自己背进来的东西不算收获：按开局盘点逐份抵扣，剩下的才算这局新捡的。
+       子弹这种可堆叠的按数量抵扣，所以"带 30 发、又捡 30 发"只会记 30 发。 */
+    const brought = Object.assign({}, this.broughtIn || {});
+    const freshCount = s => {
+      const id = s.item && s.item.id, n = s.n || 1;
+      const left = brought[id] || 0;
+      const own = Math.min(left, n);
+      if (own > 0) brought[id] = left - own;
+      return n - own;
+    };
     const lines = [];
-    let bagged = 0, baggedValue = 0;
+    let bagged = 0, baggedValue = 0, gained = 0;
     for (const s of kept) {
       const it = s.item;
+      const fresh = freshCount(s);
       const stays = !it.equip && (it.cat === 'ammo' || it.cat === 'key' || Medical.is(it));
       if (stays && !Base.bagBlock(it, s.n)) {
         Save.addBag(it.id, s.n, s.cap);
-        bagged++;
-        baggedValue += (it.price || 0) * s.n;
-        lines.push({ it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: (it.price || 0) * s.n, bag: true, isNew: false });
+        if (fresh > 0) {
+          bagged++;
+          baggedValue += entryValue(it, s) * fresh;
+          gained += fresh;
+          lines.push({ it, n: fresh, name: it.name + (fresh > 1 ? ' ×' + fresh : ''), price: entryValue(it, s) * fresh, bag: true, isNew: false });
+        }
         continue;
       }
       if (it.equip) {
         Save.addGearStash(it);
-        lines.push({ it, n: 1, name: it.name, price: it.sell || 0, gear: true, isNew: false });
+        if (fresh > 0) {
+          gained++;
+          lines.push({ it, n: 1, name: it.name, price: it.sell || 0, gear: true, isNew: false });
+        }
         continue;
       }
       Save.addStash(it.id, s.n, s.cap);
       if (!it.noCodex && !Save.codex[it.id]) {
         Save.codex[it.id] = { first: Date.now(), count: 1 };
       }
-      lines.push({
-        it, n: s.n, name: it.name + (s.n > 1 ? ' ×' + s.n : ''), price: entryValue(it, s) * s.n,
-        isNew: newIds.has(it.id)
-      });
+      if (fresh > 0) {
+        gained += fresh;
+        lines.push({
+          it, n: fresh, name: it.name + (fresh > 1 ? ' ×' + fresh : ''), price: entryValue(it, s) * fresh,
+          isNew: newIds.has(it.id)
+        });
+      }
     }
 
     const total = lines.reduce((a, b) => a + b.price, 0);
@@ -999,8 +1019,9 @@ Object.assign(Game, {
       tide: M.tideEnabled ? this.tidePhase + 1 : 0,
       kills: this.stats.kills,
       found: this.stats.found,
-      keptCount: kept.length,
-      gearCount: kept.filter(s => s.item.equip).length,
+      /* 件数也只算这局新捡的：带进来又原样带出去的，不该出现在"带回"里 */
+      keptCount: gained,
+      gearCount: lines.filter(l => l.gear).length,
       bagged: bagged,
       baggedValue: baggedValue,
       total: total,
