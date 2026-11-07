@@ -7,6 +7,7 @@ const STORAGE_UI_CONFIG={
     {id:'protection',name:'防护装备',icon:'person'},
     {id:'bags',name:'背包',icon:'box'},
     {id:'medical',name:'医疗物品',icon:'cross'},
+    {id:'key',name:'钥匙',icon:'tool'},
     {id:'collectibles',name:'收集品',icon:'archive'}
   ],
   planned:{lock:'物品锁定尚未开放。绑定赠送刀具仍沿用现有不可出售规则，与手动锁定无关。',repair:'维修与改装服务尚未开放。当前只展示物品实际耐久，不扣除维修费用。',batch:'多选、批量转移等操作尚未开放。出售请前往商人总览，按所选商人的报价确认。'},

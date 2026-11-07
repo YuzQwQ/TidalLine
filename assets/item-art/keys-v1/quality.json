@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "orientation": "bow upper-left, tip lower-right",
+  "results": [
+    {
+      "id": "door_key_old_apt",
+      "number": "002",
+      "canvas": [
+        48,
+        48
+      ],
+      "colors": 254,
+      "opaquePixels": 586,
+      "principalAngle": 45.43,
+      "sha256": "052a75c17a7fe459bfb0190ea5f1c087669125ddb812dec437b01fb33f256a84"
+    },
+    {
+      "id": "door_key_clinic",
+      "number": "005",
+      "canvas": [
+        48,
+        48
+      ],
+      "colors": 252,
+      "opaquePixels": 554,
+      "principalAngle": 45.83,
+      "sha256": "dfcc8cfd813ac996760d1e657c8380772db1327a51d50a773a5c7f592d645e75"
+    },
+    {
+      "id": "door_key_watchshop",
+      "number": "007",
+      "canvas": [
+        48,
+        48
+      ],
+      "colors": 255,
+      "opaquePixels": 310,
+      "principalAngle": 43.31,
+      "sha256": "f5ab94d09e9db4e94739f79e2658e4de553516a456a37aeb3c4e0e2be44f9afe"
+    },
+    {
+      "id": "door_key_bank_vault",
+      "number": "006",
+      "canvas": [
+        48,
+        48
+      ],
+      "colors": 254,
+      "opaquePixels": 558,
+      "principalAngle": 45.49,
+      "sha256": "c2fdee43f70ec400735d2ff4506c85e85e2d703d1113bb9b4894fc7985f1702a"
+    },
+    {
+      "id": "door_key_warehouse",
+      "number": "008",
+      "canvas": [
+        48,
+        48
+      ],
+      "colors": 255,
+      "opaquePixels": 504,
+      "principalAngle": 46.78,
+      "sha256": "28810059c8b0a1c34d72afa7c48509510471062b68860c2ec868c629133c258e"
+    }
+  ]
+}

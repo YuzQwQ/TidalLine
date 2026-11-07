@@ -79,6 +79,9 @@ const Tips = {
       rows.push(['伤害系数', '×' + A.dmgMul.toFixed(2)]);
       rows.push(['穿透等级', 'Lv' + A.penLevel]);
     }
+    if (it.cat === 'key') {
+      rows.push(['钥匙编号',it.number||it.id],['耐久上限',it.maxDur],['开锁消耗','每次1点，耗尽后移除']);
+    }
     if (Medical.is(it)) {
       rows.push(['医疗分组', MEDICAL_GROUPS[it.medicalGroup]]);
       rows.push(['来源', it.source]);
@@ -414,7 +417,12 @@ const SFX = {
     drop: 0.055,
     gear: 0.07,        // 头盔/护甲/背包装卸：比拾取重一点，穿戴是个"动作"
     sprint: 0.065,     // 冲刺起步的蹬地声：比闪避轻，跑起来就不该再抢耳朵
-    hurt: 0.11,
+    hurt: 0.11,         // 玩家受伤：整局最需要被听见的一记
+    hurtEnemy: 0.085,   // 别人挨打要能听出来，但压在玩家自己的惨叫之下
+    deathEnemy: 0.095,  // 人形敌人死亡惨叫
+    echoEngage: 0.10,   // 异常生物接战语音
+    echoDeath: 0.11,    // 异常生物消散
+    breath: 0.045,      // 低体力喘息是垫底的环境层，别盖过脚步
     extract: 0.09,
     death: 0.13
   },
@@ -556,6 +564,33 @@ const SFX = {
      旧的 melee.wav 留作兜底：六条都解不出来（素材缺失）才轮到它。 */
   MELEE_SAMPLE: ['melee_1', 'melee_2', 'melee_3', 'melee_4', 'melee_5', 'melee_6'],
   _lastMelee: null,
+
+  /* ---------------- 战斗人声池（2026-11-07 新素材） ----------------
+     挨打、惨叫、接战这类声音一旦连着触发就会叠成一堵墙：自动武器一秒
+     十几发、多个敌人同时进战、一梭子扫倒两三个人。所以每条池子都有
+     两道保险：随机抽（排除上一条，避免连着重复）+ 最短触发间隔。
+     GAP 是「同一条池子」的全局间隔，不是每个敌人各算一份 —— 混战里
+     同时三声惨叫比一声都不响还吵。 */
+  POOL: {
+    hurtPlayer: ['hurt_player_1', 'hurt_player_2', 'hurt_player_3'],
+    hurtEnemy:  ['hurt_enemy_1', 'hurt_enemy_2'],
+    deathEnemy: ['death_enemy_1', 'death_enemy_2', 'death_enemy_3', 'death_enemy_4',
+                 'death_enemy_5', 'death_enemy_6', 'death_enemy_7', 'death_enemy_8'],
+    echoEngage: ['echo_engage'],
+    echoDeath:  ['echo_death'],
+    breathLow:  ['breath_low']
+  },
+  /* 秒。玩家挨打最密，间隔给足；接战语音要等打完一轮才可能再来一次。 */
+  POOL_GAP: {
+    hurtPlayer: 0.80,
+    hurtEnemy:  0.45,
+    deathEnemy: 0.22,
+    echoEngage: 2.00,
+    echoDeath:  0.40,
+    breathLow:  3.20
+  },
+  _poolAt: {},
+  _poolLast: {},
 
   /* ---------------- 装备穿脱：一件装备一个材质的声 ----------------
      头盔是硬壳与织带、护甲是布料与插板、背包是扣具与织带。
@@ -725,6 +760,17 @@ const SFX = {
     if (id === 'sprint') return this.LOUD.sprint;
     /* 玩家挨打：整局最需要"被听见"的一次反馈，压在枪声之下、拾取之上 */
     if (id === 'hurt') return this.LOUD.hurt;
+    /* 战斗人声池：同一池子里的每一条都对齐到同一个目标响度，
+       换素材或加变体不用重新调音量。 */
+    if (/^hurt_player_[123]$/.test(id)) return this.LOUD.hurt;
+    if (/^hurt_enemy_[12]$/.test(id)) return this.LOUD.hurtEnemy;
+    if (/^death_enemy_[1-8]$/.test(id)) return this.LOUD.deathEnemy;
+    if (id === 'death_player') return this.LOUD.death;
+    if (id === 'echo_engage') return this.LOUD.echoEngage;
+    if (id === 'echo_death') return this.LOUD.echoDeath;
+    if (id === 'breath_low') return this.LOUD.breath;
+    /* 畸变生物的怒吼还没接线，先把响度档备好，接上就能直接对齐 */
+    if (id === 'mutant_roar') return this.LOUD.echoEngage;
     /* 拾取的四条变体都按拾取档对齐，四条之间响度一致 */
     if (/^pickup_[1-4]$/.test(id)) return this.LOUD.pickup;
     /* 搜索的各条材质按同一档对齐，碰到哪个容器都一样响 */
@@ -903,6 +949,32 @@ const SFX = {
     return this._playSample(ready[n], {
       rate: (o.rate || 1) * (1 - j + Math.random() * j * 2),
       vol: (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2)
+    });
+  },
+
+  /* 战斗人声池：随机 + 最短触发间隔。
+     间隔内返回 true 而不是 false —— 那表示"这条触发已经处理过了"，
+     别再落回合成音，否则节流会变成每发子弹补一声电子哔。 */
+  _playPool(key, opts) {
+    const ids = this.POOL[key];
+    if (!ids) return false;
+    const ready = ids.filter(id => this.samples[id]);
+    if (!ready.length) return false;
+    const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+    const gap = (this.POOL_GAP[key] || 0) * 1000;
+    if (gap && now - (this._poolAt[key] != null ? this._poolAt[key] : -1e9) < gap) return true;
+    this._poolAt[key] = now;
+    let n = Math.floor(Math.random() * ready.length);
+    if (ready.length > 1 && ready[n] === this._poolLast[key]) {
+      n = (n + 1 + Math.floor(Math.random() * (ready.length - 1))) % ready.length;
+    }
+    this._poolLast[key] = ready[n];
+    const o = opts || {};
+    return this._playSample(ready[n], {
+      rate: (o.rate || 1) * (0.965 + Math.random() * 0.07),
+      vol: o.vol != null ? o.vol : 1,
+      lp: o.lp,
+      delay: o.delay
     });
   },
 
@@ -1334,6 +1406,25 @@ const SFX = {
     if (this.ctx.state === 'suspended' && this.ctx.resume) {
       try { const p = this.ctx.resume(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
     }
+    /* 战斗人声池：随机变体 + 最短触发间隔，必须排在通用采样分发之前。
+       没有素材时玩家挨打 / 阵亡退回原来的合成音，其它人声宁可安静也不硬造。 */
+    if (Object.prototype.hasOwnProperty.call(this.POOL, name)) {
+      if (this._playPool(name, opts)) return;
+      if (name === 'hurtPlayer') return this.play('hurt', opts);
+      if (name === 'deathPlayer') return this.play('death', opts);
+      return;
+    }
+    /* 玩家阵亡单独一条（闷哼 + 长叹），不是池子 */
+    if (name === 'deathPlayer') {
+      if (this.samples.death_player) { this._playSample('death_player', opts); return; }
+      return this.play('death', opts);
+    }
+    /* 切近战：拔刃出鞘；素材没加载上就退回旧的滑套声 */
+    if (name === 'switchMelee') {
+      if (this.samples.switch_melee) { this._playSample('switch_melee', opts); return; }
+      return this.play('shot_switch', opts);
+    }
+
     /* 搜索：按容器 art 查表，一个容器一个声（没配到的落回合成音） */
     if (name === 'search' && this._playSearch(opts)) return;
 

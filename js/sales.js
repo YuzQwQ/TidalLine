@@ -4,7 +4,7 @@ const MERCHANT_BUYBACK={
  gun:{label:'枪械、弹药与配件；偏好电子产品、军事物资及通信资料',allow:['gun','melee','ammo','attachment'],multipliers:{},items:{}},
  shop:{label:'防具与背包；偏好工业器材、港务资料和防护检测器材',allow:['armor','bag'],multipliers:{},items:{}},
  doctor:{label:'医疗道具；偏好医疗收集品及异常观察资料',allow:['medical'],multipliers:{},items:{}},
- viktor:{label:'收购全部九类收集品；偏好生活用品及历史影像',allow:['collectible'],multipliers:{},items:{}}
+ viktor:{label:'收购全部九类收集品与钥匙（钥匙按剩余耐久 × 75% 回收）；偏好生活用品及历史影像',allow:['collectible','key'],multipliers:{},items:{}}
 };
 for(const rule of Object.values(MERCHANT_BUYBACK))if(!rule.allow.includes('collectible'))rule.allow.push('collectible');
 const Sales={
@@ -17,6 +17,14 @@ const Sales={
   if(merchant==='warehouse')return {...out,reason:'请前往商人处出售，仓库金额仅为估价'};
   const kind=this.kind(item),rule=MERCHANT_BUYBACK[merchant],override=rule?.items?.[item.id];
   if(merchant!=='warehouse'&&(!rule||override?.allowed===false||(!rule.allow.includes(kind)&&override?.allowed!==true)))return {...out,reason:'当前商人不收购此类物品'};
+  /* 钥匙：原价 × 剩余耐久% × 75% 回收；耐久耗尽（cap≤0）不可回收，随规范化直接销毁。 */
+  if(kind==='key'){
+   const max=ItemCapacity.max(item),rem=ItemCapacity.remaining(e);
+   if(!(max>0)||!(rem>0))return {...out,status:'refused',reason:'耐久耗尽，钥匙已无法回收'};
+   const base=unitPrice(item),unit=Math.floor(base*(rem/max)*0.75);
+   if(!Number.isFinite(unit)||unit<0)return out;
+   return {...out,ok:true,status:'normal',reason:'钥匙回收 · 原价75% × 剩余耐久 '+rem+'/'+max,base,unit,multiplier:0.75*rem/max};
+  }
   const rate=kind==='collectible'?(COLLECTIBLE_BUYBACK.overrides[item.id]?.[merchant]??COLLECTIBLE_BUYBACK.defaultRates[item.cat]?.[merchant]??60):100;
   if(kind==='collectible'&&rate===0)return {...out,reason:'当前商人不收购此类物品'};
   const multiplier=override?.multiplier??rule?.multipliers?.[kind]??rate/100,base=unitPrice(item),unit=Math.floor(base*(multiplier*100)/100);

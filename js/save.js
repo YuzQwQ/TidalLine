@@ -207,7 +207,7 @@ const Save = {
         out.push(entry);
         return;
       }
-      for (let k = 0; k < n; k++) out.push({ id, n: 1 });
+      for (let k = 0; k < n; k++) out.push(item.cat === 'key' ? { id, n: 1, cap: item.maxDur } : { id, n: 1 });
     };
     for (const e of list) {
       if (!e) continue;
@@ -226,7 +226,7 @@ const Save = {
       if (!item) continue;
       const n = Math.max(1, e.n || 1);
       /* 恢复品的容量是 HP，效果品的容量是次数，用了多少都得存下来 */
-      const max = Medical.capOf(item) || 0;
+      const max = ItemCapacity.max(item) || 0;
       if (!max) { push(id, n, item); continue; }
       /* 恢复品要保留"用了多少"：老存档没写 cap 就按满容量初始化，归零的直接丢掉 */
       const cap = typeof e.cap === 'number' ? U.clamp(e.cap, 0, max) : max;
@@ -278,7 +278,7 @@ const Save = {
     const item = ITEM_BY_ID[id];
     if (!item) return false;
     const stack = stackLimit(item);
-    const max = item.healCap || 0;
+    const max = ItemCapacity.max(item);
     if (max && typeof cap === 'number' && cap < max - 1e-6) {
       this.bag.push({ id, n: 1, cap: U.clamp(cap, 0, max) });
       return true;
@@ -321,7 +321,7 @@ const Save = {
   fullCount(id) {
     id = Medical.canonicalId(id);
     const item = ITEM_BY_ID[id];
-    const max = item ? (item.healCap || 0) : 0;
+    const max = item ? (ItemCapacity.max(item)) : 0;
     if (!max) return this.stashCount(id);
     return this.stash.reduce((sum, x) =>
       (x.id === id && !x.gear && (x.cap == null || x.cap >= max - 1e-6)) ? sum + x.n : sum, 0);
@@ -330,7 +330,7 @@ const Save = {
   takeFull(id, n) {
     id = Medical.canonicalId(id);
     const item = ITEM_BY_ID[id];
-    const max = item ? (item.healCap || 0) : 0;
+    const max = item ? (ItemCapacity.max(item)) : 0;
     if (this.fullCount(id) < n) return false;
     let left = n;
     for (const e of this.stash.slice()) {
@@ -356,7 +356,7 @@ const Save = {
   addStash(id, n, cap) {
     id = Medical.canonicalId(id);
     const item = ITEM_BY_ID[id];
-    const max = (item && item.healCap) || 0;
+    const max = ItemCapacity.max(item);
     /* 用过的那件单独入库，容量原样保留 */
     if (max && typeof cap === 'number' && cap < max - 1e-6) {
       this.stash.push({ id, n: 1, cap: U.clamp(cap, 0, max) });
@@ -373,7 +373,7 @@ const Save = {
       while(left>0){const put=Math.min(limit,left);this.stash.push({id,n:put});left-=put;}
       return;
     }
-    for (let k = 0; k < Math.max(1, n | 0); k++) this.stash.push({ id, n: 1 });
+    for (let k = 0; k < Math.max(1, n | 0); k++) this.stash.push(item?.cat === 'key' ? { id, n: 1, cap: item.maxDur } : { id, n: 1 });
   },
 
   setHP(hp, immediate = true) {

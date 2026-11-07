@@ -21,8 +21,8 @@ Object.assign(Game, {
     const it = spec && spec.it, node = spec && spec.node;
     if (!it || !node || !node.getBoundingClientRect) return;
     const extra = [];
-    if (Medical.capOf(it) && spec.entry) {
-      extra.push([it.effect ? '剩余次数' : '当前容量', Medical.capText(spec.entry)]);
+    if (ItemCapacity.max(it) && spec.entry) {
+      extra.push([ItemCapacity.label(it), ItemCapacity.text(spec.entry)]);
     }
     Tips.show(it, node.getBoundingClientRect(), spec.hint || '', extra);
     const acts = [];
@@ -752,8 +752,8 @@ Object.assign(Game, {
           ? '<span class="qty">' + esc(it.note) + '</span>'
           : (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '');
         /* 用过的恢复品把剩余容量直接标在格子里，不用点开详情才知道 */
-        const capTag = (it.healCap && Medical.isPartial(s))
-          ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '';
+        const capTag = ((it.cat === 'key' || it.healCap) && (it.cat === 'key' || ItemCapacity.isPartial(s)))
+          ? '<span class="cap">' + Math.ceil(ItemCapacity.remaining(s)) + '</span>' : '';
         const label = it.short || it.name;
         /* 护甲：底边一条耐久条，局内也一眼看出还能扛几下 */
         const armor = DuraBar.of(it), dots = SlotDots.html(it);
@@ -801,8 +801,8 @@ Object.assign(Game, {
         for (const a of this.extraActsFor(it, 'bag', s)) extra.push(a);
         if (extra.length) spec.extraActs = extra;
 
-        cell.title = (Medical.capOf(it) && Medical.isPartial(s)
-            ? it.name + ' · ' + Medical.capText(s)
+        cell.title = (ItemCapacity.max(it) && (it.cat==='key' || ItemCapacity.isPartial(s))
+            ? it.name + ' · ' + ItemCapacity.text(s)
             : it.name + ' · ' + it.w + 'kg') +
           ' · 双击' + (spec.primary && spec.actLabel ? spec.actLabel.replace(/（.*/, '') : '看详情') +
           ' · Ctrl+左键移入安全箱 · 右键更多';
@@ -828,10 +828,10 @@ Object.assign(Game, {
         if (dots) cell.classList.add('has-dots');
         cell.innerHTML = ico2 + '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
           (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '') +
-          ((Medical.capOf(s.item) && Medical.isPartial(s))
-            ? '<span class="cap">' + Math.ceil(Medical.entryCap(s)) + '</span>' : '') + dots;
-        cell.title = s.item.name + (Medical.capOf(s.item) && Medical.isPartial(s)
-            ? ' · ' + Medical.capText(s)
+          ((ItemCapacity.max(s.item) && (s.item.cat==='key' || ItemCapacity.isPartial(s)))
+            ? '<span class="cap">' + Math.ceil(ItemCapacity.remaining(s)) + '</span>' : '') + dots;
+        cell.title = s.item.name + (ItemCapacity.max(s.item) && (s.item.cat==='key' || ItemCapacity.isPartial(s))
+            ? ' · ' + ItemCapacity.text(s)
             : ' · ' + s.item.w + 'kg') + ' · 双击移回背包 · Ctrl+左键移回背包';
         /* 安全箱：双击=移回背包（可交互的医疗品是"使用"），右键=详情/使用/丢弃 */
         const spec = {
@@ -950,7 +950,7 @@ Object.assign(Game, {
     let bagged = 0, baggedValue = 0;
     for (const s of kept) {
       const it = s.item;
-      const stays = !it.equip && (it.cat === 'ammo' || Medical.is(it));
+      const stays = !it.equip && (it.cat === 'ammo' || it.cat === 'key' || Medical.is(it));
       if (stays && !Base.bagBlock(it, s.n)) {
         Save.addBag(it.id, s.n, s.cap);
         bagged++;

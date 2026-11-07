@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "file": "index.html",
+      "loaded": 5,
+      "inventoryBindings": true,
+      "originalDetails": true,
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "loaded": 5,
+      "inventoryBindings": true,
+      "originalDetails": true,
+      "errors": []
+    }
+  ]
+}

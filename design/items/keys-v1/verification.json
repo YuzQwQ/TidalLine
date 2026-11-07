@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "file": "index.html",
+      "bagAndSafeConsumption": true,
+      "wrongAndMissingRejected": true,
+      "exhaustedRemoved": true,
+      "reopenFree": true,
+      "independentCopies": true,
+      "partialDurability": true,
+      "layout": true,
+      "purchaseAndSave": true,
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "bagAndSafeConsumption": true,
+      "wrongAndMissingRejected": true,
+      "exhaustedRemoved": true,
+      "reopenFree": true,
+      "independentCopies": true,
+      "partialDurability": true,
+      "layout": true,
+      "purchaseAndSave": true,
+      "errors": []
+    }
+  ],
+  "editorSaveUndoRedoReopen": true
+}

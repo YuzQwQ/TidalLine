@@ -1,0 +1,147 @@
+{
+  "id": "keys-v1",
+  "generator": "built-in image_gen",
+  "orientation": "75deg top-down; bow upper-left, tip lower-right, diagonal45deg; light upper-left",
+  "assets": [
+    {
+      "id": "door_key_old_apt",
+      "name": "老公寓3号房钥匙",
+      "number": "002",
+      "design": "暗红圆柄旧铜钥匙",
+      "generatedSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-0a4952de-40cf-4311-a545-de11cd694886.png",
+      "source": "assets/item-art/keys-v1/sources/door_key_old_apt.png",
+      "target": "assets/items/door_key_old_apt.png",
+      "gameplay": {
+        "r": 6,
+        "price": 30000000,
+        "maxDur": 10
+      },
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "canvas": [
+        48,
+        48
+      ],
+      "subjectSize": [
+        40,
+        40
+      ],
+      "processing": "alpha>=140 bounding crop; lanczos3 contain40x40; binary alpha; adaptive PNG palette up to256 colors; centered48x48",
+      "status": "ready"
+    },
+    {
+      "id": "door_key_clinic",
+      "name": "诊所储藏室钥匙",
+      "number": "005",
+      "design": "白紫医疗钥匙",
+      "generatedSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-721f49ea-914d-4b52-a989-d453acaf1fb0.png",
+      "source": "assets/item-art/keys-v1/sources/door_key_clinic.png",
+      "target": "assets/items/door_key_clinic.png",
+      "gameplay": {
+        "r": 4,
+        "price": 7100000,
+        "maxDur": 10
+      },
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "canvas": [
+        48,
+        48
+      ],
+      "subjectSize": [
+        40,
+        40
+      ],
+      "processing": "alpha>=140 bounding crop; lanczos3 contain40x40; binary alpha; adaptive PNG palette up to256 colors; centered48x48",
+      "status": "ready"
+    },
+    {
+      "id": "door_key_watchshop",
+      "name": "钟表店私人收藏室钥匙",
+      "number": "007",
+      "design": "三叶花饰黄铜钥匙",
+      "generatedSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-9a2f5e9e-5c9d-4ef9-9083-5aaa07e7c7e3.png",
+      "source": "assets/item-art/keys-v1/sources/door_key_watchshop.png",
+      "target": "assets/items/door_key_watchshop.png",
+      "gameplay": {
+        "r": 5,
+        "price": 18300000,
+        "maxDur": 10
+      },
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "canvas": [
+        48,
+        48
+      ],
+      "subjectSize": [
+        40,
+        39
+      ],
+      "processing": "alpha>=140 bounding crop; lanczos3 contain40x40; binary alpha; adaptive PNG palette up to256 colors; centered48x48",
+      "status": "ready"
+    },
+    {
+      "id": "door_key_bank_vault",
+      "name": "银行金库大门钥匙",
+      "number": "006",
+      "design": "黑红六角金库钥匙",
+      "generatedSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-87aab3ce-f567-4e1b-969d-b6610482a375.png",
+      "source": "assets/item-art/keys-v1/sources/door_key_bank_vault.png",
+      "target": "assets/items/door_key_bank_vault.png",
+      "gameplay": {
+        "r": 6,
+        "price": 43900000,
+        "maxDur": 10
+      },
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "canvas": [
+        48,
+        48
+      ],
+      "subjectSize": [
+        39,
+        40
+      ],
+      "processing": "alpha>=140 bounding crop; lanczos3 contain40x40; binary alpha; adaptive PNG palette up to256 colors; centered48x48",
+      "status": "ready"
+    },
+    {
+      "id": "door_key_warehouse",
+      "name": "仓库后勤储备室钥匙",
+      "number": "008",
+      "design": "橄榄绿工业钥匙",
+      "generatedSource": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1aa02-a806-7720-9d15-760178469f59\\exec-1d0a36ae-7e7c-479a-889c-ba2f6e4a6f54.png",
+      "source": "assets/item-art/keys-v1/sources/door_key_warehouse.png",
+      "target": "assets/items/door_key_warehouse.png",
+      "gameplay": {
+        "r": 5,
+        "price": 20500000,
+        "maxDur": 10
+      },
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "canvas": [
+        48,
+        48
+      ],
+      "subjectSize": [
+        38,
+        40
+      ],
+      "processing": "alpha>=140 bounding crop; lanczos3 contain40x40; binary alpha; adaptive PNG palette up to256 colors; centered48x48",
+      "status": "ready"
+    }
+  ]
+}

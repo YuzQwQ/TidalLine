@@ -978,7 +978,7 @@ const Base = {
       /* 整叠走，别按「一件」走：逐件点击时 toStash 一次只搬 1 件（用过的医疗品
          本来就是单件，堆叠的靠玩家多点几次），但这里是**整条删掉**，
          照抄那个 1 就等于把剩下的 n-1 件吞了。只有真的用过的（cap 不满）才是单件。 */
-      const maxCap = Medical.capOf(it);
+      const maxCap = ItemCapacity.max(it);
       const used = !!maxCap && e.cap != null && e.cap < maxCap - 1e-6;
       const n = (e.gear || used) ? 1 : Math.max(1, e.n || 1);
       /* 弹药先问仓库塞不塞得下 —— 和逐件点「放回仓库」是同一条规则，
@@ -1005,7 +1005,7 @@ const Base = {
       (armor?' has-dbar':'')+(dots?' has-dots':'');
     cell.innerHTML=Icons.bagTag(it,'ico-bag')+'<span class="cn">'+esc(it.short||it.name)+'</span>'+
       (n>1?'<span class="qty">'+n+'</span>':'')+
-      (Medical.capOf(it)&&Medical.isPartial(e)?'<span class="cap">'+Math.ceil(Medical.entryCap(e))+'</span>':'')+
+      (ItemCapacity.max(it)&&(it.cat==='key'||ItemCapacity.isPartial(e))?'<span class="cap">'+Math.ceil(ItemCapacity.remaining(e))+'</span>':'')+
       (armor?DuraBar.html(armor):'')+dots;
     cell.title=it.name+' · '+(it.w*n).toFixed(2)+'kg · 单击看详情';
     return cell;
@@ -1093,7 +1093,7 @@ const Base = {
     let room = 0;
     for (const e of Save.bag) {
       if (e.gear || e.id !== it.id) continue;
-      if (Medical.capOf(it) && e.cap != null && e.cap < Medical.capOf(it) - 1e-6) continue;
+      if (ItemCapacity.max(it) && e.cap != null && e.cap < ItemCapacity.max(it) - 1e-6) continue;
       room += Math.max(0, stack - e.n);
     }
     const need = Math.max(0, n - room);
@@ -1106,7 +1106,7 @@ const Base = {
     if (!Save.stash.includes(e)) return false;
     const it = stashItem(e);
     if (!it) return false;
-    const n = (e.gear || Medical.capOf(it)) ? 1 : Math.max(1, e.n || 1);
+    const n = (e.gear || ItemCapacity.max(it)) ? 1 : Math.max(1, e.n || 1);
     const why = this.bagBlock(it, n);
     if (why) { this.note('放不进背包：' + why, true); return false; }
     if (e.gear) Save.addGearBag(it);
@@ -1123,7 +1123,7 @@ const Base = {
     if (!Save.bag.includes(e)) return false;
     const it = stashItem(e);
     if (!it) return false;
-    const n = (e.gear || Medical.capOf(it)) ? 1 : Math.max(1, e.n || 1);
+    const n = (e.gear || ItemCapacity.max(it)) ? 1 : Math.max(1, e.n || 1);
     if(it.cat==='ammo'&&!Save.canAddStash(it.id,n)){this.note('仓库空间不足',true);return false;}
     if (e.gear) Save.addGearStash(it);
     else Save.addStash(it.id, n, e.cap);
@@ -1177,8 +1177,8 @@ const Base = {
     /* 堆叠数量在原来的右侧面板里是单独一行，浮窗也得有，不然弹药看不出多少发 */
     if (!inGear && e && (e.n || 1) > 1)
       extra.push(['数量', (e.n || 1) + (it.cat === 'ammo' ? ' 发' : ' 件')]);
-    if (!inGear && Medical.capOf(it))
-      extra.push([it.effect ? '剩余次数' : '当前容量', Medical.capText(e)]);
+    if (!inGear && ItemCapacity.max(it))
+      extra.push([ItemCapacity.label(it), ItemCapacity.text(e)]);
     const hint = inStash ? '双击放进背包 · 右键不额外弹菜单'
       : inBag ? '双击卸下 · Ctrl+左键同样卸下'
       : '双击卸下 · 右键有详情与卸下';
@@ -1190,7 +1190,7 @@ const Base = {
     else if (inBag) acts.push({ label: '卸下', onClick: () => this.toStash(e) });
     else {
       /* 背包塞不下就别给个能点的按钮，直接说明为什么 */
-      const why = this.bagBlock(it, (e.gear || Medical.capOf(it)) ? 1 : Math.max(1, e.n || 1));
+      const why = this.bagBlock(it, (e.gear || ItemCapacity.max(it)) ? 1 : Math.max(1, e.n || 1));
       acts.push({ label: '放进背包', disabled: !!why, onClick: () => this.toBag(e) });
     }
 
@@ -1344,11 +1344,11 @@ const Base = {
         Icons.bagTag(it, '') +
         '<span class="cn">' + esc(it.short || it.name) + '</span>' +
         (n > 1 ? '<span class="qty">' + n + '</span>' : '') +
-        ((Medical.capOf(it) && Medical.isPartial(e))
-          ? '<span class="cap">' + Math.ceil(Medical.entryCap(e)) + '</span>' : '') +
+        ((ItemCapacity.max(it) && (it.cat==='key' || ItemCapacity.isPartial(e)))
+          ? '<span class="cap">' + Math.ceil(ItemCapacity.remaining(e)) + '</span>' : '') +
         (armor ? DuraBar.html(armor) : '') + dots;
-      cell.title = it.name + (Medical.capOf(it) && Medical.isPartial(e)
-          ? ' · ' + Medical.capText(e)
+      cell.title = it.name + (ItemCapacity.max(it) && (it.cat==='key' || ItemCapacity.isPartial(e))
+          ? ' · ' + ItemCapacity.text(e)
           : ' · ' + it.w.toFixed(2) + 'kg') + ' · ' +
         '估价 ' + formatMoney(unitPrice(it) * n) + ' · 成交价以商人报价为准 · 左键看详情';
       /* 仓库只有左键看详情、双击放进背包；右键不弹菜单（别让两套入口打架） */
@@ -1520,7 +1520,7 @@ const DeployGuard = {
   carriesMeds() {
     return Save.bag.concat(Save.safe||[]).some(e => {
       const it = ITEM_BY_ID[e.id];
-      return it && Medical.is(it) && Medical.capOf(it) > 0;
+      return it && Medical.is(it) && ItemCapacity.max(it) > 0;
     });
   },
 

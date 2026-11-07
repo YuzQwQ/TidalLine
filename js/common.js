@@ -11,6 +11,16 @@
 const ITEM_BY_ID = {};
 for (const it of ITEMS) ITEM_BY_ID[it.id] = it;
 
+/* Shared per-item capacity. Keys use cap for remaining durability so transfers,
+   dropped items and save entries preserve the same state as medical supplies. */
+const ItemCapacity={
+  max(item){return item ? (item.maxDur||item.healCap||item.effect?.uses||0) : 0;},
+  remaining(entry){const item=entry&&(entry.item||stashItem(entry)),max=this.max(item);return !max?0:typeof entry.cap==='number'?(Number.isFinite(entry.cap)?Math.max(0,Math.min(max,entry.cap)):0):max;},
+  isPartial(entry){return this.remaining(entry)<this.max(entry&&(entry.item||stashItem(entry)));},
+  text(entry){const item=entry&&(entry.item||stashItem(entry));return item?.cat==='key'?this.remaining(entry)+' / '+this.max(item):Medical.capText(entry);},
+  label(item){return item?.cat==='key'?'剩余耐久':item?.effect?'剩余次数':'当前容量';}
+};
+
 /* innerHTML 拼字符串时统一过一遍，名字里有 & < > 也不会把结构搞坏 */
 function esc(s) {
   return String(s == null ? '' : s)

@@ -14,7 +14,7 @@ const Icons = {
     this.gear = {};
     const loading = new Map();
     const jobs = ITEMS.map(async it => {
-      if ((Medical.is(it) || it.cat === 'ammo') && !it.iconId) { this.map[it.id] = null; return; }
+      if ((Medical.is(it) || it.cat === 'ammo' || it.cat === 'key') && !it.iconId) { this.map[it.id] = null; return; }
       const key = 'items/' + (it.iconId || it.id);
       if (!loading.has(key)) loading.set(key, new Promise(resolve => {
       const hit = inlineMap && (inlineMap[key] || inlineMap[it.id]);
@@ -78,6 +78,10 @@ const Icons = {
         (color ? ' style="background:'+color+'30;box-shadow:inset 0 0 0 1px '+color+'70"' : '') + '>';
     }
     const it = ITEM_BY_ID[id];
+    if(it?.cat==='key'){
+      const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g transform="rotate(-35 24 24)" stroke="#353e45" stroke-width="2"><path fill="#b4a070" d="M20 18h9v21h-5v-5h-4v-5h4v-9h-4z"/><circle cx="24" cy="14" r="9" fill="#a9905c"/><circle cx="24" cy="14" r="4" fill="#353e45"/></g></svg>';
+      return '<img class="'+esc(cls)+'" src="data:image/svg+xml,'+encodeURIComponent(svg)+'" alt="钥匙">';
+    }
     const c = it ? RARITY[it.r - 1].color : '#3a4a44';
     /* 缺图时仍按等级数字与稀有度色兜底。 */
     const glyph = (it && it.cat === 'ammo') ? String(it.level) : (Medical.is(it) ? (it.short || it.name) : '');

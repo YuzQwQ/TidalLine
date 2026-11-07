@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>潮汐线 · 老公寓钥匙房评测</title>
+<style>
+  :root{
+    --paper:#f5f2ea; --card:#fffdf8; --ink:#23201c; --dim:#8a8175; --line:#ded7c8;
+    --accent:#3f6d9b; --warn:#a8732a; --bad:#a34a3c; --good:#3f7a5e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font:14px/1.65 "PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+  code,.glyph,.num{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px 80px}
+  header.top{padding:34px 0 18px;border-bottom:2px solid var(--ink)}
+  .kicker{font-size:11px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase}
+  h1{margin:6px 0 10px;font-size:30px;letter-spacing:.02em}
+  .lead{color:#5c554a;max-width:860px}
+  .stats{display:flex;gap:30px;flex-wrap:wrap;margin:18px 0 6px}
+  .stat b{display:block;font-size:22px;line-height:1.2}
+  .stat span{font-size:11px;color:var(--dim);letter-spacing:.08em}
+  h2{font-size:20px;margin:34px 0 6px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  h3{font-size:15px;margin:22px 0 8px}
+  p{margin:8px 0}
+  .dim{color:var(--dim)} .small{font-size:12px}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+  th{font-size:11px;letter-spacing:.08em;color:var(--dim);font-weight:600;background:#efe9dd}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .strong{font-weight:700}
+  .q{font-size:10px;padding:1px 6px;border-radius:999px;border:1px solid var(--line);margin-left:6px;color:var(--dim)}
+  .q-secret{border-color:#c9a1a1;color:#8d3a3a;background:#fbeeee}
+  .q-rich{border-color:#d8c48a;color:#7d631d;background:#fbf5e2}
+  .q-fine{border-color:#c3b0d4;color:#6b4b8c;background:#f5eefb}
+  .note{background:#fbf6ea;border:1px solid #e6d9bc;border-left:4px solid var(--warn);
+    padding:12px 16px;border-radius:8px;margin:16px 0;color:#5c4a26}
+  .note b{color:#7a5a1a}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ctrl{display:grid;grid-template-columns:150px 1fr 120px;gap:14px;align-items:center;margin:14px 0}
+  .ctrl label{font-size:13px;color:#4a443b}
+  .ctrl output{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+  .scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:8px 0 16px}
+  .scen button{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;
+    text-align:left;font:inherit;cursor:pointer;transition:.12s}
+  .scen button b{display:block;font-size:13px}
+  .scen button span{display:block;font-size:11px;color:var(--dim);margin-top:2px}
+  .scen button.on{border-color:var(--accent);background:#eef3f9;box-shadow:0 0 0 1px var(--accent) inset}
+  .scen button.on b{color:var(--accent)}
+  .readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:16px 0 6px}
+  .ro{background:#f4efe4;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .ro b{display:block;font-size:20px;line-height:1.25;font-variant-numeric:tabular-nums}
+  .ro span{font-size:11px;color:var(--dim);letter-spacing:.06em}
+  .ro.good b{color:var(--good)} .ro.bad b{color:var(--bad)}
+  .verdict{margin-top:14px;padding:12px 16px;border-radius:10px;font-size:14px}
+  .v-normal{background:#eef4ef;border:1px solid #c7dccd;color:#2f5c43}
+  .v-adv{background:#f4f0e2;border:1px solid #ddd0a8;color:#6d5820}
+  .v-top{background:#f6ebe4;border:1px solid #e0c2b0;color:#7d3d24}
+  .v-over{background:#f7e7e4;border:1px solid #e2b3aa;color:#8a2f21}
+  canvas{width:100%;height:250px;display:block;background:#fbf8f0;border:1px solid var(--line);border-radius:10px}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin-top:8px}
+  .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+  footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:var(--dim)}
+</style></head><body><div class="wrap">
+<header class="top">
+  <div class="kicker">TIDE LINE · ECONOMY AUDIT</div>
+  <h1>老公寓钥匙房 · 产出与携带评测</h1>
+  <p class="lead">5 个容器：大型保险箱、小型保险箱、密封公文包、机密封存箱、军用物资箱。
+  真实 <code>Loot.fill</code> 抽样 120,000 局，固定种子可复现；红档 = 稀有度 6。</p>
+  <div class="stats">
+    <div class="stat"><b>¥3,443,805</b><span>产出总值均值 / 次</span></div>
+    <div class="stat"><b>¥2,622,600</b><span>中位数 / 次</span></div>
+    <div class="stat"><b>¥6,043,680</b><span>p90 / 次</span></div>
+    <div class="stat"><b>98%</b><span>只带紫以上 · 实现率</span></div>
+  </div>
+</header>
+
+<h2>一、出红率的三个口径</h2>
+<p>容器只规定<b>每抽一件</b>的稀有度曲线；一个秘藏箱一次抽 3 件，所以「单件红率 8%」≠「单箱出红 8%」。</p>
+<table>
+  <thead><tr><th>容器</th><th class="num">单件红率</th><th class="num">单箱 ≥1 红</th><th class="num">平均件数</th><th class="num">单箱期望</th></tr></thead>
+  <tbody>
+        <tr>
+          <td>大型保险箱 <span class="q q-secret">secret</span></td>
+          <td class="num">8.25%</td>
+          <td class="num strong">22.89%</td>
+          <td class="num">3.00</td>
+          <td class="num">¥994,987</td>
+        </tr>
+        <tr>
+          <td>小型保险箱 <span class="q q-rich">rich</span></td>
+          <td class="num">2.05%</td>
+          <td class="num strong">5.05%</td>
+          <td class="num">2.50</td>
+          <td class="num">¥391,283</td>
+        </tr>
+        <tr>
+          <td>密封公文包 <span class="q q-secret">secret</span></td>
+          <td class="num">8.09%</td>
+          <td class="num strong">22.51%</td>
+          <td class="num">3.00</td>
+          <td class="num">¥926,170</td>
+        </tr>
+        <tr>
+          <td>机密封存箱 <span class="q q-secret">secret</span></td>
+          <td class="num">8.16%</td>
+          <td class="num strong">22.68%</td>
+          <td class="num">3.00</td>
+          <td class="num">¥953,217</td>
+        </tr>
+        <tr>
+          <td>军用物资箱 <span class="q q-fine">fine</span></td>
+          <td class="num">0.33%</td>
+          <td class="num strong">1.16%</td>
+          <td class="num">3.50</td>
+          <td class="num">¥178,148</td>
+        </tr>
+  </tbody>
+</table>
+<div class="note">
+  <b>出红率：</b>整房「至少一件红」为 <b>56.72%</b>，由 <code>1 − Π(1 − 单箱出红率)</code> 得到，不是单件率相加。
+</div>
+
+<h2>二、价值按稀有度分布</h2>
+<p>这决定“玩家只挑金红紫”到底损失多少。若金红已占绝大部分价值，按比例打折就会严重高估损耗。</p>
+<table>
+  <thead><tr><th>稀有度</th><th class="num">件数占比</th><th class="num">价值占比</th></tr></thead>
+  <tbody>
+        <tr>
+          <td>r1 寻常</td>
+          <td class="num">3.6%</td>
+          <td class="num ">0.0%</td>
+        </tr>
+        <tr>
+          <td>r2 良品</td>
+          <td class="num">7.6%</td>
+          <td class="num ">0.2%</td>
+        </tr>
+        <tr>
+          <td>r3 上乘</td>
+          <td class="num">17.3%</td>
+          <td class="num ">1.8%</td>
+        </tr>
+        <tr>
+          <td>r4 稀见</td>
+          <td class="num">29.8%</td>
+          <td class="num ">9.6%</td>
+        </tr>
+        <tr>
+          <td>r5 珍罕</td>
+          <td class="num">36.4%</td>
+          <td class="num strong">45.2%</td>
+        </tr>
+        <tr>
+          <td>r6 孤品</td>
+          <td class="num">5.3%</td>
+          <td class="num strong">43.3%</td>
+        </tr>
+  </tbody>
+</table>
+<div class="note">
+  <b>结论：</b>金（r5）+ 红（r6）合计约占总值 <b>88%</b>，紫以上约 <b>98%</b>。
+  所以“只带金红”的真实实现率 ≈ 88%，而不是拍脑袋的 50–70%。本项目物品平均 15 件、总重约 11.6kg，
+  任何正经背包（≥14 格 / 45kg）都能全部带走。
+</div>
+
+<h2>三、交互：携带策略 × 钥匙售价 × 耐久</h2>
+<p class="dim">这里不再用“变现率 × 总值”的线性假设——那是错的。改用真实装包模型：按价值从高到低挑，
+受背包格数与 45kg 承重双约束，格满即停。每个策略的分布都是独立模拟出来的。</p>
+
+<div class="panel">
+  <h3 style="margin-top:4px">携带策略</h3>
+  <div class="scen" id="scen">
+      <button data-sc="0" class="on">
+        <b>全部带走</b><span>22 格 / 45kg · 实现 100%</span>
+      </button>
+      <button data-sc="1">
+        <b>只带紫以上</b><span>r≥4 · 价值 98% · 实现 98%</span>
+      </button>
+      <button data-sc="2">
+        <b>只带金红</b><span>r≥5 · 价值 88% · 实现 88%</span>
+      </button>
+      <button data-sc="3">
+        <b>6 格基础包</b><span>未装备背包 · 实现 86%</span>
+      </button>
+  </div>
+
+  <div class="ctrl">
+    <label for="p">钥匙总价（售价）</label>
+    <input id="p" type="range" min="500000" max="40000000" step="500000" value="27000000">
+    <output id="ro-p">¥27,000,000</output>
+  </div>
+  <div class="ctrl">
+    <label for="u">耐久（可开次数）</label>
+    <input id="u" type="range" min="1" max="20" step="1" value="10">
+    <output id="ro-u">10 次</output>
+  </div>
+
+  <div class="readout">
+    <div class="ro"><span>单次成本</span><b id="o-cost">—</b></div>
+    <div class="ro"><span>该策略带走均值</span><b id="o-mean">—</b></div>
+    <div class="ro" id="o-netwrap"><span>单次净收益</span><b id="o-net">—</b></div>
+    <div class="ro" id="o-losswrap"><span>有效亏损率</span><b id="o-loss">—</b></div>
+    <div class="ro" id="o-keywrap"><span>每把钥匙净收益</span><b id="o-key">—</b></div>
+    <div class="ro"><span>中位回本所需实现</span><b id="o-be">—</b></div>
+  </div>
+  <div id="verdict" class="verdict v-adv">—</div>
+
+  <h3 style="margin-top:22px">带走价值分布（竖线 = 当前回本线）</h3>
+  <canvas id="chart"></canvas>
+  <div class="legend">
+    <span><i class="sw" style="background:#3f6d9b"></i>该策略带走价值</span>
+    <span><i class="sw" style="background:#a34a3c"></i>低于回本线（亏损区）</span>
+    <span><i class="sw" style="background:#3f7a5e"></i>回本线</span>
+  </div>
+</div>
+
+<h2>四、怎么读</h2>
+<p>· <b>有效亏损率</b> = 该策略带走价值 &lt; 单次成本 的概率。
+<br>· <b>中位回本所需实现</b> = 单次成本 ÷ 该策略中位带走值；&gt; 100% 表示即便满带，中位那一局也回不了本。
+<br>· 若玩家还会在地图其它地方搜刮、到钥匙房时背包已占一半，请选“6 格基础包”或自行下调格数作为下界。</p>
+
+<footer>生成：<code>node tools/report-keyroom.js</code> · 样本 120,000 · 随机种子 20261107 · 价格取物品 <code>price</code> 字段 · 承重上限 45kg · 安全箱 4 格</footer>
+</div>
+
+<script>
+(function(){
+  var D = {"n":120000,"redRarity":6,"mean":3443804.566508333,"median":2622600,"p10":1699500,"p90":6043680,"roomRed":0.5672,"binW":100000,"boxes":[{"ch":"V","name":"大型保险箱","q":"secret","itemRed":0.08250833333333334,"boxRed":0.22890833333333332,"items":3,"ev":994986.722475},{"ch":"B","name":"小型保险箱","q":"rich","itemRed":0.02047015407571226,"boxRed":0.050541666666666665,"items":2.5020166666666666,"ev":391282.5269},{"ch":"O","name":"密封公文包","q":"secret","itemRed":0.08089166666666667,"boxRed":0.22513333333333332,"items":3,"ev":926169.9003833333},{"ch":"I","name":"机密封存箱","q":"secret","itemRed":0.08159166666666667,"boxRed":0.22683333333333333,"items":3,"ev":953217.0118916667},{"ch":"Q","name":"军用物资箱","q":"fine","itemRed":0.0033226943597560975,"boxRed":0.0116,"items":3.498666666666667,"ev":178148.40485833332}],"byR":[{"r":1,"name":"寻常","cntPct":0.03633501140503599,"valPct":0.00035194394549965347},{"r":2,"name":"良品","cntPct":0.0761581972376814,"valPct":0.0022734498814116688},{"r":3,"name":"上乘","cntPct":0.17263380223789804,"valPct":0.017535528173489884},{"r":4,"name":"稀见","cntPct":0.2979703146856643,"valPct":0.09572292028587225},{"r":5,"name":"珍罕","cntPct":0.3637173195443319,"valPct":0.4515162075752005},{"r":6,"name":"孤品","cntPct":0.05318535488938837,"valPct":0.43259995013852603}],"scenarios":[{"key":"all","name":"全部带走","note":"22 格 / 45kg","mean":3443804.566508333,"median":2622600,"p10":1699500,"p90":6043680,"real":1,"hist":{"bins":[0,0,0,0,0,2,9,27,91,176,376,606,966,1499,2056,2682,3525,4079,4786,5343,5576,5932,5718,5547,5183,4788,4295,3874,3427,3184,2864,2548,2404,2261,2100,1941,1796,1637,1406,1280,1070,1014,814,695,617,567,561,558,584,571,594,675,667,702,718,661,653,686,653,673,642,554,546,515,512,454,431,424,365,321,347,279,270,266,250,253,242,231,212,262,245,195,183,154,164,140,155,106,119,89,98,82,74,85,94,45,77,61,40,61,38,54,60,58,45,60,49,43,49,45,50,39,49,36,40,37,35,41,25,30,22,22,22,10,22,20,18,16,33,15,38,33,34,36,43,51,44,56,42,53,51,43,38,55,31,23,34,31,20,17,26,15,14,15,13,12,14,5,9,11,6,7,7,4,7,3,3,3,5,14,3,6,4,9,6,3,5,2,2,2,5,2,2,3,1,1,3,1,4,7,2,1,0,3,2,2,0,1,2,1,1,1,2,0,1,1,0,1,0,1,0,0,0,0,0,0,0,1,0,1,1,1,0,0,2,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,8,9,6,13,14,14,19,29,22,27,14,19,34,29,17,12,6,16,17,9,11,7,11,3,5,5,6,4,5,4,4,4,2,1,3,1,4,2,1,3,6,4,3,1,5,3,2,1,1,2,1,2,1,3,1,3,1,1,0,0,0,0,0,2,1,0,0,2,1,0,1,1,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"overflow":0}},{"key":"purple","name":"只带紫以上","note":"r≥4 · 价值 98%","mean":3374374.2912583333,"median":2560000,"p10":1618000,"p90":5976000,"real":0.9798390779995988,"hist":{"bins":[0,0,0,1,2,15,30,89,194,369,618,885,1459,1932,2459,3298,3843,4636,4998,5384,5846,5675,5431,5216,4934,4431,3982,3633,3215,3002,2708,2418,2345,2120,1959,1827,1706,1507,1306,1145,1020,905,767,623,627,558,594,558,581,612,639,646,675,749,654,658,666,688,642,658,578,539,539,520,474,427,421,398,331,346,289,264,284,254,255,232,248,228,225,244,226,192,164,149,156,150,110,111,112,105,86,78,78,84,74,51,78,46,48,53,48,52,71,42,53,54,46,49,44,50,46,37,45,36,35,40,36,32,26,29,21,24,14,23,12,21,16,27,27,30,28,36,35,38,50,49,52,57,41,50,49,43,36,43,26,26,30,32,14,22,25,12,13,18,12,14,6,6,12,9,3,10,6,5,4,3,5,4,7,8,6,5,8,6,4,5,3,1,3,2,5,0,5,1,1,2,1,2,9,1,3,0,3,1,2,1,1,0,2,2,0,1,2,0,2,0,0,1,1,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,2,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,6,6,11,11,11,14,18,25,25,22,19,17,30,32,20,14,8,14,17,10,7,11,12,4,4,5,8,2,4,7,4,2,3,3,2,2,3,3,0,4,3,7,1,3,4,2,3,2,0,2,1,1,3,1,2,3,1,2,0,0,0,0,0,0,2,1,0,1,1,1,0,3,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,2,0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"overflow":0}},{"key":"goldRed","name":"只带金红","note":"r≥5 · 价值 88%","mean":3044723.2612583335,"median":2248000,"p10":1220000,"p90":5680000,"real":0.8841161577137266,"hist":{"bins":[17,15,83,124,287,417,636,1044,1271,1927,2402,2821,3567,3951,4473,4923,5047,5121,5233,5076,4800,4637,4196,3749,3482,3190,3016,2671,2544,2217,2164,1926,1794,1570,1479,1322,1199,1064,856,805,748,643,580,633,624,581,639,651,636,690,712,678,614,634,676,651,613,600,517,535,486,500,455,397,326,349,357,305,289,297,241,263,250,253,239,218,221,209,178,163,167,163,131,138,121,103,92,78,91,77,80,90,60,70,46,53,42,56,51,67,59,47,64,37,46,53,37,38,39,49,41,32,37,34,38,37,22,19,18,21,21,16,28,23,21,36,24,35,31,39,43,53,37,30,52,51,58,44,36,42,34,26,35,37,18,19,17,23,22,13,18,9,12,6,14,5,5,11,10,7,6,5,4,2,7,6,4,7,6,6,8,5,3,4,4,1,2,2,6,2,2,0,1,4,0,5,4,4,2,2,2,1,1,1,1,1,2,0,0,3,0,2,0,1,0,0,1,0,0,0,0,0,0,0,1,1,0,2,0,1,0,0,1,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,6,2,8,13,5,9,13,11,19,21,20,21,29,20,18,23,24,22,12,10,10,11,12,13,2,7,7,5,7,2,5,4,7,3,3,4,2,2,3,1,4,2,3,4,6,2,3,1,3,2,2,2,1,2,0,2,3,2,0,2,1,0,0,0,0,1,0,1,0,2,0,0,2,1,2,0,0,0,2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"overflow":0}},{"key":"base6","name":"6 格基础包","note":"未装备背包","mean":2963552.755841667,"median":2090000,"p10":1363000,"p90":5503000,"real":0.8605461484843803,"hist":{"bins":[0,0,0,1,6,29,118,275,568,973,1640,2392,3357,4314,5302,6242,7126,7282,7479,7062,6278,5200,4114,3310,2597,2293,2006,2029,2091,2202,2110,2093,1901,1630,1370,1086,849,630,434,395,372,401,386,482,529,560,637,687,769,765,763,828,713,634,640,631,593,508,490,508,519,478,437,387,343,324,259,230,229,178,188,202,238,221,295,261,258,180,182,162,145,108,84,86,84,75,70,62,84,81,65,78,49,46,51,53,35,41,52,36,51,53,42,68,51,63,48,44,50,38,29,30,17,18,19,30,12,24,13,26,17,21,18,14,13,20,35,28,43,43,49,55,53,51,55,47,55,54,36,48,39,19,24,31,11,15,22,16,11,7,13,12,11,5,5,6,5,2,6,4,6,9,1,5,7,10,5,4,8,4,2,3,3,2,4,4,1,1,1,5,2,3,5,2,2,1,2,4,1,2,1,0,0,2,2,1,2,0,0,0,1,2,0,1,0,0,0,0,0,1,0,0,0,0,0,0,2,3,2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,5,5,10,13,11,21,21,37,39,32,34,29,27,19,13,5,5,8,8,8,12,10,9,5,3,6,6,2,2,1,0,3,3,0,0,1,4,1,6,6,4,4,3,3,2,3,1,0,0,5,3,1,1,0,1,2,0,3,0,0,0,0,0,2,0,0,2,1,1,1,2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"overflow":0}}]};
+  window.__SC = D.scenarios;
+  var W = D.binW, N = D.n;
+
+  var el = function(id){ return document.getElementById(id); };
+  var P = el('p'), U = el('u');
+  var cur = 0;
+
+  var fmtMoney = function(v){ return (v<0?'-':'') + '¥' + Math.round(Math.abs(v)).toLocaleString('en-US'); };
+  var fmtPct = function(v){ return (v*100).toFixed(1) + '%'; };
+
+  function makeCdf(sc){
+    var B = sc.hist.bins, prefix = [], acc = 0;
+    for (var i=0;i<B.length;i++){ prefix[i]=acc; acc+=B[i]; }
+    var total = acc + sc.hist.overflow;
+    return function(x){
+      if (x <= 0) return 0;
+      var i = Math.floor(x / W);
+      if (i >= B.length) return 1;
+      return (prefix[i] + B[i] * ((x - i*W) / W)) / total;
+    };
+  }
+
+  var canvas = el('chart'), cctx = canvas.getContext('2d');
+
+  function draw(sc, costLine){
+    var dpr = window.devicePixelRatio || 1;
+    var cssW = canvas.clientWidth, cssH = 250;
+    if (canvas.width !== cssW*dpr || canvas.height !== cssH*dpr){
+      canvas.width = cssW*dpr; canvas.height = cssH*dpr;
+    }
+    cctx.setTransform(dpr,0,0,dpr,0,0);
+    cctx.clearRect(0,0,cssW,cssH);
+    var padL=48, padR=16, padT=16, padB=28;
+    var plotW = cssW-padL-padR, plotH = cssH-padT-padB;
+    var xMax = Math.min(sc.hist.bins.length*W, sc.p90*1.6);
+    var B = sc.hist.bins, step = Math.ceil(B.length/120), cols = [];
+    for (var i=0;i<B.length;i+=step){
+      var c=0, n=Math.min(i+step,B.length);
+      for (var k=i;k<n;k++) c+=B[k];
+      cols.push({x0:i*W, x1:n*W, c:c});
+    }
+    var maxC=0;
+    for (var j=0;j<cols.length;j++) if (cols[j].x0 < xMax) maxC=Math.max(maxC, cols[j].c);
+
+    cctx.fillStyle='#fbf8f0'; cctx.fillRect(0,0,cssW,cssH);
+    if (costLine>0 && costLine<xMax){
+      var lx = padL + (costLine/xMax)*plotW;
+      cctx.fillStyle='rgba(163,74,60,0.07)';
+      cctx.fillRect(padL, padT, lx-padL, plotH);
+    }
+    for (var q=0;q<cols.length;q++){
+      var col=cols[q];
+      if (col.x0>=xMax) break;
+      var x=padL+(col.x0/xMax)*plotW;
+      var w=Math.max(1,(col.x1-col.x0)/xMax*plotW-1);
+      var h=maxC>0?(col.c/maxC)*plotH:0;
+      var isLoss = costLine>0 && col.x1<=costLine;
+      cctx.fillStyle = isLoss?'#a34a3c':'#3f6d9b';
+      cctx.globalAlpha = isLoss?0.75:0.85;
+      cctx.fillRect(x, padT+plotH-h, w, h);
+    }
+    cctx.globalAlpha=1;
+    cctx.strokeStyle='#ded7c8'; cctx.lineWidth=1;
+    cctx.beginPath(); cctx.moveTo(padL,padT); cctx.lineTo(padL,padT+plotH); cctx.lineTo(padL+plotW,padT+plotH); cctx.stroke();
+    if (costLine>0 && costLine<xMax){
+      var bx=padL+(costLine/xMax)*plotW;
+      cctx.strokeStyle='#3f7a5e'; cctx.lineWidth=2; cctx.setLineDash([5,4]);
+      cctx.beginPath(); cctx.moveTo(bx,padT); cctx.lineTo(bx,padT+plotH); cctx.stroke();
+      cctx.setLineDash([]);
+    }
+    cctx.fillStyle='#8a8175'; cctx.font='11px ui-monospace, Consolas, monospace';
+    cctx.textAlign='right'; cctx.textBaseline='middle';
+    for (var t=0;t<=4;t++){
+      var vv=xMax*t/4, yy=padT+plotH-(plotH*t/4);
+      cctx.fillText((vv/1000000).toFixed(1)+'M', padL-8, yy);
+    }
+    cctx.textAlign='center'; cctx.textBaseline='top';
+    for (var t2=0;t2<=4;t2++){
+      var xv=xMax*t2/4;
+      cctx.fillText('¥'+(xv/1000000).toFixed(1)+'M', padL+(xv/xMax)*plotW, padT+plotH+6);
+    }
+  }
+
+  function update(){
+    var sc = D.scenarios[cur];
+    var cdf = makeCdf(sc);
+    var price = parseInt(P.value,10);
+    var uses = parseInt(U.value,10);
+    var cost = price/uses;
+    var net = sc.mean - cost;
+    var loss = cdf(cost);
+    var netKey = uses*net;
+    var be = cost/sc.median;
+
+    el('ro-p').textContent = fmtMoney(price);
+    el('ro-u').textContent = uses + ' 次';
+    el('o-cost').textContent = fmtMoney(cost);
+    el('o-mean').textContent = fmtMoney(sc.mean);
+    el('o-net').textContent = fmtMoney(net);
+    el('o-loss').textContent = fmtPct(loss);
+    el('o-key').textContent = fmtMoney(netKey);
+    el('o-be').textContent = fmtPct(be);
+
+    el('o-netwrap').className = 'ro ' + (net>=0?'good':'bad');
+    el('o-keywrap').className = 'ro ' + (netKey>=0?'good':'bad');
+    el('o-losswrap').className = 'ro ' + (loss<=0.3?'good':'bad');
+
+    var v = el('verdict');
+    if (loss < 0.30){ v.className='verdict v-normal'; v.innerHTML='<b>普通档 · 稳定经营</b>　有效亏损率 '+fmtPct(loss)+'，单次净 '+fmtMoney(net)+'。'; }
+    else if (loss < 0.50){ v.className='verdict v-adv'; v.innerHTML='<b>高级档 · 图鉴取向</b>　有效亏损率 '+fmtPct(loss)+'，单次净 '+fmtMoney(net)+'。'; }
+    else if (loss < 0.70){ v.className='verdict v-top'; v.innerHTML='<b>顶级档 · 财富博弈</b>　有效亏损率 '+fmtPct(loss)+'，单次净 '+fmtMoney(net)+'。'; }
+    else { v.className='verdict v-over'; v.innerHTML='<b>过赌 · 劝退风险</b>　有效亏损率 '+fmtPct(loss)+'，单次净 '+fmtMoney(net)+'。'; }
+
+    draw(sc, cost);
+  }
+
+  document.querySelectorAll('#scen button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('#scen button').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      cur = parseInt(b.getAttribute('data-sc'),10);
+      update();
+    });
+  });
+  P.addEventListener('input', update);
+  U.addEventListener('input', update);
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+</body></html>
