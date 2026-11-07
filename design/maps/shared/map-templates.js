@@ -74,6 +74,8 @@
     D: { name: '运动包', q: 'ample' },
 
     M: { name: '医疗柜', q: 'fine' },
+    g: { name: '武器箱', q: 'fine' },
+    h: { name: '装备箱', q: 'fine' },
     R: { name: '电子设备柜', q: 'fine' },
     H: { name: '急救器材箱', q: 'fine' },
     Q: { name: '军用物资箱', q: 'fine' },

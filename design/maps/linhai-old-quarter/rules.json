@@ -20,7 +20,7 @@
     "windowsMin": null
   },
   "enemySpacing": {
-    "between": 3,
+    "between": 1,
     "fromSpawn": 12,
     "fromExit": 6
   },

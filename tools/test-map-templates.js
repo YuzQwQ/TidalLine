@@ -180,8 +180,9 @@ console.log('\n=== 容器类型库 ===');
   check(!!m, '能从 js/data.js 取到 CONTAINER_TYPES');
   if (m) {
     /* 池是 data.js 里的外部常量，单独 eval 这段会找不到，先摘掉 */
-    const body = m[1].replace(/\s*,\s*(?:ammo|gear)Pool:\s*[A-Z_][A-Z_0-9]*/g, '');
-    const game = vm.runInNewContext('(' + body + ')', {});
+    const context=vm.createContext({});
+    for(const file of ['config.js','data.js'])vm.runInContext(fs.readFileSync(path.join(ROOT,'js',file),'utf8'),context);
+    const game = vm.runInContext('CONTAINER_TYPES',context);
     const lib = Tpl.CONTAINER_TYPES;
     const gameKeys = Object.keys(game).sort();
     const libKeys = Object.keys(lib).sort();

@@ -866,9 +866,9 @@
       "role": "scene-component",
       "canvas": [
         32,
-        48
+        32
       ],
-      "generationManifest": "assets/source/door-redraw/manifest.json"
+      "generationManifest": "assets/source/doors-batch-03/manifest.json"
     },
     {
       "group": "props",
@@ -877,9 +877,9 @@
       "role": "scene-component",
       "canvas": [
         32,
-        48
+        32
       ],
-      "generationManifest": "assets/source/door-redraw/manifest.json"
+      "generationManifest": "assets/source/doors-batch-03/manifest.json"
     },
     {
       "group": "props",
@@ -888,9 +888,9 @@
       "role": "scene-component",
       "canvas": [
         32,
-        48
+        32
       ],
-      "generationManifest": "assets/source/door-redraw/manifest.json"
+      "generationManifest": "assets/source/doors-batch-02/manifest.json"
     },
     {
       "group": "props",
@@ -899,9 +899,9 @@
       "role": "scene-component",
       "canvas": [
         32,
-        48
+        32
       ],
-      "generationManifest": "assets/source/door-redraw/manifest.json"
+      "generationManifest": "assets/source/doors-batch-02/manifest.json"
     },
     {
       "group": "props",
@@ -922,9 +922,9 @@
       "role": "scene-component",
       "canvas": [
         32,
-        48
+        32
       ],
-      "generationManifest": "assets/source/door-redraw/manifest.json"
+      "generationManifest": "assets/source/doors-batch-06/manifest.json"
     },
     {
       "group": "props",
@@ -933,9 +933,9 @@
       "role": "scene-component",
       "canvas": [
         32,
-        48
+        32
       ],
-      "generationManifest": "assets/source/door-redraw/manifest.json"
+      "generationManifest": "assets/source/doors-batch-06/manifest.json"
     },
     {
       "group": "props",
@@ -944,9 +944,9 @@
       "role": "scene-component",
       "canvas": [
         32,
-        48
+        32
       ],
-      "generationManifest": "assets/source/door-redraw/manifest.json"
+      "generationManifest": "assets/source/doors-batch-02/manifest.json"
     },
     {
       "group": "props",
@@ -955,9 +955,9 @@
       "role": "scene-component",
       "canvas": [
         32,
-        48
+        32
       ],
-      "generationManifest": "assets/source/door-redraw/manifest.json"
+      "generationManifest": "assets/source/doors-batch-02/manifest.json"
     },
     {
       "group": "props",
@@ -1645,6 +1645,107 @@
         1
       ],
       "usage": "运行时动态生成的遗落物品堆，占1格；不作为静态家具放置。"
+    },
+    {
+      "group": "props",
+      "id": "door_barricade",
+      "name": "单向受阻木门",
+      "role": "scene-component",
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas": [
+        32,
+        32
+      ],
+      "generationManifest": "assets/source/doors-batch-03/manifest.json"
+    },
+    {
+      "group": "props",
+      "id": "door_barricade_side",
+      "name": "单向受阻木门·侧面",
+      "role": "scene-component",
+      "footprint": [
+        1,
+        1
+      ],
+      "variantOf": "door_barricade",
+      "facing": "side",
+      "canvas": [
+        32,
+        32
+      ],
+      "generationManifest": "assets/source/doors-batch-02/manifest.json"
+    },
+    {
+      "group": "props",
+      "id": "door_locked",
+      "name": "上锁铁门",
+      "role": "scene-component",
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas": [
+        32,
+        32
+      ],
+      "generationManifest": "assets/source/doors-batch-06/manifest.json"
+    },
+    {
+      "group": "props",
+      "id": "door_locked_side",
+      "name": "上锁铁门·侧面",
+      "role": "scene-component",
+      "footprint": [
+        1,
+        1
+      ],
+      "variantOf": "door_locked",
+      "facing": "side",
+      "canvas": [
+        32,
+        32
+      ],
+      "generationManifest": "assets/source/doors-batch-02/manifest.json"
+    },
+    {
+      "group": "props",
+      "id": "door_side_study",
+      "name": "南北向门结构试验",
+      "role": "scene-component",
+      "footprint": [
+        1,
+        1
+      ],
+      "canvas": [
+        32,
+        48
+      ],
+      "generationManifest": "assets/source/doors-batch-04/manifest.json"
+    },
+    {
+      "group": "props",
+      "id": "crate_weapons",
+      "name": "武器箱",
+      "role": "scene-component",
+      "containerType": "g",
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "group": "props",
+      "id": "crate_equipment",
+      "name": "装备箱",
+      "role": "scene-component",
+      "containerType": "h",
+      "footprint": [
+        1,
+        1
+      ]
     }
   ]
 }

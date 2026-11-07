@@ -244,6 +244,9 @@
     /* ---------- G8 门洞结构 ---------- */
     for (const p of data.portals) {
       if (!p.id) err('G8', '门洞缺少 id');
+      if(p.doorType&&!['normal','barricade','locked'].includes(p.doorType))err('G8','门体类型未知 '+p.id);
+      if(p.doorType==='locked'&&!(typeof p.keyId==='string'&&p.keyId.trim()))err('G8','上锁铁门需要对应钥匙ID '+p.id);
+      if(p.kickFrom&&!['n','s','e','w'].includes(p.kickFrom))err('G8','允许踹开侧无效 '+p.id);
       if (!['door', 'breach', 'gate', 'window'].includes(p.kind)) err('G8', `门洞类型未知 ${p.id || '?'}：${p.kind}`);
       if (!Array.isArray(p.cells) || !p.cells.length) err('G8', `门洞缺少格坐标 ${p.id}`);
       else {

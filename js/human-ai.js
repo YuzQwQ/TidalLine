@@ -70,7 +70,7 @@ const HumanAI={
     return Math.min(e.ai.mag,w.modes.includes('auto')?Math.min(3,Math.max(1,n)):1);
   },
   notice(e,text,seconds=1.4){e.ai.notice=text;e.ai.noticeUntil=e.ai.clock+seconds;},
-  // Geometry is sampled in world coordinates, including north-projecting half-walls.
+  // Sample actual tile geometry; raised wall tops are visual overlays only.
   clear(x,y,tx,ty,shots=false){
     const n=Math.max(1,Math.ceil(U.dist(x,y,tx,ty)/2));
     for(let i=1;i<=n;i++){

@@ -178,19 +178,18 @@ const M = {
     return true;
   },
 
-  // 与48px高墙的可见范围一致：原格 + 北侧半格，特殊破口/玻璃除外。
+  // 墙体实体只占原格；北侧半格墙顶是绘制投影，不参与碰撞、弹道和视线。
   wallCell(t) { return !!(t&&t.solid&&!t.wallCap&&t.terrainCh!=='w'&&(t.ch==='#'||t.art==='wall')); },
   wallAtPoint(wx,wy) {
-    const x=this.tx(wx),y=this.ty(wy),t=this.at(x,y);
-    return this.wallCell(t)||(!t?.door&&!t?.wallCap&&t?.terrainCh!=='w'&&this.wallCell(this.at(x,y+1))&&wy>=(y+.5)*CFG.TILE);
+    return this.wallCell(this.at(this.tx(wx),this.ty(wy)));
   },
   walkable(x,y) { return this.baseWalkable(x,y); },
-  navigationPoint(x,y) { return {x:this.cx(x),y:this.cy(y)-(this.wallCell(this.at(x,y+1))&&!this.at(x,y)?.door?CFG.TILE/4:0)}; },
+  navigationPoint(x,y) { return {x:this.cx(x),y:this.cy(y)}; },
   walkablePoint(wx,wy) { return this.baseWalkable(this.tx(wx),this.ty(wy))&&!this.wallAtPoint(wx,wy); },
   collisionRects(x,y) {
     const size=CFG.TILE;
     if(!this.baseWalkable(x,y))return [[x*size,y*size,size,size]];
-    return !this.at(x,y)?.door&&!this.at(x,y)?.wallCap&&this.wallCell(this.at(x,y+1))?[[x*size,(y+.5)*size,size,size/2]]:[];
+    return [];
   },
 
   /* 是否挡视线。
@@ -260,9 +259,6 @@ const M = {
         this._oct[0][o], this._oct[1][o],
         this._oct[2][o], this._oct[3][o], mark);
     }
-    // 看见墙体伸入上格的实体部分时，也显示所属墙格；避免出现隐形碰撞。
-    for(let y=0;y<this.H-1;y++)for(let x=0;x<this.W;x++)
-      if(this.raw[this.idx(x,y)]&&!this.wallCell(this.at(x,y))&&this.wallCell(this.at(x,y+1)))mark(x,y+1);
   },
 
   /* 把 360° 的 raw 可见，按视锥 + 近身 过滤成 visible，并累积 seen */

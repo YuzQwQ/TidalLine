@@ -22,7 +22,7 @@ function compile(layoutOverride) {
     const wall = (x,y) => ['#','X','w'].includes(d.rows[y]?.[x]);
     const axis = p.cells.length > 1 ? (p.cells[1][0]===x?'vertical':'horizontal')
       : Number(wall(x,y-1))+Number(wall(x,y+1)) > Number(wall(x-1,y))+Number(wall(x+1,y))?'vertical':'horizontal';
-    const door = {id:p.id,cells:p.cells,axis,reinforced:['bank.security','bank.vault'].includes(p.id)};
+    const door = {id:p.id,cells:p.cells,axis,reinforced:['bank.security','bank.vault'].includes(p.id),doorType:p.doorType||'normal',kickFrom:p.kickFrom||(axis==='vertical'?'w':'n'),keyId:p.keyId||''};
     doors.push(door); for (const c of p.cells) doorAxes[c.join(',')] = axis;
   }
   /* 登记表里声明的绘制参数（visual = 贴图绘制盒比占地大）在这里补到每条家具上：

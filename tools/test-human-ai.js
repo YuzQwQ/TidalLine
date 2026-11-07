@@ -17,8 +17,8 @@ test('warning outside anchor never attacks; inside waits warning and aiming',()=
 test('damage bypasses warning without removing aim or resetting attack phase',()=>{
  arena();Game.player.y=450;const e=enemy('holdout');e.hurt(1,'player','body',5);tick(e,1/60,30);assert.equal(e.ai.shots,0);tick(e,1/60,18);assert.equal(e.ai.shots,1);const cd=e.ai.cd,phase=e.ai.phase;e.hurt(1,'player','body',5);assert.equal(e.ai.cd,cd);assert.equal(e.ai.phase,phase);
 });
-test('actual geometry: north half-wall, glass, closed/open doors and water',()=>{
- arena();const e=enemy('retriever',300,300);let wall=M.at(10,10);wall.ch='#';wall.solid=true;wall.art='wall';wall.opaque=true;assert(!HumanAI.clear(300,310,360,310,true));assert(!HumanAI.clear(300,310,360,310,false));
+test('actual geometry: full wall tile, visual-only wall top, glass, doors and water',()=>{
+ arena();const e=enemy('retriever',300,300);let wall=M.at(10,10);wall.ch='#';wall.solid=true;wall.art='wall';wall.opaque=true;assert(HumanAI.clear(300,310,360,310,true));assert(HumanAI.clear(300,310,360,310,false));assert(!HumanAI.clear(300,336,360,336,true));assert(!HumanAI.clear(300,336,360,336,false));
  wall.solid=false;wall.opaque=false;wall.ch='.';wall.art='low';wall.terrainCh='w';assert(HumanAI.clear(300,336,360,336,false));assert(!HumanAI.clear(300,336,360,336,true));wall.terrainCh='.';wall.door={open:false};assert(!HumanAI.clear(300,336,360,336,true));wall.door.open=true;assert(HumanAI.clear(300,336,360,336,true));delete wall.door;wall.ch='~';wall.terrainCh='~';wall.h=0;assert(HumanAI.clear(300,336,360,336,true));
 });
 test('LOS memory never reads hidden player position or uses radio as firing permission',()=>{
