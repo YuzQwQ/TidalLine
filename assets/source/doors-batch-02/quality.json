@@ -1,0 +1,100 @@
+{
+  "status": "passed",
+  "assets": [
+    {
+      "id": "door_side",
+      "canvas": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "visiblePixels": 148
+    },
+    {
+      "id": "door_side_open",
+      "canvas": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "visiblePixels": 111
+    },
+    {
+      "id": "sdoor_side",
+      "canvas": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "visiblePixels": 148
+    },
+    {
+      "id": "sdoor_side_open",
+      "canvas": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "visiblePixels": 107
+    },
+    {
+      "id": "door_barricade_side",
+      "canvas": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "visiblePixels": 174
+    },
+    {
+      "id": "door_locked_side",
+      "canvas": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "visiblePixels": 151
+    }
+  ],
+  "browser": {
+    "passed": true,
+    "results": [
+      {
+        "file": "index.html",
+        "oneWayBothAxes": true,
+        "blockedSideHidden": true,
+        "normalAfterKick": true,
+        "correctKeyOnly": true,
+        "safeKeys": true,
+        "keyNotConsumed": true,
+        "unlockedStays": true,
+        "caps": 5,
+        "sidePlanView": true,
+        "errors": []
+      },
+      {
+        "file": "潮汐线.html",
+        "oneWayBothAxes": true,
+        "blockedSideHidden": true,
+        "normalAfterKick": true,
+        "correctKeyOnly": true,
+        "safeKeys": true,
+        "keyNotConsumed": true,
+        "unlockedStays": true,
+        "caps": 5,
+        "sidePlanView": true,
+        "errors": []
+      }
+    ],
+    "editorFieldsSerializeUndoRedo": true
+  },
+  "baseTests": {
+    "passed": 479,
+    "failed": 0
+  },
+  "assetCheck": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "sceneRegression": "blocked by existing formal-map SHA mismatch"
+}

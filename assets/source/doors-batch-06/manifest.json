@@ -1,0 +1,61 @@
+{
+  "generator": "built-in image_gen",
+  "assets": [
+    {
+      "id": "sdoor",
+      "source": "sources/sdoor.png",
+      "target": "assets/props/sdoor.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleBounds": [
+        6,
+        4,
+        19,
+        26
+      ],
+      "previous": "previous/sdoor.png"
+    },
+    {
+      "id": "sdoor_open",
+      "source": "sources/sdoor_open.png",
+      "target": "assets/props/sdoor_open.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleBounds": [
+        6,
+        4,
+        19,
+        26
+      ],
+      "previous": "previous/sdoor_open.png"
+    },
+    {
+      "id": "door_locked",
+      "source": "sources/door_locked.png",
+      "target": "assets/props/door_locked.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleBounds": [
+        6,
+        4,
+        19,
+        26
+      ],
+      "previous": "previous/door_locked.png"
+    }
+  ],
+  "aperture": [
+    [
+      9,
+      7,
+      13,
+      25
+    ]
+  ]
+}

@@ -122,14 +122,44 @@
     for (const p of data.portals) {
       if (p.kind !== 'door') continue;
       const [x, y] = p.cells[0];
-      const art = 'door' + (doorAxis(data, p) === 'vertical' ? '_side' : '');
-      const im = image('props', Art.rotateArt(art, rot).art);
+      const special=['barricade','locked'].includes(p.doorType);
+      const axis=doorAxis(data,p),rotated=(rot===90||rot===270)?(axis==='vertical'?'horizontal':'vertical'):axis;
+      const art = special?'door_'+p.doorType+(rotated==='vertical'?'_side':''):'door'+(axis==='vertical'?'_side':'');
+      const im = image('props', special?art:Art.rotateArt(art, rot).art);
       if (usable(im)) {
         const cells=p.cells.map(([x,y])=>Core.project(x,y,rot,data.width,data.height));
         const left=Math.min(...cells.map(c=>c[0])),top=Math.min(...cells.map(c=>c[1]));
         const width=Math.max(...cells.map(c=>c[0]))-left+1,height=Math.max(...cells.map(c=>c[1]))-top+1;
-        const lift=im.naturalHeight===48?TILE/2:0;
-        g.drawImage(im,left*TILE,top*TILE-lift,width*TILE,height*TILE+lift);
+        const neighbor=p.cells.flatMap(([cx,cy])=>[[cx-1,cy],[cx+1,cy],[cx,cy-1],[cx,cy+1]]).find(([cx,cy])=>['#','X'].includes(data.rows[cy]?.[cx]));
+        const material=neighbor?data.legend[data.rows[neighbor[1]][neighbor[0]]]?.art:'wall';
+        if(root.DoorVisual.isSidePortal({...p,axis:rotated})){
+          const floorCell=p.cells.flatMap(([cx,cy])=>[[cx+1,cy],[cx-1,cy],[cx,cy+1],[cx,cy-1]]).find(([cx,cy])=>data.legend[data.rows[cy]?.[cx]]?.walkable);
+          const floor=image('tiles',floorCell?(data.legend[data.rows[floorCell[1]][floorCell[0]]]?.art||'floor'):'floor');
+          const rect={x:left*TILE,y:top*TILE,w:TILE,h:TILE};
+          if(usable(floor))g.drawImage(floor,rect.x,rect.y,TILE,TILE);
+          const turn={w:'n',n:'e',e:'s',s:'w'};let kickFrom=p.kickFrom||(axis==='vertical'?'w':'n');for(let angle=0;angle<rot;angle+=90)kickFrom=turn[kickFrom];
+          root.DoorVisual.sidePortal(g,rect,{...p,kickFrom,barred:p.doorType==='barricade'},image('tiles',material||'wall'));
+          continue;
+        }
+        const rect={x:left*TILE,y:top*TILE-(rotated==='vertical'?TILE/2:0),w:width*TILE,h:height*TILE};
+        if(rotated==='horizontal'){
+          const surface=image('tiles',material||'wall');
+          const floorCell=p.cells.flatMap(([cx,cy])=>[[cx,cy+1],[cx,cy-1]]).find(([cx,cy])=>data.legend[data.rows[cy]?.[cx]]?.walkable);
+          const floor=image('tiles',floorCell?(data.legend[data.rows[floorCell[1]][floorCell[0]]]?.art||'floor'):'floor');
+          for(const[cx,cy]of cells){
+            const cell={x:cx*TILE,y:cy*TILE,w:TILE,h:TILE};
+            if(usable(floor))g.drawImage(floor,cell.x,cell.y,TILE,TILE);
+            root.DoorVisual.wallLayer(g,cell,rect,p,()=>{if(usable(surface))g.drawImage(surface,cell.x,cell.y,TILE,TILE);});
+          }
+        }
+        g.drawImage(im,rect.x,rect.y,rect.w,rect.h);
+        const cap=image('tiles',material||'wall');if(usable(cap))for(const [cx,cy]of cells){
+          if(rotated==='vertical'&&cy!==top+height-1)continue;
+          if(rotated==='vertical')root.DoorVisual.sidePost(g,{x:cx*TILE,y:cy*TILE+TILE/2,w:TILE,h:TILE/2},0.85);
+          g.save();if(rotated==='vertical')g.globalAlpha*=0.3;
+          g.drawImage(cap,0,0,cap.naturalWidth,cap.naturalHeight/2,cx*TILE,cy*TILE+(rotated==='vertical'?TILE/2:-TILE/2),TILE,TILE/2);
+          g.restore();
+        }
       }
     }
     staticCanvas = c; staticKey = key;

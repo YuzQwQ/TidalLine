@@ -1,0 +1,37 @@
+{
+  "generator": "built-in image_gen",
+  "transparent_background": true,
+  "reference": "assets/source/doors-batch-02/sources/door_side.png",
+  "assets": [
+    {
+      "id": "door_side",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-305b8a7d-3066-4390-9449-25e28c224d35.png",
+      "prompt": "Use case: precise-object-edit. Edit target: supplied wooden side-door sprite. Replace its perspective completely. Game asset for a vertical NORTH-SOUTH wall in a 75-degree top-down orthographic pixel-art game. The door MUST read as a plan viewed from almost overhead, NOT an upright doorway or an elevation. On a transparent square canvas, arrange THREE pieces in a straight vertical line: a short chunky jamb BLOCK at the NORTH end, a long narrow closed wooden door LEAF seen primarily by its TOP EDGE in the middle, a short chunky jamb BLOCK at the SOUTH end. Both jamb blocks are wider than the leaf. Native32x32 geometry: north jamb x11..21,y2..7; narrow wooden leaf x14..18,y8..24; south jamb x11..21,y25..30. Show upper faces of both blocks and narrow wood top edge, with only 2px of darker right-side thickness. No tall uprights, no rectangular arch frame, no diagonal vanishing lines, no lintel joining jambs. Preserve muted dark olive concrete and worn brown wood, upper-left light, bold coarse pixel clusters, hard edges, flat alpha transparency, no floor, no cast shadows, no text. The shape must look like a vertical dash with thicker block caps at top and bottom, not a miniature front door. One centered isolated asset."
+    },
+    {
+      "id": "door_side_open",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-6825c198-bcf3-480f-a7f4-e6267b8e92fe.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET for a top-down orthographic pixel-art door sprite for a vertical north-south wall. OPEN WOODEN DOOR: keep the north and south jamb blocks EXACTLY where they are. Swing the narrow wooden leaf 90 degrees toward the RIGHT of the canvas, pivoting at the inner edge of the NORTH block. The leaf now forms a short HORIZONTAL bar in the upper third of the canvas, extending right from the north jamb. Leave a fully transparent empty passage between the two jamb blocks; no vertical leaf remaining. Leaf is primarily its wood top edge, same 4px thickness. Keep both jamb blocks. Do not draw a tall upright door. Preserve the reference camera: 75 degree downward view, fixed upper-left lighting, muted olive concrete, coarse hard pixel clusters at native32x32, two separate end-jamb BLOCKS, no connected upright arch or lintel, no front elevation. Transparent square canvas with generous space on both sides (all visible shapes must fit), same scale as reference, no floor no shadow no text."
+    },
+    {
+      "id": "sdoor_side",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-50b00601-f5c5-49ee-bae2-dd36d93846d1.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET for a top-down orthographic pixel-art door sprite for a vertical north-south wall. REINFORCED CLOSED STEEL DOOR: change only the narrow middle wooden strip into dark desaturated gray-green steel with two tiny rivet marks and a metal top-edge highlight. Keep the exact plan-view I-shaped geometry with two short chunky concrete blocks at north/south ends. Do not widen into a front panel or draw any tall upright arch. Preserve the reference camera: 75 degree downward view, fixed upper-left lighting, muted olive concrete, coarse hard pixel clusters at native32x32, two separate end-jamb BLOCKS, no connected upright arch or lintel, no front elevation. Transparent square canvas with generous space on both sides (all visible shapes must fit), same scale as reference, no floor no shadow no text."
+    },
+    {
+      "id": "sdoor_side_open",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-fae549be-d639-44f3-8f00-cb23900dafc3.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET for a top-down orthographic pixel-art door sprite for a vertical north-south wall. OPEN REINFORCED STEEL DOOR: keep the north and south concrete jamb blocks EXACTLY where they are. Remove the central vertical strip entirely. Instead swing a narrow dark gray-green steel leaf 90 degrees to the RIGHT, pivoting at inner edge of the NORTH block: a short HORIZONTAL steel top-edge bar extending right from north block in upper third of the canvas. Leave fully transparent empty passage between jamb blocks. No vertical leaf remains. No upright panel. Preserve the reference camera: 75 degree downward view, fixed upper-left lighting, muted olive concrete, coarse hard pixel clusters at native32x32, two separate end-jamb BLOCKS, no connected upright arch or lintel, no front elevation. Transparent square canvas with generous space on both sides (all visible shapes must fit), same scale as reference, no floor no shadow no text."
+    },
+    {
+      "id": "door_barricade_side",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-47f73702-5bf4-481f-bfb1-82c9cec12bab.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET for a top-down orthographic pixel-art door sprite for a vertical north-south wall. BARRICADED CLOSED WOODEN DOOR: keep exact three-piece I-shaped plan geometry, but add a short thick dark timber stop with small iron brackets on the RIGHT/EAST side of the middle wooden leaf. Timber crossbar projects rightward, across the leaf's narrow top edge, around halfway down the gap. It visibly obstructs opening from east. Keep both north/south blocks unchanged; only see top surfaces and 2px right side thickness. No upright arch or tall front panel. Preserve the reference camera: 75 degree downward view, fixed upper-left lighting, muted olive concrete, coarse hard pixel clusters at native32x32, two separate end-jamb BLOCKS, no connected upright arch or lintel, no front elevation. Transparent square canvas with generous space on both sides (all visible shapes must fit), same scale as reference, no floor no shadow no text."
+    },
+    {
+      "id": "door_locked_side",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-550625d8-ba51-489c-b151-d174d5467b95.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET for a top-down orthographic pixel-art door sprite for a vertical north-south wall. LOCKED CLOSED STEEL DOOR: keep exact three-piece I-shaped plan geometry. Change narrow middle leaf to gray-green steel with tiny rivets. Add a small recognizable muted brass padlock on the RIGHT/EAST edge of the middle leaf at its halfway point; it protrudes slightly, about 3 native pixels. Keep concrete end blocks. No tall door panel, no upright arch, keep primarily top edge. Preserve the reference camera: 75 degree downward view, fixed upper-left lighting, muted olive concrete, coarse hard pixel clusters at native32x32, two separate end-jamb BLOCKS, no connected upright arch or lintel, no front elevation. Transparent square canvas with generous space on both sides (all visible shapes must fit), same scale as reference, no floor no shadow no text."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "kind": "canvas-door-prototype",
+  "sources": ["js/door-visual.js", "js/doors.js"],
+  "reusedSprites": ["assets/props/door.png", "assets/props/sdoor.png"],
+  "runtimeArtAdded": false
+}

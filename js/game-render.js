@@ -29,7 +29,7 @@ Object.assign(Game, {
         dir = (dy < 0 ? '北' : dy > 0 ? '南' : '') + (dx < 0 ? '西' : dx > 0 ? '东' : '') || '脚下';
         dir = '（' + dir + '）';
       }
-      return '[E] ' + (it.obj.t.door.open ? '关门' : '开门') + dir;
+      return '[E] ' + (typeof DoorSystem!=='undefined'?DoorSystem.label(it.obj.t.door,this.player):it.obj.t.door.open ? '关门' : '开门') + dir;
     }
     return '';
   },
@@ -65,6 +65,7 @@ Object.assign(Game, {
     /* 靶场的靶子、弹孔、射程尽头都盖在雾之后画，读数才不会被压暗 */
     if (typeof Range !== 'undefined' && Range.active) Range.render(c, camX, camY);
     this.renderNoiseEdge(c);
+    if(typeof DoorTest!=='undefined')DoorTest.render(c,camX,camY);
     this.renderHUD(c);
 
     /* 准星：张开幅度 = 当前散布，位置带开火抖动，颜色随后坐力变暖。
@@ -205,7 +206,7 @@ Object.assign(Game, {
           col = wd > 0.6 ? '#17343a' : '#1a3a37';
         }
 
-        const tImg = (t.art && Art.get('tiles',t.art)) || Art.tile(t.ch);
+        const tImg = t.door&&typeof DoorSystem!=='undefined'&&(t.door.axis==='horizontal'||DoorSystem.isStudy(t.door))?DoorSystem.floorImage(t.door,x,y):(t.art && Art.get('tiles',t.art)) || Art.tile(t.ch);
         if (tImg) {
           c.drawImage(tImg, sx, sy, TS, TS);
           // 水淹用一层水色覆盖，不破坏贴图
@@ -256,6 +257,13 @@ Object.assign(Game, {
     this.renderRaisedWalls(c,camX,camY);
   },
 
+  // 只淡化投影到可见空地的半格；连续墙、门洞内部的墙顶保持实体观感。
+  wallTopAlpha(x,y) {
+    const above=M.at(x,y-1);
+    if(!above||M.wallCell(above)||above.door||above.wallCap||above.terrainCh==='w')return 1;
+    return M.visible[M.idx(x,y-1)]?0.3:1;
+  },
+
   renderRaisedWalls(c,camX,camY,overhang=false) {
     const size=CFG.TILE;
     for(let y=Math.max(0,Math.floor(camY/size));y<Math.min(M.H,Math.ceil((camY+CFG.VIEW_H)/size)+1);y++)
@@ -265,7 +273,7 @@ Object.assign(Game, {
         if(overhang&&(!edges.north||y===0||M.at(x,y-1).door||M.at(x,y-1).wallCap||M.at(x,y-1).terrainCh==='w'))continue;
         const bright=CFG.FOV.BRIGHT_NOW;
         c.save();c.beginPath();c.rect(sx,overhang?sy-size/2:sy,size,overhang?size/2:size);c.clip();
-        // 加高区域已为实体，无需再按玩家位置淡化。
+        if(overhang)c.globalAlpha*=this.wallTopAlpha(x,y);
         Art.drawWallFaces(c,sx,sy,size,edges);
         if(bright<1){c.fillStyle='rgba(4,8,7,'+(1-bright)+')';c.fillRect(sx,sy-size/2,size,size*1.5);}
         c.restore();
@@ -285,6 +293,9 @@ Object.assign(Game, {
 
   renderObjects(c, camX, camY) {
     const TS = CFG.TILE;
+
+    // The unfolded frame is floor decoration: all props, bodies and actors draw over it.
+    if(typeof DoorSystem!=='undefined')for(const d of M.doors)if(DoorSystem.isStudy(d))DoorSystem.drawStudyGround(c,d,TS,camX,camY);
 
     // 摆设按实体/地贴配置占格；这里只负责绘制并遵循视野层亮度。
     for (const prop of (M.map ? M.map.props : DECOR)) {
@@ -384,8 +395,8 @@ Object.assign(Game, {
 
       c.fillStyle = b.opened ? '#1e2a26' : cols;
       c.fillRect(sx + (TS - sz) / 2, sy + (TS - sz) / 2, sz, sz);
-      c.strokeStyle = b.opened ? 'rgba(157,165,159,0.65)' : 'rgba(157,165,159,0.9)';
-      c.lineWidth = 1.6;
+      c.strokeStyle = b.opened ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.9)';
+      c.lineWidth = 0.5;
       c.strokeRect(sx + (TS - sz) / 2 + 0.5, sy + (TS - sz) / 2 + 0.5, sz - 1, sz - 1);
 
       // 贵重 / 秘藏容器加个记号
@@ -437,6 +448,12 @@ Object.assign(Game, {
       c.fill();
     }
 
+    // 侧门下半格先画单根门框柱，再叠墙顶；双格门只在末格保留一组。
+    if(typeof DoorSystem!=='undefined')for(let y=0;y<M.H;y++)for(let x=0;x<M.W;x++){
+      const d=M.grid[y][x].door;
+      if(d?.axis==='vertical')DoorSystem.drawCap(c,d,x,y,TS,camX,camY);
+    }
+
     // 门
     for (let y = 0; y < M.H; y++) {
       for (let x = 0; x < M.W; x++) {
@@ -447,8 +464,14 @@ Object.assign(Game, {
         const bright = 1;
         const safe = t.door.safe;
 
+        if(typeof DoorSystem!=='undefined'&&DoorSystem.isStudy(t.door)){
+          DoorSystem.drawStudy(c,t.door,null,{x:sx,y:sy,w:TS,h:TS});
+          continue;
+        }
+
         const dImg = Art.door(t.door);
         if (dImg) {
+          if(typeof DoorSystem!=='undefined')DoorSystem.drawSurface(c,t.door,dImg,x,y,TS,camX,camY);
           // 共用完整门框，每格裁切；观察暗层统一覆盖门与周围地面。
           c.save();
           const rect=Art.doorRect(t.door,dImg,x,y,TS);
@@ -457,6 +480,7 @@ Object.assign(Game, {
           c.globalAlpha = bright;
           c.drawImage(dImg,rect.x-camX,rect.y-camY,rect.w,rect.h);
           c.restore();
+          if(typeof DoorSystem!=='undefined'&&t.door.axis!=='vertical')DoorSystem.drawCap(c,t.door,x,y,TS,camX,camY);
           continue;
         }
 

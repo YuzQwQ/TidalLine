@@ -1,0 +1,70 @@
+{
+  "assets": [
+    {
+      "id": "door_side",
+      "source": "sources/door_side.png",
+      "target": "assets/props/door_side.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "generator": "built-in image_gen",
+      "previous": "previous/door_side.png"
+    },
+    {
+      "id": "door_side_open",
+      "source": "sources/door_side_open.png",
+      "target": "assets/props/door_side_open.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "generator": "built-in image_gen",
+      "previous": "previous/door_side_open.png"
+    },
+    {
+      "id": "sdoor_side",
+      "source": "sources/sdoor_side.png",
+      "target": "assets/props/sdoor_side.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "generator": "built-in image_gen",
+      "previous": "previous/sdoor_side.png"
+    },
+    {
+      "id": "sdoor_side_open",
+      "source": "sources/sdoor_side_open.png",
+      "target": "assets/props/sdoor_side_open.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "generator": "built-in image_gen",
+      "previous": "previous/sdoor_side_open.png"
+    },
+    {
+      "id": "door_barricade_side",
+      "source": "sources/door_barricade_side.png",
+      "target": "assets/props/door_barricade_side.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "generator": "built-in image_gen",
+      "previous": "previous/door_barricade_side.png"
+    },
+    {
+      "id": "door_locked_side",
+      "source": "sources/door_locked_side.png",
+      "target": "assets/props/door_locked_side.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "generator": "built-in image_gen",
+      "previous": "previous/door_locked_side.png"
+    }
+  ]
+}

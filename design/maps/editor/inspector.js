@@ -177,6 +177,17 @@
         ref.kind,
         v => commit('改门洞类型', d => { const e = T.resolve(d, sel); if (e) e.kind = v; })
       ), '门会画出木门板，破口只有洞口'));
+      if(ref.kind==='door'){
+        const [px,py]=cells[0],isWall=(x,y)=>['#','X','w'].includes(data.rows[y]?.[x]);
+        const vertical=cells.length>1?cells[1][0]===px:Number(isWall(px,py-1))+Number(isWall(px,py+1))>Number(isWall(px-1,py))+Number(isWall(px+1,py));
+        host.appendChild(field('门体类型',selectInput([['normal','普通门'],['barricade','单向受阻门'],['locked','上锁铁门']],ref.doorType||'normal',v=>commit('修改门体类型',d=>{T.resolve(d,sel).doorType=v;}))));
+        host.appendChild(field('允许踹开侧',selectInput(vertical?[['w','西侧'],['e','东侧']]:[['n','北侧'],['s','南侧']],ref.kickFrom||(vertical?'w':'n'),v=>commit('修改踹门方向',d=>{T.resolve(d,sel).kickFrom=v;})),'另一侧不提供踹开交互'));
+        if(ref.doorType==='locked'){
+          const keys=[['','请选择钥匙编号'],...KeyCatalog.map(k=>[k.id,k.number+' · '+k.name+'（耐久 '+k.maxDur+'）'])];
+          if(ref.keyId&&!KeyCatalog.some(k=>k.id===ref.keyId))keys.push([ref.keyId,'未登记：'+ref.keyId]);
+          host.appendChild(field('对应钥匙编号',selectInput(keys,ref.keyId||'',v=>commit('修改门锁钥匙',d=>{T.resolve(d,sel).keyId=v;})),'成功开锁消耗1点耐久，耗尽后移除；解锁后本局可自由开关'));
+        }
+      }
       host.appendChild(field('连接空间', textInput((ref.connects || []).join(','), v => commit('改门洞连接', d => {
         const e = T.resolve(d, sel);
         if (e) e.connects = v.split(/[,\s]+/).filter(Boolean);

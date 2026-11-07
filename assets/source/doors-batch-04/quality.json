@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "binaryAlpha": true,
+  "colors": 16,
+  "results": [
+    {
+      "file": "index.html",
+      "height": 48,
+      "frameWidth": 6,
+      "doorWidth": 3,
+      "lowerPostHeight": 16,
+      "backFrameBehindDoor": true,
+      "openKeepsFrame": true,
+      "capNorthUpperHalf": true,
+      "collisionUnchanged": true,
+      "postSample": "85,84,68,255",
+      "postSurround": "149,153,136,255",
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "height": 48,
+      "frameWidth": 6,
+      "doorWidth": 3,
+      "lowerPostHeight": 16,
+      "backFrameBehindDoor": true,
+      "openKeepsFrame": true,
+      "capNorthUpperHalf": true,
+      "collisionUnchanged": true,
+      "postSample": "85,84,68,255",
+      "postSurround": "149,153,136,255",
+      "errors": []
+    }
+  ]
+}

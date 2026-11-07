@@ -1,0 +1,37 @@
+{
+  "generator": "built-in image_gen",
+  "transparent_background": true,
+  "reference": "assets/source/doors-batch-03/sources/door.png",
+  "assets": [
+    {
+      "id": "door",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-bb1d3e39-0059-4b49-80de-4c1154de253a.png",
+      "prompt": "Use case: precise-object-edit. Edit target: supplied ordinary door sprite. Redraw as a SMALL INSET DOOR OVERLAY for a pixel-art game, on a genuinely transparent SQUARE canvas. This overlay will be composited onto an existing east-west wall face; DO NOT include wall masonry, wall coping, wall header, floor, background, or cast shadow. Native32x32 tile composition: door assembly occupies approximately x6..25,y7..29, leaving clear transparent margins on LEFT, RIGHT and ABOVE and a little below. One compact worn gray-green wooden closed door leaf with a tiny dull brass handle, surrounded by an inverted-U frame: two narrow side jambs and one top lintel, all the SAME slender thickness (about2 logical pixels). NO thick horizontal wall-cap slab, NO broad stone pillars, NO bottom frame bar. Frame is muted khaki stone, same material and thickness all three sides. Door height visibly LESS than one tile. Fixed high75degree downward orthographic game camera; restrained flat architectural front face with a tiny top surface, NO diagonal isometric distortion, no vanishing point. Upper-left light, dark sage wood, charcoal outlines, hard coarse pixel clusters suitable for32px,16 restrained colors. No text or markings. Keep entire outside of the small inverted-U doorway truly transparent. Only one asset."
+    },
+    {
+      "id": "door_open",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-d4667a59-ac05-4748-8755-830b35f5362f.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET: compact door overlay on transparent square canvas. Remove the entire wooden door leaf, all inner dark backing, handle and threshold. Keep ONLY the inverted-U stone frame: same thin top lintel and both side jambs in exactly the same positions and thickness. The complete interior from just below lintel down to canvas bottom MUST be genuinely transparent, as must all exterior margins. No swung-open leaf, no floor, no black fill, no bottom frame bar. Absolutely just an empty U-shaped frame. Invariants: identical fixed high-angle orthographic camera, same outline/position/scale, same clear margins on left/right/top/bottom, height less than one native32px tile, muted olive/khaki palette, upper-left light, hard coarse pixel clusters, no cast shadow no wall no background no text. Keep genuine alpha transparency."
+    },
+    {
+      "id": "sdoor",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-365498a3-1b22-4f1d-992e-2bff4068252f.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET: compact door overlay on transparent square canvas. Change ONLY the inner wooden leaf to a closed dark gray-green industrial STEEL panel with restrained rivets and a small dull metal handle. Keep the compact inverted-U stone frame in the exact position, with equal top and side thickness. No raised coping slab or heavy header, no extra outer masonry, no lettering. Invariants: identical fixed high-angle orthographic camera, same outline/position/scale, same clear margins on left/right/top/bottom, height less than one native32px tile, muted olive/khaki palette, upper-left light, hard coarse pixel clusters, no cast shadow no wall no background no text. Keep genuine alpha transparency."
+    },
+    {
+      "id": "sdoor_open",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-c6401701-da2e-41ad-912d-25ac47db7143.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET: compact door overlay on transparent square canvas. Keep ONLY the empty inverted-U frame, with weathered gray-green steel lining around the stone jambs, retaining the exact same silhouette and thin uniform header/side thickness. Remove the entire door leaf, handle, padlock, threshold and inner backing. Entire inner opening below header all the way to canvas bottom is truly transparent. No swung leaf, no floor, no black fill. Only the empty three-sided frame. Invariants: identical fixed high-angle orthographic camera, same outline/position/scale, same clear margins on left/right/top/bottom, height less than one native32px tile, muted olive/khaki palette, upper-left light, hard coarse pixel clusters, no cast shadow no wall no background no text. Keep genuine alpha transparency."
+    },
+    {
+      "id": "door_barricade",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-2de9953f-0fb5-4292-88ba-f4eb244e0988.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET: compact door overlay on transparent square canvas. Keep the exact compact door outline, frame position and uniform thin top/side frame. Add a chunky short battered WOODEN BARRICADE across the CLOSED gray-green wooden leaf, held by two simple dark metal brackets. The barricade is fully inside the door leaf. No added masonry, no outer pillars, no projecting large lintel. Invariants: identical fixed high-angle orthographic camera, same outline/position/scale, same clear margins on left/right/top/bottom, height less than one native32px tile, muted olive/khaki palette, upper-left light, hard coarse pixel clusters, no cast shadow no wall no background no text. Keep genuine alpha transparency."
+    },
+    {
+      "id": "door_locked",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-b6c00516-649c-4db6-8b2e-e417f1ef8e6b.png",
+      "prompt": "Use case: precise-object-edit. Input image is the EDIT TARGET: compact door overlay on transparent square canvas. Keep exact compact door outline, frame position and thin uniform top/side frame. Replace wooden leaf with a solid dark gray-green riveted STEEL leaf. Add one clearly recognizable muted brass mechanical padlock by its right-side handle. Restrained details for32px game sprite; no text. No thick header or extra wall masonry. Invariants: identical fixed high-angle orthographic camera, same outline/position/scale, same clear margins on left/right/top/bottom, height less than one native32px tile, muted olive/khaki palette, upper-left light, hard coarse pixel clusters, no cast shadow no wall no background no text. Keep genuine alpha transparency."
+    }
+  ]
+}

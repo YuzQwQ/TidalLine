@@ -1,0 +1,165 @@
+{
+  "passed": true,
+  "assets": [
+    {
+      "id": "sdoor",
+      "blue": 489,
+      "copper": 0,
+      "solid": 492,
+      "colors": 16
+    },
+    {
+      "id": "sdoor_open",
+      "blue": 174,
+      "copper": 0,
+      "solid": 174,
+      "colors": 16
+    },
+    {
+      "id": "door_locked",
+      "blue": 449,
+      "copper": 18,
+      "solid": 467,
+      "colors": 16
+    }
+  ],
+  "overlays": {
+    "passed": true,
+    "uniformFrames": true,
+    "transparentMargins": true,
+    "emptyFrames": true,
+    "results": [
+      {
+        "entry": "index.html",
+        "checks": [
+          {
+            "type": 0,
+            "width": 1,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 0,
+            "width": 2,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 1,
+            "width": 1,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 1,
+            "width": 2,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 2,
+            "width": 1,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 2,
+            "width": 2,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 3,
+            "width": 1,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 3,
+            "width": 2,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          }
+        ],
+        "errors": []
+      },
+      {
+        "entry": "潮汐线.html",
+        "checks": [
+          {
+            "type": 0,
+            "width": 1,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 0,
+            "width": 2,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 1,
+            "width": 1,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 1,
+            "width": 2,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 2,
+            "width": 1,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 2,
+            "width": 2,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 3,
+            "width": 1,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          },
+          {
+            "type": 3,
+            "width": 2,
+            "outerWall": true,
+            "openFloorEveryPixel": true
+          }
+        ],
+        "errors": []
+      }
+    ]
+  },
+  "variants": {
+    "passed": true,
+    "results": [
+      {
+        "file": "index.html",
+        "distinctClosedVariants": 4,
+        "timberSideAndBreach": true,
+        "keyAndLockRemoval": true,
+        "matchingOpenPanels": true,
+        "originalCollision": true,
+        "errors": []
+      },
+      {
+        "file": "潮汐线.html",
+        "distinctClosedVariants": 4,
+        "timberSideAndBreach": true,
+        "keyAndLockRemoval": true,
+        "matchingOpenPanels": true,
+        "originalCollision": true,
+        "errors": []
+      }
+    ]
+  }
+}

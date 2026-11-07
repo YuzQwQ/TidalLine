@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "entry": "index.html",
+      "hidden": 1,
+      "visible": 0.3,
+      "topEnd": 0.3,
+      "internalOverhang": false,
+      "internalBody": 1,
+      "wallBody": 1,
+      "oneTileCollision": true,
+      "noSightLeak": true,
+      "doorAlpha": 0.3,
+      "sidePostContrast": 60.09159675029446,
+      "sideCoveredCell": true,
+      "singleBar": true,
+      "errors": []
+    },
+    {
+      "entry": "潮汐线.html",
+      "hidden": 1,
+      "visible": 0.3,
+      "topEnd": 0.3,
+      "internalOverhang": false,
+      "internalBody": 1,
+      "wallBody": 1,
+      "oneTileCollision": true,
+      "noSightLeak": true,
+      "doorAlpha": 0.3,
+      "sidePostContrast": 60.09159675029446,
+      "sideCoveredCell": true,
+      "singleBar": true,
+      "errors": []
+    }
+  ]
+}

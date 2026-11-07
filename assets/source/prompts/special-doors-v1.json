@@ -1,0 +1,11 @@
+{
+  "generator": "built-in image_gen",
+  "transparent_background": true,
+  "common": "TidalLine gritty low-saturation pixel-art game scene sprite, fully transparent background, 75 degree top-down fixed camera, light from upper left, charcoal outlines, muted olive brown and steel gray palette, deliberate coarse pixel clusters, no text no watermark no ground no cast shadow. One isolated CLOSED door assembly framed by worn dark concrete jambs, intended native32x48 sprite with upper16px wall header region and bottom32px door cell; large output but detail like native32px. ",
+  "assets": {
+    "door_barricade": "Horizontal wall segment seen from south: frame width broad 28 of32 logical pixels, vertical rectangular weathered wooden door panel facing camera, one thick battered wooden barricade beam latched across the near/south-facing side, unmistakably obstructed on this side, simple bolts and metal straps, keep tall rectangular frame.",
+    "door_barricade_side": "Vertical north-south wall segment: narrow SIDE VIEW of a door, thin upright frame on left, closed wooden leaf receding toward upper right, very narrow profile about12 logical pixels wide and40 high. A thick blocking timber and latch on the right/east-facing side. Same upper-left lighting; do not just rotate a frontal door image.",
+    "door_locked": "Horizontal wall segment seen from south: broad28px-wide tall rectangular closed IRON SECURITY DOOR, riveted gray-green steel panel, robust dark metal frame, clearly visible mechanical key cylinder and small brass padlock near right edge, no bars and no windows, no markings, solid and heavy.",
+    "door_locked_side": "Vertical north-south wall segment: narrow SIDE VIEW of a closed IRON SECURITY DOOR, thin upright dark steel frame on left and narrow heavy riveted gray-green leaf receding upper right. Small projecting brass lock on right/east-facing edge, narrow12px logical width40 high. Not a rotated frontal image."
+  }
+}

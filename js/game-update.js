@@ -305,6 +305,11 @@ Object.assign(Game, {
        没有下一件在搜，这一帧就把它淡出。 */
     if (typeof SFX !== 'undefined') SFX.searchLoop(!!(this.search && this.lootOpen));
 
+    /* 力竭 / 快没体力时喘一声。SFX 的池间隔 3.2 秒管住频率，
+       所以这里每帧问一次也不会变成连续喘气。 */
+    if (typeof SFX !== 'undefined' && !P.dead &&
+        (P.exhausted || (P.stamRatio < 0.25 && P.sprinting))) SFX.play('breathLow');
+
     /* 面板跟随检查：走远了自动关 */
     if (this.lootOpen) {
       const d = U.dist(P.x, P.y, this.lootOpen.x, this.lootOpen.y);
@@ -432,6 +437,7 @@ Object.assign(Game, {
       for (let dx = -1; dx <= 1; dx++) {
         const t = M.at(ptx + dx, pty + dy);
         if (!t || !t.door) continue;
+        if(typeof DoorSystem!=='undefined'&&!DoorSystem.available(t.door,P))continue;
         const d = U.dist(P.x, P.y, M.cx(ptx + dx), M.cy(pty + dy));
         if (d < bdDoor) {
           bdDoor = d;
@@ -527,10 +533,12 @@ Object.assign(Game, {
         }));
         if(occupied){this.toast('门口有人，暂时无法关门');return;}
       }
+      let doorAction={ok:true};
+      if(!d.open&&typeof DoorSystem!=='undefined'){doorAction=DoorSystem.prepareOpen(d,this.player);if(!doorAction.ok){this.toast(doorAction.message);return;}}
       d.open = !d.open;
-      Noise.emit(M.cx(it.obj.x), M.cy(it.obj.y), CFG.NOISE.door, 'door');
+      Noise.emit(M.cx(it.obj.x), M.cy(it.obj.y), CFG.NOISE.door*(doorAction.kicked?2:1), 'door');
       SFX.play('door');
-      this.toast(d.open ? '门开了' : '门关上了');
+      this.toast(doorAction.kicked?'门已踹开':doorAction.unlocked?(doorAction.keyBroken?'已开锁，钥匙耐久耗尽':'已开锁，钥匙耐久 -1'):d.open ? '门开了' : '门关上了');
       return;
     }
 
@@ -627,6 +635,11 @@ Object.assign(Game, {
   /* ---------------- 事件 ---------------- */
   onEnemyKilled(e) {
     this.stats.kills++;
+    /* 死亡人声：回响体走异常生物那条，人形敌人从 8 段惨叫里随机抽一条。
+       机械守卫没有声带，保持安静。两条池子都自带最短间隔，一梭子放倒
+       两三个人不会叠成一片。 */
+    if (e.t.faction === 'echo') Game.sfx('echoDeath');
+    else if (e.t.human) Game.sfx('deathEnemy');
     this.corpses.push(new Corpse(e.x, e.y, e));
     // 战后安静区
     Quiet.add(e.x, e.y, CFG.QUIET_RADIUS, CFG.QUIET_TIME);
@@ -658,7 +671,8 @@ Object.assign(Game, {
     if (typeof Debuff !== 'undefined') Debuff.clearAll();  // 死亡动画期间不再 tick，先清状态与图标
     this.player.dodgeT = 0;
     this.player.tickAnimation(0, false);
-    SFX.play('death'); this.shake(9);
+    /* 玩家阵亡用新人声（闷哼 + 长叹）；结算面板的失败音仍是旧的扫弦 */
+    SFX.play('deathPlayer'); this.shake(9);
   },
 
   doExtract() {

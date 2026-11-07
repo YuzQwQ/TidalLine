@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "entry": "index.html",
+      "dragWall": true,
+      "strokeUndoRedo": true,
+      "doubleDoor": true,
+      "wholeDoorErase": true,
+      "automaticAxes": true,
+      "customKeyInteraction": true,
+      "playerProtected": true,
+      "resetPreservesLayout": true,
+      "isolatedStorage": true,
+      "errors": []
+    },
+    {
+      "entry": "潮汐线.html",
+      "dragWall": true,
+      "strokeUndoRedo": true,
+      "doubleDoor": true,
+      "wholeDoorErase": true,
+      "automaticAxes": true,
+      "customKeyInteraction": true,
+      "playerProtected": true,
+      "resetPreservesLayout": true,
+      "isolatedStorage": true,
+      "errors": []
+    }
+  ]
+}

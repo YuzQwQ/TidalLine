@@ -328,8 +328,11 @@
     const s = store.get();
     /* 缓存键要带"实体还在不在"：删除是原地改数组，data 引用没换，
      * 只靠 kind:id + dataSeq 判断的话，删完检查器还停在被删实体的字段上。 */
-    const exists = s.selection && T.resolve(s.data, s.selection) ? '1' : '0';
-    const key = (s.selection ? s.selection.kind + ':' + s.selection.id : '-') + '|' + exists + '|' + dataSeq;
+    const ref = s.selection && T.resolve(s.data, s.selection);
+    const exists = ref ? '1' : '0';
+    // Door type changes add/remove the key selector, including in-place edits.
+    const doorFields = s.selection?.kind === 'portal' && ref ? ref.kind + ':' + (ref.doorType || 'normal') : '';
+    const key = (s.selection ? s.selection.kind + ':' + s.selection.id : '-') + '|' + exists + '|' + dataSeq + '|' + doorFields;
     if (key === lastInspectorKey) return;
     lastInspectorKey = key;
     root.EditorInspector.render($('inspector'), {
@@ -717,6 +720,8 @@
   /* ---------- 载入与保存 ---------- */
   function apply(payload, opts) {
     const data = payload.data;
+    // Newly registered containers must also be selectable on older map files.
+    data.containerTypes = {...root.MapTemplates.CONTAINER_TYPES, ...data.containerTypes};
     /* 一定要归一化再进 store：没有 rules.json 时 payload.rules 是空对象 {},
      * 而侧栏、校验都按"完整结构"读 rules.expect / rules.specialChecks，
      * 直接存 {} 会让 Object.keys(undefined) 抛错——新图一打开就白屏。 */

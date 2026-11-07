@@ -211,6 +211,9 @@ const Art = {
 
   // 方向沿墙体走向命名，不能旋转正面位图，否则立面和光源都会跟着转。
   door(door) {
+    if(door.doorType==='barricade'&&!door.breached&&!door.open){const normal=typeof DoorSystem!=='undefined'&&Game.player&&DoorSystem.normalSide(door,Game.player);return this.get('props',(normal?'door':'door_barricade')+(door.axis==='vertical'?'_side':''))||this.get('props','door');}
+    if(door.doorType==='locked'&&!door.unlocked&&!door.open)return this.get('props','door_locked'+(door.axis==='vertical'?'_side':''))||this.get('props','sdoor');
+    if(door.doorType==='locked')door={...door,reinforced:true};
     const base = door.safe || door.reinforced ? 'sdoor' : 'door';
     const state = door.open ? '_open' : '';
     const key = base + (door.axis === 'vertical' ? '_side' : '') + state;
@@ -218,9 +221,10 @@ const Art = {
   },
 
   doorRect(door, image, x, y, size) {
-    const span=door.cells?door.cells.length:1,lift=image.naturalHeight===48?size/2:0;
+    // 侧门与半格墙顶交换屏幕位置：门体上移半格，尺寸与碰撞占地保持原值。
+    const span=door.cells?door.cells.length:1,study=typeof DoorSystem!=='undefined'&&DoorSystem.isStudy(door),lift=door.axis==='vertical'&&!study?size/2:0;
     return {x:(door.cells?door.x:x)*size,y:(door.cells?door.y:y)*size-lift,
-      w:size*(door.axis==='horizontal'?span:1),h:size*(door.axis==='vertical'?span:1)+lift,lift};
+      w:size*(door.axis==='horizontal'?span:1),h:size*(door.axis==='vertical'?span:1),lift};
   },
 
   /* 按朝向取角色图，返回 { img, flip, dir, exact } 或 null
@@ -310,8 +314,11 @@ const Art = {
 
   wallEdges(x, y, at) {
     at = at || ((x,y) => M.at(x,y));
-    return { north:!this.wallCell(at(x,y-1)), south:!this.wallCell(at(x,y+1)),
-      west:!this.wallCell(at(x-1,y)), east:!this.wallCell(at(x+1,y)) };
+    const joined=t=>this.wallCell(t)||t?.door?.axis==='horizontal';
+    const below=at(x,y+1),portalBelow=typeof DoorVisual!=='undefined'&&DoorVisual.isSidePortal(below?.door);
+    // Continue the coping to the portal's north jamb instead of exposing a front face.
+    return { north:!joined(at(x,y-1)), south:!joined(below)&&!portalBelow,
+      west:!joined(at(x-1,y)), east:!joined(at(x+1,y)) };
   },
 
   drawWallFaces(c, x, y, size, edges) {

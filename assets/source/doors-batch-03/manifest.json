@@ -1,0 +1,124 @@
+{
+  "assets": [
+    {
+      "id": "door",
+      "source": "sources/door.png",
+      "target": "assets/props/door.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleBounds": [
+        5,
+        4,
+        22,
+        26
+      ],
+      "previous": "previous/door.png",
+      "generator": "built-in image_gen"
+    },
+    {
+      "id": "door_open",
+      "source": "sources/door_open.png",
+      "target": "assets/props/door_open.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleBounds": [
+        5,
+        4,
+        22,
+        26
+      ],
+      "previous": "previous/door_open.png",
+      "generator": "built-in image_gen"
+    },
+    {
+      "id": "sdoor",
+      "source": "sources/sdoor.png",
+      "target": "assets/props/sdoor.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleBounds": [
+        6,
+        4,
+        19,
+        26
+      ],
+      "previous": "previous/sdoor.png",
+      "generator": "built-in image_gen"
+    },
+    {
+      "id": "sdoor_open",
+      "source": "sources/sdoor_open.png",
+      "target": "assets/props/sdoor_open.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleBounds": [
+        6,
+        4,
+        19,
+        26
+      ],
+      "previous": "previous/sdoor_open.png",
+      "generator": "built-in image_gen"
+    },
+    {
+      "id": "door_barricade",
+      "source": "sources/door_barricade.png",
+      "target": "assets/props/door_barricade.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleBounds": [
+        5,
+        4,
+        22,
+        26
+      ],
+      "previous": "previous/door_barricade.png",
+      "generator": "built-in image_gen"
+    },
+    {
+      "id": "door_locked",
+      "source": "sources/door_locked.png",
+      "target": "assets/props/door_locked.png",
+      "canvas": [
+        32,
+        32
+      ],
+      "visibleBounds": [
+        6,
+        4,
+        19,
+        26
+      ],
+      "previous": "previous/door_locked.png",
+      "generator": "built-in image_gen"
+    }
+  ],
+  "openings": {
+    "door_open": [
+      [
+        8,
+        7,
+        16,
+        25
+      ]
+    ],
+    "sdoor_open": [
+      [
+        9,
+        7,
+        13,
+        25
+      ]
+    ]
+  }
+}

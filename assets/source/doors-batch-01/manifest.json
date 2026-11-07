@@ -1,0 +1,48 @@
+{
+  "assets": [
+    {
+      "id": "door_barricade",
+      "name": "单向受阻木门",
+      "source": "sources/door_barricade.png",
+      "target": "assets/props/door_barricade.png",
+      "canvas": [
+        32,
+        48
+      ],
+      "generator": "built-in image_gen"
+    },
+    {
+      "id": "door_barricade_side",
+      "name": "单向受阻木门·侧面",
+      "source": "sources/door_barricade_side.png",
+      "target": "assets/props/door_barricade_side.png",
+      "canvas": [
+        32,
+        48
+      ],
+      "generator": "built-in image_gen"
+    },
+    {
+      "id": "door_locked",
+      "name": "上锁铁门",
+      "source": "sources/door_locked.png",
+      "target": "assets/props/door_locked.png",
+      "canvas": [
+        32,
+        48
+      ],
+      "generator": "built-in image_gen"
+    },
+    {
+      "id": "door_locked_side",
+      "name": "上锁铁门·侧面",
+      "source": "sources/door_locked_side.png",
+      "target": "assets/props/door_locked_side.png",
+      "canvas": [
+        32,
+        48
+      ],
+      "generator": "built-in image_gen"
+    }
+  ]
+}

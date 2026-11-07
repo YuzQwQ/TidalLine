@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "file": "index.html",
+      "oneWayBothAxes": true,
+      "blockedSideHidden": true,
+      "normalAfterKick": true,
+      "correctKeyOnly": true,
+      "safeKeys": true,
+      "keyConsumed": true,
+      "unlockedStays": true,
+      "caps": 7,
+      "sidePlanView": true,
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "oneWayBothAxes": true,
+      "blockedSideHidden": true,
+      "normalAfterKick": true,
+      "correctKeyOnly": true,
+      "safeKeys": true,
+      "keyConsumed": true,
+      "unlockedStays": true,
+      "caps": 7,
+      "sidePlanView": true,
+      "errors": []
+    }
+  ],
+  "editorFieldsSerializeUndoRedo": true
+}

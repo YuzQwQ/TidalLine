@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "file": "index.html",
+      "productionSidePortals": 17,
+      "height": 32,
+      "northSouthJambs": true,
+      "frameOpaque": true,
+      "floorUnderGroundFrame": true,
+      "groundDoorPanelVisible": true,
+      "frameExcludedFromCrop": true,
+      "hingeAligned": true,
+      "playerPassesOverGroundLayer": true,
+      "westSwing": true,
+      "noNorthTileRepaint": true,
+      "northWallFullCoping": true,
+      "collisionAndSight": true,
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "productionSidePortals": 17,
+      "height": 32,
+      "northSouthJambs": true,
+      "frameOpaque": true,
+      "floorUnderGroundFrame": true,
+      "groundDoorPanelVisible": true,
+      "frameExcludedFromCrop": true,
+      "hingeAligned": true,
+      "playerPassesOverGroundLayer": true,
+      "westSwing": true,
+      "noNorthTileRepaint": true,
+      "northWallFullCoping": true,
+      "collisionAndSight": true,
+      "errors": []
+    }
+  ]
+}

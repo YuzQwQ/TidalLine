@@ -1,0 +1,21 @@
+{
+  "generator": "built-in image_gen",
+  "transparent_background": true,
+  "assets": [
+    {
+      "id": "sdoor",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-15acc1db-4cf7-49de-a562-3dc17c94fc70.png",
+      "prompt": "Use case: precise-object-edit. Input is EDIT TARGET for an inset door game sprite. Preserve exact current geometry: one compact door in a transparent32x32 logical square, visible assembly x6..24,y4..29, slim equal-thickness inverted-U frame, no bottom threshold bar, transparent margins left/right/top/bottom,75degree downward orthographic game camera. Change only MATERIALS and small hardware to match blue-steel north-south door frames: dark outline#20353d, desaturated steel-blue/slate-green body#5b7771 to#627e82, cool pale edge highlights#9aafb2, small muted rivets. Frame must be STEEL BLUE too, replacing all beige stone trim. Crisp chunky pixel-art at native32px,16 restrained colors, upper-left light, real alpha transparency, no glow no floor no wall no cast shadow no text no watermark. CLOSED REINFORCED DOOR: solid steel-blue leaf, sturdy equally thick blue steel top and side frames, simple rivet heads, a small dull metal handle. No padlock on this reinforced normal door. Keep the central leaf unobstructed by frame; native reusable leaf crop x9..21,y7..29."
+    },
+    {
+      "id": "sdoor_open",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-f9672a15-1f3a-4109-b44f-c546c2ad7f15.png",
+      "prompt": "Use case: precise-object-edit. Input is EDIT TARGET for an inset door game sprite. Preserve exact current geometry: one compact door in a transparent32x32 logical square, visible assembly x6..24,y4..29, slim equal-thickness inverted-U frame, no bottom threshold bar, transparent margins left/right/top/bottom,75degree downward orthographic game camera. Change only MATERIALS and small hardware to match blue-steel north-south door frames: dark outline#20353d, desaturated steel-blue/slate-green body#5b7771 to#627e82, cool pale edge highlights#9aafb2, small muted rivets. Frame must be STEEL BLUE too, replacing all beige stone trim. Crisp chunky pixel-art at native32px,16 restrained colors, upper-left light, real alpha transparency, no glow no floor no wall no cast shadow no text no watermark. OPEN FRAME ONLY: retain only the inverted-U blue steel frame and its tiny rivet heads. Absolutely no leaf, handle, padlock, inner dark backing or bottom threshold. Entire interior opening below header through canvas bottom is genuinely transparent, as are outside margins. Keep native central opening x9..21,y7..31 clear."
+    },
+    {
+      "id": "door_locked",
+      "originalSource": "C:/Users/Yuz/.codex/generated_images/01a1aa02-a806-7720-9d15-760178469f59/exec-67996338-7b93-4889-97de-814577ac730e.png",
+      "prompt": "Use case: precise-object-edit. Input is EDIT TARGET for an inset door game sprite. Preserve exact current geometry: one compact door in a transparent32x32 logical square, visible assembly x6..24,y4..29, slim equal-thickness inverted-U frame, no bottom threshold bar, transparent margins left/right/top/bottom,75degree downward orthographic game camera. Change only MATERIALS and small hardware to match blue-steel north-south door frames: dark outline#20353d, desaturated steel-blue/slate-green body#5b7771 to#627e82, cool pale edge highlights#9aafb2, small muted rivets. Frame must be STEEL BLUE too, replacing all beige stone trim. Crisp chunky pixel-art at native32px,16 restrained colors, upper-left light, real alpha transparency, no glow no floor no wall no cast shadow no text no watermark. CLOSED LOCKED DOOR: steel-blue riveted leaf with sturdy blue steel frame, matching reinforced door palette. One very clear chunky COPPER/BRASS PADLOCK on RIGHT side of door leaf, near mid-height: dark brown outline, warm brass body#c39c4f, lighter squared U shackle#b5a16c, obvious black keyhole. Make lock big enough to read at native32px, about5pixels wide by7high, within the panel, not a tiny brass dot. This is the same compact squared padlock used on the side-facing blue steel door. No text and no extra hardware outside the silhouette. The outer frame remains thin and same thickness at top and sides."
+    }
+  ]
+}

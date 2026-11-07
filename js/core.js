@@ -129,7 +129,7 @@ const M = {
     // 同一两格门洞共用一个门状态和门框；按显式墙轴线绘制。
     if (map) {
       for (const spec of map.doors) {
-        const door = {...spec,open:true,safe:false,x:spec.cells[0][0],y:spec.cells[0][1]};
+        const door = {...spec,open:!['barricade','locked'].includes(spec.doorType),safe:false,breached:false,unlocked:false,x:spec.cells[0][0],y:spec.cells[0][1]};
         this.doors.push(door);
         for (const [x,y] of spec.cells) this.at(x,y).door = door;
       }

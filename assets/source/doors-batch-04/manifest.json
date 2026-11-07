@@ -1,0 +1,81 @@
+{
+  "generator": "built-in image_gen",
+  "id": "door_side_study",
+  "source": "sources/door_side_study.png",
+  "target": "assets/props/door_side_study.png",
+  "canvas": [
+    32,
+    48
+  ],
+  "segments": [
+    {
+      "sourceY": [
+        90,
+        245
+      ],
+      "native": [
+        14,
+        0,
+        4,
+        4
+      ]
+    },
+    {
+      "sourceY": [
+        245,
+        850
+      ],
+      "native": [
+        15,
+        4,
+        2,
+        24
+      ]
+    },
+    {
+      "sourceY": [
+        850,
+        990
+      ],
+      "native": [
+        14,
+        28,
+        4,
+        4
+      ]
+    },
+    {
+      "sourceY": [
+        990,
+        1470
+      ],
+      "native": [
+        14,
+        32,
+        4,
+        16
+      ]
+    }
+  ],
+  "backFrame": {
+    "source": [
+      0,
+      32,
+      32,
+      16
+    ],
+    "native": [
+      0,
+      4,
+      32,
+      24
+    ],
+    "opacity": 0.85
+  },
+  "wallCap": {
+    "source": "tiles/wall top half",
+    "offsetY": -32,
+    "height": 16
+  },
+  "scope": "door test only"
+}

@@ -16,6 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (Game.state === 'base') Base.render();
     });
     Game.init();
+    if(location.hash.startsWith('#doors-test')){document.getElementById('startVeil').classList.add('hidden');DoorSystem.startTest();return;}
     // 调试入口：index.html#base 打开藏身处；#base,demo 顺便灌一些测试物资
     if (location.hash.startsWith('#base')) {
       if (location.hash.indexOf('demo') >= 0) {
