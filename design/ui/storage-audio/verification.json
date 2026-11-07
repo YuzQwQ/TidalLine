@@ -66,7 +66,7 @@
           "name": "unload ammunition to bag",
           "result": true,
           "sounds": [
-            "pickup_4"
+            "pickup_2"
           ]
         },
         {
@@ -85,28 +85,28 @@
           "name": "unequip w0",
           "result": true,
           "sounds": [
-            "pickup_2"
+            "pickup_1"
           ]
         },
         {
           "name": "unequip w1",
           "result": true,
           "sounds": [
-            "pickup_1"
+            "pickup_2"
           ]
         },
         {
           "name": "unequip helmet",
           "result": true,
           "sounds": [
-            "pickup_3"
+            "pickup_4"
           ]
         },
         {
           "name": "unequip body",
           "result": true,
           "sounds": [
-            "pickup_4"
+            "pickup_3"
           ]
         },
         {
@@ -124,7 +124,7 @@
           "name": "stash to bag",
           "result": true,
           "sounds": [
-            "pickup_3"
+            "pickup_1"
           ]
         },
         {
@@ -136,21 +136,21 @@
           "name": "bag to stash",
           "result": true,
           "sounds": [
-            "pickup_1"
+            "pickup_2"
           ]
         },
         {
           "name": "medical to bag",
           "result": true,
           "sounds": [
-            "pickup_3"
+            "pickup_1"
           ]
         },
         {
           "name": "bag to safe",
           "result": true,
           "sounds": [
-            "pickup_2"
+            "pickup_4"
           ]
         },
         {
@@ -186,7 +186,7 @@
           "name": "unequip backpack",
           "result": true,
           "sounds": [
-            "pickup_1"
+            "pickup_4"
           ]
         }
       ],
@@ -258,7 +258,7 @@
           "name": "unload ammunition to bag",
           "result": true,
           "sounds": [
-            "pickup_3"
+            "pickup_2"
           ]
         },
         {
@@ -291,21 +291,21 @@
           "name": "unequip helmet",
           "result": true,
           "sounds": [
-            "pickup_2"
+            "pickup_1"
           ]
         },
         {
           "name": "unequip body",
           "result": true,
           "sounds": [
-            "pickup_1"
+            "pickup_3"
           ]
         },
         {
           "name": "unequip melee",
           "result": true,
           "sounds": [
-            "pickup_3"
+            "pickup_2"
           ]
         },
         {
@@ -316,7 +316,7 @@
           "name": "stash to bag",
           "result": true,
           "sounds": [
-            "pickup_4"
+            "pickup_3"
           ]
         },
         {
@@ -328,35 +328,35 @@
           "name": "bag to stash",
           "result": true,
           "sounds": [
-            "pickup_1"
+            "pickup_4"
           ]
         },
         {
           "name": "medical to bag",
           "result": true,
           "sounds": [
-            "pickup_3"
+            "pickup_1"
           ]
         },
         {
           "name": "bag to safe",
           "result": true,
           "sounds": [
-            "pickup_1"
+            "pickup_2"
           ]
         },
         {
           "name": "safe to bag",
           "result": true,
           "sounds": [
-            "pickup_4"
+            "pickup_1"
           ]
         },
         {
           "name": "clear bag one pickup",
           "result": 2,
           "sounds": [
-            "pickup_3"
+            "pickup_4"
           ]
         },
         {
@@ -378,7 +378,7 @@
           "name": "unequip backpack",
           "result": true,
           "sounds": [
-            "pickup_4"
+            "pickup_2"
           ]
         }
       ],

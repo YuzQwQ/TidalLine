@@ -145,7 +145,7 @@ class Bag {
 
   /* 带治疗容量的物品，只有满容量才能互相堆叠 */
   fullCap(entry, item) {
-    const max = (item && item.healCap) || 0;
+    const max = ItemCapacity.max(item);
     if (!max) return true;
     return (typeof entry.cap === 'number' ? entry.cap : max) >= max - 1e-6;
   }
@@ -170,8 +170,8 @@ class Bag {
     if (this.weight() + item.w * n > CFG.BAG.CARRY) return false;
     while (n > 0) {
       const put = Math.min(stack, n);
-      this.slots.push(item.healCap
-        ? { item, n: put, cap: typeof cap === 'number' ? cap : item.healCap }
+      this.slots.push(ItemCapacity.max(item)
+        ? { item, n: put, cap: typeof cap === 'number' ? cap : ItemCapacity.max(item) }
         : { item, n: put });
       n -= put;
     }
@@ -854,12 +854,14 @@ class Player {
 
     /* 自己挨打也飘字，但不再单独配色：按伤害类型走和敌人同一张表
        （普通枪伤骨白、爆头橙金、近战蓝）。kind 由伤害来源传进来，
-       没传就按部位推：写在 hurt 里，将来任何新的掉血来源都自动覆盖。
-       （这里只飘字不发声：受击的音效还在等合适的素材，见 audio-actions 的缺口） */
+       没传就按部位推：写在 hurt 里，将来任何新的掉血来源都自动覆盖。 */
     Game.popDamage(this.x, this.y - 20, dmg,
       { kind: kind || (head ? 'crit' : 'normal'), key: this });
     this.hurtAnimT = PLAYER_ANIMS.hurt.frames / PLAYER_ANIMS.hurt.fps;
     this.hp -= dmg;
+    /* 玩家受伤人声：三段随机，SFX.POOL 里按 0.8 秒节流 —— 自动武器一梭子
+       扫过来不会叠成一片惨叫。护甲完全挡下（dmg=0）或已阵亡都不出声。 */
+    if (dmg > 0 && this.hp > 0) Game.sfx('hurtPlayer');
     /* 受击不打断治疗：只有死亡才强制中断（下面 hp<=0 那一段处理） */
     Save.setHP(this.hp);
     /* 唯一致伤入口：拿「实际掉血」判定，护甲完全抵挡（0）或蹭伤过小都不触发。
@@ -1054,6 +1056,20 @@ class Enemy {
     return true;
   }
 
+  /* 进入战斗状态的唯一入口：只有从非 chase 切进来的那一次算「接战」。
+     异常生物（目前是回响体）在这一刻响专属接战语音，看见玩家、被同伴叫来、
+     挨了一枪三条路径共用这里，不会每帧重播、也不会在开火时反复触发。
+     SFX 里还有 2 秒的池间隔兜住 chase↔suspect 来回抖动。 */
+  enterCombat() {
+    const fresh = this.state !== 'chase';
+    this.state = 'chase';
+    this.stateT = 0;
+    this.chaseT = 0;
+    this.path = null;
+    if (fresh && this.t.faction === 'echo') Game.sfx('echoEngage');
+    return fresh;
+  }
+
   update(dt) {
     if (this.dead) return;
     if (this.t.tactical) return HumanAI.update(this,dt);
@@ -1070,11 +1086,8 @@ class Enemy {
     if (canSeePlayer) {
       this.seenPlayerT = 0.9;
       if (this.state !== 'chase') {
-        this.state = 'chase';
-        this.stateT = 0;
-        this.chaseT = 0;
+        this.enterCombat();
         this.target = { kind: 'player' };
-        this.path = null;
         // 拾荒者发现玩家会喊一声，把同伴引过来
         if (this.t.faction === 'scav' && !this.alarmPlayed) {
           this.alarmPlayed = true;
@@ -1101,10 +1114,7 @@ class Enemy {
       const foe = this.perceiveFoe();
       if (foe) {
         this.target = { kind: 'enemy', ref: foe };
-        this.state = 'chase';
-        this.stateT = 0;
-        this.chaseT = 0;
-        this.path = null;
+        this.enterCombat();
       }
     }
 
@@ -1271,6 +1281,9 @@ class Enemy {
     const pre = d * (head ? CFG.COMBAT.HEAD_MULT : 1);
     const res = damageType === 'trueDamage' ? {health:d,durabilityLoss:0} : BALLISTICS.hit(pre, pen == null ? CFG.AMMO.UNARMED_PEN : pen, gear);
     this.hp -= res.health;
+    /* 人形敌人受伤人声：两条随机 + 0.45 秒节流；异常体和机械守卫不吃人声。
+       打死了就不喊了 —— 那一声交给 onEnemyKilled 的死亡惨叫。 */
+    if (res.health > 0 && this.hp > 0 && this.t.human) Game.sfx('hurtEnemy');
     if (this.hp > 0) Debuff.onHit(this, { dealt: res.health, meta, now: Game.time });
     /* 敌人穿着护甲时一样会被打穿、掉耐久，尸体上捡到的就是打剩下的那件 */
     if (gear && res.durabilityLoss > 0) {
@@ -1279,11 +1292,8 @@ class Enemy {
     this.hurtFlash = 0.12;
     // 被打会立刻警觉
     if (this.t.tactical) HumanAI.hurt(this,fromFaction);
-    if (!this.t.tactical && (this.state === 'patrol' || this.state === 'suspect')) {
-      this.state = 'chase';
-      this.stateT = 0;
-      this.chaseT = 0;
-      this.path = null;
+    if (!this.t.tactical && this.hp > 0 && (this.state === 'patrol' || this.state === 'suspect')) {
+      this.enterCombat();
       if (!this.target) this.target = { kind: 'player' };
     }
     if (this.hp <= 0) {

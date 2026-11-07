@@ -149,7 +149,7 @@ const GROUPS = [
     rows: [
       {
         name: '脚步', scope: 'raid',
-        where: 'js/entities.js:640（走路）· :552（闪避落地踩实那一步）',
+        where: 'js/entities.js:650（走路）· :562（闪避落地踩实那一步）',
         detail: '采样 <b>×4</b> 随机 · rate 0.94–1.06 · vol 0.5–1.2（越快步子越沉，潜行压到七成）· LOUD.step <b>0.05</b>',
         sounds: ['step_stone_1', 'step_stone_2', 'step_stone_3', 'step_stone_4'],
         btns: [
@@ -160,14 +160,14 @@ const GROUPS = [
       },
       {
         name: '闪避', scope: 'raid',
-        where: 'js/entities.js:572（Player.dodge）',
+        where: 'js/entities.js:582（Player.dodge）',
         detail: '合成破风：带通 600→2600Hz 扫频 0.18s + 低频垫 · LOUD.dodge <b>0.09</b>',
         sounds: [],
         btns: [{ l: '闪避', fn: () => SFX.play('dodge') }]
       },
       {
         name: '冲刺起步', scope: 'raid',
-        where: 'js/entities.js:617（按住 Shift 跑起来的那一帧）',
+        where: 'js/entities.js:627（按住 Shift 跑起来的那一帧）',
         detail: '采样 <b>sprint</b> 0.374s（714258）· 蹬地一声 + 掠过的风 · LOUD.sprint <b>0.065</b><br>' +
           '<b>只响一次，不循环</b>：sprinting 是"按住 Shift"这个状态，站着按住也一样为真，' +
           '所以要 <span class="code">sprinting && moving && !_sprintVoiced</span> —— ' +
@@ -183,7 +183,7 @@ const GROUPS = [
     rows: [
       {
         name: '开火（按型号路由）', scope: 'raid',
-        where: 'js/entities.js:756（玩家）· js/human-ai.js（敌人）',
+        where: 'js/entities.js:766（玩家）· js/human-ai.js（敌人）',
         detail: '先查 <span class="code">SHOT_MODEL</span>（akm/famas_f1/mp5a3 各有专属录音），再退回 gun category；' +
           '手枪三条轮换，霰弹开完自动补一声泵动 · LOUD.shot <b>0.14</b>（全场最响）',
         sounds: ['shot_rifle', 'shot_ak47', 'shot_famas', 'shot_mp5', 'shot_smg', 'shot_shotgun',
@@ -194,7 +194,7 @@ const GROUPS = [
       },
       {
         name: '泵动（霰弹枪）', scope: 'raid',
-        where: 'js/ui.js:457（跟着枪声排在音频时钟后 0.44s）',
+        where: 'js/ui.js:510（跟着枪声排在音频时钟后 0.44s）',
         detail: '采样 <b>shot_shotgun_pump</b> 0.343s · vol 0.85 · ' +
           '只有 cycleTime > 0 的枪才有（Rem870 有，MP-155 / Saiga-12 半自动没有）',
         sounds: ['shot_shotgun_pump'],
@@ -202,7 +202,7 @@ const GROUPS = [
       },
       {
         name: '敌人开火', scope: 'raid',
-        where: 'js/entities.js:1240（敌人 AI 开枪）',
+        where: 'js/entities.js:1260（敌人 AI 开枪）',
         detail: '复用手枪采样但压低并低通 1200Hz —— 听得出是"别人在打"，' +
           '而不是换了个音色 · LOUD.enemyShot <b>0.075</b>',
         sounds: ['shot_pistol_1', 'shot_pistol_2', 'shot_pistol_3'],
@@ -210,7 +210,7 @@ const GROUPS = [
       },
       {
         name: '命中反馈（打中敌人）', scope: 'raid',
-        where: 'js/entities.js:1424（Bullet.resolveHit）',
+        where: 'js/entities.js:1447（Bullet.resolveHit）',
         detail: '采样 <b>hit</b> 0.202s（660770）· 音高抖 ±3% —— 连打十几发时同一段会听成机械节拍 · ' +
           'LOUD.hit <b>0.085</b><br>' +
           '这个动作以前是合成的一声 2600Hz 高通"啪"，换成录音后金属感更具体；' +
@@ -225,7 +225,7 @@ const GROUPS = [
       },
       {
         name: '爆头', scope: 'raid',
-        where: 'js/entities.js:1424（部位 = head）',
+        where: 'js/entities.js:1447（部位 = head）',
         detail: '采样 <b>headshot</b> 0.212s（660769）· 和命中是两条独立录音，' +
           '更窄更亮，一耳朵分得出来 · LOUD.headshot <b>0.085</b>',
         sounds: ['headshot'],
@@ -239,7 +239,7 @@ const GROUPS = [
       },
       {
         name: '护甲破裂', scope: 'raid',
-        where: 'js/entities.js:872（护甲耐久磨到 broken 的那一瞬）',
+        where: 'js/entities.js:885（护甲耐久磨到 broken 的那一瞬）',
         detail: '采样 <b>break</b> 0.465s（583310）· 硬壳裂开的一串碎响，收在 0.46s · ' +
           'LOUD.break <b>0.10</b>（这条素材峰高 RMS 低，按 0.10 对齐会削波，' +
           '所以实际被峰值压到 0.95 收住）· 只在<b>从完好/破损变成失效</b>时响一次，不是每发都响',
@@ -276,7 +276,7 @@ const GROUPS = [
       },
       {
         name: '切枪', scope: 'raid',
-        where: 'js/entities.js:451 · js/melee.js（近战武器切换）',
+        where: 'js/entities.js:461 · js/melee.js:221（枪切近战）',
         detail: '采样 <b>shot_switch</b> 0.235s；霰弹枪换用 <b>shot_switch_shotgun</b> 0.696s（上膛）· LOUD.switch <b>0.08</b>',
         sounds: ['shot_switch', 'shot_switch_shotgun'],
         btns: [
@@ -286,7 +286,7 @@ const GROUPS = [
       },
       {
         name: '换弹（三段序列 / MP5 整段）', scope: 'raid',
-        where: 'js/gunplay.js:36（主动换弹）· :49（自动装填）· js/entities.js:805',
+        where: 'js/gunplay.js:36（主动换弹）· :49（自动装填）· js/entities.js:815',
         detail: '通用：采样 <b>reload_out → reload_in → reload_rack</b>，按游戏节奏排在 0 / 0.55 / 1.05 秒 · ' +
           'LOUD.reload <b>0.075</b><br>' +
           'MP5A3 有专属整段录音 <b>reload_mp5</b>（616757，1.47s）：退匣 → 插匣 → 拉栓一口气播完，' +
@@ -312,7 +312,7 @@ const GROUPS = [
     rows: [
       {
         name: '拾取', scope: 'both',
-        where: 'js/game-panels.js:251 / :480 / :526 · js/game-update.js:286 · js/medical.js:247,306（医疗品开始/结束）· js/base.js（仓库取物）',
+        where: 'js/game-panels.js:256 / :490 / :540 · js/game-update.js:297 · js/medical.js:279 · :329（医疗品开始 / 结束）· js/base.js（仓库取物）',
         detail: '采样 <b>×4</b> 每次随机抽一条（且不重复刚播过的那条）· LOUD.pickup <b>0.06</b>',
         sounds: ['pickup_1', 'pickup_2', 'pickup_3', 'pickup_4'],
         btns: [
@@ -324,7 +324,7 @@ const GROUPS = [
       },
       {
         name: '容器搜索（一个容器一个声）', scope: 'raid',
-        where: 'js/game-update.js:464（撬开读条起手）· js/game-panels.js:81（直接打开）',
+        where: 'js/game-update.js:567（撬开读条起手）· js/game-panels.js:81（直接打开）',
         detail: '按容器 art 查 <span class="code">CONTAINER_SFX</span>，一个容器一条声：' +
           '包/旅行箱是<b>长拉链</b>、衣服是<b>布料</b>、抽屉是<b>滑轨</b>、' +
           '小保险是<b>锁舌</b>、纸/工具箱各有三种变体；没配到的落回合成音 · ' +
@@ -347,7 +347,7 @@ const GROUPS = [
       },
       {
         name: '逐件搜索（循环底声）', scope: 'raid',
-        where: 'js/game-update.js:295（每帧喂状态）· js/ui.js 的 searchLoop（循环通道）与 SEARCH_SAMPLE（响度对齐）',
+        where: 'js/game-update.js:306（每帧喂状态）· js/ui.js 的 searchLoop（循环通道）与 SEARCH_SAMPLE（响度对齐）',
         detail: '采样 <b>search_rustle</b>（179670 在琴盒里翻找，5.22s 单声道）—— ' +
           '<span class="code">BufferSource.loop = true</span>，淡入 0.18s / 淡出 0.20s，' +
           '每次起播音高抖 ±3%；垫在材质音底下，响度取 LOUD.search × <b>0.7</b><br>' +
@@ -363,7 +363,7 @@ const GROUPS = [
       },
       {
         name: '背包开合', scope: 'both',
-        where: 'js/game-panels.js:555（toggleBag）· js/game.js:192（Tab 键）',
+        where: 'js/game-panels.js:562（toggleBag）· js/game.js:200（Tab 键）',
         detail: '采样 <b>bag_zip</b> · 开 1.06 / 关 0.90 —— 拉开比拉上略快，' +
           '这是个"打开了"的触感，不该盖过局内的脚步 · LOUD.bagZip <b>0.045</b><br>' +
           '<b>只有玩家自己按出来的那一下才响</b>：搜容器时搜刮面板会把背包一起带出来，' +
@@ -376,7 +376,7 @@ const GROUPS = [
       },
       {
         name: '丢弃物品', scope: 'raid',
-        where: 'js/game-update.js:127',
+        where: 'js/game-update.js:135',
         detail: '合成闷响 0.12s（380Hz）· 丢东西本来就该低调 · LOUD.drop <b>0.055</b>',
         sounds: [],
         btns: [{ l: '丢弃', fn: () => SFX.play('drop') }]
@@ -388,14 +388,14 @@ const GROUPS = [
     rows: [
       {
         name: '开门', scope: 'raid',
-        where: 'js/game-update.js:437',
+        where: 'js/game-update.js:540',
         detail: '合成闷响 0.16s（420Hz）· LOUD.door <b>0.08</b>',
         sounds: [],
         btns: [{ l: '开门', fn: () => SFX.play('door') }]
       },
       {
         name: '撤离成功', scope: 'raid',
-        where: 'js/game-panels.js:908（结算面板）',
+        where: 'js/game-panels.js:935（结算面板）',
         detail: '采样 <b>extract</b>（47635 颤音吉他，2.85s）—— 一段慢慢收尾的演奏，' +
           '从撤离面板出现一直铺到玩家读完结算 · LOUD.extract <b>0.09</b><br>' +
           '素材缺失时退回原来的合成上行音，不会哑',
@@ -407,7 +407,7 @@ const GROUPS = [
       },
       {
         name: '死亡', scope: 'raid',
-        where: 'js/game-update.js:559（阵亡）· js/game-panels.js:908（结算）',
+        where: 'js/game-update.js:675（阵亡）· js/game-panels.js:935（结算）',
         detail: '采样 <b>death</b>（618532 走调的吉他扫弦，1.70s）—— 一声就收，' +
           '不拖泥带水 · LOUD.death <b>0.13</b><br>' +
           '素材缺失时退回原来的合成下沉音，不会哑',
@@ -422,28 +422,28 @@ const GROUPS = [
     rows: [
       {
         name: '点击', scope: 'both',
-        where: 'js/ui.js:986（全局事件委托，所有按钮的默认点击音）',
+        where: 'js/ui.js:1120（全局事件委托，所有按钮的默认点击音）',
         detail: '采样 <b>ui_click</b> 0.068s 清脆一声 · LOUD.uiClick <b>0.05</b>',
         sounds: ['ui_click'],
         btns: [{ l: '点击', fn: () => SFX.ui('click') }]
       },
       {
         name: '悬停', scope: 'both',
-        where: 'js/ui.js:991（鼠标经过按钮，90ms 节流）',
+        where: 'js/ui.js:1125（鼠标经过按钮，90ms 节流）',
         detail: '采样 <b>ui_tap</b> 0.127s 短提示 · LOUD.uiTap <b>0.028</b>（最轻的一档）',
         sounds: ['ui_tap'],
         btns: [{ l: '悬停', fn: () => SFX.ui('tap') }]
       },
       {
         name: '确认（出发 / 进入游戏）', scope: 'base',
-        where: 'js/ui.js:989（读 data-sfx）· index.html 1224 / 1284（出发按钮标了 confirm）',
+        where: 'js/ui.js:1123（读 data-sfx）· index.html 1224 / 1284（出发按钮标了 confirm）',
         detail: '采样 <b>ui_confirm</b> 0.453s 高调一句 · LOUD.uiConfirm <b>0.085</b>',
         sounds: ['ui_confirm'],
         btns: [{ l: '确认', fn: () => SFX.ui('confirm') }]
       },
       {
         name: '通知', scope: 'both',
-        where: 'js/game.js:531（好消息提示）',
+        where: 'js/game.js:597（好消息提示）',
         detail: '采样 <b>ui_notify</b> 0.865s 明朗一句 · LOUD.uiNotify <b>0.07</b>',
         sounds: ['ui_notify'],
         btns: [{ l: '通知', fn: () => SFX.ui('notify') }]
@@ -456,7 +456,7 @@ const GROUPS = [
     rows: [
       {
         name: '装备穿脱（头盔 / 护甲 / 背包）', scope: 'base',
-        where: 'js/base.js:465（equipFromStash）· :495（unequip）—— 仓库双击装备也走这两条',
+        where: 'js/base.js:504（equipFromStash）· :534（unequip）—— 仓库双击装备也走这两条',
         detail: '一件装备一种材质：头盔是硬壳与织带（<b>gear_helmet</b>）、' +
           '护甲是布料与插板（<b>gear_armor</b>）、背包是扣具与织带（<b>gear_bag</b>）· ' +
           '穿上 rate 1.0，卸下 rate 0.94 且压到九成 —— 同一个动作的两个方向，不需要两份素材 · ' +
@@ -472,10 +472,80 @@ const GROUPS = [
       },
       {
         name: '出售结算', scope: 'base',
-        where: 'js/sales.js:52（出售结算，单件与批量合一）· js/base.js:1645（出售结算）· js/base.js:1461（治疗结算）',
+        where: 'js/sales.js:52（出售结算，单件与批量合一）· js/base.js:1767（出售结算 / 治疗结算）',
         detail: '采样 <b>sell</b> 0.84s 老式收银机 —— 和拾取区分开 · LOUD.sell <b>0.07</b>',
         sounds: ['sell'],
         btns: [{ l: '出售', fn: () => SFX.play('sell') }]
+      }
+    ]
+  },
+  {
+    id: 'voices', name: '战斗人声 · 2026-11-07 新素材', scope: 'raid',
+    note: '玩家 / 人形敌人 / 异常生物各自一套人声。同一条池子随机抽变体并带最短触发间隔，' +
+          '自动武器连发、混战里多人同时进战都不会叠成一堵墙。接战音只在非 chase → chase 那一次响。',
+    rows: [
+      {
+        name: '玩家受伤', scope: 'raid',
+        where: 'js/entities.js:864（Player.hurt）· js/ui.js:971（随机池 + 间隔，表在 :581）',
+        detail: '<b>3 段</b>随机、排除上一条 · rate ±3.5% · LOUD.hurt <b>0.11</b> · ' +
+          '护甲完全挡下（0 伤害）或已阵亡都不出声',
+        sounds: ['hurt_player_1', 'hurt_player_2', 'hurt_player_3'],
+        btns: [
+          { l: '挨一下', fn: () => SFX.play('hurtPlayer') },
+          { l: '连挨三下', ghost: true, fn: () => [0, 900, 1800].forEach(t => setTimeout(() => SFX.play('hurtPlayer'), t)) }
+        ]
+      },
+      {
+        name: '人形敌人受伤', scope: 'raid',
+        where: 'js/entities.js:1286（Enemy.hurt）',
+        detail: '<b>2 段</b>随机 · 0.45s 间隔 · LOUD.hurtEnemy <b>0.085</b>（压在玩家自己的惨叫之下）· ' +
+          '异常体与机械守卫不吃人声',
+        sounds: ['hurt_enemy_1', 'hurt_enemy_2'],
+        btns: [{ l: '打中一个人', fn: () => SFX.play('hurtEnemy') }]
+      },
+      {
+        name: '人形敌人死亡', scope: 'raid',
+        where: 'js/game-update.js:642（onEnemyKilled）',
+        detail: '长惨叫合辑切出的 <b>8 段</b>随机 · 0.22s 间隔 · LOUD.deathEnemy <b>0.095</b>',
+        sounds: ['death_enemy_1', 'death_enemy_2', 'death_enemy_3', 'death_enemy_4',
+                 'death_enemy_5', 'death_enemy_6', 'death_enemy_7', 'death_enemy_8'],
+        btns: [{ l: '惨叫一段', fn: () => SFX.play('deathEnemy') }]
+      },
+      {
+        name: '玩家阵亡', scope: 'raid',
+        where: 'js/game-update.js:675（beginDying）',
+        detail: '闷哼一声 + 长叹 2.33s · LOUD.death <b>0.13</b> · 结算面板失败音仍是旧的扫弦',
+        sounds: ['death_player'],
+        btns: [{ l: '阵亡', fn: () => SFX.play('deathPlayer') }]
+      },
+      {
+        name: '异常生物接战（回响体）', scope: 'raid',
+        where: 'js/entities.js:1069（enterCombat）',
+        detail: '只在 <b>非 chase → chase</b> 的那一次响 · 池间隔 2s 兜住 chase↔suspect 抖动 · ' +
+          'LOUD.echoEngage <b>0.10</b>',
+        sounds: ['echo_engage'],
+        btns: [{ l: '接战语音', fn: () => SFX.play('echoEngage') }]
+      },
+      {
+        name: '异常生物死亡（回响体）', scope: 'raid',
+        where: 'js/game-update.js:641（onEnemyKilled）',
+        detail: '1.30s 消散声 · LOUD.echoDeath <b>0.11</b> · 人形敌人不吃这一条',
+        sounds: ['echo_death'],
+        btns: [{ l: '消散', fn: () => SFX.play('echoDeath') }]
+      },
+      {
+        name: '切近战 · 拔刃出鞘', scope: 'raid',
+        where: 'js/melee.js:221（Player.switchMelee）',
+        detail: '0.56s 金属出鞘 · LOUD.switch <b>0.08</b> · 素材没加载上时自动退回滑套声',
+        sounds: ['switch_melee'],
+        btns: [{ l: '拔刀', fn: () => SFX.play('switchMelee') }]
+      },
+      {
+        name: '低体力喘息', scope: 'raid',
+        where: 'js/game-update.js:311（每帧状态检查）',
+        detail: '力竭 / 体力低于 25% 且冲刺时喘一声 · 3.2s 间隔 · LOUD.breath <b>0.045</b>',
+        sounds: ['breath_low'],
+        btns: [{ l: '喘一口气', fn: () => SFX.play('breathLow') }]
       }
     ]
   }
@@ -487,7 +557,12 @@ const GROUPS = [
 const LADDER = [
   ['shot', '枪声（玩家）', () => SFX.play('shot', { gun: 'm4a1' })],
   ['death', '死亡', () => SFX.play('death')],
-  ['hurt', '受伤（自己中弹）', () => SFX.play('hurt')],
+  ['hurt', '受伤（自己中弹）', () => SFX.play('hurtPlayer')],
+  ['hurtEnemy', '受伤（敌人）', () => SFX.play('hurtEnemy')],
+  ['deathEnemy', '敌人死亡惨叫', () => SFX.play('deathEnemy')],
+  ['echoEngage', '异常生物接战', () => SFX.play('echoEngage')],
+  ['echoDeath', '异常生物死亡', () => SFX.play('echoDeath')],
+  ['breath', '低体力喘息', () => SFX.play('breathLow')],
   ['melee', '挥刀', () => SFX.play('melee')],
   ['break', '护甲破裂', () => SFX.play('break')],
   ['extract', '撤离', () => SFX.play('extract')],
@@ -517,12 +592,10 @@ const LADDER = [
    ============================================================ */
 const GAPS = [
   {
-    name: 'hurt（玩家挨打）', src: '合成 · 180→90Hz 锯齿波 0.16s',
-    why: '<span class="code">SFX.LOUD.hurt = 0.11</span> 和合成分支都写好了，' +
-      '但局内<b>没有任何地方调用</b>它：玩家挨打（js/entities.js 的 Player.hurt）' +
-      '只有画面反馈 —— 屏幕闪红 + 紫色伤害数字 + 抖屏，没有声音。' +
-      '660770 / 660769 是<b>打中敌人</b>的反馈，不是自己挨打，别混用；' +
-      '等收到"被打中"的素材（贴脸的一声闷响/金属撞击）再接进来。'
+    name: 'mutant_roar（畸变生物怒吼，预留）', src: '用户提供 · 2.01s WAV',
+    why: '素材已经切好、登记进 manifest 并内联进离线版，响度档也备好了，' +
+      '但<b>局内还没有畸变生物这种敌人</b>，所以暂时不接线。' +
+      '后续加这类敌人时，照回响体的 enterCombat / onEnemyKilled 挂上即可。'
   }
 ];
 

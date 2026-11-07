@@ -70,11 +70,11 @@ const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
     assert(ids.includes(id), '页面声明的采样 ' + id + ' 不在 manifest 里');
   }
 
-  /* ---------- 3. 缺口：hurt 确实还空着（660770 是打中敌人，不是挨打） ---------- */
+  /* ---------- 3. 玩家挨打已经接进来了，页面不该再把它写成缺口 ---------- */
   const jsFiles = fs.readdirSync(path.join(ROOT, 'js')).filter(f => f.endsWith('.js'));
-  const hurtCalls = jsFiles.filter(f => /sfx\('hurt'/.test(read('js/' + f)));
-  assert.deepEqual(hurtCalls, [],
-    'hurt 已经接进局内了（' + hurtCalls.join(', ') + '）：页面上的"缺口"要改成"已接入"');
+  const hurtCalls = jsFiles.filter(f => /sfx\('hurtPlayer'/.test(read('js/' + f)));
+  assert(hurtCalls.includes('entities.js'),
+    'Player.hurt 里应该有 hurtPlayer 调用（页面上的"缺口"要改成"已接入"）');
 
   /* ---------- 4. 页面自身跑起来：数据自洽 ---------- */
   const browser = await chromium.launch({
@@ -108,7 +108,8 @@ const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
   for (const k of r.ladder) {
     assert(r.loudKeys.includes(k), '响度阶梯里的 ' + k + ' 不在 SFX.LOUD 里');
   }
-  assert(r.gaps.some(g => /hurt/.test(g)), '缺口里要列出 hurt（玩家挨打还没声音）');
+  assert(!r.gaps.some(g => /hurt/.test(g)), '玩家挨打已经有声音了，不该再列为缺口');
+  assert(r.gaps.some(g => /mutant_roar/.test(g)), '缺口里要列出暂未接线的畸变生物怒吼');
 
   /* ---------- 5. 点一遍所有按钮，确认都触发得到声音 ---------- */
   const played = await page.evaluate(async () => {

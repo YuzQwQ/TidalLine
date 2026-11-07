@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "newSamples": 19,
+      "wired": [
+        "hurtPlayer",
+        "hurtEnemy",
+        "deathEnemy",
+        "deathPlayer",
+        "echoEngage",
+        "echoDeath",
+        "switchMelee",
+        "breathLow"
+      ],
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "newSamples": 19,
+      "wired": [
+        "hurtPlayer",
+        "hurtEnemy",
+        "deathEnemy",
+        "deathPlayer",
+        "echoEngage",
+        "echoDeath",
+        "switchMelee",
+        "breathLow"
+      ],
+      "errors": []
+    }
+  ]
+}

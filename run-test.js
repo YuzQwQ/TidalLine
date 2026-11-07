@@ -1379,8 +1379,7 @@ Game.debug = false;
 
 console.log('\n=== 玩家动画状态 ===');
 Game.startRun();
-/* 出生点的合法站位：北侧楼体在南边投影半格，格子中心（cy(4)=144）正好压在墙沿上，
-   人物会被自己的碰撞圆卡住走不动。游戏里出生也用 navigationPoint，这里照抄。 */
+/* 出生与寻路都使用格中心；墙顶的北侧半格投影不占用站位。 */
 const SPAWN_PT = M.navigationPoint(7, 4);
 const animator = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y);
 animator.tickAnimation(0.55, false);
@@ -1480,10 +1479,57 @@ swapper.fillWeapons([EQUIP.gun('rifle', 5), null, null]);
 swapper.melee = ctx.MeleeSystem.normalize(EQUIP.melee('melee01'));
 sfxLog.length = 0;
 swapper.switchMelee();
-ok('枪 → 刀有声', sfxLog.some(c => c.name === 'shot_switch'));
+/* 新素材是拔刃出鞘；SFX.play 在采样缺失时自己退回 shot_switch */
+ok('枪 → 刀有声', sfxLog.some(c => c.name === 'switchMelee' || c.name === 'shot_switch'));
 sfxLog.length = 0;
 swapper.switchWeapon(0);
 ok('刀 → 枪有声', sfxLog.filter(c => c.name === 'shot_switch').length === 1);
+
+console.log('\n=== 新一批战斗人声：随机池 / 触发间隔 / 接战只在状态切换 ===');
+{
+  const log = [];
+  const realPlay = ctx.SFX._playSample, realCtx = ctx.SFX.ctx, realOn = ctx.SFX.on;
+  const realNow = ctx.performance.now;
+  let clock = 1000;
+  ctx.performance.now = () => clock;
+  ctx.SFX.ctx = { state: 'running' }; ctx.SFX.on = true;
+  ctx.SFX._poolAt = {}; ctx.SFX._poolLast = {};
+  for (const id of ['hurt_player_1','hurt_player_2','hurt_player_3',
+                    'hurt_enemy_1','hurt_enemy_2','echo_engage','echo_death','death_enemy_1'])
+    ctx.SFX.samples[id] = {};
+  ctx.SFX._playSample = (id) => { log.push(id); return true; };
+  try {
+    ctx.SFX.play('hurtPlayer');
+    ok('玩家受伤从三条里随机抽一条', log.length === 1 && /^hurt_player_[123]$/.test(log[0]));
+    ctx.SFX.play('hurtPlayer');
+    ok('0.8 秒内连着挨打不再叠音', log.length === 1);
+    clock += 900;
+    ctx.SFX.play('hurtPlayer');
+    ok('过了间隔才换下一条，且不与上一条重复',
+       log.length === 2 && /^hurt_player_[123]$/.test(log[1]) && log[1] !== log[0]);
+    ctx.SFX.play('hurtEnemy'); ctx.SFX.play('hurtEnemy');
+    ok('敌人受伤走自己的池子和间隔', log.filter(x => /^hurt_enemy_/.test(x)).length === 1);
+
+    /* 接战音：只在非 chase → chase 的那一次，且池间隔兜住抖动 */
+    const e = new ctx.Enemy('echo', SPAWN_PT.x, SPAWN_PT.y);
+    sfxLog.length = 0;
+    e.enterCombat(); e.enterCombat();
+    ok('接战音只在进入战斗那一次响', sfxLog.filter(c => c.name === 'echoEngage').length === 1);
+    e.state = 'patrol';
+    e.enterCombat();
+    ok('退出战斗后重新接战会再响一次', sfxLog.filter(c => c.name === 'echoEngage').length === 2);
+    const scav = new ctx.Enemy('scav', SPAWN_PT.x, SPAWN_PT.y);
+    sfxLog.length = 0;
+    scav.enterCombat();
+    ok('人形敌人不吃异常生物接战音', sfxLog.every(c => c.name !== 'echoEngage'));
+  } finally {
+    ctx.SFX._playSample = realPlay; ctx.SFX.ctx = realCtx; ctx.SFX.on = realOn;
+    ctx.performance.now = realNow;
+    for (const id of ['hurt_player_1','hurt_player_2','hurt_player_3',
+                      'hurt_enemy_1','hurt_enemy_2','echo_engage','echo_death','death_enemy_1'])
+      delete ctx.SFX.samples[id];
+  }
+}
 
 /* 切枪音按枪型走：霰弹枪是泵动上膛，其余沿用通用滑套 */
 const sw2 = new ctx.Player(SPAWN_PT.x, SPAWN_PT.y);

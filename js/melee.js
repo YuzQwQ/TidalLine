@@ -217,8 +217,8 @@ Player.prototype.switchMelee=function(){
   const wasActive=this.meleeActive;
   Medical.cancel();AmmoQuick.cancel();MedQuick.cancel();this.reloadT=0;this.reloadPending=false;this.meleeActive=true;
   MeleeSystem.cancel(this);Game.renderGearPanel();
-  /* 枪 → 刀：金属滑出的声音，压低一点，和换枪的清脆滑套分开 */
-  if(!wasActive)Game.sfx('shot_switch',{rate:0.86});
+  /* 枪 → 刀：换成拔刃出鞘那一段；素材没加载上时 SFX 自己退回滑套声 */
+  if(!wasActive)Game.sfx('switchMelee',{rate:0.98});
   return true;
 };
 meleeWrap(Player.prototype,'switchWeapon',function(original,i){
