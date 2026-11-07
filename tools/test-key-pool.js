@@ -63,7 +63,7 @@ test('高价值容器一粒钥匙都不出', () => {
   }
 });
 
-test('掉落率与配置一致（±0.03%）', () => {
+test('掉落率与配置一致（3σ 容差）', () => {
   const N = 60000;
   for (const ch of ['U', 'Y', 'F']) {
     const t = CONTAINER_TYPES[ch];
@@ -71,8 +71,10 @@ test('掉落率与配置一致（±0.03%）', () => {
     for (let i = 0; i < N; i++) {
       if (Loot.fill(t.q, t.cats, t).some(e => e.item.cat === 'key')) hit++;
     }
-    const p = hit / N;
-    assert(near(p, t.keyPool.chance, 3e-4), ch + ' 实测 ' + (p * 100).toFixed(3) + '% ≠ 配置 ' + (t.keyPool.chance * 100).toFixed(2) + '%');
+    const p = hit / N, exp = t.keyPool.chance;
+    /* 二项分布抽样误差：3σ ≈ 99.7% 置信。固定容差在 0.3% 档会偶发误报 */
+    const tol = 3 * Math.sqrt(exp * (1 - exp) / N);
+    assert(near(p, exp, tol), ch + ' 实测 ' + (p * 100).toFixed(3) + '% ≠ 配置 ' + (exp * 100).toFixed(2) + '%');
   }
 });
 
