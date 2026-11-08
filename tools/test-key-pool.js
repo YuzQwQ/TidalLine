@@ -89,7 +89,7 @@ test('钥匙是额外一件，件数不超过 rolls 上限 +1', () => {
   }
 });
 
-test('档位分布按 keyTiers，红档合计为两把之和', () => {
+test('档位分布按 keyTiers（档位权重，与同档把数无关）', () => {
   const tiers = CFG.LOOT.keyTiers;
   const N = 120000;
   const seen = {};
@@ -105,10 +105,11 @@ test('档位分布按 keyTiers，红档合计为两把之和', () => {
     }
   }
   assert(total > 500, '样本太少：' + total);
-  const wsum = DROPPABLE.reduce((s, k) => s + (tiers[k.r] || 0), 0);
+  const tierSum = [...new Set(DROPPABLE.map(k => k.r))].reduce((s, r) => s + (tiers[r] || 0), 0);
   for (const k of DROPPABLE) {
+    const sameTier = DROPPABLE.filter(x => x.r === k.r);
     const p = (seen[k.id] || 0) / total;
-    const exp = (tiers[k.r] || 0) / wsum;
+    const exp = (tiers[k.r] || 0) / tierSum / sameTier.length;
     assert(near(p, exp, 0.03), k.number + ' 实测 ' + (p * 100).toFixed(1) + '% ≠ 期望 ' + (exp * 100).toFixed(1) + '%');
   }
 });

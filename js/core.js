@@ -549,7 +549,7 @@ const Loot = {
   },
   /* 指定物品池也按稀有度加权，尸体不能绕过新等级规则等概率产出孤品。 */
   pickFromPool(pool) {
-    /* egg 与 noLoot 一样不进常规池：彩蛋只能从 roll() 里那条 2% 的支线出来，
+    /* egg 与 noLoot 一样不进常规池：彩蛋只能从 roll() 里那条按品质判定的支线出来，
        否则它会挤进同类池、把其它红色物品的概率按数量摊薄。 */
     const available=pool.filter(item=>!item.noLoot&&!item.egg&&RARITY_WEIGHT[item.r]>0);
     if(!available.length)return null;
@@ -640,9 +640,9 @@ const Loot = {
     let r = Math.random() * total;
     for (let i = 0; i < pool.length; i++) {
       r -= w[i];
-      if (r <= 0) return itemPool?.allowEggs===false ? { item: pool[i], n: 1 } : this.eggSwap({ item: pool[i], n: 1 });
+      if (r <= 0) return itemPool?.allowEggs===false ? { item: pool[i], n: 1 } : this.eggSwap({ item: pool[i], n: 1 }, quality);
     }
-    return itemPool?.allowEggs===false ? { item: pool[0], n: 1 } : this.eggSwap({ item: pool[0], n: 1 });
+    return itemPool?.allowEggs===false ? { item: pool[0], n: 1 } : this.eggSwap({ item: pool[0], n: 1 }, quality);
   },
 
   /* 价值档位的单件权重。没有配档位的红色按三档均值兜底，
@@ -660,14 +660,29 @@ const Loot = {
   /* 彩蛋池：数据里带 egg 标记的收集品（当前四件，等概率）。 */
   eggPool() { return ITEMS.filter(it => it.egg); },
 
+  /* 某个容器品质的红后中签率。
+     eggChance 是兜底值（没有品质覆盖时用），同时是总开关：
+     它被设成 0 就等于关掉整条彩蛋支线，老测试与调试脚本的语义不变。 */
+  eggChanceFor(quality) {
+    const L = CFG.LOOT || {};
+    const base = L.eggChance == null ? 0 : L.eggChance;
+    if (!(base > 0)) return 0;
+    const table = L.eggByQuality || null;
+    const v = (table && quality != null) ? table[quality] : null;
+    if (v == null) return base;
+    return v > 0 ? v : 0;
+  },
+
   /* 抽到红色物品之后再掷一次：中签就把这件换成彩蛋池里的一件。
-     因为彩蛋本身也是 r6，稀有度分布一格不动，只是「红色里有两成是彩蛋之外的东西」。
+     中签率按容器品质取（eggByQuality），废弃 / 普通箱子恒为 0 ——
+     彩蛋不在垃圾堆里，只有贵重与秘藏箱才有。没有品质信息时用 eggChance 兜底。
+     因为彩蛋本身也是 r6，稀有度分布一格不动，只是「红色里有几成是彩蛋」。
      chance 为 0 或没有彩蛋数据时原样返回，所以关掉功能不需要改调用点。 */
-  eggSwap(pick) {
-    const L = CFG.LOOT || {}, chance = L.eggChance == null ? 0 : L.eggChance;
+  eggSwap(pick, quality) {
+    const chance = this.eggChanceFor(quality);
     const eggs = chance > 0 ? this.eggPool() : null;
     if (!pick || !pick.item || !eggs || !eggs.length) return pick;
-    if (pick.item.r !== (L.eggRarity || 6)) return pick;
+    if (pick.item.r !== ((CFG.LOOT && CFG.LOOT.eggRarity) || 6)) return pick;
     if (Math.random() >= chance) return pick;
     return { item: U.pick(eggs), n: 1 };
   },
@@ -755,13 +770,26 @@ const Loot = {
     const pool = (typeof KEY_ITEMS !== 'undefined' ? KEY_ITEMS : [])
       .filter(k => k && k.cat === 'key' && k.drop === true && k.price > 0);
     if (!pool.length) return null;
+    /* 先按档位权重抽档，再在档内按 lootW 选一把：
+       keyTiers 表示「档位概率」，不会因为某档钥匙变多而稀释其他档。 */
     const tiers = options.tiers || (CFG.LOOT && CFG.LOOT.keyTiers) || { 4: 65, 5: 27, 6: 8 };
-    const w = pool.map(k => (tiers[k.r] || 0) * (k.lootW == null ? 1 : k.lootW));
-    const total = w.reduce((s, v) => s + v, 0);
+    const groups = [];
+    for (const k of pool) {
+      const w = tiers[k.r] || 0;
+      if (!(w > 0)) continue;
+      const g = groups.find(x => x.r === k.r);
+      if (g) g.items.push(k); else groups.push({ r: k.r, w, items: [k] });
+    }
+    const total = groups.reduce((s, g) => s + g.w, 0);
     if (!(total > 0)) return null;
     let roll = Math.random() * total;
-    for (let i = 0; i < pool.length; i++) { roll -= w[i]; if (roll <= 0) return { item: pool[i], n: 1 }; }
-    return { item: pool[0], n: 1 };
+    let chosen = groups[groups.length - 1];
+    for (const g of groups) { roll -= g.w; if (roll <= 0) { chosen = g; break; } }
+    const items = chosen.items;
+    const wsum = items.reduce((s, k) => s + (k.lootW == null ? 1 : k.lootW), 0);
+    let pick = Math.random() * wsum;
+    for (const k of items) { pick -= (k.lootW == null ? 1 : k.lootW); if (pick <= 0) return { item: k, n: 1 }; }
+    return { item: items[0], n: 1 };
   },
 
   fill(quality, preferredCats, type) {

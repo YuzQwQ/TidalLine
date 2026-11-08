@@ -29,12 +29,13 @@ const G = vm.runInContext(
 const { ITEMS, CONTAINER_TYPES, CONTAINER_QUALITY, QUALITY_ORDER, RARITY, CATS, BOX_COUNT, CAT_PREF, MAP,
         Loot, CFG, itemGroup } = G;
 const RED_R = (CFG.LOOT && CFG.LOOT.eggRarity) || 6;
-const EGG_CHANCE = (CFG.LOOT && CFG.LOOT.eggChance) || 0;
 const EGGS = ITEMS.filter(i => i.egg);
+/* 彩蛋中签率按容器品质给（CFG.LOOT.eggByQuality），没有品质时回落到 eggChance */
+const eggChance = q => Loot.eggChanceFor(q);
 
 /* ---------- 复刻 Loot.roll 的权重 ----------
    与 js/core.js 保持同源：品类权重按 cellW 归一、红档内部再按 tierWeight 归一，
-   抽到红档之后还有 eggChance 的彩蛋支线（红档总量不变，只把 2% 分给彩蛋）。
+   抽到红档之后还有一条彩蛋支线（中签率按品质取，红档总量不变，只把其中一部分分给彩蛋）。
    itemPool 是容器声明的专属池：非红只放行 cats 里的类别，红档放行全部收集品；
    池内类别等权，点位偏好 catPref 与高级容器的 collect ×1.35 都不再生效。 */
 function weightTable(quality, prefCats, itemPool) {
@@ -79,6 +80,7 @@ function weightTable(quality, prefCats, itemPool) {
   });
   for (const row of rows) row.p /= total;
   /* 彩蛋：从红档总量里切走 eggChance，均分给彩蛋池 */
+  const EGG_CHANCE = eggChance(quality);
   if (EGG_CHANCE > 0 && EGGS.length) {
     const redP = rows.filter(r => r.r === RED_R).reduce((s, r) => s + r.p, 0);
     for (const row of rows) if (row.r === RED_R) row.p *= (1 - EGG_CHANCE);

@@ -28,7 +28,7 @@ const TYPES = vm.runInContext('CONTAINER_TYPES', ctx);
 const RARITY = vm.runInContext('RARITY', ctx);
 const BAG = CFG.BAG;
 
-const ROOM = ['V','B','O','I','Q'];
+const ROOM = ['V','B','O'];
 const perBox = {};
 for (const ch of ROOM) perBox[ch] = { draws:0, redDraws:0, boxes:0, boxRed:0, items:0, value:0 };
 
@@ -283,7 +283,7 @@ ${scenButtons}
 
   <div class="ctrl">
     <label for="p">钥匙总价（售价）</label>
-    <input id="p" type="range" min="500000" max="40000000" step="500000" value="27000000">
+    <input id="p" type="range" min="500000" max="30000000" step="500000" value="18500000">
     <output id="ro-p">¥27,000,000</output>
   </div>
   <div class="ctrl">

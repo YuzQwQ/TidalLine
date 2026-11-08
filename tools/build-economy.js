@@ -33,7 +33,9 @@ function build(){
  src=src.includes('/* BEGIN ECONOMY SETTINGS */')?src.replace(/\/\* BEGIN ECONOMY SETTINGS \*\/[\s\S]*?\/\* END ECONOMY SETTINGS \*\//,block):src.replace('const ITEMS = [',block+'\n\nconst ITEMS = [');
  const c=vm.createContext({});vm.runInContext(fs.readFileSync(path.join(root,'js/config.js'),'utf8'),c);vm.runInContext(src,c);
  const items=vm.runInContext('ITEMS',c);
- assert.equal(items.filter(i=>i.cat!=='ammo').length,spec.items.length,'物品价格审查需要更新');
+ /* 钥匙价格由 design/items/keys.json 经 tools/build-keys.js 单独写入，
+    经济表里不重复登记 —— 两边各存一份必然对不齐，所以这里按类别排除。 */
+ assert.equal(items.filter(i=>i.cat!=='ammo'&&i.cat!=='key').length,spec.items.length,'物品价格审查需要更新');
  /* 弹药价格直接校验生成结果 */
  for(const [cal,lv,price] of [[ '556',1,60],['9mm',1,35],['12g',1,80]]){
   const it=items.find(i=>i.id==='ammo_'+cal+'_'+lv);

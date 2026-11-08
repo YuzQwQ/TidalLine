@@ -8,9 +8,10 @@ assert.deepEqual(Array.from(tiers,t=>t.color),['#c6ceca','#3f8b78','#3f6d9b','#9
 assert.equal(review.items.length,170);assert.equal(new Set(review.items.map(i=>i.id)).size,170);
 for(const r of review.items){const item=items.find(i=>i.id===r.id);assert.equal(groupOf(item),'collectible');assert.equal(item.r,r.rarity);assert(r.reason.length>12);}
 assert.deepEqual(Array.from(tiers,t=>items.filter(i=>groupOf(i)==='collectible'&&i.r===t.k).length),[17,29,33,32,27,32]);
-assert.equal(items.filter(i=>i.r===6).length,32);assert(items.filter(i=>i.r===6).some(i=>i.id==='odd02'));
+/* 钥匙也算 r6（银行金库钥），这里只数收集品 */
+assert.equal(items.filter(i=>i.r===6&&groupOf(i)==='collectible').length,32);assert(items.filter(i=>i.r===6).some(i=>i.id==='odd02'));
 /* 红档内部必须有价值档位：每件非彩蛋红都带 tier，且三档都有人 */
-const reds=items.filter(i=>i.r===6&&!i.egg);
+const reds=items.filter(i=>i.r===6&&!i.egg&&groupOf(i)==='collectible');
 assert(reds.every(i=>[1,2,3].includes(i.tier)),'红档缺 tier');
 assert.deepEqual([1,2,3].map(t=>reds.filter(i=>i.tier===t).length),[9,9,10]);
 const L=vm.runInContext('Loot',c);assert.equal(cfg.LOOT.redTiers[1]+cfg.LOOT.redTiers[2]+cfg.LOOT.redTiers[3],98);

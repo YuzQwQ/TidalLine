@@ -5286,8 +5286,7 @@
       "footprint": [
         2,
         1
-      ],
-      "facing": "back"
+      ]
     },
     {
       "id": "p48",
@@ -5567,8 +5566,8 @@
       "region": "outdoors",
       "type": "decal_surface_crack_01",
       "name": "细裂纹",
-      "x": 63,
-      "y": 14,
+      "x": 62,
+      "y": 12,
       "solid": false,
       "ground": true,
       "opaque": false,
@@ -7821,8 +7820,8 @@
       "region": "outdoors",
       "type": "tree_courtyard_canopy",
       "name": "院落树木",
-      "x": 39,
-      "y": 32,
+      "x": 38,
+      "y": 31,
       "solid": true,
       "footprint": [
         3,
@@ -8301,7 +8300,7 @@
       "region": "outdoors",
       "type": "decal_surface_damp_01",
       "name": "潮湿痕迹",
-      "x": 53,
+      "x": 51,
       "y": 53,
       "solid": false,
       "ground": true,
@@ -8482,6 +8481,20 @@
       "footprint": [
         1,
         1
+      ],
+      "facing": "side"
+    },
+    {
+      "id": "p279",
+      "region": "bank",
+      "type": "display_clock",
+      "name": "橱窗展柜",
+      "x": 54,
+      "y": 19,
+      "solid": true,
+      "footprint": [
+        1,
+        2
       ],
       "facing": "side"
     }
@@ -9269,17 +9282,6 @@
       ]
     },
     {
-      "id": "c87",
-      "region": "outdoors",
-      "type": "Q",
-      "x": 22,
-      "y": 10,
-      "preference": [
-        "ind",
-        "elec"
-      ]
-    },
-    {
       "id": "c88",
       "region": "apartment",
       "type": "b",
@@ -9500,16 +9502,6 @@
       ]
     },
     {
-      "id": "c112",
-      "region": "bank",
-      "type": "V",
-      "x": 52,
-      "y": 18,
-      "preference": [
-        "collect"
-      ]
-    },
-    {
       "id": "c113",
       "region": "clockshop",
       "type": "e",
@@ -9529,16 +9521,6 @@
       "preference": [
         "ind",
         "elec"
-      ]
-    },
-    {
-      "id": "c116",
-      "region": "outdoors",
-      "type": "I",
-      "x": 18,
-      "y": 9,
-      "preference": [
-        "life"
       ]
     },
     {
@@ -9776,7 +9758,7 @@
       "region": "bank",
       "type": "I",
       "x": 52,
-      "y": 21,
+      "y": 18,
       "preference": [
         "life"
       ]
@@ -10043,6 +10025,1317 @@
       "q": "secret"
     }
   },
+  "lootSpawns": [
+    {
+      "id": "loot-1",
+      "name": "物资刷新点",
+      "x": 20,
+      "y": 7,
+      "pool": "collect",
+      "chance": 30,
+      "weights": [
+        5,
+        10,
+        20,
+        35,
+        25,
+        5
+      ],
+      "offsetY": 12
+    },
+    {
+      "id": "loot-2",
+      "name": "物资刷新点",
+      "x": 18,
+      "y": 11,
+      "pool": "intel",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-3",
+      "name": "物资刷新点",
+      "x": 12,
+      "y": 10,
+      "pool": "intel",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-4",
+      "name": "物资刷新点",
+      "x": 6,
+      "y": 10,
+      "pool": "intel",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-5",
+      "name": "物资刷新点",
+      "x": 9,
+      "y": 6,
+      "pool": "life",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-6",
+      "name": "物资刷新点",
+      "x": 15,
+      "y": 6,
+      "pool": "life",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-7",
+      "name": "物资刷新点",
+      "x": 17,
+      "y": 13,
+      "pool": "ind",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-8",
+      "name": "物资刷新点",
+      "x": 21,
+      "y": 14,
+      "pool": "ind",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-9",
+      "name": "物资刷新点",
+      "x": 12,
+      "y": 18,
+      "pool": "life",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-10",
+      "name": "物资刷新点",
+      "x": 19,
+      "y": 21,
+      "pool": "life",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-11",
+      "name": "物资刷新点",
+      "x": 7,
+      "y": 26,
+      "pool": "collect",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-12",
+      "name": "物资刷新点",
+      "x": 7,
+      "y": 30,
+      "pool": "elec",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-13",
+      "name": "物资刷新点",
+      "x": 18,
+      "y": 30,
+      "pool": "life",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-14",
+      "name": "物资刷新点",
+      "x": 18,
+      "y": 26,
+      "pool": "ind",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-15",
+      "name": "物资刷新点",
+      "x": 27,
+      "y": 29,
+      "pool": "life",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-16",
+      "name": "物资刷新点",
+      "x": 27,
+      "y": 36,
+      "pool": "life",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-17",
+      "name": "物资刷新点",
+      "x": 16,
+      "y": 40,
+      "pool": "collect",
+      "chance": 30,
+      "weights": [
+        5,
+        10,
+        20,
+        35,
+        25,
+        5
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-18",
+      "name": "物资刷新点",
+      "x": 7,
+      "y": 39,
+      "pool": "med",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-19",
+      "name": "物资刷新点",
+      "x": 7,
+      "y": 41,
+      "pool": "med",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-20",
+      "name": "物资刷新点",
+      "x": 11,
+      "y": 42,
+      "pool": "med",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-21",
+      "name": "物资刷新点",
+      "x": 6,
+      "y": 44,
+      "pool": "med",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-22",
+      "name": "物资刷新点",
+      "x": 11,
+      "y": 45,
+      "pool": "med",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-23",
+      "name": "物资刷新点",
+      "x": 16,
+      "y": 34,
+      "pool": "life",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-24",
+      "name": "物资刷新点",
+      "x": 10,
+      "y": 34,
+      "pool": "elec",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-25",
+      "name": "物资刷新点",
+      "x": 16,
+      "y": 44,
+      "pool": "life",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-26",
+      "name": "物资刷新点",
+      "x": 13,
+      "y": 50,
+      "pool": "life",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-27",
+      "name": "物资刷新点",
+      "x": 27,
+      "y": 48,
+      "pool": "ind",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-28",
+      "name": "物资刷新点",
+      "x": 58,
+      "y": 8,
+      "pool": "life",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-29",
+      "name": "物资刷新点",
+      "x": 59,
+      "y": 9,
+      "pool": "life",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-30",
+      "name": "物资刷新点",
+      "x": 66,
+      "y": 9,
+      "pool": "life",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-31",
+      "name": "物资刷新点",
+      "x": 47,
+      "y": 5,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-32",
+      "name": "物资刷新点",
+      "x": 47,
+      "y": 7,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-33",
+      "name": "物资刷新点",
+      "x": 53,
+      "y": 5,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-34",
+      "name": "物资刷新点",
+      "x": 53,
+      "y": 7,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-35",
+      "name": "物资刷新点",
+      "x": 53,
+      "y": 12,
+      "pool": "elec",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-36",
+      "name": "物资刷新点",
+      "x": 53,
+      "y": 15,
+      "pool": "elec",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-37",
+      "name": "物资刷新点",
+      "x": 63,
+      "y": 20,
+      "pool": "occult",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-38",
+      "name": "物资刷新点",
+      "x": 63,
+      "y": 19,
+      "pool": "elec",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-39",
+      "name": "物资刷新点",
+      "x": 45,
+      "y": 20,
+      "pool": "collect",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-40",
+      "name": "物资刷新点",
+      "x": 45,
+      "y": 22,
+      "pool": "collect",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-41",
+      "name": "物资刷新点",
+      "x": 54,
+      "y": 19,
+      "pool": "collect",
+      "chance": 30,
+      "weights": [
+        5,
+        10,
+        20,
+        35,
+        25,
+        5
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-42",
+      "name": "物资刷新点",
+      "x": 54,
+      "y": 20,
+      "pool": "collect",
+      "chance": 30,
+      "weights": [
+        5,
+        10,
+        20,
+        35,
+        25,
+        5
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-44",
+      "name": "物资刷新点",
+      "x": 38,
+      "y": 29,
+      "pool": "collect",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-45",
+      "name": "物资刷新点",
+      "x": 38,
+      "y": 35,
+      "pool": "collect",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-43",
+      "name": "物资刷新点",
+      "x": 38,
+      "y": 50,
+      "pool": "mil",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-46",
+      "name": "物资刷新点",
+      "x": 42,
+      "y": 43,
+      "pool": "mil",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-47",
+      "name": "物资刷新点",
+      "x": 39,
+      "y": 54,
+      "pool": "mil",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-48",
+      "name": "物资刷新点",
+      "x": 39,
+      "y": 52,
+      "pool": "intel",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-49",
+      "name": "物资刷新点",
+      "x": 48,
+      "y": 52,
+      "pool": "gun",
+      "chance": 30,
+      "weights": [
+        10,
+        20,
+        35,
+        25,
+        10,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-50",
+      "name": "物资刷新点",
+      "x": 54,
+      "y": 52,
+      "pool": "ammo",
+      "chance": 70,
+      "weights": [
+        10,
+        15,
+        35,
+        30,
+        10,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-51",
+      "name": "物资刷新点",
+      "x": 55,
+      "y": 53,
+      "pool": "ammo",
+      "chance": 70,
+      "weights": [
+        10,
+        15,
+        35,
+        30,
+        10,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-52",
+      "name": "物资刷新点",
+      "x": 55,
+      "y": 31,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-53",
+      "name": "物资刷新点",
+      "x": 55,
+      "y": 34,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-54",
+      "name": "物资刷新点",
+      "x": 56,
+      "y": 37,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-55",
+      "name": "物资刷新点",
+      "x": 55,
+      "y": 43,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-56",
+      "name": "物资刷新点",
+      "x": 55,
+      "y": 46,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-57",
+      "name": "物资刷新点",
+      "x": 59,
+      "y": 46,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-58",
+      "name": "物资刷新点",
+      "x": 63,
+      "y": 46,
+      "pool": "collect",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-59",
+      "name": "物资刷新点",
+      "x": 56,
+      "y": 39,
+      "pool": "intel",
+      "chance": 70,
+      "weights": [
+        15,
+        22,
+        30,
+        25,
+        7,
+        1
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-60",
+      "name": "物资刷新点",
+      "x": 60,
+      "y": 31,
+      "pool": "life",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-61",
+      "name": "物资刷新点",
+      "x": 59,
+      "y": 32,
+      "pool": "life",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-62",
+      "name": "物资刷新点",
+      "x": 59,
+      "y": 37,
+      "pool": "elec",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-63",
+      "name": "物资刷新点",
+      "x": 65,
+      "y": 34,
+      "pool": "ind",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-64",
+      "name": "物资刷新点",
+      "x": 65,
+      "y": 36,
+      "pool": "ind",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-65",
+      "name": "物资刷新点",
+      "x": 62,
+      "y": 37,
+      "pool": "ind",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-66",
+      "name": "物资刷新点",
+      "x": 59,
+      "y": 39,
+      "pool": "elec",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-67",
+      "name": "物资刷新点",
+      "x": 62,
+      "y": 39,
+      "pool": "elec",
+      "chance": 75,
+      "weights": [
+        30,
+        30,
+        25,
+        12,
+        2.8,
+        0.2
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-68",
+      "name": "物资刷新点",
+      "x": 65,
+      "y": 42,
+      "pool": "collect",
+      "chance": 30,
+      "weights": [
+        5,
+        10,
+        20,
+        35,
+        25,
+        5
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-69",
+      "name": "物资刷新点",
+      "x": 66,
+      "y": 42,
+      "pool": "collect",
+      "chance": 30,
+      "weights": [
+        5,
+        10,
+        20,
+        35,
+        25,
+        5
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-70",
+      "name": "物资刷新点",
+      "x": 40,
+      "y": 47,
+      "pool": "ind",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-71",
+      "name": "物资刷新点",
+      "x": 42,
+      "y": 47,
+      "pool": "ind",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-72",
+      "name": "物资刷新点",
+      "x": 44,
+      "y": 47,
+      "pool": "ind",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-73",
+      "name": "物资刷新点",
+      "x": 46,
+      "y": 47,
+      "pool": "ind",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-74",
+      "name": "物资刷新点",
+      "x": 9,
+      "y": 38,
+      "pool": "medical",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-75",
+      "name": "物资刷新点",
+      "x": 7,
+      "y": 42,
+      "pool": "medical",
+      "chance": 80,
+      "weights": [
+        55,
+        28,
+        13,
+        3.5,
+        0.5,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-76",
+      "name": "物资刷新点",
+      "x": 8,
+      "y": 7,
+      "pool": "life",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    },
+    {
+      "id": "loot-77",
+      "name": "物资刷新点",
+      "x": 14,
+      "y": 7,
+      "pool": "life",
+      "chance": 70,
+      "weights": [
+        78,
+        19,
+        2.8,
+        0.2,
+        0,
+        0
+      ],
+      "offsetY": 0
+    }
+  ],
   "enemies": [
     {
       "id": "e04",
@@ -10072,7 +11365,7 @@
       "id": "e08",
       "region": "bank",
       "type": "scav",
-      "x": 51,
+      "x": 53,
       "y": 24,
       "patrolRadius": 2
     },
@@ -10158,9 +11451,9 @@
     },
     {
       "id": "e20",
-      "region": "outdoors",
+      "region": "clinic",
       "type": "echo",
-      "x": 15,
+      "x": 13,
       "y": 36,
       "patrolRadius": 3
     },
@@ -10176,16 +11469,16 @@
       "id": "e24",
       "region": "outdoors",
       "type": "echo",
-      "x": 50,
-      "y": 40,
+      "x": 41,
+      "y": 37,
       "patrolRadius": 3
     },
     {
       "id": "e25",
       "region": "bank",
       "type": "scav",
-      "x": 53,
-      "y": 19,
+      "x": 47,
+      "y": 25,
       "patrolRadius": 2
     },
     {
@@ -10200,8 +11493,8 @@
       "id": "e27",
       "region": "outdoors",
       "type": "scav",
-      "x": 58,
-      "y": 23,
+      "x": 60,
+      "y": 13,
       "patrolRadius": 2
     },
     {
@@ -10302,10 +11595,10 @@
     },
     {
       "id": "e46",
-      "region": "bank",
+      "region": "outdoors",
       "type": "scav",
-      "x": 50,
-      "y": 21,
+      "x": 58,
+      "y": 25,
       "patrolRadius": 2
     },
     {
@@ -10388,6 +11681,71 @@
       "y": 16,
       "patrolRadius": 2,
       "facing": "s"
+    },
+    {
+      "id": "e56",
+      "region": "clockshop",
+      "type": "guard",
+      "x": 53,
+      "y": 41,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e57",
+      "region": "clockshop",
+      "type": "guard",
+      "x": 54,
+      "y": 36,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e58",
+      "region": "clockshop",
+      "type": "guard",
+      "x": 56,
+      "y": 43,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e59",
+      "region": "warehouse",
+      "type": "retriever",
+      "x": 48,
+      "y": 48,
+      "patrolRadius": 2,
+      "facing": "s"
+    },
+    {
+      "id": "e60",
+      "region": "outdoors",
+      "type": "echo",
+      "x": 17,
+      "y": 41,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e61",
+      "region": "outdoors",
+      "type": "echo",
+      "x": 18,
+      "y": 43,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e62",
+      "region": "outdoors",
+      "type": "echo",
+      "x": 20,
+      "y": 40,
+      "patrolRadius": 2
+    },
+    {
+      "id": "e63",
+      "region": "outdoors",
+      "type": "echo",
+      "x": 21,
+      "y": 43,
+      "patrolRadius": 2
     }
   ],
   "spawn": {

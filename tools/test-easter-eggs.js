@@ -75,12 +75,14 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+decodeU
   const pool=await p.evaluate(()=>({
     eggs:Loot.eggPool().map(i=>i.id),
     chance:CFG.LOOT.eggChance,
+    byQuality:Object.keys(CFG.LOOT.eggByQuality).map(q=>q+':'+Loot.eggChanceFor(q)).join(','),
     inRoll:(()=>{let hit=0;const keep=CFG.LOOT.eggChance;CFG.LOOT.eggChance=0;
       for(let i=0;i<3000;i++)if(Loot.roll('secret').item.egg)hit++;CFG.LOOT.eggChance=keep;return hit;})(),
     fromPool:Loot.pickFromPool(ITEMS.filter(i=>i.egg))
   }));
   assert.deepEqual(pool.eggs,['odd13','odd14','odd15','odd16'],'彩蛋池就是这四件');
-  assert.equal(pool.chance,0.02,'掉落概率 2%');
+  assert.equal(pool.chance,0.02,'没有品质信息时兜底中签率 2%');
+  assert.equal(pool.byQuality,'junk:0,plain:0,ample:0.01,fine:0.04,rich:0.12,secret:0.25','品质分级中签率');
   assert.equal(pool.inRoll,0,'常规池不得漏出彩蛋');
   assert.equal(pool.fromPool,null,'尸体/敌人池不得包含彩蛋');
 
