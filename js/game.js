@@ -423,8 +423,34 @@ const Game = {
     if(!this.rangeMode){
       Save.normalizeSafe();
       this.player.bag.safe=Save.safe.map(e=>({item:stashItem(e),n:e.n||1,...(e.cap==null?{}:{cap:e.cap})}));
-      Save.safe=[];Save.save();Save.flush();
+      Save.safe=[];
+      /* 钥匙链跟着人走：局内拿一份副本，存档里这一串原地留着。
+         局内每开一次门都会把剩余耐久写回 Save.chain（Game.syncRaidChain），
+         撤离 / 阵亡时结算页再按副本整体回写一遍。
+         不在这里清空 —— 局内刷新会直接回到藏身处，清空了整串钥匙就掉了。 */
+      Save.normalizeChain();
+      this.player.bag.chain=Save.chain.map(e=>({item:stashItem(e),n:e.n||1,...(e.cap==null?{}:{cap:e.cap})}));
+      Save.save();Save.flush();
     }
+  },
+
+  /* 钥匙链的耐久写回存档：局内每开一次锁、以及关页 / 刷新前各调一次。
+     耐久归零的那把按规则直接销毁，不进仓库也不留在链上。 */
+  syncRaidChain() {
+    const P = this.player;
+    if (!P || !P.bag || !Array.isArray(P.bag.chain)) return false;
+    /* 靶场和门测试走 rangeMode，不会把存档里的链条搬进来：
+       这时局内是空链、存档里却还有钥匙，别让空数组把存档覆盖掉。 */
+    if (!P.bag.chain.length && (Save.chain || []).length) return false;
+    const rows = P.bag.chain.filter(s => s && s.item && ItemCapacity.remaining(s) >= 1)
+      .map(s => ({ id: s.item.id, n: s.n || 1, ...(s.cap == null ? {} : { cap: s.cap }) }));
+    const same = rows.length === (Save.chain || []).length &&
+      rows.every((r, i) => Save.chain[i] && Save.chain[i].id === r.id &&
+        ItemCapacity.remaining(Save.chain[i]) === ItemCapacity.remaining(r));
+    if (same) return false;
+    Save.chain = rows;
+    Save.save(); Save.flush();
+    return true;
   },
 
   grantLegacyBag(L) {

@@ -15,14 +15,14 @@ async function main(){
     const check=(c,m)=>{if(!c)throw Error(m);},k=ITEM_BY_ID.door_key_test,k2=ITEM_BY_ID.door_key_old_apt,
       k3=ITEM_BY_ID.door_key_tier_1,k4=ITEM_BY_ID.door_key_tier_2,P=Game.player;
     check(KEY_ITEMS.length===8&&k.maxDur===1&&k.price===400000,'catalog');
-    check(k2&&k2.name==='老公寓3号房钥匙'&&k2.maxDur===10&&k2.price===30000000&&k2.number==='002'&&k2.r===6&&k2.cat==='key','top tier key catalog');
+    check(k2&&k2.name==='老公寓3号房钥匙'&&k2.maxDur===10&&k2.price===18500000&&k2.number==='002'&&k2.r===5&&k2.cat==='key','old apartment key catalog');
     check(k3&&k3.maxDur===10&&k3.price===17500000&&k3.r===4&&k3.cat==='key','normal tier key catalog');
     check(k4&&k4.maxDur===10&&k4.price===22000000&&k4.r===5&&k4.cat==='key','elite tier key catalog');
     const roomKeys=[
-      ['door_key_clinic','诊所储藏室钥匙',4,7100000],
-      ['door_key_watchshop','钟表店私人收藏室钥匙',5,18300000],
+      ['door_key_clinic','诊所储藏室钥匙',4,7400000],
+      ['door_key_watchshop','钟表店私人收藏室钥匙',5,19000000],
       ['door_key_warehouse','仓库后勤储备室钥匙',5,20500000],
-      ['door_key_bank_vault','银行金库大门钥匙',6,43900000]
+      ['door_key_bank_vault','银行金库大门钥匙',6,35500000]
     ].map(([id,name,r,price])=>{const it=ITEM_BY_ID[id];
       check(it&&it.name===name&&it.cat==='key'&&it.r===r&&it.price===price&&it.maxDur===10&&it.noLoot&&it.noCodex&&it.drop===true,'room key '+id);
       return it;});

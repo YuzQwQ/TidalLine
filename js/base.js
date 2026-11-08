@@ -21,8 +21,14 @@ const Base = {
     Save.normalizeStash();
     Save.normalizeBag();
     Save.normalizeSafe();
+    Save.normalizeChain();
     this.ensureSidearm();     // 不自动补发死亡损失
     this.render();
+    /* 有未领取的信就提一句：入口在头部，容易看不见 */
+    if (typeof Mail !== 'undefined') {
+      const n = Mail.unclaimed();
+      if (n) this.note('信箱里有 ' + n + ' 封未领取的信件');
+    }
     /* 大厅 BGM：进藏身处就起，离开时由 close()/startRun 淡出 */
     if (typeof Music !== 'undefined') Music.enterBase();
   },
@@ -62,6 +68,7 @@ const Base = {
     this.renderTabs();
     this.renderFilter();
     this.renderStash();
+    if (typeof Mail !== 'undefined') Mail.refreshBadge();
   },
 
   /* ---- 装备槽的读写：'w0'/'w1'/'w2' 走武器位，'helmet'/'body' 走护甲，'back' 是背包 ---- */

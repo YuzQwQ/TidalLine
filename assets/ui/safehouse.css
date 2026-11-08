@@ -94,3 +94,13 @@
 .bag-hd .mini:hover:not(:disabled){background:#16241f;color:#a8c4ba;border-color:#2f5a4f}
 .bag-hd .mini:disabled{color:#3f5a52;border-color:#1a2a25;cursor:not-allowed}
 .sh-shell .bag-hd .mini{min-height:36px}   /* 和仓库那边「出售寻常收集品」同高 */
+
+/* ---- 信箱入口：顶部全局区，在信用点左边 ----
+   信封图标 + 未领取角标。局外一直可见（仓库、备战、商人页都在顶栏下），
+   局内顶栏不出现，所以信箱本身也只在藏身处打开。 */
+.sh-mail{position:relative;align-self:center;display:flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0!important;color:#a6a99b!important;background:#ffffff05!important;border:1px solid #55554d66!important;border-radius:2px}
+.sh-mail:hover{color:#f0e2b8!important;background:#e2cf9910!important;border-color:#ebcf8d88!important}
+.sh-mail svg{width:21px;height:21px}
+.sh-mail-badge{position:absolute;top:-6px;right:-7px;min-width:16px;height:16px;padding:0 4px;font:10px/16px Consolas,monospace;letter-spacing:0;text-align:center;color:#1b1510;background:#e0b45f;border-radius:8px;box-shadow:0 0 0 1px #101514}
+.sh-mail-badge[hidden]{display:none}
+@media(max-width:799px){.sh-mail{width:38px;min-height:44px}}

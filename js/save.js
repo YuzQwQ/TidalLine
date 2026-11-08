@@ -11,6 +11,17 @@ const Save = {
      条目形态和仓库一致（{id,n,cap} / {id,n:1,gear}），这样仓库和背包能用同一套代码搬。 */
   bag: [],
   safe: [],          // 局外保险箱准备区，出发时交给局内保险箱
+  /* 钥匙链：挂在身上，不占背包格、不计负重与背包价值，
+     只在局外调整；局内只能开门消耗耐久，拿不出来也放不进去。
+     死亡不掉落：出发时局内拿一份副本，但这条存档记录不删，
+     断线 / 刷新也不会把整串钥匙掉进海里（耐久由 Game.syncRaidChain 同步）。 */
+  chain: [],
+  /* 信箱：局外信件。附件要点「领取」才进仓库，跟仓库满不满分开处理。 */
+  mail: [],
+  /* 已经发过的发放批次 id。重开页面不会重复寄信。 */
+  mailBatches: {},
+  /* load() 时存档是否已经存在。发放批次只补给老存档，新号从零开始。 */
+  existed: false,
   credits: START_CREDITS,
   hp: CFG.P.HP,
   // 配装：三个武器位 + 头盔 / 护甲
@@ -63,7 +74,13 @@ const Save = {
     try {
       this._ammoSpill=[];
       const raw = localStorage.getItem(this.key);
-      if (!raw) { this.bag = this.defaultBag(); this.safe=[]; this.commissionBoard=null; return; }
+      this.existed = !!raw;
+      if (!raw) {
+        this.bag = this.defaultBag();
+        this.safe=[]; this.commissionBoard=null;
+        this.mail=[]; this.mailBatches={};
+        return;
+      }
       const d = JSON.parse(raw);
       /* 2026-11 异常遗物补充批次把两件红品让出编号：逆流沙漏 odd04→odd17、瓶中风暴 odd05→odd18。
          旧存档（v<4）里的 odd04/05 指的是这两件红品，必须搬过去；v4 起 odd04/05 是新的一级样本，
@@ -89,6 +106,9 @@ const Save = {
          数量一条不差（旧 ammo 字段归 5.56，绷带归 heal01），不会白丢。 */
       this.bag = Array.isArray(d.bag) ? d.bag : this.bagFromLoadout(d.loadout || null);
       this.safe = Array.isArray(d.safe) ? d.safe : [];
+      this.chain = Array.isArray(d.chain) ? d.chain : [];
+      this.mail = Array.isArray(d.mail) ? d.mail : [];
+      this.mailBatches = (d.mailBatches && typeof d.mailBatches === 'object') ? d.mailBatches : {};
 
       // 配装：老存档没有就补默认，缺字段逐项兜底
       const g = d.gear || {};
@@ -104,6 +124,8 @@ const Save = {
       this.normalizeStash();
       this.normalizeBag();
       this.normalizeSafe();
+      this.normalizeChain();
+      this.normalizeMail();
       for(const item of this._partSpill)this.stash.push({id:item.id,n:1,gear:item});
       this._partSpill=null;
       if(this._ammoSpill.length)this.stash=this.normalizeList([...this.stash,...this._ammoSpill]);
@@ -171,6 +193,9 @@ const Save = {
         stash: this.stash,
         bag: this.bag.slice(-60),
         safe: this.safe,
+        chain: this.chain,
+        mail: this.mail,
+        mailBatches: this.mailBatches,
         credits: this.credits,
         hp: this.hp,
         gear: this.gear,
@@ -254,6 +279,49 @@ const Save = {
     for(const e of rows.slice(CFG.BAG.SAFE)){if(e.gear)this.addGearStash(e.gear);else this.addStash(e.id,e.n,e.cap);}
   },
   safeWeight(){return (this.safe||[]).reduce((n,e)=>n+(stashItem(e)?.w||0)*(e.n||1),0);},
+  /* 钥匙链只收钥匙：非钥匙、超格数、耐久归零的条目一律退回仓库，不静默吞掉。 */
+  normalizeChain() {
+    const rows = this.normalizeList(this.chain || []);
+    const keys = rows.filter(e => stashItem(e)?.cat === 'key');
+    for (const e of rows) if (!keys.includes(e)) this.addStash(e.id, e.n, e.cap);
+    this.chain = keys.slice(0, CFG.BAG.CHAIN);
+    for (const e of keys.slice(CFG.BAG.CHAIN)) this.addStash(e.id, e.n, e.cap);
+  },
+  chainWeight() { return 0; },   // 钥匙链不占负重，留着这个方法是为了调用点读起来一致
+  /* 信件只留认得出来的附件：物品表里没有的 id、耐久已经归零的钥匙直接丢掉，
+     别让一封旧信在领取时把整个仓库流程搞崩。信本身留着，正文还能读。 */
+  normalizeMail() {
+    const out = [];
+    for (const letter of (Array.isArray(this.mail) ? this.mail : [])) {
+      if (!letter || typeof letter !== 'object') continue;
+      const items = [];
+      for (const e of (Array.isArray(letter.items) ? letter.items : [])) {
+        const id = e && Medical.canonicalId(e.id);
+        const item = id && ITEM_BY_ID[id];
+        if (!item) continue;
+        const max = ItemCapacity.max(item);
+        const n = Math.max(1, Math.floor(Number(e.n) || 1));
+        if (!max) { items.push({ id, n }); continue; }
+        const cap = typeof e.cap === 'number' ? U.clamp(e.cap, 0, max) : max;
+        if (cap <= 0) continue;
+        items.push(cap >= max - 1e-6 ? { id, n } : { id, n: 1, cap });
+      }
+      out.push({
+        id: String(letter.id || ('m' + (letter.ts || out.length))),
+        from: String(letter.from || '潮汐线补给处'),
+        title: String(letter.title || '无标题'),
+        body: String(letter.body || ''),
+        ts: Number.isFinite(letter.ts) ? letter.ts : Date.now(),
+        items,
+        credits: Math.max(0, Math.round(Number(letter.credits) || 0)),
+        read: letter.read === true,
+        claimed: letter.claimed === true,
+        batch: letter.batch || null
+      });
+    }
+    /* 只留最近 60 封：信箱不是仓库，旧信领完就没必要一直背着 */
+    this.mail = out.slice(-60);
+  },
   normalizeBag() {
     this.bag = this.normalizeList(this.bag);
     /* 老存档里药品是叠着的，拆成一件一条之后可能超出背包容量。

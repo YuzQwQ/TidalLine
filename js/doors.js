@@ -11,7 +11,8 @@ const DoorSystem={
   available(d,p){return d.doorType!=='barricade'||d.breached||d.open||this.normalSide(d,p);},
   findKey(d,p){
     if(!d.keyId)return null;
-    for(const list of [p.bag?.slots||[],p.bag?.safe||[]]){
+    /* 钥匙链优先：挂在身上就是为了随取随用，扣耐久也先扣它。 */
+    for(const list of [p.bag?.chain||[],p.bag?.slots||[],p.bag?.safe||[]]){
       const entry=list.find(e=>e&&(e.n??1)>0&&e.item?.cat==='key'&&(e.item.id===d.keyId||e.item.doorKey===d.keyId)&&ItemCapacity.remaining(e)>=1);
       if(entry)return{list,entry};
     }
@@ -26,6 +27,8 @@ const DoorSystem={
       key.entry.cap=ItemCapacity.remaining(key.entry)-1;
       const broken=key.entry.cap<=0;
       if(broken)key.list.splice(key.list.indexOf(key.entry),1);
+      /* 开了锁就把钥匙链的剩余耐久写回存档：断线 / 刷新不会把耐久刷回去。 */
+      if(typeof Game!=='undefined'&&Game.syncRaidChain)Game.syncRaidChain();
       d.unlocked=true;return{ok:true,unlocked:true,keyBroken:broken};
     }
     return{ok:true};

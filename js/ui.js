@@ -293,7 +293,8 @@ function equipDesc(it) {
     const extra = it.equip.slots - BASE_BAG_SLOTS;
     return '装上它，携带容量从基础 ' + BASE_BAG_SLOTS + ' 格变成 ' + it.equip.slots +
       ' 格（多 ' + extra + ' 格，不是叠加）。\n\n' +
-      '背包不能套背包，也不能在局内更换 —— 换了更小的包而身上的东西放不下，会被拦下。';
+      '背包能塞进背包，也能在局内当场换：包里带着备用包，捡到更合适的就直接换上。' +
+      '但它只占 1 格、只加自重，容量不会叠起来；换更小的包而身上的东西放不下，会被拦下。';
   }
   const w = WEAPONS[it.equip.gun];
   if (!w) return '';
