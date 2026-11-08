@@ -189,7 +189,7 @@
   <td>未定</td>
   <td>未定</td>
   <td>未定</td>
-  <td>生活用品、电子产品、工业器材、文物藏品、医疗收集品</td>
+  <td>钥匙、生活用品、电子产品、工业器材、文物藏品、医疗收集品</td>
   <td>10 / 0 / 0</td>
 </tr><tr>
   <td><a href="#shop"><b>玛拉·维恩</b></a><br><small>MARA VANE</small></td>
@@ -241,10 +241,10 @@
   <section class="block">
     <h3><i>04</i>待补与缺口</h3>
     <ul class="gaps">
-      
-      
+
+
   <li><b>维克托·萨伦</b>（贸易商）还没有设定稿：没有年龄、阵营、主题句、背景、性格、信任等级、委托线与八节点台词。
-  目前只有藏身处里的姓名/职业/招牌台词、一张立绘（<code>assets/ui/safehouse/merchant_viktor.webp</code>）、固定货架（18 件，125% 溢价）和 10 条运行时语音。
+  目前只有藏身处里的姓名/职业/招牌台词、一张立绘（<code>assets/ui/safehouse/merchant_viktor.webp</code>）、固定货架（26 件，125% 溢价）和 10 条运行时语音。
   收购反应台词 <code>reserved.sell / priceUp / priceDown</code> 已写，但行情涨跌这套机制还没做，代码里没有调用点。</li>
       <li><b>三人共有的接线问题</b>：设定稿里的八节点台词（初识／低中高信任／接取／完成／关键剧情）只有 <code>design-v1.json</code> 里有，
       游戏内商店只跑 <code>MERCHANT_DIALOGUE</code> 的随机池，两套词还没合并。需要定：哪套作为正式口径，另一套是否保留为设计注释。</li>
@@ -281,17 +281,17 @@
   <section class="block" id="m-viktor-identity">
     <h3><i>01</i>身份与职责</h3>
     <p class="para">公开身份未定。</p>
-    
+
     <div class="cols">
       <div class="panel">
         <h4>售卖与经营</h4>
-        <div class="chips"><span class="chip">生活用品</span><span class="chip">电子产品</span><span class="chip">工业器材</span><span class="chip">文物藏品</span><span class="chip">医疗收集品</span></div>
-        <p class="mini">维克托：18件白至紫收集品固定供货，购买后进入仓库。</p>
+        <div class="chips"><span class="chip">钥匙</span><span class="chip">生活用品</span><span class="chip">电子产品</span><span class="chip">工业器材</span><span class="chip">文物藏品</span><span class="chip">医疗收集品</span></div>
+        <p class="mini">维克托：收集品与钥匙统一由他供货——两档通用模板钥匙加四间房的房卡，购买后进入仓库。</p>
       </div>
       <div class="panel">
         <h4>收购偏好</h4>
-        <p class="mini">收购全部九类收集品；偏好生活用品及历史影像</p>
-        <p class="mini dim">可收类别：收集品（九类）</p>
+        <p class="mini">收购全部九类收集品与钥匙（钥匙按剩余耐久 × 75% 回收）；偏好生活用品及历史影像</p>
+        <p class="mini dim">可收类别：收集品（九类）、key</p>
       </div>
       <div class="panel">
         <h4>后续扩展</h4>
@@ -318,17 +318,17 @@
       <div class="panel"><h4>最看重</h4><p class="mini">未定</p></div>
       <div class="panel"><h4>高信任意味着</h4><p class="mini">未定</p></div>
     </div>
-    
-    
+
+
   </section>
 
   <section class="block" id="m-viktor-trust">
     <h3><i>04</i>信任成长</h3>
     <p class="empty">信任等级未设计：当前没有信誉、交易额和任务门槛，货架固定开放。</p>
     <h4 class="sub">商品分级</h4>
-    <p>固定货架：18 件白至紫收集品，售价为参考价值的 <b>125%</b>，买下直接进仓库。没有等级、限购或信任门槛。</p>
-      <div class="chips"><span class="chip">生活用品 · 6</span><span class="chip">电子产品 · 4</span><span class="chip">工业器材 · 4</span><span class="chip">文物藏品 · 2</span><span class="chip">医疗收集品 · 2</span></div>
-      <details class="fold"><summary>展开 18 件在售清单</summary><div class="shelf"><span class="shelf-item"><img src="assets/items/life01.png" alt="" loading="lazy"><b>搪瓷缸</b><small>¥1,800</small></span><span class="shelf-item"><img src="assets/items/life06.png" alt="" loading="lazy"><b>铝饭盒</b><small>¥1,400</small></span><span class="shelf-item"><img src="assets/items/life04.png" alt="" loading="lazy"><b>铁皮饼干盒</b><small>¥5,400</small></span><span class="shelf-item"><img src="assets/items/life05.png" alt="" loading="lazy"><b>未拆封的毛巾</b><small>¥4,000</small></span><span class="shelf-item"><img src="assets/items/life11.png" alt="" loading="lazy"><b>双铃闹钟</b><small>¥12,000</small></span><span class="shelf-item"><img src="assets/items/life20.png" alt="" loading="lazy"><b>纪念瓷器套装</b><small>¥45,000</small></span><span class="shelf-item"><img src="assets/items/elec01.png" alt="" loading="lazy"><b>收音机</b><small>¥7,500</small></span><span class="shelf-item"><img src="assets/items/elec03.png" alt="" loading="lazy"><b>计算器</b><small>¥5,000</small></span><span class="shelf-item"><img src="assets/items/elec07.png" alt="" loading="lazy"><b>电子宠物机</b><small>¥18,000</small></span><span class="shelf-item"><img src="assets/items/elec02.png" alt="" loading="lazy"><b>随身听</b><small>¥30,000</small></span><span class="shelf-item"><img src="assets/items/ind01.png" alt="" loading="lazy"><b>铜管</b><small>¥3,000</small></span><span class="shelf-item"><img src="assets/items/ind02.png" alt="" loading="lazy"><b>轴承</b><small>¥5,600</small></span><span class="shelf-item"><img src="assets/items/ind07.png" alt="" loading="lazy"><b>绝缘胶带</b><small>¥4,200</small></span><span class="shelf-item"><img src="assets/items/ind10.png" alt="" loading="lazy"><b>精密游标卡尺</b><small>¥16,000</small></span><span class="shelf-item"><img src="assets/items/antiq02.png" alt="" loading="lazy"><b>黄铜怀表</b><small>¥17,000</small></span><span class="shelf-item"><img src="assets/items/art01.png" alt="" loading="lazy"><b>黑胶唱片</b><small>¥16,000</small></span><span class="shelf-item"><img src="assets/items/med02.png" alt="" loading="lazy"><b>注射器</b><small>¥5,800</small></span><span class="shelf-item"><img src="assets/items/med15.png" alt="" loading="lazy"><b>便携式心电图机</b><small>¥32,000</small></span></div></details>
+    <p>固定货架：26 件白至紫收集品，售价为参考价值的 <b>125%</b>，买下直接进仓库。没有等级、限购或信任门槛。</p>
+      <div class="chips"><span class="chip">生活用品 · 6</span><span class="chip">电子产品 · 4</span><span class="chip">工业器材 · 4</span><span class="chip">文物藏品 · 2</span><span class="chip">医疗收集品 · 2</span><span class="chip">key · 8</span></div>
+      <details class="fold"><summary>展开 18 件在售清单</summary><div class="shelf"><span class="shelf-item"><img src="assets/items/life01.png" alt="" loading="lazy"><b>搪瓷缸</b><small>¥1,800</small></span><span class="shelf-item"><img src="assets/items/life06.png" alt="" loading="lazy"><b>铝饭盒</b><small>¥1,400</small></span><span class="shelf-item"><img src="assets/items/life04.png" alt="" loading="lazy"><b>铁皮饼干盒</b><small>¥5,400</small></span><span class="shelf-item"><img src="assets/items/life05.png" alt="" loading="lazy"><b>未拆封的毛巾</b><small>¥4,000</small></span><span class="shelf-item"><img src="assets/items/life11.png" alt="" loading="lazy"><b>双铃闹钟</b><small>¥12,000</small></span><span class="shelf-item"><img src="assets/items/life20.png" alt="" loading="lazy"><b>纪念瓷器套装</b><small>¥45,000</small></span><span class="shelf-item"><img src="assets/items/elec01.png" alt="" loading="lazy"><b>收音机</b><small>¥7,500</small></span><span class="shelf-item"><img src="assets/items/elec03.png" alt="" loading="lazy"><b>计算器</b><small>¥5,000</small></span><span class="shelf-item"><img src="assets/items/elec07.png" alt="" loading="lazy"><b>电子宠物机</b><small>¥18,000</small></span><span class="shelf-item"><img src="assets/items/elec02.png" alt="" loading="lazy"><b>随身听</b><small>¥30,000</small></span><span class="shelf-item"><img src="assets/items/ind01.png" alt="" loading="lazy"><b>铜管</b><small>¥3,000</small></span><span class="shelf-item"><img src="assets/items/ind02.png" alt="" loading="lazy"><b>轴承</b><small>¥5,600</small></span><span class="shelf-item"><img src="assets/items/ind07.png" alt="" loading="lazy"><b>绝缘胶带</b><small>¥4,200</small></span><span class="shelf-item"><img src="assets/items/ind10.png" alt="" loading="lazy"><b>精密游标卡尺</b><small>¥16,000</small></span><span class="shelf-item"><img src="assets/items/antiq02.png" alt="" loading="lazy"><b>黄铜怀表</b><small>¥17,000</small></span><span class="shelf-item"><img src="assets/items/art01.png" alt="" loading="lazy"><b>黑胶唱片</b><small>¥16,000</small></span><span class="shelf-item"><img src="assets/items/med02.png" alt="" loading="lazy"><b>注射器</b><small>¥5,800</small></span><span class="shelf-item"><img src="assets/items/med15.png" alt="" loading="lazy"><b>便携式心电图机</b><small>¥32,000</small></span><span class="shelf-item"><img src="assets/items/door_key_test.png" alt="" loading="lazy"><b>001号测试钥匙</b><small>¥400,000</small></span><span class="shelf-item"><img src="assets/items/door_key_clinic.png" alt="" loading="lazy"><b>诊所储藏室钥匙</b><small>¥7,400,000</small></span><span class="shelf-item"><img src="assets/items/door_key_tier_1.png" alt="" loading="lazy"><b>普通钥匙</b><small>¥17,500,000</small></span><span class="shelf-item"><img src="assets/items/door_key_watchshop.png" alt="" loading="lazy"><b>钟表店私人收藏室钥匙</b><small>¥19,000,000</small></span><span class="shelf-item"><img src="assets/items/door_key_warehouse.png" alt="" loading="lazy"><b>仓库后勤储备室钥匙</b><small>¥20,500,000</small></span><span class="shelf-item"><img src="assets/items/door_key_tier_2.png" alt="" loading="lazy"><b>高级钥匙</b><small>¥22,000,000</small></span><span class="shelf-item"><img src="assets/items/door_key_old_apt.png" alt="" loading="lazy"><b>老公寓3号房钥匙</b><small>¥18,500,000</small></span><span class="shelf-item"><img src="assets/items/door_key_bank_vault.png" alt="" loading="lazy"><b>银行金库大门钥匙</b><small>¥35,500,000</small></span></div></details>
   </section>
 
   <section class="block" id="m-viktor-quests">
@@ -366,7 +366,7 @@
     </section></div>
     <h4 class="sub">设定稿台词（还没接进游戏）</h4>
     <p class="empty">这位商人还没有设定稿台词。当前只在 <code>MERCHANT_DIALOGUE</code> 里有 10 条运行时语音，八节点（初识／购买／低中高信任／接取／完成／关键剧情）全部空缺。</p>
-    
+
   </section>
 </section>
 <section class="view" id="m-shop" data-view="shop" hidden>
@@ -488,7 +488,7 @@
         <div><dt>奖励</dt><dd>信誉 +10 · ¥20,000</dd></div>
       </dl>
       <p class="story">人物信息：她先确认玩家能否按清单办事。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">基础回收</span><i>最低 Lv.1</i></header>
@@ -501,7 +501,7 @@
         <div><dt>奖励</dt><dd>信誉 +15 · ¥35,000</dd></div>
       </dl>
       <p class="story">人物信息：用可核对的包装状态表达保护物资，不新增耐久系统。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">中期调查</span><i>最低 Lv.2</i></header>
@@ -514,7 +514,7 @@
         <div><dt>奖励</dt><dd>信誉 +35 · ¥60,000</dd></div>
       </dl>
       <p class="story">人物信息：玩家发现名单修改可能影响当年的撤离顺序。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">中期风险</span><i>最低 Lv.3</i></header>
@@ -527,7 +527,7 @@
         <div><dt>奖励</dt><dd>信誉 +10 · ¥90,000</dd></div>
       </dl>
       <p class="story">人物信息：她对封条与交接链的重视逐渐超过对物资本身的重视。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">关键剧情</span><i>最低 Lv.3</i></header>
@@ -557,7 +557,7 @@
         <div><dt>奖励</dt><dd>信誉 +5 · ¥200,000</dd></div>
       </dl>
       <p class="story">人物信息：不替她开脱，也不以单个真相推翻全部记录。</p>
-      
+
     </article></div>
   </section>
 
@@ -656,7 +656,7 @@
   <section class="block" id="m-gun-identity">
     <h3><i>01</i>身份与职责</h3>
     <p class="para">退役军械技术员，兼营灰色渠道武器供应和维护。</p>
-    
+
     <div class="cols">
       <div class="panel">
         <h4>售卖与经营</h4>
@@ -694,7 +694,7 @@
       <div class="panel"><h4>高信任意味着</h4><p class="mini">愿意提供高级货源与完整一些的测试记录，让玩家参与重要的采购和反馈。</p></div>
     </div>
     <details class="fold"><summary>外形与立绘参考</summary><p class="mini">55岁，干瘦略高，灰白寸发、矩形眼镜、敏锐而带疲态的目光。钢蓝工装、灰黑马甲或旧工业夹克，工具摆放整齐。手持卸下的弹匣与小型工具，台上有维护布、零件和出入库簿。精明克制，偶有干涩的幽默。</p><p class="mini dim">立绘：<code>assets/ui/safehouse/merchant_guns.webp</code> · 要求见 <a href="design/merchants/BRIEF_V1.md">BRIEF_V1.md</a> 第七、八节</p></details>
-    
+
   </section>
 
   <section class="block" id="m-gun-trust">
@@ -749,7 +749,7 @@
         <div><dt>奖励</dt><dd>信誉 +10 · ¥20,000</dd></div>
       </dl>
       <p class="story">人物信息：玩家接触他对来源和品质的要求。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">基础回收</span><i>最低 Lv.1</i></header>
@@ -762,7 +762,7 @@
         <div><dt>奖励</dt><dd>信誉 +15 · ¥35,000</dd></div>
       </dl>
       <p class="story">人物信息：不能用购买的普通弹药冒充采样证据。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">中期调查</span><i>最低 Lv.2</i></header>
@@ -775,7 +775,7 @@
         <div><dt>奖励</dt><dd>信誉 +35 · ¥60,000</dd></div>
       </dl>
       <p class="story">人物信息：他此前提供的风险说明与实测结果不完全一致。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">中期风险</span><i>最低 Lv.3</i></header>
@@ -788,7 +788,7 @@
         <div><dt>奖励</dt><dd>信誉 +10 · ¥90,000</dd></div>
       </dl>
       <p class="story">人物信息：主动试验与资料回收都能交付有效数据。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">关键剧情</span><i>最低 Lv.3</i></header>
@@ -818,7 +818,7 @@
         <div><dt>奖励</dt><dd>信誉 +5 · ¥200,000</dd></div>
       </dl>
       <p class="story">人物信息：保留他对品质的责任感，也明确他对人的冷漠。</p>
-      
+
     </article></div>
   </section>
 
@@ -881,7 +881,7 @@
   <section class="block" id="m-doctor-identity">
     <h3><i>01</i>身份与职责</h3>
     <p class="para">原环礁湾市立医院急诊医生，现经营临时诊台与医疗供应点。</p>
-    
+
     <div class="cols">
       <div class="panel">
         <h4>售卖与经营</h4>
@@ -919,7 +919,7 @@
       <div class="panel"><h4>高信任意味着</h4><p class="mini">愿意提供贵重医疗物资、分享病例与研究疑问，让玩家参与她不愿独自作出的判断。</p></div>
     </div>
     <details class="fold"><summary>外形与立绘参考</summary><p class="mini">41岁，黑发盘起，面容克制温和，眼下有疲态，目光平静专注。实用的旧象牙白医疗外套，内搭灰绿衬衣，手持纸质病历夹，口袋有笔和手电。桌面仅有少量绷带、药瓶与记录本。成熟、可靠，带压抑的忧虑。</p><p class="mini dim">立绘：<code>assets/ui/safehouse/merchant_doctor.webp</code> · 要求见 <a href="design/merchants/BRIEF_V1.md">BRIEF_V1.md</a> 第七、八节</p></details>
-    
+
   </section>
 
   <section class="block" id="m-doctor-trust">
@@ -974,7 +974,7 @@
         <div><dt>奖励</dt><dd>信誉 +10 · ¥20,000</dd></div>
       </dl>
       <p class="story">人物信息：不把现有诊所直接改名为市立医院。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">基础回收</span><i>最低 Lv.1</i></header>
@@ -987,7 +987,7 @@
         <div><dt>奖励</dt><dd>信誉 +15 · ¥35,000</dd></div>
       </dl>
       <p class="story">人物信息：如实标注缺失信息，不要求玩家已有异常状态。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">中期调查</span><i>最低 Lv.2</i></header>
@@ -1000,7 +1000,7 @@
         <div><dt>奖励</dt><dd>信誉 +35 · ¥60,000</dd></div>
       </dl>
       <p class="story">人物信息：样本不能从普通医疗收藏或商店购买替代。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">中期风险</span><i>最低 Lv.3</i></header>
@@ -1013,7 +1013,7 @@
         <div><dt>奖励</dt><dd>信誉 +10 · ¥90,000</dd></div>
       </dl>
       <p class="story">人物信息：设备在运转不等于患者仍可恢复，调查只提供证据。</p>
-      
+
     </article>
     <article class="quest">
       <header><span class="phase">关键剧情</span><i>最低 Lv.3</i></header>
@@ -1043,7 +1043,7 @@
         <div><dt>奖励</dt><dd>信誉 +5 · ¥200,000</dd></div>
       </dl>
       <p class="story">人物信息：不规定患者最终生死，也不把一次选择写成通用医学结论。</p>
-      
+
     </article></div>
   </section>
 
@@ -1090,7 +1090,7 @@
     <h3><i>01</i>设定缺口</h3>
     <ul class="gaps">
   <li><b>维克托·萨伦</b>（贸易商）还没有设定稿：没有年龄、阵营、主题句、背景、性格、信任等级、委托线与八节点台词。
-  目前只有藏身处里的姓名/职业/招牌台词、一张立绘（<code>assets/ui/safehouse/merchant_viktor.webp</code>）、固定货架（18 件，125% 溢价）和 10 条运行时语音。
+  目前只有藏身处里的姓名/职业/招牌台词、一张立绘（<code>assets/ui/safehouse/merchant_viktor.webp</code>）、固定货架（26 件，125% 溢价）和 10 条运行时语音。
   收购反应台词 <code>reserved.sell / priceUp / priceDown</code> 已写，但行情涨跌这套机制还没做，代码里没有调用点。</li></ul>
   </section>
   <section class="block">

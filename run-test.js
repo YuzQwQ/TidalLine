@@ -79,9 +79,9 @@ ctx.globalThis = ctx;
 vm.createContext(ctx);
 
 for (const f of ['config.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
-  'common.js', 'medical.js', 'art.js', 'durabar.js', 'slotdots.js', 'debuff.js', 'ui.js', 'save.js', 'base.js', 'repair.js',
+  'common.js', 'medical.js', 'art.js', 'durabar.js', 'slotdots.js', 'debuff.js', 'ui.js', 'save.js', 'base.js', 'base-keychain.js', 'mail.js', 'repair.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
-  'medhud.js', 'melee.js', 'range.js', 'buyback-data.js', 'sales.js', 'boot.js']) {
+  'medhud.js', 'melee.js', 'range.js', 'buyback-data.js', 'sales.js', 'raid-value.js', 'door-visual.js', 'doors.js', 'sandbox.js', 'loot-spawn-data.js', 'ground-spawns.js', 'boot.js']) {
   try {
     vm.runInContext(fs.readFileSync(path.join(dir, 'js', f), 'utf8'), ctx, { filename: f });
   } catch (e) {
@@ -115,6 +115,8 @@ vm.runInContext(`
   globalThis.RANGE_PARAMS = RANGE_PARAMS; globalThis.RANGE_DEF_G = RANGE_DEF_G;
   globalThis.magazineRounds = magazineRounds;
   globalThis.BACKPACK = BACKPACK; globalThis.bagSlots = bagSlots;
+  globalThis.DoorSystem = DoorSystem; globalThis.BaseKeychain = BaseKeychain;
+  globalThis.Mail = Mail; globalThis.MAIL_BATCHES = MAIL_BATCHES;
 `, ctx, { filename: 'export' });
 
 let pass = 0, fail = 0;
@@ -137,7 +139,7 @@ ok('画布拿到 2d 上下文', Game.ctx === ctxMock);
 noThrow('Game.startRun()', () => Game.startRun());
 ok('玩家已创建', !!Game.player);
 ok('敌人数量', Game.enemies.length === vm.runInContext('SPAWNS.length', ctx), Game.enemies.length + ' 个');
-ok('容器数量', Game.boxes.length === vm.runInContext('MAP_ROWS.join(\'\').split(\'\').filter(ch => BOX_KIND[ch]).length', ctx), Game.boxes.length + ' 个');
+ok('容器数量', Game.boxes.filter(b => !b.groundLoot).length === vm.runInContext('MAP_ROWS.join(\'\').split(\'\').filter(ch => BOX_KIND[ch]).length', ctx), Game.boxes.filter(b => !b.groundLoot).length + ' 个（另 ' + Game.boxes.filter(b => b.groundLoot).length + ' 个物资刷新点）');
 ok('巡逻半径来自出生配置', Game.enemies.every((enemy, i) => enemy.patrolRadius === vm.runInContext('SPAWNS', ctx)[i].patrolRadius));
 
 const boxTile = Game.boxes[0];
@@ -329,7 +331,7 @@ const healItem = ITEMS.find(i => i.id === 'heal01');
 const boxes0 = Game.boxes.length;
 PD.bag.slots = [{ item: ammoItem, n: 12 }];
 Game.dropFromBag(0);
-const pile = Game.boxes.find(b => b.pile);
+const pile = Game.boxes.find(b => b.pile && !b.groundLoot);
 ok('丢弃生成物品堆', !!pile && Game.boxes.length === boxes0 + 1);
 ok('物品堆落在脚下那一格',
    !!pile && Math.floor(PD.x / CFG.TILE) === pile.tx && Math.floor(PD.y / CFG.TILE) === pile.ty);
@@ -345,7 +347,7 @@ ok('物品堆可以交互', !!pile && Game.boxHasItems(pile) &&
 PD.bag.slots = [{ item: healItem, n: 1 }];
 Game.dropFromBag(0);
 ok('同格丢弃并入同一堆',
-   Game.boxes.filter(b => b.pile).length === 1 && pile.items.length === 2);
+   Game.boxes.filter(b => b.pile && !b.groundLoot).length === 1 && pile.items.length === 2);
 
 /* 可堆叠的同种物品并成一条，而不是堆里出现两条同名 */
 PD.bag.slots = [{ item: ammoItem, n: 5 }];
@@ -585,6 +587,147 @@ Game.startRun();
   Game.showEnd(true);
   const line = Game._end.lines.find(l => l.it.id === A.id);
   ok('堆叠子弹只记新捡的那部分', !!line && line.n === 30, line ? '记了 ' + line.n + ' 发' : '没有结算行');
+}
+
+/* 钥匙链：6 格只收钥匙，不占背包格 / 负重 / 背包价值，局内只负责开门掉耐久 */
+{
+  const K = ctx.ITEM_BY_ID.door_key_old_apt, ART = ctx.ITEM_BY_ID.art01;
+  ok('钥匙链容量 6 格', ctx.CFG.BAG.CHAIN === 6, 'CFG.BAG.CHAIN=' + ctx.CFG.BAG.CHAIN);
+
+  Save.stash = [];
+  Save.chain = [{ id: ART.id, n: 1 }];
+  Save.normalizeChain();
+  ok('非钥匙挂不上钥匙链', Save.chain.length === 0 && Save.stash.some(e => e.id === ART.id),
+    '链 ' + Save.chain.length + ' / 仓库 ' + Save.stash.length);
+
+  Save.stash = [];
+  Save.chain = [{ id: K.id, n: 1, cap: 0 }];
+  Save.normalizeChain();
+  ok('耐久归零的钥匙不进钥匙链', Save.chain.length === 0);
+
+  Save.stash = [];
+  Save.chain = Array.from({ length: 8 }, () => ({ id: K.id, n: 1, cap: 10 }));
+  Save.normalizeChain();
+  ok('超出 6 格的部分退回仓库', Save.chain.length === 6 && Save.stash.length === 2,
+    '链 ' + Save.chain.length + ' / 仓库 ' + Save.stash.length);
+}
+Game.startRun();
+{
+  const PY = Game.player, K = ctx.ITEM_BY_ID.door_key_old_apt;
+  PY.bag.slots.length = 0; PY.bag.safe.length = 0;
+  PY.bag.chain = [{ item: K, n: 1, cap: 10 }];
+  ok('钥匙链不占背包格', PY.bag.count() === 0);
+  ok('钥匙链不计背包负重', PY.bag.weight() === 0, '负重 ' + PY.bag.weight());
+  ok('钥匙链不计背包价值', PY.bag.value() === 0, '价值 ' + PY.bag.value());
+
+  const door = { doorType: 'locked', unlocked: false, keyId: K.id, cells: [[1, 1]] };
+  ok('钥匙链上的钥匙能开门', ctx.DoorSystem.hasKey(door, PY));
+  const before = PY.bag.chain[0].cap;
+  const opened = ctx.DoorSystem.prepareOpen(door, PY);
+  ok('用钥匙链开门正常扣耐久', opened.ok && PY.bag.chain[0].cap === before - 1,
+    '耐久 ' + before + ' → ' + PY.bag.chain[0].cap);
+
+  /* 同款钥匙同时挂在链上和背包里时，先扣链上的 */
+  PY.bag.chain = [{ item: K, n: 1, cap: 3 }];
+  PY.bag.slots = [{ item: K, n: 1, cap: 9 }];
+  const door2 = { doorType: 'locked', unlocked: false, keyId: K.id, cells: [[2, 2]] };
+  ctx.DoorSystem.prepareOpen(door2, PY);
+  ok('同款钥匙优先扣钥匙链', PY.bag.chain[0].cap === 2 && PY.bag.slots[0].cap === 9,
+    '链 ' + PY.bag.chain[0].cap + ' / 包 ' + PY.bag.slots[0].cap);
+}
+/* 撤离按剩余耐久写回；死亡整条链跟背包一起没了 */
+Game.startRun();
+{
+  const PY = Game.player, K = ctx.ITEM_BY_ID.door_key_old_apt;
+  PY.bag.slots.length = 0; PY.bag.safe.length = 0;
+  PY.bag.chain = [{ item: K, n: 1, cap: 6 }];
+  Save.chain = []; Save.stash = []; Save.bag = []; Save.codex = {};
+  Game.showEnd(true);
+  ok('撤离后钥匙链按剩余耐久写回', Save.chain.length === 1 && Save.chain[0].id === K.id && Save.chain[0].cap === 6,
+    JSON.stringify(Save.chain));
+  ok('钥匙链不结算成收获价值', Game._end.total === 0, '结算 ' + Game._end.total);
+}
+Game.startRun();
+{
+  const PY = Game.player, K = ctx.ITEM_BY_ID.door_key_old_apt;
+  PY.bag.slots.length = 0; PY.bag.safe.length = 0;
+  PY.bag.chain = [{ item: K, n: 1, cap: 8 }];
+  Save.stash = []; Save.bag = []; Save.codex = {};
+  Save.chain = [{ id: K.id, n: 1, cap: 8 }];
+  /* 出发不再清空存档里的链条：局内拿到的是副本，刷新还能把钥匙捞回来 */
+  ok('出发后存档里的钥匙链仍在', Save.chain.length === 1 && Save.chain[0].cap === 8,
+    JSON.stringify(Save.chain));
+  const door = { doorType: 'locked', unlocked: false, keyId: K.id, cells: [[2, 2]] };
+  ctx.DoorSystem.prepareOpen(door, PY);
+  ok('局内开锁把剩余耐久写回存档', Save.chain.length === 1 && Save.chain[0].cap === 7,
+    JSON.stringify(Save.chain));
+  ok('局内副本自己也扣了耐久', PY.bag.chain[0].cap === 7);
+  /* 模拟局内刷新页面：内存清空，只从 localStorage 读回来 */
+  Save.chain = []; Save.load();
+  ok('刷新后钥匙链与耐久都还在', Save.chain.length === 1 && Save.chain[0].id === K.id && Save.chain[0].cap === 7,
+    JSON.stringify(Save.chain));
+  Game.showEnd(false, '阵亡');
+  ok('死亡后钥匙链原样保留', Save.chain.length === 1 && Save.chain[0].id === K.id && Save.chain[0].cap === 7,
+    JSON.stringify(Save.chain));
+  ok('死亡后钥匙链不被打散进仓库', !Save.stash.some(e => e.id === K.id));
+  /* 靶场 / 门测试没有把存档里的链条搬进局内，空链不能反过来覆盖存档 */
+  Save.chain = [{ id: K.id, n: 1, cap: 4 }];
+  Game.player.bag.chain = [];
+  Game.syncRaidChain();
+  ok('空链不会清掉存档里的钥匙', Save.chain.length === 1 && Save.chain[0].cap === 4, JSON.stringify(Save.chain));
+}
+
+console.log('\n=== 信箱 ===');
+{
+  const Mail = ctx.Mail, K = ctx.ITEM_BY_ID;
+  Save.mail = []; Save.mailBatches = {}; Save.chain = []; Save.stash = [];
+  Save.bag = []; Save.credits = 0;
+  Save.existed = false;
+  noThrow('Mail.init()', () => Mail.init());
+  ok('新号默认收不到发放批次', Save.mail.length === 0, Save.mail.length + ' 封');
+  Save.existed = true;
+  ok('老存档补发四封信', Mail.applyBatches() === 4 && Save.mail.length === 4, Save.mail.length + ' 封');
+  const ids = Save.mail.map(l => l.items[0] && l.items[0].id);
+  ok('四把钥匙都在信里', ['door_key_bank_vault', 'door_key_watchshop', 'door_key_clinic', 'door_key_old_apt']
+    .every(id => ids.includes(id)), ids.join(','));
+  ok('附件耐久都是 5', Save.mail.every(l => l.items.length === 1 && l.items[0].cap === 5));
+  ok('重复初始化不会重复寄信', Mail.applyBatches() === 0 && Save.mail.length === 4);
+  ok('按剩余耐久折算附件价值',
+    ctx.entryValue(K.door_key_bank_vault, Save.mail[0].items[0]) === Math.round(K.door_key_bank_vault.price / 2),
+    ctx.entryValue(K.door_key_bank_vault, Save.mail[0].items[0]));
+  ok('未领取计数', Mail.unclaimed() === 4 && Mail.unread() === 4);
+
+  const bank = Save.mail.find(l => l.items[0].id === 'door_key_bank_vault');
+  ok('领取后进仓库且保留耐久', Mail.claim(bank.id) === true &&
+    Save.stash.some(e => e.id === 'door_key_bank_vault' && e.cap === 5) &&
+    Save.mail.find(l => l.id === bank.id).claimed === true);
+  ok('领完的信件不能再领', Mail.claim(bank.id) === false);
+  ok('未领取计数跟着减', Mail.unclaimed() === 3);
+
+  ok('没有附件也能收下', (() => {
+    const l = Mail.push({ title: '只言片语', body: '空信一封' });
+    return Mail.claim(l.id) === true;
+  })());
+
+  /* 仓库满时整封留着，不出现"领了一半" */
+  const watch = Save.mail.find(l => !l.claimed && l.items.length === 1);
+  const canAdd = Save.canAddStash;
+  Save.canAddStash = () => false;
+  ok('仓库放不下时拒绝领取', Mail.claim(watch.id) === false);
+  ok('拒绝领取后附件原样留在信里', Save.mail.find(l => l.id === watch.id).items.length === 1 &&
+    Save.mail.find(l => l.id === watch.id).claimed === false);
+  Save.canAddStash = canAdd;
+
+  /* 外部队列：读完即删，只收一次 */
+  ctx.localStorage.setItem('tideline_pending_mail', JSON.stringify([{ id: 'q1', title: '投递测试', body: '队列' }]));
+  ok('外部队列收进信箱', Mail.drain() === 1 && !!Save.mail.find(l => l.id === 'q1'));
+  ok('队列读完即删', ctx.localStorage.getItem('tideline_pending_mail') === null);
+  ok('再收一次不会重复', Mail.drain() === 0);
+
+  /* 坏数据不炸：认不出的物品、归零的钥匙 */
+  Save.mail = [{ id: 'bad', title: '坏信', items: [{ id: 'not_an_item' }, { id: 'door_key_clinic', cap: 0 }], credits: 0 }];
+  noThrow('规范化丢弃无效附件', () => Save.normalizeMail());
+  ok('无效附件被丢掉、信还留着', Save.mail.length === 1 && Save.mail[0].items.length === 0);
 }
 
 // 真实尸体：拾荒者手里那把枪要能掉出来、能捡起来
@@ -1092,13 +1235,37 @@ ok('尸体落地朝向取四向之一',
     const wantId = cb.loot[bi].item.equip.bag;
     Game.takeGear(cb.loot[bi], bi);
     ok('尸体上的背包能直接背上', PB.back && PB.back.id === wantId, PB.back && PB.back.id);
-    ok('换下来的旧包落在脚边',
-       Game.boxes.some(b => b.pile && b.items.some(e => e && e.item && e.item.equip &&
-         e.item.equip.kind === 'bag' && e.item.equip.bag === 'bag01')),
-       '地面堆 ' + Game.boxes.filter(b => b.pile).length);
+    ok('换下来的旧包塞进背包，不再丢地上',
+       PB.bag.slots.some(s => s.item && s.item.equip && s.item.equip.kind === 'bag' &&
+         s.item.equip.bag === 'bag01') && !Game.boxes.some(b => b.pile && !b.groundLoot),
+       '背包内 ' + PB.bag.slots.filter(s => s.item?.equip?.kind === 'bag').length + ' 只 / 地面堆 ' +
+       Game.boxes.filter(b => b.pile).length);
     ok('背包容量立刻生效', bagSlots() === BACKPACK.def(wantId).slots,
        bagSlots() + ' 格 / 期望 ' + BACKPACK.def(wantId).slots);
   }
+}
+
+/* 背包也是能放进背包的装备：占 1 格、只加自重，容量不会变大 */
+{
+  const PB = Game.player;
+  const sack = EQUIP.bag('bag01');
+  const cells0 = PB.bag.slots.length, w0 = PB.bag.weight(), v0 = PB.bag.value();
+  const cap0 = bagSlots();
+  const chk = PB.bag.canAdd(sack, 1);
+  ok('背包能放进背包', chk.ok, chk.why || '');
+  ok('放进去后只占 1 格', PB.bag.add(sack, 1) && PB.bag.slots.length === cells0 + 1);
+  ok('背包自重计入负重', PB.bag.weight() > w0, w0.toFixed(1) + ' → ' + PB.bag.weight().toFixed(1) + ' kg');
+  ok('背包按售价计入价值', PB.bag.value() > v0, '¥' + v0 + ' → ¥' + PB.bag.value());
+  ok('套包不会扩大携带容量', bagSlots() === cap0, bagSlots() + ' 格');
+
+  /* 换更小的包会被拦下：身上的东西放不下 */
+  const idx = PB.bag.slots.findIndex(s => s.item && s.item.equip &&
+    s.item.equip.kind === 'bag' && s.item.equip.bag === 'bag01');
+  while (PB.bag.slots.length < bagSlots()) PB.bag.slots.push({ item: ctx.ITEM_BY_ID.art01, n: 1 });
+  const beforeCount = PB.bag.slots.length, beforeBack = PB.back && PB.back.id;
+  const swapped = Game.equipFromBag(idx);
+  ok('满包时换小包会被拦下', swapped === false && PB.back.id === beforeBack &&
+     PB.bag.slots.length === beforeCount, '物品 ' + PB.bag.slots.length + ' 件');
 }
 
 // 图片解析的降级顺序
@@ -2176,25 +2343,38 @@ console.log('\n=== 彩蛋藏品 ===');
   ok('尸体/敌人专属池也过滤彩蛋', L.pickFromPool(eggs) === null);
   CFG.LOOT.eggChance = keep;
 
+  /* 中签率按容器品质分级：垃圾堆里没有彩蛋，越贵的箱子越可能 */
+  ok('废弃/普通箱子中签率为 0', L.eggChanceFor('junk') === 0 && L.eggChanceFor('plain') === 0);
+  ok('品质越高越容易中签',
+     ['ample', 'fine', 'rich', 'secret'].every((q, i, arr) => !i || L.eggChanceFor(q) > L.eggChanceFor(arr[i - 1])),
+     ['ample', 'fine', 'rich', 'secret'].map(q => q + ' ' + (L.eggChanceFor(q) * 100).toFixed(0) + '%').join(' / '));
+  ok('秘藏箱红里四件一件是彩蛋', Math.abs(L.eggChanceFor('secret') - 0.25) < 1e-9);
+  ok('没有品质信息时回落到 eggChance 兜底', L.eggChanceFor(undefined) === CFG.LOOT.eggChance);
+  let junkEgg = 0, plainEgg = 0;
+  for (let i = 0; i < 20000; i++) { if (L.roll('junk').item.egg) junkEgg++; if (L.roll('plain').item.egg) plainEgg++; }
+  ok('垃圾箱与普通箱实际摸不出彩蛋', junkEgg === 0 && plainEgg === 0, junkEgg + ' / ' + plainEgg);
+
   /* 概率拉满：红件必换彩蛋，非红件不动 */
-  CFG.LOOT.eggChance = 1;
-  ok('红色物品会换成彩蛋', L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}).item.egg === true);
-  ok('非红物品不会被换掉', L.eggSwap({item: ctx.ITEM_BY_ID['life01'], n: 1}).item.id === 'life01');
+  const keepTable = CFG.LOOT.eggByQuality;
+  CFG.LOOT.eggByQuality = { junk: 1, plain: 1, ample: 1, fine: 1, rich: 1, secret: 1 };
+  ok('红色物品会换成彩蛋', L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}, 'secret').item.egg === true);
+  ok('非红物品不会被换掉', L.eggSwap({item: ctx.ITEM_BY_ID['life01'], n: 1}, 'secret').item.id === 'life01');
   ok('四件均分（拉满时都会出现）', (() => {
     const seen = new Set();
-    for (let i = 0; i < 400; i++) seen.add(L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}).item.id);
+    for (let i = 0; i < 400; i++) seen.add(L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}, 'secret').item.id);
     return seen.size === 4;
   })());
-  CFG.LOOT.eggChance = keep;
+  CFG.LOOT.eggByQuality = keepTable;
 
-  /* 实测：秘藏箱 8% 红 × 2% = 0.16% 的彩蛋；红档总量不变 */
+  /* 实测：秘藏箱 8% 红 × 25% = 2% 的彩蛋；红档总量不变 */
   const N = 120000, r = [0, 0, 0, 0, 0, 0];
   let egg = 0;
   for (let i = 0; i < N; i++) { const d = L.roll('secret'); if (d.item.egg) egg++; r[d.item.r - 1]++; }
   const eggPct = egg / N * 100, redPct = r[5] / N * 100;
-  ok('秘藏箱彩蛋率 ≈ 8% × 2%', Math.abs(eggPct - 0.16) < 0.05, eggPct.toFixed(3) + '%');
+  ok('秘藏箱彩蛋率 ≈ 8% × 25%', Math.abs(eggPct - 2) < 0.2, eggPct.toFixed(3) + '%');
   ok('红色总量仍是 8%（彩蛋从红里分，不额外增加）', Math.abs(redPct - 8) < 0.35, redPct.toFixed(2) + '%');
-  ok('红里约 2% 是彩蛋', Math.abs(egg / Math.max(1, r[5]) * 100 - 2) < 0.6);
+  ok('秘藏箱红里约 25% 是彩蛋', Math.abs(egg / Math.max(1, r[5]) * 100 - 25) < 1.6,
+     (egg / Math.max(1, r[5]) * 100).toFixed(1) + '%');
 }
 
 console.log('\n---------------------------------------');

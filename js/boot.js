@@ -6,7 +6,24 @@
 window.addEventListener('DOMContentLoaded', () => {
   try {
     Save.load();
+    /* 信箱：先收 localStorage 里的外部队列（外部脚本投递的信），
+       再补发放批次，最后把入口上的未领取计数刷新出来。 */
+    if (typeof Mail !== 'undefined') Mail.init();
     window.addEventListener('pagehide', () => Save.flush());
+    /* 局内刷新 / 关页面前，先把钥匙链的剩余耐久写回存档：
+       断线只会丢这一局，不会把整串钥匙丢掉。顺带拦一次误关。 */
+    window.addEventListener('pagehide', () => {
+      if (Game.state !== 'playing') return;
+      if (Game.syncRaidChain) Game.syncRaidChain();
+      Save.flush();
+    });
+    window.addEventListener('beforeunload', e => {
+      if (Game.state !== 'playing') return;
+      if (Game.syncRaidChain) Game.syncRaidChain();
+      Save.flush();
+      e.preventDefault();
+      e.returnValue = '';
+    });
     // 首次打开面板可能早于贴图加载；加载结束后刷新当前可见的列表。
     // sprites 的键是 目录/文件名（items/life01、chars/player）。
     const sprites = window.__SPRITES__ || window.__ICONS__ || null;
@@ -16,6 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (Game.state === 'base') Base.render();
     });
     Game.init();
+    if(location.hash.startsWith('#sandbox-test')){document.getElementById('startVeil').classList.add('hidden');Sandbox.start();return;}
     if(location.hash.startsWith('#doors-test')){document.getElementById('startVeil').classList.add('hidden');DoorSystem.startTest();return;}
     // 调试入口：index.html#base 打开藏身处；#base,demo 顺便灌一些测试物资
     if (location.hash.startsWith('#base')) {

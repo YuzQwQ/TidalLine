@@ -529,6 +529,109 @@ window.addEventListener('error', function (e) {
 }
 .deploy-hint.bad { color: #b5551f; }
 
+/* ===== 信箱 ===== */
+/* 入口挂在藏身处头部：有未领取的信就亮一点，数字是待领取封数 */
+.mail-entry {
+  margin: 0 26px 0 0; align-self: center;
+  padding: 5px 12px; font-size: 11px; letter-spacing: 2px;
+  background: transparent; color: #6fa093;
+  border: 1px solid #26403a; border-radius: 2px;
+}
+.mail-entry:hover { background: #16241f; color: #a8c4ba; border-color: #2f5a4f; }
+.mail-entry.has-mail { color: #e2c98d; border-color: #6b5836; }
+.mail-entry b {
+  display: inline-block; min-width: 15px; margin-left: 7px; padding: 0 4px;
+  font-size: 10px; line-height: 15px; text-align: center; letter-spacing: 0;
+  background: #B5551F; color: #fff2e6; border-radius: 8px;
+}
+.mail-entry b[hidden] { display: none; }
+
+.mail-box {
+  width: min(900px, 94vw); height: min(600px, 88vh);
+  display: flex; flex-direction: column;
+  background: #0e1512; border: 1px solid #1e312b;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+}
+.mail-hd {
+  flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 14px; padding: 18px 22px 14px; border-bottom: 1px solid #1a2a25;
+}
+.mail-hd h1 { font-size: 19px; letter-spacing: 5px; margin: 0; color: #dbe5e1; }
+.mail-hd-acts { display: flex; align-items: center; gap: 8px; }
+.mail-hint { font-size: 11px; color: #6f8f85; min-height: 16px; max-width: 320px; line-height: 1.5; }
+.mail-hint.bad { color: #c0774a; }
+.mail-hd-acts button.mini, .ms-acts button.mini {
+  margin: 0; padding: 5px 12px; font-size: 10.5px; letter-spacing: 1px;
+  background: transparent; color: #6fa093; border: 1px solid #26403a; border-radius: 2px;
+}
+.mail-hd-acts button.mini:hover, .ms-acts button.mini:hover {
+  background: #16241f; color: #a8c4ba; border-color: #2f5a4f;
+}
+.mail-main { flex: 1; display: flex; min-height: 0; }
+.mail-list {
+  flex: 0 0 clamp(200px, 30%, 260px); margin: 0; padding: 8px;
+  list-style: none; overflow-y: auto;
+  background: #0b1210; border-right: 1px solid #1a2a25;
+}
+.mail-row {
+  padding: 9px 11px; margin-bottom: 5px; cursor: pointer;
+  background: #101a17; border: 1px solid transparent; border-left: 2px solid #26382f;
+}
+.mail-row:hover { background: #14201c; }
+.mail-row.on { background: #15231e; border-color: #2f5a4f; border-left-color: #69c7a4; }
+.mail-row.done .mr-title { color: #7d918a; }
+.mr-top { display: flex; justify-content: space-between; gap: 8px; font-size: 10px; color: #4d7d70; letter-spacing: 1px; }
+.mr-title { display: block; margin: 4px 0 6px; font-size: 12.5px; font-weight: 500; color: #cfdcd7; line-height: 1.5; }
+.mr-foot { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #5f7a72; }
+.mr-tag { padding: 1px 6px; border: 1px solid #2a443d; border-radius: 2px; color: #7fa79a; }
+.mr-tag.done { color: #4d7d70; border-color: #1e312b; }
+.mr-dot { width: 6px; height: 6px; margin-left: auto; border-radius: 50%; background: #B5551F; }
+.mail-empty { padding: 22px 12px; text-align: center; font-size: 11.5px; color: #47645c; }
+
+.mail-read { flex: 1; min-width: 0; overflow-y: auto; padding: 22px 26px 26px; }
+.mail-read::-webkit-scrollbar, .mail-list::-webkit-scrollbar { width: 7px; }
+.mail-read::-webkit-scrollbar-thumb, .mail-list::-webkit-scrollbar-thumb { background: #1e312b; }
+.mail-blank { color: #47645c; font-size: 12px; line-height: 2; }
+.ms-sheet { max-width: 620px; }
+.ms-hd h2 { margin: 0 0 6px; padding: 0; border: none; font-size: 16px; letter-spacing: 1px; color: #e0e9e4; }
+.ms-meta { padding-bottom: 14px; font-size: 10.5px; color: #4d7d70; letter-spacing: 1px; border-bottom: 1px solid #1a2a25; }
+.ms-body { padding: 16px 0 4px; }
+.ms-body p { margin: 0 0 12px; font-size: 12.5px; line-height: 1.95; color: #a9beb6; }
+.ms-att { margin-top: 10px; padding-top: 14px; border-top: 1px dashed #1e312b; }
+.ms-att h3 { margin: 0 0 10px; font-size: 10px; letter-spacing: 2px; color: #6fa093; font-weight: 600; }
+.ms-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.mail-item {
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+  background: #101a17; border: 1px solid #1a2a25; border-left: 2px solid #55605c;
+}
+.mail-item.r2 { border-left-color: #3f8b78; }
+.mail-item.r3 { border-left-color: #3f6d9b; }
+.mail-item.r4 { border-left-color: #9165b3; }
+.mail-item.r5 { border-left-color: #a8862a; }
+.mail-item.r6 { border-left-color: #8d3a3a; }
+.mail-item .mi-ico { flex: 0 0 34px; }
+.mail-item .mi-ico img, .mail-item .mi-ico span {
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  image-rendering: pixelated; font-size: 10px;
+}
+.mail-item .mi-txt { min-width: 0; }
+.mail-item .mi-txt b { display: block; font-size: 12px; color: #cfdcd7; font-weight: 500; }
+.mail-item .mi-txt span { display: block; margin-top: 2px; font-size: 10px; color: #b09a62; }
+.mail-item .mi-txt em { display: block; margin-top: 2px; font-style: normal; font-size: 10px; color: #6f8f85; }
+.ms-cr { margin-top: 10px; font-size: 12px; color: #7d948c; }
+.ms-cr b { color: #b09a62; font-family: Consolas, monospace; }
+.ms-acts { margin-top: 22px; display: flex; align-items: center; gap: 12px; }
+.ms-acts #btnMailClaim { margin: 0; padding: 10px 30px; font-size: 12.5px; letter-spacing: 3px; background: #14685C; }
+.ms-acts #btnMailClaim:hover { background: #1a8577; }
+.ms-done { font-size: 11px; letter-spacing: 1px; color: #4d7d70; }
+@media(max-width:720px) {
+  .mail-box { width: 100%; height: 100%; }
+  .mail-main { flex-direction: column; }
+  .mail-list { flex: 0 0 auto; max-height: 180px; border-right: none; border-bottom: 1px solid #1a2a25; }
+  .mail-read { padding: 16px; }
+  .mail-hint { display: none; }
+}
+
 /* 地图选择为独立页面，保留返回配装的路径。 */
 #mapVeil { position:fixed;align-items:flex-start;background:#0d1512;overflow-y:auto;z-index:21; }
 .map-page { width:min(1040px,100%);min-height:100%;box-sizing:border-box;padding:32px;display:flex;flex-direction:column;gap:24px; }
@@ -1209,7 +1312,7 @@ window.addEventListener('error', function (e) {
 
   <div class="box" id="bagBox">
     <div class="ttl" style="font-size:12px;letter-spacing:2px;color:#6fa093;margin-bottom:6px;display:flex;justify-content:space-between">
-      <span>背包</span><span style="color:#4d7d70">Tab 关闭 · 世界不会暂停</span>
+      <span style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline">背包 <span style="font-size:11px;letter-spacing:0;color:#bd9d83">本局损耗 <b id="raidLoss" aria-live="polite">¥0</b></span></span><span style="color:#4d7d70">Tab 关闭 · 世界不会暂停</span>
     </div>
     <div class="eqbar w6" id="eqStrip"></div>
     <div class="stat"><span>负重 <b id="bagWeight">0.0 / 45 kg</b></span><span>价值 <b id="bagValue">0</b></span></div>
@@ -1217,6 +1320,8 @@ window.addEventListener('error', function (e) {
     <div class="grid24" id="bagGrid"></div>
     <div class="stat"><span style="color:#3f6d5f">安全箱（死亡不掉落 · 点击物品可移入）</span></div>
     <div class="grid24" id="safeGrid" style="grid-template-columns:repeat(4,minmax(0,1fr));max-width:48%"></div>
+    <div class="stat"><span style="color:#3f6d5f">钥匙链（局内不可调整 · 死亡不掉落）</span></div>
+    <div class="grid24" id="chainGrid" style="grid-template-columns:repeat(6,minmax(0,1fr));max-width:72%"></div>
   </div>
 </div>
 
@@ -1377,6 +1482,27 @@ window.addEventListener('error', function (e) {
   </main>
 </div>
 
+<!-- 信箱：局外信件。附件点「领取」才进仓库，不占背包格 -->
+<div class="veil hidden" id="mailVeil">
+  <div class="mail-box" role="dialog" aria-modal="true" aria-labelledby="mailTitle">
+    <header class="mail-hd">
+      <div>
+        <div class="kicker">MAILBOX</div>
+        <h1 id="mailTitle">信箱</h1>
+      </div>
+      <div class="mail-hd-acts">
+        <span class="mail-hint" id="mailHint"></span>
+        <button type="button" class="mini" id="btnMailClaimAll">全部领取</button>
+        <button type="button" class="mini" id="btnMailClose">关闭</button>
+      </div>
+    </header>
+    <div class="mail-main">
+      <ul class="mail-list" id="mailList"></ul>
+      <article class="mail-read" id="mailRead"></article>
+    </div>
+  </div>
+</div>
+
 <!-- 结算界面 -->
 <div class="veil hidden" id="endVeil">
   <div class="card" id="endCard"></div>
@@ -1445,6 +1571,8 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 <script src="js/merchant-dialogue.js"></script>
 <script src="js/storage-loadout.js"></script>
 <script src="js/base-safe.js"></script>
+<script src="js/base-keychain.js"></script>
+<script src="js/mail.js"></script>
 <script src="js/buyback-data.js"></script>
 <script src="js/sales.js"></script>
 <script src="js/merchant-sales.js"></script>
@@ -1454,6 +1582,10 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 <script src="js/doors.js"></script>
 <script src="js/door-visual.js"></script>
 <script src="js/door-test.js"></script>
+<script src="js/raid-value.js"></script>
+<script src="js/sandbox.js"></script>
+<script src="js/loot-spawn-data.js"></script>
+<script src="js/ground-spawns.js"></script>
 <script src="js/boot.js"></script>
 </body>
 </html>
