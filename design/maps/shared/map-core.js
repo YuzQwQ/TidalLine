@@ -16,7 +16,7 @@
     'schemaVersion', 'id', 'title', 'status', 'width', 'height', 'tileSize',
     'coordinateConvention', 'reference', 'legend', 'rows',
     'buildings', 'rooms', 'roomFlows', 'portals', 'windows', 'clearances',
-    'props', 'containers', 'containerTypes', 'enemies',
+    'props', 'containers', 'containerTypes', 'lootSpawns', 'enemies',
     'spawn', 'exits', 'bridges', 'bridgeHeadReserve', 'plazas',
     'tide', 'quotas', 'routeSpecs'
   ];

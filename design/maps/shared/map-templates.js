@@ -343,6 +343,7 @@
       props: [],
       containers: [],
       containerTypes: JSON.parse(JSON.stringify(CONTAINER_TYPES)),
+      lootSpawns: [],
       enemies: [],
       spawn: skel.spawn,
       exits: skel.exits,

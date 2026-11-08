@@ -271,6 +271,8 @@
       if (ex.x === spawn[0] && ex.y === spawn[1]) err('G9', `撤离点与出生点重合 ${ex.id}`);
     }
 
+    /* Ground loot is an independent non-blocking layer, including furniture cells. */
+    const lootIds=new Set();for(const p of data.lootSpawns||[]){const spec=typeof module==='object'&&module.exports?require('../../../js/loot-spawn-data.js'):globalThis.LootSpawnSpec;if(!spec.valid(p)||lootIds.has(p.id)||!walkable(p.x,p.y))err('G11','物资刷新点配置非法 '+p.id,{entityId:p.id,cells:[[p.x,p.y]]});lootIds.add(p.id);}
     /* ---------- G10 推荐路线 ---------- */
     for (const spec of data.routeSpecs) {
       const name = spec.name || spec.id;

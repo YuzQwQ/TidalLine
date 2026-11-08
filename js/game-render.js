@@ -13,6 +13,7 @@ Object.assign(Game, {
       const b = it.obj;
       const q = CONTAINER_QUALITY[b.kind] || CONTAINER_QUALITY.plain;
       const nm = b.name || '容器';
+      if(b.groundLoot)return '[E] 拾取 '+nm;
       return b.searched
         ? '[E] ' + (b.pile ? '查看 ' : '继续翻 ') + nm
         : '[E] 打开 ' + nm + (q.time > 0 ? '（' + q.time.toFixed(1) + ' 秒' + (q.still ? '，站定' : '') + '）' : '');
@@ -348,6 +349,7 @@ Object.assign(Game, {
 
       /* 动态物品堆使用独立贴图，与其它容器共用外轮廓描边。 */
       if (b.pile) {
+        if(b.groundLoot&&typeof GroundLoot!=='undefined'){GroundLoot.draw(c,b,sx,sy,TS);continue;}
         const pileImage=Art.get('props','loot_pile');
         if(pileImage){
           Art.drawContainerOutline(c,pileImage,sx,sy,TS,false);

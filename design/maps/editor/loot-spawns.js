@@ -1,0 +1,28 @@
+(function(root){
+const T=root.EditorTools,S=root.LootSpawnSpec,C=root.MapCore;
+const inside=(d,x,y)=>Number.isInteger(x)&&Number.isInteger(y)&&x>=0&&y>=0&&x<d.width&&y<d.height&&C.isWalkableTerrain(d,x,y);
+root.EditorPalette.CATEGORIES.unshift({id:'lootSpawn',name:'物资刷新点',hint:'独立置顶图层，可叠家具',paintable:true,items(d){return Object.entries(S.pools).map(([pool,name])=>({key:pool,label:name,count:(d.lootSpawns||[]).filter(s=>s.pool===pool).length,swatch:'#d69f5f',paint:{kind:'lootSpawn',pool,label:name},match:e=>e.kind==='lootSpawn'&&e.ref.pool===pool}));}});
+const at=T.entityAt;T.entityAt=function(d,x,y){const s=root.__editor?.store.get();const p=s?.layers.lootSpawn===false?null:(d.lootSpawns||[]).find(p=>p.x===x&&p.y===y);return p?{kind:'lootSpawn',ref:p}:at(d,x,y);};
+const resolve=T.resolve;T.resolve=function(d,sel){return sel?.kind==='lootSpawn'?(d.lootSpawns||[]).find(p=>p.id===sel.id)||null:resolve(d,sel);};
+const place=T.place;T.place=function(d,m,x,y){if(m.kind!=='lootSpawn')return place(d,m,x,y);if(!inside(d,x,y))return{ok:false,reason:'刷新点需要地板，可与家具重叠'};d.lootSpawns||=[];if(d.lootSpawns.some(p=>p.x===x&&p.y===y))return{ok:false,reason:'此格已有刷新点'};let n=1;while(d.lootSpawns.some(p=>p.id==='loot-'+n))n++;const p={id:'loot-'+n,name:'物资刷新点',x,y,...C.clone(S.defaults),pool:m.pool};d.lootSpawns.push(p);return{ok:true,id:p.id,label:p.name};};
+const move=T.moveTo;T.moveTo=function(d,sel,x,y){if(sel.kind!=='lootSpawn')return move(d,sel,x,y);if(!inside(d,x,y)||(d.lootSpawns||[]).some(p=>p.id!==sel.id&&p.x===x&&p.y===y))return'刷新点位置不可用';const p=T.resolve(d,sel);if(!p)return'刷新点不存在';p.x=x;p.y=y;return null;};
+const remove=T.removeAt;T.removeAt=function(d,x,y){const p=T.entityAt(d,x,y);if(p?.kind!=='lootSpawn')return remove(d,x,y);d.lootSpawns=d.lootSpawns.filter(s=>s!==p.ref);return{ok:true,id:p.ref.id,kind:'lootSpawn'};};
+const inspector=root.EditorInspector.render;root.EditorInspector.render=function(host,o){if(o.sel?.kind!=='lootSpawn')return inspector(host,o);host.innerHTML='';const p=T.resolve(o.data,o.sel);if(!p)return;const title=document.createElement('h3');title.textContent='物资刷新点 · '+p.id;host.append(title);
+function field(label,node){const row=document.createElement('label');row.className='field';const name=document.createElement('span');name.textContent=label;node.setAttribute('aria-label',label);row.append(name,node);host.append(row);}
+function input(label,value,fn,min,max,step=1){const e=document.createElement('input');e.type='number';e.value=value;e.min=min;e.max=max;e.step=step;e.onchange=()=>{const v=Number(e.value);if(!Number.isFinite(v)||v<min||v>max){e.value=value;return;}o.commit('修改刷新点',d=>fn(T.resolve(d,o.sel),v));updateSummary();};field(label,e);return e;}
+const pool=document.createElement('select');for(const[id,name]of Object.entries(S.pools)){const opt=document.createElement('option');opt.value=id;opt.textContent=name;pool.append(opt);}pool.value=p.pool;pool.onchange=()=>{o.commit('修改刷新类型',d=>T.resolve(d,o.sel).pool=pool.value);updateSummary();};field('刷新类型',pool);
+const preset=document.createElement('select');const custom=document.createElement('option');custom.value='';custom.textContent='自定义 · 逐档填写';preset.append(custom);for(const ps of S.presets){const opt=document.createElement('option');opt.value=ps.key;opt.textContent=ps.key+' '+ps.name+'（出现率 '+ps.chance+'%）';preset.append(opt);}
+preset.onchange=()=>{const ps=S.presets.find(x=>x.key===preset.value);if(!ps)return;o.commit('套用出货预案',d=>{const t=T.resolve(d,o.sel);t.weights=[...ps.weights];t.chance=ps.chance;});weightInputs.forEach((e,i)=>e.value=p.weights[i]);chanceInput.value=p.chance;updateSummary();};field('出货预案',preset);
+const chanceInput=input('出现概率 %',p.chance,(p,v)=>p.chance=v,0,100,.1);
+const weightInputs=['白','绿','蓝','紫','金','红'].map((name,i)=>input(name+'品质 %',p.weights[i],(p,v)=>p.weights[i]=v,0,100,.1));
+const note=document.createElement('p');function updateSummary(){const total=p.weights.reduce((a,b)=>a+b,0),ok=Math.abs(total-100)<.001,eff=S.effective(p),names=['白','绿','蓝','紫','金','红'];
+note.style.color=ok?'':'#c95845';let txt='六档合计 '+total.toFixed(1)+'%（需为100%）。每局开始判定一次，每点生成一件；弹药生成一组。';
+if(eff){if(eff.empty.length){txt+=' ⚠ '+eff.empty.map(i=>names[i]).join('/')+'档在此池无物品，这部分权重会重分配到可用档（有效 '+eff.sum.toFixed(1)+'%）';note.style.color='#c95845';}else txt+=' 有效权重 '+eff.sum.toFixed(1)+'%。';if(!eff.spawns){txt+=' ⚠ 当前配置不会生成任何物品！';note.style.color='#c95845';}}
+const cur=S.presets.find(x=>x.key===(S.matchPreset(p.weights)||''));if(cur)txt+=' 已套用 '+cur.key+'：'+cur.hint+'；当前出现率 '+p.chance+'%。';
+note.textContent=txt;preset.value=S.matchPreset(p.weights)||'';}updateSummary();host.append(note);
+input('绘制上下偏移 px',p.offsetY||0,(p,v)=>p.offsetY=v,-32,32);const del=document.createElement('button');del.textContent='删除刷新点';del.onclick=o.remove;host.append(del);
+};
+const draw=root.EditorRender.draw;root.EditorRender.draw=function(d,r,state,canvas){const result=draw.apply(this,arguments);if(state.layers.lootSpawn===false||!state.view)return result;const v=state.view,c=canvas.getContext('2d'),ratio=canvas.width/canvas.getBoundingClientRect().width;c.save();c.setTransform(ratio,0,0,ratio,0,0);
+for(const p of d.lootSpawns||[]){const[x,y]=C.project(p.x,p.y,state.rot,d.width,d.height),sx=v.ox+(x+.5)*v.tile,sy=v.oy+(y+.5)*v.tile;c.fillStyle='#e8b56f';c.strokeStyle='#253c34';c.lineWidth=2;c.beginPath();c.arc(sx,sy,Math.max(5,v.tile*.22),0,Math.PI*2);c.fill();c.stroke();c.fillStyle='#172a23';c.font='bold 10px sans-serif';c.textAlign='center';c.fillText('物',sx,sy+3);if(state.selection?.kind==='lootSpawn'&&state.selection.id===p.id){c.strokeStyle='#e86234';c.strokeRect(v.ox+x*v.tile,v.oy+y*v.tile,v.tile,v.tile);}}
+c.restore();return result;};
+})(window);

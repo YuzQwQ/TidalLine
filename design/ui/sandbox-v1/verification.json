@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "file": "doors.html",
+      "sixRaritiesThreeEach": true,
+      "rarityBorderPixels": true,
+      "reusesIcons": true,
+      "nonBlocking": true,
+      "ePickup": true,
+      "fullBagPreservesLoot": true,
+      "replenish": true,
+      "doorsPreserved": true,
+      "saveIsolation": true,
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "sixRaritiesThreeEach": true,
+      "rarityBorderPixels": true,
+      "reusesIcons": true,
+      "nonBlocking": true,
+      "ePickup": true,
+      "fullBagPreservesLoot": true,
+      "replenish": true,
+      "doorsPreserved": true,
+      "saveIsolation": true,
+      "errors": []
+    }
+  ]
+}

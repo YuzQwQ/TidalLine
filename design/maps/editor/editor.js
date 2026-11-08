@@ -21,7 +21,7 @@
     zoom: 1,
     pan: { x: 0, y: 0 },
     layers: {
-      container: true, prop: true, enemy: true, interact: true,
+      lootSpawn: true, container: true, prop: true, enemy: true, interact: true,
       route: true, zones: false, grid: true, coords: true, patrol: false
     },
     hover: null,
@@ -189,7 +189,7 @@
     const m = s.material;
     $('material').classList.toggle('none', !m);
     $('material').querySelector('.m-name').textContent = m ? m.label : '未选择';
-    $('material').querySelector('.m-label').textContent = m ? (m.kind === 'terrain' ? '地形' : m.kind === 'container' ? '容器' : m.kind === 'prop' ? '装饰' : '敌人') : '材质';
+    $('material').querySelector('.m-label').textContent = m ? (m.kind === 'lootSpawn' ? '物资刷新点' : m.kind === 'terrain' ? '地形' : m.kind === 'container' ? '容器' : m.kind === 'prop' ? '装饰' : '敌人') : '材质';
   }
 
   function renderStats() {
@@ -272,7 +272,7 @@
   function renderLayers() {
     const s = store.get();
     const labels = {
-      container: '容器', prop: '装饰', enemy: '敌人', interact: '出生 / 撤离 / 房间',
+      lootSpawn:'物资刷新点（置顶）', container: '容器', prop: '装饰', enemy: '敌人', interact: '出生 / 撤离 / 房间',
       route: '推荐路线', zones: '净宽与建筑框', grid: '网格', coords: '坐标', patrol: '巡逻半径'
     };
     const host = $('layers');
@@ -471,7 +471,7 @@
     if (s.selection.kind === 'spawn' || s.selection.kind === 'exit') { toast('出生点与撤离点不能删除', true); return; }
     const kind = s.selection.kind;
     const table = {
-      container: s.data.containers, prop: s.data.props, enemy: s.data.enemies,
+      lootSpawn:s.data.lootSpawns, container: s.data.containers, prop: s.data.props, enemy: s.data.enemies,
       portal: s.data.portals, window: s.data.windows
     };
     const list = table[kind];
@@ -514,7 +514,7 @@
     const hit = T.entityAt(s.data, cell.x, cell.y);
     if (hit && hit.kind !== 'spawn' && hit.kind !== 'exit') {
       const table = {
-        container: s.data.containers, prop: s.data.props, enemy: s.data.enemies,
+        lootSpawn:s.data.lootSpawns, container: s.data.containers, prop: s.data.props, enemy: s.data.enemies,
         portal: s.data.portals, window: s.data.windows
       };
       const list = table[hit.kind];
@@ -560,6 +560,7 @@
       });
       return;
     }
+    if(m.kind==='lootSpawn'){store.set({preview:{rect:[cell.x,cell.y,cell.x,cell.y],tint:'rgba(230,175,80,.35)',color:'#c99b56',label:'放置物资刷新点'}});return;}
     if (m.kind === 'container' || m.kind === 'prop' || m.kind === 'enemy') {
       const w = m.kind === 'prop' ? (T.propDefaults(s.data, m.type).footprint) : [1, 1];
       const bad = T.placementProblem(s.data, cell.x, cell.y, w[0], w[1], null);
@@ -720,6 +721,7 @@
   /* ---------- 载入与保存 ---------- */
   function apply(payload, opts) {
     const data = payload.data;
+    data.lootSpawns ||= [];
     // Newly registered containers must also be selectable on older map files.
     data.containerTypes = {...root.MapTemplates.CONTAINER_TYPES, ...data.containerTypes};
     /* 一定要归一化再进 store：没有 rules.json 时 payload.rules 是空对象 {},

@@ -550,6 +550,7 @@ Object.assign(Game, {
 
     if (it.type === 'box') {
       const b = it.obj;
+      if(b.groundLoot&&typeof GroundLoot!=='undefined'){GroundLoot.take(b);return;}
       /* 已经掀开过的容器不用重新撬：直接看里子，也不再重复发声。
          只有第一次要按品质读条——那是"撬开"的动作，之后只是翻找。 */
       if (b.searched) { this.openLoot(b); return; }

@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "furnitureAndFloor": true,
+  "topLayer": true,
+  "manualRarity": true,
+  "allPools": true,
+  "runtimeSpawning": true,
+  "undoRedoMoveDeleteSaveReopen": true,
+  "presets": 5,
+  "presetApply": true,
+  "chanceApplied": true,
+  "defaultChanceBelow100": true,
+  "emptyTierWarning": true,
+  "coverageSynced": true
+}
