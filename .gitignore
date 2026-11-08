@@ -4,6 +4,26 @@ temp files/
 node_modules/
 *.log
 
+# 编辑器缓存、测试临时目录和本机配置
+.workbuddy/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+test-results/
+playwright-report/
+*.tmp
+*.bak
+*.swp
+*~
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# 单文件构建的中转文件；正式 HTML、素材原稿和验收记录仍入库
+/.*-build.html
+/.*-previous.html
+
 # 音频原始下载包（几十上百个文件、几十 MB）；挑进来的成品在 assets/audio/ 顶层
 assets/audio/_source/
 
