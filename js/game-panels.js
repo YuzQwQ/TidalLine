@@ -128,6 +128,7 @@ Object.assign(Game, {
 
   closeLoot() {
     this.lootOpen = null;
+    this._lootRevealTimes = null;
     this.search = null;
     this.autoSearch = false;
     this._searchBar = null;
@@ -145,6 +146,13 @@ Object.assign(Game, {
   searchTime(it) {
     const arr = CFG.ITEM_SEARCH.timeByRarity;
     return arr[U.clamp(it.r - 1, 0, arr.length - 1)];
+  },
+
+  lootRevealTiming(it) {
+    const rarity = U.clamp((it.r || 1) - 1, 0, 5);
+    return { light: [120, 220, 380, 600, 900, 1300][rarity],
+      pop: [80, 140, 240, 380, 580, 850][rarity],
+      glint: [0, 0, 0, 0, 600, 1100][rarity] };
   },
 
   stepAutoSearch() {
@@ -207,7 +215,7 @@ Object.assign(Game, {
       /* ---- 还没搜出来：只给一个压暗的剪影，不透露稀有度和价值 ---- */
       if (!entry.known) {
         const searching = this.search && this.search.idx === i;
-        row.className = 'row unknown';
+        row.className = 'row unknown' + (searching ? ' searching' : '');
         if (!searching) {
           /* 自动模式下后面几件是"排队"，点一下就插队 */
           row.innerHTML =
@@ -215,11 +223,13 @@ Object.assign(Game, {
             '<span class="nm">' + (this.autoSearch ? '排队' : '未搜索') + '</span>' +
             '<span class="vv">—</span>';
         } else {
+          const progress = Math.min(100, this.search.t / this.search.total * 100) + '%';
           row.innerHTML =
-            '<span class="ico phq">?</span>' +
+            '<span class="ico search-icon"><span class="prog" aria-hidden="true" style="--search-progress:' + progress + '">' +
+            (it.equip ? Icons.bagTag(it, 'scan-silhouette') : Icons.tag(it.id, 'scan-silhouette')) +
+            '<i style="left:' + progress + '"></i></span></span>' +
             '<span class="nm">搜索中</span>' +
-            '<span class="prog"><i style="width:' +
-            Math.min(100, this.search.t / this.search.total * 100) + '%"></i></span>';
+            '<span class="search-lens" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="6.5"/><path d="M15 15l6 6"/></svg></span>';
         }
         /* 点一件 = 我要先搜这个：中断自动顺序搜索，改搜指定目标 */
         row.onclick = () => { if (!this.search || this.search.idx !== i) this.startItemSearch(i, true); };
@@ -230,7 +240,23 @@ Object.assign(Game, {
       }
 
       /* ---- 搜出来了：显示名称、重量、价格 ---- */
-      row.className = 'row ' + RARITY[it.r - 1].cls;
+      row.className = 'row ' + RARITY[it.r - 1].cls + (it.egg ? ' egg-item' : '');
+      /* 自动搜索会立即重绘列表，以同一时间起点续播，避免下一件开搜时闪回。 */
+      const revealedAt = this._lootRevealTimes && this._lootRevealTimes.get(entry);
+      const timing = this.lootRevealTiming(it);
+      const revealElapsed = revealedAt === undefined || revealedAt === null ? timing.light : performance.now() - revealedAt;
+      if (revealElapsed < timing.light) {
+        row.classList.add('search-revealed');
+        row.style.setProperty('--reveal-light', timing.light + 'ms');
+        row.style.setProperty('--reveal-pop', timing.pop + 'ms');
+        row.style.animationDelay = (-revealElapsed) + 'ms';
+        if (timing.glint) {
+          row.classList.add('search-glint');
+          row.style.setProperty('--glint-duration', timing.glint + 'ms');
+          row.style.setProperty('--glint-delay', (timing.light - timing.glint - revealElapsed) + 'ms');
+          row.style.setProperty('--glint-color', it.r === 5 ? '226, 191, 106' : '239, 139, 139');
+        }
+      }
       const known = Save.codex[it.id];
 
       let badges = '';
@@ -771,7 +797,7 @@ Object.assign(Game, {
       const s = P.bag.slots[i];
       if (s) {
         const it = s.item;
-        cell.className = 'cell ' + RARITY[it.r - 1].cls + (it.equip ? ' eq' : '');
+        cell.className = 'cell ' + RARITY[it.r - 1].cls + (it.equip ? ' eq' : '') + (it.egg ? ' egg-item' : '');
         cell.style.color = '#b9cac4';
         const ico = Icons.bagTag(it, 'ico-bag');
         /* 装备只有一件，右上角改显示枪里的余弹 */
@@ -847,7 +873,7 @@ Object.assign(Game, {
       const cell = document.createElement('div');
       const s = P.bag.safe[i];
       if (s) {
-        cell.className = 'cell safe ' + RARITY[s.item.r - 1].cls;
+        cell.className = 'cell safe ' + RARITY[s.item.r - 1].cls + (s.item.egg ? ' egg-item' : '');
         cell.style.color = '#b9cac4';
         const ico2 = Icons.bagTag(s.item, 'ico-safe');
         /* 安全箱只有 38px 高，枪也常塞在这儿 —— 点缩到 18px 图标那一档才塞得下 */
@@ -1156,10 +1182,10 @@ Object.assign(Game, {
     let cards;
     if (top.length) {
       cards = '<h2>' + (d.success ? '最值钱的几件' : '保住的这几件') + '</h2><div class="end-cards">' +
-        top.map(l => {
+        top.map((l, i) => {
           const it = l.it;
           const rar = RARITY[U.clamp((it.r || 1) - 1, 0, RARITY.length - 1)];
-          return '<div class="end-card-item ' + rar.cls + '">' +
+          return '<div class="end-card-item end-item-reveal ' + rar.cls + '" style="--reveal-delay:' + (100 + i * 160) + 'ms">' +
             (l.isNew ? '<em>NEW</em>' : '') +
             '<span class="ic">' + Icons.bagTag(it, 'ico-bag') + '</span>' +
             '<b>' + esc(it.short || it.name) + '</b>' +

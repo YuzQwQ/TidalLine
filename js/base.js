@@ -1009,7 +1009,7 @@ const Base = {
     if(!it){cell.className='cell empty';cell.textContent='·';return cell;}
     const n=e.n||1,armor=DuraBar.of(it),dots=SlotDots.html(it);
     cell.className='cell '+RARITY[U.clamp((it.r||1)-1,0,RARITY.length-1)].cls+(it.equip?' eq':'')+
-      (armor?' has-dbar':'')+(dots?' has-dots':'');
+      (armor?' has-dbar':'')+(dots?' has-dots':'')+(it.egg?' egg-item':'');
     cell.innerHTML=Icons.bagTag(it,'ico-bag')+'<span class="cn">'+esc(it.short||it.name)+'</span>'+
       (n>1?'<span class="qty">'+n+'</span>':'')+
       (ItemCapacity.max(it)&&(it.cat==='key'||ItemCapacity.isPartial(e))?'<span class="cap">'+Math.ceil(ItemCapacity.remaining(e))+'</span>':'')+
@@ -1346,7 +1346,7 @@ const Base = {
       const armor = DuraBar.of(it);      // 护甲在格子底边挂一条耐久条
       const dots = SlotDots.html(it);    // 枪在底边挂一排配件槽点
       cell.className = 'scell r' + (it.r || 1) + (it.equip ? ' eq' : '') +
-        (armor ? ' has-dbar' : '') + (dots ? ' has-dots' : '');
+        (armor ? ' has-dbar' : '') + (dots ? ' has-dots' : '') + (it.egg ? ' egg-item' : '');
       cell.innerHTML =
         Icons.bagTag(it, '') +
         '<span class="cn">' + esc(it.short || it.name) + '</span>' +

@@ -172,6 +172,9 @@ window.addEventListener('error', function (e) {
     cursor: pointer; font-size: 12px; line-height: 1.4;
   }
   .row:hover { background: #16241f; border-color: #2a443d; }
+  /* 局内容器和背包统一小圆角；扫描层与闪光层跟随外框。 */
+  #lootBox .row, #lootBox .eqs, #bagBox .cell, #bagBox .eqs { border-radius: 6px; }
+  #lootBox .row .prog { border-radius: inherit; }
   .row.taken { opacity: 0.34; cursor: default; }
   .row.taken:hover { background: #101a17; border-color: #1a2a25; }
   .row .ico {
@@ -197,7 +200,7 @@ window.addEventListener('error', function (e) {
   .row .badge.ser { background: #7A5C10; }
 
   /* 未搜索：压暗剪影，不透露稀有度与价值 */
-  .row.unknown { border-left: 3px solid #26382f; background: #0c1512; }
+  .row.unknown { border: 1px solid #26382f; background: #0c1512; }
   .row .ico.phq {
     display: flex; align-items: center; justify-content: center;
     background: #0a1310; border: 1px dashed #2a443b;
@@ -209,14 +212,95 @@ window.addEventListener('error', function (e) {
   .row.unknown .vv { color: #3b544c; }
   .row.unknown:hover { background: #12201b; border-color: #24463d; }
 
-  /* 搜索进度条 */
+  /* 扫描线跟随真实搜索进度；放大镜持续绕圈，不透露物品品质。 */
+  .row.searching { position: relative; overflow: hidden; }
+  .row.unknown .ico.search-icon {
+    position: relative; overflow: hidden; background: #2b3b33;
+    border: 1px solid #3e5549; filter: none; opacity: 1;
+  }
+  .row .scan-silhouette {
+    display: block; width: 100%; height: 100%; object-fit: contain;
+    filter: brightness(0); background: transparent !important; box-shadow: none !important;
+    clip-path: inset(0 calc(100% - var(--search-progress, 0%)) 0 0);
+  }
   .row .prog {
-    flex: 1; height: 4px; border-radius: 2px;
-    background: #1b2b26; overflow: hidden;
+    position: absolute; inset: 0; pointer-events: none;
+    overflow: hidden;
   }
   .row .prog i {
-    display: block; height: 100%; width: 0%;
-    background: linear-gradient(90deg, #1c6f60, #3fbf9b);
+    position: absolute; top: 0; bottom: 0; width: 2px;
+    transform: translateX(-50%); background: #8bd6b9;
+    box-shadow: 0 0 6px #3fbf9b;
+  }
+  .row .prog i::before {
+    content: ''; position: absolute; top: 0; bottom: 0; right: 2px; width: 10px;
+    background: linear-gradient(90deg, transparent, rgba(63,191,155,.24));
+  }
+  .row .search-lens {
+    display: flex; align-items: center; justify-content: center;
+    flex: 0 0 28px; height: 28px; color: #8bb6a5;
+  }
+  .row .search-lens svg {
+    width: 17px; height: 17px;
+    animation: search-lens-orbit 1.2s linear infinite;
+  }
+  @keyframes search-lens-orbit {
+    from { transform: rotate(0deg) translateX(3px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(3px) rotate(-360deg); }
+  }
+  @property --rarity-border-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  #lootList .row:not(.unknown), #bagBox .cell:not(.empty) {
+    position: relative; border-color: transparent;
+  }
+  #lootList .row:not(.unknown)::before, #bagBox .cell:not(.empty)::before,
+  :is(.sh-shell, #baseVeil) .cell:not(.empty)::before,
+  :is(.sh-shell, #baseVeil) :is(.scell, .slot):not(.empty)::after {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    box-sizing: border-box; padding: 1px; pointer-events: none;
+    background: conic-gradient(from var(--rarity-border-angle),
+      var(--rarity-edge) 0deg, color-mix(in srgb, var(--rarity-edge) 55%, black) 170deg,
+      var(--rarity-edge) 255deg, color-mix(in srgb, var(--rarity-edge) 65%, white) 305deg,
+      var(--rarity-edge) 360deg);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    animation: rarity-border-flow 2.8s linear infinite;
+  }
+  @keyframes rarity-border-flow { to { --rarity-border-angle: 360deg; } }
+  #lootList .row.egg-item::before, #bagBox .cell.egg-item::before,
+  :is(.sh-shell, #baseVeil) .cell.egg-item::before,
+  :is(.sh-shell, #baseVeil) :is(.scell, .slot).egg-item::after {
+    background: conic-gradient(from var(--rarity-border-angle),
+      #a17eb0 0deg, #84a7b9 45deg, #6ca58f 90deg, #b0a17a 135deg,
+      #a17eb0 180deg, #84a7b9 225deg, #6ca58f 270deg, #b0a17a 315deg, #a17eb0 360deg);
+    animation-duration: 3.6s;
+  }
+  .row.search-revealed {
+    transform-origin: center;
+    animation: search-reveal var(--reveal-light, 350ms) ease-out backwards,
+      search-reveal-pop var(--reveal-pop, 180ms) ease-out backwards;
+  }
+  @keyframes search-reveal-pop {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.025); }
+    100% { transform: scale(1); }
+  }
+  @keyframes search-reveal {
+    from { filter: brightness(.25); opacity: .5; }
+    to { filter: brightness(1); opacity: 1; }
+  }
+  .row.search-glint { position: relative; }
+  .row.search-glint::after {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    pointer-events: none; opacity: 0;
+    background: linear-gradient(110deg, transparent 10%, rgba(var(--glint-color), .30) 35%,
+      rgba(255, 250, 230, .55) 50%, rgba(var(--glint-color), .30) 65%, transparent 90%);
+    box-shadow: inset 0 0 18px rgba(var(--glint-color), .45),
+      inset 0 0 0 1px rgba(var(--glint-color), .65), 0 0 8px rgba(var(--glint-color), .24);
+    animation: search-glint var(--glint-duration) ease-in-out var(--glint-delay) backwards;
+  }
+  @keyframes search-glint {
+    0%, 100% { opacity: 0; }
+    40% { opacity: 1; }
   }
 
   /* 装备槽：和物品格同一种方格，名字在格子上面。
@@ -269,17 +353,17 @@ window.addEventListener('error', function (e) {
     font-size: 9px; color: #47645c; margin: -4px 0 8px; letter-spacing: 0.5px;
   }
 
-  /* 稀有度颜色：左边框 + 底色。底色用 background-image 叠在背景色上，
+  /* 稀有度颜色：1px 同色系动态边框 + 底色。底色用 background-image 叠在背景色上，
      这样 :hover 改 background-color 时不会把底色覆盖掉。 */
-  .r1, :is(.row,.cell,.scell).r1:not(.empty) { border-left: 3px solid #c6ceca; }
-  .r2, :is(.row,.cell,.scell).r2:not(.empty) { border-left: 3px solid #3f8b78; }
-  .r3, :is(.row,.cell,.scell).r3:not(.empty) { border-left: 3px solid #3f6d9b; }
-  .r4, :is(.row,.cell,.scell).r4:not(.empty) { border-left: 3px solid #9165b3; }
+  .r1, :is(.row,.cell,.scell).r1:not(.empty) { --rarity-edge: #929c96; border: 1px solid #929c96; }
+  .r2, :is(.row,.cell,.scell).r2:not(.empty) { --rarity-edge: #356d5e; border: 1px solid #356d5e; }
+  .r3, :is(.row,.cell,.scell).r3:not(.empty) { --rarity-edge: #375a7c; border: 1px solid #375a7c; }
+  .r4, :is(.row,.cell,.scell).r4:not(.empty) { --rarity-edge: #73538d; border: 1px solid #73538d; }
   .row.r4 { background-image:linear-gradient(90deg,rgba(145,101,179,0.40),rgba(145,101,179,0.07)); }
   .cell.r4 { background-image:linear-gradient(160deg,rgba(145,101,179,0.34),rgba(145,101,179,0.06)); }
   .scell.r4 { background-image:linear-gradient(160deg,rgba(145,101,179,0.32),rgba(145,101,179,0.05)); }
-  .r5, :is(.row,.cell,.scell).r5:not(.empty) { border-left: 3px solid #a8862a; }
-  .r6, :is(.row,.cell,.scell).r6:not(.empty) { border-left: 3px solid #8d3a3a; }
+  .r5, :is(.row,.cell,.scell).r5:not(.empty) { --rarity-edge: #826c30; border: 1px solid #826c30; }
+  .r6, :is(.row,.cell,.scell).r6:not(.empty) { --rarity-edge: #703737; border: 1px solid #703737; }
 
   .row.r1 { background-image: linear-gradient(90deg, rgba(198,206,202,0.34), rgba(198,206,202,0.05)); }
   .row.r2 { background-image: linear-gradient(90deg, rgba(63,139,120,0.34), rgba(63,139,120,0.05)); }
@@ -402,6 +486,18 @@ window.addEventListener('error', function (e) {
   .end-card-item.r4 { border-left-color: #9165b3; }
   .end-card-item.r5 { border-left-color: #a8862a; }
   .end-card-item.r6 { border-left-color: #8d3a3a; }
+  /* 结算物品按显示顺序亮起，不延迟按钮与价值统计。 */
+  .end-item-reveal {
+    animation: end-item-light 480ms ease-out both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+  @keyframes end-item-light {
+    from { filter: brightness(.18); opacity: .45; }
+    to { filter: brightness(1); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .end-item-reveal { animation: none; }
+  }
   .end-new { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 14px; font-size: 12px; color: #6d8780; }
   .end-new span { font-size: 11px; letter-spacing: 2px; color: #4d7d70; }
   .end-new b { font-weight: 400; padding: 2px 8px; color: #9db4ab; background: #101a16; border: 1px solid #1e312b; }
@@ -981,10 +1077,13 @@ window.addEventListener('error', function (e) {
 .tip-egg {
   display: inline-block; margin-left: 7px; padding: 0 5px;
   font: 9px/14px Consolas, monospace; letter-spacing: 1px; font-style: normal;
-  color: #ffdf9d; background: linear-gradient(#5a4318, #3a2c12);
-  border: 1px solid #a8862a; box-shadow: 0 0 6px rgba(168, 134, 42, 0.35);
+  color: #20252b; background: repeating-linear-gradient(110deg,
+    #a17eb0 0px, #84a7b9 12px, #6ca58f 24px, #b0a17a 36px, #a17eb0 48px);
+  background-size: 250% 100%; animation: egg-label-flow 4s linear infinite;
+  border: 1px solid #9691a6; border-radius: 3px; box-shadow: 0 0 6px rgba(132, 167, 185, .12);
   vertical-align: 1px;
 }
+@keyframes egg-label-flow { to { background-position: 250% 0; } }
 .tip-dura { margin: 10px 0 2px; }
 .dbar-box { margin: 11px 0 1px; }
 .dbar-cap { display: block; margin-top: 5px; font: 10px Consolas, monospace; color: #7d948c; letter-spacing: 0; }

@@ -26,7 +26,7 @@ const Game = {
   action: null,          // { type, t, total, target }
   lootOpen: null,        // 当前打开的容器对象
   search: null,          // 正在搜的那一件 { idx, t, total }
-  _searchBar: null,      // 进度条的 DOM 引用
+  _searchBar: null,      // 搜索扫描线的 DOM 引用
   bagWasAuto: false,     // 背包是不是因为搜刮才打开的
   bagOpen: false,
   tideLevel: 0,

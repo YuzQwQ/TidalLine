@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "file": "index.html",
+      "scan": {
+        "clip": "inset(0px 50% 0px 0px)",
+        "black": "brightness(0)",
+        "lens": true,
+        "unknown": true,
+        "safes": 3
+      },
+      "frames": [
+        {
+          "radius": "6px",
+          "animation": "none",
+          "angle": "10deg"
+        },
+        {
+          "radius": "6px",
+          "animation": "none",
+          "angle": "10deg"
+        },
+        {
+          "radius": "6px",
+          "animation": "none",
+          "angle": "10deg"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "file": "潮汐线.html",
+      "scan": {
+        "clip": "inset(0px 50% 0px 0px)",
+        "black": "brightness(0)",
+        "lens": true,
+        "unknown": true,
+        "safes": 3
+      },
+      "frames": [
+        {
+          "radius": "6px",
+          "animation": "none",
+          "angle": "10deg"
+        },
+        {
+          "radius": "6px",
+          "animation": "none",
+          "angle": "10deg"
+        },
+        {
+          "radius": "6px",
+          "animation": "none",
+          "angle": "10deg"
+        }
+      ],
+      "passed": true
+    }
+  ]
+}

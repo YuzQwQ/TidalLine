@@ -33,3 +33,34 @@
 .ammo-checkout footer{border-top:1px solid #8a795055;padding-top:18px}.ammo-purchase-total{display:flex;justify-content:space-between;gap:12px;align-items:center}.ammo-purchase-total strong{font-size:27px;color:#edce91}.ammo-checkout [data-ammo-wallet]{font-size:12px;color:#b9bda6;margin:7px 0}.ammo-purchase-error{min-height:20px;font-size:12px;color:#f0b29d;margin:8px 0}
 .ammo-purchase-actions{display:flex;gap:12px}.ammo-purchase-actions button{flex:1;min-height:44px;padding:10px;border:1px solid #938467;background:#2d3a2b;color:#e3dec7;font:inherit;cursor:pointer}.ammo-purchase-actions [data-ammo-pay]{background:linear-gradient(120deg,#9b7b3e,#65522d);border-color:#c4a267;color:#fff0d1}.ammo-purchase-actions button:disabled{opacity:.4;cursor:default}.ammo-checkout :focus-visible{outline:2px solid #efd294;outline-offset:3px}
 @media(max-width:480px){.ammo-checkout{padding:18px}.ammo-purchase-total strong{font-size:24px}.ammo-purchase-item{padding:10px;gap:10px}.ammo-purchase-item h3{font-size:14px}}
+
+/* Shop tiles use the warehouse square layout; prices sit below the item frame. */
+.mb-buy-mount .shop-grid {
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 9px; align-items: start; align-content: start;
+}
+.mb-buy-mount .scell {
+  display: block; aspect-ratio: 1; min-height: 0; height: auto;
+  padding: 0; margin-bottom: 26px; overflow: visible; box-sizing: border-box;
+  background: linear-gradient(135deg, #35432b5c, #0e1a1399);
+  box-shadow: inset 0 0 12px #08100822;
+}
+.mb-buy-mount .scell img, .mb-buy-mount .scell .gl {
+  position: absolute; inset: 8% 12% auto; width: 76%; height: 70%;
+  object-fit: contain; margin: 0;
+}
+.mb-buy-mount .scell .cn {
+  position: absolute !important; bottom: 5px; left: 5px; right: 5px;
+  max-width: calc(100% - 10px); font-size: 10px; line-height: 1.4;
+  text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: #d4dcc5;
+}
+.mb-buy-mount .scell.has-dots .cn { bottom: 14px; }
+.mb-buy-mount .scell .sdots { position: absolute; left: 5px; bottom: 5px; gap: 3px; }
+.mb-buy-mount .scell .sdots > b { width: 4px; height: 4px; }
+.mb-buy-mount .scell .pr {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+  margin: 0; font: 11px/18px Consolas, monospace; color: #d6bb7d;
+  white-space: nowrap; text-align: center;
+}
+.mb-buy-mount .scell .pending-mark { position: absolute; top: 4px; right: 4px; font-size: 9px; }

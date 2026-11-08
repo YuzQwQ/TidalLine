@@ -42,16 +42,27 @@ const Sandbox={
   this.active=true;Game.toasts=[];document.title='潮汐线 · 局内测试场';M.map.title='局内测试场';
   Game.player.x=M.cx(8);Game.player.y=M.cy(15);Game.input.aimAngle=-Math.PI/2;Game.updateCamera(true);
   const ui=document.getElementById('doorTestControls'),doors=ui.querySelector('details');doors.removeAttribute('open');doors.querySelector('summary').textContent='门体搭建与交互测试（展开）';
-  const panel=document.createElement('section');panel.innerHTML='<b>局内测试场 · 地表物品</b><div class="tools"><label>物品尺寸<select data-ground-size><option>12</option><option selected>16</option><option>20</option><option>24</option></select> px</label><label><input type="checkbox" data-ground-outline checked>品质描边</label><label><input type="checkbox" data-sandbox-vision checked>全视野</label><button data-ground-reset>补回样品</button><button data-ground-clear>清空测试背包</button></div><small>六档各3件 · 左→右：白 / 绿 / 蓝 / 紫 / 金 / 红 · E拾取 · 样品不计入存档</small>';
+  const panel=document.createElement('section');panel.innerHTML='<b>局内测试场 · 地表物品</b><div class="tools"><label>物品尺寸<select data-ground-size><option>12</option><option selected>16</option><option>20</option><option>24</option></select> px</label><label><input type="checkbox" data-ground-outline checked>品质描边</label><label><input type="checkbox" data-sandbox-vision checked>全视野</label><button data-ground-reset>补回样品</button><button data-ground-clear>清空测试背包</button></div><small>出生点上方：彩蛋「颂乐玩偶」 · 六档各3件 · 左→右：白 / 绿 / 蓝 / 紫 / 金 / 红 · E拾取 · 样品不计入存档</small>';
   const legend=document.createElement('div');legend.className='tools';legend.style.gap='14px';legend.innerHTML=RARITY.map((r,i)=>'<span style="color:'+r.color+'">'+['白','绿','蓝','紫','金','红'][i]+' · '+r.name+'</span>').join('');panel.append(legend);ui.prepend(panel);panel.querySelector('[data-ground-size]').value=String(GroundLoot.size);panel.querySelector('[data-ground-outline]').checked=GroundLoot.outline;
   panel.querySelector('[data-ground-size]').onchange=e=>{GroundLoot.size=Number(e.target.value);};panel.querySelector('[data-ground-outline]').onchange=e=>{GroundLoot.outline=e.target.checked;};
   panel.querySelector('[data-ground-reset]').onclick=()=>this.populate();panel.querySelector('[data-ground-clear]').onclick=()=>{Game.player.bag.slots=[];Game.player.bag.safe=[];if(Game.bagOpen)Game.renderBag();Game.toast('测试背包已清空');};
   ui.querySelector('[data-door-reset]').onclick=()=>this.start();
-  this.populate();Game.toasts=[];RaidValue.begin(Game.player);Game.update(1/60);Game.render();Game.toast('地表物品：六列依次为白、绿、蓝、紫、金、红，每档三件');
+  const safeTools=document.createElement('div');safeTools.className='tools';safeTools.innerHTML='<button data-safe-reset>重置三个保险箱</button><small>出生点下方三个大型保险箱 · E 搜索 · 重置后可再次测试揭晓动画</small>';panel.append(safeTools);
+  safeTools.querySelector('[data-safe-reset]').onclick=()=>this.populateSafes();
+  this.populate();this.populateSafes();Game.toasts=[];RaidValue.begin(Game.player);Game.update(1/60);Game.render();Game.toast('出生点下方有三个大型保险箱，可反复重置测试搜索动画');
+ },
+ populateSafes(){
+  for(const box of [...Game.boxes])if(box.sandboxSafe)Game.removePile(box);
+  const type=CONTAINER_TYPES.V;
+  for(const [i,x]of [5,8,11].entries()){
+   const y=16,box={id:'sandbox-safe-'+i,x:M.cx(x),y:M.cy(y),tx:x,ty:y,kind:type.q,q:CONTAINER_QUALITY[type.q],art:type.art,name:type.name+' · 测试'+(i+1),items:Loot.fill(type.q,type.cats,type),opened:false,searched:false,sandboxSafe:true};
+   const tile=M.at(x,y);tile.box=box;tile.solid=true;Game.boxes.push(box);
+  }
+  Game.interactKey=null;Game.toast('三个大型保险箱已重置');
  },
  populate(){
   for(const box of [...Game.boxes])if(box.sandboxSample)Game.removePile(box);
-  for(const [id,x,y]of this.samples){const item=ITEM_BY_ID[id];if(!item||!M.walkable(x,y))continue;const box=Game.makePile(x,y);box.groundLoot=true;box.sandboxSample=true;box.name=item.name;box.items=[{item,n:1,known:true}];}
+  for(const [id,x,y]of [...this.samples,['odd15',8,14]]){const item=ITEM_BY_ID[id];if(!item||!M.walkable(x,y))continue;const box=Game.makePile(x,y);box.groundLoot=true;box.sandboxSample=true;box.name=item.name;box.items=[{item,n:1,known:true}];}
   Game.interactKey=null;Game.toast('地表样品已补回');
  }
 };

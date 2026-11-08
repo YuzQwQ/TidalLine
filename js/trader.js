@@ -20,7 +20,7 @@ const TradeMerchant={
   document.getElementById('shopNote').textContent='固定货架 · 收集品与钥匙 · 每次购买一件；钥匙按标价出售。';
   document.getElementById('shopHint').textContent='购买后直接进入仓库；暂无动态行情、限购或信任门槛。';
   for(const o of this.offers(key)){
-   const it=o.item,cell=document.createElement('div');cell.className='scell r'+it.r;cell.dataset.offer=JSON.stringify({kind:it.cat==='key'?'key':'collectible',id:it.id,merchant:key,price:o.price});
+   const it=o.item,cell=document.createElement('div');cell.className='scell r'+it.r+(it.egg?' egg-item':'');cell.dataset.offer=JSON.stringify({kind:it.cat==='key'?'key':'collectible',id:it.id,merchant:key,price:o.price});
    cell.innerHTML=Icons.bagTag(it,'')+'<span class="cn">'+esc(it.short||it.name)+'</span><span class="pr">'+formatMoney(o.price)+'</span>';cell.title=it.name+' · '+formatMoney(o.price);
    cell.onclick=()=>Deal.show({kind:'buy',title:it.cat==='key'?'购买钥匙':'购买收集品',name:it.name,id:it.id,sub:'贸易商 · 一件 · 进入仓库',price:o.price,can:Save.credits>=o.price&&Save.canAddStash(it.id,1),onGo:()=>this.buy(key,it.id,o.price)},cell.getBoundingClientRect());el.appendChild(cell);
   }

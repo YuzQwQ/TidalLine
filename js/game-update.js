@@ -287,11 +287,17 @@ Object.assign(Game, {
         Noise.emit(this.lootOpen.x, this.lootOpen.y, CFG.ITEM_SEARCH.noise, 'search');
       }
       if (this._searchBar) {
-        this._searchBar.style.width = Math.min(100, s2.t / s2.total * 100) + '%';
+        const progress = Math.min(100, s2.t / s2.total * 100) + '%';
+        this._searchBar.style.left = progress;
+        this._searchBar.parentElement.style.setProperty('--search-progress', progress);
       }
       if (s2.t >= s2.total) {
         const e = this.lootOpen.items[s2.idx];
-        if (e) e.known = true;
+        if (e) {
+          e.known = true;
+          if (!this._lootRevealTimes) this._lootRevealTimes = new WeakMap();
+          this._lootRevealTimes.set(e, performance.now());
+        }
         this.search = null;
         this._searchBar = null;
         SFX.play('pickup');
