@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "file": "index.html",
+      "loss": 1865000,
+      "baseline": 18846095,
+      "armorValue": 15000,
+      "keyLoss": 1850000,
+      "errors": []
+    },
+    {
+      "file": "潮汐线.html",
+      "loss": 1865000,
+      "baseline": 18846095,
+      "armorValue": 15000,
+      "keyLoss": 1850000,
+      "errors": []
+    }
+  ]
+}

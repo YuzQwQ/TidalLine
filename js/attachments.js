@@ -94,7 +94,7 @@ const Attachments={
   },
   commit(t,slot,id,source){const r=this.preview(t,slot,id,source);if(!r.ok)return r;
     const raid=t.owner.startsWith('raid'),p=Game.player;
-    if(raid){p.bag.slots=r.next;if(t.owner==='raid-equipped'){const e=r.gun.equip;p.weapons[t.index]={...r.after,ammo:e.ammo,rounds:[...e.rounds],magCur:e.mag,fireMode:e.fireMode,cycleRemaining:e.cycleRemaining};if(p.slot===t.index){p.mag=e.mag;p.resetAim();}}Game.syncGear();Save.flush();}
+    if(raid){p.bag.slots=r.next;if(t.owner==='raid-equipped'){const e=r.gun.equip;p.weapons[t.index]={...r.after,...(typeof RaidValue!=='undefined'?{[RaidValue.token]:t.ref[RaidValue.token]}:{}),ammo:e.ammo,rounds:[...e.rounds],magCur:e.mag,fireMode:e.fireMode,cycleRemaining:e.cycleRemaining};if(p.slot===t.index){p.mag=e.mag;p.resetAim();}}Game.syncGear();Save.flush();}
     else{Save.stash=r.next;if(t.owner==='base-equipped')Save.gear.weapons[t.index]=r.gun;else if(t.owner==='base-bag')Save.bag[t.index]={...Save.bag[t.index],gear:r.gun,id:r.gun.id};Save.save();Save.flush();}
     const ref=t.owner==='raid-equipped'?p.weapons[t.index]:r.gun;return{...r,target:this.targets().find(x=>x.ref===ref),ok:true};
   }

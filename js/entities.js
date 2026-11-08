@@ -107,6 +107,9 @@ class Bag {
   constructor() {
     this.slots = [];        // [{ item, n }]
     this.safe = [];         // 安全箱
+    /* 钥匙链：只用来开门，不参与 capacity / weight / value 的计算，
+       所以塞满 6 把钥匙也不会挤占背包格或抬高背包价值。 */
+    this.chain = [];
   }
   weight() {
     let w = 0;
@@ -116,8 +119,8 @@ class Bag {
   }
   value() {
     let v = 0;
-    for (const s of this.slots) v += s.item.price * s.n;
-    for (const s of this.safe) v += s.item.price * s.n;
+    for (const s of this.slots) v += (typeof RaidValue!=='undefined'?RaidValue.value(s.item,s):entryValue(s.item,s)) * s.n;
+    for (const s of this.safe) v += (typeof RaidValue!=='undefined'?RaidValue.value(s.item,s):entryValue(s.item,s)) * s.n;
     return v;
   }
   count() { return this.slots.length; }
@@ -126,10 +129,8 @@ class Bag {
 
   canAdd(item, n, cap) {
     n = Math.max(1, n | 0);
-    /* 背包不能套背包：容量只由背包槽决定，塞进去也不会变大 */
-    if (item.equip && item.equip.kind === 'bag') {
-      return { ok: false, why: '背包不能塞进背包，回藏身处换装' };
-    }
+    /* 背包可以塞进背包：它只占 1 格、只加自重，不会让容量变大，
+       所以可以带着备用包进图，进去再换上。 */
     const stack = stackLimit(item);
     // 可堆叠：找同类（容量类物品只和"满的"那堆合并，用过的不并）
     if (stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {
@@ -152,7 +153,6 @@ class Bag {
 
   add(item, n, cap) {
     n = Math.max(1, n | 0);
-    if (item.equip && item.equip.kind === 'bag') return false;   // 不套背包
     const stack = stackLimit(item);
     /* 先并进已有的同类堆（只有子弹这类可堆叠的） */
     if (stack > 1 && this.fullCap({ item, n: 1, cap }, item)) {

@@ -457,18 +457,30 @@ Object.assign(Game, {
       const free = range.find(k => !P.weapons[k]);
       if (free != null) {
         const snap=s.gunItem.equip,got=snap.mag;
-        P.weapons[free] = Object.assign({}, g, { attachments:{...snap.attachments},magCur: got,ammo:snap.ammo,rounds:[...snap.rounds],fireMode:snap.fireMode,cycleRemaining:snap.cycleRemaining });
+        P.weapons[free] = Object.assign({}, g, { attachments:{...snap.attachments},...(typeof RaidValue!=='undefined'?{[RaidValue.token]:snap[RaidValue.token]}:{}),magCur: got,ammo:snap.ammo,rounds:[...snap.rounds],fireMode:snap.fireMode,cycleRemaining:snap.cycleRemaining });
         if (!P.weapons[P.slot] || P.slot===free) { P.slot = free; P.mag = got; }
         msg = '换上 ' + g.name + '（' + got + ' 发）';
       }
     } else if (s.bag) {
-      /* 背包不能塞进背包，换下来那只直接丢在脚边 —— 但只有更大的才值得换，
+      /* 背包能塞进背包，所以只有更大的才值得当场换；
          更小的那只走下面的"放进背包"，别把身上好的那只抖到地上 */
       const cur = P.back;
       if (!cur || g.slots > cur.slots) {
-        if (cur) dropOld = EQUIP.bag(cur.id);
-        P.back = BACKPACK.make(g.id);
-        msg = '背上 ' + g.name + (dropOld ? '，' + dropOld.name + ' 丢在脚边' : '');
+        let carried = '';
+        if (cur) {
+          const oldItem = EQUIP.bag(cur.id);
+          if (typeof RaidValue !== 'undefined') RaidValue.copy(cur, oldItem.equip);
+          P.back = BACKPACK.make(g.id);
+          if (typeof RaidValue !== 'undefined') RaidValue.copy(entry.item?.equip, P.back);
+          /* 先换上再判断：bagSlots() 读的是存档里的背包位，同步之后才是新容量 */
+          this.syncGear();
+          if (P.bag.add(oldItem, 1)) carried = '，' + oldItem.name + ' 塞进包里';
+          else dropOld = oldItem;
+        } else {
+          P.back = BACKPACK.make(g.id);
+          if (typeof RaidValue !== 'undefined') RaidValue.copy(entry.item?.equip, P.back);
+        }
+        msg = '背上 ' + g.name + carried + (dropOld ? '，' + dropOld.name + ' 丢在脚边' : '');
       }
     } else if (!P[g.type]) {
       P[g.type] = Object.assign({}, g);
@@ -518,7 +530,7 @@ Object.assign(Game, {
       const cur = P.weapons[at];
       if (cur) old = Gunplay.snapshot(cur);
       P.weapons[at] = Object.assign({}, def, {
-        magCur: eq.mag || 0,
+        ...(typeof RaidValue!=='undefined'?{[RaidValue.token]:eq[RaidValue.token]}:{}),magCur: eq.mag || 0,
         rounds: magazineRounds(def, eq.mag || 0, eq.ammo, eq.rounds),
         fireMode:eq.fireMode||def.defaultMode,cycleRemaining:eq.cycleRemaining||0,
         ammo: (AMMO_BY_ID[eq.ammo] && AMMO_BY_ID[eq.ammo].caliber === def.caliber) ? eq.ammo : def.ammo
@@ -526,6 +538,21 @@ Object.assign(Game, {
       Gunplay.cancel(P,true); AmmoQuick.cancel();
       P.slot = at;
       P.mag = P.weapons[at].magCur;
+    } else if (eq.kind === 'bag') {
+      /* 背包也是能塞进背包的装备，局内可以当场换。换小包会把东西挤出来，
+         所以先算换完之后还剩几格（这一格被拿走，旧包占回一格）。 */
+      const cur = P.back;
+      const nextCount = P.bag.slots.length - 1 + (cur ? 1 : 0);
+      if (nextCount > eq.slots) {
+        this.toast('新背包只有 ' + eq.slots + ' 格，装不下现有的 ' + nextCount + ' 件');
+        return false;
+      }
+      if (cur) {
+        old = EQUIP.bag(cur.id);
+        if (typeof RaidValue !== 'undefined') RaidValue.copy(cur, old.equip);
+      }
+      P.back = BACKPACK.make(eq.bag);
+      if (typeof RaidValue !== 'undefined') RaidValue.copy(eq, P.back);
     } else {
       const g = eq.gear;
       const cur = P[g.type];
@@ -855,6 +882,34 @@ Object.assign(Game, {
       sg.appendChild(cell);
     }
 
+    /* 钥匙链：局内只读。显示是为了随时看到还剩几次耐久，
+       但不能拿出来、也不能往里放 —— 局内只拿来开门。 */
+    const cg = document.getElementById('chainGrid');
+    if (cg) {
+      cg.innerHTML = '';
+      const chain = P.bag.chain || [];
+      for (let i = 0; i < CFG.BAG.CHAIN; i++) {
+        const cell = document.createElement('div');
+        const s = chain[i];
+        if (s) {
+          cell.className = 'cell safe ' + RARITY[U.clamp((s.item.r || 1) - 1, 0, RARITY.length - 1)].cls;
+          cell.style.color = '#b9cac4';
+          const dots = SlotDots.html(s.item);
+          if (dots) cell.classList.add('has-dots');
+          cell.innerHTML = Icons.bagTag(s.item, 'ico-safe') +
+            '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
+            (ItemCapacity.max(s.item) ? '<span class="cap">' + Math.ceil(ItemCapacity.remaining(s)) + '</span>' : '') + dots;
+          cell.title = s.item.name + ' · ' + ItemCapacity.text(s) + ' · 钥匙链：局内不可调整';
+          this.bindItem(cell, { it: s.item, entry: s, hint: '钥匙链 · 局内只能开门，死亡不掉落' });
+        } else {
+          cell.className = 'cell empty safe';
+          cell.textContent = '·';
+          cell.title = '钥匙链空位 · 出发前在藏身处装备';
+        }
+        cg.appendChild(cell);
+      }
+    }
+
     const w = P.bag.weight(), t = P.bag.tier();
     document.getElementById('bagWeight').textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
     document.getElementById('bagValue').textContent = formatMoney(P.bag.value());
@@ -936,10 +991,16 @@ Object.assign(Game, {
 
     const P = this.player;
     Save.setHP(success ? P.hp : 1);
+    const deathOrigins=!success&&typeof RaidValue!=='undefined'&&RaidValue.player===P;
+    if(deathOrigins)RaidValue.sync();
     const lostEquipment=success?[]:this.applyEquipmentLoss();
     const carried = P.bag.slots.slice();
     const safe = P.bag.safe.slice();
     const kept = success ? carried.concat(safe) : safe;
+    /* 钥匙链不随死亡掉落：撤离和阵亡都原样回档，保留局内已经消耗的耐久，
+       也不会被打散进仓库或背包。它不占背包格，所以不参与下面的分拣与收获统计。 */
+    Save.chain=(P.bag.chain||[]).filter(s=>s.item&&ItemCapacity.remaining(s)>=1)
+      .map(s=>({id:s.item.id,n:s.n||1,...(s.cap==null?{}:{cap:s.cap})}));
 
     /* 回藏身处自动分拣：子弹和药物留在背包里（下一趟接着用），
        收集品、物资、装备一律回仓库。死亡时只有安全箱里的东西参与分拣。
@@ -949,14 +1010,23 @@ Object.assign(Game, {
     /* 自己背进来的东西不算收获：按开局盘点逐份抵扣，剩下的才算这局新捡的。
        子弹这种可堆叠的按数量抵扣，所以"带 30 发、又捡 30 发"只会记 30 发。 */
     const brought = Object.assign({}, this.broughtIn || {});
+    if(deathOrigins)for(const s of kept){
+      const it=s.item,resource=it.cat==='ammo'?'ammo:'+it.id:it.equip?.kind==='attachment'?'part:'+it.equip.attachment:null;
+      if(resource)brought[it.id]=RaidValue.resources.get(resource)?.remaining||0;
+    }
     const freshCount = s => {
       const id = s.item && s.item.id, n = s.n || 1;
+      if(deathOrigins&&s.item.cat!=='ammo'&&s.item.equip?.kind!=='attachment'){
+        const it=s.item,eq=it.equip,token=eq?.gear?.[RaidValue.token]||eq?.[RaidValue.token]||it[RaidValue.token];
+        return token&&RaidValue.records.has(token)?0:n;
+      }
       const left = brought[id] || 0;
       const own = Math.min(left, n);
       if (own > 0) brought[id] = left - own;
       return n - own;
     };
     const lines = [];
+    const keptValue=(it,s)=>deathOrigins?RaidValue.value(it,s):entryValue(it,s);
     let bagged = 0, baggedValue = 0, gained = 0;
     for (const s of kept) {
       const it = s.item;
@@ -966,9 +1036,9 @@ Object.assign(Game, {
         Save.addBag(it.id, s.n, s.cap);
         if (fresh > 0) {
           bagged++;
-          baggedValue += entryValue(it, s) * fresh;
+          baggedValue += keptValue(it, s) * fresh;
           gained += fresh;
-          lines.push({ it, n: fresh, name: it.name + (fresh > 1 ? ' ×' + fresh : ''), price: entryValue(it, s) * fresh, bag: true, isNew: false });
+          lines.push({ it, n: fresh, name: it.name + (fresh > 1 ? ' ×' + fresh : ''), price: keptValue(it, s) * fresh, bag: true, isNew: false });
         }
         continue;
       }
@@ -976,7 +1046,7 @@ Object.assign(Game, {
         Save.addGearStash(it);
         if (fresh > 0) {
           gained++;
-          lines.push({ it, n: 1, name: it.name, price: it.sell || 0, gear: true, isNew: false });
+          lines.push({ it, n: 1, name: it.name, price: deathOrigins?keptValue(it,s):(it.sell||0), gear: true, isNew: false });
         }
         continue;
       }
@@ -987,7 +1057,7 @@ Object.assign(Game, {
       if (fresh > 0) {
         gained += fresh;
         lines.push({
-          it, n: fresh, name: it.name + (fresh > 1 ? ' ×' + fresh : ''), price: entryValue(it, s) * fresh,
+          it, n: fresh, name: it.name + (fresh > 1 ? ' ×' + fresh : ''), price: keptValue(it, s) * fresh,
           isNew: newIds.has(it.id)
         });
       }
@@ -1073,11 +1143,11 @@ Object.assign(Game, {
         (d.isRecord ? '<span class="end-record">新纪录 · 上一趟最好 ' + formatMoney(d.prevBest) + '</span>' : '') +
         '</div>';
     } else {
-      hero = '<div class="end-hero bad">' +
-        '<span class="end-hero-cap">这一趟的损失</span>' +
-        '<span class="end-hero-num">−' + formatMoney(d.lostValue) + '</span>' +
+      hero = '<div class="end-hero">' +
+        '<span class="end-hero-cap">保险箱战利品价值</span>' +
+        '<span class="end-hero-num">' + formatMoney(d.total) + '</span>' +
         '<span class="end-hero-sub">' +
-          (d.keptCount ? '安全箱保住 ' + d.keptCount + ' 件（' + formatMoney(d.total) + '）' : '安全箱是空的') +
+          (d.keptCount ? '本局新获 ' + d.keptCount + ' 件 · 已排除局外带入物品' : '未保住本局新获物品') +
           ' · 用时 ' + this.fmtTime(d.time) + ' · 击杀 ' + d.kills + ' · 开箱 ' + d.found + '</span>' +
         '</div>';
     }
@@ -1099,7 +1169,7 @@ Object.assign(Game, {
     } else {
       cards = '<div class="tip">' + (d.success
         ? '这一趟什么都没带出来。'
-        : '安全箱是空的。下次先把最值钱的那件塞进去。') + '</div>';
+        : '保险箱没有本局新获物品。下次先把最值钱的那件塞进去。') + '</div>';
     }
 
     const newBlock = d.newOnes.length
@@ -1126,20 +1196,17 @@ Object.assign(Game, {
     html += '<h2>这一趟</h2>';
     html += '<div class="settle-row"><span>击杀</span><b>' + d.kills + '</b></div>';
     html += '<div class="settle-row"><span>开过的容器</span><b>' + d.found + '</b></div>';
-    html += '<div class="settle-row"><span>带出物品</span><b>' + d.keptCount + ' 件 / ' + formatMoney(d.total) + '</b></div>';
+    html += '<div class="settle-row"><span>'+(d.success?'带出物品':'保险箱本局收获')+'</span><b>' + d.keptCount + ' 件 / ' + formatMoney(d.total) + '</b></div>';
     if (d.gearCount) {
       html += '<div class="settle-row"><span>带出装备</span><b>' + d.gearCount + ' 件 · 已进仓库</b></div>';
     }
     if (d.bagged) {
       html += '<div class="settle-row"><span>子弹 / 药物留背包</span><b>' + d.bagged + ' 件 / ' + formatMoney(d.baggedValue) + '</b></div>';
     }
-    if (!d.success) {
-      html += '<div class="settle-row"><span>损失</span><b class="bad-val">−' + formatMoney(d.lostValue) + '</b></div>';
-    }
     html += '<div class="settle-row"><span>新收录</span><b>' + d.newOnes.length + '</b></div>';
     html += '<div class="settle-row"><span>信用点余额</span><b>' + formatMoney(Save.credits) + '</b></div>';
 
-    if (d.lost.length) {
+    if (d.success && d.lost.length) {
       html += '<h2>丢在里面的东西</h2>';
       for (const l of d.lost) {
         html += '<div class="settle-row"><span>' + esc(l.name) + '</span><b class="dim">' + formatMoney(l.price) + '</b></div>';
