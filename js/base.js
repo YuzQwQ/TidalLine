@@ -1484,7 +1484,7 @@ const MapSelect = {
   },
   render() {
     const choices=document.getElementById('mapChoices');
-    choices.innerHTML=MAP_CATALOG.map(map=>`<button type="button" class="map-choice" data-map="${map.id}" aria-pressed="${map.id===this.selectedId}"><span class="map-choice-head"><b>${esc(map.title)}</b><span class="map-choice-state">${map.id===this.selectedId?'已选择':'选择地图'}</span></span><canvas width="${map.width*4}" height="${map.height*4}" data-preview="${map.id}" role="img" aria-label="${esc(map.title)}地形示意"></canvas><span class="map-choice-tags">${map.width}×${map.height} 格 · ${map.districts.length} 栋建筑 · ${map.exits.length} 个撤离点</span><span class="map-choice-desc">${map.tideEnabled?'修理铺、旧集市与低洼船坞。水位逐渐上涨，留意退路。':'两岸旧街、中央运河与双桥。水位稳定，银行集中高价值物资。'}</span><span class="map-choice-detail">${map.containers.length} 个容器 · ${map.enemies.length} 个敌人 · ${Game.roundDuration(map.id)/60} 分钟</span></button>`).join('');
+    choices.innerHTML=MAP_CATALOG.map(map=>`<button type="button" class="map-choice" data-map="${map.id}" aria-pressed="${map.id===this.selectedId}"><span class="map-choice-head"><b>${esc(map.title)}</b><span class="map-choice-state">${map.id===this.selectedId?'已选择':'选择地图'}</span></span><canvas width="${map.width*4}" height="${map.height*4}" data-preview="${map.id}" role="img" aria-label="${esc(map.title)}地形示意"></canvas><span class="map-choice-tags">${map.width}×${map.height} 格 · ${map.districts.length} 栋建筑 · ${map.exits.length} 个撤离点 · ${map.exits.filter(ex=>ex.spawnable!==false).length>=2?'随机入场（入场点本局封闭）':'固定入场'}</span><span class="map-choice-desc">${map.tideEnabled?'修理铺、旧集市与低洼船坞。水位逐渐上涨，留意退路。':'两岸旧街、中央运河与双桥。水位稳定，银行集中高价值物资。'}</span><span class="map-choice-detail">${map.containers.length} 个容器 · ${map.enemies.length} 个敌人 · ${Game.roundDuration(map.id)/60} 分钟</span></button>`).join('');
     choices.querySelectorAll('[data-map]').forEach(button=>button.onclick=()=>{
       this.selectedId=button.dataset.map;this.render();
       document.querySelector('#mapChoices [aria-pressed="true"]')?.focus({preventScroll:true});
@@ -1494,7 +1494,7 @@ const MapSelect = {
       const colors={wall:'#273b34',floor:'#8b9583',low:'#46584c',marsh:'#285960',canal_water:'#285960',street_stone:'#667c6b',courtyard_paving:'#a39a77',quay_top:'#91a18b',bridge_stone_deck:'#baac89',bridge_wood_deck:'#a98351'};
       for(let y=0;y<map.height;y++)for(let x=0;x<map.width;x++){c.fillStyle=colors[map.terrain[map.terrainRows[y][x]].art]||'#7d927d';c.fillRect(x*4,y*4,4,4);}
       c.fillStyle='#e8f4ee';c.fillRect(map.spawn.x*4-1,map.spawn.y*4-1,6,6);
-      c.fillStyle='#52e8b3';for(const ex of map.exits)c.fillRect(ex.x*4-1,ex.y*4-1,6,6);
+      for(const ex of map.exits){c.fillStyle=ex.spawnable===false?'#8a9a90':'#52e8b3';c.fillRect(ex.x*4-1,ex.y*4-1,6,6);}
     }
     const map=MAP_CATALOG.find(m=>m.id===this.selectedId);
     document.getElementById('mapSelectedName').textContent=map.title;

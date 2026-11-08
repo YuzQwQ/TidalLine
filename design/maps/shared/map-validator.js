@@ -261,15 +261,25 @@
     /* ---------- G9 出生点与撤离点 ---------- */
     if (!Number.isInteger(data.spawn.x) || !Number.isInteger(data.spawn.y)) err('G9', '出生点坐标非法');
     const exitIds = new Set();
+    const exitCells = new Set();
     if (!data.exits.length) err('G9', '至少需要一个撤离点');
     for (const ex of data.exits) {
       if (!ex.id) err('G9', '撤离点缺少 id');
       else if (exitIds.has(ex.id)) err('G9', `撤离点编号重复 ${ex.id}`);
       else exitIds.add(ex.id);
+      if (ex.spawnable !== undefined && typeof ex.spawnable !== 'boolean') err('G9', `撤离点 spawnable 必须是布尔值 ${ex.id}`);
       if (!Number.isInteger(ex.x) || !Number.isInteger(ex.y)) { err('G9', `撤离点坐标非法 ${ex.id}`); continue; }
+      const k = key(ex.x, ex.y);
+      if (exitCells.has(k)) err('G9', `撤离点坐标重复 ${ex.id} @ ${k}`, { cells: [[ex.x, ex.y]], entityId: ex.id });
+      exitCells.add(k);
       if (!walkable(ex.x, ex.y)) err('G9', `撤离点不可通行 ${ex.id}`, { cells: [[ex.x, ex.y]], entityId: ex.id });
       if (ex.x === spawn[0] && ex.y === spawn[1]) err('G9', `撤离点与出生点重合 ${ex.id}`);
     }
+    /* 随机入场玩法：每局随机挑一个撤离点当入场点并封闭它，必须还有别的点能撤离。
+       不足两个（或可作入场点的只有一个）时游戏会退回固定出生点，设计者要知道。 */
+    const spawnableExits = data.exits.filter(ex => ex.spawnable !== false).length;
+    if (data.exits.length < 2) warn('G9', '撤离点少于 2 个：随机入场并封闭的规则无法生效，本局会退回固定出生点');
+    else if (spawnableExits < 2) warn('G9', '可作入场点的撤离点少于 2 个：随机入场规则无法生效，本局会退回固定出生点');
 
     /* Ground loot is an independent non-blocking layer, including furniture cells. */
     const lootIds=new Set();for(const p of data.lootSpawns||[]){const spec=typeof module==='object'&&module.exports?require('../../../js/loot-spawn-data.js'):globalThis.LootSpawnSpec;if(!spec.valid(p)||lootIds.has(p.id)||!walkable(p.x,p.y))err('G11','物资刷新点配置非法 '+p.id,{entityId:p.id,cells:[[p.x,p.y]]});lootIds.add(p.id);}

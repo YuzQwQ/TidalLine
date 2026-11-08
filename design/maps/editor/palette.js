@@ -175,11 +175,16 @@
       }
     },
     {
-      id: 'interact', name: '交互', hint: '出生 / 撤离 / 路线', paintable: false,
+      id: 'interact', name: '交互', hint: '出生 / 撤离 / 路线', paintable: true,
       items(data) {
         return [
           { key: 'spawn', label: '出生点', count: 1, swatch: '#2f8f6a', match: e => e.kind === 'spawn' },
-          { key: 'exit', label: '撤离点', count: data.exits.length, swatch: '#2f8f9a', match: e => e.kind === 'exit' },
+          {
+            key: 'exit', label: '撤离点', count: data.exits.length, swatch: '#2f8f9a',
+            detail: '点空地新增一个撤离点；每局随机挑一个当入场点并封闭，必须去别的撤离点撤离',
+            paint: { kind: 'exit', label: '撤离点' },
+            match: e => e.kind === 'exit'
+          },
           { key: 'route', label: '推荐路线', count: data.routeSpecs.length, swatch: '#21937b', match: e => e.kind === 'route' },
           { key: 'room', label: '房间锚点', count: data.rooms.length, swatch: '#c2a24a', match: e => e.kind === 'room' }
         ];

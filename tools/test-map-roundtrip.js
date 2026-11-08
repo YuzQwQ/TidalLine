@@ -47,7 +47,8 @@ check(!('routes' in data), 'layout.json 本身不含 routes');
 check(data.schemaVersion === Core.SCHEMA_VERSION, 'schemaVersion = ' + Core.SCHEMA_VERSION, String(data.schemaVersion));
 
 /* 6. 浏览器环境：没有 module，只能靠全局挂载 */
-const browser = vm.createContext({ console });
+/* 校验器在浏览器环境走 globalThis.LootSpawnSpec（G11 物资刷新点） */
+const browser = vm.createContext({ console, LootSpawnSpec: require('../js/loot-spawn-data.js') });
 for (const file of ['map-core.js', 'map-rules.js', 'map-validator.js', 'map-art-map.js', 'map-templates.js']) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../design/maps/shared', file), 'utf8'), browser, { filename: file });
 }

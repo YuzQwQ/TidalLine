@@ -183,6 +183,15 @@ game-render.js  →  renderDamageText：画在雾之后、HUD 之前
 - 当前地图为 72×56 临海路旧街区：公寓、诊所、钟表店、银行、仓库，中央运河与双桥；48 个容器、24 个敌人、两处撤离点。18 张新增地块已接入。
 - 临海路旧街区20分钟行动计时；剩余5／3／1分钟各播报一次（提示音＋持续横幅，背包打开也显示），后一次替换前一次，战局结算立即清空。临海路暂用稳定水位。围栏区保留原有12分钟潮汐规则。时长按`CFG.RAID.DURATION`查表，倒计时、选图显示和超时结算共用`Game.roundDuration()`。
 - 站在撤离点 6 秒完成撤离，撤离或死亡后结算，物品进仓库、图鉴登记（存 localStorage）
+- **随机入场（2026-11-08）**：每局从「可作入场点」的撤离点里随机挑一个，玩家就出生在那里，
+  这个点本局立即**封闭**（不能再撤离），必须走到别的撤离点才能出图。实现在 `M.chooseInfiltration()`
+  （`js/core.js`，由 `Game.startRun()` 在 `M.load()` 之后调用，编辑器和校验工具单纯装载地图时不受影响）：
+  `M.infiltration` 记录入场点、`M.openExtracts()` 给出仍然开放的点，
+  `M.playerSpawn` 覆盖成入场格，地图数据本身不动。封闭点在地图上画红叉、在交互候选表里写明「已封闭」，
+  按 `E` 只会提示、不开始读条；右上角 HUD 常驻「入场 X · 已封闭 / 可撤离：Y、Z」。
+  候选少于 2 个（或撤离点总数少于 2 个，例如只有一张图的旧档、靶场）会**自动退回固定出生点**，不封闭任何点。
+  `spawnable:false` 的撤离点只作撤离、不进随机池；编辑器里可以逐点开关。
+  回归：`run-test.js` 的「随机入场 / 入场点封闭」小节与 `node tools/test-infiltration-browser.js`。
 
 **搜刮**
 - 容器分六档品质（废弃 / 普通 / 充实 / 优质 / 贵重 / 秘藏），品质固定在容器类型上、不做二次随机：
@@ -201,7 +210,8 @@ game-render.js  →  renderDamageText：画在雾之后、HUD 之前
 - 未录入的物品在搜刮面板里有橙色「新」角标
 
 **交互选项滚轮**：`Game.findInteractables()` 把附近所有容器、尸体、门、撤离点都列成候选，
-按距离排序（门的旧优先级、撤离点的绝对优先保留），`findInteractable()` 取当前选中的那一项，
+按距离排序（门的旧优先级、**开放**撤离点的绝对优先保留；封闭的入场点不抢这个位置，
+否则开局丢在脚边的物品堆会被它挡住），`findInteractable()` 取当前选中的那一项，
 `E` 就作用在它上面 —— 尸体压在门上时，滚一下就能搜到尸体，不会再被「关门」永久挡住。
 滚轮在 `js/game.js` 的 `wheel` 监听里按 40px 折算一格、单次最多两格，到表头 / 表尾停住不循环；
 走动超过 14px 会作废临时选择、回到最近的默认项。绘制在 `js/game-render.js`：
@@ -1065,7 +1075,9 @@ assets/props/corpse_guard.png   机械：潮汐守卫
 外观、品质与掉落偏好配置在 `CONTAINER_TYPES`（品质取 `CONTAINER_QUALITY`）；扩建地图有 48 个容器，覆盖全部六档品质。
 字模避开 `P` 出生点、`E` 撤离点、`S` 已开的门、`X` 背景街坊；纸箱/员工储物盒/帆布挎包用小写 `b`/`e`/`m` 补位。
 
-地图布局与巡逻说明见 [MAP_LAYOUT.md](MAP_LAYOUT.md)；地图编辑器在 `design/maps/editor/`（起本地服务后打开，或双击拖入 layout.json）：五工具改地形、放实体、撤销重做、实时校验、点问题条目跳到出事的格子、选中家具按 `R` 顺时针转 90°（占格与贴图一起转，视图旋转是 `Shift+R`）、Ctrl+S 写回 layout.json；打开别的图用 `index.html?map=../layout1.json`（路径相对 editor/，rules.json 自动从同目录取）；重画了 `assets/` 里的贴图后点顶栏"重载贴图"或按 `Alt+R`（切回窗口时也会自动比对 `Last-Modified` 并重载，改了图看不到效果就是这层缓存）；门与橱窗可点选、改名/改类型、删除（原地自动封墙），要从无到有开一扇就用左侧「结构 → 门洞」点墙，两侧空间自动推断；校验分两级：**硬性错误会拦构建**（尺寸、行宽、实体占格重叠、地形冲突、撤离点可达、门洞结构、敌人出生格与巡逻可达、编号唯一），其余一律降为提醒（孤立格、房间标注点、箱柜操作面、分区、配额、净宽、建筑出入口）——`rules.json` 的 `expect` 全 `null`、`specialChecks` 为空时 M1–M6 整段不跑，想恢复某条专项检查把名字加回 `specialChecks` 即可；顶栏"新建"可从三个尺寸预设与三种模板开一张新图；`?selftest=1` 跑自测。要一次生成 `layout.json` + `rules.json` + `README.md` 三件套用 `node tools/new-map.js --id <编号> --size 48x36 --template blank|canal|building`（浏览器写不了目录，这一步只能在命令行做）。方案见 `design/maps/MAP_EDITOR_DESIGN.md`。运行 `node tools/gen-map-preview.js` 可从实际游戏数据重绘总览。地图相关测试有六层：`design/maps/linhai-old-quarter/test.cjs`（破坏性样例，证明校验器会拦）、`tools/test-map-validator.js`（18 条规则逐条破坏，跑的是全约束规则，与某张图关不关它无关）、`tools/test-map-roundtrip.js`（字段往返 + 浏览器 UMD）、`tools/test-map-layout.js`（设计稿与游戏快照一致）、`tools/test-map-templates.js`（15 组预设 × 模板）、`tools/test-map-art-map.js`（美术登记表与 `assets/props` 对齐）。规则本体与模板在 `design/maps/shared/`，浏览器与 node 共用。
+地图布局与巡逻说明见 [MAP_LAYOUT.md](MAP_LAYOUT.md)；地图编辑器在 `design/maps/editor/`（起本地服务后打开，或双击拖入 layout.json）：五工具改地形、放实体、撤销重做、实时校验、点问题条目跳到出事的格子、选中家具按 `R` 顺时针转 90°（占格与贴图一起转，视图旋转是 `Shift+R`）、Ctrl+S 写回 layout.json；打开别的图用 `index.html?map=../layout1.json`（路径相对 editor/，rules.json 自动从同目录取）；重画了 `assets/` 里的贴图后点顶栏"重载贴图"或按 `Alt+R`（切回窗口时也会自动比对 `Last-Modified` 并重载，改了图看不到效果就是这层缓存）；右侧新增「撤离点」面板：列出全部撤离点（编号 / 名称 / 坐标），可定位、删除、勾选「入场」决定是否进随机入场池，
+「＋ 放置撤离点」等同于拿起撤离点材质后在画布上点一块空地；左侧「交互 → 撤离点」是同一个材质。至少要留 1 个撤离点，
+少于 2 个候选时校验器会给 G9 提醒。门与橱窗可点选、改名/改类型、删除（原地自动封墙），要从无到有开一扇就用左侧「结构 → 门洞」点墙，两侧空间自动推断；校验分两级：**硬性错误会拦构建**（尺寸、行宽、实体占格重叠、地形冲突、撤离点可达、门洞结构、敌人出生格与巡逻可达、编号唯一），其余一律降为提醒（孤立格、房间标注点、箱柜操作面、分区、配额、净宽、建筑出入口）——`rules.json` 的 `expect` 全 `null`、`specialChecks` 为空时 M1–M6 整段不跑，想恢复某条专项检查把名字加回 `specialChecks` 即可；顶栏"新建"可从三个尺寸预设与三种模板开一张新图；`?selftest=1` 跑自测。要一次生成 `layout.json` + `rules.json` + `README.md` 三件套用 `node tools/new-map.js --id <编号> --size 48x36 --template blank|canal|building`（浏览器写不了目录，这一步只能在命令行做）。方案见 `design/maps/MAP_EDITOR_DESIGN.md`。运行 `node tools/gen-map-preview.js` 可从实际游戏数据重绘总览。地图相关测试有六层：`design/maps/linhai-old-quarter/test.cjs`（破坏性样例，证明校验器会拦）、`tools/test-map-validator.js`（18 条规则逐条破坏，跑的是全约束规则，与某张图关不关它无关）、`tools/test-map-roundtrip.js`（字段往返 + 浏览器 UMD）、`tools/test-map-layout.js`（设计稿与游戏快照一致）、`tools/test-map-templates.js`（15 组预设 × 模板）、`tools/test-map-art-map.js`（美术登记表与 `assets/props` 对齐）。规则本体与模板在 `design/maps/shared/`，浏览器与 node 共用。
 
 #### 角色是三向图
 

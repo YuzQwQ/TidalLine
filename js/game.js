@@ -512,6 +512,9 @@ const Game = {
 
     // 重置地图状态
     M.load(map.rows, map.doorAxes, map.props, map);
+    /* 局级规则：随机挑一个撤离点当入场点并封闭它（撤离点不足 2 个会自动退回固定出生点）。
+       放在 M.load 之后，编辑器/校验工具单纯 M.load 地图时不会被这条规则影响。 */
+    M.chooseInfiltration();
     for (let y = 0; y < M.H; y++) {
       for (let x = 0; x < M.W; x++) { M.seen[y * M.W + x] = 0; }
     }
@@ -558,6 +561,11 @@ const Game = {
 
     this.updateCamera(true);
     this.toast('进入' + map.title);
+    /* 入场点本局作废：开局就把「从哪进来、还能从哪走」说清楚，别等玩家跑回去才发现 */
+    if (M.infiltration) {
+      const open = M.openExtracts().map(ex => ex.name || ex.id).join('、');
+      this.toast('从「' + (M.infiltration.name || M.infiltration.id) + '」入场，此点已封闭 · 请前往：' + open);
+    }
 
     // 预热一帧：即使浏览器还没来得及跑 requestAnimationFrame，画面也不是黑的
     this.update(1 / 60);

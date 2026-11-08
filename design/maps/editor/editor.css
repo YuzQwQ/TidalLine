@@ -287,3 +287,36 @@ kbd {
 .modal-foot button:hover { background: #eef3ea; }
 .modal-foot button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
 .modal-foot button.primary:hover { background: #357a62; }
+
+/* ---- 撤离点管理（右侧面板） ----
+   一行一条：编号 / 名称 / 坐标 / 入场候选开关 / 删除。
+   勾选「入场」的点才会进每局的随机入场池；只留一个候选会退回固定出生点。 */
+.exit-list { padding: 0 10px; max-height: 190px; overflow-y: auto; }
+.exit-row {
+  display: flex; align-items: center; gap: 6px; padding: 3px 6px; margin-bottom: 3px;
+  border: 1px solid var(--line); border-left: 3px solid #2f8f9a; border-radius: 3px;
+  background: #fff; cursor: pointer; font-size: 11px; white-space: nowrap;
+}
+.exit-row:hover { background: #eef6f0; }
+.exit-row.on { border-color: var(--accent); background: var(--accent-soft); }
+.exit-id { flex: 0 0 16px; color: var(--accent); font-weight: 600; }
+.exit-name { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; }
+.exit-pos { flex: 0 0 auto; color: #8b9d94; font-size: 10px; }
+.exit-no { flex: 0 0 auto; color: #a8762a; font-size: 10px; }
+.exit-toggle { flex: 0 0 auto; display: flex; align-items: center; gap: 2px; font-size: 10px; color: var(--muted); cursor: pointer; }
+.exit-toggle input { width: 12px; height: 12px; margin: 0; cursor: pointer; }
+.exit-del {
+  flex: 0 0 auto; width: 18px; height: 18px; line-height: 14px; padding: 0;
+  border: 1px solid #dcc4bb; background: #fdf3f0; color: #9c4432; border-radius: 3px;
+  cursor: pointer; font: inherit; font-size: 12px;
+}
+.exit-del:hover:not(:disabled) { background: #f8e4de; }
+.exit-del:disabled { opacity: .4; cursor: default; }
+.exit-hint { padding: 2px 12px 6px; font-size: 10px; line-height: 1.5; color: #8b9d94; }
+.exit-hint.bad { color: var(--err); }
+.exit-add {
+  display: block; width: calc(100% - 20px); margin: 2px 10px 0; padding: 4px;
+  border: 1px solid var(--accent); border-radius: 3px; background: var(--accent-soft);
+  color: var(--accent); cursor: pointer; font: inherit; font-size: 11px;
+}
+.exit-add:hover { background: #cfe4d6; }

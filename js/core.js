@@ -30,7 +30,8 @@ const M = {
   seen: null,        // Uint8Array 曾经可见
   raw: null,         // Uint8Array 360° 实测可见（未过滤视锥）
   playerSpawn: { x: 0, y: 0 },
-  extracts: [],      // [{x,y}]
+  extracts: [],      // [{x,y}]，本局全部撤离点（含已封闭的入场点）
+  infiltration: null, // 本局随机选中的入场撤离点：出生在这里，且这个点本局不能再撤离
   tideLevel: 0,
   tideEnabled: true,
   doors: [],
@@ -83,6 +84,7 @@ const M = {
     this.W = rows[0].length;
     this.grid = [];
     this.extracts = [];
+    this.infiltration = null;
     const n = this.W * this.H;
     this.visible = new Uint8Array(n);
     this.seen = new Uint8Array(n);
@@ -138,7 +140,11 @@ const M = {
         tile.overlays.push(overlay.art);
         if (overlay.replaceWall) {tile.art='floor';tile.wallCap=true;}
       }
-      this.extracts = map.exits.map(ex=>({...ex}));
+      /* 撤离点数据只在这里装载；「本局随机挑哪个当入场点」是局级状态，
+         由 Game.startRun() 在 M.load 之后显式调 chooseInfiltration()。
+         不能塞进 load：编辑器 / 校验工具也会用 M.load(rows) 看地图，
+         它们不该把出生点悄悄换成一个随机撤离点。 */
+      this.extracts = map.exits.map(ex=>({...ex, closed:false}));
     }
     // 自定义测试/扩展地图可显式传摆设；主地图默认使用 DECOR。
     const furnishings = props || (map ? map.props : []);
@@ -160,6 +166,29 @@ const M = {
       }
     }
   },
+
+  /* ---------------- 随机入场 ----------------
+     规则：每局从「可作入场点」的撤离点里随机挑一个，玩家出生在那里，
+     这个点随即作废（本局不能再从它撤离），必须走到其它撤离点才能出图。
+     候选少于 2 个、或总撤离点少于 2 个时退回旧规则：固定出生点 + 所有撤离点开放。
+     这样只有一张图的旧存档 / 靶场 / 测试地图都不会被这条规则卡死。
+     rng 可注入，方便测试锁死随机序列。 */
+  chooseInfiltration(rng) {
+    const rand = typeof rng === 'function' ? rng : Math.random;
+    const exits = this.extracts || [];
+    this.infiltration = null;
+    for (const ex of exits) ex.closed = false;
+    const candidates = exits.filter(ex => ex.spawnable !== false);
+    if (exits.length < 2 || candidates.length < 2) return null;
+    const pick = candidates[Math.min(candidates.length - 1, Math.floor(rand() * candidates.length))];
+    pick.closed = true;
+    this.infiltration = pick;
+    this.playerSpawn = { x: pick.x, y: pick.y };
+    return pick;
+  },
+
+  /* 本局真正能用的撤离点。局内交互、HUD 提示都走这里，别各自过滤一遍。 */
+  openExtracts() { return (this.extracts || []).filter(ex => !ex.closed); },
 
   at(x, y) {
     if (x < 0 || y < 0 || x >= this.W || y >= this.H) return null;

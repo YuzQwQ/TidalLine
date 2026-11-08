@@ -6,7 +6,11 @@ const ctx=vm.createContext({console,performance});
 for(const f of ['config.js','data.js','core.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),ctx);
 const {M,map,rows,spawns,props}=vm.runInContext('({M,map:RAID_MAP,rows:MAP_ROWS,spawns:SPAWNS,props:DECOR})',ctx);
 assert.deepEqual(JSON.parse(JSON.stringify(map)),require('./build-linhai-map.js').compile(),'地图快照落后于设计稿');
-M.load(rows);assert.equal(M.W,72);assert.equal(M.H,56);assert.equal(M.extracts.length,2);
+/* 家具碰撞由 props 传进去；不传 map 就不会触发局内的随机入场（那是每局状态，不是地图物理） */
+M.load(rows, null, draft.props);assert.equal(M.W,72);assert.equal(M.H,56);assert.equal(M.extracts.length,2);
+/* 设计稿的 '+' 是「评审按打开状态」的可通行格；M.load 默认关门。
+   比碰撞之前先把门打开，否则会拿关门的运行时状态去比开门的设计稿。 */
+for(const d of M.doors) d.open=true;
 const key=(x,y)=>x+','+y,dirs=[[1,0],[-1,0],[0,1],[0,-1]];
 function flood(blocked=new Set()) {const q=[M.playerSpawn],seen=new Set([key(q[0].x,q[0].y)]);for(let i=0;i<q.length;i++)for(const [dx,dy]of dirs){const x=q[i].x+dx,y=q[i].y+dy,k=key(x,y);if(M.walkable(x,y)&&!blocked.has(k)&&!seen.has(k)){seen.add(k);q.push({x,y});}}return seen;}
 const reached=flood();
@@ -27,7 +31,9 @@ if(unreachable)console.log('  注意：'+unreachable+' 个容器没有可达操�
 assert.equal(map.containers.length,draft.containers.length);
 assert.equal(spawns.length,draft.enemies.length);
 assert.equal(props.length,draft.props.length);
-for(const s of spawns){assert(M.walkable(s.x,s.y));assert(Math.hypot(s.x-map.spawn.x,s.y-map.spawn.y)>=12);for(const ex of map.exits)assert(Math.hypot(s.x-ex.x,s.y-ex.y)>=6);for(const other of spawns)if(other!==s)assert(Math.hypot(s.x-other.x,s.y-other.y)>=3);}
+/* 布防阈值跟着 rules.json 走（设计稿把敌人间距从 3 放宽到 1），别再写死成首版的数字 */
+const space=require('../design/maps/linhai-old-quarter/rules.json').enemySpacing;
+for(const s of spawns){assert(M.walkable(s.x,s.y));assert(Math.hypot(s.x-map.spawn.x,s.y-map.spawn.y)>=space.fromSpawn);for(const ex of map.exits)assert(Math.hypot(s.x-ex.x,s.y-ex.y)>space.fromExit);for(const other of spawns)if(other!==s)assert(Math.hypot(s.x-other.x,s.y-other.y)>=space.between);}
 const bridgeCells=b=>{const out=[];for(let y=b.rect[1];y<=b.rect[3];y++)for(let x=b.rect[0];x<=b.rect[2];x++)out.push(key(x,y));return out;};
 for(const b of map.bridges)assert(flood(new Set(bridgeCells(b))).has('67,51'),'单桥仍须能撤离');
 assert(!flood(new Set(map.bridges.flatMap(bridgeCells))).has('67,51'),'封闭两桥后不可绕河');

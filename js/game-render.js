@@ -8,7 +8,10 @@ Object.assign(Game, {
   /* 候选表里每一项的文案。multi=true 时补上区分用的名字 / 方位，
      只有一个候选时文案和旧版逐字一致。 */
   interactLabel(it, multi) {
-    if (it.type === 'extract') return '[E] 撤离（6 秒，站定）';
+    if (it.type === 'extract') {
+      if (it.obj && it.obj.closed) return '[E] ' + (it.obj.name || it.obj.id) + ' · 本局入场点，已封闭';
+      return multi ? '[E] 撤离 ' + (it.obj.name || it.obj.id) + '（6 秒，站定）' : '[E] 撤离（6 秒，站定）';
+    }
     if (it.type === 'box') {
       const b = it.obj;
       const q = CONTAINER_QUALITY[b.kind] || CONTAINER_QUALITY.plain;
@@ -313,10 +316,31 @@ Object.assign(Game, {
       c.restore();
     }
 
-    // 撤离点
+    // 撤离点：本局入场点画成暗红并标「封闭」，其余照旧脉冲
     for (const ex of M.extracts) {
       const i = ex.y * M.W + ex.x;
       const sx = ex.x * TS - camX, sy = ex.y * TS - camY;
+      const closed = !!ex.closed;
+      if (closed) {
+        c.globalAlpha = 0.85;
+        c.strokeStyle = 'rgba(176,80,64,0.9)';
+        c.lineWidth = 2;
+        c.strokeRect(sx + 4, sy + 4, TS - 8, TS - 8);
+        c.fillStyle = 'rgba(120,40,32,0.25)';
+        c.fillRect(sx + 4, sy + 4, TS - 8, TS - 8);
+        c.beginPath();
+        c.moveTo(sx + 7, sy + 7); c.lineTo(sx + TS - 7, sy + TS - 7);
+        c.moveTo(sx + TS - 7, sy + 7); c.lineTo(sx + 7, sy + TS - 7);
+        c.stroke();
+        if (M.visible[i]) {
+          c.fillStyle = 'rgba(232,150,130,0.95)';
+          c.font = '9px monospace';
+          c.textAlign = 'center';
+          c.fillText('封闭', sx + TS / 2, sy + TS + 9);
+        }
+        c.globalAlpha = 1;
+        continue;
+      }
       const a = 0.9;
       const pulse = 0.55 + 0.45 * Math.sin(this.time * 3);
       const exImg = Art.get('props', 'exit');
@@ -911,6 +935,23 @@ Object.assign(Game, {
     c.fillRect(tx0 + 14, 66, TW - 28, 5);
     c.fillStyle = '#2f6d7a';
     c.fillRect(tx0 + 14, 66, (TW - 28) * U.clamp(M.tideLevel / 3, 0, 1), 5);
+
+    /* --- 右上追加：本局随机入场点与仍然开放的撤离点 ---
+       封闭的点不能再撤离，光靠地图上的红叉不够，HUD 里常驻一行才不会白跑一趟。 */
+    if (!this.rangeMode && M.infiltration) {
+      const ey = 84;
+      c.fillStyle = 'rgba(8,14,12,0.78)';
+      c.fillRect(tx0, ey, TW, 40);
+      c.font = '10px monospace';
+      c.textAlign = 'right';
+      c.fillStyle = '#c98a5e';
+      c.fillText('入场 ' + (M.infiltration.name || M.infiltration.id) + ' · 已封闭',
+        tx0 + TW - 12, ey + 16, TW - 24);
+      c.fillStyle = '#7ec8ac';
+      const names = M.openExtracts().map(ex => ex.name || ex.id).join('、');
+      c.fillText('可撤离：' + (names || '—'), tx0 + TW - 12, ey + 32, TW - 24);
+      c.textAlign = 'left';
+    }
 
     /* --- 爆头提示 --- */
     if (this.headT > 0) {

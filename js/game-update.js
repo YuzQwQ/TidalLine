@@ -406,11 +406,11 @@ Object.assign(Game, {
     const out = [];
     const range = CFG.INTERACT_RANGE;
 
-    // 撤离点
+    // 撤离点：封闭的入场点也要进候选表，但提示里明说本局不能用
     for (const ex of M.extracts) {
       const d = U.dist(P.x, P.y, M.cx(ex.x), M.cy(ex.y));
       if (d < CFG.EXTRACT_RADIUS && d < range + 6) {
-        out.push({ type: 'extract', obj: ex, dist: d });
+        out.push({ type: 'extract', obj: ex, dist: d, closed: !!ex.closed });
       }
     }
 
@@ -457,8 +457,11 @@ Object.assign(Game, {
         out.unshift(door);
       }
     }
-    /* 撤离点默认永远排第一（旧逻辑是命中即返回） */
-    const ei = out.findIndex(o => o.type === 'extract');
+    /* 开放撤离点默认永远排第一（旧逻辑是命中即返回）。
+       本局封闭的入场点不抢这个位置：它就压在出生脚下，若还强行插队，
+       开局丢在脚边的物品堆会永远选不中，只能靠滚轮绕过去。
+       封闭点仍留在候选表里，滚轮切到它就能看到「已封闭」的说明。 */
+    const ei = out.findIndex(o => o.type === 'extract' && !o.closed);
     if (ei > 0) { const [ex] = out.splice(ei, 1); out.unshift(ex); }
     return out;
   },
@@ -490,6 +493,10 @@ Object.assign(Game, {
       return null;
     }
     let idx = list.findIndex(o => this.interactKeyOf(o) === this.interactKey);
+    /* 封闭的入场点不作为「上一次选中项」粘住：它就压在出生脚下，
+       开局丢下的物品堆必须能被直接捡起来，而不是先滚一轮滚轮。
+       它仍在候选表里，作为次要选项显示「已封闭」的说明。 */
+    if (idx >= 0 && list[idx].type === 'extract' && list[idx].closed) idx = -1;
     if (idx < 0) idx = 0;             // 选中项消失（拿空了 / 走远了）就回到默认项
     this.interactIndex = idx;
     this.interactKey = this.interactKeyOf(list[idx]);
@@ -543,6 +550,10 @@ Object.assign(Game, {
     }
 
     if (it.type === 'extract') {
+      if (it.obj && it.obj.closed) {
+        this.toast('这里是本局入场点，已经封闭 · 去其它撤离点');
+        return;
+      }
       this.action = { type: 'extract', t: 0, total: CFG.EXTRACT_TIME };
       this.toast('撤离中——别动');
       return;

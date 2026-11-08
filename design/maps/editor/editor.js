@@ -189,7 +189,7 @@
     const m = s.material;
     $('material').classList.toggle('none', !m);
     $('material').querySelector('.m-name').textContent = m ? m.label : '未选择';
-    $('material').querySelector('.m-label').textContent = m ? (m.kind === 'lootSpawn' ? '物资刷新点' : m.kind === 'terrain' ? '地形' : m.kind === 'container' ? '容器' : m.kind === 'prop' ? '装饰' : '敌人') : '材质';
+    $('material').querySelector('.m-label').textContent = m ? (m.kind === 'lootSpawn' ? '物资刷新点' : m.kind === 'terrain' ? '地形' : m.kind === 'container' ? '容器' : m.kind === 'prop' ? '装饰' : m.kind === 'exit' ? '撤离点' : '敌人') : '材质';
   }
 
   function renderStats() {
@@ -210,6 +210,69 @@
     ];
     host.innerHTML = rows.map(([k, v]) => '<dt>' + k + '</dt><dd>' + v + '</dd>').join('');
     $('map-id').textContent = sum.id || '';
+  }
+
+  /* ---------- 撤离点管理 ----------
+     每局随机挑一个撤离点当入场点并把它封闭，玩家必须去别的撤离点撤离；
+     所以这张图最好有两个以上撤离点。列表里可以定位、标记「可作入场点」、删除。 */
+  function renderExits() {
+    const s = store.get();
+    const host = $('exit-list');
+    if (!host || !s.data) return;
+    const exits = s.data.exits || [];
+    const candidates = exits.filter(e => e.spawnable !== false).length;
+    $('exit-count').textContent = exits.length + ' 个 · 入场候选 ' + candidates;
+    $('exit-hint').textContent = exits.length >= 2 && candidates >= 2
+      ? '每局随机 1 个候选当入场点并封闭，需从其余撤离点撤离'
+      : '⚠ 少于 2 个候选入场点，本局会退回固定出生点、不封闭任何撤离点';
+    $('exit-hint').classList.toggle('bad', exits.length < 2 || candidates < 2);
+    host.innerHTML = '';
+    for (const ex of exits) {
+      const row = document.createElement('div');
+      row.className = 'exit-row' + (s.selection && s.selection.kind === 'exit' && s.selection.id === ex.id ? ' on' : '');
+      row.innerHTML = '<span class="exit-id mono">' + escapeHtml(ex.id) + '</span>' +
+        '<span class="exit-name">' + escapeHtml(ex.name || '未命名') + '</span>' +
+        '<span class="exit-pos mono">(' + ex.x + ',' + ex.y + ')</span>' +
+        (ex.spawnable === false ? '<span class="exit-no">只撤离</span>' : '');
+      row.title = '点击定位到检查器';
+      row.addEventListener('click', () => { select({ kind: 'exit', id: ex.id }); centerOn(ex.x, ex.y); });
+
+      const cb = document.createElement('label');
+      cb.className = 'exit-toggle';
+      cb.title = '可作为每局随机入场点';
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.checked = ex.spawnable !== false;
+      input.addEventListener('click', e => e.stopPropagation());
+      input.addEventListener('change', () => {
+        const on = input.checked;
+        if (history.run('切换入场候选 ' + ex.id, d => {
+          const r = (d.exits || []).find(x => x.id === ex.id);
+          if (!r) return;
+          if (on) delete r.spawnable; else r.spawnable = false;
+        })) markEdited();
+      });
+      cb.appendChild(input);
+      cb.appendChild(document.createTextNode('入场'));
+      row.appendChild(cb);
+
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'exit-del';
+      del.textContent = '×';
+      del.title = exits.length <= 1 ? '至少保留 1 个撤离点' : '删除 ' + ex.id;
+      del.disabled = exits.length <= 1;
+      del.addEventListener('click', e => {
+        e.stopPropagation();
+        if (history.run('删除撤离点 ' + ex.id, d => {
+          const list = d.exits || [];
+          const i = list.findIndex(x => x.id === ex.id);
+          if (i >= 0 && list.length > 1) list.splice(i, 1);
+        })) { markEdited(); toast('已删除撤离点 ' + ex.id + '（可用 Ctrl+Z 撤销）'); }
+      });
+      row.appendChild(del);
+      host.appendChild(row);
+    }
   }
 
   function renderIssues() {
@@ -369,7 +432,7 @@
     if (!s.data) return;
     if (!$('palette').childElementCount) renderPalette();
     else syncPaletteState();
-    renderStats(); renderIssues(); renderLayers(); renderHover(); renderToolbar(); renderInspector();
+    renderStats(); renderExits(); renderIssues(); renderLayers(); renderHover(); renderToolbar(); renderInspector();
     $('zoom-label').textContent = Math.round(s.zoom * 100) + '%';
     $('rot-hint').hidden = s.rot === 0;
     document.querySelectorAll('[data-rot]').forEach(b => b.classList.toggle('on', Number(b.dataset.rot) === s.rot));
@@ -468,11 +531,12 @@
     if (!s.selection) return;
     const ref = T.resolve(s.data, s.selection);
     if (!ref) { select(null); return; }
-    if (s.selection.kind === 'spawn' || s.selection.kind === 'exit') { toast('出生点与撤离点不能删除', true); return; }
+    if (s.selection.kind === 'spawn') { toast('出生点不能删除，只能移动', true); return; }
+    if (s.selection.kind === 'exit' && s.data.exits.length <= 1) { toast('至少保留 1 个撤离点', true); return; }
     const kind = s.selection.kind;
     const table = {
       lootSpawn:s.data.lootSpawns, container: s.data.containers, prop: s.data.props, enemy: s.data.enemies,
-      portal: s.data.portals, window: s.data.windows
+      exit: s.data.exits, portal: s.data.portals, window: s.data.windows
     };
     const list = table[kind];
     if (!list) { toast('这种实体不能删除', true); return; }
@@ -512,10 +576,14 @@
   function applyErase(cell) {
     const s = store.get();
     const hit = T.entityAt(s.data, cell.x, cell.y);
-    if (hit && hit.kind !== 'spawn' && hit.kind !== 'exit') {
+    /* 撤离点也能擦掉，但最后一个要留着；不足两个时给一句提醒 */
+    if (hit && hit.kind === 'exit' && s.data.exits.length <= 1) {
+      toast('至少保留 1 个撤离点', true); return false;
+    }
+    if (hit && hit.kind !== 'spawn') {
       const table = {
         lootSpawn:s.data.lootSpawns, container: s.data.containers, prop: s.data.props, enemy: s.data.enemies,
-        portal: s.data.portals, window: s.data.windows
+        exit: s.data.exits, portal: s.data.portals, window: s.data.windows
       };
       const list = table[hit.kind];
       if (!list) return false;
@@ -561,7 +629,7 @@
       return;
     }
     if(m.kind==='lootSpawn'){store.set({preview:{rect:[cell.x,cell.y,cell.x,cell.y],tint:'rgba(230,175,80,.35)',color:'#c99b56',label:'放置物资刷新点'}});return;}
-    if (m.kind === 'container' || m.kind === 'prop' || m.kind === 'enemy') {
+    if (m.kind === 'container' || m.kind === 'prop' || m.kind === 'enemy' || m.kind === 'exit') {
       const w = m.kind === 'prop' ? (T.propDefaults(s.data, m.type).footprint) : [1, 1];
       const bad = T.placementProblem(s.data, cell.x, cell.y, w[0], w[1], null);
       store.set({
@@ -843,6 +911,20 @@
   $('btn-quotas').addEventListener('click', () => {
     if (history.run('同步配额', d => T.syncQuotas(d))) { markEdited(); toast('quotas 已同步为当前实际数量'); }
     else toast('配额已经是当前数量');
+  });
+  /* 「＋ 放置撤离点」＝替用户拿起撤离点材质并切到画笔，落点由画布点击决定。
+     和左侧调色板点「撤离点」走的是同一份 material，撤销/历史也共用。 */
+  $('btn-add-exit').addEventListener('click', () => {
+    const s = store.get();
+    if (!s.data) return;
+    store.set({
+      material: { cat: 'interact', kind: 'exit', label: '撤离点' },
+      highlight: { key: 'interact:exit', category: 'interact', match: e => e.kind === 'exit', label: '撤离点' },
+      tool: s.tool === 'select' ? 'brush' : s.tool
+    });
+    syncPaletteState();
+    renderToolbar();
+    toast('拿起了撤离点：点一块空地放置（Esc 放下）');
   });
 
   $('draft-restore').addEventListener('click', () => {

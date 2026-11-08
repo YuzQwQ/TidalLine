@@ -22,11 +22,11 @@ const els = {};
 function makeEl(id) {
   return {
     id,
-    style: {},
+    style: { setProperty(name, value) { this[name] = value; } },
     classList: { add() {}, remove() {}, toggle() {}, contains() { return false; } },
     innerHTML: '', textContent: '', title: '',
     appendChild() {},
-    querySelector() { return { style: {}, dataset: {} }; },
+    querySelector() { const child = makeEl('query'); child.parentElement = this; return child; },
     querySelectorAll() { return []; },
     dataset: {},
     addEventListener() {},
@@ -1539,7 +1539,8 @@ ok('迁移保留已有副武器', migrated[2].equip.gun === 'glock17');
 console.log('\n=== 撤离 ===');
 Game.startRun();
 const P11 = Game.player;
-const ex = M.extracts[0];
+/* 入场点本局封闭，测试要站在仍然开放的那个撤离点上 */
+const ex = (M.openExtracts ? M.openExtracts() : M.extracts)[0];
 P11.x = M.cx(ex.x); P11.y = M.cy(ex.y);
 Game.input.interactPressed = true;
 Game.update(1 / 60);
@@ -2016,21 +2017,27 @@ console.log('\n=== 双轴后坐力 ===');
   /* 锁定状态下的虚拟光标同样能穿过玩家：game-update 里不再按 keep 顶回去 */
   {
     const K = Game.input;
+    /* 随机入场后每局出生点会变，这一段必须按当前 player 的坐标算，
+       不能拿后坐力小节留下的旧 PR 引用（那会指向上一局的玩家）。 */
+    const CUR = Game.player;
     const wasLocked = Game.pointerLocked;
     const mx0 = K.mx, my0 = K.my;
     Game.pointerLocked = true;
+    /* 出生点每局随机，镜头可能还停在上一局的撤离点：先把镜头吸到当前玩家身上，
+       否则 K.my 会被夹到画布外，这一段的坐标换算就没意义了。 */
+    Game.updateCamera(true);
     Game.update(1 / 60);          // 先让镜头跟上，后面按稳定后的 cam 反推屏幕坐标
-    K.mx = PR.x - Game.cam.x;
-    K.my = PR.y - Game.cam.y;
+    K.mx = CUR.x - Game.cam.x;
+    K.my = CUR.y - Game.cam.y;
     Game.update(1 / 60);
     ok('锁定时光标能停在玩家身上',
-       Math.hypot(K.wx - PR.x, K.wy - PR.y) < 1e-6,
-       '光标离玩家 ' + Math.hypot(K.wx - PR.x, K.wy - PR.y).toFixed(2) + 'px');
-    K.mx = PR.x - Game.cam.x - 40;
-    K.my = PR.y - Game.cam.y;
+       Math.hypot(K.wx - CUR.x, K.wy - CUR.y) < 1e-6,
+       '光标离玩家 ' + Math.hypot(K.wx - CUR.x, K.wy - CUR.y).toFixed(2) + 'px');
+    K.mx = CUR.x - Game.cam.x - 40;
+    K.my = CUR.y - Game.cam.y;
     Game.update(1 / 60);
-    ok('锁定时光标能穿过玩家到另一侧', K.wx < PR.x - 30,
-       '光标在玩家左侧 ' + (PR.x - K.wx).toFixed(1) + 'px');
+    ok('锁定时光标能穿过玩家到另一侧', K.wx < CUR.x - 30,
+       '光标在玩家左侧 ' + (CUR.x - K.wx).toFixed(1) + 'px');
     Game.pointerLocked = wasLocked;
     K.mx = mx0; K.my = my0;
   }
@@ -2375,6 +2382,79 @@ console.log('\n=== 彩蛋藏品 ===');
   ok('红色总量仍是 8%（彩蛋从红里分，不额外增加）', Math.abs(redPct - 8) < 0.35, redPct.toFixed(2) + '%');
   ok('秘藏箱红里约 25% 是彩蛋', Math.abs(egg / Math.max(1, r[5]) * 100 - 25) < 1.6,
      (egg / Math.max(1, r[5]) * 100).toFixed(1) + '%');
+}
+
+console.log('\n=== 随机入场 / 入场点封闭 ===');
+{
+  const MM = ctx.M, GG = ctx.Game, R = vm.runInContext('RAID_MAP', ctx);
+  const load = (exits) => {
+    const map = Object.assign({}, R, exits ? { exits } : {});
+    MM.load(map.rows, map.doorAxes, map.props, map);
+    MM.chooseInfiltration();       // 局级规则由 startRun 调用，测试里显式走一遍
+    return map;
+  };
+  ok('主图至少有两个撤离点', R.exits.length >= 2, R.exits.length + ' 个');
+  load();
+  ok('每次进图都会挑一个入场点', !!MM.infiltration && MM.infiltration.closed === true);
+  ok('有且只有一个撤离点被封闭', MM.extracts.filter(e => e.closed).length === 1);
+  ok('其余撤离点仍然开放', MM.openExtracts().length === MM.extracts.length - 1);
+  ok('出生点被改到入场点那一格',
+    MM.playerSpawn.x === MM.infiltration.x && MM.playerSpawn.y === MM.infiltration.y,
+    JSON.stringify(MM.playerSpawn) + ' vs ' + MM.infiltration.id);
+
+  const first = MM.chooseInfiltration(() => 0);
+  ok('rng=0 选第一个候选', first.id === MM.extracts[0].id && first.closed === true, first.id);
+  const last = MM.chooseInfiltration(() => 0.999999);
+  const candidates = MM.extracts.filter(e => e.spawnable !== false);
+  ok('rng→1 选最后一个候选', last.id === candidates[candidates.length - 1].id, last.id);
+  ok('重挑时上一个入场点自动解封', MM.extracts.filter(e => e.closed).length === 1 && !first.closed);
+
+  /* spawnable:false 的点只作撤离、不进随机池 */
+  const three = R.exits.concat([{ id: 'Z', name: '备用撤离 Z', x: 10, y: 10, spawnable: false }]);
+  load(three);
+  ok('非入场候选不会被选中', MM.infiltration && MM.infiltration.spawnable !== false && MM.infiltration.id !== 'Z');
+  ok('非入场候选仍然可以撤离', MM.openExtracts().some(e => e.id === 'Z'));
+  load(three.map(e => Object.assign({}, e, { spawnable: e.id === 'Z' ? false : false })));
+  ok('候选不足 2 个时退回固定出生点', MM.infiltration === null && MM.extracts.every(e => !e.closed),
+    '入场点 ' + (MM.infiltration && MM.infiltration.id));
+
+  /* 只有 1 个撤离点：不封闭，否则这一局没法通关 */
+  load([R.exits[0]]);
+  ok('只剩一个撤离点时不封闭', MM.infiltration === null && MM.extracts.length === 1 && !MM.extracts[0].closed);
+  ok('固定出生点仍然来自 P 格',
+    MM.playerSpawn.x === R.spawn.x && MM.playerSpawn.y === R.spawn.y, JSON.stringify(MM.playerSpawn));
+
+  /* 真随机：连开 100 局，两个点都该被抽到 */
+  load();
+  const seen = new Set();
+  for (let i = 0; i < 100; i++) { const p = MM.chooseInfiltration(); if (p) seen.add(p.id); }
+  ok('随机入场会轮到不同撤离点', seen.size >= 2, [...seen].join(','));
+
+  /* 局内：封闭的点进候选表但不给撤离，开放的照常 */
+  GG.startRun();
+  const closed = MM.extracts.find(e => e.closed);
+  ok('开局玩家真的站在入场点上',
+    Math.abs(GG.player.x - MM.cx(closed.x)) < 1 && Math.abs(GG.player.y - MM.cy(closed.y)) < 1,
+    GG.player.x + ',' + GG.player.y + ' vs ' + MM.cx(closed.x) + ',' + MM.cy(closed.y));
+  const near = GG.findInteractables().filter(it => it.type === 'extract');
+  ok('封闭的入场点仍在候选表里并带 closed 标记',
+    near.some(it => it.obj === closed && it.closed === true), JSON.stringify(near.map(it => [it.obj.id, it.closed])));
+  const blocked = { type: 'extract', obj: closed, dist: 0, closed: true };
+  ok('封闭点的提示写明已封闭', GG.interactLabel(blocked, true).includes('已封闭'));
+  /* 把其它交互目标清掉，让 E 一定落在撤离点上 */
+  GG.boxes = []; GG.corpses = []; GG.enemies = [];
+  const moveToExit = ex => {
+    GG.player.x = MM.cx(ex.x); GG.player.y = MM.cy(ex.y);
+    GG.action = null; GG.interactKey = null; GG._interactAnchor = null;
+    GG.handleInteract();
+  };
+  moveToExit(closed);
+  ok('在封闭点上按 E 不会开始撤离读条', GG.action === null);
+  const open = MM.extracts.find(e => !e.closed);
+  moveToExit(open);
+  ok('开放撤离点照常开始读条', !!GG.action && GG.action.type === 'extract');
+  GG.action = null;
+  ok('开放点的提示仍是撤离', GG.interactLabel({ type: 'extract', obj: open }, false).includes('撤离'));
 }
 
 console.log('\n---------------------------------------');

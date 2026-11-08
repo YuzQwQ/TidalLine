@@ -258,6 +258,18 @@
     return id;
   }
 
+  /* 撤离点沿用地图里的 A/B/C 编号；26 个字母用完后退到 ex1、ex2… */
+  function nextExitId(list) {
+    const used = new Set(list.map(e => e.id));
+    for (let i = 0; i < 26; i++) {
+      const id = String.fromCharCode(65 + i);
+      if (!used.has(id)) return id;
+    }
+    let n = 1, id;
+    do { id = 'ex' + n++; } while (used.has(id));
+    return id;
+  }
+
   /* ---------- 放置 / 删除 / 移动 ---------- */
 
   function place(d, material, x, y) {
@@ -340,6 +352,24 @@
       return { ok: true, id: rec.id, label: material.type };
     }
 
+    if (material.kind === 'exit') {
+      const bad = placementProblem(d, x, y, 1, 1, null);
+      if (bad) return { ok: false, reason: bad };
+      if (d.spawn && d.spawn.x === x && d.spawn.y === y) return { ok: false, reason: '撤离点不能压在固定出生点上' };
+      if (d.exits.some(e => e.x === x && e.y === y)) return { ok: false, reason: '这里已经是撤离点了' };
+      const id = nextExitId(d.exits);
+      const rec = {
+        id,
+        name: '撤离点 ' + id,
+        x, y,
+        risk: '',
+        region: regionAt(d, x, y),
+        spawnable: true
+      };
+      d.exits.push(rec);
+      return { ok: true, id: rec.id, label: '撤离点 ' + id };
+    }
+
     if (material.kind === 'portal') return placePortal(d, x, y, material.portalKind || 'door');
 
     return { ok: false, reason: '这种材质不能放置' };
@@ -393,9 +423,11 @@
     const hit = entityAt(d, x, y);
     if (!hit) return { ok: false, reason: '这里没有实体' };
     if (hit.kind === 'spawn') return { ok: false, reason: '出生点不能删除，只能移动' };
-    if (hit.kind === 'exit') return { ok: false, reason: '撤离点不能删除，只能移动' };
+    /* 撤离点可以删，但至少留一个：一个都没有 game 端就没法撤离了。
+       少于两个时 editor 侧会给提醒（随机入场玩法需要 2 个以上）。 */
+    if (hit.kind === 'exit' && d.exits.length <= 1) return { ok: false, reason: '至少保留 1 个撤离点' };
     const table = {
-      container: d.containers, prop: d.props, enemy: d.enemies,
+      container: d.containers, prop: d.props, enemy: d.enemies, exit: d.exits,
       portal: d.portals, window: d.windows
     };
     const list = table[hit.kind];
@@ -416,6 +448,10 @@
       return '门洞与橱窗没有 x/y，只有一组格坐标；拖动没法决定新形状，请删掉后在目标位置重画';
     }
     const [w, h] = sel.kind === 'container' ? footprintOf(e) : sel.kind === 'prop' ? footprintOf(e) : [1, 1];
+    if (sel.kind === 'exit') {
+      if (d.spawn && d.spawn.x === x && d.spawn.y === y) return '撤离点不能压在固定出生点上';
+      if (d.exits.some(o => o.id !== e.id && o.x === x && o.y === y)) return '这里已有另一个撤离点';
+    }
     const bad = e.ground ? (!inBounds(d,x,y)||!walkable(d,x,y)?'贴花需要可通行地面':null) : placementProblem(d, x, y, w, h, e.id);
     if (bad) return bad;
     const changedRegion = regionAt(d, x, y);
@@ -449,6 +485,6 @@
     setTerrain, fillRect, floodFill, rectBetween, defaultFloorChar,
     entityAt, resolve, footprintCells, coversCell, sealShut,
     regionAt, spaceAt, dominantPreference, propDefaults, deriveFacing, nextId, rotateEntity,
-    placementProblem, place, placePortal, removeAt, moveTo, syncQuotas
+    placementProblem, place, placePortal, removeAt, moveTo, syncQuotas, nextExitId
   };
 })(window);

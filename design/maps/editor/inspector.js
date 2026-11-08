@@ -166,8 +166,17 @@
       }))));
       host.appendChild(field('风险', textInput(ref.risk || '', v => commit('改撤离点风险', d => {
         const e = T.resolve(d, sel); if (e) e.risk = v;
-      }))));
-      host.appendChild(field('坐标', readOnly('(' + ref.x + ', ' + ref.y + ')')));
+      })), '只作地图说明，游戏里不参与数值'));
+      host.appendChild(field('可作入场点', selectInput(
+        [['yes', '是'], ['no', '否']],
+        ref.spawnable === false ? 'no' : 'yes',
+        v => commit('改入场点候选', d => {
+          const e = T.resolve(d, sel); if (!e) return;
+          if (v === 'no') e.spawnable = false; else delete e.spawnable;
+        })
+      ), '每局从打「是」的撤离点里随机挑一个当入场点并封闭；不足 2 个会退回固定出生点'));
+      host.appendChild(field('分区', readOnly(ref.region || '—')));
+      host.appendChild(field('坐标', readOnly('(' + ref.x + ', ' + ref.y + ')'), '拖动或方向键移动'));
     } else if (sel.kind === 'portal') {
       host.appendChild(field('名称', textInput(ref.name || '', v => commit('改门洞名称', d => {
         const e = T.resolve(d, sel); if (e) e.name = v;
@@ -216,8 +225,8 @@
     del.type = 'button';
     del.className = 'danger';
     del.textContent = '删除';
-    del.disabled = sel.kind === 'spawn' || sel.kind === 'exit';
-    if (del.disabled) del.title = '出生点与撤离点只能移动，不能删除';
+    del.disabled = sel.kind === 'spawn' || (sel.kind === 'exit' && data.exits.length <= 1);
+    if (del.disabled) del.title = sel.kind === 'spawn' ? '出生点只能移动，不能删除' : '至少保留 1 个撤离点';
     del.addEventListener('click', remove);
     actions.appendChild(del);
     host.appendChild(actions);

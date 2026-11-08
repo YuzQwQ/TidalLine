@@ -320,18 +320,19 @@
     ok('改回去以后回到 0 错误', S().result.counts.errors === 0, S().result.counts.errors);
 
     /* ---------- 14. 门可选中 / 可编辑 / 可删除 ---------- */
-/* 不写死门 id：设计稿改版会增删门洞（apartment.living-w 已经没了）。
-       这里要的只是"一个占两格的门"，所以从当前数据里挑第一个。 */
-    const door = S().data.portals.find(p => Array.isArray(p.cells) && p.cells.length === 2);
+/* 不写死门 id：设计稿改版会增删门洞（apartment.living-w 已经没了），
+       门也从两格改成过单格。这里只取第一个门，点它最后一格：
+       单格门命中自己，两格门则验证"任意一格都能命中"。 */
+    const door = S().data.portals.find(p => Array.isArray(p.cells) && p.cells.length > 0);
     const DID = door && door.id;
-    ok('测试用的门存在且占两格', !!(door && door.cells.length === 2), door && door.cells.length);
-    const [dx, dy] = door.cells[1];          // 故意点第二格：多格门任意一格都该命中
+    ok('测试用的门存在', !!(door && door.cells.length > 0), door && door.cells.length);
+    const [dx, dy] = door.cells[door.cells.length - 1];
     const terrBefore = Core.terrainAt(S().data, dx, dy);
 
     E.setTool('select');
     click(dx, dy);
     await sleep(80);
-    ok('点门的第二格能选中',
+    ok('点门能选中',
       S().selection && S().selection.kind === 'portal' && S().selection.id === DID,
       JSON.stringify(S().selection));
 
@@ -430,7 +431,8 @@
     ok('对话框已关闭', document.getElementById('newmap').hidden === true);
     ok('新图尺寸是 64×48', nd.width === 64 && nd.height === 48, nd.width + '×' + nd.height);
     ok('新图带了一栋建筑', nd.buildings.length === 1 && nd.rooms.length === 5, nd.buildings.length + '/' + nd.rooms.length);
-    ok('新图预置容器类型', Object.keys(nd.containerTypes).length === 25, Object.keys(nd.containerTypes).length);
+    /* 容器类型表会随新容器扩充，别写死成 25 */
+    ok('新图预置容器类型', Object.keys(nd.containerTypes).length >= 25, Object.keys(nd.containerTypes).length);
     ok('新图没有容器和敌人', nd.containers.length === 0 && nd.enemies.length === 0);
     ok('新图规则未设定', Object.values(S().rules.expect).every(v => v === null));
     ok('新图 0 错误', S().result.counts.errors === 0, S().result.counts.errors);
@@ -547,6 +549,59 @@
 
     const probedFirst = await E.Render.probeAssets();
     ok('首次探测只建基线、不重载', probedFirst === false, String(probedFirst));
+
+    /* ---------- 16b. 多个撤离点：放置、入场候选、删除 ---------- */
+    const exBefore = S().data.exits.length;
+    ok('撤离点面板列出全部撤离点',
+      document.querySelectorAll('#exit-list .exit-row').length === exBefore,
+      document.querySelectorAll('#exit-list .exit-row').length + ' / ' + exBefore);
+    document.getElementById('btn-add-exit').click();
+    ok('右侧面板按钮也能拿起撤离点材质', S().material && S().material.kind === 'exit' && S().tool !== 'select',
+      S().tool);
+    ok('交互分类里有可放置的撤离点材质', pick('interact', 'exit'));
+    ok('拿起的是 exit 材质', S().material && S().material.kind === 'exit');
+    key('2');                      // 不管前面停在哪个工具，都切回画笔
+    /* 16 起跑的是「新建」出来的空白模板，地板字符不一定是 '.'，
+       所以按可通行 + 无实体找落点，不复用 findBlock 的硬编码。 */
+    let exitSpot = null;
+    for (let ey = 1; ey < S().data.height - 1 && !exitSpot; ey++) {
+      for (let exx = 1; exx < S().data.width - 1 && !exitSpot; exx++) {
+        if (!Core.isWalkableTerrain(S().data, exx, ey)) continue;
+        if (T.entityAt(S().data, exx, ey)) continue;
+        if (T.placementProblem(S().data, exx, ey, 1, 1, null)) continue;
+        exitSpot = { x: exx, y: ey };
+      }
+    }
+    ok('找到一格空地放撤离点', !!exitSpot, exitSpot ? exitSpot.x + ',' + exitSpot.y : 'none');
+    if (exitSpot) {
+      click(exitSpot.x, exitSpot.y);
+      await sleep(100);            // 右侧面板走 store 订阅刷新，等一帧再数行
+      const addedExit = S().data.exits[S().data.exits.length - 1];
+      ok('点击空地新增一个撤离点', S().data.exits.length === exBefore + 1,
+        S().data.exits.length + ' / ' + (exBefore + 1));
+      ok('新撤离点落在点击的格子上', addedExit.x === exitSpot.x && addedExit.y === exitSpot.y);
+      ok('新撤离点默认可作入场点', addedExit.spawnable === true);
+      ok('放置后自动选中新撤离点', S().selection && S().selection.kind === 'exit' && S().selection.id === addedExit.id);
+      ok('撤离点面板同步出现新行',
+        document.querySelectorAll('#exit-list .exit-row').length === exBefore + 1);
+
+      /* 入场候选开关：关掉写入 spawnable:false，撤销能恢复 */
+      const exitRow = document.querySelector('#exit-list .exit-row');
+      const toggle = exitRow && exitRow.querySelector('.exit-toggle input');
+      if (toggle) {
+        toggle.click();
+        ok('取消入场候选写入 spawnable:false', S().data.exits[0].spawnable === false);
+        key('z', { ctrlKey: true });
+        ok('撤销恢复入场候选', S().data.exits[0].spawnable !== false);
+      } else ok('撤离点行里有入场候选开关', false);
+
+      key('Delete');
+      ok('Delete 能删掉撤离点', S().data.exits.length === exBefore, String(S().data.exits.length));
+      key('z', { ctrlKey: true });
+      ok('撤销能把撤离点带回来', S().data.exits.length === exBefore + 1, String(S().data.exits.length));
+      key('Delete');
+      ok('删回初始数量', S().data.exits.length === exBefore);
+    }
 
     /* ---------- 17. 还原并收尾 ---------- */
     E.apply({ data: JSON.parse(original), rules: originalRules, source: '还原' }, { silent: true });

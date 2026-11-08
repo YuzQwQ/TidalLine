@@ -28,8 +28,9 @@ console.log('=== 容器贴图 ===');
   const src = fs.readFileSync(path.join(ROOT, 'js/data.js'), 'utf8');
   const m = /const CONTAINER_TYPES = (\{[\s\S]*?\n\});/.exec(src);
   check(!!m, '能从 js/data.js 取到 CONTAINER_TYPES');
-  /* 奖池常量定义在别处，单独抠出来的这段字面量里引用不到，先摘掉再求值 */
-  const body = m[1].replace(/\s*,\s*(?:ammo|gear)Pool:\s*[A-Z_][A-Z_0-9]*/g, '');
+  /* 奖池常量定义在别处，单独抠出来的这段字面量里引用不到，先摘掉再求值
+     （后来加进来的保险箱专属池 SAFE_ITEM_POOL 一样要摘） */
+  const body = m[1].replace(/\s*,\s*\w+Pool:\s*[A-Z_][A-Z_0-9]*/g, '');
   const game = vm.runInNewContext('(' + body + ')', {});
   const diff = Object.keys(game).filter(k => Art.CONTAINER_ART[k] !== game[k].art);
   check(diff.length === 0, '25 种容器的贴图名与游戏一致', diff.map(k => k + ':' + Art.CONTAINER_ART[k] + '≠' + game[k].art).join(' '));

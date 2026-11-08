@@ -432,7 +432,8 @@
       if (hot({ kind: 'spawn' })) outlineCell(ctx, psx, psy, tile, accent);
       for (const ex of data.exits) {
         const [sx, sy] = px(ex.x, ex.y);
-        drawBadge(ctx, sx, sy, tile, '#2f8f9a', ex.id);
+        /* 灰色 = spawnable:false，只作撤离点、不进随机入场池 */
+        drawBadge(ctx, sx, sy, tile, ex.spawnable === false ? '#8b9d94' : '#2f8f9a', ex.id);
         if (hot({ kind: 'exit', ref: ex })) outlineCell(ctx, sx, sy, tile, accent);
       }
     }
