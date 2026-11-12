@@ -36,7 +36,7 @@ const TILE_H = { "#":3, ".":2, ",":1, "~":0, H:3, "+":2, S:2, P:2, E:3 };
 /* 弹药池：chance 是「每次抽取走这个池」的概率；count 是各口径每组发数区间。 */
 const AMMO_POOL = {
   chance: 0.25,
-  count: { '545x39': [10, 20], '556': [10, 20], '762x39': [10,20], '9mm': [10, 20], '45acp': [10,20], '12g': [4, 8] }
+  count: { '68x51': [6, 12], '545x39': [10, 20], '556': [10, 20], '762x39': [10,20], '9mm': [10, 20], '45acp': [10,20], '12g': [4, 8] }
 };
 
 /* 装备池：kinds 里等概率抽一种（头盔 / 护甲 / 背包 / 枪械），等级分布与同容器的弹药池一致。 */
@@ -992,11 +992,12 @@ const ITEMS = [
     desc:'一只由厚壁玻璃制成的大型密封容器，内部持续存在一场微缩暴风雨。\n\n灰蓝色云团缓缓旋转，细小的雨滴落入容器底部的水面，偶尔有微弱的闪电在云层间一闪而过。\n\n瓶内水位始终不变，温度变化也无法使风暴停止。\n\n研究人员曾经用连续摄影记录其变化。经过数日观测，他们发现云团的形态从未完全重复，却始终保持着相近的风暴规模。\n\n它没有扩散，没有减弱，也没有结束。' },
 
   /* --- 彩蛋（egg）-------------------------------------------------------
-     四件隐藏藏品，大类仍旧是异常遗物（cat:'odd'）、稀有度固定红色孤品。
+     七件隐藏藏品，稀有度固定红色孤品。首版四件登记在异常遗物（cat:'odd'），
+     2026-11-08 新增的三件按题材各自归位：文物藏品 / 电子产品。
      它们不走常规掉落池：egg:true 让所有抽取池把它们过滤掉，
      只有 Loot.roll 在抽到红色物品后按 CFG.LOOT.eggByQuality 再掷一次
      （秘藏 25% / 贵重 12% / 优质 4% / 充实 1%，废弃与普通箱恒为 0），
-     中签才从这四件里等概率挑一件（见 js/core.js 的 eggSwap）。
+     中签才从这七件里等概率挑一件（见 js/core.js 的 eggSwap）。
      所以红色物品的总概率没变，彩蛋是从"红色"内部按容器品质再分出来的。 */
   { id:'odd13', name:'捧腹者雕像', short:'奶龙雕像', cat:'odd', r:6, w:2.8, price:22451401, egg:true,
     desc:'从战区一处被炸塌的地下掩体中发掘出的黄色石像，面部肌肉呈现极度夸张的收缩状态，口腔张开幅度达正常哺乳动物极限的三倍以上。考古队最初判断这是一尊古代“欢愉祭祀”用具，碳-14 检测却显示它的形成时间不超过两年。\n\n更蹊跷的是，石像底座刻有一行小字：“恭喜你，刷到了罕见的奶龙，每 114514 年才会出现一只。”专家组目前无法解释：为什么一尊“两岁”的石像，敢声称自己等了一万多年。\n\n建议回收时佩戴隔音耳罩——石像内部偶尔传出无法溯源的“哈哈哈哈”回声，疑似某种尚未被记录的次声波武器。' },
@@ -1006,6 +1007,18 @@ const ITEMS = [
     desc:'声学组接到任务时以为搞错了：要鉴定的不是一个声音，而是一个动作产生的“沉默”。\n\n娃娃保持着原剧中的姿态：双臂垂落，肩部松垮，整个人的重心以一种非常明确的“放弃”方式向后沉。经高速摄影逐帧分析，该姿态从启动到锁定耗时 0.7 秒，期间没有任何试图维持演奏姿势的肌肉代偿动作。\n\n声学组在报告里写道：“这不是‘弹错了’之后的慌乱。慌乱会有修正。这个动作里没有任何修正的意图。它在说出那句话之前，就已经替那句话做好了身体上的准备。”\n\n随附音频分析：娃娃内置发声装置，触发后播放台词“全——都不会弹——”。频谱显示该语音的基频极其平稳，没有紧张、没有羞愧、没有表演性的自嘲。声学组批注：“说话者对自己的结论没有一丝怀疑。这才是最令人不安的部分。”' },
   { id:'odd16', name:'持械木质拟人塑像', short:'持械木偶', cat:'odd', r:6, w:1.5, price:18888888, egg:true,
     desc:'一页从论坛上撕下来的帖子打印件，标题被加粗标红：「理性讨论，通哥 T0 是不是吹过头了？」\n\n楼主：仙人掌大象单推人\n\n“先亮屁股，我不是通黑。但每次论战视频里通哥赢，弹幕就刷‘机制怪’‘数值怪’。你们有没有想过一个问题：它的机制本质上就是‘你不理我我就打你’，这跟小学生有什么区别？”\n\n1L（楼主自己抢）：“补充：我不是说通哥弱。我是说，一个身高 150 米体重 20 公斤的东西，按物理法则应该被自己的身高压垮。它能站着本身就是一种超模。”\n\n17L：“你拿物理法则去套 AI 山海经？耐克鲨鱼穿着鞋走路你管过吗？”\n\n34L：“认真回楼主：通哥的 T0 不在于单挑。在于它打团的时候，你分不清它是来参团的还是来叫你起床的。这两件事在 AI 山海经宇宙里是同一个机制。”\n\n58L：“通哥在二设里已经被写成主角了，光靠体术就能打爆一切。你们还在争 T0，人家已经在争唯一 T0 了。”\n\n楼主回复 58L：“……行吧。那至少承认一下，它那个木棍的打击感做得确实好。每次‘Tung’那一下，屏幕都在震。”\n\n帖末系统备注：该帖因“持续产生有效论战内容”被版主加精。版规第 4 条：“禁止无悬念对战。通哥对大部分角色的结果不具备讨论价值，建议投稿时直接跳过。”' },
+
+  /* easter-eggs-v2 · 立绘 assets/item-art/easter-eggs-v2/sources/collect_secret01.png */
+  { id:'collect_secret01', name:'无忧之丘', short:'XP画框', cat:'collect', r:6, w:2.6, price:20010000, egg:true,
+    desc:'一幅装裱在鎏金木框中的风景画，描绘了一片起伏平缓的翠绿草原，以及几乎没有一丝阴霾的湛蓝天空。画面色彩鲜艳得近乎失真，构图却异常简单，没有人物、建筑，也没有任何值得特别关注的景物。奇怪的是，几乎所有见过这幅画的人都表示，自己似乎曾在某个地方见过它。\n\n画作底部绘有一条蓝色横栏，左侧是一枚写着“开始”的绿色按钮，右侧则标注着永远停留在 14:20 的时钟。艺术鉴定人员最初认为这是一件早期数字艺术作品，但始终无法解释，为什么有人会把计算机操作界面如此郑重地装裱进古典画框。\n\n在一次公开展览中，一名参观者盯着画作沉默了整整十分钟，随后询问工作人员：“能不能把鼠标借我一下？”\n\n展览馆最终决定撤下这幅作品。原因并非其艺术价值存在争议，而是每天都有游客试图点击画框左下角的绿色按钮。' },
+
+  /* easter-eggs-v2 · 立绘 assets/item-art/easter-eggs-v2/sources/elec_secret01.png */
+  { id:'elec_secret01', name:'极伪 RXT 6090 Ti', short:'6090Ti', cat:'elec', r:6, w:3.8, price:60900000, egg:true,
+    desc:'一块来历不明的超高性能图形处理设备，采用三风扇散热结构、黑金复合装甲与大量蓝色发光元件。外壳上印有醒目的“GeFarce RXT 6090 Ti”字样，制造商“极伪科技”却不存在于任何已知的企业登记记录中。其内部集成电路的复杂程度远远超出了当前半导体工业水平，研究人员甚至无法辨认其使用的制造工艺。\n\n实验室曾尝试将其接入一台大型计算机，设备随即报告供电不足。更换工业级电源后，显卡终于成功启动，并在三秒内触发了整栋研究设施的过载保护。事后技术人员在随附说明书中发现一行小字：“建议搭配独立核电站使用。”\n\n目前尚无人能够验证其图形处理性能，但包装盒上赫然印着一句宣传语：“性能领先时代三十年，功耗领先电网五十年。”' },
+
+  /* easter-eggs-v2 · 立绘 assets/item-art/easter-eggs-v2/sources/elec_secret02.png */
+  { id:'elec_secret02', name:'诺鸡鸭 3310', short:'诺鸡鸭', cat:'elec', r:6, w:0.13, price:33100000, egg:true,
+    desc:'一部产自上世纪末的老式移动电话，采用深蓝色塑料外壳、单色液晶屏幕与实体数字键盘。机身布满划痕，边角磨损严重，屏幕却依然清晰。制造商标识为“诺鸡鸭”，其商标是一只造型简陋的白色鸭子。尽管外观平平无奇，该设备却在多项破坏性测试中表现出了令人费解的结构强度。\n\n据回收记录，这部手机最初是在一栋坍塌的六层建筑废墟中被发现的。搜救人员注意到，它正安静地躺在一块碎裂的混凝土板上，屏幕显示电量满格。随后的实验中，研究人员先后使用液压机、工业冲击锤与高空坠落装置对其进行测试，最终造成两台设备报废、一处实验台开裂，而手机仅新增了几道划痕。\n\n目前该设备仍可正常开机，内置游戏也能够流畅运行。唯一的问题是，它似乎永远无法耗尽电量。技术人员对此提出了多种解释，但项目负责人最终只在报告末尾留下了一句话：\n\n“建议停止测试。我们的经费已经不够买下一台液压机了。”' },
 ];
 
 /* ------------------------------------------------------------
@@ -1019,121 +1032,121 @@ const AMMO_TABLE = [
   [
     "556",
     1,
-    "5.56mm普通弹",
+    "5.56×45mm M856 曳光弹",
     60
   ],
   [
     "556",
     2,
-    "5.56mm改良弹",
+    "5.56×45mm FMJ 全被甲弹",
     140
   ],
   [
     "556",
     3,
-    "5.56mm钢芯弹",
+    "5.56×45mm M855",
     320
   ],
   [
     "556",
     4,
-    "5.56mm硬芯穿甲弹",
+    "5.56×45mm M855A1 EPR",
     800
   ],
   [
     "556",
     5,
-    "5.56mm特种穿甲弹",
+    "5.56×45mm M995 AP",
     2000
   ],
   [
     "762x39",
     1,
-    "7.62mm普通弹",
+    "7.62×39mm SP 软尖弹",
     80
   ],
   [
     "762x39",
     2,
-    "7.62mm改良弹",
+    "7.62×39mm FMJ 全被甲弹",
     180
   ],
   [
     "762x39",
     3,
-    "7.62mm钢芯弹",
+    "7.62×39mm PS gzh",
     420
   ],
   [
     "762x39",
     4,
-    "7.62mm穿甲弹",
+    "7.62×39mm BP gzh",
     1000
   ],
   [
     "762x39",
     5,
-    "7.62mm特种穿甲弹",
+    "7.62×39mm MAI AP",
     2500
   ],
   [
     "9mm",
     1,
-    "9mm普通弹",
+    "9×19mm PSO gzh",
     35
   ],
   [
     "9mm",
     2,
-    "9mm强化弹",
+    "9×19mm Green Tracer 绿色曳光弹",
     80
   ],
   [
     "9mm",
     3,
-    "9mm钢芯弹",
+    "9×19mm Pst gzh",
     180
   ],
   [
     "9mm",
     4,
-    "9mm穿甲弹",
+    "9×19mm AP 6.3",
     450
   ],
   [
     "9mm",
     5,
-    "9mm特种穿甲弹",
+    "9×19mm PBP gzh",
     1100
   ],
   [
     "45acp",
     1,
-    ".45 ACP普通弹",
+    ".45 ACP Hydra-Shok JHP",
     50
   ],
   [
     "45acp",
     2,
-    ".45 ACP改良弹",
+    ".45 ACP Lasermatch FMJ",
     110
   ],
   [
     "45acp",
     3,
-    ".45 ACP钢芯弹",
+    ".45 ACP Match FMJ",
     250
   ],
   [
     "45acp",
     4,
-    ".45 ACP穿甲弹",
+    ".45 ACP AP",
     600
   ],
   [
     "45acp",
     5,
-    ".45 ACP特种穿甲弹",
+    ".45 ACP AP-HC 高硬芯穿甲弹",
     1500
   ],
   [
@@ -1169,48 +1182,67 @@ const AMMO_TABLE = [
   [
     "545x39",
     1,
-    "5.45mm普通弹",
+    "5.45×39mm SP 软尖弹",
     70
   ],
   [
     "545x39",
     2,
-    "5.45mm改良弹",
+    "5.45×39mm FMJ 全被甲弹",
     160
   ],
   [
     "545x39",
     3,
-    "5.45mm钢芯弹",
+    "5.45×39mm PP gs",
     370
   ],
   [
     "545x39",
     4,
-    "5.45mm穿甲弹",
+    "5.45×39mm BP gs",
     900
   ],
   [
     "545x39",
     5,
-    "5.45mm特种穿甲弹",
+    "5.45×39mm BS gs",
     2250
+  ],
+  [
+    "68x51",
+    4,
+    "6.8×51mm SIG FMJ",
+    2500
+  ],
+  [
+    "68x51",
+    5,
+    "6.8×51mm SIG Hybrid",
+    7500
   ]
 ];
 
-const AMMO_STACK_LIMITS = {"556":60,"762x39":60,"9mm":90,"45acp":90,"12g":20,"545x39":60};
+const AMMO_STACK_LIMITS = {"556":60,"762x39":60,"9mm":90,"45acp":90,"12g":20,"545x39":60,"68x51":60};
 const AMMO_ITEMS = AMMO_TABLE.map(([caliber, level, name, price]) => {
   const t = BALLISTICS.tier(level);
   const cal = BALLISTICS.caliber(caliber);
+  const spec = BALLISTICS.flesh(caliber, level);
+  const model = cal.ammunition?.find(a=>a.level===level);
   return {
     id: BALLISTICS.ammoId(caliber, level),
-    iconId: 'ammo_' + caliber,
-    name, short: cal.short + '·' + level,
+    iconId: model?.iconId || 'ammo_' + caliber,
+    shopAvailable: model?.shopAvailable,
+    name, short: cal.ammoShortNames?.[level-1] || cal.short + '·' + level,
     cat: 'ammo', r: level, w: cal.weight || 0.012, price, stack: AMMO_STACK_LIMITS[caliber],
     noCodex: true, noLoot: true,
-    caliber, level, penLevel: t.pen, dmgMul: t.dmgMul,
-    desc: cal.name + ' 制式弹药，' + t.name + '级。\n\n' +
-      '伤害系数 ×' + t.dmgMul.toFixed(2) + '，穿透等级 ' + t.pen + '。' +
+    caliber, level, penLevel: t.pen, dmgMul: 1,
+    /* 战斗系统 V1：固定肉伤 B 与穿透力 P 是唯一的伤害来源，
+       不再有按等级增长的伤害系数。dmgMul 恒为 1，仅作旧字段兼容。 */
+    B: spec.B, P: spec.P, compat: spec.compat,
+    desc: (model?.description || cal.name + ' 制式弹药，' + t.name + '级。') + '\n\n' +
+      '基础肉伤 ' + spec.B + '，穿透力 ' + spec.P + '。' +
+      (spec.compat ? '（12 Gauge 临时兼容值，等专项方案替换）' : '') +
       '同口径的枪都能装，口径不对的装不进去。'
   };
 });
@@ -1221,8 +1253,8 @@ const AMMO_BY_ID = Object.fromEntries(AMMO_ITEMS.map(i => [i.id, i]));
 function ammoItem(caliber, level) {
   return AMMO_BY_ID[BALLISTICS.ammoId(caliber, level)] || null;
 }
-/* 某口径的默认弹药（Lv1），武器没指定时兜底 */
-function defaultAmmo(caliber) { return ammoItem(caliber, 1); }
+/* 某口径实际存在的默认弹药，常规Lv1，6.8×51为FMJ Lv4 */
+function defaultAmmo(caliber) { return ammoItem(caliber, BALLISTICS.defaultLevel(caliber)); }
 
 /* 稀有度 → 掉落权重（越低越少见） */
 const RARITY_WEIGHT = { 1: 100, 2: 55, 3: 20, 4: 10, 5: 6, 6: 1.2 };
@@ -1240,7 +1272,7 @@ const BOX_COUNT = Object.fromEntries(Object.entries(CONTAINER_QUALITY).map(([k, 
 const ENEMY_TYPES = {
   scav: {
     name: '拾荒者', short: '拾', color: '#b07a4a',
-    hp: 60, speed: 54, sight: 11, fov: 1.7, hear: 1.0,
+    hp: 90, speed: 54, sight: 11, fov: 1.7, hear: 1.0,
     range: 235, cd: 0.85, faction: 'scav', injuryType: 'bullet',
     arrow: true,            // 远程
     human: true,            // 人：会自己穿戴头甲、配对应等级的弹
@@ -1248,14 +1280,14 @@ const ENEMY_TYPES = {
   },
   echo: {
     name: '回响体', short: '响', color: '#8f5f7a',
-    hp: 22, speed: 44, sight: 0, fov: 0, hear: 1.65,
+    hp: 110, speed: 44, sight: 0, fov: 0, hear: 1.65,
     dmg: 14, range: 30, cd: 0.75, faction: 'echo', injuryType: 'heavy',
     arrow: false,
     desc: '溺死者的声音聚成的形体。没有眼睛，只听得见。'
   },
   guard: {
     name: '潮汐守卫', short: '守', color: '#5f7f9b',
-    hp: 72, speed: 36, sight: 15, fov: 2.0, hear: 0.6,
+    hp: 175, speed: 36, sight: 15, fov: 2.0, hear: 0.6,
     dmg: 13, range: 300, cd: 1.05, faction: 'guard', injuryType: 'bullet',
     arrow: true,
     desc: '事故当天留下的自动化安保，还在执行早已失效的指令。'
@@ -1409,7 +1441,6 @@ const WEAPONS = {
     "recoilVMul": 1,
     "recoilHMul": 1,
     "spreadMul": 1,
-    "recoilPerShot": 0.075,
     "modes": [
       "semi",
       "auto"
@@ -1419,6 +1450,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "M4A1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
     "visual": "黑色AR式卡宾枪，直线伸缩枪托、短护木、顶部提把和弧形弹匣。",
+    "aimTime": 0.4,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -1428,11 +1462,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.4,
-    "spreadBase": 0.04,
-    "spreadMax": 0.26,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "akm": {
@@ -1450,7 +1479,6 @@ const WEAPONS = {
     "recoilVMul": 1.35,
     "recoilHMul": 1.2,
     "spreadMul": 1.1,
-    "recoilPerShot": 0.085,
     "modes": [
       "semi",
       "auto"
@@ -1460,6 +1488,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "AKM，使用7.62×39mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
     "visual": "深色钢制机匣，旧胡桃木枪托与护木，明显弯曲的7.62弹匣。",
+    "aimTime": 0.4,
+    "spreadGrowthMul": 1.133,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -1469,11 +1500,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.4,
-    "spreadBase": 0.044000000000000004,
-    "spreadMax": 0.28600000000000003,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "famas_f1": {
@@ -1491,7 +1517,6 @@ const WEAPONS = {
     "recoilVMul": 1.1,
     "recoilHMul": 1.25,
     "spreadMul": 1.05,
-    "recoilPerShot": 0.09,
     "modes": [
       "semi",
       "burst3",
@@ -1502,6 +1527,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "FAMAS F1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
     "visual": "黑色无托步枪，顶部高提把，弹匣位于握把后方，短枪管。",
+    "aimTime": 0.4,
+    "spreadGrowthMul": 1.2,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -1511,11 +1539,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.4,
-    "spreadBase": 0.042,
-    "spreadMax": 0.273,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "pp19_01": {
@@ -1530,10 +1553,9 @@ const WEAPONS = {
     "price": 72000,
     "rarity": 3,
     "w": 2.4,
-    "recoilVMul": 0.7,
-    "recoilHMul": 0.8,
-    "spreadMul": 1.05,
-    "recoilPerShot": 0.055,
+    "recoilVMul": 0.535,
+    "recoilHMul": 0.6,
+    "spreadMul": 1.215,
     "modes": [
       "semi",
       "auto"
@@ -1543,6 +1565,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "PP-19-01 Vityaz，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
     "visual": "黑色短管AK式冲锋枪，三角折叠托，细长弯曲弹匣，不采用螺旋弹筒。",
+    "aimTime": 0.3,
+    "spreadGrowthMul": 0.733,
+    "adsPrecisionMul": 0.7,
     "attackType": "bullet",
     "injuryChanceMul": 0.8,
     "slot": "primary",
@@ -1552,11 +1577,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 600,
     "range": 420,
-    "aimTime": 0.3,
-    "spreadBase": 0.052500000000000005,
-    "spreadMax": 0.29400000000000004,
-    "recoilBaseV": 2.6,
-    "recoilBaseH": 1.8,
     "pelletSpread": 0
   },
   "mp5a3": {
@@ -1571,10 +1591,9 @@ const WEAPONS = {
     "price": 115000,
     "rarity": 4,
     "w": 2.6,
-    "recoilVMul": 0.6,
-    "recoilHMul": 0.65,
-    "spreadMul": 0.8,
-    "recoilPerShot": 0.06,
+    "recoilVMul": 0.459,
+    "recoilHMul": 0.488,
+    "spreadMul": 0.926,
     "modes": [
       "semi",
       "auto"
@@ -1584,6 +1603,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "MP5A3，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
     "visual": "圆筒形护木，双导杆伸缩枪托，细弯弹匣，深色滚轮闭锁机匣轮廓。",
+    "aimTime": 0.3,
+    "spreadGrowthMul": 0.8,
+    "adsPrecisionMul": 0.7,
     "attackType": "bullet",
     "injuryChanceMul": 0.8,
     "slot": "primary",
@@ -1593,11 +1615,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 600,
     "range": 420,
-    "aimTime": 0.3,
-    "spreadBase": 0.04000000000000001,
-    "spreadMax": 0.22400000000000003,
-    "recoilBaseV": 2.6,
-    "recoilBaseH": 1.8,
     "pelletSpread": 0
   },
   "ump45": {
@@ -1612,10 +1629,9 @@ const WEAPONS = {
     "price": 108000,
     "rarity": 4,
     "w": 2.3,
-    "recoilVMul": 0.95,
-    "recoilHMul": 0.9,
-    "spreadMul": 1,
-    "recoilPerShot": 0.07,
+    "recoilVMul": 0.726,
+    "recoilHMul": 0.675,
+    "spreadMul": 1.157,
     "modes": [
       "semi",
       "auto"
@@ -1625,6 +1641,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "UMP45，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
     "visual": "方正深灰聚合物机匣，镂空折叠托，粗直弹匣。",
+    "aimTime": 0.3,
+    "spreadGrowthMul": 0.933,
+    "adsPrecisionMul": 0.7,
     "attackType": "bullet",
     "injuryChanceMul": 0.8,
     "slot": "primary",
@@ -1634,11 +1653,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 600,
     "range": 420,
-    "aimTime": 0.3,
-    "spreadBase": 0.05,
-    "spreadMax": 0.28,
-    "recoilBaseV": 2.6,
-    "recoilBaseH": 1.8,
     "pelletSpread": 0
   },
   "mp155": {
@@ -1653,10 +1667,9 @@ const WEAPONS = {
     "price": 78000,
     "rarity": 3,
     "w": 3.6,
-    "recoilVMul": 1.85,
+    "recoilVMul": 2.394,
     "recoilHMul": 1.4,
-    "spreadMul": 1,
-    "recoilPerShot": 0.22,
+    "spreadMul": 0.579,
     "modes": [
       "semi"
     ],
@@ -1665,6 +1678,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "MP-155，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
     "visual": "长枪管半自动猎枪，胡桃木枪托和前护木，下方细长管式弹仓，无盒式弹匣。",
+    "aimTime": 0.45,
+    "spreadGrowthMul": 2.933,
+    "adsPrecisionMul": 0.7,
     "attackType": "shotgun",
     "injuryChanceMul": 1,
     "slot": "primary",
@@ -1674,11 +1690,6 @@ const WEAPONS = {
     "pellets": 6,
     "speed": 560,
     "range": 300,
-    "aimTime": 0.45,
-    "spreadBase": 0.025,
-    "spreadMax": 0.14,
-    "recoilBaseV": 4.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0.1785
   },
   "rem870": {
@@ -1693,10 +1704,9 @@ const WEAPONS = {
     "price": 58000,
     "rarity": 3,
     "w": 3.4,
-    "recoilVMul": 2.2,
+    "recoilVMul": 2.847,
     "recoilHMul": 1.25,
-    "spreadMul": 0.85,
-    "recoilPerShot": 0.24,
+    "spreadMul": 0.492,
     "modes": [
       "pump"
     ],
@@ -1705,6 +1715,9 @@ const WEAPONS = {
     "cycleTime": 0.8,
     "desc": "Remington 870，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
     "visual": "深色木枪托，长条肋纹泵动护木，钢制机匣和管式弹仓，无盒式弹匣。",
+    "aimTime": 0.45,
+    "spreadGrowthMul": 3.2,
+    "adsPrecisionMul": 0.7,
     "attackType": "shotgun",
     "injuryChanceMul": 1,
     "slot": "primary",
@@ -1714,11 +1727,6 @@ const WEAPONS = {
     "pellets": 6,
     "speed": 560,
     "range": 300,
-    "aimTime": 0.45,
-    "spreadBase": 0.02125,
-    "spreadMax": 0.11900000000000001,
-    "recoilBaseV": 4.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0.1785
   },
   "saiga12": {
@@ -1733,10 +1741,9 @@ const WEAPONS = {
     "price": 175000,
     "rarity": 5,
     "w": 3.8,
-    "recoilVMul": 2.1,
+    "recoilVMul": 2.718,
     "recoilHMul": 1.75,
-    "spreadMul": 1.2,
-    "recoilPerShot": 0.26,
+    "spreadMul": 0.694,
     "modes": [
       "semi"
     ],
@@ -1745,6 +1752,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "Saiga-12，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
     "visual": "黑色AK式霰弹枪，聚合物固定托，较粗枪管，明显的宽盒式弹匣。",
+    "aimTime": 0.45,
+    "spreadGrowthMul": 3.467,
+    "adsPrecisionMul": 0.7,
     "attackType": "shotgun",
     "injuryChanceMul": 1,
     "slot": "primary",
@@ -1754,11 +1764,6 @@ const WEAPONS = {
     "pellets": 6,
     "speed": 560,
     "range": 300,
-    "aimTime": 0.45,
-    "spreadBase": 0.03,
-    "spreadMax": 0.168,
-    "recoilBaseV": 4.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0.1785
   },
   "glock17": {
@@ -1773,10 +1778,9 @@ const WEAPONS = {
     "price": 32000,
     "rarity": 2,
     "w": 1.1,
-    "recoilVMul": 0.75,
-    "recoilHMul": 0.8,
-    "spreadMul": 0.95,
-    "recoilPerShot": 0.1,
+    "recoilVMul": 0.529,
+    "recoilHMul": 0.533,
+    "spreadMul": 0.918,
     "modes": [
       "semi"
     ],
@@ -1785,6 +1789,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "Glock 17，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
     "visual": "黑色方形套筒，简洁聚合物枪身与双排弹匣握把，短枪管。",
+    "aimTime": 0.2,
+    "spreadGrowthMul": 1.333,
+    "adsPrecisionMul": 0.65,
     "attackType": "bullet",
     "injuryChanceMul": 1,
     "slot": "secondary",
@@ -1794,11 +1801,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 600,
     "range": 460,
-    "aimTime": 0.2,
-    "spreadBase": 0.042749999999999996,
-    "spreadMax": 0.209,
-    "recoilBaseV": 2.4,
-    "recoilBaseH": 1.6,
     "pelletSpread": 0
   },
   "m1911a1": {
@@ -1813,10 +1815,9 @@ const WEAPONS = {
     "price": 37000,
     "rarity": 3,
     "w": 1.2,
-    "recoilVMul": 1.2,
-    "recoilHMul": 1,
-    "spreadMul": 0.9,
-    "recoilPerShot": 0.12,
+    "recoilVMul": 0.847,
+    "recoilHMul": 0.667,
+    "spreadMul": 0.869,
     "modes": [
       "semi"
     ],
@@ -1825,6 +1826,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "M1911A1，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
     "visual": "细长钢制套筒，棕色单排握把，外露击锤与圆弧扳机护圈。",
+    "aimTime": 0.2,
+    "spreadGrowthMul": 1.6,
+    "adsPrecisionMul": 0.65,
     "attackType": "bullet",
     "injuryChanceMul": 1,
     "slot": "secondary",
@@ -1834,11 +1838,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 600,
     "range": 460,
-    "aimTime": 0.2,
-    "spreadBase": 0.0405,
-    "spreadMax": 0.198,
-    "recoilBaseV": 2.4,
-    "recoilBaseH": 1.6,
     "pelletSpread": 0
   },
   "beretta92": {
@@ -1853,10 +1852,9 @@ const WEAPONS = {
     "price": 44000,
     "rarity": 3,
     "w": 1.2,
-    "recoilVMul": 0.7,
-    "recoilHMul": 0.65,
-    "spreadMul": 0.8,
-    "recoilPerShot": 0.09,
+    "recoilVMul": 0.494,
+    "recoilHMul": 0.433,
+    "spreadMul": 0.773,
     "modes": [
       "semi"
     ],
@@ -1865,6 +1863,9 @@ const WEAPONS = {
     "cycleTime": 0,
     "desc": "Beretta 92FS，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
     "visual": "较长开放式套筒，露出的枪管，深色握把与圆弧护圈。",
+    "aimTime": 0.2,
+    "spreadGrowthMul": 1.2,
+    "adsPrecisionMul": 0.65,
     "attackType": "bullet",
     "injuryChanceMul": 1,
     "slot": "secondary",
@@ -1874,11 +1875,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 600,
     "range": 460,
-    "aimTime": 0.2,
-    "spreadBase": 0.036,
-    "spreadMax": 0.17600000000000002,
-    "recoilBaseV": 2.4,
-    "recoilBaseH": 1.6,
     "pelletSpread": 0
   },
   "m16a1": {
@@ -1896,8 +1892,6 @@ const WEAPONS = {
     "recoilVMul": 1.1,
     "recoilHMul": 1.15,
     "spreadMul": 0.95,
-    "aimTimeMul": 1.15,
-    "recoilPerShot": 0.075,
     "modes": [
       "semi",
       "auto"
@@ -1908,6 +1902,9 @@ const WEAPONS = {
     "shopAvailable": true,
     "desc": "枪身上的编号已经磨得模糊，但护木和枪托仍然完整。老式装备并不意味着它已经失去了用途。",
     "visual": "固定枪托、三角护木、长枪管、提把、20发短弹匣。",
+    "aimTime": 0.46,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -1917,11 +1914,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.45999999999999996,
-    "spreadBase": 0.038,
-    "spreadMax": 0.247,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "galil_arm": {
@@ -1939,8 +1931,6 @@ const WEAPONS = {
     "recoilVMul": 1.25,
     "recoilHMul": 1.2,
     "spreadMul": 1.15,
-    "aimTimeMul": 1.15,
-    "recoilPerShot": 0.075,
     "modes": [
       "semi",
       "auto"
@@ -1951,6 +1941,9 @@ const WEAPONS = {
     "shopAvailable": true,
     "desc": "厚实的机匣、沉重的枪身，以及一个比多数同类武器更宽裕的弹匣。它从来不以轻巧著称。",
     "visual": "钢机匣、木护木、管式折叠枪托、折叠两脚架、大弹匣。",
+    "aimTime": 0.46,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -1960,11 +1953,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.45999999999999996,
-    "spreadBase": 0.046,
-    "spreadMax": 0.299,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "aks74u": {
@@ -1982,8 +1970,6 @@ const WEAPONS = {
     "recoilVMul": 1.25,
     "recoilHMul": 1.2,
     "spreadMul": 1.15,
-    "aimTimeMul": 0.8,
-    "recoilPerShot": 0.075,
     "modes": [
       "semi",
       "auto"
@@ -1994,6 +1980,9 @@ const WEAPONS = {
     "shopAvailable": true,
     "desc": "短小的枪身和折叠枪托让它很适合狭窄空间。至于连续射击时那股不安分的劲头，最好亲自试试。",
     "visual": "短枪管、膨大消焰器、短木护木、三角折叠枪托。",
+    "aimTime": 0.32,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -2003,11 +1992,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.32000000000000006,
-    "spreadBase": 0.046,
-    "spreadMax": 0.299,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "g36c": {
@@ -2025,8 +2009,6 @@ const WEAPONS = {
     "recoilVMul": 0.95,
     "recoilHMul": 1.1,
     "spreadMul": 1.1,
-    "aimTimeMul": 0.85,
-    "recoilPerShot": 0.075,
     "modes": [
       "semi",
       "auto"
@@ -2037,6 +2019,9 @@ const WEAPONS = {
     "shopAvailable": true,
     "desc": "聚合物枪身减轻了负担，紧凑的结构也方便携行。它原本就是为行动迅速的人设计的。",
     "visual": "黑色聚合物短枪身、镂空折叠枪托、透明弹匣。",
+    "aimTime": 0.34,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -2046,11 +2031,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.34,
-    "spreadBase": 0.044000000000000004,
-    "spreadMax": 0.28600000000000003,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "fn_fnc": {
@@ -2068,8 +2048,6 @@ const WEAPONS = {
     "recoilVMul": 0.9,
     "recoilHMul": 0.95,
     "spreadMul": 0.95,
-    "aimTimeMul": 1.05,
-    "recoilPerShot": 0.075,
     "modes": [
       "semi",
       "auto"
@@ -2080,6 +2058,9 @@ const WEAPONS = {
     "shopAvailable": true,
     "desc": "坚实的结构和朴素的设计让它在制式武器中占有一席之地。没有什么花哨之处，也很少令人失望。",
     "visual": "朴素钢机匣、深色护木、管式折叠枪托、长枪管。",
+    "aimTime": 0.42,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -2089,11 +2070,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.42000000000000004,
-    "spreadBase": 0.038,
-    "spreadMax": 0.247,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "sig550": {
@@ -2111,8 +2087,6 @@ const WEAPONS = {
     "recoilVMul": 0.85,
     "recoilHMul": 0.8,
     "spreadMul": 0.8,
-    "aimTimeMul": 1.15,
-    "recoilPerShot": 0.075,
     "modes": [
       "semi",
       "auto"
@@ -2123,6 +2097,9 @@ const WEAPONS = {
     "shopAvailable": true,
     "desc": "精密的制造工艺带来了良好的射击一致性。即使经历长时间存放，保养得当的枪械依然值得信赖。",
     "visual": "橄榄绿护木和镂空折叠枪托、灰色机匣、透明弹匣。",
+    "aimTime": 0.46,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -2132,11 +2109,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.45999999999999996,
-    "spreadBase": 0.032,
-    "spreadMax": 0.20800000000000002,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "an94": {
@@ -2154,8 +2126,6 @@ const WEAPONS = {
     "recoilVMul": 1.05,
     "recoilHMul": 0.95,
     "spreadMul": 0.9,
-    "aimTimeMul": 1.1,
-    "recoilPerShot": 0.075,
     "modes": [
       "semi",
       "burst2",
@@ -2169,6 +2139,9 @@ const WEAPONS = {
     "visual": "黑色非对称机匣、倾斜弹匣、长枪管组件。",
     "burstRPM": 1800,
     "burstDelayRecoil": true,
+    "aimTime": 0.44,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -2178,11 +2151,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.44000000000000006,
-    "spreadBase": 0.036000000000000004,
-    "spreadMax": 0.234,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "aug_a1": {
@@ -2200,8 +2168,6 @@ const WEAPONS = {
     "recoilVMul": 0.8,
     "recoilHMul": 0.75,
     "spreadMul": 0.75,
-    "aimTimeMul": 1.05,
-    "recoilPerShot": 0.075,
     "modes": [
       "semi",
       "auto"
@@ -2212,6 +2178,9 @@ const WEAPONS = {
     "shopAvailable": false,
     "desc": "紧凑的无托结构、独特的外形和一体式光学瞄具，使它即使混在一整排枪械中，也很难被认错。",
     "visual": "橄榄绿无托枪身、一体式光学提把、垂直折叠握把。",
+    "aimTime": 0.42,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -2221,11 +2190,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.42000000000000004,
-    "spreadBase": 0.03,
-    "spreadMax": 0.195,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "groza1": {
@@ -2250,11 +2214,12 @@ const WEAPONS = {
     "recoilVMul": 1.4,
     "recoilHMul": 1.25,
     "spreadMul": 1.05,
-    "aimTimeMul": 0.75,
-    "recoilPerShot": 0.085,
     "shopAvailable": false,
     "desc": "无托结构将7.62毫米火力压进了短小的枪身。抬枪迅速，穿行狭窄通道时也不易磕碰，但连续射击时的跳动需要用力压住。环礁湾的旧装备箱上只给它留了一个简短的译名：雷暴。",
     "visual": "紧凑黑色无托枪身、高提把、握把后方的弯曲AK弹匣、短枪管与前握把。",
+    "aimTime": 0.3,
+    "spreadGrowthMul": 1.133,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -2264,11 +2229,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.30000000000000004,
-    "spreadBase": 0.042,
-    "spreadMax": 0.273,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "ak12": {
@@ -2293,11 +2253,12 @@ const WEAPONS = {
     "recoilVMul": 0.9,
     "recoilHMul": 0.85,
     "spreadMul": 0.9,
-    "aimTimeMul": 1,
-    "recoilPerShot": 0.075,
     "shopAvailable": true,
     "desc": "导轨护木、可调枪托和重新布置的操控部件，让这支现代制式步枪比它的前辈更容易上手。使用5.45×39毫米弹药，连续射击较为平稳，也给携行者留下了充足的改装余地。",
     "visual": "黑色现代AK机匣、连续顶轨、开槽聚合物护木、可调枪托和较直的5.45弹匣。",
+    "aimTime": 0.4,
+    "spreadGrowthMul": 1,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -2307,11 +2268,6 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.4,
-    "spreadBase": 0.036000000000000004,
-    "spreadMax": 0.234,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
     "pelletSpread": 0
   },
   "mk47_mod2": {
@@ -2336,11 +2292,12 @@ const WEAPONS = {
     "recoilVMul": 1.05,
     "recoilHMul": 0.9,
     "spreadMul": 0.8,
-    "aimTimeMul": 1.05,
-    "recoilPerShot": 0.08,
     "shopAvailable": false,
     "desc": "环礁湾一家武器工坊基于Mk47构思试制的全自动改型。AR式操控布局配合7.62×39毫米弹药和弯曲弹匣，着重改善射击一致性与后坐力控制。MOD.2是工坊自编的改型编号，现存样枪的零件与加工痕迹并不完全一致。",
     "visual": "黑色AR式机匣、细长M-LOK护木、可调镂空枪托与明显弯曲的AK式7.62弹匣。",
+    "aimTime": 0.42,
+    "spreadGrowthMul": 1.067,
+    "adsPrecisionMul": 0.5,
     "attackType": "bullet",
     "injuryChanceMul": 1.1,
     "slot": "primary",
@@ -2350,11 +2307,84 @@ const WEAPONS = {
     "pellets": 1,
     "speed": 620,
     "range": 640,
-    "aimTime": 0.42000000000000004,
-    "spreadBase": 0.032,
-    "spreadMax": 0.20800000000000002,
-    "recoilBaseV": 3.4,
-    "recoilBaseH": 2.4,
+    "pelletSpread": 0
+  },
+  "mcx_spear": {
+    "id": "mcx_spear",
+    "name": "SIG MCX SPEAR",
+    "short": "MCX SPEAR",
+    "rpm": 800,
+    "w": 4.2,
+    "price": 650000,
+    "rarity": 5,
+    "aimTime": 0.48,
+    "recoilVMul": 1.55,
+    "recoilHMul": 1.35,
+    "spreadGrowthMul": 1.2,
+    "spreadMul": 0.85,
+    "adsPrecisionMul": 0.45,
+    "reloadTime": 2.8,
+    "desc": "高成本的6.8×51毫米综合火力平台。连续射击需要控制明显的后坐力，完整的改装槽则为后续调校留下了余地。本作采用可选择单发与全自动的游戏配置，M7不在本批实装范围内。",
+    "visual": "沙色传统布局步枪，长开槽护木、折叠伸缩枪托、20发短弹匣，枪口朝右",
+    "category": "rifle",
+    "caliber": "68x51",
+    "mag": 20,
+    "modes": [
+      "semi",
+      "auto"
+    ],
+    "defaultMode": "auto",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "shopAvailable": false,
+    "attackType": "bullet",
+    "injuryChanceMul": 1.1,
+    "slot": "primary",
+    "ammo": "ammo_68x51_4",
+    "dmgMin": 42,
+    "dmgMax": 47,
+    "pellets": 1,
+    "speed": 620,
+    "range": 640,
+    "pelletSpread": 0
+  },
+  "rm277": {
+    "id": "rm277",
+    "name": "GD RM277",
+    "short": "RM277",
+    "rpm": 700,
+    "w": 3.8,
+    "price": 390000,
+    "rarity": 4,
+    "aimTime": 0.4,
+    "recoilVMul": 1.35,
+    "recoilHMul": 1.15,
+    "spreadGrowthMul": 1.1,
+    "spreadMul": 0.9,
+    "adsPrecisionMul": 0.45,
+    "reloadTime": 2.9,
+    "desc": "紧凑的无托试验平台，原厂操控较好，但一体式尾部无法更换枪托。现实原型使用.277 TVCM，本作有意统一为6.8×51毫米供弹，弹匣接口仍单独区分。",
+    "visual": "沙色无托步枪，高直顶轨、厚实一体尾托、握把后方20发短弹匣，枪口朝右",
+    "category": "rifle",
+    "caliber": "68x51",
+    "mag": 20,
+    "modes": [
+      "semi",
+      "auto"
+    ],
+    "defaultMode": "auto",
+    "reloadType": "magazine",
+    "cycleTime": 0,
+    "shopAvailable": true,
+    "attackType": "bullet",
+    "injuryChanceMul": 1.1,
+    "slot": "primary",
+    "ammo": "ammo_68x51_4",
+    "dmgMin": 42,
+    "dmgMax": 47,
+    "pellets": 1,
+    "speed": 620,
+    "range": 640,
     "pelletSpread": 0
   }
 };
@@ -2377,28 +2407,33 @@ const MELEE = [
 ART.gear.push(...MELEE.map(m=>m.id));
 
 /* ------------------------------------------------------------
-   护甲：六级头盔 / 六级身体护甲
-   lv = 防护等级（对应 BALLISTICS.MATRIX 的列），dur = 最大耐久，
-   aimPenaltyPct = 身体护甲的瞄准准备时间惩罚；move仅保留为1的兼容字段。
-   已经没有"固定减伤率"这回事：挡多少只看弹药穿透等级 × 护甲等级 × 剩余耐久。
-   价格采用 economy.json 中六级代表价；同级变体后续可围绕代表价浮动。
+   护甲：六级头盔 / 六级身体护甲 + I~IV 级变体（战斗系统 V1）
+     lv        防护等级 1~6，进入 Combat.effectiveArmor() 算有效防护值
+     dur       原厂（也是全新时的最大）耐久
+     material  材质 id，三套系数 Kb/Kd/Kr 全在 CFG.MATERIALS 里查
+     rep       耐修度 0~100，仅作 UI 展示；维修损耗实际由材质 Kr 决定
+     aimPenaltyPct  身体护甲的瞄准准备时间惩罚；头盔恒 0（重量已进负重系统）
+     move      仅保留为 1 的兼容字段
+   Lv1 的布帽 / 帆布 / 皮革等早期装备按芳纶做简化归类，代表其游戏机制中的
+   防护层，不意味着普通帆布真的具备芳纶防弹性能。
+   高等级钢甲的标称耐久已压缩，避免叠加钢材 ×0.70 的低损耗倍率后过于耐打。
    ------------------------------------------------------------ */
 const HELMETS = [
-  { lv: 1, name: '布面工帽',   short: '工帽',   dur: 20,  w: 0.5, move: 1,    price: 2000,   rep: 72 },
-  { lv: 2, name: '工程安全帽', short: '安全帽', dur: 30,  w: 0.8, move: 1,    price: 6000,   rep: 68 },
-  { lv: 3, name: '防撞头盔',   short: '防撞盔', dur: 45,  w: 1.2, move: 1,    price: 15000,  rep: 64 },
-  { lv: 4, name: '防弹头盔',   short: '防弹盔', dur: 65,  w: 1.8, move: 1,    price: 48000,  rep: 58 },
-  { lv: 5, name: '重型防弹盔', short: '重盔',   dur: 85,  w: 2.5, move: 1,    price: 120000, rep: 54 },
-  { lv: 6, name: '攻坚头盔',   short: '攻坚盔', dur: 110, w: 3.5, move: 1,    price: 350000, rep: 50 }
+  { lv: 1, name: '布面工帽',   short: '工帽',   dur: 20,  material: 'aramid',  w: 0.5, move: 1, price: 2000,   rep: 94 },
+  { lv: 2, name: '工程安全帽', short: '安全帽', dur: 30,  material: 'pe',      w: 0.8, move: 1, price: 6000,   rep: 92 },
+  { lv: 3, name: '防撞头盔',   short: '防撞盔', dur: 45,  material: 'aramid',  w: 1.2, move: 1, price: 15000,  rep: 94 },
+  { lv: 4, name: '防弹头盔',   short: '防弹盔', dur: 65,  material: 'aramid',  w: 1.8, move: 1, price: 48000,  rep: 94 },
+  { lv: 5, name: '重型防弹盔', short: '重盔',   dur: 85,  material: 'ceramic', w: 2.5, move: 1, price: 120000, rep: 84 },
+  { lv: 6, name: '攻坚头盔',   short: '攻坚盔', dur: 110, material: 'steel',   w: 3.5, move: 1, price: 350000, rep: 97 }
 ];
 
 const BODIES = [
-  { lv: 1, name: '帆布护胸',   short: '护胸',   dur: 40,  w: 1.5, move: 1.00, price: 3000,   rep: 74 },
-  { lv: 2, name: '防刺背心',   short: '防刺',   dur: 60,  w: 2.5, move: 0.98, price: 9000,   rep: 70 },
-  { lv: 3, name: '轻型战术背心', short: '轻甲', dur: 85,  w: 4.0, move: 0.96, price: 28000,  rep: 66 },
-  { lv: 4, name: '战术防弹衣', short: '战术甲', dur: 115, w: 6.0, move: 0.94, price: 85000,  rep: 60 },
-  { lv: 5, name: '重型防弹衣', short: '重甲',   dur: 150, w: 9.0, move: 0.91, price: 220000, rep: 56 },
-  { lv: 6, name: '攻坚装甲',   short: '攻坚甲', dur: 190, w: 13.0, move: 0.88, price: 650000, rep: 52 }
+  { lv: 1, name: '帆布护胸',     short: '护胸',   dur: 40,  material: 'aramid',  w: 1.5,  move: 1, price: 3000,   rep: 94 },
+  { lv: 2, name: '防刺背心',     short: '防刺',   dur: 60,  material: 'aramid',  w: 2.5,  move: 1, price: 9000,   rep: 94 },
+  { lv: 3, name: '轻型战术背心', short: '轻甲',   dur: 85,  material: 'aramid',  w: 4.0,  move: 1, price: 28000,  rep: 94 },
+  { lv: 4, name: '战术防弹衣',   short: '战术甲', dur: 110, material: 'ceramic', w: 6.0,  move: 1, price: 85000,  rep: 84 },
+  { lv: 5, name: '重型防弹衣',   short: '重甲',   dur: 135, material: 'steel',   w: 9.0,  move: 1, price: 220000, rep: 97 },
+  { lv: 6, name: '攻坚装甲',     short: '攻坚甲', dur: 165, material: 'steel',   w: 13.0, move: 1, price: 650000, rep: 97 }
 ];
 
 /* ------------------------------------------------------------
@@ -2420,9 +2455,10 @@ const ARMOR_VARIANTS = [
     "name": "旧式摩托盔",
     "short": "摩托盔",
     "dur": 28,
+    "material": "pe",
     "w": 0.85,
     "price": 2400,
-    "rep": 70,
+    "rep": 91,
     "aimPenaltyPct": 0,
     "desc": "早年常见的开放式摩托车头盔，硬壳下面填着已经变硬的泡棉，耳侧的衬布还能拆下来清洗。\n\n内衬上印着一排尺码，原主人把其中两个划掉，旁边补了一句：戴围巾时用大的。",
     "visual": "米白色圆鼓硬壳，宽阔的开放面部缺口，短小黑色前檐，耳侧棕色软垫和垂下的下颚带；一道褪色橙条，漆面少量磕碰。没有面罩、导轨或军用附件。与原软布工帽形成圆硬壳／软帽的剪影差别。",
@@ -2435,9 +2471,10 @@ const ARMOR_VARIANTS = [
     "name": "皮革作业背心",
     "short": "皮革背心",
     "dur": 55,
+    "material": "aramid",
     "w": 2,
     "price": 3600,
-    "rep": 76,
+    "rep": 95,
     "aimPenaltyPct": 4,
     "desc": "用厚皮革和帆布衬里缝成的作业背心，胸前有两片重叠的护片。扣具很大，戴着手套也能解开。\n\n左下角的工具袋被补了三次。最后一次修补的人没有再缝袋口，而是把整只袋子封死了。",
     "visual": "深红棕皮革，宽肩、深V领、三枚粗金属扣，胸前大块叠皮，腰侧一只扁工具袋；轮廓上宽下直，皮面有折痕与浅色擦伤。区别原土黄帆布护胸，不画成带钢板的重甲。",
@@ -2450,9 +2487,10 @@ const ARMOR_VARIANTS = [
     "name": "轻型救援盔",
     "short": "救援盔",
     "dur": 24,
+    "material": "pe",
     "w": 0.6,
     "price": 7200,
-    "rep": 66,
+    "rep": 91,
     "aimPenaltyPct": 0,
     "desc": "面向狭窄空间作业的轻型头盔，采用短檐外壳与四点式固定带，蹲下或低头时不容易从头上滑落。\n\n培训说明要求每次使用前检查扣具。实际留在盔上的检查贴纸，已经把能填写的地方全部用完了。",
     "visual": "褪色暗橙色低矮硬壳，短檐、两道宽散热槽，细黑色四点下颚带，后缘小块米白反光贴。没有医疗十字、不配置现代灯具导轨。比黄色工程帽更贴头、轮廓更低。",
@@ -2465,9 +2503,10 @@ const ARMOR_VARIANTS = [
     "name": "隐蔽式软甲",
     "short": "隐蔽软甲",
     "dur": 45,
+    "material": "aramid",
     "w": 1.8,
     "price": 10800,
-    "rep": 72,
+    "rep": 95,
     "aimPenaltyPct": 4,
     "desc": "可以穿在衬衣下面的薄型防护背心，肩部和侧腰采用宽幅粘扣，外层布套允许单独拆洗。\n\n销售手册特意展示了它藏在西装下面的照片。照片中的人把外套扣得很紧，双臂始终没有放下来。",
     "visual": "灰白或浅米色薄软甲，圆领、窄肩、两侧宽粘扣片，胸前平整只有一条浅缝；没有外挂袋和硬插板轮廓。紧凑、贴身、短下摆，与黑色厚层防刺背心分开。",
@@ -2480,9 +2519,10 @@ const ARMOR_VARIANTS = [
     "name": "治安防暴盔",
     "short": "防暴盔",
     "dur": 60,
+    "material": "pe",
     "w": 1.7,
     "price": 18000,
-    "rep": 62,
+    "rep": 90,
     "aimPenaltyPct": 0,
     "desc": "深色防暴头盔，面罩由两侧转轴固定，后方缝着一片可折起的护颈。面罩上的擦痕比盔壳上的多得多。\n\n储藏室的交接表将面罩列作可更换耗材。最后几次记录里，这一栏都写着：缺货，保留旧件。",
     "visual": "深海军蓝厚圆壳，两侧大圆转轴，透明烟灰面罩抬到额头前上方，后缘短黑色护颈。用粗轮廓与两道冷灰反光表现透明面罩，不把整张脸涂成白块。没有未来电子装备。",
@@ -2494,11 +2534,12 @@ const ARMOR_VARIANTS = [
     "lv": 3,
     "name": "旧式军用防片衣",
     "short": "防片衣",
-    "dur": 110,
+    "dur": 100,
+    "material": "aramid",
     "w": 5.2,
     "price": 33600,
-    "rep": 58,
-    "aimPenaltyPct": 30,
+    "rep": 93,
+    "aimPenaltyPct": 22,
     "desc": "上一代军用防护服，厚实的纤维填充层分成数个独立区域，衣领和腹部留有柔软的延伸护片。体积不小，口袋却只有两个。\n\n内侧标签要求在干燥通风处悬挂存放。它被找到时，恰好挂在一间已经没有屋顶的库房里。",
     "visual": "褪色灰橄榄绿厚布衣，短立领、宽肩、分段绗缝与下腹软护片，胸部仅两个扁平斜袋；整体宽厚、长下摆，不画现代织带矩阵或成排弹匣袋，与原窄身战术背心明显区分。",
     "source": "退役军用库存与旧式护送装备"
@@ -2510,9 +2551,10 @@ const ARMOR_VARIANTS = [
     "name": "短沿轻型防弹盔",
     "short": "轻型弹盔",
     "dur": 50,
+    "material": "pe",
     "w": 1.35,
     "price": 57600,
-    "rep": 60,
+    "rep": 91,
     "aimPenaltyPct": 0,
     "desc": "采用较薄壳体与简化悬挂系统的防弹盔，取消了不必要的外部安装座，主要面向需要长时间佩戴的人员。\n\n采购目录将它称作轻型。包装箱的搬运提示却没有随之修改，仍然要求两人共同抬运。",
     "visual": "砂灰色紧凑圆壳，极短前檐、较低耳侧轮廓、黑色窄包边与细下颚带，侧面露出一颗小固定螺钉；没有导轨、前挂点、耳机和护颈。靠简洁剪影与浅砂色区别原厚重军绿防弹盔。",
@@ -2525,17 +2567,18 @@ const ARMOR_VARIANTS = [
     "name": "轻型插板背心",
     "short": "轻型板甲",
     "dur": 90,
+    "material": "pe",
     "w": 4.7,
     "price": 102000,
-    "rep": 55,
-    "aimPenaltyPct": 14,
+    "rep": 91,
+    "aimPenaltyPct": 10,
     "desc": "围绕前后防护板设计的简化载具，只保留必要的固定带和调节扣。侧腰没有厚软垫，活动时会露出里面的衬衣。\n\n卖方附送了一张可另行订购的附件清单。清单上的配件全部装齐以后，它就不再比普通型号轻了。",
     "visual": "深石墨灰窄身板袋，前部一块清晰的切角矩形插板轮廓，两条宽肩带和侧腰开放式织带扣；短下摆、无腹甲、无护颈、没有密集外挂袋。局部旧卡其色缝线，不与浅砂色头盔做成同色套装。",
     "source": "专业承包队与高端安保装备"
   }
 ];
 for (const [type,list] of [['helmet',HELMETS],['body',BODIES]]) {
-  list.forEach(d=>{d.id=type+d.lv;d.icon=d.id;d.type=type;d.move=1;d.aimPenaltyPct=type==='body'?[0,0,10,20,30,45,60][d.lv]:0;});
+  list.forEach(d=>{d.id=type+d.lv;d.icon=d.id;d.type=type;d.move=1;d.aimPenaltyPct=type==='body'?[0,0,10,12,22,32,45][d.lv]:0;});
   list.push(...ARMOR_VARIANTS.filter(d=>d.type===type).map(d=>({...d,icon:d.id,move:1})));
 }
 for(const w of Object.values(WEAPONS))w.aimTime??={rifle:.40,shotgun:.45,smg:.30,pistol:.20}[w.id]??.4;
@@ -2599,6 +2642,7 @@ const GEAR = {
       id:d.id||type+d.lv, icon:d.icon||d.id||type+d.lv, type, lv: d.lv, name: d.name, short: d.short,
       max: cap, dur: (dur == null ? cap : U.clamp(dur, 0, cap)),
       rep: (d.rep == null ? 50 : d.rep),
+      material: d.material || 'aramid',
       w: d.w, move: 1, aimPenaltyPct:d.aimPenaltyPct||0, price: d.price, desc:d.desc||''
     };
   },
@@ -2708,7 +2752,8 @@ function magazineRounds(w, n, ammo, rounds) {
   const out = (Array.isArray(rounds) ? rounds : []).filter(id => AMMO_BY_ID[id]?.caliber === w.caliber).slice(0,n);
   while(out.length < n) out.push(fallback);
   return out;
-}/* BEGIN SCENE LIBRARY */
+}
+/* BEGIN SCENE LIBRARY */
 for(const a of [{"group":"tiles","id":"ground_concrete_plain_01"},{"group":"tiles","id":"ground_concrete_plain_02"},{"group":"tiles","id":"ground_soil_compact_01"},{"group":"tiles","id":"ground_soil_compact_02"},{"group":"props","id":"barrel"},{"group":"props","id":"barrel_back"},{"group":"props","id":"barrel_side"},{"group":"props","id":"bed_clinic"},{"group":"props","id":"bed_clinic_back"},{"group":"props","id":"bed_clinic_side"},{"group":"props","id":"bed_home"},{"group":"props","id":"bed_home_back"},{"group":"props","id":"bed_home_side"},{"group":"props","id":"bench_wood"},{"group":"props","id":"bench_wood_back"},{"group":"props","id":"bench_wood_side"},{"group":"props","id":"chair"},{"group":"props","id":"chair_back"},{"group":"props","id":"chair_side"},{"group":"props","id":"console_security"},{"group":"props","id":"console_security_back"},{"group":"props","id":"console_security_side"},{"group":"props","id":"counter_bank"},{"group":"props","id":"counter_bank_back"},{"group":"props","id":"counter_bank_side"},{"group":"props","id":"counter_shop"},{"group":"props","id":"counter_shop_back"},{"group":"props","id":"counter_shop_side"},{"group":"props","id":"decal_surface_crack_01"},{"group":"props","id":"decal_surface_damp_01"},{"group":"props","id":"desk"},{"group":"props","id":"desk_back"},{"group":"props","id":"desk_side"},{"group":"props","id":"display_clock"},{"group":"props","id":"display_clock_back"},{"group":"props","id":"display_clock_side"},{"group":"props","id":"shelf"},{"group":"props","id":"shelf_back"},{"group":"props","id":"shelf_side"},{"group":"props","id":"sofa_home"},{"group":"props","id":"sofa_home_back"},{"group":"props","id":"sofa_home_side"},{"group":"props","id":"stove_home"},{"group":"props","id":"stove_home_back"},{"group":"props","id":"stove_home_side"},{"group":"props","id":"tree_courtyard_back"},{"group":"props","id":"tree_courtyard_canopy"},{"group":"props","id":"tree_courtyard_canopy_back"},{"group":"props","id":"tree_courtyard_canopy_side"},{"group":"props","id":"tree_courtyard_side"},{"group":"props","id":"table_dining"},{"group":"props","id":"table_dining_side"},{"group":"props","id":"table_dining_back"},{"group":"props","id":"chair_wood"},{"group":"props","id":"chair_wood_side"},{"group":"props","id":"chair_wood_back"},{"group":"props","id":"wardrobe_home"},{"group":"props","id":"wardrobe_home_side"},{"group":"props","id":"wardrobe_home_back"},{"group":"props","id":"sink_kitchen"},{"group":"props","id":"sink_kitchen_side"},{"group":"props","id":"sink_kitchen_back"},{"group":"props","id":"fridge_home"},{"group":"props","id":"fridge_home_side"},{"group":"props","id":"fridge_home_back"},{"group":"props","id":"cart_medical"},{"group":"props","id":"cart_medical_side"},{"group":"props","id":"cart_medical_back"},{"group":"props","id":"screen_clinic"},{"group":"props","id":"screen_clinic_side"},{"group":"props","id":"screen_clinic_back"},{"group":"props","id":"workbench_clock"},{"group":"props","id":"workbench_clock_side"},{"group":"props","id":"workbench_clock_back"},{"group":"props","id":"clock_grandfather"},{"group":"props","id":"clock_grandfather_side"},{"group":"props","id":"clock_grandfather_back"},{"group":"props","id":"barrier_queue"},{"group":"props","id":"barrier_queue_side"},{"group":"props","id":"barrier_queue_back"},{"group":"props","id":"workbench_industrial"},{"group":"props","id":"workbench_industrial_side"},{"group":"props","id":"workbench_industrial_back"},{"group":"props","id":"pallet_stack"},{"group":"props","id":"pallet_stack_side"},{"group":"props","id":"pallet_stack_back"},{"group":"props","id":"door_barricade_side"},{"group":"props","id":"door_locked_side"}]){if(!ART[a.group].includes(a.id))ART[a.group].push(a.id);}
 /* END SCENE LIBRARY */
 /* BEGIN PROP BOUNDS */

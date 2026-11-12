@@ -139,14 +139,14 @@
       "cash": 310000,
       "rewards": [
         {
-          "id": "att_mag_556_quick_ext",
-          "name": "5.56×45mm 快速扩容弹匣",
+          "id": "att_mag_556_60",
+          "name": "STANAG 60发弹鼓",
           "n": 1,
-          "resale": 10500
+          "resale": 18000
         }
       ],
       "materialValue": 244000,
-      "rewardValue": 320500
+      "rewardValue": 328000
     },
     {
       "id": "elena_mirror_records",

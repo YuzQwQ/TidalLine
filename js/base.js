@@ -566,8 +566,8 @@ const Base = {
     if(typeof SFX!=='undefined'&&SFX.gear)SFX.gear(key);
   },
 
-  /* ---- 护甲商人：只卖崭新的一~三级 ---- */
-  SHOP_MAX_LV: 3,
+  /* ---- 护甲商人：只卖崭新的一~四级 ---- */
+  SHOP_MAX_LV: 4,
 
   renderTabs() {
     const el = document.getElementById('baseTabs');
@@ -624,7 +624,7 @@ const Base = {
 
     const note = document.getElementById('shopNote');
     if (note) {
-      note.innerHTML = '当前公开货架：<b>全新一至三级</b>防护装备。高级防护与背包供应预留后续合作渠道，尚未开放。';
+      note.innerHTML = '当前公开货架：<b>全新一至四级</b>防护装备。五级及以上防护与高级背包供应预留后续合作渠道，尚未开放。';
     }
     const hint = document.getElementById('shopHint');
     if (hint) hint.textContent = '买下的东西直接进右边的仓库';
@@ -641,7 +641,7 @@ const Base = {
           : '<span class="gl">' + esc(GEAR[type].short) + '</span>';
         cell.innerHTML = ico +
           '<span class="cn">' + esc(d.short || d.name) + '</span>' +
-          '<span class="pr">' + formatMoney(d.price) + '</span>';
+          '<span class="pr">' + formatMoney(buyPrice(d.price)) + '</span>';
         cell.title = d.name + ' · 防护 Lv' + lv +
           ' · 耐久 ' + d.dur + ' · ' + d.w + 'kg · 右键看详情';
         cell.onclick = () => this.askBuy(type, d.id, cell);
@@ -670,7 +670,7 @@ const Base = {
         : '<span class="gl">包</span>';
       cell.innerHTML = ico +
         '<span class="cn">' + esc(d.short) + '</span>' +
-        '<span class="pr">' + formatMoney(d.price) + '</span>';
+        '<span class="pr">' + formatMoney(buyPrice(d.price)) + '</span>';
       cell.title = d.name + ' · 容量 ' + d.slots + ' 格 · ' + d.w + 'kg · 右键看详情';
       cell.onclick = () => this.askBuyBag(d.id, cell);
       cell.oncontextmenu = (ev) => {
@@ -694,8 +694,8 @@ const Base = {
       sub: '容量 ' + d.slots + ' 格 · ' + d.w + 'kg',
       icon: d.id,
       short: d.short,
-      price: d.price,
-      can: Save.credits >= d.price && Save.stash.length < STASH_SLOTS,
+      price: buyPrice(d.price),
+      can: Save.credits >= buyPrice(d.price) && Save.stash.length < STASH_SLOTS,
       onGo: () => this.buyBag(id)
     }, cell.getBoundingClientRect());
   },
@@ -705,16 +705,16 @@ const Base = {
     if (!d) return false;
     if (d.r > this.SHOP_BAG_MAX_R) return false;        // 商人进不到更高级的货
     if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return false; }
-    if (Save.credits < d.price) {
-      this.note('买 ' + d.name + ' 还差 ' + formatMoney(d.price - Save.credits), true);
+    if (Save.credits < buyPrice(d.price)) {
+      this.note('买 ' + d.name + ' 还差 ' + formatMoney(buyPrice(d.price) - Save.credits), true);
       return false;
     }
-    Save.credits -= d.price;
+    Save.credits -= buyPrice(d.price);
     Save.addGearStash(EQUIP.bag(id));
     Save.save();
     Game.sfx('pickup');
     this.render();
-    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），已入仓库，可在备战页背上');
+    this.note('买下 ' + d.name + '（-' + formatMoney(buyPrice(d.price)) + '），已入仓库，可在备战页背上');
     return true;
   },
 
@@ -722,8 +722,8 @@ const Base = {
   renderGunShop(el) {
     const note = document.getElementById('shopNote');
     if (note) {
-      note.innerHTML = '全新枪械，<b>满弹匣</b>出手。当前出售<b>一级、二级</b>弹药；' +
-        '新增常规步枪有售；AN-94 与 AUG A1 需在探索中搜获。高阶弹药与紫色配件通过搜刮获得。';
+      note.innerHTML = '全新枪械，<b>满弹匣</b>出手。常规弹药出售<b>一级至三级</b>，另售6.8×51 SIG FMJ；' +
+        'RM277有售；SPEAR、SIG Hybrid及专属抑制器需探索获取。';
     }
     const hint = document.getElementById('shopHint');
     if (hint) hint.textContent = '买下的东西直接进右边的仓库，回左边装进背包';
@@ -749,7 +749,7 @@ const Base = {
         if (dots) cell.classList.add('has-dots');
         cell.innerHTML = ico +
           '<span class="cn">' + esc(d.short) + '</span>' + dots +
-          '<span class="pr">' + formatMoney(d.price) + '</span>';
+          '<span class="pr">' + formatMoney(buyPrice(d.price)) + '</span>';
         cell.title = d.name + ' · ' + d.dmgMin + '–' + d.dmgMax + ' 伤害 · 弹匣 ' + d.mag +
           ' · ' + d.rpm + ' 发/分 · ' + d.w + 'kg · 右键看详情';
         cell.onclick = () => this.askBuyGun(id, cell);
@@ -764,10 +764,11 @@ const Base = {
     this.renderAmmoShop(el);
   },
 
-  /* 弹药柜：六种口径 × 一~二级，按发购买，每次最多六组。
-     三级以上没有渠道 —— 那才是下海一趟的理由。 */
-  SHOP_AMMO_MAX_LV: 2,
+  /* 弹药柜：常规口径一~三级，6.8×51仅FMJ，按发购买，每次最多六组。
+     特殊弹药按物品供应标记判断，Hybrid不出售。 */
+  SHOP_AMMO_MAX_LV: 3,
   SHOP_AMMO_MAX_STACKS: 6,
+  sellsAmmo(item){return !!item&&item.cat==='ammo'&&(item.shopAvailable??(item.level<=this.SHOP_AMMO_MAX_LV));},
 
   renderAmmoShop(el) {
     const title = document.createElement('div');
@@ -776,9 +777,9 @@ const Base = {
     el.appendChild(title);
 
     for (const cal of Object.keys(CALIBERS)) {
-      for (let lv = 1; lv <= this.SHOP_AMMO_MAX_LV; lv++) {
+      for (const lv of BALLISTICS.levels(cal)) {
         const it = ammoItem(cal, lv);
-        if (!it) continue;
+        if (!this.sellsAmmo(it)) continue;
         const cell = document.createElement('div');
         cell.className = 'scell r' + it.r;
         cell.dataset.offer = JSON.stringify({kind:'ammo',id:it.id});
@@ -787,8 +788,9 @@ const Base = {
           : '<span class="gl">Lv' + it.level + '</span>';
         cell.innerHTML = ico +
           '<span class="cn">' + esc(it.short) + '</span>' +
-          '<span class="pr">' + formatMoney(it.price) + ' / 发</span>';
-        cell.title = it.name + ' · 穿透 Lv' + it.penLevel + ' · 伤害系数 ×' + it.dmgMul.toFixed(2) +
+          '<span class="pr">' + formatMoney(buyPrice(it.price)) + ' / 发</span>';
+        cell.title = it.name + ' · 基础肉伤 ' + it.B + ' · 穿透力 ' + it.P +
+          (it.compat ? '（临时兼容值）' : '') +
           ' · 单次最多 ' + this.SHOP_AMMO_MAX_STACKS + ' 组（' + stackLimit(it)*this.SHOP_AMMO_MAX_STACKS + ' 发）';
         cell.onclick = () => this.askBuyAmmo(it.id);
         cell.oncontextmenu = (ev) => {
@@ -804,10 +806,10 @@ const Base = {
 
   ammoQuote(id, quantity) {
     const item=ITEM_BY_ID[id];
-    if(!item||item.cat!=='ammo'||item.level>this.SHOP_AMMO_MAX_LV)return {ok:false,reason:'该弹药暂不出售',total:0};
+    if(!this.sellsAmmo(item))return {ok:false,reason:'该弹药暂不出售',total:0};
     const max=stackLimit(item)*this.SHOP_AMMO_MAX_STACKS;
     if(!Number.isInteger(quantity)||quantity<1||quantity>max)return {ok:false,item,max,total:0,reason:'请选择1–'+max+'发弹药'};
-    const total=item.price*quantity;
+    const total=buyPrice(item.price)*quantity;
     const reason=Save.credits<total?'信用点不足':!Save.canAddStash(id,quantity)?'仓库空间不足，无法放入这批弹药':'';
     return {ok:!reason,item,max,quantity,total,reason};
   },
@@ -886,11 +888,12 @@ const Base = {
       kind: 'buy',
       title: '买入',
       name: d.name,
-      sub: '防护 Lv' + d.lv + ' · 耐久 ' + d.dur + (type==='body'?' · 瞄准时间 +'+d.aimPenaltyPct+'%':''),
+      sub: '防护 Lv' + d.lv + ' · ' + Combat.materialOf(d).label + ' · 耐修 ' + (d.rep ?? 50) +
+        ' · 耐久 ' + d.dur + (type==='body'?' · 瞄准时间 +'+d.aimPenaltyPct+'%':''),
       icon: d.id,
       short: d.short,
-      price: d.price,
-      can: Save.credits >= d.price && Save.stash.length < STASH_SLOTS,
+      price: buyPrice(d.price),
+      can: Save.credits >= buyPrice(d.price) && Save.stash.length < STASH_SLOTS,
       onGo: () => this.buyArmor(type, lv)
     }, cell.getBoundingClientRect());
   },
@@ -906,8 +909,8 @@ const Base = {
            ' 伤害 · 弹匣 ' + d.mag + ' · 满弹',
       icon: id,
       short: d.short,
-      price: d.price,
-      can: Save.credits >= d.price && Save.stash.length < STASH_SLOTS,
+      price: buyPrice(d.price),
+      can: Save.credits >= buyPrice(d.price) && Save.stash.length < STASH_SLOTS,
       onGo: () => this.buyGun(id)
     }, cell.getBoundingClientRect());
   },
@@ -916,16 +919,16 @@ const Base = {
     const d = WEAPONS[id];
     if (!d || d.shopAvailable === false) return false;
     if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return false; }
-    if (Save.credits < d.price) {
-      this.note('买 ' + d.name + ' 还差 ' + formatMoney(d.price - Save.credits), true);
+    if (Save.credits < buyPrice(d.price)) {
+      this.note('买 ' + d.name + ' 还差 ' + formatMoney(buyPrice(d.price) - Save.credits), true);
       return false;
     }
-    Save.credits -= d.price;
+    Save.credits -= buyPrice(d.price);
     Save.addGearStash(EQUIP.gun(id, d.mag));      // 崭新：满弹匣
     Save.save();
     Game.sfx('pickup');
     this.render();
-    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），已入仓库，可在备战页装备');
+    this.note('买下 ' + d.name + '（-' + formatMoney(buyPrice(d.price)) + '），已入仓库，可在备战页装备');
     return true;
   },
 
@@ -934,16 +937,16 @@ const Base = {
     if (!d) return;
     if (d.lv > this.SHOP_MAX_LV) return;                 // 商人进不到更高级的货
     if (Save.stash.length >= STASH_SLOTS) { this.note('仓库满了，先卖点东西', true); return; }
-    if (Save.credits < d.price) {
-      this.note('买 ' + d.name + ' 还差 ' + formatMoney(d.price - Save.credits), true);
+    if (Save.credits < buyPrice(d.price)) {
+      this.note('买 ' + d.name + ' 还差 ' + formatMoney(buyPrice(d.price) - Save.credits), true);
       return;
     }
-    Save.credits -= d.price;
+    Save.credits -= buyPrice(d.price);
     Save.addGearStash(EQUIP.armor(GEAR.make(type, lv)));   // 崭新：耐久是满的
     Save.save();
     Game.sfx('pickup');
     this.render();
-    this.note('买下 ' + d.name + '（-' + formatMoney(d.price) + '），已入仓库，可在备战页装备');
+    this.note('买下 ' + d.name + '（-' + formatMoney(buyPrice(d.price)) + '），已入仓库，可在备战页装备');
   },
 
   /* ---- 背包：和局内背包同一套格子 UI ----
@@ -1007,14 +1010,14 @@ const Base = {
   makeBagCell(e) {
     const cell=document.createElement('div'),it=e?stashItem(e):null;
     if(!it){cell.className='cell empty';cell.textContent='·';return cell;}
-    const n=e.n||1,armor=DuraBar.of(it),dots=SlotDots.html(it);
+    const n=e.n||1,armor=DuraBar.of(it),dots=SlotDots.html(it),capBar=CapBar.html(e);
     cell.className='cell '+RARITY[U.clamp((it.r||1)-1,0,RARITY.length-1)].cls+(it.equip?' eq':'')+
-      (armor?' has-dbar':'')+(dots?' has-dots':'')+(it.egg?' egg-item':'');
+      ((armor||capBar)?' has-dbar':'')+(dots?' has-dots':'')+(it.egg?' egg-item':'');
     cell.innerHTML=Icons.bagTag(it,'ico-bag')+'<span class="cn">'+esc(it.short||it.name)+'</span>'+
       (n>1?'<span class="qty">'+n+'</span>':'')+
-      (ItemCapacity.max(it)&&(it.cat==='key'||ItemCapacity.isPartial(e))?'<span class="cap">'+Math.ceil(ItemCapacity.remaining(e))+'</span>':'')+
-      (armor?DuraBar.html(armor):'')+dots;
-    cell.title=it.name+' · '+(it.w*n).toFixed(2)+'kg · 单击看详情';
+      /* 医疗容量 / 次数、钥匙剩余耐久：都在底边挂同款进度条 */
+      (armor?DuraBar.html(armor):capBar)+dots;
+    cell.title=it.name+(CapBar.readout(e)?' · '+CapBar.readout(e):'')+' · '+(it.w*n).toFixed(2)+'kg · 单击看详情';
     return cell;
   },
 
@@ -1185,7 +1188,7 @@ const Base = {
     if (!inGear && e && (e.n || 1) > 1)
       extra.push(['数量', (e.n || 1) + (it.cat === 'ammo' ? ' 发' : ' 件')]);
     if (!inGear && ItemCapacity.max(it))
-      extra.push([ItemCapacity.label(it), ItemCapacity.text(e)]);
+      extra.push([ItemCapacity.label(it), ItemCapacity.value(e)]);
     const hint = inStash ? '双击放进背包 · 右键不额外弹菜单'
       : inBag ? '双击卸下 · Ctrl+左键同样卸下'
       : '双击卸下 · 右键有详情与卸下';
@@ -1345,18 +1348,17 @@ const Base = {
       const n = e.n || 1;
       const armor = DuraBar.of(it);      // 护甲在格子底边挂一条耐久条
       const dots = SlotDots.html(it);    // 枪在底边挂一排配件槽点
+      const capBar = CapBar.html(e);     // 医疗品同款：容量 / 次数条
       cell.className = 'scell r' + (it.r || 1) + (it.equip ? ' eq' : '') +
-        (armor ? ' has-dbar' : '') + (dots ? ' has-dots' : '') + (it.egg ? ' egg-item' : '');
+        ((armor || capBar) ? ' has-dbar' : '') + (dots ? ' has-dots' : '') + (it.egg ? ' egg-item' : '');
       cell.innerHTML =
         Icons.bagTag(it, '') +
         '<span class="cn">' + esc(it.short || it.name) + '</span>' +
         (n > 1 ? '<span class="qty">' + n + '</span>' : '') +
-        ((ItemCapacity.max(it) && (it.cat==='key' || ItemCapacity.isPartial(e)))
-          ? '<span class="cap">' + Math.ceil(ItemCapacity.remaining(e)) + '</span>' : '') +
-        (armor ? DuraBar.html(armor) : '') + dots;
-      cell.title = it.name + (ItemCapacity.max(it) && (it.cat==='key' || ItemCapacity.isPartial(e))
-          ? ' · ' + ItemCapacity.text(e)
-          : ' · ' + it.w.toFixed(2) + 'kg') + ' · ' +
+        /* 医疗容量 / 次数、钥匙剩余耐久：都在底边挂同款进度条 */
+        (armor ? DuraBar.html(armor) : capBar) + dots;
+      cell.title = it.name + (CapBar.readout(e) ? ' · ' + CapBar.readout(e) : '') +
+          ' · ' + it.w.toFixed(2) + 'kg · ' +
         '估价 ' + formatMoney(entryValue(it, e) * n) + ' · 成交价以商人报价为准 · 左键看详情';
       /* 仓库只有左键看详情、双击放进背包；右键不弹菜单（别让两套入口打架） */
       cell.onclick = () => this.showItem(e, 'stash', cell);

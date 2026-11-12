@@ -8,14 +8,25 @@ function fresh(id,mag=30,parts={}){Save.hp=100;Save.stash=[];Save.bag=[];Save.ge
 function advance(p,t,fps=120,held=false){for(let i=0;i<Math.round(t*fps);i++){p.update(1/fps,input);G.trigger(p,held,false);}}
 test('exactly three new guns, 14 rifles / 23 guns, original 20 and six calibers unchanged',()=>{
  assert.equal(Object.keys(WEAPONS).length,23);assert.equal(Object.values(WEAPONS).filter(w=>w.category==='rifle').length,14);assert.deepEqual(Object.keys(WEAPONS).filter(id=>!baseline.weapons[id]),spec.weapons.map(w=>w.id));
- for(const [id,w]of Object.entries(baseline.weapons))assert.deepEqual(plain(Object.fromEntries(Object.keys(w).map(k=>[k,WEAPONS[id][k]]))),w,id);assert.deepEqual(plain(CALIBERS),baseline.calibers);assert.equal(AMMO_ITEMS.length,30);assert.equal(Object.keys(D).length,35);
+ /* 六参数模型：旧的绝对字段（spreadBase/Max、recoilPerShot、recoilBaseV/H）
+    不再存在于枪上，改用倍率 × 全局基准核对实际手感。 */
+ for(const [id,w]of Object.entries(baseline.weapons)){const now=WEAPONS[id],d=c.Firearms.derive(now);
+  for(const k of Object.keys(w)){if(['spreadBase','spreadMax','recoilPerShot','recoilBaseV','recoilBaseH','recoilVMul','recoilHMul','spreadMul','spreadGrowthMul','aimTimeMul','aimTime'].includes(k))continue;assert.deepEqual(plain(now[k]),w[k],id+'/'+k);}
+  const near5=(a,b,t=5e-3)=>assert(Math.abs(a-b)<t,`${id} ${a} != ${b}`);
+  /* 基础/满散布共用 spreadMul：步枪零漂移，SMG/手枪 ≤16%（既定设计） */
+  const rel=(u,v)=>Math.abs(u-v)/v;
+  assert(rel(d.spreadBase,w.spreadBase)<0.16,`${id} spreadBase ${d.spreadBase} != ${w.spreadBase}`);
+  assert(rel(d.spreadMax,w.spreadMax)<0.16,`${id} spreadMax ${d.spreadMax} != ${w.spreadMax}`);
+  near5(d.growth,w.recoilPerShot);near5(now.aimTime,w.aimTime,1e-6);
+  near5(d.vKick,w.recoilBaseV*w.recoilVMul);near5(d.hKick,w.recoilBaseH*w.recoilHMul);}
+ assert.deepEqual(plain(CALIBERS),baseline.calibers);assert.equal(AMMO_ITEMS.length,30);assert.equal(Object.keys(D).length,35);
  for(const [id,a]of Object.entries(baseline.attachments)){const now=plain(D[id]);if(id.startsWith('att_mag_545x39_'))now.description=a.description;assert.deepEqual(now,a,id+' attachment mechanics');}
  for(const s of spec.weapons){const w=WEAPONS[s.id];for(const k of ['caliber','rpm','mag','rarity','price'])assert.equal(w[k],s[k]);assert.deepEqual(Array.from(w.modes),['semi','auto']);assert.equal(w.slot,'primary');assert.equal(E.gun(w.id).stack,1);}
 });
 test('roles differ through aim/spread/recoil only; no caliber damage bonus or exclusive mechanism',()=>{
  const {groza1:g,ak12:a,mk47_mod2:m,akm}=WEAPONS;
- assert(g.aimTime<akm.aimTime);assert(g.recoilVMul>akm.recoilVMul);assert(g.recoilHMul>akm.recoilHMul);assert(a.recoilVMul<WEAPONS.aks74u.recoilVMul);assert(a.recoilHMul<WEAPONS.aks74u.recoilHMul);assert(m.spreadBase<akm.spreadBase);assert(m.recoilHMul<akm.recoilHMul);
- for(const s of spec.weapons){const w=WEAPONS[s.id],ref=w.caliber==='545x39'?WEAPONS.aks74u:akm;assert.equal(w.dmgMin,ref.dmgMin);assert.equal(w.dmgMax,ref.dmgMax);assert.equal(w.range,ref.range);assert.equal(w.speed,ref.speed);assert(!w.burstRPM);near(w.aimTime,WEAPONS.m4a1.aimTime*s.aimTimeMul);}
+ assert(g.aimTime<akm.aimTime);assert(g.recoilVMul>akm.recoilVMul);assert(g.recoilHMul>akm.recoilHMul);assert(a.recoilVMul<WEAPONS.aks74u.recoilVMul);assert(a.recoilHMul<WEAPONS.aks74u.recoilHMul);assert(c.Firearms.derive(m).spreadBase<c.Firearms.derive(akm).spreadBase);assert(m.recoilHMul<akm.recoilHMul);
+ for(const s of spec.weapons){const w=WEAPONS[s.id],ref=w.caliber==='545x39'?WEAPONS.aks74u:akm;assert.equal(w.dmgMin,ref.dmgMin);assert.equal(w.dmgMax,ref.dmgMax);assert.equal(w.range,ref.range);assert.equal(w.speed,ref.speed);assert(!w.burstRPM);near(w.aimTime,WEAPONS.m4a1.aimTime*(s.aimTimeMul??1));}
  assert(m.desc.includes('环礁湾')&&m.desc.includes('工坊')&&m.desc.includes('试制')&&m.desc.includes('全自动'));assert(!/正式量产|原厂全自动|厂商量产/.test(m.desc));
 });
 test('semi requires fresh press, auto follows configured RPM at 30/60/144FPS, empty fire consumes nothing',()=>{
@@ -25,10 +36,10 @@ test('semi requires fresh press, auto follows configured RPM at 30/60/144FPS, em
  }
 });
 test('both recoil axes use the shared family impulse and return normally',()=>{
- const random=c.Math.random;c.Math.random=()=>.75;try{for(const {id}of spec.weapons){const p=fresh(id),w=p.weapon;G.trigger(p,true,true);near(p.rV,w.recoilBaseV*w.recoilVMul);near(p.rH,(w.recoilBaseH+.5*CFG.RECOIL.axis.h.rand)*w.recoilHMul*(CFG.RECOIL.axis.h.bias<0?-1:1));const v=p.rV,h=Math.abs(p.rH);advance(p,1);assert(p.rV<v);assert(Math.abs(p.rH)<h);}}finally{c.Math.random=random;}
+ const random=c.Math.random;c.Math.random=()=>.75;try{for(const {id}of spec.weapons){const p=fresh(id),w=p.weapon;G.trigger(p,true,true);near(p.rV,CFG.RECOIL.axis.v.kick*w.recoilVMul);near(p.rH,(CFG.RECOIL.axis.h.kick*w.recoilHMul+.5*CFG.RECOIL.axis.h.rand)*(CFG.RECOIL.axis.h.bias<0?-1:1));const v=p.rV,h=Math.abs(p.rH);advance(p,1);assert(p.rV<v);assert(Math.abs(p.rH)<h);}}finally{c.Math.random=random;}
 });
 test('all five existing ammunition tiers produce shared damage/penetration, correct caliber reload',()=>{
- const rand=U.rand;U.rand=(a,b)=>(a+b)/2;try{for(const {id}of spec.weapons)for(let lv=1;lv<=5;lv++){const p=fresh(id,0),w=p.weapon,ammo='ammo_'+w.caliber+'_'+lv,other=w.caliber==='545x39'?'762x39':'545x39';p.bag.addAmmo('ammo_'+other+'_1',10);assert(!p.tryReload());p.bag.addAmmo(ammo,1);p.weapon.ammo=ammo;assert(p.tryReload());advance(p,w.reloadTime+.01);assert.equal(p.mag,1);G.trigger(p,true,true);const b=Game.bullets.at(-1),a=AMMO_ITEMS.find(x=>x.id===ammo);near(b.dmg,(w.dmgMin+w.dmgMax)/2*a.dmgMul);assert.equal(b.pen,lv);assert.equal(p.mag,0);assert.equal(p.bag.ammoCount(ammo),0);assert.equal(p.bag.ammoCountByCaliber(other),10);}}finally{U.rand=rand;}
+ const rand=U.rand;U.rand=(a,b)=>(a+b)/2;try{for(const {id}of spec.weapons)for(let lv=1;lv<=5;lv++){const p=fresh(id,0),w=p.weapon,ammo='ammo_'+w.caliber+'_'+lv,other=w.caliber==='545x39'?'762x39':'545x39';p.bag.addAmmo('ammo_'+other+'_1',10);assert(!p.tryReload());p.bag.addAmmo(ammo,1);p.weapon.ammo=ammo;assert(p.tryReload());advance(p,w.reloadTime+.01);assert.equal(p.mag,1);G.trigger(p,true,true);const b=Game.bullets.at(-1),a=AMMO_ITEMS.find(x=>x.id===ammo);near(b.dmg,a.B);assert.equal(b.pen,a.P);assert.equal(p.mag,0);assert.equal(p.bag.ammoCount(ammo),0);assert.equal(p.bag.ammoCountByCaliber(other),10);}}finally{U.rand=rand;}
 });
 test('magazines are shared with older same-caliber models; five-slot compatibility and exact capacity',()=>{
  for(const {id}of spec.weapons){const w=WEAPONS[id];assert.equal(Object.keys(w.attachmentSlots).length,5);assert.equal(A.compatible(id,'att_stock01'),id!=='groza1');for(const slot of ['optic','grip','muzzle','magazine'])assert(w.attachmentSlots[slot]);
@@ -45,7 +56,7 @@ test('existing mod transaction attaches and detaches exactly one item per gun',(
  for(const {id}of spec.weapons){fresh(id);Game.state='base';Save.stash=[];Save.addGearStash(E.attachment('att_optic01'));let t=A.targets().find(t=>t.owner==='base-equipped'&&t.index===0);let r=A.commit(t,'optic','att_optic01',Save.stash[0]);assert(r.ok,id);assert.equal(Save.stash.length,0);t=A.targets().find(t=>t.owner==='base-equipped'&&t.index===0);r=A.commit(t,'optic',null);assert(r.ok);assert.equal(Save.stash.length,1);assert.equal(Save.stash[0].gear.equip.attachment,'att_optic01');}
 });
 test('only AK-12 is offered, all three can be sold; every model is reachable via existing weighted gear pool',()=>{
- const random=c.Math.random;try{for(const s of spec.weapons){Game.state='base';Save.stash=[];Save.credits=1e6;assert.equal(Base.buyGun(s.id),s.id==='ak12');assert.equal(Save.credits,1e6-(s.id==='ak12'?s.price:0));Save.stash=[];const item=E.gun(s.id,0);Save.addGearStash(item);const sales=vm.runInContext('Sales',c);c.Safehouse={view:'merchant'};c.MerchantUI={key:'gun',mode:'sell'};const quote=sales.preview('gun',[{entry:Save.stash[0],n:1}]),before=Save.credits;assert(sales.commit(sales.authorize(quote)).ok);assert.equal(Save.credits-before,item.sell);assert.equal(Save.stash.length,0);
+ const random=c.Math.random;try{for(const s of spec.weapons){Game.state='base';Save.stash=[];Save.credits=1e6;assert.equal(Base.buyGun(s.id),s.id==='ak12');assert.equal(Save.credits,1e6-(s.id==='ak12'?Math.round(s.price*3):0));Save.stash=[];const item=E.gun(s.id,0);Save.addGearStash(item);const sales=vm.runInContext('Sales',c);c.Safehouse={view:'merchant'};c.MerchantUI={key:'gun',mode:'sell'};const quote=sales.preview('gun',[{entry:Save.stash[0],n:1}]),before=Save.credits;assert(sales.commit(sales.authorize(quote)).ok);assert.equal(Save.credits-before,item.sell);assert.equal(Save.stash.length,0);
   const pct=CONTAINER_QUALITY.fine.pct,group=Object.values(WEAPONS).filter(w=>w.rarity===s.rarity),index=group.findIndex(w=>w.id===s.id),roll=(pct.slice(0,s.rarity-1).reduce((a,b)=>a+b,0)+pct[s.rarity-1]/2)/pct.reduce((a,b)=>a+b,0),draws=[roll,0,(index+.5)/group.length];c.Math.random=()=>draws.shift()??.5;const drop=Loot.rollGear('fine',{kinds:['gun']});assert.equal(drop.item.equip.gun,s.id);assert.equal(drop.n,1);assert.equal(drop.item.equip.mag,0);c.Math.random=random;
  }}finally{c.Math.random=random;delete c.Safehouse;delete c.MerchantUI;}
 });

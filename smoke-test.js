@@ -12,7 +12,7 @@ const ctx = {
 };
 vm.createContext(ctx);
 
-for (const f of ['config.js', 'data.js', 'core.js']) {
+for (const f of ['config.js', 'combat.js', 'data.js', 'core.js']) {
   const code = fs.readFileSync(path.join(dir, 'js', f), 'utf8');
   vm.runInContext(code, ctx, { filename: f });
 }

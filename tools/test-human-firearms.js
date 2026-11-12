@@ -11,8 +11,8 @@ function tick(e,dt){Game.time+=dt;e.update(dt);Noise.tick(dt);}
 function advance(e,t,fps=120){for(let n=0;n<Math.round(t*fps);n++)tick(e,1/fps);}
 function bullets(){return Game.bullets.map(b=>[b.x,b.y,b.vx,b.vy,b.dmg,b.range,b.pen]);}
 test('60/80/100HP; all humans have finite, weapon-sized magazines and actual corpse snapshots',()=>{
- arena();for(const [key,hp]of [['scav',60],['holdout',80],['retriever',100]]){const e=npc(key),w=H.weapon(e);assert.equal(e.hp,hp);assert.equal(e.ai.mag,w.mag);assert(e.ai.reserve>0);assert(e.t.tactical);const corpse=new Corpse(e.x,e.y,e),gun=corpse.loot.find(x=>x.gun).gun;assert.equal(gun.id,e.weaponId);assert.equal(gun.magCur,e.ai.mag);assert.equal(gun.ammo,e.ammoId);}
- assert.equal(ENEMY_TYPES.echo.hp,22);assert.equal(ENEMY_TYPES.guard.hp,72);
+ arena();for(const [key,hp]of [['scav',90],['holdout',110],['retriever',145]]){const e=npc(key),w=H.weapon(e);assert.equal(e.hp,hp);assert.equal(e.ai.mag,w.mag);assert(e.ai.reserve>0);assert(e.t.tactical);const corpse=new Corpse(e.x,e.y,e),gun=corpse.loot.find(x=>x.gun).gun;assert.equal(gun.id,e.weaponId);assert.equal(gun.magCur,e.ai.mag);assert.equal(gun.ammo,e.ammoId);}
+ assert.equal(ENEMY_TYPES.echo.hp,110);assert.equal(ENEMY_TYPES.guard.hp,175);
 });
 test('player/NPC emit identical damage, penetration, pellets, velocity, range and recoil for all 23 guns and five tiers',()=>{
  const random=c.Math.random;c.Math.random=()=>.75;try{for(const id of Object.keys(WEAPONS))for(let lv=1;lv<=5;lv++){
@@ -45,6 +45,6 @@ test('finite budget is conserved every tick through shooting/reload/exhaustion f
  for(const key of ['scav','holdout','retriever']){arena();Game.player.x=620;const e=npc(key);e.ai.engaged=true;e.ai.mag=2;e.ai.reserve=1;for(let i=0;i<120*25;i++){tick(e,1/120);assert.equal(e.ai.mag+e.ai.reserve+e.ai.shots,3);assert(e.ai.mag>=0&&e.ai.reserve>=0);}assert.equal(e.ai.shots,3);assert.equal(e.ai.mag+e.ai.reserve,0);const shots=e.ai.shots;advance(e,5);assert.equal(e.ai.shots,shots);}
 });
 test('same weapon recoil/spread recover using the shared helper without resetting on a new group',()=>{
- arena();const e=npc();H.shot(e,0);const v=e.ai.rV,spread=F.spread(e.gun,e.ai.recoil);assert(v>0);assert(spread>e.gun.spreadBase);e.ai.sinceShot=1;F.recover(e.ai,e.gun,.5);assert(e.ai.rV<v);assert(F.spread(e.gun,e.ai.recoil)<spread);
+ arena();const e=npc();H.shot(e,0);const v=e.ai.rV,spread=F.spread(e.gun,e.ai.recoil);assert(v>0);assert(spread>F.derive(e.gun).spreadBase);e.ai.sinceShot=1;F.recover(e.ai,e.gun,.5);assert(e.ai.rV<v);assert(F.spread(e.gun,e.ai.recoil)<spread);
 });
 fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({passed,failures,cadence},null,2)+'\n');console.log(`Shared human firearms: ${passed} groups passed, ${failures.length} failed`);

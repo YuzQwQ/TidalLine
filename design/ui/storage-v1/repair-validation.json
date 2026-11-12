@@ -4,23 +4,23 @@
     {
       "file": "index.html",
       "menu": 3,
-      "fee": 31600,
-      "capLoss": 21,
+      "fee": 31300,
+      "capLoss": 8.1,
       "after": {
-        "credits": 468400,
-        "dur": 94,
-        "max": 94
+        "credits": 468700,
+        "dur": 101.9,
+        "max": 101.9
       }
     },
     {
       "file": "潮汐线.html",
       "menu": 3,
-      "fee": 31600,
-      "capLoss": 21,
+      "fee": 31300,
+      "capLoss": 8.1,
       "after": {
-        "credits": 468400,
-        "dur": 94,
-        "max": 94
+        "credits": 468700,
+        "dur": 101.9,
+        "max": 101.9
       }
     }
   ]

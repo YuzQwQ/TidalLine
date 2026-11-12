@@ -20,7 +20,8 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
   'gear_helmet', 'gear_armor', 'gear_bag',
   'melee_1', 'melee_2', 'melee_3', 'melee_4', 'melee_5', 'melee_6',
   'melee_hit_small', 'melee_hit_medium', 'melee_hit_large', 'melee_hit_stab',
-  'shot_famas', 'shot_mp5', 'reload_mp5'];
+  'shot_famas', 'shot_mp5', 'reload_mp5',
+  'shot_spear', 'shot_rm277', 'switch_6851', 'reload_6851'];
 
 (async () => {
   const browser = await chromium.launch({
@@ -116,6 +117,33 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
     SFX.play('reload');
     SFX._playSeq = realSeq;
     out.genericReload = seqIds;
+
+    /* 6851 口径（6.8×51mm）两把枪：专属枪声 + 换弹序列 */
+    const seqIds6851 = [];
+    const realSeq6851 = SFX._playSeq.bind(SFX);
+    SFX._playSeq = (n, s) => { if (n === 'reload') seqIds6851.push(s.map(x => x[0] + '@' + x[1])); return realSeq6851(n, s); };
+    played.length = 0;
+    SFX.play('shot', { gun: 'mcx_spear' });
+    SFX.play('shot', { gun: 'rm277' });
+    out.spearShot = played.map(p => p.id);
+    played.length = 0;
+    SFX.play('reload', { model: 'mcx_spear' });
+    out.mcxReloadSeq = seqIds6851[seqIds6851.length - 1];
+    SFX._playSeq = realSeq6851;
+    out.modelMap6851 = { mcx_spear: SFX.SHOT_MODEL.mcx_spear, rm277: SFX.SHOT_MODEL.rm277 };
+    const sw6851 = (typeof SWITCH_MODEL !== 'undefined') ? SWITCH_MODEL : null;
+    out.switchMap6851 = sw6851 ? { mcx_spear: sw6851.mcx_spear, rm277: sw6851.rm277 } : null;
+    out.loud6851 = {
+      shot_spear: SFX._targetFor('shot_spear'),
+      shot_rm277: SFX._targetFor('shot_rm277'),
+      switch_6851: SFX._targetFor('switch_6851'),
+      reload_6851: SFX._targetFor('reload_6851')
+    };
+    out.loudTable6851 = {
+      shot_spear: SFX.LOUD.shot, shot_rm277: SFX.LOUD.shot,
+      switch_6851: SFX.LOUD.switch, reload_6851: SFX.LOUD.reload
+    };
+
     played.length = 0;
 
     /* 3. 仓库那条路径：穿上 / 脱下都要有声音。
@@ -179,6 +207,18 @@ const SAMPLE_IDS = ['hit', 'headshot', 'break', 'sprint',
     'AKM 和不带型号的换弹应该各走一次三段拼接，实际 ' + b.genericReload.length + ' 次');
   assert(b.genericReload.every(s => s === 'reload_out+reload_in+reload_rack'),
     '通用换弹的三段拼接内容变了：' + b.genericReload.join(' | '));
+
+  /* 6851 口径两把枪的接线 */
+  assert.deepEqual(b.spearShot, ['shot_spear', 'shot_rm277'],
+    'MCX SPEAR / RM277 应各播各的专属枪声：' + b.spearShot.join(','));
+  assert.deepEqual(b.modelMap6851, { mcx_spear: 'spear', rm277: 'rm277' },
+    'SHOT_MODEL 没把 mcx_spear / rm277 映射到专属枪声');
+  assert.deepEqual(b.mcxReloadSeq, ['reload_6851@0', 'switch_6851@2.4'],
+    'MCX SPEAR 换弹应走 [换弹夹@0, 拉栓@2.4] 序列：' + (b.mcxReloadSeq || []).join(' '));
+  assert.deepEqual(b.switchMap6851, { mcx_spear: 'switch_6851', rm277: 'switch_6851' },
+    '两把枪的切枪都映射到共用的拉栓声 switch_6851');
+  assert.deepEqual(b.loud6851, b.loudTable6851,
+    '6851 火声 / 切枪 / 换弹的响度档对不上 LOUD 表');
 
   /* ---------- 局内：冲刺起步只响一次 ---------- */
   const play = await browser.newPage();

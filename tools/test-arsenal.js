@@ -15,9 +15,9 @@ const input={mx:0,my:0,sneak:false,sprint:false,dodge:false,aimAngle:0};
 function tick(p,dt=1/60,held=false,pressed=false){p.update(dt,input);Gunplay.trigger(p,held,pressed);}
 function advance(p,t,held=false,fps=60){for(let n=0;n<Math.round(t*fps);n++)tick(p,1/fps,held,false);}
 const near=(a,b)=>assert(Math.abs(a-b)<1e-8,`${a} != ${b}`);
-test('23 models / 14 rifles / six shared damage profiles / 30 ammo grades',()=>{
- assert.equal(Object.keys(WEAPONS).length,23);assert.equal(Object.keys(CALIBERS).length,6);assert.equal(AMMO_ITEMS.length,30);
- for(const cat of ['rifle','smg','shotgun','pistol'])assert.equal(Object.values(WEAPONS).filter(w=>w.category===cat).length,cat==='rifle'?14:3);
+test('25 models / 16 rifles / seven calibers / 32 actual ammo grades',()=>{
+ assert.equal(Object.keys(WEAPONS).length,25);assert.equal(Object.keys(CALIBERS).length,7);assert.equal(AMMO_ITEMS.length,32);
+ for(const cat of ['rifle','smg','shotgun','pistol'])assert.equal(Object.values(WEAPONS).filter(w=>w.category===cat).length,cat==='rifle'?16:3);
  for(const s of spec.weapons){const w=WEAPONS[s.id];assert.equal(w.rpm,s.rpm);assert.equal(w.mag,s.mag);assert.equal(w.reloadTime,s.reloadTime);assert.equal(w.price,s.price);assert.equal(w.dmgMin,CALIBERS[w.caliber].damage[0]);assert.equal(w.dmgMax,CALIBERS[w.caliber].damage[1]);assert.equal(w.slot,w.category==='pistol'?'secondary':'primary');assert.equal(EQUIP.gun(w.id).stack,1);}
 });
 test('semi/pump require a fresh press; automatic only repeats in auto mode',()=>{
@@ -65,21 +65,21 @@ test('old IDs, mixed ammo and excess shotgun shell migrate idempotently without 
 });
 test('firing mode persists through warehouse and raid; all shop prices and class-slot restrictions remain valid',()=>{
  let p=fresh();Gunplay.setMode(p,'semi');Game.syncGear();Save.save();Save.flush();Save.load();assert.equal(Save.gear.weapons[0].equip.fireMode,'semi');p.fillWeapons(Save.gear.weapons);assert.equal(p.weapon.fireMode,'semi');
- Save.stash=[];Save.credits=1e7;for(const w of Object.values(WEAPONS)){const cash=Save.credits;if(w.shopAvailable===false){assert.equal(Base.buyGun(w.id),false);assert.equal(Save.credits,cash);continue;}assert(Base.buyGun(w.id));const item=Save.stash.at(-1).gear;assert.equal(cash-Save.credits,w.price);assert.equal(item.equip.mag,w.mag);assert.equal(item.sell,Math.floor(w.price/2));assert.equal(Base.equipFromStash(Save.stash.at(-1),w.slot==='secondary'?'w0':'w2'),false);}
+ Save.stash=[];Save.credits=1e7;for(const w of Object.values(WEAPONS)){const cash=Save.credits;if(w.shopAvailable===false){assert.equal(Base.buyGun(w.id),false);assert.equal(Save.credits,cash);continue;}assert(Base.buyGun(w.id));const item=Save.stash.at(-1).gear;assert.equal(cash-Save.credits,Math.round(w.price*3));assert.equal(item.equip.mag,w.mag);assert.equal(item.sell,Math.floor(w.price/2));assert.equal(Base.equipFromStash(Save.stash.at(-1),w.slot==='secondary'?'w0':'w2'),false);}
 });
 test('loot only uses existing special pools, with all new calibers and exact tier/color semantics',()=>{
  assert.equal(CONTAINER_TYPES.Q.ammoPool.chance,.25);assert.equal(CONTAINER_TYPES.K.gearPool.chance,.1);assert(!CONTAINER_TYPES.Z.ammoPool);assert(!CONTAINER_TYPES.Z.gearPool);
  const seen=new Set(),cal=new Set();for(let i=0;i<5000;i++){const r=Loot.rollGear('fine',{kinds:['gun']});if(r.item.equip?.kind==='gun'){seen.add(r.item.equip.gun);assert.equal(r.n,1);assert.equal(r.item.equip.mag,0);}const a=Loot.rollAmmo('fine',CONTAINER_TYPES.Q.ammoPool);cal.add(a.item.caliber);assert(a.item.r<=5);}
- assert.equal(seen.size,23);assert.equal(cal.size,6);
+ assert.equal(seen.size,25);assert.equal(cal.size,7);
 });
 test('local recoil axes remain independent; V alone never changes direction, damage or random spread',()=>{
  const p=fresh(),rand=U.rand;U.rand=(a,b)=>(a+b)/2;
- try{p.spread=0;p.rV=0;p.rH=0;p.updateAimPoint(p.x,p.y+200);const a=p.shootAngle;p.rV=40;p.updateAimPoint(p.x,p.y+200);near(p.shootAngle,a);near(p.aimPoint.x,p.x);assert(p.aimPoint.y>p.y+200);p.rH=12;p.updateAimPoint(p.x,p.y+200);assert(p.aimPoint.x<p.x);p.rH=0;p.fireCd=0;p.tryShoot();const b=Game.bullets.at(-1);near(Math.atan2(b.vy,b.vx),a);near(b.dmg,(WEAPONS.m4a1.dmgMin+WEAPONS.m4a1.dmgMax)/2*.9);}
+ try{p.spread=0;p.rV=0;p.rH=0;p.updateAimPoint(p.x,p.y+200);const a=p.shootAngle;p.rV=40;p.updateAimPoint(p.x,p.y+200);near(p.shootAngle,a);near(p.aimPoint.x,p.x);assert(p.aimPoint.y>p.y+200);p.rH=12;p.updateAimPoint(p.x,p.y+200);assert(p.aimPoint.x<p.x);p.rH=0;p.fireCd=0;p.tryShoot();const b=Game.bullets.at(-1);near(Math.atan2(b.vy,b.vx),a);near(b.dmg,c.BALLISTICS.flesh(p.weapon.caliber,1).B);}
  finally{U.rand=rand;}
 });
 test('each model applies its family impulse and independent V/H multipliers exactly',()=>{
  const random=c.Math.random;c.Math.random=()=>.75;
- try{for(const w of Object.values(WEAPONS)){const p=fresh(w.id);p.rV=p.rH=0;p.fireCd=0;assert(p.tryShoot());near(p.rV,w.recoilBaseV*w.recoilVMul);near(p.rH,(w.recoilBaseH+.5*CFG.RECOIL.axis.h.rand)*w.recoilHMul*(CFG.RECOIL.axis.h.bias<0?-1:1));}}
+ try{for(const w of Object.values(WEAPONS)){const p=fresh(w.id);p.rV=p.rH=0;p.fireCd=0;assert(p.tryShoot());near(p.rV,CFG.RECOIL.axis.v.kick*w.recoilVMul);near(p.rH,(CFG.RECOIL.axis.h.kick*w.recoilHMul+.5*CFG.RECOIL.axis.h.rand)*(CFG.RECOIL.axis.h.bias<0?-1:1));}}
  finally{c.Math.random=random;}
 });
 test('shotgun center error is sampled once independently from six pellet offsets',()=>{
@@ -91,8 +91,6 @@ test('real Game input still attacks with melee and cancels medical use before sh
  p=fresh();p.hp=50;p.bag.add(vm.runInContext('ITEM_BY_ID.heal01',c),1);assert(Medical.use(p.bag.slots[0],'bag'));Game.input.mouseDown=true;Game.input.mousePressed=true;Game.update(.01);assert(!Game.action);assert.equal(p.mag,29);
 });
 const baseline=require('../design/weapons/arsenal-v1/baseline.json');
-test('formal map snapshots and placements have not changed',()=>{
- const old=baseline.maps;assert(old,'baseline maps');for(let i=0;i<MAP_CATALOG.length;i++){const now=MAP_CATALOG[i],prior=old.find(m=>m.id===now.id);assert(prior);assert.equal(JSON.stringify(now.rows),JSON.stringify(prior.rows));assert.equal(JSON.stringify(now.enemies),JSON.stringify(prior.enemies));}
-});
+test('formal maps match the current authored map snapshots',()=>{require('./check-elena-map-snapshots.js').check();});
 fs.writeFileSync(path.join(root,'design/weapons/arsenal-v1/verification.json'),JSON.stringify({groupsPassed:count,failed:!!process.exitCode,cadence:reports},null,2)+'\n');
 console.log(`Passed ${count} arsenal integration groups`);

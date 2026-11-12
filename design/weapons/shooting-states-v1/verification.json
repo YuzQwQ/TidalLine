@@ -1,0 +1,107 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "hip": {
+        "a": 0,
+        "zoom": 1,
+        "spread": 0.04,
+        "mode": "腰射",
+        "sprint": false,
+        "dodge": 0
+      },
+      "shoulder": {
+        "a": 0.55,
+        "zoom": 1.0797476763321128,
+        "spread": 0.028999999999999998,
+        "mode": "肩射",
+        "sprint": false,
+        "dodge": 0
+      },
+      "ads": {
+        "a": 1,
+        "zoom": 1.1499581850589768,
+        "spread": 0.02,
+        "mode": "瞄准",
+        "sprint": false,
+        "dodge": 0
+      },
+      "sprint": {
+        "a": 0,
+        "zoom": 1.0005090447737162,
+        "spread": 0.07200000000000001,
+        "mode": "冲刺腰射",
+        "sprint": true,
+        "dodge": 0
+      },
+      "formula": {
+        "preserved": true,
+        "kick": {
+          "growth": 0.0525,
+          "vertical": 2.8899999999999997
+        }
+      },
+      "aligned": 0,
+      "isolated": {
+        "unchanged": true,
+        "active": true,
+        "zoom": 1,
+        "spread": 0.04,
+        "expected": 0.04
+      },
+      "passed": true
+    },
+    {
+      "file": "潮汐线.html",
+      "hip": {
+        "a": 0,
+        "zoom": 1,
+        "spread": 0.04,
+        "mode": "腰射",
+        "sprint": false,
+        "dodge": 0
+      },
+      "shoulder": {
+        "a": 0.55,
+        "zoom": 1.0798088736205063,
+        "spread": 0.028999999999999998,
+        "mode": "肩射",
+        "sprint": false,
+        "dodge": 0
+      },
+      "ads": {
+        "a": 1,
+        "zoom": 1.1499683350802188,
+        "spread": 0.02,
+        "mode": "瞄准",
+        "sprint": false,
+        "dodge": 0
+      },
+      "sprint": {
+        "a": 0,
+        "zoom": 1.0005090447737162,
+        "spread": 0.07200000000000001,
+        "mode": "冲刺腰射",
+        "sprint": true,
+        "dodge": 0
+      },
+      "formula": {
+        "preserved": true,
+        "kick": {
+          "growth": 0.0525,
+          "vertical": 2.8899999999999997
+        }
+      },
+      "aligned": 0,
+      "isolated": {
+        "unchanged": true,
+        "active": true,
+        "zoom": 1,
+        "spread": 0.04,
+        "expected": 0.04
+      },
+      "passed": true
+    }
+  ]
+}

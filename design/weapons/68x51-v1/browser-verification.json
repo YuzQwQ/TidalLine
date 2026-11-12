@@ -1,0 +1,151 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "range": [
+        {
+          "id": "mcx_spear",
+          "mag": 25,
+          "noise": 0.32,
+          "ammo": "ammo_68x51_5",
+          "lv": 5,
+          "icon": true,
+          "ammoIcon": true,
+          "stock": true
+        },
+        {
+          "id": "rm277",
+          "mag": 25,
+          "noise": 0.4,
+          "ammo": "ammo_68x51_5",
+          "lv": 5,
+          "icon": true,
+          "ammoIcon": true,
+          "stock": false
+        }
+      ],
+      "offers": [
+        {
+          "id": "rm277",
+          "kind": "gun",
+          "price": 1170000
+        },
+        {
+          "id": "ammo_68x51_4",
+          "kind": "ammo",
+          "price": 7500
+        },
+        {
+          "id": "att_mag_68x51_sr25_pattern_competition",
+          "kind": "attachment",
+          "price": 28000
+        },
+        {
+          "id": "att_mag_68x51_sr25_pattern_polymer",
+          "kind": "attachment",
+          "price": 19000
+        },
+        {
+          "id": "att_mag_68x51_sr25_pattern_25",
+          "kind": "attachment",
+          "price": 38000
+        },
+        {
+          "id": "att_mag_68x51_rm277_competition",
+          "kind": "attachment",
+          "price": 28000
+        },
+        {
+          "id": "att_mag_68x51_rm277_polymer",
+          "kind": "attachment",
+          "price": 19000
+        },
+        {
+          "id": "att_mag_68x51_rm277_25",
+          "kind": "attachment",
+          "price": 38000
+        }
+      ],
+      "choices": [
+        "att_mag_68x51_rm277_25",
+        "att_mag_68x51_rm277_competition",
+        "att_mag_68x51_rm277_polymer"
+      ],
+      "passed": true
+    },
+    {
+      "file": "潮汐线.html",
+      "range": [
+        {
+          "id": "mcx_spear",
+          "mag": 25,
+          "noise": 0.32,
+          "ammo": "ammo_68x51_5",
+          "lv": 5,
+          "icon": true,
+          "ammoIcon": true,
+          "stock": true
+        },
+        {
+          "id": "rm277",
+          "mag": 25,
+          "noise": 0.4,
+          "ammo": "ammo_68x51_5",
+          "lv": 5,
+          "icon": true,
+          "ammoIcon": true,
+          "stock": false
+        }
+      ],
+      "offers": [
+        {
+          "id": "rm277",
+          "kind": "gun",
+          "price": 1170000
+        },
+        {
+          "id": "ammo_68x51_4",
+          "kind": "ammo",
+          "price": 7500
+        },
+        {
+          "id": "att_mag_68x51_sr25_pattern_competition",
+          "kind": "attachment",
+          "price": 28000
+        },
+        {
+          "id": "att_mag_68x51_sr25_pattern_polymer",
+          "kind": "attachment",
+          "price": 19000
+        },
+        {
+          "id": "att_mag_68x51_sr25_pattern_25",
+          "kind": "attachment",
+          "price": 38000
+        },
+        {
+          "id": "att_mag_68x51_rm277_competition",
+          "kind": "attachment",
+          "price": 28000
+        },
+        {
+          "id": "att_mag_68x51_rm277_polymer",
+          "kind": "attachment",
+          "price": 19000
+        },
+        {
+          "id": "att_mag_68x51_rm277_25",
+          "kind": "attachment",
+          "price": 38000
+        }
+      ],
+      "choices": [
+        "att_mag_68x51_rm277_25",
+        "att_mag_68x51_rm277_competition",
+        "att_mag_68x51_rm277_polymer"
+      ],
+      "passed": true
+    }
+  ]
+}

@@ -22,7 +22,7 @@ Object.assign(Game, {
     if (!it || !node || !node.getBoundingClientRect) return;
     const extra = [];
     if (ItemCapacity.max(it) && spec.entry) {
-      extra.push([ItemCapacity.label(it), ItemCapacity.text(spec.entry)]);
+      extra.push([ItemCapacity.label(it), ItemCapacity.value(spec.entry)]);
     }
     Tips.show(it, node.getBoundingClientRect(), spec.hint || '', extra, spec.entry || null);
     const acts = [];
@@ -804,16 +804,14 @@ Object.assign(Game, {
         const qty = it.note
           ? '<span class="qty">' + esc(it.note) + '</span>'
           : (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '');
-        /* 用过的恢复品把剩余容量直接标在格子里，不用点开详情才知道 */
-        const capTag = ((it.cat === 'key' || it.healCap) && (it.cat === 'key' || ItemCapacity.isPartial(s)))
-          ? '<span class="cap">' + Math.ceil(ItemCapacity.remaining(s)) + '</span>' : '';
+        /* 医疗品与钥匙同护甲：底边一条容量 / 次数 / 耐久条，满的也显示 */
+        const capBar = CapBar.html(s);
         const label = it.short || it.name;
-        /* 护甲：底边一条耐久条，局内也一眼看出还能扛几下 */
         const armor = DuraBar.of(it), dots = SlotDots.html(it);
-        if (armor) cell.classList.add('has-dbar');
+        if (armor || capBar) cell.classList.add('has-dbar');
         if (dots) cell.classList.add('has-dots');
-        cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty + capTag +
-          (armor ? DuraBar.html(armor) : '') + dots;
+        cell.innerHTML = ico + '<span class="cn">' + esc(label) + '</span>' + qty +
+          (armor ? DuraBar.html(armor) : capBar) + dots;
         /* 弹药：双击把它设为当前武器的待装填弹种（口径不对会直接提示） */
         const isAmmo = it.cat === 'ammo';
         const isLoaded = isAmmo && P.ammoId === it.id;
@@ -854,8 +852,9 @@ Object.assign(Game, {
         for (const a of this.extraActsFor(it, 'bag', s)) extra.push(a);
         if (extra.length) spec.extraActs = extra;
 
-        cell.title = (ItemCapacity.max(it) && (it.cat==='key' || ItemCapacity.isPartial(s))
-            ? it.name + ' · ' + ItemCapacity.text(s)
+        /* 容量 / 次数 / 耐久一律给「标签 + N / 上限」的精确读数，和底边条同口径 */
+        cell.title = (CapBar.readout(s)
+            ? it.name + ' · ' + CapBar.readout(s)
             : it.name + ' · ' + it.w + 'kg') +
           ' · 双击' + (spec.primary && spec.actLabel ? spec.actLabel.replace(/（.*/, '') : '看详情') +
           ' · Ctrl+左键移入安全箱 · 右键更多';
@@ -877,15 +876,14 @@ Object.assign(Game, {
         cell.style.color = '#b9cac4';
         const ico2 = Icons.bagTag(s.item, 'ico-safe');
         /* 安全箱只有 38px 高，枪也常塞在这儿 —— 点缩到 18px 图标那一档才塞得下 */
-        const dots = SlotDots.html(s.item);
+        const dots = SlotDots.html(s.item), capBar = CapBar.html(s);
         if (dots) cell.classList.add('has-dots');
+        if (capBar) cell.classList.add('has-dbar');
         cell.innerHTML = ico2 + '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
           (s.n > 1 ? '<span class="qty">' + s.n + '</span>' : '') +
-          ((ItemCapacity.max(s.item) && (s.item.cat==='key' || ItemCapacity.isPartial(s)))
-            ? '<span class="cap">' + Math.ceil(ItemCapacity.remaining(s)) + '</span>' : '') + dots;
-        cell.title = s.item.name + (ItemCapacity.max(s.item) && (s.item.cat==='key' || ItemCapacity.isPartial(s))
-            ? ' · ' + ItemCapacity.text(s)
-            : ' · ' + s.item.w + 'kg') + ' · 双击移回背包 · Ctrl+左键移回背包';
+          capBar + dots;
+        cell.title = s.item.name + (CapBar.readout(s) ? ' · ' + CapBar.readout(s) : '') +
+            ' · 双击移回背包 · Ctrl+左键移回背包';
         /* 安全箱：双击=移回背包（可交互的医疗品是"使用"），右键=详情/使用/丢弃 */
         const spec = {
           it: s.item, entry: s, hint: '安全箱 · 死亡也能带回',
@@ -920,12 +918,13 @@ Object.assign(Game, {
         if (s) {
           cell.className = 'cell safe ' + RARITY[U.clamp((s.item.r || 1) - 1, 0, RARITY.length - 1)].cls;
           cell.style.color = '#b9cac4';
-          const dots = SlotDots.html(s.item);
+          const dots = SlotDots.html(s.item), capBar = CapBar.html(s);
           if (dots) cell.classList.add('has-dots');
+          if (capBar) cell.classList.add('has-dbar');
           cell.innerHTML = Icons.bagTag(s.item, 'ico-safe') +
             '<span class="cn">' + esc(s.item.short || s.item.name) + '</span>' +
-            (ItemCapacity.max(s.item) ? '<span class="cap">' + Math.ceil(ItemCapacity.remaining(s)) + '</span>' : '') + dots;
-          cell.title = s.item.name + ' · ' + ItemCapacity.text(s) + ' · 钥匙链：局内不可调整';
+            capBar + dots;
+          cell.title = s.item.name + ' · ' + CapBar.readout(s) + ' · 钥匙链：局内不可调整';
           this.bindItem(cell, { it: s.item, entry: s, hint: '钥匙链 · 局内只能开门，死亡不掉落' });
         } else {
           cell.className = 'cell empty safe';

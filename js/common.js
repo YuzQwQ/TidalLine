@@ -18,6 +18,8 @@ const ItemCapacity={
   remaining(entry){const item=entry&&(entry.item||stashItem(entry)),max=this.max(item);return !max?0:typeof entry.cap==='number'?(Number.isFinite(entry.cap)?Math.max(0,Math.min(max,entry.cap)):0):max;},
   isPartial(entry){return this.remaining(entry)<this.max(entry&&(entry.item||stashItem(entry)));},
   text(entry){const item=entry&&(entry.item||stashItem(entry));return item?.cat==='key'?this.remaining(entry)+' / '+this.max(item):Medical.capText(entry);},
+  /* 详情表格里的精确读数统一成「N / 上限」：和容量条 / 次数条的口径一致 */
+  value(entry){const max=this.max(entry&&(entry.item||stashItem(entry)));return max?Math.ceil(this.remaining(entry))+' / '+max:'—';},
   label(item){return item?.cat==='key'?'剩余耐久':item?.effect?'剩余次数':'当前容量';}
 };
 

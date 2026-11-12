@@ -23,7 +23,7 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+deco
   await page.locator('.sh-top [data-sh="traders"]').click();assert(await page.locator('.mb-overview').isVisible());await page.locator('[data-mb-open="doctor"]').click();assert(await page.locator('#doctorService').isVisible());
   assert(await page.evaluate(()=>{const before=Save.credits;const q=Medical.quote();Base.treat(q.total);return Save.hp===100&&Save.credits===before-q.total;}));
   await page.evaluate(()=>MerchantUI.open('gun'));assert(await page.locator('#shopGrid [data-melee="melee01"]').isVisible());
-  assert(await page.evaluate(()=>{const before=Save.credits,n=Save.stash.length;Base.buyGun('pistol');return Save.credits<before&&Save.stash.length>n;}));
+  assert(await page.evaluate(()=>{Save.credits=1e7;const before=Save.credits,n=Save.stash.length;Base.buyGun('pistol');return Save.credits<before&&Save.stash.length>n;}));
   await page.screenshot({path:path.join(out,file==='index.html'?'game-trader.png':'offline-trader.png')});
   await page.locator('.sh-top [data-sh="archive"]').click();assert((await page.locator('.sh-dialog').innerText()).includes('收集图鉴'));await page.keyboard.press('Escape');
   for(const size of [{width:1280,height:720},{width:390,height:844}]){

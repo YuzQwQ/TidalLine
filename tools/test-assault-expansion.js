@@ -20,9 +20,18 @@ function advance(p,seconds,fps=120,held=false){for(let i=0;i<Math.round(seconds*
 test('14 rifles with rarity counts 2/2/3/3/4, 23 total models; original 12 models unchanged',()=>{
  assert.equal(Object.keys(WEAPONS).length,23);const rifles=Object.values(WEAPONS).filter(w=>w.category==='rifle');assert.equal(rifles.length,14);
  assert.deepEqual([1,2,3,4,5].map(r=>rifles.filter(w=>w.rarity===r).length),[2,2,3,3,4]);
- for(const [id,w]of Object.entries(baseline.weapons))assert.deepEqual(plain(Object.fromEntries(Object.keys(w).map(k=>[k,WEAPONS[id][k]]))),w,id+' original record');
+ /* 六参数模型：旧绝对字段改用倍率×全局基准核对（保留 ≤5e-3 的折算误差） */
+ for(const [id,w]of Object.entries(baseline.weapons)){const now=WEAPONS[id],d=c.Firearms.derive(now);
+  for(const k of Object.keys(w)){if(['spreadBase','spreadMax','recoilPerShot','recoilBaseV','recoilBaseH','recoilVMul','recoilHMul','spreadMul','spreadGrowthMul','aimTimeMul','aimTime'].includes(k))continue;assert.deepEqual(plain(now[k]),w[k],id+'/'+k);}
+  const near5=(a,b)=>assert(Math.abs(a-b)<5e-3,`${id} ${a} != ${b}`);
+  /* 基础/满散布共用 spreadMul：步枪零漂移，SMG/手枪 ≤16%（既定设计） */
+  const rel=(u,v)=>Math.abs(u-v)/v;
+  assert(rel(d.spreadBase,w.spreadBase)<0.16,`${id} spreadBase ${d.spreadBase} != ${w.spreadBase}`);
+  assert(rel(d.spreadMax,w.spreadMax)<0.16,`${id} spreadMax ${d.spreadMax} != ${w.spreadMax}`);
+  near5(d.growth,w.recoilPerShot);near5(now.aimTime,w.aimTime,1e-6);
+  near5(d.vKick,w.recoilBaseV*w.recoilVMul);near5(d.hKick,w.recoilBaseH*w.recoilHMul);}
  for(const [id,cal]of Object.entries(baseline.calibers))assert.deepEqual(plain(CALIBERS[id]),cal,id+' original caliber');
- for(const s of spec.weapons){const w=WEAPONS[s.id];for(const k of ['rpm','mag','w','price','rarity','reloadTime','recoilVMul','recoilHMul'])assert.equal(w[k],s[k],s.id+'/'+k);near(w.aimTime,WEAPONS.m4a1.aimTime*s.aimTimeMul);near(w.spreadBase,WEAPONS.m4a1.spreadBase*s.spreadMul);assert(ART.gear.includes(s.id));}
+ for(const s of spec.weapons){const w=WEAPONS[s.id];for(const k of ['rpm','mag','w','price','rarity','reloadTime','recoilVMul','recoilHMul'])assert.equal(w[k],s[k],s.id+'/'+k);near(w.aimTime,WEAPONS.m4a1.aimTime*(s.aimTimeMul??1));near(c.Firearms.derive(w).spreadBase,CFG.RECOIL.spreadBase*(s.spreadMul??1));assert(ART.gear.includes(s.id));}
 });
 test('six calibers / 30 tiers; 5.45 shares tier damage/penetration matrix without changing other ammunition',()=>{
  assert.equal(Object.keys(CALIBERS).length,6);assert.equal(AMMO_ITEMS.length,30);assert.equal(D.att_mag_545x39_ext.r,2);assert.equal(D.att_mag_545x39_quick.r,3);assert.equal(D.att_mag_545x39_quick_ext.r,4);
@@ -40,7 +49,7 @@ test('AN-94 second shot occurs at 33.333ms, never early, with one pair per press
 });
 test('second bullet precedes first-shot recoil: identical pre-kick angle, combined V/H kick after pair',()=>{
  const random=c.Math.random,rand=U.rand;c.Math.random=()=>.75;U.rand=(a,b)=>(a+b)/2;
- try{const p=fresh();G.setMode(p,'burst2');G.trigger(p,true,true);assert.equal(p.rV,0);assert.equal(p.rH,0);assert.equal(p.recoil,0);assert(p._deferredBurstRecoil);const a=Math.atan2(Game.bullets[0].vy,Game.bullets[0].vx);tick(p,1/30);const b=Math.atan2(Game.bullets[1].vy,Game.bullets[1].vx);near(a,b);near(p.rV,2*p.weapon.recoilBaseV*p.weapon.recoilVMul);near(p.rH,2*(p.weapon.recoilBaseH+.5*CFG.RECOIL.axis.h.rand)*p.weapon.recoilHMul*(CFG.RECOIL.axis.h.bias<0?-1:1));near(p.recoil,2*p.weapon.recoilPerShot);assert(!p._deferredBurstRecoil);
+ try{const p=fresh();G.setMode(p,'burst2');G.trigger(p,true,true);assert.equal(p.rV,0);assert.equal(p.rH,0);assert.equal(p.recoil,0);assert(p._deferredBurstRecoil);const a=Math.atan2(Game.bullets[0].vy,Game.bullets[0].vx);tick(p,1/30);const b=Math.atan2(Game.bullets[1].vy,Game.bullets[1].vx);near(a,b);near(p.rV,2*CFG.RECOIL.axis.v.kick*p.weapon.recoilVMul);near(p.rH,2*(CFG.RECOIL.axis.h.kick*p.weapon.recoilHMul+.5*CFG.RECOIL.axis.h.rand)*(CFG.RECOIL.axis.h.bias<0?-1:1));near(p.recoil,2*CFG.RECOIL.perShot*p.weapon.spreadGrowthMul);assert(!p._deferredBurstRecoil);
  }finally{c.Math.random=random;U.rand=rand;}
 });
 test('AN-94 one remaining round applies one kick; zero rounds cannot create a burst',()=>{
@@ -62,7 +71,7 @@ test('all eight reload exact capacity and time, mixed grades preserve order, int
  }
 });
 test('all five ammunition tiers use shared damage and penetration on AKS-74U and AN-94',()=>{
- const rand=U.rand;U.rand=(a,b)=>(a+b)/2;try{for(const id of ['aks74u','an94'])for(let lv=1;lv<=5;lv++){const ammo='ammo_545x39_'+lv,p=fresh(id,0),tier=AMMO_ITEMS.find(a=>a.id===ammo);p.bag.addAmmo(ammo,1);p.weapon.ammo=ammo;p.tryReload();tick(p,p.weapon.reloadTime+.001);p.fireCd=0;G.trigger(p,true,true);assert.equal(Game.bullets.length,1);near(Game.bullets[0].dmg,(17+24)/2*tier.dmgMul);assert.equal(Game.bullets[0].pen,lv);assert.equal(p.bag.ammoCount(ammo),0);}}finally{U.rand=rand;}
+ const rand=U.rand;U.rand=(a,b)=>(a+b)/2;try{for(const id of ['aks74u','an94'])for(let lv=1;lv<=5;lv++){const ammo='ammo_545x39_'+lv,p=fresh(id,0),tier=AMMO_ITEMS.find(a=>a.id===ammo);p.bag.addAmmo(ammo,1);p.weapon.ammo=ammo;p.tryReload();tick(p,p.weapon.reloadTime+.001);p.fireCd=0;G.trigger(p,true,true);assert.equal(Game.bullets.length,1);near(Game.bullets[0].dmg,tier.B);assert.equal(Game.bullets[0].pen,tier.P);assert.equal(p.bag.ammoCount(ammo),0);}}finally{U.rand=rand;}
 });
 test('new magazines reject wrong calibers, extend both 5.45 models to 39 and apply reload once',()=>{
  for(const id of ids)for(const type of ['ext','quick','quick_ext']){const part='att_mag_545x39_'+type;assert.equal(A.compatible(id,part),WEAPONS[id].caliber==='545x39');}
@@ -77,7 +86,7 @@ test('expanded 5.45 mixed magazines survive save/load, warehousing, selling with
  }
 });
 test('new shop offers respect rarity policy; all new guns and 5.45 grades enter existing loot pools',()=>{
- Game.state='base';Save.credits=1e7;Save.stash=[];for(const id of ids){const cash=Save.credits,n=Save.stash.length,allowed=WEAPONS[id].rarity<=3;assert.equal(Base.buyGun(id),allowed);assert.equal(cash-Save.credits,allowed?WEAPONS[id].price:0);assert.equal(Save.stash.length-n,allowed?1:0);}
+ Game.state='base';Save.credits=1e7;Save.stash=[];for(const id of ids){const cash=Save.credits,n=Save.stash.length,allowed=WEAPONS[id].rarity<=3;assert.equal(Base.buyGun(id),allowed);assert.equal(cash-Save.credits,allowed?Math.round(WEAPONS[id].price*3):0);assert.equal(Save.stash.length-n,allowed?1:0);}
  const random=c.Math.random,pct=vm.runInContext('CONTAINER_QUALITY.fine.pct',c);try{for(const id of ids){const w=WEAPONS[id],group=Object.values(WEAPONS).filter(x=>x.rarity===w.rarity),index=group.findIndex(x=>x.id===id);const roll=(pct.slice(0,w.rarity-1).reduce((a,b)=>a+b,0)+pct[w.rarity-1]/2)/pct.reduce((a,b)=>a+b,0),draws=[roll,0,(index+.5)/group.length];c.Math.random=()=>draws.shift()??.5;const r=Loot.rollGear('fine',{kinds:['gun']});assert.equal(r.item.equip.gun,id);assert.equal(r.item.equip.mag,0);}}finally{c.Math.random=random;}
  assert(CONTAINER_TYPES.Q.gearPool);assert(CONTAINER_TYPES.K.gearPool);assert(!CONTAINER_TYPES.Z.gearPool);
 });

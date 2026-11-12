@@ -431,7 +431,7 @@ window.addEventListener('error', function (e) {
     color: #d8bf86; background: rgba(6,12,10,0.72);
     font-family: Consolas, monospace;
   }
-  /* 用过的医疗品：左上角标剩余容量（右下角已被名称占着），不和图标抢位置 */
+  /* 已退役：容量 / 次数 / 耐久统一走底边 CapBar 进度条，样式留着兼容旧皮肤 */
   .cell .cap, .scell .cap {
     position: absolute; left: 1px; top: 1px;
     font-size: 9px; line-height: 11px; padding: 0 1px;
@@ -1087,6 +1087,16 @@ window.addEventListener('error', function (e) {
 .tip-dura { margin: 10px 0 2px; }
 .dbar-box { margin: 11px 0 1px; }
 .dbar-cap { display: block; margin-top: 5px; font: 10px Consolas, monospace; color: #7d948c; letter-spacing: 0; }
+/* ---- 医疗容量 / 次数条（CapBar）----
+   直接复用护甲的 .dbar 配色：绿=剩余、灰=已消耗，满容量整条绿。
+   医疗没有「修理吃掉的上限」，所以不生成红色段；.dbar-capacity 只是标记，
+   和上一行修理窗那行小字 .dbar-cap 不是同一个东西。 */
+#medBar .pill { position: relative; }
+#medBar .pill .dbar { position: absolute; left: 4px; right: 4px; bottom: 1px; width: auto; height: 2px; }
+#medBar.empty .dbar-capacity { display: none; }
+.mi-capbar { margin-top: 5px; }
+.mi-capbar .dbar, .mb-capbar .dbar { height: 3px; }
+.mb-capbar { margin: 10px 0 2px; }
 /* ---- 枪械槽位点：灰=空槽 彩点=已装配件（取配件稀有度色）----
    点数就是这把枪支持的槽位数，顺序固定瞄具→握把→枪托→枪口→弹匣。 */
 .sdots { display: flex; align-items: center; gap: 3px; height: 6px; }
@@ -1314,7 +1324,7 @@ window.addEventListener('error', function (e) {
    放左边：落点墙在靶场东侧，放右边会把弹孔正好挡住。 */
 #rangePanel {
   position: absolute; left: 8px; top: 136px;
-  width: 308px; max-height: calc(100% - 250px);
+  width: 308px; max-height: calc(100% - 170px);
   overflow-y: auto; overscroll-behavior: contain;
   z-index: 30;
   background: rgba(9, 15, 13, 0.97);
@@ -1336,6 +1346,18 @@ window.addEventListener('error', function (e) {
 }
 #rangePanel button:hover { background: #16241f; border-color: #2f5548; color: #d6e6e0; }
 #rangePanel button.on { background: #1d3a31; border-color: #3f7a68; color: #e6fbf3; }
+/* 战斗测试台：敌人靶 / 弹药等级 / 配件改装 */
+.rg-loadout { padding: 2px 0 5px; }
+.rg-line { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; }
+.rg-loadout button { font-size: 10px; padding: 3px 5px; }
+.rg-loadout button.installed { border-color: #3f7a68; }
+.rg-loadout button:disabled { opacity: .35; cursor: default; }
+.rg-loadout small { display: block; color: #5d8076; font-size: 9px; line-height: 1.35; }
+.rg-slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin-bottom: 5px; }
+.rg-parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; max-height: 150px; overflow-y: auto; margin-bottom: 5px; }
+.rg-parts button { text-align: left; }
+.rg-table { background: #0b1210; border: 1px solid #172620; padding: 4px 6px; margin-bottom: 5px; }
+.rg-tip { color: #5d8076; font-size: 9.5px; line-height: 1.5; margin-bottom: 4px; }
 .rg-top { display: flex; align-items: baseline; gap: 8px; margin-bottom: 7px; }
 .rg-top b { font-size: 12px; letter-spacing: 2px; color: #7fc3ae; }
 .rg-hint { flex: 1; font-size: 9.5px; color: #4a665e; }
@@ -1383,6 +1405,9 @@ window.addEventListener('error', function (e) {
 .rg-sfx { padding: 2px 0 4px; }
 .rg-sfx-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin: 5px 0 4px; }
 .rg-sfx-btns button { padding: 3px 0; font-size: 10px; }
+.rg-suppressor-ab { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
+.rg-suppressor-ab button { padding: 6px 3px; letter-spacing: 0; }
+.rg-suppressor-ab [data-act="suppressor-load"] { grid-column: 1 / -1; }
 .rg-sfx-tip { color: #4c665e; font-size: 9.5px; line-height: 1.5; }
 
 .tip-ic img.item-detail-original{image-rendering:auto}
@@ -1414,7 +1439,7 @@ window.addEventListener('error', function (e) {
       <span style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline">背包 <span style="font-size:11px;letter-spacing:0;color:#bd9d83">本局损耗 <b id="raidLoss" aria-live="polite">¥0</b></span></span><span style="color:#4d7d70">Tab 关闭 · 世界不会暂停</span>
     </div>
     <div class="eqbar w6" id="eqStrip"></div>
-    <div class="stat"><span>负重 <b id="bagWeight">0.0 / 45 kg</b></span><span>价值 <b id="bagValue">0</b></span></div>
+    <div class="stat"><span>负重 <b id="bagWeight">0.0 / 75 kg</b></span><span>价值 <b id="bagValue">0</b></span></div>
     <div class="bar" id="bagBar"><i style="width:0%"></i></div>
     <div class="grid24" id="bagGrid"></div>
     <div class="stat"><span style="color:#3f6d5f">安全箱（死亡不掉落 · 点击物品可移入）</span></div>
@@ -1452,9 +1477,9 @@ window.addEventListener('error', function (e) {
       <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>移动</span></div>
       <div><kbd>鼠标</kbd><span>瞄准</span></div>
       <div><kbd>左键</kbd><span>射击</span></div>
-      <div><kbd>右键</kbd><span>闪避（有冷却）</span></div>
-      <div><kbd>Shift</kbd><span>潜行（噪声最小）</span></div>
-      <div><kbd>空格</kbd><span>冲刺（噪声最大）</span></div>
+      <div><kbd>右键</kbd><span>按住瞄准</span></div>
+      <div><kbd>Shift</kbd><span>潜行 / 肩射</span></div>
+      <div><kbd>空格</kbd><span>短按闪避 / 长按移动冲刺</span></div>
       <div><kbd>E</kbd><span>搜刮 / 开门 / 撤离 / 搜尸体</span></div>
       <div><kbd>R</kbd><span>短按装填 · 长按弹药轮盘</span></div>
       <div><kbd>B</kbd><span>切换射击模式</span></div>
@@ -1627,12 +1652,14 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 </script>
 <!-- @@AUDIO_BUNDLE_END@@ -->
 <script src="js/config.js"></script>
+<script src="js/combat.js"></script>
 <script src="js/pixfont.js"></script>
 <script src="js/floatfont-data.js"></script>
 <script src="js/floattext.js"></script>
 <script src="js/data.js"></script>
 <script src="js/attachment-data.js"></script>
 <script src="js/attachments.js"></script>
+<script src="js/attachment-migration.js"></script>
 <script src="js/core.js"></script>
 <script src="js/entities.js"></script>
 <script src="js/gunplay.js"></script>
@@ -1657,6 +1684,8 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 <script src="js/medhud.js"></script>
 <script src="js/melee.js"></script>
 <script src="js/range.js"></script>
+<script src="js/aim.js"></script>
+<script src="js/range-aim.js"></script>
 <script src="js/safehouse-config.js"></script>
 <script src="js/safehouse.js"></script>
 <script src="js/merchant-config.js"></script>
@@ -1685,6 +1714,7 @@ if (location.protocol === 'file:') document.write('<script src="assets/audio/bun
 <script src="js/sandbox.js"></script>
 <script src="js/loot-spawn-data.js"></script>
 <script src="js/ground-spawns.js"></script>
+<script src="js/trade-audio.js"></script>
 <script src="js/boot.js"></script>
 </body>
 </html>

@@ -1,4 +1,17 @@
 {
-  "passed": 9,
-  "failures": []
+  "passed": 6,
+  "failures": [
+    {
+      "name": "exactly three new guns, 14 rifles / 23 guns, original 20 and six calibers unchanged",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n25 !== 23\n\n    at D:\\develop\\project\\tide\\tools\\test-assault-batch-03.js:10:9\n    at test (D:\\develop\\project\\tide\\tools\\test-assault-batch-03.js:6:28)\n    at Object.<anonymous> (D:\\develop\\project\\tide\\tools\\test-assault-batch-03.js:9:1)\n    at Module._compile (node:internal/modules/cjs/loader:1705:14)\n    at Object..js (node:internal/modules/cjs/loader:1838:10)\n    at Module.load (node:internal/modules/cjs/loader:1441:32)\n    at Function._load (node:internal/modules/cjs/loader:1263:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)"
+    },
+    {
+      "name": "magazines are shared with older same-caliber models; five-slot compatibility and exact capacity",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n30 !== 39\n\n    at D:\\develop\\project\\tide\\tools\\test-assault-batch-03.js:47:130\n    at test (D:\\develop\\project\\tide\\tools\\test-assault-batch-03.js:6:28)\n    at Object.<anonymous> (D:\\develop\\project\\tide\\tools\\test-assault-batch-03.js:44:1)\n    at Module._compile (node:internal/modules/cjs/loader:1705:14)\n    at Object..js (node:internal/modules/cjs/loader:1838:10)\n    at Module.load (node:internal/modules/cjs/loader:1441:32)\n    at Function._load (node:internal/modules/cjs/loader:1263:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)"
+    },
+    {
+      "name": "reload interruption and expanded mixed-grade save/equip/warehouse round trip conserve all rounds",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n30 !== 39\n\n    at D:\\develop\\project\\tide\\tools\\test-assault-batch-03.js:52:627\n    at test (D:\\develop\\project\\tide\\tools\\test-assault-batch-03.js:6:28)\n    at Object.<anonymous> (D:\\develop\\project\\tide\\tools\\test-assault-batch-03.js:50:1)\n    at Module._compile (node:internal/modules/cjs/loader:1705:14)\n    at Object..js (node:internal/modules/cjs/loader:1838:10)\n    at Module.load (node:internal/modules/cjs/loader:1441:32)\n    at Function._load (node:internal/modules/cjs/loader:1263:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)"
+    }
+  ]
 }

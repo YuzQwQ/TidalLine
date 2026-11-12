@@ -42,9 +42,10 @@ preview不改库存。确认令牌保存商人、数量、条目状态与报价�
 - 同型号不同耐久实例、改装枪、混合等级弹药、部分医疗容量；物品移出、状态/价格变化、取消令牌、存档失败回滚与重载一致性。
 - 背包、保险箱条目不允许直接进入交易。
 - 1920×1080、1440×900、1280×720、390/320px；确认按钮可到达，清单滚动不撑高页面。
+- 伊莲娜从委托／人物档案切回出售的首屏：目录恢复显示后才量格子，首次打开与筛选／排序／翻页后的列数、格宽、图标尺寸一致，不出现 2 列超大格。
 - 现有仓库、配装、配件改装、商人购买、医生治疗和主流程回归；主流程基线402项通过。
 
-命令：node tools/test-merchant-sales.js；node tools/test-storage-ui.js；node tools/test-storage-loadout.js；node tools/test-merchant-ui.js；node tools/test-viktor.js；node tools/test-doctor-dialogue.js；node tools/test-gunsmith-page.js；node tools/test-attachments-browser.js；node run-test.js。
+命令：node tools/test-merchant-sales.js；node tools/test-storage-ui.js；node tools/test-storage-loadout.js；node tools/test-merchant-ui.js；node tools/test-viktor.js；node tools/test-doctor-dialogue.js；node tools/test-gunsmith-page.js；node tools/test-attachments-browser.js；node tools/test-elena-sell-grid-browser.js；node run-test.js。
 
 离线构建使用node build.js --assets-only，不编译地图草稿。没有新增场景PNG。
 

@@ -78,7 +78,7 @@ const ctx = {
 ctx.globalThis = ctx;
 vm.createContext(ctx);
 
-for (const f of ['config.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
+for (const f of ['config.js', 'combat.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'attachment-data.js', 'attachments.js', 'attachment-migration.js', 'core.js', 'entities.js', 'gunplay.js', 'human-ai.js',
   'common.js', 'medical.js', 'art.js', 'durabar.js', 'slotdots.js', 'debuff.js', 'ui.js', 'save.js', 'base.js', 'base-keychain.js', 'mail.js', 'repair.js',
   'game.js', 'game-update.js', 'game-render.js', 'game-panels.js',
   'medhud.js', 'melee.js', 'range.js', 'buyback-data.js', 'sales.js', 'raid-value.js', 'door-visual.js', 'doors.js', 'sandbox.js', 'loot-spawn-data.js', 'ground-spawns.js', 'boot.js']) {
@@ -91,13 +91,14 @@ for (const f of ['config.js', 'floatfont-data.js', 'floattext.js', 'data.js', 'a
 }
 
 vm.runInContext(`
-  globalThis.CFG = CFG; globalThis.M = M; globalThis.U = U;
+  globalThis.CFG = CFG; globalThis.M = M; globalThis.U = U; globalThis.Combat = Combat;
   globalThis.ITEMS = ITEMS; globalThis.Game = Game; globalThis.Save = Save;
   globalThis.Player = Player; globalThis.Enemy = Enemy; globalThis.Noise = Noise;
   globalThis.Quiet = Quiet; globalThis.SFX = SFX; globalThis.MeleeSystem = MeleeSystem;
   globalThis.Base = Base; globalThis.Art = Art; globalThis.ART = ART;
   globalThis.Corpse = Corpse; globalThis.Bullet = Bullet;
   globalThis.GEAR = GEAR; globalThis.WEAPONS = WEAPONS; globalThis.EQUIP = EQUIP; globalThis.HELMETS = HELMETS; globalThis.BODIES = BODIES; globalThis.SIDEARM_SLOT = SIDEARM_SLOT;
+  globalThis.AMMO_ITEMS = AMMO_ITEMS; globalThis.Firearms = Firearms;
   globalThis.START_CREDITS = START_CREDITS;
   globalThis.Debuff = Debuff; globalThis.DebuffHud = DebuffHud;
   globalThis.Medical = Medical; globalThis.ITEM_BY_ID = ITEM_BY_ID;
@@ -112,7 +113,7 @@ vm.runInContext(`
   globalThis.STASH_FILTERS = STASH_FILTERS; globalThis.stashFilterMatch = stashFilterMatch;
   globalThis.itemGroup = itemGroup; globalThis.itemCategoryLabel = itemCategoryLabel;
   globalThis.Range = Range; globalThis.RANGE_MAP = RANGE_MAP; globalThis.RANGE_GEO = RANGE_GEO;
-  globalThis.RANGE_PARAMS = RANGE_PARAMS; globalThis.RANGE_DEF_G = RANGE_DEF_G;
+  globalThis.RANGE_PARAMS = RANGE_PARAMS; globalThis.RANGE_DEF_W = RANGE_DEF_W;
   globalThis.magazineRounds = magazineRounds;
   globalThis.BACKPACK = BACKPACK; globalThis.bagSlots = bagSlots;
   globalThis.DoorSystem = DoorSystem; globalThis.BaseKeychain = BaseKeychain;
@@ -130,7 +131,8 @@ function noThrow(name, fn) {
 }
 
 const { Game, M, CFG, U, Save, ITEMS, Noise, Quiet, Base, Art, ART, GEAR, WEAPONS, HELMETS, BODIES, EQUIP, SIDEARM_SLOT,
-  Range, RANGE_MAP, RANGE_GEO, RANGE_PARAMS, RANGE_DEF_G, BACKPACK, bagSlots } = ctx;
+  Range, RANGE_MAP, RANGE_GEO, RANGE_PARAMS, RANGE_DEF_W, BACKPACK, bagSlots,
+  Firearms, Attachments, ATTACHMENT_DEFS } = ctx;
 
 console.log('\n=== 启动 ===');
 noThrow('Save.load()', () => Save.load());
@@ -509,10 +511,10 @@ const h4 = EQUIP.armor(GEAR.make('helmet', 4));
 ok('头盔回收价不超过买价', h4.sell <= h4.price, h4.sell + ' ≤ ' + h4.price);
 ok('满耐久按半价回收', h4.sell === Math.floor(GEAR.def('helmet',4).price * 0.5), '¥' + h4.sell);
 
-const body5 = EQUIP.armor(GEAR.make('body', 5));              // 150 耐久
-const body5w = EQUIP.armor(GEAR.make('body', 5, 75));         // 一半耐久
+const body5 = EQUIP.armor(GEAR.make('body', 5));              // V1：135 耐久
+const body5w = EQUIP.armor(GEAR.make('body', 5, GEAR.def('body', 5).dur / 2));
 ok('耐久掉了回收价跟着掉', body5w.sell < body5.sell, body5.sell + ' → ' + body5w.sell);
-ok('回收价跟着耐久等比算', body5w.sell === Math.floor(body5.sell / 2));
+ok('回收价跟着耐久等比算', body5w.sell === Math.floor(GEAR.def('body', 5).price * 0.5 * 0.5));
 
 const broken = EQUIP.armor(GEAR.make('body', 6, 0));
 ok('耐久归零只剩保底价', broken.sell === 1, '¥' + broken.sell);
@@ -975,15 +977,14 @@ ok('角色三向共 18 个资源槽', ART.chars.length * ART.charDirs.length ===
    ART.chars.length + ' 角色 × ' + ART.charDirs.length + ' 方向');
 
 console.log('\n=== 物品简称 ===');
-// 背包格子只有 48×42，名字超过四个字会显示不全，所以约定要写 short
-const longNames = ITEMS.filter(i => i.name.replace(/\s/g, '').length > 4);
-ok('长名字物品都写了简称',
-   longNames.every(i => !!i.short),
-   longNames.filter(i => !i.short).map(i => i.name).join(',') || '全部有');
-/* 弹药简称是"口径·等级"（如 5.56·3），6 个字符但半角，实际宽度和四个汉字相当 */
-ok('简称不超过 4 个字（弹药为口径·等级）',
-   ITEMS.filter(i => i.short).every(i => i.short.length <= 4 || i.cat === 'ammo'),
-   ITEMS.filter(i => i.short && i.short.length > 4 && i.cat !== 'ammo').map(i => i.short).join(',') || '全部合规');
+/* 背包格子只有 48×42，名字超过四个字会显示不全，所以约定要写 short。
+   真正约束的是显示宽度：半角字符只有汉字的一半宽，所以按「半角=1 / 全角=2，
+   合计不超过 8（四个汉字）」判断。弹药的 "5.56·3"、彩蛋的 "6090Ti" 都是
+   6 个半角字符，显示宽度和三个汉字相当，不该被按字数误判。 */
+const shortWidth = s => [...s].reduce((a, ch) => a + (ch.charCodeAt(0) < 128 ? 1 : 2), 0);
+ok('简称不超过四个字的显示宽度',
+   ITEMS.filter(i => i.short).every(i => shortWidth(i.short) <= 8),
+   ITEMS.filter(i => i.short && shortWidth(i.short) > 8).map(i => i.short).join(',') || '全部合规');
 
 console.log('\n=== 逐件搜索 ===');
 Game.startRun({ ammo: 0, bandage: 0, stone: 0 });
@@ -1092,51 +1093,55 @@ ok('偏心的命中算身体', Math.abs(bodyDmg - 20) < 0.01, bodyDmg.toFixed(1)
 const missDmg = shotThrough(0, 12);    // 完全在外圆外
 ok('明显偏离不造成伤害', missDmg === 0, missDmg.toFixed(1));
 
-/* 玩家护甲：爆头倍率先并进伤害，再按"弹药穿透等级 vs 护甲等级"结算；
-   耐久只掉"挡下来的那部分"，穿透干净的一发不磨甲。 */
-const freshHelmet = () => GEAR.make('helmet', 4);   // Lv4 / 65
+/* 战斗系统 V1：确定性穿透 A = 10L − 10(1−D/Dmax)，H 二选一，
+   ΔD = min[D, B(0.035+0.009P)·Kd]。爆头倍率与距离衰减在结算之后乘，
+   护甲磨损与穿透结果无关（穿透成功也磨甲）。 */
+const freshHelmet = () => GEAR.make('helmet', 4);   // Lv4 / 65 / 芳纶 Kb1.25 Kd0.75
+const durLoss = (B, P, Kd) => B * (CFG.COMBAT_MODEL.DUR_BASE + CFG.COMBAT_MODEL.DUR_PER_PEN * P) * Kd;
 PE.helmet = freshHelmet(); PE.body = null; PE.hp = 100;
-PE.hurt(20, 'head', 3);        // Lv3 弹打 Lv4 盔：矩阵留 60%
-ok('爆头 ×1.5 后再按穿透结算',
-   Math.abs(PE.hp - (100 - 30 * 0.6)) < 1e-6, PE.hp.toFixed(2));
-ok('头盔耐久按挡下的伤害扣',
-   Math.abs(PE.helmet.dur - (65 - 30 * 0.4 * CFG.AMMO.DURABILITY_FACTOR)) < 1e-6,
+PE.hurt(20, 'head', 33);   // A=40，P=33 未穿透 → 钝伤 0.08×20×1.25=2，爆头 ×1.5 = 3
+ok('未穿透只产生钝伤，爆头倍率在结算之后乘',
+   Math.abs(PE.hp - 97) < 1e-6, PE.hp.toFixed(2));
+ok('护甲磨损按 B/P/Kd 算，与是否穿透无关',
+   Math.abs(PE.helmet.dur - (65 - durLoss(20, 33, 0.75))) < 1e-6,
    PE.helmet.dur.toFixed(2) + '/65');
 
-/* 穿透干净（同级弹打同级甲留 80%，那 Lv5 弹打 Lv4 甲是 100%）→ 不掉耐久 */
-PE.helmet.dur = 65; PE.hp = 100;
-PE.hurt(20, 'head', 5);
-ok('完全穿透时护甲不掉耐久',
-   Math.abs(PE.hp - 70) < 1e-6 && PE.helmet.dur === 65, PE.helmet.dur + '/65');
+/* P ≥ A → 全额基础肉伤，不再叠加钝伤；仍然磨甲 */
+PE.helmet = freshHelmet(); PE.hp = 100;
+PE.hurt(20, 'head', 40);   // P = A = 40，穿透
+ok('P≥A 时造成全额基础肉伤，不再叠加钝伤',
+   Math.abs(PE.hp - 70) < 1e-6, PE.hp.toFixed(2));
+ok('穿透成功一样磨甲',
+   Math.abs(PE.helmet.dur - (65 - durLoss(20, 40, 0.75))) < 1e-6,
+   PE.helmet.dur.toFixed(2) + '/65');
 
-/* 击毁溢出：耐久不够挡，按剩余耐久折算，护甲被击穿但仍提供部分防护 */
-PE.helmet.dur = 3; PE.hp = 100;
-PE.hurt(20, 'head', 1);        // Lv1 打 Lv4：留 25%，理论耗甲 30*0.75*0.5 = 11.25
-const expectHp = 100 - (30 - 30 * 0.75 * (3 / (30 * 0.75 * CFG.AMMO.DURABILITY_FACTOR)));
-ok('护甲被打穿时仍挡住一部分',
-   Math.abs(PE.hp - expectHp) < 1e-6, PE.hp.toFixed(2));
-ok('这一击把耐久打空', PE.helmet.dur === 0, PE.helmet.dur + '');
+/* 本发 ΔD 不影响本发判定：命中前耐久 0.5 → A≈30.08，P=1 仍是钝伤；
+   本发理论 ΔD=0.66 > 剩余 0.5，按剩余耐久封顶打到 0 */
+PE.helmet = GEAR.make('helmet', 4, 0.5); PE.hp = 100;
+PE.hurt(20, 'head', 1);
+ok('本发判定只按命中前耐久', Math.abs(PE.hp - 97) < 1e-6, PE.hp.toFixed(2));
+ok('耐久损耗以剩余耐久封顶、不会低于 0', PE.helmet.dur === 0, PE.helmet.dur + '');
 
-/* 失效：没有防护 */
+/* 失效：下一发直接全额 */
 PE.hp = 100;
 PE.hurt(20, 'head', 1);
-ok('护甲失效后吃满伤害', Math.abs(PE.hp - 70) < 1e-6, PE.hp.toFixed(2));
+ok('护甲失效后下一发全额伤害', Math.abs(PE.hp - 70) < 1e-6, PE.hp.toFixed(2));
 
 /* 身体命中只吃身体护甲，头盔耐久不变 */
 PE.helmet = freshHelmet();
-PE.body = GEAR.make('body', 5);   // Lv5 / 150
+PE.body = GEAR.make('body', 5);   // V1：Lv5 / 135 / 装甲钢 Kb0.75 Kd0.70
 PE.hp = 100;
 const hdBefore = PE.helmet.dur;
-PE.hurt(20, 'body', 3);           // Lv3 打 Lv5：留 40%
-ok('身体命中按身体护甲穿透', Math.abs(PE.hp - (100 - 8)) < 1e-6, PE.hp.toFixed(2));
+PE.hurt(20, 'body', 33);          // A=50，P=33 未穿透 → 钝伤 0.08×20×0.75 = 1.2
+ok('身体命中按身体护甲判定', Math.abs(PE.hp - 98.8) < 1e-6, PE.hp.toFixed(2));
 ok('身体命中不动头盔耐久', PE.helmet.dur === hdBefore);
 ok('身体命中扣身体护甲耐久',
-   Math.abs(PE.body.dur - (150 - 12 * CFG.AMMO.DURABILITY_FACTOR)) < 1e-6,
-   PE.body.dur.toFixed(2) + '/150');
+   Math.abs(PE.body.dur - (135 - durLoss(20, 33, 0.70))) < 1e-6,
+   PE.body.dur.toFixed(2) + '/135');
 
 /* 移速 / 负重 / 存档 */
 PE.body = GEAR.make('body', 6);
-ok('六级甲不再直接减速，改为瞄准时间 +60%', PE.armorMove===1 && PE.body.aimPenaltyPct===60);
+ok('六级甲不再直接减速，改为瞄准时间 +45%', PE.armorMove===1 && PE.body.aimPenaltyPct===45);
 ok('护甲重量计入总负重', PE.totalWeight >= 13, PE.totalWeight.toFixed(1) + 'kg');
 PE.helmet = GEAR.make('helmet', 3);
 PE.hurt(20, 'head', 2);
@@ -1161,7 +1166,7 @@ ok('霰弹一次打六颗', (() => {
   PE.tryShoot();
   return Game.bullets.length === 6;
 })(), Game.bullets.length + ' 颗');
-ok('霰弹后坐力比步枪大', WEAPONS.shotgun.recoilPerShot > WEAPONS.rifle.recoilPerShot);
+ok('霰弹连射增长比步枪大', WEAPONS.shotgun.spreadGrowthMul > WEAPONS.rifle.spreadGrowthMul);
 
 console.log('\n=== 尸体分类 ===');
 // 三种敌人 -> 三种尸体图，缺图退通用 corpse，再缺退代码绘制
@@ -1359,7 +1364,9 @@ PX.bag.slots.length = 0;
 PX.bag.safe.length = 0;
 PX.bag.add(ITEMS.find(i => i.id === 'ind01'), 1);      // 会丢
 PX.bag.safe.push({ item: ITEMS.find(i => i.id === 'lux02'), n: 1 });  // 保住
-PX.hurt(999);
+/* V1：低穿透的高肉伤会被护甲折成小额钝伤，死亡结算用例先卸甲 */
+PX.helmet = null; PX.body = null;
+PX.hurt(999, 'body', 999);
 for (let i = 0; i < 60; i++) Game.update(1 / 60);
 ok('死亡后只有安全箱入库',
    Save.stashCount('lux02') === 1 && Save.stashCount('ind01') === 0,
@@ -1391,7 +1398,7 @@ noThrow('空列表也能渲染', () => Base.renderPicker());
 Base.togglePicker('helmet');
 ok('再点一次收起', Base.picker === null);
 
-// 商人：只卖崭新的一~三级
+// 商人：只卖崭新的一~四级
 Base.tab = 'shop';
 noThrow('商人页渲染', () => Base.render());
 const cBuy = Save.credits;
@@ -1399,12 +1406,12 @@ Base.buyArmor('helmet', 2);
 ok('买下一顶二级头盔', Save.stash.filter(e => e.gear).length === 1);
 ok('买来的是崭新（满耐久）',
   Save.stash.find(e => e.gear).gear.equip.gear.dur === GEAR.def('helmet', 2).dur);
-ok('买东西扣钱', Save.credits === cBuy - GEAR.def('helmet', 2).price,
+ok('买东西扣钱', Save.credits === cBuy - Math.round(GEAR.def('helmet', 2).price * 3),
   cBuy + ' → ' + Save.credits);
 
 const nShop = Save.stash.length;
 Base.buyArmor('helmet', 5);
-ok('商人卖不到三级以上', Save.stash.length === nShop, '仓库 ' + Save.stash.length + ' 条');
+ok('商人卖不到四级以上', Save.stash.length === nShop, '仓库 ' + Save.stash.length + ' 条');
 
 Save.credits = 10;
 Base.buyArmor('body', 3);
@@ -1451,7 +1458,7 @@ ok('护甲位里能列出护甲', Base.stashArmor('body').length === 1);
 console.log('\n=== 武器位与军火商 ===');
 
 // 武器位和护甲一样走"仓库挑选"，而且是真物品（带余弹）
-Save.stash = []; Save.credits = 200000;
+Save.stash = []; Save.credits = 1000000;
 Save.gear.weapons = [EQUIP.gun('rifle', 18), null, EQUIP.gun('pistol', 7)];
 ok('武器位存的是物品而不是 id',
   typeof Save.gear.weapons[0] === 'object' && Save.gear.weapons[0].equip.gun === 'm4a1');
@@ -1472,7 +1479,7 @@ ok('军火商能买到枪', Save.stash.filter(e => e.gear).length === 1);
 const smgEntry = Save.stash.find(e => e.gear);
 ok('买来的枪是满弹匣', smgEntry.gear.equip.mag === WEAPONS.smg.mag,
   smgEntry.gear.equip.mag + ' / ' + WEAPONS.smg.mag);
-ok('买枪扣钱', Save.credits === cGun - WEAPONS.smg.price, cGun + ' → ' + Save.credits);
+ok('买枪扣钱', Save.credits === cGun - Math.round(WEAPONS.smg.price * 3), cGun + ' → ' + Save.credits);
 ok('枪的买价和回收价对得上',
   smgEntry.gear.sell === Math.floor(WEAPONS.smg.price * 0.5), '¥' + smgEntry.gear.sell);
 
@@ -1779,18 +1786,50 @@ noThrow('击发延迟：延迟到点才出膛', () => {
 });
 ok('击发延迟：延迟后子弹已发射', Game.bullets.length > b0, String(Game.bullets.length - b0));
 
-/* 调参即时生效：射速 / 后坐力 / 回正 */
+/* 靶场七参数：增加实验用瞄准散布倍率，物理基准仍由 CFG.RECOIL 派生。 */
 Range.equip('rifle');
+ok('靶场七项调参包含瞄准精度', RANGE_PARAMS.length === 7 &&
+  RANGE_PARAMS.map(p => p.key).join(',') === 'rpm,aimTime,recoilVMul,recoilHMul,spreadGrowthMul,spreadMul,adsPrecisionMul',
+  RANGE_PARAMS.map(p => p.key).join(','));
 Range.setDisp(RANGE_PARAMS.find(p => p.key === 'rpm'), 900);
-Range.setDisp(RANGE_PARAMS.find(p => p.key === 'recoilPerShot'), 0.2);
-Range.setDisp(RANGE_PARAMS.find(p => p.key === 'decay'), 1.5);
+Range.setDisp(RANGE_PARAMS.find(p => p.key === 'recoilVMul'), 1.5);
+Range.setDisp(RANGE_PARAMS.find(p => p.key === 'spreadGrowthMul'), 2);
 Range.apply();
-ok('调参写进当前武器', Math.abs(Game.player.weapon.rpm - 900) < 1e-6 && Math.abs(Game.player.weapon.recoilPerShot - 0.2) < 1e-6,
-  Game.player.weapon.rpm + ' / ' + Game.player.weapon.recoilPerShot);
-ok('调参写进后坐力配置', Math.abs(CFG.RECOIL.decay - 1.5) < 1e-6, String(CFG.RECOIL.decay));
+ok('调参写进当前武器',
+  Math.abs(Game.player.weapon.rpm - 900) < 1e-6 &&
+  Math.abs(Game.player.weapon.recoilVMul - 1.5) < 1e-6 &&
+  Math.abs(Game.player.weapon.spreadGrowthMul - 2) < 1e-6,
+  Game.player.weapon.rpm + ' / ' + Game.player.weapon.recoilVMul + ' / ' + Game.player.weapon.spreadGrowthMul);
+{
+  const d = Firearms.derive(Game.player.weapon);
+  ok('派生冲击 = 全局基准 × 倍率',
+    Math.abs(d.vKick - CFG.RECOIL.axis.v.kick * 1.5) < 1e-9 &&
+    Math.abs(d.growth - CFG.RECOIL.perShot * 2) < 1e-9,
+    d.vKick.toFixed(2) + 'px / ' + d.growth.toFixed(4));
+  ok('调参不再改写全局常量',
+    CFG.RECOIL.axis.v.kick === 3.4 && CFG.RECOIL.perShot === 0.075,
+    CFG.RECOIL.axis.v.kick + ' / ' + CFG.RECOIL.perShot);
+}
 Game.player.fireCd = 0; Game.player.windupShot = false; Game.player.mag = Game.player.weapon.mag;
 Game.player.tryShoot();
 ok('射速参与开火冷却', Math.abs(Game.player.fireCd - 60 / 900) < 1e-6, String(Game.player.fireCd));
+
+/* 配件在靶场里改的是倍率，并且和调参叠加而不是互相覆盖 */
+{
+  const before = Game.player.weapon;
+  const part = Object.values(ATTACHMENT_DEFS).find(a => a.subtype === 'muzzle' &&
+    Attachments.compatible(before.id, a.id, 'muzzle'));
+  Range.setPart('muzzle', part.id);
+  const after = Game.player.weapon;
+  const m = part.statModifiers || {};
+  ok('靶场改装立即生效（倍率被配件改写）',
+    (m.recoilVertical == null || Math.abs(after.recoilVMul - before.recoilVMul * (1 + m.recoilVertical)) < 1e-9) &&
+    after.attachments.muzzle === part.id, part.name);
+  ok('改装不会冲掉调参值', Math.abs(after.rpm - 900) < 1e-6 && Math.abs(after.spreadGrowthMul - 2) < 1e-6,
+    after.rpm + ' / ' + after.spreadGrowthMul);
+  Range.setPart('muzzle', null);
+  ok('拆卸后回到未改装倍率', Math.abs(Game.player.weapon.recoilVMul - 1.5) < 1e-6, String(Game.player.weapon.recoilVMul));
+}
 
 /* 面板按钮与重置 */
 Range.clearMarks();
@@ -1819,12 +1858,13 @@ ok('导出 JSON 只列改动项',
    !!exp.weapons && !!exp.weapons.m4a1 && exp.weapons.m4a1.rpm === 600 &&
    !exp.weapons.pp19_01,
    JSON.stringify(exp.weapons));
-ok('导出结构能被写回脚本识别', exp.version === 1 && !('weaponDiff' in exp),
+ok('导出结构能被写回脚本识别', exp.version === 2 && !('recoil' in exp),
    Object.keys(exp).join(','));
 
-/* 退出后还原后坐力配置 */
+/* 退出后全局常量原样不动（调参只存在于本局武器上） */
+const decayBefore = CFG.RECOIL.decayHalfLife;
 Range.exit();
-ok('退出靶场还原后坐力配置', Math.abs(CFG.RECOIL.decay - RANGE_DEF_G.decay) < 1e-9, String(CFG.RECOIL.decay));
+ok('退出靶场不还原全局常量（本来就没改）', CFG.RECOIL.decayHalfLife === decayBefore, String(CFG.RECOIL.decayHalfLife));
 ok('退出靶场清空靶子', (Game.targets || []).length === 0);
 
 /* ============================================================
@@ -2100,7 +2140,11 @@ console.log('\n=== 体力 ===');
     clrW();
     return d;
   };
-  const dLight = drainWith(5), dMid = drainWith(25), dHeavy = drainWith(40), dOver = drainWith(60);
+  /* 取样点跟着 BAG.TIERS 走：三档门槛分别取「轻装中段 / 刚过中载线 / 刚过重载线」，
+     上限以后再调也不用手改这里的数字。 */
+  const BT = CFG.BAG.TIERS;
+  const dLight = drainWith(BT[0][0] * 0.3), dMid = drainWith(BT[0][0] + 5),
+        dHeavy = drainWith(BT[1][0] + 5), dOver = drainWith(BT[2][0] + 5);
   ok('轻装按基础速率消耗', Math.abs(dLight - S.SPRINT_DRAIN) < 0.6, dLight.toFixed(2) + '/s');
   ok('中载及以下不影响消耗', Math.abs(dMid - dLight) < 0.05,
      dMid.toFixed(2) + ' vs ' + dLight.toFixed(2));
@@ -2115,8 +2159,8 @@ console.log('\n=== 体力 ===');
   ok('闪避确实滑出去了', PR.dodgeT > 0);
   ok('闪避后体力条亮着', PR.stamAlpha > 0.9);
 
-  /* 超载不可闪避 */
-  reset(); setW(60);
+  /* 超载不可闪避（取重载线之上 5kg，正好落进超载档） */
+  reset(); setW(CFG.BAG.TIERS[2][0] + 5);
   PR.update(dt, mk({ dodge: true }));
   ok('超载不能闪避', PR.dodgeT === 0 && PR.stamina === S.MAX);
   ok('超载闪避给出原因', PR.dodgeBlockedWhy() === '超载，闪不动', PR.dodgeBlockedWhy());
@@ -2215,25 +2259,27 @@ console.log('\n=== 护甲修理 ===');
 {
   const Repair = ctx.Repair, ARMOR_VARIANTS = ctx.ARMOR_VARIANTS;
   const defs = HELMETS.concat(BODIES, ARMOR_VARIANTS);
-  ok('所有护甲都带耐修程度', defs.every(d => Number.isFinite(d.rep) && d.rep > 0 && d.rep <= 100),
+  ok('所有护甲都带耐修度与材质',
+     defs.every(d => Number.isFinite(d.rep) && d.rep > 0 && d.rep <= 100 && !!CFG.MATERIALS[d.material]),
      '共 ' + defs.length + ' 件，' + Math.min(...defs.map(d => d.rep)) + '~' + Math.max(...defs.map(d => d.rep)));
 
-  /* 战术防弹衣：115 上限、耐修 60，掉到 20 再修 */
+  /* 战术防弹衣：V1 为 110 上限、防弹陶瓷 Kr=0.090，掉到 20 再修 */
   const g = GEAR.make('body', 4, 20);
   const q = Repair.quote(g);
-  ok('缺失耐久按上限减当前耐久结算', q.max === 115 && q.dur === 20 && q.lost === 95);
-  ok('上限损耗 = 缺失耐久 ×(1-rep/100)×WEAR',
-     q.capLoss === Math.max(1, Math.round(q.lost * (1 - q.rep / 100) * CFG.REPAIR.WEAR)) && q.newMax === q.max - q.capLoss,
+  ok('缺失耐久按上限减当前耐久结算', q.max === 110 && q.dur === 20 && q.lost === 90);
+  ok('上限损耗 = 缺失耐久 × 材质 Kr',
+     q.Kr === 0.09 && Math.abs(q.capLoss - q.lost * q.Kr) < 1e-6 &&
+     Math.abs(q.newMax - (q.max - q.capLoss)) < 1e-6 && q.newMax < q.max,
      '-' + q.capLoss + ' → 上限 ' + q.newMax);
   ok('修理费按原价 ÷ 原厂耐久 × 缺失耐久',
-     q.fee === Math.max(CFG.REPAIR.MIN_FEE, Math.round(g.price / 115 * q.lost * CFG.REPAIR.COST / 10) * 10),
+     q.fee === Math.max(CFG.REPAIR.MIN_FEE, Math.round(g.price / GEAR.def('body', 4).dur * q.lost * CFG.REPAIR.COST / 10) * 10),
      '¥' + q.fee);
   ok('修一次的上限损耗远小于补回的耐久', q.capLoss > 0 && q.capLoss < q.lost / 2);
 
-  /* 缺口一样、耐修不同：耐修高的那件掉得更少 */
-  const soft = Repair.quote(GEAR.make('body', 1, 20));      // 帆布护胸 rep 74，缺口 20
-  const hard = Repair.quote(GEAR.make('helmet', 6, 90));    // 攻坚头盔 rep 50，缺口 20
-  ok('耐修越高，同样缺口掉的上限越少', soft.lost === hard.lost && soft.capLoss < hard.capLoss,
+  /* 缺口一样、材质不同：Kr 小的那件掉得更少 */
+  const soft = Repair.quote(GEAR.make('body', 1, 20));      // 芳纶 Kr .035，缺口 20
+  const hard = Repair.quote(GEAR.make('helmet', 5, 65));    // 陶瓷 Kr .090，缺口 20
+  ok('材质 Kr 决定同样缺口的上限损耗', soft.lost === hard.lost && soft.capLoss < hard.capLoss,
      soft.capLoss + ' vs ' + hard.capLoss);
 
   ok('满耐久不需要修', !Repair.quote(GEAR.make('helmet', 3)).ok);
@@ -2243,7 +2289,7 @@ console.log('\n=== 护甲修理 ===');
   ok('GEAR.make 带得住修理后的上限', carried.max === 77 && carried.dur === 20);
   const pseudo = EQUIP.armor(carried);
   ok('伪物品不把上限冲回模板值', pseudo.equip.gear.max === 77 && pseudo.equip.gear.dur === 20);
-  ok('回收价按原厂上限折算', pseudo.sell === EQUIP.sellPrice(carried.price, 20, 77, 115) && pseudo.sell < 85000 * 0.5);
+  ok('回收价按原厂上限折算', pseudo.sell === EQUIP.sellPrice(carried.price, 20, 77, GEAR.def('body', 4).dur) && pseudo.sell < 85000 * 0.5);
 
   Save.gear.body = GEAR.make('body', 4, 30, 70);
   Save.save(); Save.load();
@@ -2287,13 +2333,15 @@ console.log('\n=== 护甲耐久条 ===');
   const worn = segs(D.html(GEAR.make('body',3,10)));         // 10/85
   ok('打掉的部分变灰', Math.abs(worn[0][1] - 10 / 85 * 100) < 0.02 && Math.abs(worn[1][1] - 75 / 85 * 100) < 0.02 && worn[2][1] === 0);
 
-  const fixed = segs(D.html(GEAR.make('body',4,20,94)));     // 20/94，原厂 115
-  ok('修掉的上限占红色', Math.abs(fixed[2][1] - 21 / 115 * 100) < 0.02);
+  const base4 = GEAR.def('body', 4).dur;                    // V1：110
+  const fixed = segs(D.html(GEAR.make('body',4,20,94)));     // 20/94，原厂 110
+  ok('修掉的上限占红色', Math.abs(fixed[2][1] - (base4 - 94) / base4 * 100) < 0.02);
   ok('三段合计正好铺满一条', Math.abs(fixed.reduce((n, s) => n + s[1], 0) - 100) < 0.02);
 
   const preview = segs(D.html(GEAR.make('body',4,20,94), {cap: 78, dur: 20}));
-  ok('修理预览按修完的上限画红色', Math.abs(preview[0][1] - 20 / 115 * 100) < 0.02 &&
-     Math.abs(preview[1][1] - 58 / 115 * 100) < 0.02 && Math.abs(preview[2][1] - 37 / 115 * 100) < 0.02);
+  ok('修理预览按修完的上限画红色', Math.abs(preview[0][1] - 20 / base4 * 100) < 0.02 &&
+     Math.abs(preview[1][1] - 58 / base4 * 100) < 0.02 &&
+     Math.abs(preview[2][1] - (base4 - 78) / base4 * 100) < 0.02);
 
   ok('非护甲不画条', D.html(EQUIP.gun('rifle')) === '' && D.of(EQUIP.gun('rifle')) === null);
 }
@@ -2334,12 +2382,31 @@ console.log('\n=== 彩蛋藏品 ===');
 {
   const L = vm.runInContext('Loot', ctx), CFG = ctx.CFG;
   const eggs = ctx.ITEMS.filter(i => i.egg);
-  ok('四件彩蛋都在物品表里', eggs.length === 4 && eggs.map(e => e.id).join(',') === 'odd13,odd14,odd15,odd16');
-  ok('彩蛋仍是红色孤品', eggs.every(e => e.r === 6 && e.cat === 'odd'));
-  ok('彩蛋带齐名称/简称/重量/价格/正文',
-     eggs.every(e => e.name && e.short && e.w > 0 && e.price > 0 && e.desc.length > 80));
-  ok('立绘与图标都在', eggs.every(e => fs.existsSync(path.join(dir, 'assets/items', e.id + '.png')) &&
-     fs.existsSync(path.join(dir, 'assets/item-art/easter-eggs-v1/sources', e.id + '.png'))));
+  const EGG_V2 = ['collect_secret01', 'elec_secret01', 'elec_secret02'];
+  ok('七件彩蛋都在物品表里', eggs.length === 7 &&
+     eggs.map(e => e.id).join(',') === 'odd13,odd14,odd15,odd16,' + EGG_V2.join(','),
+     eggs.map(e => e.id).join(','));
+  ok('彩蛋都是红色孤品、且都是收集品',
+     eggs.every(e => e.r === 6 && e.name && e.short && e.w > 0 && e.price > 0 && e.desc.length > 80));
+  ok('首版四件归异常遗物、新增三件按题材归位',
+     eggs.slice(0,4).every(e => e.cat === 'odd') &&
+     vm.runInContext('ITEM_BY_ID.collect_secret01.cat', ctx) === 'collect' &&
+     vm.runInContext('ITEM_BY_ID.elec_secret01.cat', ctx) === 'elec' &&
+     vm.runInContext('ITEM_BY_ID.elec_secret02.cat', ctx) === 'elec');
+  ok('新增三件的价格与文案口径一致',
+     vm.runInContext('ITEM_BY_ID.collect_secret01.price', ctx) === 20010000 &&
+     vm.runInContext('ITEM_BY_ID.elec_secret01.price', ctx) === 60900000 &&
+     vm.runInContext('ITEM_BY_ID.elec_secret02.price', ctx) === 33100000);
+  /* 立绘按批次存放：v1 首版四件、v2 新增三件；两批都是 1254×1254 RGBA */
+  const eggBatch = id => 'easter-eggs-' + (EGG_V2.includes(id) ? 'v2' : 'v1');
+  ok('七件的 48px 图标与立绘原稿都在', eggs.every(e =>
+     fs.existsSync(path.join(dir, 'assets/items', e.id + '.png')) &&
+     fs.existsSync(path.join(dir, 'assets/item-art', eggBatch(e.id), 'sources', e.id + '.png'))));
+  ok('七件都登记进详情原图通道', (() => {
+    const artKeys = new Set(JSON.parse(fs.readFileSync(path.join(dir, 'assets/item-details/catalog.json'), 'utf8'))
+      .assets.map(a => a.key));
+    return eggs.every(e => artKeys.has('items/' + e.id));
+  })(), 'catalog.json 里应有 items/<id> 原稿登记');
 
   /* 常规池必须过滤彩蛋：把概率关掉，抽一万次也不该出现 */
   const keep = CFG.LOOT.eggChance;
@@ -2355,7 +2422,7 @@ console.log('\n=== 彩蛋藏品 ===');
   ok('品质越高越容易中签',
      ['ample', 'fine', 'rich', 'secret'].every((q, i, arr) => !i || L.eggChanceFor(q) > L.eggChanceFor(arr[i - 1])),
      ['ample', 'fine', 'rich', 'secret'].map(q => q + ' ' + (L.eggChanceFor(q) * 100).toFixed(0) + '%').join(' / '));
-  ok('秘藏箱红里四件一件是彩蛋', Math.abs(L.eggChanceFor('secret') - 0.25) < 1e-9);
+  ok('秘藏箱红里四分之一换成彩蛋', Math.abs(L.eggChanceFor('secret') - 0.25) < 1e-9);
   ok('没有品质信息时回落到 eggChance 兜底', L.eggChanceFor(undefined) === CFG.LOOT.eggChance);
   let junkEgg = 0, plainEgg = 0;
   for (let i = 0; i < 20000; i++) { if (L.roll('junk').item.egg) junkEgg++; if (L.roll('plain').item.egg) plainEgg++; }
@@ -2366,11 +2433,11 @@ console.log('\n=== 彩蛋藏品 ===');
   CFG.LOOT.eggByQuality = { junk: 1, plain: 1, ample: 1, fine: 1, rich: 1, secret: 1 };
   ok('红色物品会换成彩蛋', L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}, 'secret').item.egg === true);
   ok('非红物品不会被换掉', L.eggSwap({item: ctx.ITEM_BY_ID['life01'], n: 1}, 'secret').item.id === 'life01');
-  ok('四件均分（拉满时都会出现）', (() => {
+  ok('七件均分（拉满时都会出现）', (() => {
     const seen = new Set();
-    for (let i = 0; i < 400; i++) seen.add(L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}, 'secret').item.id);
-    return seen.size === 4;
-  })());
+    for (let i = 0; i < 800; i++) seen.add(L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}, 'secret').item.id);
+    return seen.size === eggs.length;
+  })(), String(eggs.length));
   CFG.LOOT.eggByQuality = keepTable;
 
   /* 实测：秘藏箱 8% 红 × 25% = 2% 的彩蛋；红档总量不变 */
@@ -2455,6 +2522,45 @@ console.log('\n=== 随机入场 / 入场点封闭 ===');
   ok('开放撤离点照常开始读条', !!GG.action && GG.action.type === 'extract');
   GG.action = null;
   ok('开放点的提示仍是撤离', GG.interactLabel({ type: 'extract', obj: open }, false).includes('撤离'));
+}
+
+console.log('\n=== 容量 / 次数 / 耐久条（CapBar）===');
+{
+  const CB = vm.runInContext('CapBar', ctx);
+  const IC = vm.runInContext('ItemCapacity', ctx);
+  const bar = CB.html({ id: 'heal03', n: 1 });
+  ok('满容量医疗品画整条绿', /dbar-capacity/.test(bar) && /width:100\.00%/.test(bar) && /width:0\.00%/.test(bar), bar);
+  ok('医疗条不画护甲那种红色损耗段', !/class="dr"/.test(bar));
+  ok('满容量读数跟着条走', /当前容量 120 \/ 120/.test(bar) && CB.label({ id: 'heal03', n: 1 }) === '当前容量 120 / 120');
+  const used = CB.html({ id: 'heal03', n: 1, cap: 30 });
+  ok('残容量 30/120 → 绿 25% / 灰 75%', /width:25\.00%/.test(used) && /width:75\.00%/.test(used), used);
+  const uses = CB.html({ id: 'heal12', n: 1, cap: 2 });
+  ok('次数式 2/8 → 绿 25%，标题写剩余次数', /width:25\.00%/.test(uses) && /剩余次数 2 \/ 8/.test(uses), uses);
+  ok('满次数式整条绿', /width:100\.00%/.test(CB.html({ id: 'heal12', n: 1 })));
+  ok('容量 / 次数比例都取同一个 ratio', CB.ratio({ id: 'heal03', n: 1, cap: 30 }) === 0.25 &&
+     CB.ratio({ id: 'heal12', n: 1, cap: 2 }) === 0.25 && CB.ratio({ id: 'heal03', n: 1 }) === 1);
+  const keyBar = CB.html({ id: 'door_key_old_apt', n: 1, cap: 5 });
+  ok('钥匙也挂同款耐久条（5/10 → 绿 50% / 灰 50%）',
+     /dbar-capacity/.test(keyBar) && /width:50\.00%/.test(keyBar) && !/class="dr"/.test(keyBar), keyBar);
+  ok('钥匙满耐久整条绿、每开一次锁短 10%',
+     /width:100\.00%/.test(CB.html({ id: 'door_key_old_apt', n: 1 })) &&
+     CB.ratio({ id: 'door_key_old_apt', n: 1, cap: 5 }) === 0.5 &&
+     CB.ratio({ id: 'door_key_old_apt', n: 1, cap: 4 }) === 0.4);
+  ok('钥匙条的读数写剩余耐久',
+     /剩余耐久 5 \/ 10/.test(keyBar) &&
+     /剩余耐久 5 \/ 10/.test(CB.readout({ id: 'door_key_old_apt', n: 1, cap: 5 })));
+  ok('普通物品 / 效果未开放的医疗品都没有条',
+     CB.html({ id: 'life01', n: 1 }) === '' && CB.html({ id: 'heal11', n: 1 }) === '' &&
+     CB.readout({ id: 'life01', n: 1 }) === '');
+  ok('cap 越界被夹住，不会出现负宽或超 100%',
+     /width:100\.00%/.test(CB.html({ id: 'heal03', n: 1, cap: 999 })) &&
+     /width:0\.00%/.test(CB.html({ id: 'heal03', n: 1, cap: -3 })));
+  ok('详情表格口径统一成 N / 上限',
+     IC.value({ id: 'heal12', n: 1, cap: 2 }) === '2 / 8' &&
+     IC.value({ id: 'heal03', n: 1, cap: 30 }) === '30 / 120' &&
+     IC.value({ id: 'door_key_old_apt', n: 1, cap: 5 }) === '5 / 10');
+  ok('护甲耐久条和医疗条互不串味',
+     !/dbar-capacity/.test(vm.runInContext('DuraBar.html(GEAR.make("helmet",3))', ctx)));
 }
 
 console.log('\n---------------------------------------');

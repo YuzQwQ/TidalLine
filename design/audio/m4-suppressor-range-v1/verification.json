@@ -1,0 +1,235 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "calls": [
+        {
+          "id": "shot_rifle",
+          "effect": false,
+          "delay": 0
+        },
+        {
+          "id": "shot_rifle",
+          "effect": true,
+          "delay": 0
+        },
+        {
+          "id": "shot_rifle",
+          "effect": true,
+          "delay": 0
+        },
+        {
+          "id": "shot_rifle",
+          "effect": true,
+          "delay": 0.075
+        },
+        {
+          "id": "shot_rifle",
+          "effect": true,
+          "delay": 0.15
+        }
+      ],
+      "shots": [
+        {
+          "gun": "m4a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "calls": [
+            {
+              "id": "shot_rifle",
+              "effect": true,
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "gun": "m4a1",
+          "muzzle": "att_muzzle08",
+          "fired": true,
+          "calls": [
+            {
+              "id": "shot_rifle",
+              "effect": true,
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "gun": "m4a1",
+          "muzzle": null,
+          "fired": true,
+          "calls": [
+            {
+              "id": "shot_rifle",
+              "effect": false,
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "gun": "akm",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "calls": [
+            {
+              "id": "shot_ak47",
+              "effect": false,
+              "delay": 0
+            }
+          ]
+        }
+      ],
+      "analysis": {
+        "dry": {
+          "rms": 0.09433566289275283,
+          "roughness": 0.5687217879256374,
+          "tail": 0.045135193604666224,
+          "peak": 0.4643922448158264
+        },
+        "wet": {
+          "rms": 0.01869464284763899,
+          "roughness": 0.4978851464397007,
+          "tail": 0,
+          "peak": 0.3662559390068054
+        },
+        "sourceDuration": 0.22702083333333334,
+        "profile": {
+          "pitchSemitones": 6,
+          "gain": 0.64,
+          "highpass": 180,
+          "lowShelfHz": 380,
+          "lowShelfDb": -9,
+          "highShelfHz": 2600,
+          "highShelfDb": -4,
+          "peakHz": 3400,
+          "peakDb": 5.5,
+          "peakQ": 1.4,
+          "lowpass": 9600,
+          "end": 0.13
+        }
+      },
+      "gate": {
+        "active": false,
+        "forced": false,
+        "installed": false
+      },
+      "passed": true
+    },
+    {
+      "file": "潮汐线.html",
+      "calls": [
+        {
+          "id": "shot_rifle",
+          "effect": false,
+          "delay": 0
+        },
+        {
+          "id": "shot_rifle",
+          "effect": true,
+          "delay": 0
+        },
+        {
+          "id": "shot_rifle",
+          "effect": true,
+          "delay": 0
+        },
+        {
+          "id": "shot_rifle",
+          "effect": true,
+          "delay": 0.075
+        },
+        {
+          "id": "shot_rifle",
+          "effect": true,
+          "delay": 0.15
+        }
+      ],
+      "shots": [
+        {
+          "gun": "m4a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "calls": [
+            {
+              "id": "shot_rifle",
+              "effect": true,
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "gun": "m4a1",
+          "muzzle": "att_muzzle08",
+          "fired": true,
+          "calls": [
+            {
+              "id": "shot_rifle",
+              "effect": true,
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "gun": "m4a1",
+          "muzzle": null,
+          "fired": true,
+          "calls": [
+            {
+              "id": "shot_rifle",
+              "effect": false,
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "gun": "akm",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "calls": [
+            {
+              "id": "shot_ak47",
+              "effect": false,
+              "delay": 0
+            }
+          ]
+        }
+      ],
+      "analysis": {
+        "dry": {
+          "rms": 0.09433566289275283,
+          "roughness": 0.5687217879256374,
+          "tail": 0.045135193604666224,
+          "peak": 0.4643922448158264
+        },
+        "wet": {
+          "rms": 0.01869464284763899,
+          "roughness": 0.4978851464397007,
+          "tail": 0,
+          "peak": 0.3662559390068054
+        },
+        "sourceDuration": 0.22702083333333334,
+        "profile": {
+          "pitchSemitones": 6,
+          "gain": 0.64,
+          "highpass": 180,
+          "lowShelfHz": 380,
+          "lowShelfDb": -9,
+          "highShelfHz": 2600,
+          "highShelfDb": -4,
+          "peakHz": 3400,
+          "peakDb": 5.5,
+          "peakQ": 1.4,
+          "lowpass": 9600,
+          "end": 0.13
+        }
+      },
+      "gate": {
+        "active": false,
+        "forced": false,
+        "installed": false
+      },
+      "passed": true
+    }
+  ]
+}

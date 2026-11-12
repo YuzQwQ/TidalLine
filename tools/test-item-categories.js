@@ -10,8 +10,10 @@ assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,r
 assert.deepEqual(Array.from(order,k=>cats[k].name),['生活用品','电子产品','工业器材','医疗物资','文物藏品','军事物资','情报资料','神秘学物品','异常遗物']);
 /* 弹药是三口径×五等级派生出来的家族，不进分类评审表（它没有"归类"这回事），
    单独在下面对照需求表逐条校验。 */
-const curated=items.filter(i=>i.cat!=='ammo');
-assert.equal(new Set(review.items.map(r=>r.id)).size,curated.length);assert.equal(curated.length,191);
+/* 弹药是派生家族、钥匙由 design/items/keys.json 单独管，都不进三份设计表。
+   这里的条数不再写死，跟着评审表走，免得每加一件物品都要手改数字。 */
+const curated=items.filter(i=>i.cat!=='ammo'&&i.cat!=='key');
+assert.equal(new Set(review.items.map(r=>r.id)).size,curated.length);assert.equal(curated.length,review.items.length);
 for(const item of curated){
  const record=review.items.find(r=>r.id===item.id);assert(record&&record.reason);assert.equal(item.cat,record.category);assert.equal(groupOf(item),record.group);assert(groups[record.group].cats.includes(item.cat));
  const original={...record.original,cat:record.category};
@@ -23,8 +25,9 @@ for(const item of curated){
  const pendingArt=new Set(review.items.filter(r=>r.pendingArt).map(r=>r.id));
  assert((item.cat==='medical'&&!item.iconId)||fs.existsSync(path.join(root,'assets/items',hasIcon+'.png'))||pendingArt.has(item.id),'缺贴图 '+item.id);
 }
-assert.equal(items.filter(i=>!i.noCodex).length,170);assert.equal(items.filter(i=>i.cat==='occult').length,17);
-assert.equal(items.filter(i=>groupOf(i)=='collectible').length,170);assert.equal(items.filter(i=>groupOf(i)==='supply').length,51);
+const nCollect=items.filter(i=>groupOf(i)=='collectible').length;
+assert.equal(items.filter(i=>!i.noCodex).length,nCollect,'进图鉴的就是收集品');assert.equal(items.filter(i=>i.cat==='occult').length,17);
+assert.equal(nCollect,rarityReview.items.length);assert.equal(items.filter(i=>groupOf(i)==='supply').length,items.length-nCollect);
 for(const id of ['life02','art03'])assert.equal(items.find(i=>i.id===id).cat,'intel');
 assert.equal(items.find(i=>i.id==='antiq03').cat,'life');assert.equal(items.find(i=>i.id==='elec01').cat,'elec');
 /* 弹药：30 种（六口径 × 五等级），id 只有 ammo_{口径}_{等级} 这一种写法，全部不进图鉴与掉落 */
@@ -47,4 +50,4 @@ for(const k of ['antiq','art','lux','spec'])assert(!cats[k],'旧分类不应留�
 for(const box of map.containers)for(const cat of box.preference)assert(cats[cat],'地图掉落偏好失效 '+box.id);
 for(const box of Object.values(types))for(const cat of box.cats||[])assert(cats[cat]);
 for(const kind of ['junk','plain','ample','fine','rich','secret'])for(let i=0;i<200;i++){const drop=loot.fill(kind,['collect']);assert(drop.length);for(const d of drop){assert(cats[d.item.cat]);assert(!d.item.noLoot);}}
-console.log('OK: 文物藏品 / 170收集品与51物资 / 弹药和医疗子类 / 170图鉴 / ID贴图及原值不变 / 绷带治疗掉落语义 / 医疗偏好');
+console.log('OK: 文物藏品 / '+nCollect+'收集品与'+(items.length-nCollect)+'物资 / 弹药和医疗子类 / '+nCollect+'图鉴 / ID贴图及原值不变 / 绷带治疗掉落语义 / 医疗偏好');

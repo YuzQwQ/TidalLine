@@ -7,15 +7,17 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "optic",
     "r": 2,
-    "price": 7500,
     "w": 0.08,
-    "description": "微型反射瞄具，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 7500,
+    "description": "微型反射瞄具。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_optic01",
     "compatibleTags": [
       "optic.common"
     ],
     "statModifiers": {
-      "aimTime": -0.12
+      "aimTime": -0.12,
+      "adsZoom": 1.15,
+      "adsView": 1.15
     },
     "visual": "small open reflex sight, tiny rectangular blue green glass lens, low square metal base, compact black alloy frame"
   },
@@ -25,16 +27,18 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "optic",
     "r": 3,
-    "price": 13500,
     "w": 0.25,
-    "description": "全息瞄具，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 13500,
+    "description": "全息瞄具。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_optic02",
     "compatibleTags": [
       "optic.common"
     ],
     "statModifiers": {
-      "baseSpread": -0.12,
-      "aimTime": 0.02
+      "aimTime": 0.02,
+      "adsSpread": -0.12,
+      "adsZoom": 1.15,
+      "adsView": 1.15
     },
     "visual": "hooded rectangular holographic sight, thick squared dark metal protective hood, subtle teal glass and low mounting foot"
   },
@@ -44,16 +48,18 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "optic",
     "r": 3,
-    "price": 18000,
     "w": 0.32,
-    "description": "低倍率光学瞄具，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 18000,
+    "description": "低倍率光学瞄具。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_optic03",
     "compatibleTags": [
       "optic.scope"
     ],
     "statModifiers": {
-      "baseSpread": -0.2,
-      "aimTime": 0.05
+      "aimTime": 0.05,
+      "adsSpread": -0.2,
+      "adsZoom": 1.4,
+      "adsView": 1.6
     },
     "visual": "short compact tubular low magnification optic, one small top adjustment turret, two mounting clamps, charcoal tube and small green lens"
   },
@@ -63,18 +69,104 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "optic",
     "r": 4,
-    "price": 30000,
     "w": 0.48,
-    "description": "精密光学瞄具，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 30000,
+    "description": "精密光学瞄具。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_optic04",
     "compatibleTags": [
       "optic.scope"
     ],
     "statModifiers": {
-      "baseSpread": -0.3,
-      "aimTime": 0.08
+      "aimTime": 0.08,
+      "adsSpread": -0.3,
+      "adsZoom": 1.4,
+      "adsView": 2
     },
     "visual": "long precision rifle scope, enlarged objective bell, smaller eyepiece, two mounting rings, three adjustment turrets, weathered dark steel"
+  },
+  "att_optic05": {
+    "id": "att_optic05",
+    "name": "开放式机械瞄具",
+    "category": "attachment",
+    "subtype": "optic",
+    "r": 1,
+    "w": 0.05,
+    "price": 3000,
+    "description": "开放式机械瞄具。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_optic05",
+    "compatibleTags": [
+      "optic.common"
+    ],
+    "statModifiers": {
+      "aimTime": -0.05,
+      "adsSpread": -0.05,
+      "adsZoom": 1.15,
+      "adsView": 1.15
+    },
+    "visual": "detachable iron sights, rear aperture and front post, no glass"
+  },
+  "att_optic06": {
+    "id": "att_optic06",
+    "name": "紧凑棱镜瞄具",
+    "category": "attachment",
+    "subtype": "optic",
+    "r": 3,
+    "w": 0.28,
+    "price": 19500,
+    "description": "紧凑棱镜瞄具。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_optic06",
+    "compatibleTags": [
+      "optic.scope"
+    ],
+    "statModifiers": {
+      "aimTime": 0.06,
+      "adsSpread": -0.15,
+      "adsZoom": 1.4,
+      "adsView": 1.45
+    },
+    "visual": "compact short prism optic, thick rectangular-tubular housing, integrated low rail"
+  },
+  "att_optic07": {
+    "id": "att_optic07",
+    "name": "低倍可变光学瞄具",
+    "category": "attachment",
+    "subtype": "optic",
+    "r": 4,
+    "w": 0.42,
+    "price": 32000,
+    "description": "低倍可变光学瞄具。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_optic07",
+    "compatibleTags": [
+      "optic.scope"
+    ],
+    "statModifiers": {
+      "aimTime": 0.12,
+      "adsSpread": -0.22,
+      "adsZoom": 1.4,
+      "adsView": 1.8
+    },
+    "visual": "medium tubular variable power scope with knurled rear magnification ring"
+  },
+  "att_optic08": {
+    "id": "att_optic08",
+    "name": "远程战术瞄准镜",
+    "category": "attachment",
+    "subtype": "optic",
+    "r": 5,
+    "w": 0.65,
+    "price": 48000,
+    "description": "远程战术瞄准镜。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_optic08",
+    "compatibleTags": [
+      "optic.scope"
+    ],
+    "statModifiers": {
+      "aimTime": 0.22,
+      "adsSpread": -0.35,
+      "adsZoom": 1.4,
+      "adsView": 2.4
+    },
+    "visual": "large long-range tactical scope, oversized objective bell and tall adjustment turrets"
   },
   "att_grip01": {
     "id": "att_grip01",
@@ -82,9 +174,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "grip",
     "r": 2,
-    "price": 6750,
     "w": 0.12,
-    "description": "垂直握把，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 6750,
+    "description": "垂直握把。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_grip01",
     "compatibleTags": [
       "grip.common"
@@ -101,9 +193,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "grip",
     "r": 2,
-    "price": 7500,
     "w": 0.1,
-    "description": "斜角握把，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 7500,
+    "description": "斜角握把。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_grip02",
     "compatibleTags": [
       "grip.common"
@@ -119,9 +211,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "grip",
     "r": 3,
-    "price": 10500,
     "w": 0.08,
-    "description": "紧凑握把，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 10500,
+    "description": "紧凑握把。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_grip03",
     "compatibleTags": [
       "grip.common"
@@ -138,9 +230,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "grip",
     "r": 3,
-    "price": 13500,
     "w": 0.14,
-    "description": "人体工学握把，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 13500,
+    "description": "人体工学握把。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_grip04",
     "compatibleTags": [
       "grip.common"
@@ -151,15 +243,93 @@ const ATTACHMENT_DEFS = {
     },
     "visual": "ergonomic foregrip, contoured olive gray palm shape, finger grooves and rubberized inset panels, solid short mounting base"
   },
+  "att_grip05": {
+    "id": "att_grip05",
+    "name": "短型阻手器",
+    "category": "attachment",
+    "subtype": "grip",
+    "r": 2,
+    "w": 0.07,
+    "price": 8500,
+    "description": "短型阻手器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_grip05",
+    "compatibleTags": [
+      "grip.common"
+    ],
+    "statModifiers": {
+      "aimTime": -0.08,
+      "hipSpread": -0.06
+    },
+    "visual": "ultra short wedge hand stop, textured polymer, minimal rail foot"
+  },
+  "att_grip06": {
+    "id": "att_grip06",
+    "name": "加重垂直握把",
+    "category": "attachment",
+    "subtype": "grip",
+    "r": 3,
+    "w": 0.21,
+    "price": 16000,
+    "description": "加重垂直握把。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_grip06",
+    "compatibleTags": [
+      "grip.common"
+    ],
+    "statModifiers": {
+      "recoilVertical": -0.24,
+      "aimTime": 0.08
+    },
+    "visual": "heavy thick ribbed vertical foregrip, broad metal clamp and weighted base"
+  },
+  "att_grip07": {
+    "id": "att_grip07",
+    "name": "稳定战术握把",
+    "category": "attachment",
+    "subtype": "grip",
+    "r": 4,
+    "w": 0.25,
+    "price": 23000,
+    "description": "稳定战术握把。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_grip07",
+    "compatibleTags": [
+      "grip.common"
+    ],
+    "statModifiers": {
+      "spreadGrowth": -0.18,
+      "recoilHorizontal": -0.08,
+      "aimTime": 0.06
+    },
+    "visual": "extended contoured forward angled tactical foregrip with rubber palm support"
+  },
+  "att_grip08": {
+    "id": "att_grip08",
+    "name": "轻型竞技握把",
+    "category": "attachment",
+    "subtype": "grip",
+    "r": 4,
+    "w": 0.09,
+    "price": 20000,
+    "description": "轻型竞技握把。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_grip08",
+    "compatibleTags": [
+      "grip.common"
+    ],
+    "statModifiers": {
+      "aimTime": -0.16,
+      "recoilHorizontal": 0.07,
+      "recoilVertical": 0.07
+    },
+    "visual": "slim skeletonized competition foregrip, angular cutouts and narrow thumb shelf"
+  },
   "att_stock01": {
     "id": "att_stock01",
     "name": "固定枪托",
     "category": "attachment",
     "subtype": "stock",
     "r": 2,
-    "price": 9000,
     "w": 0.3,
-    "description": "固定枪托，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 9000,
+    "description": "固定枪托。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_stock01",
     "compatibleTags": [
       "stock.replaceable"
@@ -177,9 +347,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "stock",
     "r": 2,
-    "price": 8250,
     "w": 0.22,
-    "description": "伸缩枪托，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 8250,
+    "description": "伸缩枪托。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_stock02",
     "compatibleTags": [
       "stock.replaceable"
@@ -197,19 +367,100 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "stock",
     "r": 4,
-    "price": 22500,
     "w": 0.45,
-    "description": "精密枪托，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 22500,
+    "description": "精密枪托。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_stock03",
     "compatibleTags": [
       "stock.replaceable"
     ],
     "statModifiers": {
-      "recoilRecovery": 0.25,
       "baseSpread": -0.08,
+      "spreadGrowth": -0.2,
       "aimTime": 0.05
     },
     "visual": "precision buttstock, heavy graphite body, raised cheek rest, adjustable flat shoulder pad with two small silver adjustment knobs, restrained 1990s industrial design"
+  },
+  "att_stock04": {
+    "id": "att_stock04",
+    "name": "轻量镂空枪托",
+    "category": "attachment",
+    "subtype": "stock",
+    "r": 2,
+    "w": 0.16,
+    "price": 11000,
+    "description": "轻量镂空枪托。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_stock04",
+    "compatibleTags": [
+      "stock.replaceable"
+    ],
+    "statModifiers": {
+      "aimTime": -0.15,
+      "recoilHorizontal": 0.08,
+      "recoilVertical": 0.08
+    },
+    "visual": "light skeletonized stock, triangular hollow cutouts, slim struts"
+  },
+  "att_stock05": {
+    "id": "att_stock05",
+    "name": "加重稳定枪托",
+    "category": "attachment",
+    "subtype": "stock",
+    "r": 3,
+    "w": 0.52,
+    "price": 17500,
+    "description": "加重稳定枪托。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_stock05",
+    "compatibleTags": [
+      "stock.replaceable"
+    ],
+    "statModifiers": {
+      "recoilHorizontal": -0.16,
+      "recoilVertical": -0.16,
+      "aimTime": 0.1
+    },
+    "visual": "heavy solid fixed stock with broad rubber buttpad, olive polymer body"
+  },
+  "att_stock06": {
+    "id": "att_stock06",
+    "name": "缓冲减震枪托",
+    "category": "attachment",
+    "subtype": "stock",
+    "r": 4,
+    "w": 0.48,
+    "price": 26000,
+    "description": "缓冲减震枪托。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_stock06",
+    "compatibleTags": [
+      "stock.replaceable"
+    ],
+    "statModifiers": {
+      "spreadGrowth": -0.22,
+      "recoilVertical": -0.07,
+      "aimTime": 0.09
+    },
+    "visual": "mechanical buffer stock with short exposed buffer cylinder and adjustable shoulder pad"
+  },
+  "att_stock07": {
+    "id": "att_stock07",
+    "name": "精英战术枪托",
+    "category": "attachment",
+    "subtype": "stock",
+    "r": 5,
+    "w": 0.36,
+    "price": 38000,
+    "description": "精英战术枪托。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_stock07",
+    "compatibleTags": [
+      "stock.replaceable"
+    ],
+    "statModifiers": {
+      "recoilHorizontal": -0.12,
+      "recoilVertical": -0.12,
+      "spreadGrowth": -0.1,
+      "aimTime": 0.05
+    },
+    "visual": "premium tactical stock, adjustable cheek rest and reinforced lower strut"
   },
   "att_muzzle01": {
     "id": "att_muzzle01",
@@ -217,9 +468,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "muzzle",
     "r": 2,
-    "price": 6000,
     "w": 0.08,
-    "description": "标准制退器，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 6000,
+    "description": "标准制退器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_muzzle01",
     "compatibleTags": [
       "muzzle.standard"
@@ -235,9 +486,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "muzzle",
     "r": 3,
-    "price": 10500,
     "w": 0.1,
-    "description": "横向补偿器，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 10500,
+    "description": "横向补偿器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_muzzle02",
     "compatibleTags": [
       "muzzle.standard"
@@ -254,9 +505,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "muzzle",
     "r": 3,
-    "price": 13500,
     "w": 0.12,
-    "description": "复合补偿器，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 13500,
+    "description": "复合补偿器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_muzzle03",
     "compatibleTags": [
       "muzzle.standard"
@@ -274,9 +525,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "muzzle",
     "r": 4,
-    "price": 18000,
     "w": 0.1,
-    "description": "精密枪口装置，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 18000,
+    "description": "精密枪口装置。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_muzzle04",
     "compatibleTags": [
       "muzzle.standard"
@@ -293,9 +544,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "muzzle",
     "r": 3,
-    "price": 12000,
     "w": 0.06,
-    "description": "收束器，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 12000,
+    "description": "收束器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_muzzle05",
     "compatibleTags": [
       "muzzle.shotgun"
@@ -312,9 +563,9 @@ const ATTACHMENT_DEFS = {
     "category": "attachment",
     "subtype": "muzzle",
     "r": 2,
-    "price": 5250,
     "w": 0.05,
-    "description": "扩散器，用于改善枪械操控。兼容性以改装界面显示为准。",
+    "price": 5250,
+    "description": "扩散器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
     "icon": "att_muzzle06",
     "compatibleTags": [
       "muzzle.shotgun"
@@ -324,356 +575,1708 @@ const ATTACHMENT_DEFS = {
     },
     "visual": "shotgun spreader muzzle device, short flared wide mouth steel tube with four broad shallow slots, thicker base collar"
   },
-  "att_mag_556_ext": {
-    "id": "att_mag_556_ext",
-    "name": "5.56×45mm 扩容弹匣",
+  "att_muzzle07": {
+    "id": "att_muzzle07",
+    "name": "鸟笼式消焰器",
     "category": "attachment",
-    "subtype": "magazine",
+    "subtype": "muzzle",
     "r": 2,
-    "price": 10500,
-    "w": 0.12,
-    "description": "5.56×45mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_556_ext",
-    "compatibleTags": [
-      "mag.box",
-      "cal.556"
-    ],
-    "statModifiers": {
-      "magazineCapacity": 0.3
-    },
-    "visual": "slightly curved narrow rifle magazine, gray aluminum ribbed body, visibly elongated extended lower body with standard flat floorplate"
-  },
-  "att_mag_556_quick": {
-    "id": "att_mag_556_quick",
-    "name": "5.56×45mm 快速弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 3,
-    "price": 13500,
-    "w": 0.1,
-    "description": "5.56×45mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_556_quick",
-    "compatibleTags": [
-      "mag.box",
-      "cal.556"
-    ],
-    "statModifiers": {
-      "reloadTime": -0.15
-    },
-    "visual": "slightly curved narrow rifle magazine, gray aluminum ribbed body, short standard capacity body with distinctive cloth pull tab on base"
-  },
-  "att_mag_556_quick_ext": {
-    "id": "att_mag_556_quick_ext",
-    "name": "5.56×45mm 快速扩容弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 4,
-    "price": 21000,
-    "w": 0.14,
-    "description": "5.56×45mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_556_quick_ext",
-    "compatibleTags": [
-      "mag.box",
-      "cal.556"
-    ],
-    "statModifiers": {
-      "magazineCapacity": 0.3,
-      "reloadTime": -0.15
-    },
-    "visual": "slightly curved narrow rifle magazine, gray aluminum ribbed body, visibly elongated extended lower body with pronounced rubber pull loop on base"
-  },
-  "att_mag_762x39_ext": {
-    "id": "att_mag_762x39_ext",
-    "name": "7.62×39mm 扩容弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 2,
-    "price": 10500,
-    "w": 0.16,
-    "description": "7.62×39mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_762x39_ext",
-    "compatibleTags": [
-      "mag.box",
-      "cal.762x39"
-    ],
-    "statModifiers": {
-      "magazineCapacity": 0.3
-    },
-    "visual": "strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, visibly elongated extended lower body with standard flat floorplate"
-  },
-  "att_mag_762x39_quick": {
-    "id": "att_mag_762x39_quick",
-    "name": "7.62×39mm 快速弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 3,
-    "price": 13500,
-    "w": 0.14,
-    "description": "7.62×39mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_762x39_quick",
-    "compatibleTags": [
-      "mag.box",
-      "cal.762x39"
-    ],
-    "statModifiers": {
-      "reloadTime": -0.15
-    },
-    "visual": "strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, short standard capacity body with distinctive cloth pull tab on base"
-  },
-  "att_mag_762x39_quick_ext": {
-    "id": "att_mag_762x39_quick_ext",
-    "name": "7.62×39mm 快速扩容弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 4,
-    "price": 21000,
-    "w": 0.18,
-    "description": "7.62×39mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_762x39_quick_ext",
-    "compatibleTags": [
-      "mag.box",
-      "cal.762x39"
-    ],
-    "statModifiers": {
-      "magazineCapacity": 0.3,
-      "reloadTime": -0.15
-    },
-    "visual": "strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, visibly elongated extended lower body with pronounced rubber pull loop on base"
-  },
-  "att_mag_9mm_ext": {
-    "id": "att_mag_9mm_ext",
-    "name": "9×19mm 扩容弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 2,
-    "price": 6000,
-    "w": 0.08,
-    "description": "9×19mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_9mm_ext",
-    "compatibleTags": [
-      "mag.box",
-      "cal.9mm"
-    ],
-    "statModifiers": {
-      "magazineCapacity": 0.3
-    },
-    "visual": "slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, visibly elongated extended lower body with standard flat floorplate"
-  },
-  "att_mag_9mm_quick": {
-    "id": "att_mag_9mm_quick",
-    "name": "9×19mm 快速弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 3,
-    "price": 8250,
-    "w": 0.07,
-    "description": "9×19mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_9mm_quick",
-    "compatibleTags": [
-      "mag.box",
-      "cal.9mm"
-    ],
-    "statModifiers": {
-      "reloadTime": -0.15
-    },
-    "visual": "slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, short standard capacity body with distinctive cloth pull tab on base"
-  },
-  "att_mag_9mm_quick_ext": {
-    "id": "att_mag_9mm_quick_ext",
-    "name": "9×19mm 快速扩容弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 4,
-    "price": 12000,
-    "w": 0.1,
-    "description": "9×19mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_9mm_quick_ext",
-    "compatibleTags": [
-      "mag.box",
-      "cal.9mm"
-    ],
-    "statModifiers": {
-      "magazineCapacity": 0.3,
-      "reloadTime": -0.15
-    },
-    "visual": "slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, visibly elongated extended lower body with pronounced rubber pull loop on base"
-  },
-  "att_mag_45acp_ext": {
-    "id": "att_mag_45acp_ext",
-    "name": ".45 ACP 扩容弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 2,
-    "price": 6750,
-    "w": 0.1,
-    "description": ".45 ACP 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_45acp_ext",
-    "compatibleTags": [
-      "mag.box",
-      "cal.45acp"
-    ],
-    "statModifiers": {
-      "magazineCapacity": 0.3
-    },
-    "visual": "broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, visibly elongated extended lower body with standard flat floorplate"
-  },
-  "att_mag_45acp_quick": {
-    "id": "att_mag_45acp_quick",
-    "name": ".45 ACP 快速弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 3,
-    "price": 9000,
     "w": 0.09,
-    "description": ".45 ACP 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_45acp_quick",
+    "price": 7500,
+    "description": "鸟笼式消焰器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_muzzle07",
     "compatibleTags": [
-      "mag.box",
-      "cal.45acp"
+      "muzzle.standard"
     ],
     "statModifiers": {
-      "reloadTime": -0.15
+      "recoilHorizontal": -0.06,
+      "noiseRadius": -0.1
     },
-    "visual": "broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, short standard capacity body with distinctive cloth pull tab on base"
+    "visual": "short classic birdcage flash hider, five elongated steel slots"
   },
-  "att_mag_45acp_quick_ext": {
-    "id": "att_mag_45acp_quick_ext",
-    "name": ".45 ACP 快速扩容弹匣",
+  "att_muzzle08": {
+    "id": "att_muzzle08",
+    "name": "紧凑型消音器",
+    "category": "attachment",
+    "subtype": "muzzle",
+    "r": 3,
+    "w": 0.2,
+    "price": 24000,
+    "description": "紧凑型消音器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_muzzle08",
+    "compatibleTags": [
+      "muzzle.standard"
+    ],
+    "statModifiers": {
+      "noiseRadius": -0.45,
+      "recoilVertical": -0.05,
+      "aimTime": 0.06
+    },
+    "visual": "short compact matte black suppressor cylinder with machined endcap"
+  },
+  "att_muzzle09": {
+    "id": "att_muzzle09",
+    "name": "重型战术消音器",
+    "category": "attachment",
+    "subtype": "muzzle",
+    "r": 4,
+    "w": 0.48,
+    "price": 39000,
+    "description": "重型战术消音器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_muzzle09",
+    "compatibleTags": [
+      "muzzle.standard"
+    ],
+    "statModifiers": {
+      "noiseRadius": -0.6,
+      "recoilHorizontal": -0.1,
+      "recoilVertical": -0.1,
+      "aimTime": 0.14
+    },
+    "visual": "long heavy thick graphite suppressor, segmented tube and reinforced mounting collar"
+  },
+  "att_muzzle10": {
+    "id": "att_muzzle10",
+    "name": "高效多孔制退器",
+    "category": "attachment",
+    "subtype": "muzzle",
+    "r": 5,
+    "w": 0.19,
+    "price": 32000,
+    "description": "高效多孔制退器。采用七参数配件规则；精确瞄准专属效果在主动瞄准时生效。",
+    "icon": "att_muzzle10",
+    "compatibleTags": [
+      "muzzle.standard"
+    ],
+    "statModifiers": {
+      "recoilVertical": -0.23,
+      "recoilHorizontal": -0.13,
+      "aimTime": 0.08,
+      "noiseRadius": 0.15
+    },
+    "visual": "angular multi-port muzzle brake with rectangular side vents and small upper ports"
+  },
+  "att_mag_556_competition": {
+    "id": "att_mag_556_competition",
+    "name": "STANAG 竞赛型弹匣",
     "category": "attachment",
     "subtype": "magazine",
-    "r": 4,
-    "price": 13500,
+    "r": 3,
+    "price": 15000,
     "w": 0.12,
-    "description": ".45 ACP 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_45acp_quick_ext",
+    "icon": "att_mag_556_competition",
+    "caliber": "556",
+    "magazineFamily": "stanag",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "m4a1",
+      "m16a1",
+      "fn_fnc"
+    ],
     "compatibleTags": [
       "mag.box",
-      "cal.45acp"
+      "cal.556",
+      "mag.interface.stanag"
     ],
     "statModifiers": {
-      "magazineCapacity": 0.3,
-      "reloadTime": -0.15
+      "reloadTime": -0.18
     },
-    "visual": "broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, visibly elongated extended lower body with pronounced rubber pull loop on base"
+    "description": "STANAG 接口专用；保持所装枪械的原厂容量。仅兼容：m4a1、m16a1、fn_fnc。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; gently curved ribbed aluminum STANAG rifle magazine"
   },
-  "att_mag_12g_ext": {
-    "id": "att_mag_12g_ext",
-    "name": "12 Gauge 扩容弹匣",
+  "att_mag_556_polymer": {
+    "id": "att_mag_556_polymer",
+    "name": "STANAG 聚合物弹匣",
     "category": "attachment",
     "subtype": "magazine",
     "r": 2,
     "price": 9000,
-    "w": 0.18,
-    "description": "12 Gauge 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_12g_ext",
+    "w": 0.07,
+    "icon": "att_mag_556_polymer",
+    "caliber": "556",
+    "magazineFamily": "stanag",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "m4a1",
+      "m16a1",
+      "fn_fnc"
+    ],
     "compatibleTags": [
       "mag.box",
-      "cal.12g"
+      "cal.556",
+      "mag.interface.stanag"
     ],
     "statModifiers": {
-      "magazineCapacity": 0.3
+      "aimTime": -0.1
     },
-    "visual": "very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, visibly elongated extended lower body with standard flat floorplate"
+    "description": "STANAG 接口专用；保持所装枪械的原厂容量。仅兼容：m4a1、m16a1、fn_fnc。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; gently curved ribbed aluminum STANAG rifle magazine"
   },
-  "att_mag_12g_quick": {
-    "id": "att_mag_12g_quick",
-    "name": "12 Gauge 快速弹匣",
+  "att_mag_556_40": {
+    "id": "att_mag_556_40",
+    "name": "STANAG 40发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 19000,
+    "w": 0.19,
+    "icon": "att_mag_556_40",
+    "caliber": "556",
+    "magazineFamily": "stanag",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "m4a1",
+      "m16a1",
+      "fn_fnc"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.stanag"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 40,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "STANAG 接口专用；固定容量 40 发。仅兼容：m4a1、m16a1、fn_fnc。",
+    "visual": "long extended box magazine, distinctly elongated body; gently curved ribbed aluminum STANAG rifle magazine"
+  },
+  "att_mag_556_60": {
+    "id": "att_mag_556_60",
+    "name": "STANAG 60发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 36000,
+    "w": 0.42,
+    "icon": "att_mag_556_60",
+    "caliber": "556",
+    "magazineFamily": "stanag",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "m4a1",
+      "m16a1",
+      "fn_fnc"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.stanag"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 60,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "STANAG 接口专用；固定容量 60 发。仅兼容：m4a1、m16a1、fn_fnc。",
+    "visual": "broad circular drum with a short interface-specific feed tower; gently curved ribbed aluminum STANAG rifle magazine"
+  },
+  "att_mag_545x39_competition": {
+    "id": "att_mag_545x39_competition",
+    "name": "AK 5.45 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 15500,
+    "w": 0.12,
+    "icon": "att_mag_545x39_competition",
+    "caliber": "545x39",
+    "magazineFamily": "ak545",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "aks74u",
+      "an94",
+      "ak12"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.545x39",
+      "mag.interface.ak545"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "AK 5.45 接口专用；保持所装枪械的原厂容量。仅兼容：aks74u、an94、ak12。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; long curved narrow AK-74 magazine, reddish brown bakelite and black steel feed lips"
+  },
+  "att_mag_545x39_polymer": {
+    "id": "att_mag_545x39_polymer",
+    "name": "AK 5.45 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 9500,
+    "w": 0.07,
+    "icon": "att_mag_545x39_polymer",
+    "caliber": "545x39",
+    "magazineFamily": "ak545",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "aks74u",
+      "an94",
+      "ak12"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.545x39",
+      "mag.interface.ak545"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "AK 5.45 接口专用；保持所装枪械的原厂容量。仅兼容：aks74u、an94、ak12。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; long curved narrow AK-74 magazine, reddish brown bakelite and black steel feed lips"
+  },
+  "att_mag_545x39_45": {
+    "id": "att_mag_545x39_45",
+    "name": "AK 5.45 45发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 22500,
+    "w": 0.21,
+    "icon": "att_mag_545x39_45",
+    "caliber": "545x39",
+    "magazineFamily": "ak545",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "aks74u",
+      "an94",
+      "ak12"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.545x39",
+      "mag.interface.ak545"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 45,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "AK 5.45 接口专用；固定容量 45 发。仅兼容：aks74u、an94、ak12。",
+    "visual": "long extended box magazine, distinctly elongated body; long curved narrow AK-74 magazine, reddish brown bakelite and black steel feed lips"
+  },
+  "att_mag_545x39_60": {
+    "id": "att_mag_545x39_60",
+    "name": "AK 5.45 60发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 38000,
+    "w": 0.42,
+    "icon": "att_mag_545x39_60",
+    "caliber": "545x39",
+    "magazineFamily": "ak545",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "aks74u",
+      "an94",
+      "ak12"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.545x39",
+      "mag.interface.ak545"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 60,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "AK 5.45 接口专用；固定容量 60 发。仅兼容：aks74u、an94、ak12。",
+    "visual": "broad circular drum with a short interface-specific feed tower; long curved narrow AK-74 magazine, reddish brown bakelite and black steel feed lips"
+  },
+  "att_mag_762x39_competition": {
+    "id": "att_mag_762x39_competition",
+    "name": "AK 7.62 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 16000,
+    "w": 0.15,
+    "icon": "att_mag_762x39_competition",
+    "caliber": "762x39",
+    "magazineFamily": "ak762",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "akm",
+      "groza1",
+      "mk47_mod2"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.762x39",
+      "mag.interface.ak762"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "AK 7.62 接口专用；保持所装枪械的原厂容量。仅兼容：akm、groza1、mk47_mod2。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; strongly curved thick banana AK magazine, reinforced feed lips"
+  },
+  "att_mag_762x39_polymer": {
+    "id": "att_mag_762x39_polymer",
+    "name": "AK 7.62 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 10000,
+    "w": 0.09,
+    "icon": "att_mag_762x39_polymer",
+    "caliber": "762x39",
+    "magazineFamily": "ak762",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "akm",
+      "groza1",
+      "mk47_mod2"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.762x39",
+      "mag.interface.ak762"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "AK 7.62 接口专用；保持所装枪械的原厂容量。仅兼容：akm、groza1、mk47_mod2。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; strongly curved thick banana AK magazine, reinforced feed lips"
+  },
+  "att_mag_762x39_40": {
+    "id": "att_mag_762x39_40",
+    "name": "AK 7.62 40发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 21000,
+    "w": 0.24,
+    "icon": "att_mag_762x39_40",
+    "caliber": "762x39",
+    "magazineFamily": "ak762",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "akm",
+      "groza1",
+      "mk47_mod2"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.762x39",
+      "mag.interface.ak762"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 40,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "AK 7.62 接口专用；固定容量 40 发。仅兼容：akm、groza1、mk47_mod2。",
+    "visual": "long extended box magazine, distinctly elongated body; strongly curved thick banana AK magazine, reinforced feed lips"
+  },
+  "att_mag_762x39_75": {
+    "id": "att_mag_762x39_75",
+    "name": "AK 7.62 75发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 50000,
+    "w": 0.69,
+    "icon": "att_mag_762x39_75",
+    "caliber": "762x39",
+    "magazineFamily": "ak762",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "akm",
+      "groza1",
+      "mk47_mod2"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.762x39",
+      "mag.interface.ak762"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 75,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "AK 7.62 接口专用；固定容量 75 发。仅兼容：akm、groza1、mk47_mod2。",
+    "visual": "broad circular drum with a short interface-specific feed tower; strongly curved thick banana AK magazine, reinforced feed lips"
+  },
+  "att_mag_556_famas_competition": {
+    "id": "att_mag_556_famas_competition",
+    "name": "FAMAS 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 15000,
+    "w": 0.12,
+    "icon": "att_mag_556_famas_competition",
+    "caliber": "556",
+    "magazineFamily": "famas",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "famas_f1"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.famas"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "FAMAS 接口专用；保持所装枪械的原厂容量。仅兼容：famas_f1。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; short straight FAMAS magazine, narrow rectangular steel body"
+  },
+  "att_mag_556_famas_polymer": {
+    "id": "att_mag_556_famas_polymer",
+    "name": "FAMAS 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 9000,
+    "w": 0.07,
+    "icon": "att_mag_556_famas_polymer",
+    "caliber": "556",
+    "magazineFamily": "famas",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "famas_f1"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.famas"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "FAMAS 接口专用；保持所装枪械的原厂容量。仅兼容：famas_f1。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; short straight FAMAS magazine, narrow rectangular steel body"
+  },
+  "att_mag_556_galil_competition": {
+    "id": "att_mag_556_galil_competition",
+    "name": "Galil 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 15000,
+    "w": 0.12,
+    "icon": "att_mag_556_galil_competition",
+    "caliber": "556",
+    "magazineFamily": "galil",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "galil_arm"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.galil"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "Galil 接口专用；保持所装枪械的原厂容量。仅兼容：galil_arm。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; curved robust Galil steel magazine, broad ribbed sides"
+  },
+  "att_mag_556_galil_polymer": {
+    "id": "att_mag_556_galil_polymer",
+    "name": "Galil 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 9000,
+    "w": 0.07,
+    "icon": "att_mag_556_galil_polymer",
+    "caliber": "556",
+    "magazineFamily": "galil",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "galil_arm"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.galil"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "Galil 接口专用；保持所装枪械的原厂容量。仅兼容：galil_arm。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; curved robust Galil steel magazine, broad ribbed sides"
+  },
+  "att_mag_556_galil_50": {
+    "id": "att_mag_556_galil_50",
+    "name": "Galil 50发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 23750,
+    "w": 0.24,
+    "icon": "att_mag_556_galil_50",
+    "caliber": "556",
+    "magazineFamily": "galil",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "galil_arm"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.galil"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 50,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "Galil 接口专用；固定容量 50 发。仅兼容：galil_arm。",
+    "visual": "long extended box magazine, distinctly elongated body; curved robust Galil steel magazine, broad ribbed sides"
+  },
+  "att_mag_556_galil_75": {
+    "id": "att_mag_556_galil_75",
+    "name": "Galil 75发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 45000,
+    "w": 0.53,
+    "icon": "att_mag_556_galil_75",
+    "caliber": "556",
+    "magazineFamily": "galil",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "galil_arm"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.galil"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 75,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "Galil 接口专用；固定容量 75 发。仅兼容：galil_arm。",
+    "visual": "broad circular drum with a short interface-specific feed tower; curved robust Galil steel magazine, broad ribbed sides"
+  },
+  "att_mag_556_g36_competition": {
+    "id": "att_mag_556_g36_competition",
+    "name": "G36 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 15000,
+    "w": 0.12,
+    "icon": "att_mag_556_g36_competition",
+    "caliber": "556",
+    "magazineFamily": "g36",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "g36c"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.g36"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "G36 接口专用；保持所装枪械的原厂容量。仅兼容：g36c。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; G36 translucent smoke polymer magazine with chunky coupling studs"
+  },
+  "att_mag_556_g36_polymer": {
+    "id": "att_mag_556_g36_polymer",
+    "name": "G36 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 9000,
+    "w": 0.07,
+    "icon": "att_mag_556_g36_polymer",
+    "caliber": "556",
+    "magazineFamily": "g36",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "g36c"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.g36"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "G36 接口专用；保持所装枪械的原厂容量。仅兼容：g36c。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; G36 translucent smoke polymer magazine with chunky coupling studs"
+  },
+  "att_mag_556_g36_40": {
+    "id": "att_mag_556_g36_40",
+    "name": "G36 40发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 19000,
+    "w": 0.19,
+    "icon": "att_mag_556_g36_40",
+    "caliber": "556",
+    "magazineFamily": "g36",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "g36c"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.g36"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 40,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "G36 接口专用；固定容量 40 发。仅兼容：g36c。",
+    "visual": "long extended box magazine, distinctly elongated body; G36 translucent smoke polymer magazine with chunky coupling studs"
+  },
+  "att_mag_556_g36_60": {
+    "id": "att_mag_556_g36_60",
+    "name": "G36 60发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 36000,
+    "w": 0.42,
+    "icon": "att_mag_556_g36_60",
+    "caliber": "556",
+    "magazineFamily": "g36",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "g36c"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.g36"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 60,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "G36 接口专用；固定容量 60 发。仅兼容：g36c。",
+    "visual": "broad circular drum with a short interface-specific feed tower; G36 translucent smoke polymer magazine with chunky coupling studs"
+  },
+  "att_mag_556_sig550_competition": {
+    "id": "att_mag_556_sig550_competition",
+    "name": "SIG 550 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 15000,
+    "w": 0.12,
+    "icon": "att_mag_556_sig550_competition",
+    "caliber": "556",
+    "magazineFamily": "sig550",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "sig550"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.sig550"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "SIG 550 接口专用；保持所装枪械的原厂容量。仅兼容：sig550。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; SIG 550 curved smoke polymer magazine with side coupling lugs"
+  },
+  "att_mag_556_sig550_polymer": {
+    "id": "att_mag_556_sig550_polymer",
+    "name": "SIG 550 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 9000,
+    "w": 0.07,
+    "icon": "att_mag_556_sig550_polymer",
+    "caliber": "556",
+    "magazineFamily": "sig550",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "sig550"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.sig550"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "SIG 550 接口专用；保持所装枪械的原厂容量。仅兼容：sig550。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; SIG 550 curved smoke polymer magazine with side coupling lugs"
+  },
+  "att_mag_556_sig550_40": {
+    "id": "att_mag_556_sig550_40",
+    "name": "SIG 550 40发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 19000,
+    "w": 0.19,
+    "icon": "att_mag_556_sig550_40",
+    "caliber": "556",
+    "magazineFamily": "sig550",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "sig550"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.sig550"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 40,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "SIG 550 接口专用；固定容量 40 发。仅兼容：sig550。",
+    "visual": "long extended box magazine, distinctly elongated body; SIG 550 curved smoke polymer magazine with side coupling lugs"
+  },
+  "att_mag_556_sig550_60": {
+    "id": "att_mag_556_sig550_60",
+    "name": "SIG 550 60发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 36000,
+    "w": 0.42,
+    "icon": "att_mag_556_sig550_60",
+    "caliber": "556",
+    "magazineFamily": "sig550",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "sig550"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.sig550"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 60,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "SIG 550 接口专用；固定容量 60 发。仅兼容：sig550。",
+    "visual": "broad circular drum with a short interface-specific feed tower; SIG 550 curved smoke polymer magazine with side coupling lugs"
+  },
+  "att_mag_556_aug_competition": {
+    "id": "att_mag_556_aug_competition",
+    "name": "AUG 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 15000,
+    "w": 0.12,
+    "icon": "att_mag_556_aug_competition",
+    "caliber": "556",
+    "magazineFamily": "aug",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "aug_a1"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.aug"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "AUG 接口专用；保持所装枪械的原厂容量。仅兼容：aug_a1。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; AUG waffle-pattern translucent smoke polymer magazine, curved lower body"
+  },
+  "att_mag_556_aug_polymer": {
+    "id": "att_mag_556_aug_polymer",
+    "name": "AUG 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 9000,
+    "w": 0.07,
+    "icon": "att_mag_556_aug_polymer",
+    "caliber": "556",
+    "magazineFamily": "aug",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "aug_a1"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.aug"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "AUG 接口专用；保持所装枪械的原厂容量。仅兼容：aug_a1。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; AUG waffle-pattern translucent smoke polymer magazine, curved lower body"
+  },
+  "att_mag_556_aug_42": {
+    "id": "att_mag_556_aug_42",
+    "name": "AUG 42发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 19950,
+    "w": 0.2,
+    "icon": "att_mag_556_aug_42",
+    "caliber": "556",
+    "magazineFamily": "aug",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "aug_a1"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.aug"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 42,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "AUG 接口专用；固定容量 42 发。仅兼容：aug_a1。",
+    "visual": "long extended box magazine, distinctly elongated body; AUG waffle-pattern translucent smoke polymer magazine, curved lower body"
+  },
+  "att_mag_556_aug_60": {
+    "id": "att_mag_556_aug_60",
+    "name": "AUG 60发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 36000,
+    "w": 0.42,
+    "icon": "att_mag_556_aug_60",
+    "caliber": "556",
+    "magazineFamily": "aug",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "aug_a1"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.556",
+      "mag.interface.aug"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 60,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "AUG 接口专用；固定容量 60 发。仅兼容：aug_a1。",
+    "visual": "broad circular drum with a short interface-specific feed tower; AUG waffle-pattern translucent smoke polymer magazine, curved lower body"
+  },
+  "att_mag_9mm_vityaz_competition": {
+    "id": "att_mag_9mm_vityaz_competition",
+    "name": "Vityaz 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 11000,
+    "w": 0.1,
+    "icon": "att_mag_9mm_vityaz_competition",
+    "caliber": "9mm",
+    "magazineFamily": "vityaz",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "pp19_01"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.vityaz"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "Vityaz 接口专用；保持所装枪械的原厂容量。仅兼容：pp19_01。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; narrow straight Vityaz SMG magazine, black polymer ribbed body and angled feed neck"
+  },
+  "att_mag_9mm_vityaz_polymer": {
+    "id": "att_mag_9mm_vityaz_polymer",
+    "name": "Vityaz 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 7500,
+    "w": 0.06,
+    "icon": "att_mag_9mm_vityaz_polymer",
+    "caliber": "9mm",
+    "magazineFamily": "vityaz",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "pp19_01"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.vityaz"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "Vityaz 接口专用；保持所装枪械的原厂容量。仅兼容：pp19_01。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; narrow straight Vityaz SMG magazine, black polymer ribbed body and angled feed neck"
+  },
+  "att_mag_9mm_vityaz_40": {
+    "id": "att_mag_9mm_vityaz_40",
+    "name": "Vityaz 40发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 15000,
+    "w": 0.15,
+    "icon": "att_mag_9mm_vityaz_40",
+    "caliber": "9mm",
+    "magazineFamily": "vityaz",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "pp19_01"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.vityaz"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 40,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "Vityaz 接口专用；固定容量 40 发。仅兼容：pp19_01。",
+    "visual": "long extended box magazine, distinctly elongated body; narrow straight Vityaz SMG magazine, black polymer ribbed body and angled feed neck"
+  },
+  "att_mag_9mm_vityaz_50": {
+    "id": "att_mag_9mm_vityaz_50",
+    "name": "Vityaz 50发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 24150,
+    "w": 0.27,
+    "icon": "att_mag_9mm_vityaz_50",
+    "caliber": "9mm",
+    "magazineFamily": "vityaz",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "pp19_01"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.vityaz"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 50,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "Vityaz 接口专用；固定容量 50 发。仅兼容：pp19_01。",
+    "visual": "broad circular drum with a short interface-specific feed tower; narrow straight Vityaz SMG magazine, black polymer ribbed body and angled feed neck"
+  },
+  "att_mag_9mm_mp5_competition": {
+    "id": "att_mag_9mm_mp5_competition",
+    "name": "MP5 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 11000,
+    "w": 0.1,
+    "icon": "att_mag_9mm_mp5_competition",
+    "caliber": "9mm",
+    "magazineFamily": "mp5",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "mp5a3"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.mp5"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "MP5 接口专用；保持所装枪械的原厂容量。仅兼容：mp5a3。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; slim curved MP5 steel SMG magazine, smooth curved spine"
+  },
+  "att_mag_9mm_mp5_polymer": {
+    "id": "att_mag_9mm_mp5_polymer",
+    "name": "MP5 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 7500,
+    "w": 0.06,
+    "icon": "att_mag_9mm_mp5_polymer",
+    "caliber": "9mm",
+    "magazineFamily": "mp5",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "mp5a3"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.mp5"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "MP5 接口专用；保持所装枪械的原厂容量。仅兼容：mp5a3。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; slim curved MP5 steel SMG magazine, smooth curved spine"
+  },
+  "att_mag_9mm_mp5_40": {
+    "id": "att_mag_9mm_mp5_40",
+    "name": "MP5 40发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 15000,
+    "w": 0.15,
+    "icon": "att_mag_9mm_mp5_40",
+    "caliber": "9mm",
+    "magazineFamily": "mp5",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "mp5a3"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.mp5"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 40,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "MP5 接口专用；固定容量 40 发。仅兼容：mp5a3。",
+    "visual": "long extended box magazine, distinctly elongated body; slim curved MP5 steel SMG magazine, smooth curved spine"
+  },
+  "att_mag_9mm_mp5_50": {
+    "id": "att_mag_9mm_mp5_50",
+    "name": "MP5 50发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 24150,
+    "w": 0.27,
+    "icon": "att_mag_9mm_mp5_50",
+    "caliber": "9mm",
+    "magazineFamily": "mp5",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "mp5a3"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.mp5"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 50,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "MP5 接口专用；固定容量 50 发。仅兼容：mp5a3。",
+    "visual": "broad circular drum with a short interface-specific feed tower; slim curved MP5 steel SMG magazine, smooth curved spine"
+  },
+  "att_mag_45acp_ump_competition": {
+    "id": "att_mag_45acp_ump_competition",
+    "name": "UMP 竞赛型弹匣",
     "category": "attachment",
     "subtype": "magazine",
     "r": 3,
     "price": 12000,
-    "w": 0.16,
-    "description": "12 Gauge 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_12g_quick",
+    "w": 0.12,
+    "icon": "att_mag_45acp_ump_competition",
+    "caliber": "45acp",
+    "magazineFamily": "ump",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "ump45"
+    ],
     "compatibleTags": [
       "mag.box",
-      "cal.12g"
+      "cal.45acp",
+      "mag.interface.ump"
     ],
     "statModifiers": {
-      "reloadTime": -0.15
+      "reloadTime": -0.18
     },
-    "visual": "very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, short standard capacity body with distinctive cloth pull tab on base"
+    "description": "UMP 接口专用；保持所装枪械的原厂容量。仅兼容：ump45。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; wide straight UMP polymer SMG magazine, deep strengthening ribs"
   },
-  "att_mag_12g_quick_ext": {
-    "id": "att_mag_12g_quick_ext",
-    "name": "12 Gauge 快速扩容弹匣",
-    "category": "attachment",
-    "subtype": "magazine",
-    "r": 4,
-    "price": 18000,
-    "w": 0.22,
-    "description": "12 Gauge 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。",
-    "icon": "att_mag_12g_quick_ext",
-    "compatibleTags": [
-      "mag.box",
-      "cal.12g"
-    ],
-    "statModifiers": {
-      "magazineCapacity": 0.3,
-      "reloadTime": -0.15
-    },
-    "visual": "very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, visibly elongated extended lower body with pronounced rubber pull loop on base"
-  },
-  "att_mag_545x39_ext": {
-    "id": "att_mag_545x39_ext",
-    "name": "5.45×39mm 扩容弹匣",
+  "att_mag_45acp_ump_polymer": {
+    "id": "att_mag_45acp_ump_polymer",
+    "name": "UMP 聚合物弹匣",
     "category": "attachment",
     "subtype": "magazine",
     "r": 2,
-    "price": 11250,
-    "w": 0.14,
-    "description": "5.45×39mm 扩容弹匣，同口径通用，适用于使用可拆卸弹匣的5.45×39mm步枪，兼容性以改装界面显示为准。",
-    "icon": "att_mag_545x39_ext",
+    "price": 8000,
+    "w": 0.08,
+    "icon": "att_mag_45acp_ump_polymer",
+    "caliber": "45acp",
+    "magazineFamily": "ump",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "ump45"
+    ],
     "compatibleTags": [
       "mag.box",
-      "cal.545x39"
+      "cal.45acp",
+      "mag.interface.ump"
     ],
     "statModifiers": {
-      "magazineCapacity": 0.3
+      "aimTime": -0.1
     },
-    "visual": "upright curved reddish brown bakelite extended magazine, feed lips up, no pull loop"
+    "description": "UMP 接口专用；保持所装枪械的原厂容量。仅兼容：ump45。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; wide straight UMP polymer SMG magazine, deep strengthening ribs"
   },
-  "att_mag_545x39_quick": {
-    "id": "att_mag_545x39_quick",
-    "name": "5.45×39mm 快速弹匣",
+  "att_mag_45acp_ump_35": {
+    "id": "att_mag_45acp_ump_35",
+    "name": "UMP 35发扩容弹匣",
     "category": "attachment",
     "subtype": "magazine",
     "r": 3,
-    "price": 14500,
-    "w": 0.12,
-    "description": "5.45×39mm 快速弹匣，同口径通用，适用于使用可拆卸弹匣的5.45×39mm步枪，兼容性以改装界面显示为准。",
-    "icon": "att_mag_545x39_quick",
+    "price": 14900,
+    "w": 0.17,
+    "icon": "att_mag_45acp_ump_35",
+    "caliber": "45acp",
+    "magazineFamily": "ump",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "ump45"
+    ],
     "compatibleTags": [
       "mag.box",
-      "cal.545x39"
+      "cal.45acp",
+      "mag.interface.ump"
     ],
     "statModifiers": {
-      "reloadTime": -0.15
+      "magazineCapacityFixed": 35,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
     },
-    "visual": "upright standard curved reddish brown magazine, cloth pull tab at base"
+    "description": "UMP 接口专用；固定容量 35 发。仅兼容：ump45。",
+    "visual": "long extended box magazine, distinctly elongated body; wide straight UMP polymer SMG magazine, deep strengthening ribs"
   },
-  "att_mag_545x39_quick_ext": {
-    "id": "att_mag_545x39_quick_ext",
-    "name": "5.45×39mm 快速扩容弹匣",
+  "att_mag_45acp_ump_50": {
+    "id": "att_mag_45acp_ump_50",
+    "name": "UMP 50发弹鼓",
     "category": "attachment",
     "subtype": "magazine",
     "r": 4,
-    "price": 22500,
-    "w": 0.16,
-    "description": "5.45×39mm 快速扩容弹匣，同口径通用，适用于使用可拆卸弹匣的5.45×39mm步枪，兼容性以改装界面显示为准。",
-    "icon": "att_mag_545x39_quick_ext",
+    "price": 27500,
+    "w": 0.33,
+    "icon": "att_mag_45acp_ump_50",
+    "caliber": "45acp",
+    "magazineFamily": "ump",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "ump45"
+    ],
     "compatibleTags": [
       "mag.box",
-      "cal.545x39"
+      "cal.45acp",
+      "mag.interface.ump"
     ],
     "statModifiers": {
-      "magazineCapacity": 0.3,
-      "reloadTime": -0.15
+      "magazineCapacityFixed": 50,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
     },
-    "visual": "upright elongated curved reddish brown magazine, large rubber pull loop at base"
+    "description": "UMP 接口专用；固定容量 50 发。仅兼容：ump45。",
+    "visual": "broad circular drum with a short interface-specific feed tower; wide straight UMP polymer SMG magazine, deep strengthening ribs"
+  },
+  "att_mag_9mm_glock_competition": {
+    "id": "att_mag_9mm_glock_competition",
+    "name": "Glock 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 11000,
+    "w": 0.1,
+    "icon": "att_mag_9mm_glock_competition",
+    "caliber": "9mm",
+    "magazineFamily": "glock",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "glock17"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.glock"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "Glock 接口专用；保持所装枪械的原厂容量。仅兼容：glock17。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; compact straight Glock pistol magazine, black polymer over steel and angled floorplate"
+  },
+  "att_mag_9mm_glock_polymer": {
+    "id": "att_mag_9mm_glock_polymer",
+    "name": "Glock 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 7500,
+    "w": 0.06,
+    "icon": "att_mag_9mm_glock_polymer",
+    "caliber": "9mm",
+    "magazineFamily": "glock",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "glock17"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.glock"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "Glock 接口专用；保持所装枪械的原厂容量。仅兼容：glock17。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; compact straight Glock pistol magazine, black polymer over steel and angled floorplate"
+  },
+  "att_mag_9mm_beretta92_competition": {
+    "id": "att_mag_9mm_beretta92_competition",
+    "name": "Beretta 92 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 11000,
+    "w": 0.1,
+    "icon": "att_mag_9mm_beretta92_competition",
+    "caliber": "9mm",
+    "magazineFamily": "beretta92",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "beretta92"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.beretta92"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "Beretta 92 接口专用；保持所装枪械的原厂容量。仅兼容：beretta92。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; slim steel Beretta pistol magazine with flat compact metal floorplate"
+  },
+  "att_mag_9mm_beretta92_polymer": {
+    "id": "att_mag_9mm_beretta92_polymer",
+    "name": "Beretta 92 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 7500,
+    "w": 0.06,
+    "icon": "att_mag_9mm_beretta92_polymer",
+    "caliber": "9mm",
+    "magazineFamily": "beretta92",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "beretta92"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.9mm",
+      "mag.interface.beretta92"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "Beretta 92 接口专用；保持所装枪械的原厂容量。仅兼容：beretta92。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; slim steel Beretta pistol magazine with flat compact metal floorplate"
+  },
+  "att_mag_45acp_m1911_competition": {
+    "id": "att_mag_45acp_m1911_competition",
+    "name": "M1911 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 12000,
+    "w": 0.12,
+    "icon": "att_mag_45acp_m1911_competition",
+    "caliber": "45acp",
+    "magazineFamily": "m1911",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "m1911a1"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.45acp",
+      "mag.interface.m1911"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "M1911 接口专用；保持所装枪械的原厂容量。仅兼容：m1911a1。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; very slim single-stack M1911 steel pistol magazine, seven-round proportions"
+  },
+  "att_mag_45acp_m1911_polymer": {
+    "id": "att_mag_45acp_m1911_polymer",
+    "name": "M1911 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 8000,
+    "w": 0.08,
+    "icon": "att_mag_45acp_m1911_polymer",
+    "caliber": "45acp",
+    "magazineFamily": "m1911",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "m1911a1"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.45acp",
+      "mag.interface.m1911"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "M1911 接口专用；保持所装枪械的原厂容量。仅兼容：m1911a1。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; very slim single-stack M1911 steel pistol magazine, seven-round proportions"
+  },
+  "att_mag_12g_saiga_competition": {
+    "id": "att_mag_12g_saiga_competition",
+    "name": "Saiga-12 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 15000,
+    "w": 0.15,
+    "icon": "att_mag_12g_saiga_competition",
+    "caliber": "12g",
+    "magazineFamily": "saiga",
+    "magazineType": "competition",
+    "compatibleWeapons": [
+      "saiga12"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.12g",
+      "mag.interface.saiga"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "Saiga-12 接口专用；保持所装枪械的原厂容量。仅兼容：saiga12。",
+    "visual": "standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; thick broad Saiga shotgun box magazine, reinforced polymer housing"
+  },
+  "att_mag_12g_saiga_polymer": {
+    "id": "att_mag_12g_saiga_polymer",
+    "name": "Saiga-12 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "price": 9000,
+    "w": 0.1,
+    "icon": "att_mag_12g_saiga_polymer",
+    "caliber": "12g",
+    "magazineFamily": "saiga",
+    "magazineType": "polymer",
+    "compatibleWeapons": [
+      "saiga12"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.12g",
+      "mag.interface.saiga"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "Saiga-12 接口专用；保持所装枪械的原厂容量。仅兼容：saiga12。",
+    "visual": "standard-capacity lightweight black molded polymer magazine; thick broad Saiga shotgun box magazine, reinforced polymer housing"
+  },
+  "att_mag_12g_saiga_12": {
+    "id": "att_mag_12g_saiga_12",
+    "name": "Saiga-12 12发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "price": 18000,
+    "w": 0.24,
+    "icon": "att_mag_12g_saiga_12",
+    "caliber": "12g",
+    "magazineFamily": "saiga",
+    "magazineType": "extended",
+    "compatibleWeapons": [
+      "saiga12"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.12g",
+      "mag.interface.saiga"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 12,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "Saiga-12 接口专用；固定容量 12 发。仅兼容：saiga12。",
+    "visual": "long extended box magazine, distinctly elongated body; thick broad Saiga shotgun box magazine, reinforced polymer housing"
+  },
+  "att_mag_12g_saiga_20": {
+    "id": "att_mag_12g_saiga_20",
+    "name": "Saiga-12 20发弹鼓",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 4,
+    "price": 30000,
+    "w": 0.45,
+    "icon": "att_mag_12g_saiga_20",
+    "caliber": "12g",
+    "magazineFamily": "saiga",
+    "magazineType": "drum",
+    "compatibleWeapons": [
+      "saiga12"
+    ],
+    "compatibleTags": [
+      "mag.box",
+      "cal.12g",
+      "mag.interface.saiga"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 20,
+      "aimTime": 0.2,
+      "reloadTime": 0.25
+    },
+    "description": "Saiga-12 接口专用；固定容量 20 发。仅兼容：saiga12。",
+    "visual": "broad circular drum with a short interface-specific feed tower; thick broad Saiga shotgun box magazine, reinforced polymer housing"
+  },
+  "att_mag_68x51_sr25_pattern_competition": {
+    "id": "att_mag_68x51_sr25_pattern_competition",
+    "name": "SR-25 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "w": 0.18,
+    "price": 28000,
+    "icon": "att_mag_68x51_sr25_pattern_competition",
+    "caliber": "68x51",
+    "calibers": [
+      "68x51",
+      "762x51"
+    ],
+    "magazineFamily": "sr25_pattern",
+    "magazineType": "competition",
+    "compatibleTags": [
+      "mag.box",
+      "mag.interface.sr25_pattern"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "本作SR-25接口专用。竞赛型、聚合物保持原厂20发，扩容型25发。预留兼容同接口的部分7.62×51平台；接口与容量为游戏适配配置，不宣称现实型号完全互换。"
+  },
+  "att_mag_68x51_sr25_pattern_polymer": {
+    "id": "att_mag_68x51_sr25_pattern_polymer",
+    "name": "SR-25 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "w": 0.12,
+    "price": 19000,
+    "icon": "att_mag_68x51_sr25_pattern_polymer",
+    "caliber": "68x51",
+    "calibers": [
+      "68x51",
+      "762x51"
+    ],
+    "magazineFamily": "sr25_pattern",
+    "magazineType": "polymer",
+    "compatibleTags": [
+      "mag.box",
+      "mag.interface.sr25_pattern"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "本作SR-25接口专用。竞赛型、聚合物保持原厂20发，扩容型25发。预留兼容同接口的部分7.62×51平台；接口与容量为游戏适配配置，不宣称现实型号完全互换。"
+  },
+  "att_mag_68x51_sr25_pattern_25": {
+    "id": "att_mag_68x51_sr25_pattern_25",
+    "name": "SR-25 25发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "w": 0.25,
+    "price": 38000,
+    "icon": "att_mag_68x51_sr25_pattern_25",
+    "caliber": "68x51",
+    "calibers": [
+      "68x51",
+      "762x51"
+    ],
+    "magazineFamily": "sr25_pattern",
+    "magazineType": "extended",
+    "compatibleTags": [
+      "mag.box",
+      "mag.interface.sr25_pattern"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 25,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "本作SR-25接口专用。竞赛型、聚合物保持原厂20发，扩容型25发。预留兼容同接口的部分7.62×51平台；接口与容量为游戏适配配置，不宣称现实型号完全互换。"
+  },
+  "att_mag_68x51_rm277_competition": {
+    "id": "att_mag_68x51_rm277_competition",
+    "name": "RM277 竞赛型弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "w": 0.18,
+    "price": 28000,
+    "icon": "att_mag_68x51_rm277_competition",
+    "caliber": "68x51",
+    "calibers": [
+      "68x51",
+      "762x51"
+    ],
+    "magazineFamily": "rm277",
+    "magazineType": "competition",
+    "compatibleTags": [
+      "mag.box",
+      "mag.interface.rm277"
+    ],
+    "statModifiers": {
+      "reloadTime": -0.18
+    },
+    "description": "本作RM277接口专用。竞赛型、聚合物保持原厂20发，扩容型25发。预留兼容同接口的部分7.62×51平台；接口与容量为游戏适配配置，不宣称现实型号完全互换。"
+  },
+  "att_mag_68x51_rm277_polymer": {
+    "id": "att_mag_68x51_rm277_polymer",
+    "name": "RM277 聚合物弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 2,
+    "w": 0.12,
+    "price": 19000,
+    "icon": "att_mag_68x51_rm277_polymer",
+    "caliber": "68x51",
+    "calibers": [
+      "68x51",
+      "762x51"
+    ],
+    "magazineFamily": "rm277",
+    "magazineType": "polymer",
+    "compatibleTags": [
+      "mag.box",
+      "mag.interface.rm277"
+    ],
+    "statModifiers": {
+      "aimTime": -0.1
+    },
+    "description": "本作RM277接口专用。竞赛型、聚合物保持原厂20发，扩容型25发。预留兼容同接口的部分7.62×51平台；接口与容量为游戏适配配置，不宣称现实型号完全互换。"
+  },
+  "att_mag_68x51_rm277_25": {
+    "id": "att_mag_68x51_rm277_25",
+    "name": "RM277 25发扩容弹匣",
+    "category": "attachment",
+    "subtype": "magazine",
+    "r": 3,
+    "w": 0.25,
+    "price": 38000,
+    "icon": "att_mag_68x51_rm277_25",
+    "caliber": "68x51",
+    "calibers": [
+      "68x51",
+      "762x51"
+    ],
+    "magazineFamily": "rm277",
+    "magazineType": "extended",
+    "compatibleTags": [
+      "mag.box",
+      "mag.interface.rm277"
+    ],
+    "statModifiers": {
+      "magazineCapacityFixed": 25,
+      "aimTime": 0.08,
+      "reloadTime": 0.05
+    },
+    "description": "本作RM277接口专用。竞赛型、聚合物保持原厂20发，扩容型25发。预留兼容同接口的部分7.62×51平台；接口与容量为游戏适配配置，不宣称现实型号完全互换。"
+  },
+  "att_muzzle11": {
+    "id": "att_muzzle11",
+    "name": "SIG SLX 战术抑制器",
+    "category": "attachment",
+    "subtype": "muzzle",
+    "r": 5,
+    "w": 0.4,
+    "price": 155000,
+    "icon": "att_muzzle11",
+    "compatibleTags": [
+      "muzzle_spear_clutchlok"
+    ],
+    "statModifiers": {
+      "noiseRadius": -0.68,
+      "recoilVertical": -0.16,
+      "recoilHorizontal": -0.15,
+      "aimTime": 0.1
+    },
+    "description": "SPEAR平台的Clutch-LOK接口专属抑制器；多流道结构强调综合控制。预留未来M7接口，本批不提供M7。"
+  },
+  "att_muzzle12": {
+    "id": "att_muzzle12",
+    "name": "Delta P BREVIS II 抑制器",
+    "category": "attachment",
+    "subtype": "muzzle",
+    "r": 5,
+    "w": 0.34,
+    "price": 135000,
+    "icon": "att_muzzle12",
+    "compatibleTags": [
+      "muzzle_rm277_delta"
+    ],
+    "statModifiers": {
+      "noiseRadius": -0.6,
+      "recoilVertical": -0.12,
+      "recoilHorizontal": -0.18,
+      "aimTime": 0.07
+    },
+    "description": "RM277专属的短粗型抑制器。偏向横向稳定和紧凑操控；参数为游戏平衡设定。"
   }
 };
-const ATTACHMENT_WEAPONS = {"m4a1":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556"]},"akm":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.762x39"]},"famas_f1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556"]},"pp19_01":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.9mm"]},"mp5a3":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.9mm"]},"ump45":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.45acp"]},"mp155":{"slots":{"optic":true,"grip":false,"stock":true,"muzzle":true,"magazine":false},"tags":["optic.common","optic.scope","stock.replaceable","muzzle.shotgun"]},"rem870":{"slots":{"optic":true,"grip":false,"stock":true,"muzzle":true,"magazine":false},"tags":["optic.common","optic.scope","stock.replaceable","muzzle.shotgun"]},"saiga12":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.shotgun","mag.box","cal.12g"]},"glock17":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.9mm"]},"m1911a1":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.45acp"]},"beretta92":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.9mm"]},"m16a1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556"]},"galil_arm":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556"]},"aks74u":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.545x39"]},"g36c":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556"]},"fn_fnc":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556"]},"sig550":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556"]},"an94":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.545x39"]},"aug_a1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556"]},"groza1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.762x39"]},"ak12":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.545x39"]},"mk47_mod2":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.762x39"]}};
+const ATTACHMENT_WEAPONS = {"m4a1":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556","mag.interface.stanag"],"magazineFamily":"stanag","magazineTypes":["competition","polymer","extended","drum"]},"akm":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.762x39","mag.interface.ak762"],"magazineFamily":"ak762","magazineTypes":["competition","polymer","extended","drum"]},"famas_f1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556","mag.interface.famas"],"magazineFamily":"famas","magazineTypes":["competition","polymer"]},"pp19_01":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.9mm","mag.interface.vityaz"],"magazineFamily":"vityaz","magazineTypes":["competition","polymer","extended","drum"]},"mp5a3":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.9mm","mag.interface.mp5"],"magazineFamily":"mp5","magazineTypes":["competition","polymer","extended","drum"]},"ump45":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.45acp","mag.interface.ump"],"magazineFamily":"ump","magazineTypes":["competition","polymer","extended","drum"]},"mp155":{"slots":{"optic":true,"grip":false,"stock":true,"muzzle":true,"magazine":false},"tags":["optic.common","optic.scope","stock.replaceable","muzzle.shotgun"]},"rem870":{"slots":{"optic":true,"grip":false,"stock":true,"muzzle":true,"magazine":false},"tags":["optic.common","optic.scope","stock.replaceable","muzzle.shotgun"]},"saiga12":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.shotgun","mag.box","cal.12g","mag.interface.saiga"],"magazineFamily":"saiga","magazineTypes":["competition","polymer","extended","drum"]},"glock17":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.9mm","mag.interface.glock"],"magazineFamily":"glock","magazineTypes":["competition","polymer"]},"m1911a1":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.45acp","mag.interface.m1911"],"magazineFamily":"m1911","magazineTypes":["competition","polymer"]},"beretta92":{"slots":{"optic":true,"grip":false,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","muzzle.standard","mag.box","cal.9mm","mag.interface.beretta92"],"magazineFamily":"beretta92","magazineTypes":["competition","polymer"]},"m16a1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556","mag.interface.stanag"],"magazineFamily":"stanag","magazineTypes":["competition","polymer","extended","drum"]},"galil_arm":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556","mag.interface.galil"],"magazineFamily":"galil","magazineTypes":["competition","polymer","extended","drum"]},"aks74u":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.545x39","mag.interface.ak545"],"magazineFamily":"ak545","magazineTypes":["competition","polymer","extended","drum"]},"g36c":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556","mag.interface.g36"],"magazineFamily":"g36","magazineTypes":["competition","polymer","extended","drum"]},"fn_fnc":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556","mag.interface.stanag"],"magazineFamily":"stanag","magazineTypes":["competition","polymer","extended","drum"]},"sig550":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.556","mag.interface.sig550"],"magazineFamily":"sig550","magazineTypes":["competition","polymer","extended","drum"]},"an94":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.545x39","mag.interface.ak545"],"magazineFamily":"ak545","magazineTypes":["competition","polymer","extended","drum"]},"aug_a1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.556","mag.interface.aug"],"magazineFamily":"aug","magazineTypes":["competition","polymer","extended","drum"]},"groza1":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","muzzle.standard","mag.box","cal.762x39","mag.interface.ak762"],"magazineFamily":"ak762","magazineTypes":["competition","polymer","extended","drum"]},"ak12":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.545x39","mag.interface.ak545"],"magazineFamily":"ak545","magazineTypes":["competition","polymer","extended","drum"]},"mk47_mod2":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","grip.common","stock.replaceable","muzzle.standard","mag.box","cal.762x39","mag.interface.ak762"],"magazineFamily":"ak762","magazineTypes":["competition","polymer","extended","drum"]},"mcx_spear":{"slots":{"optic":true,"grip":true,"stock":true,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","optic_picatinny","grip.common","muzzle.standard","muzzle_spear_clutchlok","mag.box","cal.68x51","mag.interface.sr25_pattern","mag_sr25_pattern","stock.replaceable","stock_mcx"],"magazineFamily":"sr25_pattern","magazineTypes":["competition","polymer","extended"]},"rm277":{"slots":{"optic":true,"grip":true,"stock":false,"muzzle":true,"magazine":true},"tags":["optic.common","optic.scope","optic_picatinny","grip.common","muzzle.standard","muzzle_rm277_delta","mag.box","cal.68x51","mag.interface.rm277","mag_rm277"],"magazineFamily":"rm277","magazineTypes":["competition","polymer","extended"]}};
 const ATTACHMENT_LOOT = {"Q":0.15,"K":0.1,"T":0.08,"R":0.05,"e":0.05,"Z":0.02,"W":0.02,"b":0.02,"U":0.02,"C":0.02,"N":0.02,"m":0.02,"L":0.02,"J":0.02,"F":0.02,"D":0.02};
 for(const [id,a] of Object.entries(ATTACHMENT_WEAPONS))Object.assign(WEAPONS[id],{attachmentSlots:a.slots,attachmentTags:a.tags});
 ART.gear=[...new Set([...ART.gear,...Object.keys(ATTACHMENT_DEFS)])];
+
+const ATTACHMENT_MAGAZINE_FAMILIES = {"stanag":{"caliber":"556","label":"STANAG","weapons":["m4a1","m16a1","fn_fnc"],"extended":40,"drum":60,"parts":{"competition":"att_mag_556_competition","polymer":"att_mag_556_polymer","extended":"att_mag_556_40","drum":"att_mag_556_60"}},"ak545":{"caliber":"545x39","label":"AK 5.45","weapons":["aks74u","an94","ak12"],"extended":45,"drum":60,"parts":{"competition":"att_mag_545x39_competition","polymer":"att_mag_545x39_polymer","extended":"att_mag_545x39_45","drum":"att_mag_545x39_60"}},"ak762":{"caliber":"762x39","label":"AK 7.62","weapons":["akm","groza1","mk47_mod2"],"extended":40,"drum":75,"parts":{"competition":"att_mag_762x39_competition","polymer":"att_mag_762x39_polymer","extended":"att_mag_762x39_40","drum":"att_mag_762x39_75"}},"famas":{"caliber":"556","label":"FAMAS","weapons":["famas_f1"],"extended":null,"drum":null,"parts":{"competition":"att_mag_556_famas_competition","polymer":"att_mag_556_famas_polymer"}},"galil":{"caliber":"556","label":"Galil","weapons":["galil_arm"],"extended":50,"drum":75,"parts":{"competition":"att_mag_556_galil_competition","polymer":"att_mag_556_galil_polymer","extended":"att_mag_556_galil_50","drum":"att_mag_556_galil_75"}},"g36":{"caliber":"556","label":"G36","weapons":["g36c"],"extended":40,"drum":60,"parts":{"competition":"att_mag_556_g36_competition","polymer":"att_mag_556_g36_polymer","extended":"att_mag_556_g36_40","drum":"att_mag_556_g36_60"}},"sig550":{"caliber":"556","label":"SIG 550","weapons":["sig550"],"extended":40,"drum":60,"parts":{"competition":"att_mag_556_sig550_competition","polymer":"att_mag_556_sig550_polymer","extended":"att_mag_556_sig550_40","drum":"att_mag_556_sig550_60"}},"aug":{"caliber":"556","label":"AUG","weapons":["aug_a1"],"extended":42,"drum":60,"parts":{"competition":"att_mag_556_aug_competition","polymer":"att_mag_556_aug_polymer","extended":"att_mag_556_aug_42","drum":"att_mag_556_aug_60"}},"vityaz":{"caliber":"9mm","label":"Vityaz","weapons":["pp19_01"],"extended":40,"drum":50,"parts":{"competition":"att_mag_9mm_vityaz_competition","polymer":"att_mag_9mm_vityaz_polymer","extended":"att_mag_9mm_vityaz_40","drum":"att_mag_9mm_vityaz_50"}},"mp5":{"caliber":"9mm","label":"MP5","weapons":["mp5a3"],"extended":40,"drum":50,"parts":{"competition":"att_mag_9mm_mp5_competition","polymer":"att_mag_9mm_mp5_polymer","extended":"att_mag_9mm_mp5_40","drum":"att_mag_9mm_mp5_50"}},"ump":{"caliber":"45acp","label":"UMP","weapons":["ump45"],"extended":35,"drum":50,"parts":{"competition":"att_mag_45acp_ump_competition","polymer":"att_mag_45acp_ump_polymer","extended":"att_mag_45acp_ump_35","drum":"att_mag_45acp_ump_50"}},"glock":{"caliber":"9mm","label":"Glock","weapons":["glock17"],"extended":null,"drum":null,"parts":{"competition":"att_mag_9mm_glock_competition","polymer":"att_mag_9mm_glock_polymer"}},"beretta92":{"caliber":"9mm","label":"Beretta 92","weapons":["beretta92"],"extended":null,"drum":null,"parts":{"competition":"att_mag_9mm_beretta92_competition","polymer":"att_mag_9mm_beretta92_polymer"}},"m1911":{"caliber":"45acp","label":"M1911","weapons":["m1911a1"],"extended":null,"drum":null,"parts":{"competition":"att_mag_45acp_m1911_competition","polymer":"att_mag_45acp_m1911_polymer"}},"saiga":{"caliber":"12g","label":"Saiga-12","weapons":["saiga12"],"extended":12,"drum":20,"parts":{"competition":"att_mag_12g_saiga_competition","polymer":"att_mag_12g_saiga_polymer","extended":"att_mag_12g_saiga_12","drum":"att_mag_12g_saiga_20"}},"sr25_pattern":{"caliber":"68x51","calibers":["68x51","762x51"],"label":"SR-25","weapons":["mcx_spear"],"extended":25,"drum":null,"parts":{"competition":"att_mag_68x51_sr25_pattern_competition","polymer":"att_mag_68x51_sr25_pattern_polymer","extended":"att_mag_68x51_sr25_pattern_25"}},"rm277":{"caliber":"68x51","calibers":["68x51","762x51"],"label":"RM277","weapons":["rm277"],"extended":25,"drum":null,"parts":{"competition":"att_mag_68x51_rm277_competition","polymer":"att_mag_68x51_rm277_polymer","extended":"att_mag_68x51_rm277_25"}}};
+const ATTACHMENT_LEGACY_MAGAZINES = {"att_mag_556_ext":{"id":"att_mag_556_ext","name":"5.56×45mm 扩容弹匣","category":"attachment","subtype":"magazine","r":2,"price":10500,"w":0.12,"description":"5.56×45mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_556_ext","compatibleTags":["mag.box","cal.556"],"statModifiers":{"magazineCapacity":0.3},"visual":"slightly curved narrow rifle magazine, gray aluminum ribbed body, visibly elongated extended lower body with standard flat floorplate"},"att_mag_556_quick":{"id":"att_mag_556_quick","name":"5.56×45mm 快速弹匣","category":"attachment","subtype":"magazine","r":3,"price":13500,"w":0.1,"description":"5.56×45mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_556_quick","compatibleTags":["mag.box","cal.556"],"statModifiers":{"reloadTime":-0.15},"visual":"slightly curved narrow rifle magazine, gray aluminum ribbed body, short standard capacity body with distinctive cloth pull tab on base"},"att_mag_556_quick_ext":{"id":"att_mag_556_quick_ext","name":"5.56×45mm 快速扩容弹匣","category":"attachment","subtype":"magazine","r":4,"price":21000,"w":0.14,"description":"5.56×45mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_556_quick_ext","compatibleTags":["mag.box","cal.556"],"statModifiers":{"magazineCapacity":0.3,"reloadTime":-0.15},"visual":"slightly curved narrow rifle magazine, gray aluminum ribbed body, visibly elongated extended lower body with pronounced rubber pull loop on base"},"att_mag_762x39_ext":{"id":"att_mag_762x39_ext","name":"7.62×39mm 扩容弹匣","category":"attachment","subtype":"magazine","r":2,"price":10500,"w":0.16,"description":"7.62×39mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_762x39_ext","compatibleTags":["mag.box","cal.762x39"],"statModifiers":{"magazineCapacity":0.3},"visual":"strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, visibly elongated extended lower body with standard flat floorplate"},"att_mag_762x39_quick":{"id":"att_mag_762x39_quick","name":"7.62×39mm 快速弹匣","category":"attachment","subtype":"magazine","r":3,"price":13500,"w":0.14,"description":"7.62×39mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_762x39_quick","compatibleTags":["mag.box","cal.762x39"],"statModifiers":{"reloadTime":-0.15},"visual":"strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, short standard capacity body with distinctive cloth pull tab on base"},"att_mag_762x39_quick_ext":{"id":"att_mag_762x39_quick_ext","name":"7.62×39mm 快速扩容弹匣","category":"attachment","subtype":"magazine","r":4,"price":21000,"w":0.18,"description":"7.62×39mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_762x39_quick_ext","compatibleTags":["mag.box","cal.762x39"],"statModifiers":{"magazineCapacity":0.3,"reloadTime":-0.15},"visual":"strongly curved banana rifle magazine, dark steel body, pronounced strengthening ribs, visibly elongated extended lower body with pronounced rubber pull loop on base"},"att_mag_9mm_ext":{"id":"att_mag_9mm_ext","name":"9×19mm 扩容弹匣","category":"attachment","subtype":"magazine","r":2,"price":6000,"w":0.08,"description":"9×19mm 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_9mm_ext","compatibleTags":["mag.box","cal.9mm"],"statModifiers":{"magazineCapacity":0.3},"visual":"slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, visibly elongated extended lower body with standard flat floorplate"},"att_mag_9mm_quick":{"id":"att_mag_9mm_quick","name":"9×19mm 快速弹匣","category":"attachment","subtype":"magazine","r":3,"price":8250,"w":0.07,"description":"9×19mm 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_9mm_quick","compatibleTags":["mag.box","cal.9mm"],"statModifiers":{"reloadTime":-0.15},"visual":"slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, short standard capacity body with distinctive cloth pull tab on base"},"att_mag_9mm_quick_ext":{"id":"att_mag_9mm_quick_ext","name":"9×19mm 快速扩容弹匣","category":"attachment","subtype":"magazine","r":4,"price":12000,"w":0.1,"description":"9×19mm 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_9mm_quick_ext","compatibleTags":["mag.box","cal.9mm"],"statModifiers":{"magazineCapacity":0.3,"reloadTime":-0.15},"visual":"slim straight compact magazine, graphite steel body, small brass cartridge visible at the feed lips, visibly elongated extended lower body with pronounced rubber pull loop on base"},"att_mag_45acp_ext":{"id":"att_mag_45acp_ext","name":".45 ACP 扩容弹匣","category":"attachment","subtype":"magazine","r":2,"price":6750,"w":0.1,"description":".45 ACP 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_45acp_ext","compatibleTags":["mag.box","cal.45acp"],"statModifiers":{"magazineCapacity":0.3},"visual":"broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, visibly elongated extended lower body with standard flat floorplate"},"att_mag_45acp_quick":{"id":"att_mag_45acp_quick","name":".45 ACP 快速弹匣","category":"attachment","subtype":"magazine","r":3,"price":9000,"w":0.09,"description":".45 ACP 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_45acp_quick","compatibleTags":["mag.box","cal.45acp"],"statModifiers":{"reloadTime":-0.15},"visual":"broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, short standard capacity body with distinctive cloth pull tab on base"},"att_mag_45acp_quick_ext":{"id":"att_mag_45acp_quick_ext","name":".45 ACP 快速扩容弹匣","category":"attachment","subtype":"magazine","r":4,"price":13500,"w":0.12,"description":".45 ACP 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_45acp_quick_ext","compatibleTags":["mag.box","cal.45acp"],"statModifiers":{"magazineCapacity":0.3,"reloadTime":-0.15},"visual":"broad straight pistol caliber magazine, dark blued steel body, wide feed lips and large brass cartridge, visibly elongated extended lower body with pronounced rubber pull loop on base"},"att_mag_12g_ext":{"id":"att_mag_12g_ext","name":"12 Gauge 扩容弹匣","category":"attachment","subtype":"magazine","r":2,"price":9000,"w":0.18,"description":"12 Gauge 扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_12g_ext","compatibleTags":["mag.box","cal.12g"],"statModifiers":{"magazineCapacity":0.3},"visual":"very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, visibly elongated extended lower body with standard flat floorplate"},"att_mag_12g_quick":{"id":"att_mag_12g_quick","name":"12 Gauge 快速弹匣","category":"attachment","subtype":"magazine","r":3,"price":12000,"w":0.16,"description":"12 Gauge 快速弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_12g_quick","compatibleTags":["mag.box","cal.12g"],"statModifiers":{"reloadTime":-0.15},"visual":"very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, short standard capacity body with distinctive cloth pull tab on base"},"att_mag_12g_quick_ext":{"id":"att_mag_12g_quick_ext","name":"12 Gauge 快速扩容弹匣","category":"attachment","subtype":"magazine","r":4,"price":18000,"w":0.22,"description":"12 Gauge 快速扩容弹匣，用于改善枪械操控。兼容性以改装界面显示为准。","icon":"att_mag_12g_quick_ext","compatibleTags":["mag.box","cal.12g"],"statModifiers":{"magazineCapacity":0.3,"reloadTime":-0.15},"visual":"very thick wide box shotgun magazine, olive black polymer body, broad ribs and a red shotgun shell at feed lips, visibly elongated extended lower body with pronounced rubber pull loop on base"},"att_mag_545x39_ext":{"id":"att_mag_545x39_ext","name":"5.45×39mm 扩容弹匣","category":"attachment","subtype":"magazine","r":2,"price":11250,"w":0.14,"description":"5.45×39mm 扩容弹匣，同口径通用，适用于使用可拆卸弹匣的5.45×39mm步枪，兼容性以改装界面显示为准。","icon":"att_mag_545x39_ext","compatibleTags":["mag.box","cal.545x39"],"statModifiers":{"magazineCapacity":0.3},"visual":"upright curved reddish brown bakelite extended magazine, feed lips up, no pull loop"},"att_mag_545x39_quick":{"id":"att_mag_545x39_quick","name":"5.45×39mm 快速弹匣","category":"attachment","subtype":"magazine","r":3,"price":14500,"w":0.12,"description":"5.45×39mm 快速弹匣，同口径通用，适用于使用可拆卸弹匣的5.45×39mm步枪，兼容性以改装界面显示为准。","icon":"att_mag_545x39_quick","compatibleTags":["mag.box","cal.545x39"],"statModifiers":{"reloadTime":-0.15},"visual":"upright standard curved reddish brown magazine, cloth pull tab at base"},"att_mag_545x39_quick_ext":{"id":"att_mag_545x39_quick_ext","name":"5.45×39mm 快速扩容弹匣","category":"attachment","subtype":"magazine","r":4,"price":22500,"w":0.16,"description":"5.45×39mm 快速扩容弹匣，同口径通用，适用于使用可拆卸弹匣的5.45×39mm步枪，兼容性以改装界面显示为准。","icon":"att_mag_545x39_quick_ext","compatibleTags":["mag.box","cal.545x39"],"statModifiers":{"magazineCapacity":0.3,"reloadTime":-0.15},"visual":"upright elongated curved reddish brown magazine, large rubber pull loop at base"}};
+for(const [id,a] of Object.entries(ATTACHMENT_WEAPONS))Object.assign(WEAPONS[id],{magazineFamily:a.magazineFamily||null,magazineTypes:a.magazineTypes||[]});
+ART.gear=ART.gear.filter(id=>!ATTACHMENT_LEGACY_MAGAZINES[id]);

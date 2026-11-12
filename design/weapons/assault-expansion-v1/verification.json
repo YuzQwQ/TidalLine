@@ -1,6 +1,23 @@
 {
-  "passed": 13,
-  "failures": [],
+  "passed": 9,
+  "failures": [
+    {
+      "name": "14 rifles with rarity counts 2/2/3/3/4, 23 total models; original 12 models unchanged",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n25 !== 23\n\n    at D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:21:9\n    at test (D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:10:28)\n    at Object.<anonymous> (D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:20:1)\n    at Module._compile (node:internal/modules/cjs/loader:1705:14)\n    at Object..js (node:internal/modules/cjs/loader:1838:10)\n    at Module.load (node:internal/modules/cjs/loader:1441:32)\n    at Function._load (node:internal/modules/cjs/loader:1263:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)"
+    },
+    {
+      "name": "six calibers / 30 tiers; 5.45 shares tier damage/penetration matrix without changing other ammunition",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n7 !== 6\n\n    at D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:37:9\n    at test (D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:10:28)\n    at Object.<anonymous> (D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:36:1)\n    at Module._compile (node:internal/modules/cjs/loader:1705:14)\n    at Object..js (node:internal/modules/cjs/loader:1838:10)\n    at Module.load (node:internal/modules/cjs/loader:1441:32)\n    at Function._load (node:internal/modules/cjs/loader:1263:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)"
+    },
+    {
+      "name": "new magazines reject wrong calibers, extend both 5.45 models to 39 and apply reload once",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:77:110\n    at test (D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:10:28)\n    at Object.<anonymous> (D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:76:1)\n    at Module._compile (node:internal/modules/cjs/loader:1705:14)\n    at Object..js (node:internal/modules/cjs/loader:1838:10)\n    at Module.load (node:internal/modules/cjs/loader:1441:32)\n    at Function._load (node:internal/modules/cjs/loader:1263:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)"
+    },
+    {
+      "name": "expanded 5.45 mixed magazines survive save/load, warehousing, selling without duplication",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ undefined\n- 'att_mag_556_quick_ext'\n\n    at D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:84:350\n    at test (D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:10:28)\n    at Object.<anonymous> (D:\\develop\\project\\tide\\tools\\test-assault-expansion.js:82:1)\n    at Module._compile (node:internal/modules/cjs/loader:1705:14)\n    at Object..js (node:internal/modules/cjs/loader:1838:10)\n    at Module.load (node:internal/modules/cjs/loader:1441:32)\n    at Function._load (node:internal/modules/cjs/loader:1263:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)"
+    }
+  ],
   "timing": [
     {
       "fps": 30,

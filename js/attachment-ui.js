@@ -19,9 +19,10 @@ const ModUI={
     const it=Attachments.read(this.target),sig=JSON.stringify([it?.equip,Attachments.inventory().map(e=>[e.id||e.item?.id,e.n]),this.target&&Attachments.blocked(this.target)]);
     if(sig!==this.sig)this.render();
   },
-  stats(w){const b=WEAPONS[w.id];return[
-    ['瞄准时间',w.aimTime,'秒',false],['基础散布',w.spreadBase*180/Math.PI,'°',false],['横向后坐力',w.recoilHMul/b.recoilHMul*100,'%',false],['纵向后坐力',w.recoilVMul/b.recoilVMul*100,'%',false],
-    ['双轴恢复速度',w.recoilRecovery||1,'×',true],['连射散布增长',w.recoilPerShot/b.recoilPerShot*100,'%',false],['装填时间',w.reloadTime,'秒',false],['弹匣容量',w.mag,'发',true],...(w.pellets>1?[['弹丸扩散',w.pelletSpread*180/Math.PI,'°',false]]:[])
+  stats(w){const b=WEAPONS[w.id],d=Firearms.derive(w);return[
+    ['瞄准时间',w.aimTime,'秒',false],['基础散布',d.spreadBase*180/Math.PI,'°',false],
+    ['横向后坐力',(w.recoilHMul??1)/(b.recoilHMul??1)*100,'%',false],['纵向后坐力',(w.recoilVMul??1)/(b.recoilVMul??1)*100,'%',false],
+    ['连射散布增长',(w.spreadGrowthMul??1)/(b.spreadGrowthMul??1)*100,'%',false],['装填时间',w.reloadTime,'秒',false],['弹匣容量',w.mag,'发',true],['画面放大',w.adsZoom??1.15,'×',true],['视距倍率',w.adsView??1.15,'×',true],['精瞄散布',(w.adsSpread??1)*100,'%',false],['腰射散布',(w.hipSpread??1)*100,'%',false],['枪声范围',(w.noiseRadius??1)*100,'%',false],...(w.pellets>1?[['弹丸扩散',w.pelletSpread*180/Math.PI,'°',false]]:[])
   ];},
   render(){if(!this.el||this.el.hidden)return;const it=Attachments.read(this.target),targets=Attachments.targets(),current=it&&Attachments.resolve(it.equip.gun,it.equip.attachments),sel=this.selection;
     const preview=it&&sel?Attachments.preview(this.target,this.slot,sel.id,sel.source):null,after=preview?.after||current;
@@ -44,8 +45,8 @@ const ModUI={
 
 // Presentation adapters leave inventory authority in Attachments.commit.
 function attachmentWrap(obj,key,fn){const original=obj[key];obj[key]=function(...args){return fn.call(this,original,...args);};}
-attachmentWrap(Base,'renderGunShop',function(original,el){original.call(this,el);for(const slot of ATTACHMENT_SLOTS){const title=document.createElement('div');title.className='shop-cat';title.textContent='枪械配件 · '+Attachments.slotNames[slot];el.appendChild(title);for(const a of Object.values(ATTACHMENT_DEFS).filter(a=>a.subtype===slot&&a.r<=3)){const cell=document.createElement('div');cell.className='scell r'+a.r;cell.dataset.offer=JSON.stringify({kind:'attachment',id:a.id});cell.innerHTML=Icons.gearIcon(a.id,'件')+'<span class="cn">'+esc(a.name)+'</span><span class="pr">'+formatMoney(a.price)+'</span>';cell.onclick=()=>Deal.show({kind:'buy',title:'购买枪械配件',name:a.name,sub:Attachments.describe(a.id),icon:a.id,price:a.price,can:Save.credits>=a.price&&Save.stash.length<STASH_SLOTS,onGo:()=>this.buyAttachment(a.id)},cell.getBoundingClientRect());el.appendChild(cell);}}});
-Base.buyAttachment=function(id){const d=ATTACHMENT_DEFS[id];if(Game.state!=='base'||!d||d.r>3||Save.credits<d.price||Save.stash.length>=STASH_SLOTS)return false;Save.credits-=d.price;Save.addGearStash(EQUIP.attachment(id));Save.save();Save.flush();this.render();return true;};
+attachmentWrap(Base,'renderGunShop',function(original,el){original.call(this,el);for(const slot of ATTACHMENT_SLOTS){const title=document.createElement('div');title.className='shop-cat';title.textContent='枪械配件 · '+Attachments.slotNames[slot];el.appendChild(title);for(const a of Object.values(ATTACHMENT_DEFS).filter(a=>a.subtype===slot&&a.r<=3)){const cell=document.createElement('div');cell.className='scell r'+a.r;cell.dataset.offer=JSON.stringify({kind:'attachment',id:a.id});cell.innerHTML=Icons.gearIcon(a.id,'件')+'<span class="cn">'+esc(a.name)+'</span><span class="pr">'+formatMoney(buyPrice(a.price))+'</span>';cell.onclick=()=>Deal.show({kind:'buy',title:'购买枪械配件',name:a.name,sub:Attachments.describe(a.id),icon:a.id,price:buyPrice(a.price),can:Save.credits>=buyPrice(a.price)&&Save.stash.length<STASH_SLOTS,onGo:()=>this.buyAttachment(a.id)},cell.getBoundingClientRect());el.appendChild(cell);}}});
+Base.buyAttachment=function(id){const d=ATTACHMENT_DEFS[id];if(Game.state!=='base'||!d||d.r>3||Save.credits<buyPrice(d.price)||Save.stash.length>=STASH_SLOTS)return false;Save.credits-=buyPrice(d.price);Save.addGearStash(EQUIP.attachment(id));Save.save();Save.flush();this.render();return true;};
 attachmentWrap(MerchantUI,'offer',function(original,meta,cell){if(meta.kind!=='attachment')return original.call(this,meta,cell);const item=EQUIP.attachment(meta.id);return item?{key:JSON.stringify(meta),meta,item,category:'attachment',quantity:1,price:item.price,cell,confirm:cell.onclick}:null;});
 attachmentWrap(StorageUI,'matches',function(original,it,key){return key==='attachments'?it.equip?.kind==='attachment':original.call(this,it,key);});
 /* 改装入口不再接管任何格子：仓库详情浮窗与装备槽右键都由 base.js 统一生成，

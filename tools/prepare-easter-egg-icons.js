@@ -1,21 +1,32 @@
 /* 彩蛋立绘 → 48px 背包图标。
-   node tools/prepare-easter-egg-icons.js
+   node tools/prepare-easter-egg-icons.js            全部重做
+   node tools/prepare-easter-egg-icons.js odd16 collect_secret01   只做指定几件
 
    和 tools/prepare-item-icons.js 的区别：那套素材是手绘 48px 像素图，缩小用最近邻；
    彩蛋的原稿是 1254px 的大图（平滑光照、半透明边缘），最近邻抽点会碎成一团噪点，
    所以这里用 Lanczos 重采样，再把 alpha 二值化，最后补 4px 透明边 —— 尺寸接口仍是
-   40+4×2 的 48px，和别的图标同一接口。原稿不在这里生成，只做整理。 */
+   40+4×2 的 48px，和别的图标同一接口。原稿不在这里生成，只做整理。
+
+   原稿按批次存放：easter-eggs-v1 是首版四件，easter-eggs-v2 是 2026-11-08 新增三件，
+   两批规格完全一致（1254×1254 RGBA），所以共用同一套处理参数。 */
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
 const root = path.resolve(__dirname, '..');
-const SRC = path.join(root, 'assets/item-art/easter-eggs-v1/sources');
 const OUT = path.join(root, 'assets/items');
-const IDS = ['odd13', 'odd14', 'odd15', 'odd16'];
+/* id → 立绘批次；加新彩蛋时在这里登记一行即可 */
+const EGG_ART = {
+  odd13: 'easter-eggs-v1', odd14: 'easter-eggs-v1',
+  odd15: 'easter-eggs-v1', odd16: 'easter-eggs-v1',
+  collect_secret01: 'easter-eggs-v2', elec_secret01: 'easter-eggs-v2',
+  elec_secret02: 'easter-eggs-v2'
+};
 
 async function prepare(id) {
-  const file = path.join(SRC, id + '.png');
+  const batch = EGG_ART[id];
+  if (!batch) throw new Error('未登记的彩蛋: ' + id);
+  const file = path.join(root, 'assets/item-art', batch, 'sources', id + '.png');
   if (!fs.existsSync(file)) throw new Error('缺少原稿: ' + file);
   const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   // 按 alpha 裁出主体，四周空白不参与缩放，主体才能占满 40px
@@ -46,4 +57,8 @@ async function prepare(id) {
   console.log(id + ': 48×48');
 }
 
-(async () => { for (const id of IDS) await prepare(id); })().catch(e => { console.error(e.message); process.exitCode = 1; });
+(async () => {
+  const only = process.argv.slice(2);
+  const ids = only.length ? only : Object.keys(EGG_ART);
+  for (const id of ids) await prepare(id);
+})().catch(e => { console.error(e.message); process.exitCode = 1; });

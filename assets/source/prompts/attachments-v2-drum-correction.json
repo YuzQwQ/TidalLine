@@ -1,0 +1,18 @@
+{
+  "mode": "built-in image_gen",
+  "reason": "Remove accidentally generated additional box magazines",
+  "edits": [
+    {
+      "id": "att_mag_545x39_60",
+      "prompt": "Use case: precise-object-edit. Edit the provided pixel-art game inventory icon. Preserve the existing circular metal drum, perspective, weathered metal shading and pixel-art style. Remove the entire extra long curved box magazine. Final image contains exactly ONE circular drum magazine with only its existing SHORT feed tower on top. No second object, no spare box magazine, no long extension, no extra bullets. Recenter the single drum in a square canvas with padding. True transparent background, no floor, no text. Specifically remove the separate reddish-brown magazine standing to the RIGHT of the drum.",
+      "source": "assets/item-art/attachments-v2/superseded/att_mag_545x39_60.png",
+      "output": "assets/gear/att_mag_545x39_60.png"
+    },
+    {
+      "id": "att_mag_762x39_75",
+      "prompt": "Use case: precise-object-edit. Edit the provided pixel-art game inventory icon. Preserve the existing circular metal drum, perspective, weathered metal shading and pixel-art style. Remove the entire extra long curved box magazine. Final image contains exactly ONE circular drum magazine with only its existing SHORT feed tower on top. No second object, no spare box magazine, no long extension, no extra bullets. Recenter the single drum in a square canvas with padding. True transparent background, no floor, no text. Specifically remove the large long curved magazine extending BEHIND the drum towards the upper right, keeping only the short tower in the foreground.",
+      "source": "assets/item-art/attachments-v2/superseded/att_mag_762x39_75.png",
+      "output": "assets/gear/att_mag_762x39_75.png"
+    }
+  ]
+}

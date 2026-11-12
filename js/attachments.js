@@ -1,25 +1,32 @@
 /* Pure gun derivation and one inventory transaction path for hideout and raid. */
 const Attachments={
   slotNames:{optic:'瞄具',grip:'握把',stock:'枪托',muzzle:'枪口',magazine:'弹匣'},
-  modifierNames:{aimTime:'瞄准时间',baseSpread:'基础散布',spreadGrowth:'连射散布增长',recoilHorizontal:'横向后坐力',recoilVertical:'纵向后坐力',recoilRecovery:'双轴回正速度',reloadTime:'装填时间',magazineCapacity:'弹匣容量',pelletSpread:'弹丸扩散'},
-  compatible(gun,id,slot){const w=typeof gun==='string'?WEAPONS[canonicalWeaponId(gun)]:gun,a=ATTACHMENT_DEFS[id];return !!(w&&a&&a.subtype===(slot||a.subtype)&&w.attachmentSlots?.[a.subtype]&&a.compatibleTags.every(t=>w.attachmentTags.includes(t)));},
+  modifierNames:{aimTime:'瞄准时间',baseSpread:'基础散布',spreadGrowth:'连射散布增长',recoilHorizontal:'横向后坐力',recoilVertical:'纵向后坐力',reloadTime:'装填时间',magazineCapacity:'弹匣容量',pelletSpread:'弹丸扩散'},
+  compatible(gun,id,slot){const w=typeof gun==='string'?WEAPONS[canonicalWeaponId(gun)]:gun,a=ATTACHMENT_DEFS[id];return !!(w&&a&&a.subtype===(slot||a.subtype)&&w.attachmentSlots?.[a.subtype]&&a.compatibleTags.every(t=>w.attachmentTags.includes(t))&&(a.subtype!=='magazine'||(w.reloadType==='magazine'&&(a.calibers||[a.caliber]).includes(w.caliber)&&a.magazineFamily===w.magazineFamily&&w.magazineTypes.includes(a.magazineType)&&(!a.compatibleWeapons||a.compatibleWeapons.includes(w.id)))));},
   normalize(id,input){const w=WEAPONS[canonicalWeaponId(id)],installed={},invalid=[];
     if(!input||typeof input!=='object')return{installed,invalid};
     for(const [slot,part]of Object.entries(input)){if(part==null||part==='')continue;if(w&&this.compatible(w,part,slot))installed[slot]=part;else invalid.push({slot,id:part,known:!!ATTACHMENT_DEFS[part]});}return{installed,invalid};},
-  resolve(id,input){const base=WEAPONS[canonicalWeaponId(id)];if(!base)return null;
-    const {installed}=this.normalize(base.id,input),mods={};let mass=0,value=0;
+  /* base 可传入「已调参的枪」：靶场改完倍率后用同一份配件重新解析，
+     配件效果与调参值同时生效，不会互相覆盖。
+     六参数模型下配件只改倍率：基础散布 → spreadMul，连射增长 → spreadGrowthMul。 */
+  resolve(id,input,base){const original=WEAPONS[canonicalWeaponId(id)],src=base||original;if(!src)return null;
+    const {installed}=this.normalize(original?original.id:src.id,input),mods={};let mass=0,value=0;
     for(const part of Object.values(installed)){const a=ATTACHMENT_DEFS[part];mass+=a.w;value+=a.price;for(const [k,v]of Object.entries(a.statModifiers))if(Number.isFinite(v))mods[k]=(mods[k]||0)+v;}
     const mul=(k,min)=>Math.max(min,1+(mods[k]||0));
-    return {...base,attachments:{...installed},attachmentModifiers:mods,
-      aimTime:base.aimTime*mul('aimTime',.6),spreadBase:base.spreadBase*mul('baseSpread',.5),
-      recoilPerShot:base.recoilPerShot*mul('spreadGrowth',.5),recoilHMul:base.recoilHMul*mul('recoilHorizontal',.5),recoilVMul:base.recoilVMul*mul('recoilVertical',.5),
-      recoilRecovery:mul('recoilRecovery',.1),reloadTime:base.reloadTime*mul('reloadTime',.6),pelletSpread:base.pelletSpread*mul('pelletSpread',.5),
-      mag:mods.magazineCapacity?Math.max(base.mag+1,Math.floor(base.mag*(1+mods.magazineCapacity)+1e-9)):base.mag,
-      w:base.w+mass,price:base.price+value};
+    const magazine=ATTACHMENT_DEFS[installed.magazine],optic=ATTACHMENT_DEFS[installed.optic];
+    return {...src,attachments:{...installed},attachmentModifiers:mods,
+      aimTime:src.aimTime*mul('aimTime',.6),
+      spreadMul:(src.spreadMul??1)*mul('baseSpread',.5),
+      spreadGrowthMul:(src.spreadGrowthMul??1)*mul('spreadGrowth',.5),
+      recoilHMul:(src.recoilHMul??1)*mul('recoilHorizontal',.5),recoilVMul:(src.recoilVMul??1)*mul('recoilVertical',.5),
+      reloadTime:src.reloadTime*mul('reloadTime',.6),pelletSpread:src.pelletSpread*mul('pelletSpread',.5),
+      adsZoom:optic?.statModifiers.adsZoom??1.15,adsView:optic?.statModifiers.adsView??1.15,adsSpread:mul('adsSpread',.5),hipSpread:mul('hipSpread',.5),noiseRadius:mul('noiseRadius',.32),
+      mag:magazine?.statModifiers.magazineCapacityFixed??src.mag,
+      w:src.w+mass,price:src.price+value};
   },
   slotState(id,installed,slot){const w=WEAPONS[canonicalWeaponId(id)];return !w?.attachmentSlots?.[slot]?'disabled':this.normalize(id,installed).installed[slot]?'installed':'empty';},
   item(id){const d=ATTACHMENT_DEFS[id];return d?{id:'g_'+id,name:d.name,short:d.name,cat:'gear',r:d.r,w:d.w,price:d.price,sell:Math.floor(d.price/2),stack:1,noCodex:true,icon:id,desc:d.description,equip:{kind:'attachment',attachment:id}}:null;},
-  describe(id){const a=ATTACHMENT_DEFS[id];return a?Object.entries(a.statModifiers).map(([k,v])=>this.modifierNames[k]+' '+(v>0?'+':'')+Math.round(v*100)+'%').join(' · '):'';},
+  describe(id){const a=ATTACHMENT_DEFS[id];if(!a)return '';const names={...this.modifierNames,adsSpread:'精瞄散布',hipSpread:'腰射散布',noiseRadius:'枪声范围'};return Object.entries(a.statModifiers).map(([k,v])=>k==='adsView'?'视距 '+v.toFixed(2)+'×':k==='adsZoom'?'画面 '+v.toFixed(2)+'×':k==='magazineCapacityFixed'?'固定 '+v+' 发':(names[k]||k)+' '+(v>0?'+':'')+Math.round(v*100)+'%').concat(a.subtype==='magazine'&&!a.statModifiers.magazineCapacityFixed?['原厂容量']:[],['兼容 '+Object.values(WEAPONS).filter(w=>this.compatible(w,a.id)).map(w=>w.short||w.id).join(' / ')]).join(' · ');},
   entryItem(e){return e?.item||e?.gear||(e&&ITEM_BY_ID[e.id])||null;},
   targets(){const out=[],raid=Game.state==='playing',add=(owner,index,entry,item)=>{if(item?.equip?.kind==='gun')out.push({owner,index,entry,ref:item,name:item.name});};
     if(raid){const p=Game.player;if(!p||p.dead)return out;p.weapons.forEach((w,i)=>{if(w)out.push({owner:'raid-equipped',index:i,ref:w,name:w.name});});p.bag.slots.forEach((e,i)=>add('raid-bag',i,e,e.item));}
@@ -37,7 +44,7 @@ const Attachments={
     if(p.weapon.cycleRemaining>0||(t.owner==='raid-equipped'&&t.ref.cycleRemaining>0)||t.ref.equip?.cycleRemaining>0)return '泵动结束后可改装';
     if(p.shotAnimT>0||p.windupShot||p._burstPending>0)return '射击动作结束后可改装';
     if(p.dodgeT>0)return '闪避结束后可改装';if(typeof MeleeSystem!=='undefined'&&MeleeSystem.locked())return '近战前摇结束后可改装';
-    if(Game.action)return ({heal:'治疗',extract:'撤离',search:'搜刮',corpse:'搜刮'}[Game.action.type]||'当前动作')+'结束后可改装';return '';
+    if(Game.action)return ({heal:'治疗',extract:'撤离',search:'搜刮',corpse:'搜刮',unlock:'开锁'}[Game.action.type]||'当前动作')+'结束后可改装';return '';
   },
   carriedWeight(){return Save.bagWeight()+Save.safeWeight()+Save.gear.weapons.reduce((n,w)=>n+(w?.w||0),0)+(Save.gear.helmet?.w||0)+(Save.gear.body?.w||0)+(Save.gear.back?.w||0)+(Save.gear.melee?.w||0);},
   preview(t,slot,id,source){const current=this.read(t);if(!current)return{ok:false,reason:'枪械位置已变化，请重新选择'};
@@ -65,7 +72,7 @@ const Attachments={
   },
   // Vendor providers are independent of the UI, so additional merchants can be added here.
   vendors(){return [{id:'gun',offers:Object.values(ATTACHMENT_DEFS).filter(d=>d.r<=3).map(d=>({id:d.id,price:d.price}))}];},
-  offer(id){for(const vendor of this.vendors()){const item=vendor.offers.find(o=>o.id===id);if(item&&Number.isFinite(item.price)&&item.price>=0)return {...item,vendor:vendor.id};}return null;},
+  offer(id){for(const vendor of this.vendors()){const item=vendor.offers.find(o=>o.id===id);if(item&&Number.isFinite(item.price)&&item.price>=0)return {...item,price:buyPrice(item.price),vendor:vendor.id};}return null;},
   plan(t,draft){
     const current=this.read(t);if(Game.state!=='base'||!current)return {ok:false,reason:'枪械位置已变化，请重新选择'};
     const eq=current.equip,before=this.resolve(eq.gun,eq.attachments),parts={...before.attachments},changes=[],used=new Set(),buys=[];

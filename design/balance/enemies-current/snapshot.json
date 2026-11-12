@@ -1,25 +1,25 @@
 {
-  "capturedAt": "2026-11-05T11:06:23.404Z",
+  "capturedAt": "2026-11-09T14:36:15.332Z",
   "basis": "current multi-file runtime code; compiled maps and editable drafts listed separately",
   "sourceHashes": {
-    "js/config.js": "45da8a7f4127251388653ac089438dc36cd69e9d0fe7a335d6de1ed6f074a532",
-    "js/data.js": "75cb3cea7d7d41f0e0c3847768825c62de65ee5fcc74f3b514b706c6c2350689",
-    "js/entities.js": "7d5ea5885726470438973acb68c092a4d2d66fe7a9610e2d4c9cc08a196728c4",
-    "js/human-ai.js": "4817c3c60682e0273aa29da53670b89c2d806fc8f8f6b2e19feddae9efb7138d",
-    "js/debuff.js": "5be81a8f3ac3e9eb51089ab69b39fc5000dea28ff7209a1a7d741c5b98b1a05f",
-    "js/core.js": "f7d93e23496da63cf0933e69dde7c9328db532ce172a9523d5ee6216296fdd4e",
-    "js/game.js": "a7cc868573b133c3f8116f6a456aca2f2d85ec5e273c878053a7409b9ebdf7b2",
-    "js/game-update.js": "5c48dde6f44699931fe7401fd7aee2db86d5ae95df5f5d28eb56dd5ad8b2a22b",
-    "js/game-panels.js": "167c1d150d61c4e7b6dcb8cd41133576f9b2fab422bd117a5872b353c8decd0a",
-    "js/save.js": "066db6725df6e43a173ed65d7ec77e62d521bc0db17dfd8e4aa76828e4a30c90",
-    "js/sales.js": "a89aea69fec76aab7196317c442ae78ea97a6a1c70535baa5f0167145ae637da"
+    "js/config.js": "be41de7a56e55da45efbc394434eb5b575404c712c0e5fe60af3731b951cf13a",
+    "js/data.js": "d9fbc18ac2ced144817b5f94c59a127071fa78ce31d8fa0a2347ee3e808dd546",
+    "js/entities.js": "db04466b1f52c034cc4717d5b5ef79a796989e9fac02e630e842f18868aaf6f1",
+    "js/human-ai.js": "05389c7997e4dbeb93578fb8a2cc9eb0f8c242827dc0afc3164e21169912e22a",
+    "js/debuff.js": "51a30a2135217fec19e7b7272632241ff5833e6fd9e52a6b12c4dcdaee429cd6",
+    "js/core.js": "6f5c93ec50dd88a59912df89181911a974705314790c8e39f7dfbc585b67e49c",
+    "js/game.js": "bc945f392fcff31c75514e6f6419aac97352f4e61f5bdbabea1598b57a43677c",
+    "js/game-update.js": "03af9df0bdbf117da4559be703e015ea66671e91d7964ca400f3a6b9b2db362c",
+    "js/game-panels.js": "b649fe198445098c2e899af4290be27e2aae48f798bdbdb44fd3cbcae147c895",
+    "js/save.js": "3adbb2f5d54cbe22564918c86a63c6d824bcc8a55fce499ca7a9a9c2e036e98b",
+    "js/sales.js": "d195d10e717e46c9e29b84398cf24e93b4c232013af720c63d15499d017ec187"
   },
   "definitions": {
     "scav": {
       "name": "拾荒者",
       "short": "拾",
       "color": "#b07a4a",
-      "hp": 60,
+      "hp": 90,
       "speed": 54,
       "sight": 11,
       "fov": 1.7,
@@ -131,7 +131,7 @@
       "name": "回响体",
       "short": "响",
       "color": "#8f5f7a",
-      "hp": 22,
+      "hp": 110,
       "speed": 44,
       "sight": 0,
       "fov": 0,
@@ -148,7 +148,7 @@
       "name": "潮汐守卫",
       "short": "守",
       "color": "#5f7f9b",
-      "hp": 72,
+      "hp": 175,
       "speed": 36,
       "sight": 15,
       "fov": 2,
@@ -165,7 +165,7 @@
       "name": "据点看守",
       "short": "看",
       "color": "#b8a26b",
-      "hp": 80,
+      "hp": 110,
       "speed": 42,
       "sight": 10,
       "fov": 1.9198621771937625,
@@ -223,7 +223,7 @@
       "name": "受雇回收员",
       "short": "回",
       "color": "#7c9684",
-      "hp": 100,
+      "hp": 145,
       "speed": 50,
       "sight": 13,
       "fov": 1.9198621771937625,
@@ -424,44 +424,21 @@
     {
       "id": "linhai-old-quarter",
       "title": "临海路旧街区",
-      "total": 46,
+      "total": 50,
       "counts": {
-        "scav": 24,
-        "guard": 4,
+        "scav": 18,
+        "guard": 7,
         "echo": 15,
-        "retriever": 3
+        "retriever": 4,
+        "holdout": 6
       },
       "spawns": [
-        {
-          "id": "e01",
-          "region": "apartment",
-          "type": "scav",
-          "x": 8,
-          "y": 18,
-          "patrolRadius": 2
-        },
-        {
-          "id": "e02",
-          "region": "apartment",
-          "type": "scav",
-          "x": 15,
-          "y": 17,
-          "patrolRadius": 2
-        },
-        {
-          "id": "e03",
-          "region": "apartment",
-          "type": "scav",
-          "x": 14,
-          "y": 21,
-          "patrolRadius": 2
-        },
         {
           "id": "e04",
           "region": "clinic",
           "type": "scav",
           "x": 14,
-          "y": 44,
+          "y": 43,
           "patrolRadius": 2
         },
         {
@@ -484,7 +461,7 @@
           "id": "e08",
           "region": "bank",
           "type": "scav",
-          "x": 51,
+          "x": 53,
           "y": 24,
           "patrolRadius": 2
         },
@@ -508,8 +485,8 @@
           "id": "e12",
           "region": "clockshop",
           "type": "guard",
-          "x": 65,
-          "y": 39,
+          "x": 64,
+          "y": 35,
           "patrolRadius": 2
         },
         {
@@ -517,15 +494,15 @@
           "region": "clockshop",
           "type": "guard",
           "x": 65,
-          "y": 35,
+          "y": 32,
           "patrolRadius": 2
         },
         {
           "id": "e14",
           "region": "outdoors",
           "type": "scav",
-          "x": 39,
-          "y": 41,
+          "x": 54,
+          "y": 15,
           "patrolRadius": 2
         },
         {
@@ -549,39 +526,31 @@
           "region": "outdoors",
           "type": "scav",
           "x": 62,
-          "y": 8,
+          "y": 6,
           "patrolRadius": 3
         },
         {
           "id": "e18",
-          "region": "outdoors",
+          "region": "clinic",
           "type": "echo",
-          "x": 18,
-          "y": 31,
+          "x": 11,
+          "y": 35,
           "patrolRadius": 3
         },
         {
           "id": "e19",
           "region": "outdoors",
           "type": "echo",
-          "x": 16,
-          "y": 36,
+          "x": 24,
+          "y": 30,
           "patrolRadius": 3
         },
         {
           "id": "e20",
-          "region": "outdoors",
+          "region": "clinic",
           "type": "echo",
-          "x": 8,
-          "y": 27,
-          "patrolRadius": 3
-        },
-        {
-          "id": "e21",
-          "region": "outdoors",
-          "type": "echo",
-          "x": 15,
-          "y": 51,
+          "x": 13,
+          "y": 36,
           "patrolRadius": 3
         },
         {
@@ -593,43 +562,35 @@
           "patrolRadius": 3
         },
         {
-          "id": "e23",
-          "region": "outdoors",
-          "type": "echo",
-          "x": 37,
-          "y": 35,
-          "patrolRadius": 3
-        },
-        {
           "id": "e24",
           "region": "outdoors",
           "type": "echo",
-          "x": 50,
-          "y": 40,
+          "x": 41,
+          "y": 37,
           "patrolRadius": 3
         },
         {
           "id": "e25",
           "region": "bank",
           "type": "scav",
-          "x": 53,
-          "y": 19,
+          "x": 47,
+          "y": 25,
           "patrolRadius": 2
         },
         {
           "id": "e26",
           "region": "outdoors",
           "type": "scav",
-          "x": 65,
-          "y": 24,
+          "x": 57,
+          "y": 20,
           "patrolRadius": 2
         },
         {
           "id": "e27",
           "region": "outdoors",
           "type": "scav",
-          "x": 58,
-          "y": 23,
+          "x": 60,
+          "y": 13,
           "patrolRadius": 2
         },
         {
@@ -637,7 +598,7 @@
           "region": "outdoors",
           "type": "scav",
           "x": 65,
-          "y": 19,
+          "y": 25,
           "patrolRadius": 2
         },
         {
@@ -676,24 +637,8 @@
           "id": "e33",
           "region": "outdoors",
           "type": "scav",
-          "x": 41,
-          "y": 8,
-          "patrolRadius": 2
-        },
-        {
-          "id": "e34",
-          "region": "apartment",
-          "type": "scav",
-          "x": 15,
-          "y": 14,
-          "patrolRadius": 2
-        },
-        {
-          "id": "e35",
-          "region": "outdoors",
-          "type": "scav",
-          "x": 19,
-          "y": 11,
+          "x": 46,
+          "y": 2,
           "patrolRadius": 2
         },
         {
@@ -701,31 +646,15 @@
           "region": "outdoors",
           "type": "echo",
           "x": 25,
-          "y": 38,
+          "y": 47,
           "patrolRadius": 2
         },
         {
           "id": "e37",
           "region": "outdoors",
           "type": "echo",
-          "x": 25,
-          "y": 33,
-          "patrolRadius": 2
-        },
-        {
-          "id": "e38",
-          "region": "outdoors",
-          "type": "scav",
-          "x": 21,
-          "y": 8,
-          "patrolRadius": 2
-        },
-        {
-          "id": "e39",
-          "region": "clinic",
-          "type": "echo",
-          "x": 11,
-          "y": 41,
+          "x": 27,
+          "y": 39,
           "patrolRadius": 2
         },
         {
@@ -740,48 +669,40 @@
           "id": "e41",
           "region": "clinic",
           "type": "echo",
-          "x": 8,
+          "x": 10,
           "y": 42,
           "patrolRadius": 2
         },
         {
-          "id": "e42",
+          "id": "e43",
           "region": "outdoors",
           "type": "echo",
-          "x": 17,
-          "y": 41,
-          "patrolRadius": 2
-        },
-        {
-          "id": "e43",
-          "region": "clinic",
-          "type": "echo",
-          "x": 10,
-          "y": 36,
+          "x": 4,
+          "y": 26,
           "patrolRadius": 2
         },
         {
           "id": "e45",
-          "region": "outdoors",
+          "region": "clinic",
           "type": "echo",
-          "x": 17,
-          "y": 44,
+          "x": 13,
+          "y": 41,
           "patrolRadius": 2
         },
         {
           "id": "e46",
-          "region": "bank",
+          "region": "outdoors",
           "type": "scav",
-          "x": 50,
-          "y": 21,
+          "x": 58,
+          "y": 25,
           "patrolRadius": 2
         },
         {
           "id": "e47",
           "region": "warehouse",
           "type": "retriever",
-          "x": 42,
-          "y": 50,
+          "x": 41,
+          "y": 52,
           "patrolRadius": 2,
           "facing": "s"
         },
@@ -790,7 +711,7 @@
           "region": "warehouse",
           "type": "retriever",
           "x": 43,
-          "y": 47,
+          "y": 49,
           "patrolRadius": 2,
           "facing": "s"
         },
@@ -798,10 +719,129 @@
           "id": "e49",
           "region": "warehouse",
           "type": "retriever",
-          "x": 45,
-          "y": 50,
+          "x": 46,
+          "y": 52,
           "patrolRadius": 2,
           "facing": "s"
+        },
+        {
+          "id": "e50",
+          "region": "apartment",
+          "type": "holdout",
+          "x": 12,
+          "y": 17,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e51",
+          "region": "apartment",
+          "type": "holdout",
+          "x": 13,
+          "y": 21,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e52",
+          "region": "apartment",
+          "type": "holdout",
+          "x": 16,
+          "y": 16,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e53",
+          "region": "apartment",
+          "type": "holdout",
+          "x": 13,
+          "y": 14,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e54",
+          "region": "outdoors",
+          "type": "holdout",
+          "x": 20,
+          "y": 19,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e55",
+          "region": "apartment",
+          "type": "holdout",
+          "x": 8,
+          "y": 16,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e56",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 53,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e57",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 54,
+          "y": 36,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e58",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 56,
+          "y": 43,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e59",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 48,
+          "y": 48,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e60",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 17,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e61",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 18,
+          "y": 43,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e62",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 20,
+          "y": 40,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e63",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 21,
+          "y": 43,
+          "patrolRadius": 2
         }
       ]
     },
@@ -989,13 +1029,13 @@
   "drafts": [
     {
       "file": "design/maps/linhai-old-quarter/layout.json",
-      "total": 40,
+      "total": 50,
       "counts": {
         "scav": 18,
-        "guard": 4,
-        "echo": 11,
-        "retriever": 3,
-        "holdout": 4
+        "guard": 7,
+        "echo": 15,
+        "retriever": 4,
+        "holdout": 6
       },
       "spawns": [
         {
@@ -1003,7 +1043,7 @@
           "region": "clinic",
           "type": "scav",
           "x": 14,
-          "y": 44,
+          "y": 43,
           "patrolRadius": 2
         },
         {
@@ -1026,7 +1066,7 @@
           "id": "e08",
           "region": "bank",
           "type": "scav",
-          "x": 51,
+          "x": 53,
           "y": 24,
           "patrolRadius": 2
         },
@@ -1050,8 +1090,8 @@
           "id": "e12",
           "region": "clockshop",
           "type": "guard",
-          "x": 65,
-          "y": 39,
+          "x": 64,
+          "y": 35,
           "patrolRadius": 2
         },
         {
@@ -1059,7 +1099,7 @@
           "region": "clockshop",
           "type": "guard",
           "x": 65,
-          "y": 35,
+          "y": 32,
           "patrolRadius": 2
         },
         {
@@ -1091,7 +1131,7 @@
           "region": "outdoors",
           "type": "scav",
           "x": 62,
-          "y": 8,
+          "y": 6,
           "patrolRadius": 3
         },
         {
@@ -1112,9 +1152,9 @@
         },
         {
           "id": "e20",
-          "region": "outdoors",
+          "region": "clinic",
           "type": "echo",
-          "x": 15,
+          "x": 13,
           "y": 36,
           "patrolRadius": 3
         },
@@ -1130,23 +1170,23 @@
           "id": "e24",
           "region": "outdoors",
           "type": "echo",
-          "x": 50,
-          "y": 40,
+          "x": 41,
+          "y": 37,
           "patrolRadius": 3
         },
         {
           "id": "e25",
           "region": "bank",
           "type": "scav",
-          "x": 53,
-          "y": 19,
+          "x": 47,
+          "y": 25,
           "patrolRadius": 2
         },
         {
           "id": "e26",
           "region": "outdoors",
           "type": "scav",
-          "x": 58,
+          "x": 57,
           "y": 20,
           "patrolRadius": 2
         },
@@ -1154,8 +1194,8 @@
           "id": "e27",
           "region": "outdoors",
           "type": "scav",
-          "x": 58,
-          "y": 23,
+          "x": 60,
+          "y": 13,
           "patrolRadius": 2
         },
         {
@@ -1210,8 +1250,8 @@
           "id": "e36",
           "region": "outdoors",
           "type": "echo",
-          "x": 24,
-          "y": 45,
+          "x": 25,
+          "y": 47,
           "patrolRadius": 2
         },
         {
@@ -1248,18 +1288,18 @@
         },
         {
           "id": "e45",
-          "region": "outdoors",
+          "region": "clinic",
           "type": "echo",
-          "x": 17,
-          "y": 44,
+          "x": 13,
+          "y": 41,
           "patrolRadius": 2
         },
         {
           "id": "e46",
-          "region": "bank",
+          "region": "outdoors",
           "type": "scav",
-          "x": 50,
-          "y": 21,
+          "x": 58,
+          "y": 25,
           "patrolRadius": 2
         },
         {
@@ -1300,10 +1340,10 @@
         },
         {
           "id": "e51",
-          "region": "outdoors",
+          "region": "apartment",
           "type": "holdout",
-          "x": 20,
-          "y": 10,
+          "x": 13,
+          "y": 21,
           "patrolRadius": 2,
           "facing": "s"
         },
@@ -1320,10 +1360,93 @@
           "id": "e53",
           "region": "apartment",
           "type": "holdout",
-          "x": 14,
+          "x": 13,
           "y": 14,
           "patrolRadius": 2,
           "facing": "s"
+        },
+        {
+          "id": "e54",
+          "region": "outdoors",
+          "type": "holdout",
+          "x": 20,
+          "y": 19,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e55",
+          "region": "apartment",
+          "type": "holdout",
+          "x": 8,
+          "y": 16,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e56",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 53,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e57",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 54,
+          "y": 36,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e58",
+          "region": "clockshop",
+          "type": "guard",
+          "x": 56,
+          "y": 43,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e59",
+          "region": "warehouse",
+          "type": "retriever",
+          "x": 48,
+          "y": 48,
+          "patrolRadius": 2,
+          "facing": "s"
+        },
+        {
+          "id": "e60",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 17,
+          "y": 41,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e61",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 18,
+          "y": 43,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e62",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 20,
+          "y": 40,
+          "patrolRadius": 2
+        },
+        {
+          "id": "e63",
+          "region": "outdoors",
+          "type": "echo",
+          "x": 21,
+          "y": 43,
+          "patrolRadius": 2
         }
       ]
     }
@@ -1338,7 +1461,7 @@
           "category": "medical",
           "rarity": 1,
           "referencePrice": 2000,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 2000
         },
         {
@@ -1347,7 +1470,7 @@
           "category": "medical",
           "rarity": 2,
           "referencePrice": 5000,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5000
         },
         {
@@ -1356,7 +1479,7 @@
           "category": "medical",
           "rarity": 1,
           "referencePrice": 2500,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 2500
         },
         {
@@ -1365,7 +1488,7 @@
           "category": "medical",
           "rarity": 2,
           "referencePrice": 6000,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 6000
         },
         {
@@ -1374,7 +1497,7 @@
           "category": "medical",
           "rarity": 1,
           "referencePrice": 3000,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 3000
         },
         {
@@ -1382,9 +1505,18 @@
           "name": "医用夹板",
           "category": "medical",
           "rarity": 2,
-          "referencePrice": 6000,
-          "firstDrawProbability": 0.011827956989247313,
-          "referenceSale": 6000
+          "referencePrice": 20000,
+          "firstDrawProbability": 0.010752688172043012,
+          "referenceSale": 20000
+        },
+        {
+          "id": "heal19",
+          "name": "简易手术包",
+          "category": "medical",
+          "rarity": 2,
+          "referencePrice": 12000,
+          "firstDrawProbability": 0.010752688172043012,
+          "referenceSale": 12000
         },
         {
           "id": "life01",
@@ -1392,7 +1524,7 @@
           "category": "life",
           "rarity": 1,
           "referencePrice": 1800,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1800
         },
         {
@@ -1401,7 +1533,7 @@
           "category": "life",
           "rarity": 1,
           "referencePrice": 1400,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1400
         },
         {
@@ -1410,7 +1542,7 @@
           "category": "life",
           "rarity": 2,
           "referencePrice": 5400,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5400
         },
         {
@@ -1419,7 +1551,7 @@
           "category": "life",
           "rarity": 2,
           "referencePrice": 4600,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 4600
         },
         {
@@ -1428,7 +1560,7 @@
           "category": "life",
           "rarity": 2,
           "referencePrice": 4800,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 4800
         },
         {
@@ -1437,7 +1569,7 @@
           "category": "life",
           "rarity": 2,
           "referencePrice": 4000,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 4000
         },
         {
@@ -1446,7 +1578,7 @@
           "category": "life",
           "rarity": 2,
           "referencePrice": 4200,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 4200
         },
         {
@@ -1455,7 +1587,7 @@
           "category": "life",
           "rarity": 1,
           "referencePrice": 1200,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1200
         },
         {
@@ -1464,7 +1596,7 @@
           "category": "life",
           "rarity": 2,
           "referencePrice": 4400,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 4400
         },
         {
@@ -1473,7 +1605,7 @@
           "category": "life",
           "rarity": 2,
           "referencePrice": 5200,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5200
         },
         {
@@ -1482,7 +1614,7 @@
           "category": "elec",
           "rarity": 2,
           "referencePrice": 7500,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 7500
         },
         {
@@ -1491,7 +1623,7 @@
           "category": "elec",
           "rarity": 2,
           "referencePrice": 5000,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5000
         },
         {
@@ -1500,7 +1632,7 @@
           "category": "elec",
           "rarity": 2,
           "referencePrice": 6200,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 6200
         },
         {
@@ -1509,7 +1641,7 @@
           "category": "ind",
           "rarity": 1,
           "referencePrice": 3000,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 3000
         },
         {
@@ -1518,7 +1650,7 @@
           "category": "ind",
           "rarity": 2,
           "referencePrice": 5600,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5600
         },
         {
@@ -1527,7 +1659,7 @@
           "category": "ind",
           "rarity": 1,
           "referencePrice": 1200,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1200
         },
         {
@@ -1536,7 +1668,7 @@
           "category": "ind",
           "rarity": 1,
           "referencePrice": 1600,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1600
         },
         {
@@ -1545,7 +1677,7 @@
           "category": "ind",
           "rarity": 1,
           "referencePrice": 2400,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 2400
         },
         {
@@ -1554,7 +1686,7 @@
           "category": "ind",
           "rarity": 2,
           "referencePrice": 4200,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 4200
         },
         {
@@ -1563,7 +1695,7 @@
           "category": "ind",
           "rarity": 2,
           "referencePrice": 6800,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 6800
         },
         {
@@ -1572,7 +1704,7 @@
           "category": "ind",
           "rarity": 2,
           "referencePrice": 7200,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 7200
         },
         {
@@ -1581,7 +1713,7 @@
           "category": "med",
           "rarity": 2,
           "referencePrice": 5800,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5800
         },
         {
@@ -1590,7 +1722,7 @@
           "category": "med",
           "rarity": 2,
           "referencePrice": 6000,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 6000
         },
         {
@@ -1599,7 +1731,7 @@
           "category": "collect",
           "rarity": 2,
           "referencePrice": 5500,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5500
         },
         {
@@ -1608,7 +1740,7 @@
           "category": "collect",
           "rarity": 2,
           "referencePrice": 7200,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 7200
         },
         {
@@ -1617,7 +1749,7 @@
           "category": "collect",
           "rarity": 1,
           "referencePrice": 1600,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1600
         },
         {
@@ -1626,7 +1758,7 @@
           "category": "collect",
           "rarity": 2,
           "referencePrice": 5700,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5700
         },
         {
@@ -1635,7 +1767,7 @@
           "category": "collect",
           "rarity": 1,
           "referencePrice": 2000,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 2000
         },
         {
@@ -1644,7 +1776,7 @@
           "category": "mil",
           "rarity": 1,
           "referencePrice": 1800,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1800
         },
         {
@@ -1653,7 +1785,7 @@
           "category": "mil",
           "rarity": 1,
           "referencePrice": 2300,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 2300
         },
         {
@@ -1662,7 +1794,7 @@
           "category": "mil",
           "rarity": 2,
           "referencePrice": 5400,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5400
         },
         {
@@ -1671,7 +1803,7 @@
           "category": "mil",
           "rarity": 2,
           "referencePrice": 6500,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 6500
         },
         {
@@ -1680,7 +1812,7 @@
           "category": "mil",
           "rarity": 2,
           "referencePrice": 7100,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 7100
         },
         {
@@ -1689,7 +1821,7 @@
           "category": "intel",
           "rarity": 2,
           "referencePrice": 5200,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 5200
         },
         {
@@ -1698,7 +1830,7 @@
           "category": "intel",
           "rarity": 1,
           "referencePrice": 1800,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1800
         },
         {
@@ -1707,7 +1839,7 @@
           "category": "intel",
           "rarity": 2,
           "referencePrice": 6800,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 6800
         },
         {
@@ -1716,7 +1848,7 @@
           "category": "intel",
           "rarity": 1,
           "referencePrice": 1000,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1000
         },
         {
@@ -1725,7 +1857,7 @@
           "category": "occult",
           "rarity": 1,
           "referencePrice": 1800,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 1800
         },
         {
@@ -1734,7 +1866,7 @@
           "category": "occult",
           "rarity": 1,
           "referencePrice": 2400,
-          "firstDrawProbability": 0.035842293906810034,
+          "firstDrawProbability": 0.03225806451612903,
           "referenceSale": 2400
         },
         {
@@ -1743,7 +1875,7 @@
           "category": "occult",
           "rarity": 2,
           "referencePrice": 6800,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 6800
         },
         {
@@ -1752,7 +1884,7 @@
           "category": "occult",
           "rarity": 2,
           "referencePrice": 8500,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 8500
         },
         {
@@ -1761,8 +1893,44 @@
           "category": "occult",
           "rarity": 2,
           "referencePrice": 9200,
-          "firstDrawProbability": 0.011827956989247313,
+          "firstDrawProbability": 0.010752688172043012,
           "referenceSale": 9200
+        },
+        {
+          "id": "odd04",
+          "name": "潮盐团块",
+          "category": "odd",
+          "rarity": 1,
+          "referencePrice": 1600,
+          "firstDrawProbability": 0.03225806451612903,
+          "referenceSale": 1600
+        },
+        {
+          "id": "odd05",
+          "name": "余温灰烬",
+          "category": "odd",
+          "rarity": 1,
+          "referencePrice": 2200,
+          "firstDrawProbability": 0.03225806451612903,
+          "referenceSale": 2200
+        },
+        {
+          "id": "odd06",
+          "name": "逆生鳞片",
+          "category": "odd",
+          "rarity": 2,
+          "referencePrice": 6800,
+          "firstDrawProbability": 0.010752688172043012,
+          "referenceSale": 6800
+        },
+        {
+          "id": "odd07",
+          "name": "畸光薄膜",
+          "category": "odd",
+          "rarity": 2,
+          "referencePrice": 8400,
+          "firstDrawProbability": 0.010752688172043012,
+          "referenceSale": 8400
         }
       ],
       "excluded": [
@@ -1833,14 +2001,14 @@
         }
       ],
       "rarityCounts": {
-        "1": 18,
-        "2": 30
+        "1": 20,
+        "2": 33
       },
       "firstDrawRarityProbability": {
         "1": 0.6451612903225806,
         "2": 0.3548387096774194
       },
-      "firstDrawMeanReferencePrice": 3350.322580645162
+      "firstDrawMeanReferencePrice": 3600.0000000000005
     },
     "echo": {
       "name": "回响体",
@@ -1851,7 +2019,7 @@
           "category": "odd",
           "rarity": 4,
           "referencePrice": 42000,
-          "firstDrawProbability": 0.44642857142857145,
+          "firstDrawProbability": 0.026014568158168577,
           "referenceSale": 42000
         },
         {
@@ -1859,9 +2027,9 @@
           "name": "潮汐仪",
           "category": "odd",
           "rarity": 6,
-          "referencePrice": 3000000,
-          "firstDrawProbability": 0.10714285714285715,
-          "referenceSale": 3000000
+          "referencePrice": 6000000,
+          "firstDrawProbability": 0.0008919280511372082,
+          "referenceSale": 6000000
         },
         {
           "id": "odd03",
@@ -1869,20 +2037,163 @@
           "category": "odd",
           "rarity": 4,
           "referencePrice": 60000,
-          "firstDrawProbability": 0.44642857142857145,
+          "firstDrawProbability": 0.026014568158168577,
           "referenceSale": 60000
+        },
+        {
+          "id": "odd04",
+          "name": "潮盐团块",
+          "category": "odd",
+          "rarity": 1,
+          "referencePrice": 1600,
+          "firstDrawProbability": 0.2601456815816858,
+          "referenceSale": 1600
+        },
+        {
+          "id": "odd05",
+          "name": "余温灰烬",
+          "category": "odd",
+          "rarity": 1,
+          "referencePrice": 2200,
+          "firstDrawProbability": 0.2601456815816858,
+          "referenceSale": 2200
+        },
+        {
+          "id": "odd06",
+          "name": "逆生鳞片",
+          "category": "odd",
+          "rarity": 2,
+          "referencePrice": 6800,
+          "firstDrawProbability": 0.14308012486992716,
+          "referenceSale": 6800
+        },
+        {
+          "id": "odd07",
+          "name": "畸光薄膜",
+          "category": "odd",
+          "rarity": 2,
+          "referencePrice": 8400,
+          "firstDrawProbability": 0.14308012486992716,
+          "referenceSale": 8400
+        },
+        {
+          "id": "odd08",
+          "name": "漂浮铁砂",
+          "category": "odd",
+          "rarity": 3,
+          "referencePrice": 19000,
+          "firstDrawProbability": 0.034686090877558105,
+          "referenceSale": 19000
+        },
+        {
+          "id": "odd09",
+          "name": "逆潮琥珀",
+          "category": "odd",
+          "rarity": 3,
+          "referencePrice": 26000,
+          "firstDrawProbability": 0.034686090877558105,
+          "referenceSale": 26000
+        },
+        {
+          "id": "odd10",
+          "name": "冷燃蜡块",
+          "category": "odd",
+          "rarity": 3,
+          "referencePrice": 32000,
+          "firstDrawProbability": 0.034686090877558105,
+          "referenceSale": 32000
+        },
+        {
+          "id": "odd11",
+          "name": "折光晶核",
+          "category": "odd",
+          "rarity": 5,
+          "referencePrice": 180000,
+          "firstDrawProbability": 0.015608740894901146,
+          "referenceSale": 180000
+        },
+        {
+          "id": "odd12",
+          "name": "相位脊针",
+          "category": "odd",
+          "rarity": 5,
+          "referencePrice": 260000,
+          "firstDrawProbability": 0.015608740894901146,
+          "referenceSale": 260000
+        },
+        {
+          "id": "odd17",
+          "name": "逆流沙漏",
+          "category": "odd",
+          "rarity": 6,
+          "referencePrice": 600000,
+          "firstDrawProbability": 0.0008919280511372082,
+          "referenceSale": 600000
+        },
+        {
+          "id": "odd18",
+          "name": "瓶中风暴",
+          "category": "odd",
+          "rarity": 6,
+          "referencePrice": 1700000,
+          "firstDrawProbability": 0.0008919280511372082,
+          "referenceSale": 1700000
+        },
+        {
+          "id": "odd13",
+          "name": "捧腹者雕像",
+          "category": "odd",
+          "rarity": 6,
+          "referencePrice": 22451401,
+          "firstDrawProbability": 0.0008919280511372082,
+          "referenceSale": 22451401
+        },
+        {
+          "id": "odd14",
+          "name": "极端应激姿态猫科标本",
+          "category": "odd",
+          "rarity": 6,
+          "referencePrice": 24121212,
+          "firstDrawProbability": 0.0008919280511372082,
+          "referenceSale": 24121212
+        },
+        {
+          "id": "odd15",
+          "name": "颂乐玩偶",
+          "category": "odd",
+          "rarity": 6,
+          "referencePrice": 55555555,
+          "firstDrawProbability": 0.0008919280511372082,
+          "referenceSale": 55555555
+        },
+        {
+          "id": "odd16",
+          "name": "持械木质拟人塑像",
+          "category": "odd",
+          "rarity": 6,
+          "referencePrice": 18888888,
+          "firstDrawProbability": 0.0008919280511372082,
+          "referenceSale": 18888888
         }
       ],
       "excluded": [],
       "rarityCounts": {
+        "1": 2,
+        "2": 2,
+        "3": 3,
         "4": 2,
-        "6": 1
+        "5": 2,
+        "6": 7
       },
       "firstDrawRarityProbability": {
-        "4": 0.8928571428571429,
-        "6": 0.10714285714285715
+        "1": 0.5202913631633715,
+        "2": 0.2861602497398543,
+        "3": 0.10405827263267431,
+        "4": 0.052029136316337155,
+        "5": 0.03121748178980229,
+        "6": 0.006243496357960458
       },
-      "firstDrawMeanReferencePrice": 366964.28571428574
+      "firstDrawMeanReferencePrice": 130697.0421683762
     },
     "guard": {
       "name": "潮汐守卫",
@@ -2009,18 +2320,36 @@
           "name": "原型信号分析终端",
           "category": "elec",
           "rarity": 6,
-          "referencePrice": 880000,
-          "firstDrawProbability": 0.0020811654526534857,
-          "referenceSale": 880000
+          "referencePrice": 1100000,
+          "firstDrawProbability": 0.000693721817551162,
+          "referenceSale": 1100000
         },
         {
           "id": "elec15",
           "name": "「远望者」深海探测核心",
           "category": "elec",
           "rarity": 6,
-          "referencePrice": 2650000,
-          "firstDrawProbability": 0.0020811654526534857,
-          "referenceSale": 2650000
+          "referencePrice": 4500000,
+          "firstDrawProbability": 0.000693721817551162,
+          "referenceSale": 4500000
+        },
+        {
+          "id": "elec16",
+          "name": "典藏晶体管收音机",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 600000,
+          "firstDrawProbability": 0.000693721817551162,
+          "referenceSale": 600000
+        },
+        {
+          "id": "elec17",
+          "name": "辉光管潮位计时器",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 4600000,
+          "firstDrawProbability": 0.000693721817551162,
+          "referenceSale": 4600000
         },
         {
           "id": "ind01",
@@ -2153,9 +2482,45 @@
           "name": "零号标准量块组",
           "category": "ind",
           "rarity": 6,
-          "referencePrice": 720000,
-          "firstDrawProbability": 0.0020811654526534857,
-          "referenceSale": 720000
+          "referencePrice": 800000,
+          "firstDrawProbability": 0.000693721817551162,
+          "referenceSale": 800000
+        },
+        {
+          "id": "ind16",
+          "name": "黄铜深潜头盔",
+          "category": "ind",
+          "rarity": 6,
+          "referencePrice": 1200000,
+          "firstDrawProbability": 0.000693721817551162,
+          "referenceSale": 1200000
+        },
+        {
+          "id": "ind17",
+          "name": "机械差分计算核心",
+          "category": "ind",
+          "rarity": 6,
+          "referencePrice": 4200000,
+          "firstDrawProbability": 0.000693721817551162,
+          "referenceSale": 4200000
+        },
+        {
+          "id": "elec_secret01",
+          "name": "极伪 RXT 6090 Ti",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 60900000,
+          "firstDrawProbability": 0.000693721817551162,
+          "referenceSale": 60900000
+        },
+        {
+          "id": "elec_secret02",
+          "name": "诺鸡鸭 3310",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 33100000,
+          "firstDrawProbability": 0.000693721817551162,
+          "referenceSale": 33100000
         }
       ],
       "excluded": [],
@@ -2165,7 +2530,7 @@
         "3": 5,
         "4": 8,
         "5": 3,
-        "6": 3
+        "6": 9
       },
       "firstDrawRarityProbability": {
         "1": 0.5202913631633715,
@@ -2175,7 +2540,7 @@
         "5": 0.03121748178980229,
         "6": 0.006243496357960458
       },
-      "firstDrawMeanReferencePrice": 23614.35260888955
+      "firstDrawMeanReferencePrice": 91772.52118329122
     },
     "holdout": {
       "name": "据点看守",
@@ -2482,9 +2847,27 @@
           "name": "零号打火机",
           "category": "life",
           "rarity": 6,
-          "referencePrice": 900000,
-          "firstDrawProbability": 0.003121748178980229,
-          "referenceSale": 900000
+          "referencePrice": 1200000,
+          "firstDrawProbability": 0.0010405827263267429,
+          "referenceSale": 1200000
+        },
+        {
+          "id": "life50",
+          "name": "黄金怀炉",
+          "category": "life",
+          "rarity": 6,
+          "referencePrice": 450000,
+          "firstDrawProbability": 0.0010405827263267429,
+          "referenceSale": 450000
+        },
+        {
+          "id": "life51",
+          "name": "御用茶宴瓷器组",
+          "category": "life",
+          "rarity": 6,
+          "referencePrice": 3800000,
+          "firstDrawProbability": 0.0010405827263267429,
+          "referenceSale": 3800000
         },
         {
           "id": "ind01",
@@ -2617,9 +3000,27 @@
           "name": "零号标准量块组",
           "category": "ind",
           "rarity": 6,
-          "referencePrice": 720000,
-          "firstDrawProbability": 0.003121748178980229,
-          "referenceSale": 720000
+          "referencePrice": 800000,
+          "firstDrawProbability": 0.0010405827263267429,
+          "referenceSale": 800000
+        },
+        {
+          "id": "ind16",
+          "name": "黄铜深潜头盔",
+          "category": "ind",
+          "rarity": 6,
+          "referencePrice": 1200000,
+          "firstDrawProbability": 0.0010405827263267429,
+          "referenceSale": 1200000
+        },
+        {
+          "id": "ind17",
+          "name": "机械差分计算核心",
+          "category": "ind",
+          "rarity": 6,
+          "referencePrice": 4200000,
+          "firstDrawProbability": 0.0010405827263267429,
+          "referenceSale": 4200000
         }
       ],
       "excluded": [],
@@ -2629,7 +3030,7 @@
         "3": 12,
         "4": 8,
         "5": 7,
-        "6": 2
+        "6": 6
       },
       "firstDrawRarityProbability": {
         "1": 0.5202913631633715,
@@ -2639,7 +3040,7 @@
         "5": 0.03121748178980229,
         "6": 0.006243496357960458
       },
-      "firstDrawMeanReferencePrice": 16191.095584956147
+      "firstDrawMeanReferencePrice": 23256.652296714732
     },
     "retriever": {
       "name": "受雇回收员",
@@ -2766,18 +3167,36 @@
           "name": "原型信号分析终端",
           "category": "elec",
           "rarity": 6,
-          "referencePrice": 880000,
-          "firstDrawProbability": 0.0015608740894901144,
-          "referenceSale": 880000
+          "referencePrice": 1100000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 1100000
         },
         {
           "id": "elec15",
           "name": "「远望者」深海探测核心",
           "category": "elec",
           "rarity": 6,
-          "referencePrice": 2650000,
-          "firstDrawProbability": 0.0015608740894901144,
-          "referenceSale": 2650000
+          "referencePrice": 4500000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 4500000
+        },
+        {
+          "id": "elec16",
+          "name": "典藏晶体管收音机",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 600000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 600000
+        },
+        {
+          "id": "elec17",
+          "name": "辉光管潮位计时器",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 4600000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 4600000
         },
         {
           "id": "ind01",
@@ -2910,9 +3329,27 @@
           "name": "零号标准量块组",
           "category": "ind",
           "rarity": 6,
-          "referencePrice": 720000,
-          "firstDrawProbability": 0.0015608740894901144,
-          "referenceSale": 720000
+          "referencePrice": 800000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 800000
+        },
+        {
+          "id": "ind16",
+          "name": "黄铜深潜头盔",
+          "category": "ind",
+          "rarity": 6,
+          "referencePrice": 1200000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 1200000
+        },
+        {
+          "id": "ind17",
+          "name": "机械差分计算核心",
+          "category": "ind",
+          "rarity": 6,
+          "referencePrice": 4200000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 4200000
         },
         {
           "id": "intel01",
@@ -3027,9 +3464,9 @@
           "name": "首潮原始观测记录",
           "category": "intel",
           "rarity": 6,
-          "referencePrice": 1850000,
-          "firstDrawProbability": 0.0015608740894901144,
-          "referenceSale": 1850000
+          "referencePrice": 3200000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 3200000
         },
         {
           "id": "life02",
@@ -3048,6 +3485,42 @@
           "referencePrice": 14000,
           "firstDrawProbability": 0.011562030292519367,
           "referenceSale": 14000
+        },
+        {
+          "id": "intel14",
+          "name": "绝密行动令",
+          "category": "intel",
+          "rarity": 6,
+          "referencePrice": 480000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 480000
+        },
+        {
+          "id": "intel15",
+          "name": "月面摄影原片",
+          "category": "intel",
+          "rarity": 6,
+          "referencePrice": 1500000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 1500000
+        },
+        {
+          "id": "elec_secret01",
+          "name": "极伪 RXT 6090 Ti",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 60900000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 60900000
+        },
+        {
+          "id": "elec_secret02",
+          "name": "诺鸡鸭 3310",
+          "category": "elec",
+          "rarity": 6,
+          "referencePrice": 33100000,
+          "firstDrawProbability": 0.0005202913631633714,
+          "referenceSale": 33100000
         }
       ],
       "excluded": [],
@@ -3057,7 +3530,7 @@
         "3": 9,
         "4": 11,
         "5": 6,
-        "6": 4
+        "6": 12
       },
       "firstDrawRarityProbability": {
         "1": 0.5202913631633715,
@@ -3067,7 +3540,7 @@
         "5": 0.03121748178980229,
         "6": 0.006243496357960458
       },
-      "firstDrawMeanReferencePrice": 26404.3925204175
+      "firstDrawMeanReferencePrice": 77330.5111468483
     }
   },
   "armor": {
@@ -3077,9 +3550,11 @@
         "name": "布面工帽",
         "short": "工帽",
         "dur": 20,
+        "material": "aramid",
         "w": 0.5,
         "move": 1,
         "price": 2000,
+        "rep": 94,
         "id": "helmet1",
         "icon": "helmet1",
         "type": "helmet",
@@ -3090,9 +3565,11 @@
         "name": "工程安全帽",
         "short": "安全帽",
         "dur": 30,
+        "material": "pe",
         "w": 0.8,
         "move": 1,
         "price": 6000,
+        "rep": 92,
         "id": "helmet2",
         "icon": "helmet2",
         "type": "helmet",
@@ -3103,9 +3580,11 @@
         "name": "防撞头盔",
         "short": "防撞盔",
         "dur": 45,
+        "material": "aramid",
         "w": 1.2,
         "move": 1,
         "price": 15000,
+        "rep": 94,
         "id": "helmet3",
         "icon": "helmet3",
         "type": "helmet",
@@ -3116,9 +3595,11 @@
         "name": "防弹头盔",
         "short": "防弹盔",
         "dur": 65,
+        "material": "aramid",
         "w": 1.8,
         "move": 1,
         "price": 48000,
+        "rep": 94,
         "id": "helmet4",
         "icon": "helmet4",
         "type": "helmet",
@@ -3129,9 +3610,11 @@
         "name": "重型防弹盔",
         "short": "重盔",
         "dur": 85,
+        "material": "ceramic",
         "w": 2.5,
         "move": 1,
         "price": 120000,
+        "rep": 84,
         "id": "helmet5",
         "icon": "helmet5",
         "type": "helmet",
@@ -3142,9 +3625,11 @@
         "name": "攻坚头盔",
         "short": "攻坚盔",
         "dur": 110,
+        "material": "steel",
         "w": 3.5,
         "move": 1,
         "price": 350000,
+        "rep": 97,
         "id": "helmet6",
         "icon": "helmet6",
         "type": "helmet",
@@ -3157,8 +3642,10 @@
         "name": "旧式摩托盔",
         "short": "摩托盔",
         "dur": 28,
+        "material": "pe",
         "w": 0.85,
         "price": 2400,
+        "rep": 91,
         "aimPenaltyPct": 0,
         "desc": "早年常见的开放式摩托车头盔，硬壳下面填着已经变硬的泡棉，耳侧的衬布还能拆下来清洗。\n\n内衬上印着一排尺码，原主人把其中两个划掉，旁边补了一句：戴围巾时用大的。",
         "visual": "米白色圆鼓硬壳，宽阔的开放面部缺口，短小黑色前檐，耳侧棕色软垫和垂下的下颚带；一道褪色橙条，漆面少量磕碰。没有面罩、导轨或军用附件。与原软布工帽形成圆硬壳／软帽的剪影差别。",
@@ -3173,8 +3660,10 @@
         "name": "轻型救援盔",
         "short": "救援盔",
         "dur": 24,
+        "material": "pe",
         "w": 0.6,
         "price": 7200,
+        "rep": 91,
         "aimPenaltyPct": 0,
         "desc": "面向狭窄空间作业的轻型头盔，采用短檐外壳与四点式固定带，蹲下或低头时不容易从头上滑落。\n\n培训说明要求每次使用前检查扣具。实际留在盔上的检查贴纸，已经把能填写的地方全部用完了。",
         "visual": "褪色暗橙色低矮硬壳，短檐、两道宽散热槽，细黑色四点下颚带，后缘小块米白反光贴。没有医疗十字、不配置现代灯具导轨。比黄色工程帽更贴头、轮廓更低。",
@@ -3189,8 +3678,10 @@
         "name": "治安防暴盔",
         "short": "防暴盔",
         "dur": 60,
+        "material": "pe",
         "w": 1.7,
         "price": 18000,
+        "rep": 90,
         "aimPenaltyPct": 0,
         "desc": "深色防暴头盔，面罩由两侧转轴固定，后方缝着一片可折起的护颈。面罩上的擦痕比盔壳上的多得多。\n\n储藏室的交接表将面罩列作可更换耗材。最后几次记录里，这一栏都写着：缺货，保留旧件。",
         "visual": "深海军蓝厚圆壳，两侧大圆转轴，透明烟灰面罩抬到额头前上方，后缘短黑色护颈。用粗轮廓与两道冷灰反光表现透明面罩，不把整张脸涂成白块。没有未来电子装备。",
@@ -3205,8 +3696,10 @@
         "name": "短沿轻型防弹盔",
         "short": "轻型弹盔",
         "dur": 50,
+        "material": "pe",
         "w": 1.35,
         "price": 57600,
+        "rep": 91,
         "aimPenaltyPct": 0,
         "desc": "采用较薄壳体与简化悬挂系统的防弹盔，取消了不必要的外部安装座，主要面向需要长时间佩戴的人员。\n\n采购目录将它称作轻型。包装箱的搬运提示却没有随之修改，仍然要求两人共同抬运。",
         "visual": "砂灰色紧凑圆壳，极短前檐、较低耳侧轮廓、黑色窄包边与细下颚带，侧面露出一颗小固定螺钉；没有导轨、前挂点、耳机和护颈。靠简洁剪影与浅砂色区别原厚重军绿防弹盔。",
@@ -3221,9 +3714,11 @@
         "name": "帆布护胸",
         "short": "护胸",
         "dur": 40,
+        "material": "aramid",
         "w": 1.5,
         "move": 1,
         "price": 3000,
+        "rep": 94,
         "id": "body1",
         "icon": "body1",
         "type": "body",
@@ -3234,9 +3729,11 @@
         "name": "防刺背心",
         "short": "防刺",
         "dur": 60,
+        "material": "aramid",
         "w": 2.5,
         "move": 1,
         "price": 9000,
+        "rep": 94,
         "id": "body2",
         "icon": "body2",
         "type": "body",
@@ -3247,52 +3744,60 @@
         "name": "轻型战术背心",
         "short": "轻甲",
         "dur": 85,
+        "material": "aramid",
         "w": 4,
         "move": 1,
         "price": 28000,
+        "rep": 94,
         "id": "body3",
         "icon": "body3",
         "type": "body",
-        "aimPenaltyPct": 20
+        "aimPenaltyPct": 12
       },
       {
         "lv": 4,
         "name": "战术防弹衣",
         "short": "战术甲",
-        "dur": 115,
+        "dur": 110,
+        "material": "ceramic",
         "w": 6,
         "move": 1,
         "price": 85000,
+        "rep": 84,
         "id": "body4",
         "icon": "body4",
         "type": "body",
-        "aimPenaltyPct": 30
+        "aimPenaltyPct": 22
       },
       {
         "lv": 5,
         "name": "重型防弹衣",
         "short": "重甲",
-        "dur": 150,
+        "dur": 135,
+        "material": "steel",
         "w": 9,
         "move": 1,
         "price": 220000,
+        "rep": 97,
         "id": "body5",
         "icon": "body5",
         "type": "body",
-        "aimPenaltyPct": 45
+        "aimPenaltyPct": 32
       },
       {
         "lv": 6,
         "name": "攻坚装甲",
         "short": "攻坚甲",
-        "dur": 190,
+        "dur": 165,
+        "material": "steel",
         "w": 13,
         "move": 1,
         "price": 650000,
+        "rep": 97,
         "id": "body6",
         "icon": "body6",
         "type": "body",
-        "aimPenaltyPct": 60
+        "aimPenaltyPct": 45
       },
       {
         "id": "body1_leather",
@@ -3301,8 +3806,10 @@
         "name": "皮革作业背心",
         "short": "皮革背心",
         "dur": 55,
+        "material": "aramid",
         "w": 2,
         "price": 3600,
+        "rep": 95,
         "aimPenaltyPct": 4,
         "desc": "用厚皮革和帆布衬里缝成的作业背心，胸前有两片重叠的护片。扣具很大，戴着手套也能解开。\n\n左下角的工具袋被补了三次。最后一次修补的人没有再缝袋口，而是把整只袋子封死了。",
         "visual": "深红棕皮革，宽肩、深V领、三枚粗金属扣，胸前大块叠皮，腰侧一只扁工具袋；轮廓上宽下直，皮面有折痕与浅色擦伤。区别原土黄帆布护胸，不画成带钢板的重甲。",
@@ -3317,8 +3824,10 @@
         "name": "隐蔽式软甲",
         "short": "隐蔽软甲",
         "dur": 45,
+        "material": "aramid",
         "w": 1.8,
         "price": 10800,
+        "rep": 95,
         "aimPenaltyPct": 4,
         "desc": "可以穿在衬衣下面的薄型防护背心，肩部和侧腰采用宽幅粘扣，外层布套允许单独拆洗。\n\n销售手册特意展示了它藏在西装下面的照片。照片中的人把外套扣得很紧，双臂始终没有放下来。",
         "visual": "灰白或浅米色薄软甲，圆领、窄肩、两侧宽粘扣片，胸前平整只有一条浅缝；没有外挂袋和硬插板轮廓。紧凑、贴身、短下摆，与黑色厚层防刺背心分开。",
@@ -3332,10 +3841,12 @@
         "lv": 3,
         "name": "旧式军用防片衣",
         "short": "防片衣",
-        "dur": 110,
+        "dur": 100,
+        "material": "aramid",
         "w": 5.2,
         "price": 33600,
-        "aimPenaltyPct": 30,
+        "rep": 93,
+        "aimPenaltyPct": 22,
         "desc": "上一代军用防护服，厚实的纤维填充层分成数个独立区域，衣领和腹部留有柔软的延伸护片。体积不小，口袋却只有两个。\n\n内侧标签要求在干燥通风处悬挂存放。它被找到时，恰好挂在一间已经没有屋顶的库房里。",
         "visual": "褪色灰橄榄绿厚布衣，短立领、宽肩、分段绗缝与下腹软护片，胸部仅两个扁平斜袋；整体宽厚、长下摆，不画现代织带矩阵或成排弹匣袋，与原窄身战术背心明显区分。",
         "source": "退役军用库存与旧式护送装备",
@@ -3349,9 +3860,11 @@
         "name": "轻型插板背心",
         "short": "轻型板甲",
         "dur": 90,
+        "material": "pe",
         "w": 4.7,
         "price": 102000,
-        "aimPenaltyPct": 14,
+        "rep": 91,
+        "aimPenaltyPct": 10,
         "desc": "围绕前后防护板设计的简化载具，只保留必要的固定带和调节扣。侧腰没有厚软垫，活动时会露出里面的衬衣。\n\n卖方附送了一张可另行订购的附件清单。清单上的配件全部装齐以后，它就不再比普通型号轻了。",
         "visual": "深石墨灰窄身板袋，前部一块清晰的切角矩形插板轮廓，两条宽肩带和侧腰开放式织带扣；短下摆、无腹甲、无护颈、没有密集外挂袋。局部旧卡其色缝线，不与浅砂色头盔做成同色套装。",
         "source": "专业承包队与高端安保装备",
@@ -3366,7 +3879,7 @@
       "name": "旧帆布挎包",
       "short": "挎包",
       "r": 1,
-      "slots": 8,
+      "slots": 14,
       "w": 0.7,
       "price": 6000,
       "desc": "翻盖、金属搭扣，肩带磨得发亮。装不下一趟完整的搜刮，但比口袋强。"
@@ -3376,7 +3889,7 @@
       "name": "民用旅行背包",
       "short": "旅行包",
       "r": 2,
-      "slots": 12,
+      "slots": 18,
       "w": 1.2,
       "price": 18000,
       "desc": "双肩、分层、拉链没坏。灾前它代表“出门几天”，现在只代表“最好真能带点东西回来”。"
@@ -3386,7 +3899,7 @@
       "name": "加固登山背包",
       "short": "登山包",
       "r": 3,
-      "slots": 16,
+      "slots": 22,
       "w": 1.9,
       "price": 45000,
       "desc": "高包体、顶盖、侧袋和束带。它认真考虑过“背着东西走很远会不会累死”。"
@@ -3396,7 +3909,7 @@
       "name": "战术突击背包",
       "short": "突击包",
       "r": 4,
-      "slots": 20,
+      "slots": 26,
       "w": 2.8,
       "price": 110000,
       "desc": "满身织带和压缩结构，跑起来不会摇得东倒西歪。多装两盒弹，或者一件能改变下周计划的东西。"
@@ -3406,7 +3919,7 @@
       "name": "远征模块背包",
       "short": "远征包",
       "r": 5,
-      "slots": 24,
+      "slots": 30,
       "w": 3.8,
       "price": 260000,
       "desc": "外挂仓、压缩带、金属支撑。宣传语说它“能陪你去地图边缘之外”——现在这句话不太好笑了。"
@@ -3454,7 +3967,7 @@
         {
           "lv": 1,
           "name": "普通",
-          "dmgMul": 0.9,
+          "dmgMul": 1,
           "pen": 1
         },
         {
@@ -3466,22 +3979,165 @@
         {
           "lv": 3,
           "name": "钢芯",
-          "dmgMul": 1.05,
+          "dmgMul": 1,
           "pen": 3
         },
         {
           "lv": 4,
           "name": "穿甲",
-          "dmgMul": 1.1,
+          "dmgMul": 1,
           "pen": 4
         },
         {
           "lv": 5,
           "name": "特种穿甲",
-          "dmgMul": 1.15,
+          "dmgMul": 1,
           "pen": 5
         }
       ],
+      "FLESH": {
+        "556": [
+          {
+            "B": 37,
+            "P": 16
+          },
+          {
+            "B": 35,
+            "P": 24
+          },
+          {
+            "B": 33,
+            "P": 33
+          },
+          {
+            "B": 31,
+            "P": 43
+          },
+          {
+            "B": 28,
+            "P": 55
+          }
+        ],
+        "545x39": [
+          {
+            "B": 40,
+            "P": 15
+          },
+          {
+            "B": 37,
+            "P": 24
+          },
+          {
+            "B": 35,
+            "P": 34
+          },
+          {
+            "B": 32,
+            "P": 45
+          },
+          {
+            "B": 28,
+            "P": 59
+          }
+        ],
+        "762x39": [
+          {
+            "B": 47,
+            "P": 18
+          },
+          {
+            "B": 44,
+            "P": 27
+          },
+          {
+            "B": 41,
+            "P": 35
+          },
+          {
+            "B": 38,
+            "P": 45
+          },
+          {
+            "B": 35,
+            "P": 58
+          }
+        ],
+        "9mm": [
+          {
+            "B": 31,
+            "P": 8
+          },
+          {
+            "B": 29,
+            "P": 15
+          },
+          {
+            "B": 27,
+            "P": 22
+          },
+          {
+            "B": 25,
+            "P": 30
+          },
+          {
+            "B": 23,
+            "P": 39
+          }
+        ],
+        "45acp": [
+          {
+            "B": 40,
+            "P": 9
+          },
+          {
+            "B": 38,
+            "P": 17
+          },
+          {
+            "B": 35,
+            "P": 25
+          },
+          {
+            "B": 33,
+            "P": 32
+          },
+          {
+            "B": 30,
+            "P": 39
+          }
+        ]
+      },
+      "SHOTGUN_COMPAT": [
+        {
+          "B": 8,
+          "P": 6
+        },
+        {
+          "B": 9,
+          "P": 10
+        },
+        {
+          "B": 10,
+          "P": 14
+        },
+        {
+          "B": 11,
+          "P": 18
+        },
+        {
+          "B": 12,
+          "P": 22
+        }
+      ],
+      "LEGACY_ENEMY_PEN": [
+        3,
+        10,
+        20,
+        30,
+        42,
+        55
+      ],
+      "UNARMED_PEN": 3,
       "MATRIX": {
         "1": [
           0.8,
@@ -3524,8 +4180,7 @@
           0.6
         ]
       },
-      "DURABILITY_FACTOR": 0.5,
-      "UNARMED_PEN": 3
+      "DURABILITY_FACTOR": 0.5
     },
     "bullet": {
       "LIFE": 1.6,
@@ -3607,7 +4262,8 @@
       },
       "BLEED": {
         "DPS": 1.5,
-        "MIN_HP": 1
+        "MIN_HP": 1,
+        "HEAL_CAP_COST": 50
       },
       "SEVERE": {
         "MAX_LAYERS": 4,
@@ -3652,8 +4308,6 @@
       "recoilVMul": 1.1,
       "recoilHMul": 1.15,
       "spreadMul": 0.95,
-      "aimTimeMul": 1.15,
-      "recoilPerShot": 0.075,
       "modes": [
         "semi",
         "auto"
@@ -3664,6 +4318,8 @@
       "shopAvailable": true,
       "desc": "枪身上的编号已经磨得模糊，但护木和枪托仍然完整。老式装备并不意味着它已经失去了用途。",
       "visual": "固定枪托、三角护木、长枪管、提把、20发短弹匣。",
+      "aimTime": 0.46,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -3673,11 +4329,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.45999999999999996,
-      "spreadBase": 0.038,
-      "spreadMax": 0.247,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -3710,8 +4361,6 @@
       "recoilVMul": 1.25,
       "recoilHMul": 1.2,
       "spreadMul": 1.15,
-      "aimTimeMul": 1.15,
-      "recoilPerShot": 0.075,
       "modes": [
         "semi",
         "auto"
@@ -3722,6 +4371,8 @@
       "shopAvailable": true,
       "desc": "厚实的机匣、沉重的枪身，以及一个比多数同类武器更宽裕的弹匣。它从来不以轻巧著称。",
       "visual": "钢机匣、木护木、管式折叠枪托、折叠两脚架、大弹匣。",
+      "aimTime": 0.46,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -3731,11 +4382,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.45999999999999996,
-      "spreadBase": 0.046,
-      "spreadMax": 0.299,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -3765,10 +4411,9 @@
       "price": 32000,
       "rarity": 2,
       "w": 1.1,
-      "recoilVMul": 0.75,
-      "recoilHMul": 0.8,
-      "spreadMul": 0.95,
-      "recoilPerShot": 0.1,
+      "recoilVMul": 0.529,
+      "recoilHMul": 0.533,
+      "spreadMul": 0.918,
       "modes": [
         "semi"
       ],
@@ -3777,6 +4422,8 @@
       "cycleTime": 0,
       "desc": "Glock 17，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
       "visual": "黑色方形套筒，简洁聚合物枪身与双排弹匣握把，短枪管。",
+      "aimTime": 0.2,
+      "spreadGrowthMul": 1.333,
       "attackType": "bullet",
       "injuryChanceMul": 1,
       "slot": "secondary",
@@ -3786,11 +4433,6 @@
       "pellets": 1,
       "speed": 600,
       "range": 460,
-      "aimTime": 0.2,
-      "spreadBase": 0.042749999999999996,
-      "spreadMax": 0.209,
-      "recoilBaseV": 2.4,
-      "recoilBaseH": 1.6,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -3821,8 +4463,6 @@
       "recoilVMul": 1.25,
       "recoilHMul": 1.2,
       "spreadMul": 1.15,
-      "aimTimeMul": 0.8,
-      "recoilPerShot": 0.075,
       "modes": [
         "semi",
         "auto"
@@ -3833,6 +4473,8 @@
       "shopAvailable": true,
       "desc": "短小的枪身和折叠枪托让它很适合狭窄空间。至于连续射击时那股不安分的劲头，最好亲自试试。",
       "visual": "短枪管、膨大消焰器、短木护木、三角折叠枪托。",
+      "aimTime": 0.32,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -3842,11 +4484,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.32000000000000006,
-      "spreadBase": 0.046,
-      "spreadMax": 0.299,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -3880,8 +4517,6 @@
       "recoilVMul": 0.95,
       "recoilHMul": 1.1,
       "spreadMul": 1.1,
-      "aimTimeMul": 0.85,
-      "recoilPerShot": 0.075,
       "modes": [
         "semi",
         "auto"
@@ -3892,6 +4527,8 @@
       "shopAvailable": true,
       "desc": "聚合物枪身减轻了负担，紧凑的结构也方便携行。它原本就是为行动迅速的人设计的。",
       "visual": "黑色聚合物短枪身、镂空折叠枪托、透明弹匣。",
+      "aimTime": 0.34,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -3901,11 +4538,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.34,
-      "spreadBase": 0.044000000000000004,
-      "spreadMax": 0.28600000000000003,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -3936,10 +4568,9 @@
       "price": 72000,
       "rarity": 3,
       "w": 2.4,
-      "recoilVMul": 0.7,
-      "recoilHMul": 0.8,
-      "spreadMul": 1.05,
-      "recoilPerShot": 0.055,
+      "recoilVMul": 0.535,
+      "recoilHMul": 0.6,
+      "spreadMul": 1.215,
       "modes": [
         "semi",
         "auto"
@@ -3949,6 +4580,8 @@
       "cycleTime": 0,
       "desc": "PP-19-01 Vityaz，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
       "visual": "黑色短管AK式冲锋枪，三角折叠托，细长弯曲弹匣，不采用螺旋弹筒。",
+      "aimTime": 0.3,
+      "spreadGrowthMul": 0.733,
       "attackType": "bullet",
       "injuryChanceMul": 0.8,
       "slot": "primary",
@@ -3958,11 +4591,6 @@
       "pellets": 1,
       "speed": 600,
       "range": 420,
-      "aimTime": 0.3,
-      "spreadBase": 0.052500000000000005,
-      "spreadMax": 0.29400000000000004,
-      "recoilBaseV": 2.6,
-      "recoilBaseH": 1.8,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -3993,10 +4621,9 @@
       "price": 78000,
       "rarity": 3,
       "w": 3.6,
-      "recoilVMul": 1.85,
+      "recoilVMul": 2.394,
       "recoilHMul": 1.4,
-      "spreadMul": 1,
-      "recoilPerShot": 0.22,
+      "spreadMul": 0.579,
       "modes": [
         "semi"
       ],
@@ -4005,6 +4632,8 @@
       "cycleTime": 0,
       "desc": "MP-155，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
       "visual": "长枪管半自动猎枪，胡桃木枪托和前护木，下方细长管式弹仓，无盒式弹匣。",
+      "aimTime": 0.45,
+      "spreadGrowthMul": 2.933,
       "attackType": "shotgun",
       "injuryChanceMul": 1,
       "slot": "primary",
@@ -4014,11 +4643,6 @@
       "pellets": 6,
       "speed": 560,
       "range": 300,
-      "aimTime": 0.45,
-      "spreadBase": 0.025,
-      "spreadMax": 0.14,
-      "recoilBaseV": 4.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0.1785,
       "attachmentSlots": {
         "optic": true,
@@ -4046,10 +4670,9 @@
       "price": 58000,
       "rarity": 3,
       "w": 3.4,
-      "recoilVMul": 2.2,
+      "recoilVMul": 2.847,
       "recoilHMul": 1.25,
-      "spreadMul": 0.85,
-      "recoilPerShot": 0.24,
+      "spreadMul": 0.492,
       "modes": [
         "pump"
       ],
@@ -4058,6 +4681,8 @@
       "cycleTime": 0.8,
       "desc": "Remington 870，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
       "visual": "深色木枪托，长条肋纹泵动护木，钢制机匣和管式弹仓，无盒式弹匣。",
+      "aimTime": 0.45,
+      "spreadGrowthMul": 3.2,
       "attackType": "shotgun",
       "injuryChanceMul": 1,
       "slot": "primary",
@@ -4067,11 +4692,6 @@
       "pellets": 6,
       "speed": 560,
       "range": 300,
-      "aimTime": 0.45,
-      "spreadBase": 0.02125,
-      "spreadMax": 0.11900000000000001,
-      "recoilBaseV": 4.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0.1785,
       "attachmentSlots": {
         "optic": true,
@@ -4099,10 +4719,9 @@
       "price": 37000,
       "rarity": 3,
       "w": 1.2,
-      "recoilVMul": 1.2,
-      "recoilHMul": 1,
-      "spreadMul": 0.9,
-      "recoilPerShot": 0.12,
+      "recoilVMul": 0.847,
+      "recoilHMul": 0.667,
+      "spreadMul": 0.869,
       "modes": [
         "semi"
       ],
@@ -4111,6 +4730,8 @@
       "cycleTime": 0,
       "desc": "M1911A1，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
       "visual": "细长钢制套筒，棕色单排握把，外露击锤与圆弧扳机护圈。",
+      "aimTime": 0.2,
+      "spreadGrowthMul": 1.6,
       "attackType": "bullet",
       "injuryChanceMul": 1,
       "slot": "secondary",
@@ -4120,11 +4741,6 @@
       "pellets": 1,
       "speed": 600,
       "range": 460,
-      "aimTime": 0.2,
-      "spreadBase": 0.0405,
-      "spreadMax": 0.198,
-      "recoilBaseV": 2.4,
-      "recoilBaseH": 1.6,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4152,10 +4768,9 @@
       "price": 44000,
       "rarity": 3,
       "w": 1.2,
-      "recoilVMul": 0.7,
-      "recoilHMul": 0.65,
-      "spreadMul": 0.8,
-      "recoilPerShot": 0.09,
+      "recoilVMul": 0.494,
+      "recoilHMul": 0.433,
+      "spreadMul": 0.773,
       "modes": [
         "semi"
       ],
@@ -4164,6 +4779,8 @@
       "cycleTime": 0,
       "desc": "Beretta 92FS，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
       "visual": "较长开放式套筒，露出的枪管，深色握把与圆弧护圈。",
+      "aimTime": 0.2,
+      "spreadGrowthMul": 1.2,
       "attackType": "bullet",
       "injuryChanceMul": 1,
       "slot": "secondary",
@@ -4173,11 +4790,6 @@
       "pellets": 1,
       "speed": 600,
       "range": 460,
-      "aimTime": 0.2,
-      "spreadBase": 0.036,
-      "spreadMax": 0.17600000000000002,
-      "recoilBaseV": 2.4,
-      "recoilBaseH": 1.6,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4208,8 +4820,6 @@
       "recoilVMul": 0.9,
       "recoilHMul": 0.95,
       "spreadMul": 0.95,
-      "aimTimeMul": 1.05,
-      "recoilPerShot": 0.075,
       "modes": [
         "semi",
         "auto"
@@ -4220,6 +4830,8 @@
       "shopAvailable": true,
       "desc": "坚实的结构和朴素的设计让它在制式武器中占有一席之地。没有什么花哨之处，也很少令人失望。",
       "visual": "朴素钢机匣、深色护木、管式折叠枪托、长枪管。",
+      "aimTime": 0.42,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4229,11 +4841,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.42000000000000004,
-      "spreadBase": 0.038,
-      "spreadMax": 0.247,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4267,8 +4874,6 @@
       "recoilVMul": 0.85,
       "recoilHMul": 0.8,
       "spreadMul": 0.8,
-      "aimTimeMul": 1.15,
-      "recoilPerShot": 0.075,
       "modes": [
         "semi",
         "auto"
@@ -4279,6 +4884,8 @@
       "shopAvailable": true,
       "desc": "精密的制造工艺带来了良好的射击一致性。即使经历长时间存放，保养得当的枪械依然值得信赖。",
       "visual": "橄榄绿护木和镂空折叠枪托、灰色机匣、透明弹匣。",
+      "aimTime": 0.46,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4288,11 +4895,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.45999999999999996,
-      "spreadBase": 0.032,
-      "spreadMax": 0.20800000000000002,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4333,11 +4935,11 @@
       "recoilVMul": 0.9,
       "recoilHMul": 0.85,
       "spreadMul": 0.9,
-      "aimTimeMul": 1,
-      "recoilPerShot": 0.075,
       "shopAvailable": true,
       "desc": "导轨护木、可调枪托和重新布置的操控部件，让这支现代制式步枪比它的前辈更容易上手。使用5.45×39毫米弹药，连续射击较为平稳，也给携行者留下了充足的改装余地。",
       "visual": "黑色现代AK机匣、连续顶轨、开槽聚合物护木、可调枪托和较直的5.45弹匣。",
+      "aimTime": 0.4,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4347,11 +4949,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.4,
-      "spreadBase": 0.036000000000000004,
-      "spreadMax": 0.234,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4382,10 +4979,9 @@
       "price": 175000,
       "rarity": 5,
       "w": 3.8,
-      "recoilVMul": 2.1,
+      "recoilVMul": 2.718,
       "recoilHMul": 1.75,
-      "spreadMul": 1.2,
-      "recoilPerShot": 0.26,
+      "spreadMul": 0.694,
       "modes": [
         "semi"
       ],
@@ -4394,6 +4990,8 @@
       "cycleTime": 0,
       "desc": "Saiga-12，使用12 Gauge弹药。六枚弹丸；装填方式与动作循环依型号区分。",
       "visual": "黑色AK式霰弹枪，聚合物固定托，较粗枪管，明显的宽盒式弹匣。",
+      "aimTime": 0.45,
+      "spreadGrowthMul": 3.467,
       "attackType": "shotgun",
       "injuryChanceMul": 1,
       "slot": "primary",
@@ -4403,11 +5001,6 @@
       "pellets": 6,
       "speed": 560,
       "range": 300,
-      "aimTime": 0.45,
-      "spreadBase": 0.03,
-      "spreadMax": 0.168,
-      "recoilBaseV": 4.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0.1785,
       "attachmentSlots": {
         "optic": true,
@@ -4441,7 +5034,6 @@
       "recoilVMul": 1.35,
       "recoilHMul": 1.2,
       "spreadMul": 1.1,
-      "recoilPerShot": 0.085,
       "modes": [
         "semi",
         "auto"
@@ -4451,6 +5043,8 @@
       "cycleTime": 0,
       "desc": "AKM，使用7.62×39mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
       "visual": "深色钢制机匣，旧胡桃木枪托与护木，明显弯曲的7.62弹匣。",
+      "aimTime": 0.4,
+      "spreadGrowthMul": 1.133,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4460,11 +5054,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.4,
-      "spreadBase": 0.044000000000000004,
-      "spreadMax": 0.28600000000000003,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4498,8 +5087,6 @@
       "recoilVMul": 1.05,
       "recoilHMul": 0.95,
       "spreadMul": 0.9,
-      "aimTimeMul": 1.1,
-      "recoilPerShot": 0.075,
       "modes": [
         "semi",
         "burst2",
@@ -4513,6 +5100,8 @@
       "visual": "黑色非对称机匣、倾斜弹匣、长枪管组件。",
       "burstRPM": 1800,
       "burstDelayRecoil": true,
+      "aimTime": 0.44,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4522,11 +5111,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.44000000000000006,
-      "spreadBase": 0.036000000000000004,
-      "spreadMax": 0.234,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4567,11 +5151,11 @@
       "recoilVMul": 1.05,
       "recoilHMul": 0.9,
       "spreadMul": 0.8,
-      "aimTimeMul": 1.05,
-      "recoilPerShot": 0.08,
       "shopAvailable": false,
       "desc": "环礁湾一家武器工坊基于Mk47构思试制的全自动改型。AR式操控布局配合7.62×39毫米弹药和弯曲弹匣，着重改善射击一致性与后坐力控制。MOD.2是工坊自编的改型编号，现存样枪的零件与加工痕迹并不完全一致。",
       "visual": "黑色AR式机匣、细长M-LOK护木、可调镂空枪托与明显弯曲的AK式7.62弹匣。",
+      "aimTime": 0.42,
+      "spreadGrowthMul": 1.067,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4581,11 +5165,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.42000000000000004,
-      "spreadBase": 0.032,
-      "spreadMax": 0.20800000000000002,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4616,10 +5195,9 @@
       "price": 115000,
       "rarity": 4,
       "w": 2.6,
-      "recoilVMul": 0.6,
-      "recoilHMul": 0.65,
-      "spreadMul": 0.8,
-      "recoilPerShot": 0.06,
+      "recoilVMul": 0.459,
+      "recoilHMul": 0.488,
+      "spreadMul": 0.926,
       "modes": [
         "semi",
         "auto"
@@ -4629,6 +5207,8 @@
       "cycleTime": 0,
       "desc": "MP5A3，使用9×19mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
       "visual": "圆筒形护木，双导杆伸缩枪托，细弯弹匣，深色滚轮闭锁机匣轮廓。",
+      "aimTime": 0.3,
+      "spreadGrowthMul": 0.8,
       "attackType": "bullet",
       "injuryChanceMul": 0.8,
       "slot": "primary",
@@ -4638,11 +5218,6 @@
       "pellets": 1,
       "speed": 600,
       "range": 420,
-      "aimTime": 0.3,
-      "spreadBase": 0.04000000000000001,
-      "spreadMax": 0.22400000000000003,
-      "recoilBaseV": 2.6,
-      "recoilBaseH": 1.8,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4673,10 +5248,9 @@
       "price": 108000,
       "rarity": 4,
       "w": 2.3,
-      "recoilVMul": 0.95,
-      "recoilHMul": 0.9,
-      "spreadMul": 1,
-      "recoilPerShot": 0.07,
+      "recoilVMul": 0.726,
+      "recoilHMul": 0.675,
+      "spreadMul": 1.157,
       "modes": [
         "semi",
         "auto"
@@ -4686,6 +5260,8 @@
       "cycleTime": 0,
       "desc": "UMP45，使用.45 ACP弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
       "visual": "方正深灰聚合物机匣，镂空折叠托，粗直弹匣。",
+      "aimTime": 0.3,
+      "spreadGrowthMul": 0.933,
       "attackType": "bullet",
       "injuryChanceMul": 0.8,
       "slot": "primary",
@@ -4695,11 +5271,6 @@
       "pellets": 1,
       "speed": 600,
       "range": 420,
-      "aimTime": 0.3,
-      "spreadBase": 0.05,
-      "spreadMax": 0.28,
-      "recoilBaseV": 2.6,
-      "recoilBaseH": 1.8,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4733,7 +5304,6 @@
       "recoilVMul": 1,
       "recoilHMul": 1,
       "spreadMul": 1,
-      "recoilPerShot": 0.075,
       "modes": [
         "semi",
         "auto"
@@ -4743,6 +5313,8 @@
       "cycleTime": 0,
       "desc": "M4A1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
       "visual": "黑色AR式卡宾枪，直线伸缩枪托、短护木、顶部提把和弧形弹匣。",
+      "aimTime": 0.4,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4752,11 +5324,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.4,
-      "spreadBase": 0.04,
-      "spreadMax": 0.26,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4790,7 +5357,6 @@
       "recoilVMul": 1.1,
       "recoilHMul": 1.25,
       "spreadMul": 1.05,
-      "recoilPerShot": 0.09,
       "modes": [
         "semi",
         "burst3",
@@ -4801,6 +5367,8 @@
       "cycleTime": 0,
       "desc": "FAMAS F1，使用5.56×45mm弹药。同口径弹药统一决定基础伤害与穿透，型号决定射击节奏与操控。",
       "visual": "黑色无托步枪，顶部高提把，弹匣位于握把后方，短枪管。",
+      "aimTime": 0.4,
+      "spreadGrowthMul": 1.2,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4810,11 +5378,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.4,
-      "spreadBase": 0.042,
-      "spreadMax": 0.273,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4847,8 +5410,6 @@
       "recoilVMul": 0.8,
       "recoilHMul": 0.75,
       "spreadMul": 0.75,
-      "aimTimeMul": 1.05,
-      "recoilPerShot": 0.075,
       "modes": [
         "semi",
         "auto"
@@ -4859,6 +5420,8 @@
       "shopAvailable": false,
       "desc": "紧凑的无托结构、独特的外形和一体式光学瞄具，使它即使混在一整排枪械中，也很难被认错。",
       "visual": "橄榄绿无托枪身、一体式光学提把、垂直折叠握把。",
+      "aimTime": 0.42,
+      "spreadGrowthMul": 1,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4868,11 +5431,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.42000000000000004,
-      "spreadBase": 0.03,
-      "spreadMax": 0.195,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4912,11 +5470,11 @@
       "recoilVMul": 1.4,
       "recoilHMul": 1.25,
       "spreadMul": 1.05,
-      "aimTimeMul": 0.75,
-      "recoilPerShot": 0.085,
       "shopAvailable": false,
       "desc": "无托结构将7.62毫米火力压进了短小的枪身。抬枪迅速，穿行狭窄通道时也不易磕碰，但连续射击时的跳动需要用力压住。环礁湾的旧装备箱上只给它留了一个简短的译名：雷暴。",
       "visual": "紧凑黑色无托枪身、高提把、握把后方的弯曲AK弹匣、短枪管与前握把。",
+      "aimTime": 0.3,
+      "spreadGrowthMul": 1.133,
       "attackType": "bullet",
       "injuryChanceMul": 1.1,
       "slot": "primary",
@@ -4926,11 +5484,6 @@
       "pellets": 1,
       "speed": 620,
       "range": 640,
-      "aimTime": 0.30000000000000004,
-      "spreadBase": 0.042,
-      "spreadMax": 0.273,
-      "recoilBaseV": 3.4,
-      "recoilBaseH": 2.4,
       "pelletSpread": 0,
       "attachmentSlots": {
         "optic": true,
@@ -4990,8 +5543,8 @@
   ],
   "observations": {
     "echoMeleeVsEnemy": {
-      "targetHpBefore": 72,
-      "targetHpAfter": 72
+      "targetHpBefore": 175,
+      "targetHpAfter": 161
     },
     "offlineIncludesDebuff": true,
     "offlineDefinitionDifferences": []

@@ -60,7 +60,12 @@ const server = http.createServer((req, res) => {
       }
       return { id: item.id, width: image.naturalWidth, height: image.naturalHeight, visible, invalidAlpha, margin };
     }));
-    assert.equal(specs.length, await page.evaluate(() => ITEMS.length), '每件物品都要有图标');
+    /* 三把没有 iconId 的通用 / 测试钥匙共用一个图标，本来就不该有独立 48px 文件；
+       其余每件物品都必须能画出自己的贴图。 */
+    const sharedKeys=require('../design/items/keys.json').filter(k=>!k.iconId).map(k=>k.id).sort();
+    const noIcon=await page.evaluate(()=>ITEMS.filter(i=>!Icons.get(i.id)).map(i=>i.id).sort());
+    assert.deepEqual(noIcon,sharedKeys,'只有共用图标的钥匙没有独立贴图');
+    assert.equal(specs.length,await page.evaluate(()=>ITEMS.filter(i=>Icons.get(i.id)).length),'每件有独立图标的物品都要能画出来');
     for (const icon of specs) {
       assert.equal(icon.width, 48, icon.id); assert.equal(icon.height, 48, icon.id);
       assert(icon.visible > 50, icon.id + ' is empty');
@@ -90,7 +95,9 @@ const server = http.createServer((req, res) => {
 
     await page.goto(origin + '/' + encodeURIComponent('物品清单.html'));
     await page.waitForFunction(() => [...document.images].every(image => image.complete && image.naturalWidth === 48));
-    assert.equal(await page.locator('.thumb img').count(), expectedIconCount);
+    /* 物品清单对没有独立贴图的钥匙渲染「待绘制」而不是 <img> */
+    assert.equal(await page.locator('.thumb img').count(), expectedIconCount-sharedKeys.length,
+      '物品清单里除了共用图标的钥匙，每件都要有 48px 缩略图');
     await page.screenshot({ path: path.join(output, 'item-sheet.png'), fullPage: true });
     console.log('OK: item sheet shows all configured icons');
 

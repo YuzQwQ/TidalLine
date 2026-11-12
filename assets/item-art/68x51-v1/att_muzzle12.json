@@ -1,0 +1,9 @@
+{
+  "id": "att_muzzle12",
+  "group": "gear",
+  "name": "Delta P BREVIS II 抑制器",
+  "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A detached Delta P BREVIS II suppressor accessory, extremely short and thick charcoal-gray cylinder, broad flat front face, stepped mounting neck, rugged textured metal. Squat silhouette clearly distinct from a long thin suppressor. One detached accessory only, no firearm.",
+  "source": "assets/item-art/68x51-v1/sources/att_muzzle12.png",
+  "target": "assets/gear/att_muzzle12.png",
+  "generator": "built-in image_gen"
+}

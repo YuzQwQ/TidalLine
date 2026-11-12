@@ -19,16 +19,23 @@ const DoorSystem={
     return null;
   },
   hasKey(d,p){return !!this.findKey(d,p);},
+  /* 只读检查：读条起手先问这句，确认身上有钥匙但不碰耐久。
+     真正扣耐久仍在 prepareOpen，由读条完成那一帧调用。 */
+  unlockHint(d,p){
+    if(this.hasKey(d,p))return null;
+    return d.keyId?'需要对应钥匙：'+(ITEM_BY_ID[d.keyId]?.name||d.keyId):'此门尚未配置钥匙';
+  },
   prepareOpen(d,p){
     if(d.doorType==='barricade'&&!d.breached){if(!this.normalSide(d,p))return{ok:false,message:'门被另一侧挡住了'};d.breached=true;return{ok:true,kicked:true};}
     if(d.doorType==='locked'&&!d.unlocked){
+      const hint=this.unlockHint(d,p);
+      if(hint)return{ok:false,message:hint};
       const key=this.findKey(d,p);
-      if(!key)return{ok:false,message:d.keyId?'需要对应钥匙：'+(ITEM_BY_ID[d.keyId]?.name||d.keyId):'此门尚未配置钥匙'};
       key.entry.cap=ItemCapacity.remaining(key.entry)-1;
       const broken=key.entry.cap<=0;
       if(broken)key.list.splice(key.list.indexOf(key.entry),1);
       /* 开了锁就把钥匙链的剩余耐久写回存档：断线 / 刷新不会把耐久刷回去。 */
-      if(typeof Game!=='undefined'&&Game.syncRaidChain)Game.syncRaidChain();
+      if(typeof Game!=='undefined'&&Game.syncRaidChain)Game.syncRaidChain(true);
       d.unlocked=true;return{ok:true,unlocked:true,keyBroken:broken};
     }
     return{ok:true};

@@ -19,11 +19,11 @@ test('gift is idempotent, bound, pending when full',()=>{
   Save.stash=[];S.grant();assert(Save.meleeGiftClaimed);assert.equal(Save.stash.length,1);
 });
 test('shop sells original knives plus rescue knife and crowbar; unavailable weapons stay blocked',()=>{
-  Save.credits=2000000;Save.stash=[];assert(Base.buyMelee('melee01'));assert(Base.buyMelee('melee02'));assert.equal(Base.buyMelee('melee03'),false);assert.equal(Save.credits,1685000);
-  Save.addGearStash(EQUIP.melee('melee01',true));const e=Save.stash.at(-1);Base.sell(e,1);assert(Save.stash.includes(e));assert.equal(Save.credits,1685000);
-  assert(Base.buyMelee('melee05'));assert(Base.buyMelee('melee06'));assert.equal(Save.credits,1392500);
+  Save.credits=10000000;Save.stash=[];assert(Base.buyMelee('melee01'));assert(Base.buyMelee('melee02'));assert.equal(Base.buyMelee('melee03'),false);assert.equal(Save.credits,9055000);
+  Save.addGearStash(EQUIP.melee('melee01',true));const e=Save.stash.at(-1);Base.sell(e,1);assert(Save.stash.includes(e));assert.equal(Save.credits,9055000);
+  assert(Base.buyMelee('melee05'));assert(Base.buyMelee('melee06'));assert.equal(Save.credits,8177500);
   for(const id of ['melee03','melee07'])assert.equal(Base.buyMelee(id),false);
-  assert.equal(Save.credits,1392500);assert(Base.buyMelee('melee04'));assert.equal(Save.credits,822500);
+  assert.equal(Save.credits,8177500);assert(Base.buyMelee('melee04'));assert.equal(Save.credits,6467500);
   assert.deepEqual(Array.from(MELEE.filter(d=>d.available),d=>d.id),['melee01','melee02','melee04','melee05','melee06']);
 });
 

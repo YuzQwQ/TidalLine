@@ -1,0 +1,9 @@
+{
+  "id": "rm277",
+  "group": "gear",
+  "name": "GD RM277",
+  "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A coyote-tan General Dynamics RM277 bullpup rifle, distinctive thick one-piece rear stock on LEFT, short 20-round box magazine BEHIND pistol grip near the rear, raised continuous top rail, vented slim front handguard and exposed barrel pointing RIGHT and slightly up. Bare rifle, no optic, no suppressor. Clearly bullpup silhouette.",
+  "source": "assets/item-art/68x51-v1/sources/rm277.png",
+  "target": "assets/gear/rm277.png",
+  "generator": "built-in image_gen"
+}

@@ -12,22 +12,22 @@ for(const offline of [false,true]){
  await p.waitForFunction(()=>typeof MerchantUI!=='undefined'&&MerchantUI.mounted&&ART.gear.every(id=>Icons.gear[id]));
  const specs=await p.evaluate(ids=>ids.map(id=>{const img=Icons.gear[id],c=document.createElement('canvas');c.width=c.height=48;const cx=c.getContext('2d');cx.drawImage(img,0,0);const b=cx.getImageData(0,0,48,48).data;let opaque=0,partial=0,edge=0;for(let y=0;y<48;y++)for(let x=0;x<48;x++){const a=b[(y*48+x)*4+3];opaque+=a>0;partial+=a>0&&a<255;edge+=(x<4||y<4||x>=44||y>=44)&&a>0;}return{id,width:img.naturalWidth,height:img.naturalHeight,opaque,partial,edge,embedded:img.src.startsWith('data:image/png;base64,')};}),variants.map(v=>v.id));
  for(const s of specs){assert.equal(s.width,48,s.id);assert.equal(s.height,48,s.id);assert(s.opaque>80,s.id);assert.equal(s.partial,0,s.id);assert.equal(s.edge,0,s.id);if(offline)assert(s.embedded,s.id);}
- await p.evaluate(()=>{Save.stash=[];Save.bag=[];Save.credits=1000000;Safehouse.route('traders');MerchantUI.open('shop');});
- assert.equal(await p.locator('#shopGrid .scell').count(),15);
+ await p.evaluate(()=>{Save.stash=[];Save.bag=[];Save.credits=10000000;Safehouse.route('traders');MerchantUI.open('shop');});
+ assert.equal(await p.locator('#shopGrid .scell').count(),19);
  const stock=await p.locator('#shopGrid [data-offer]').evaluateAll(ns=>ns.map(n=>JSON.parse(n.dataset.offer)).filter(x=>x.kind==='armor').map(x=>x.id));
- for(const v of variants){if(v.level>3){assert(!stock.includes(v.id));continue;}assert(stock.includes(v.id));
+ for(const v of variants){if(v.level>4){assert(!stock.includes(v.id));continue;}assert(stock.includes(v.id));
   const before=await p.evaluate(()=>Save.credits);
   await p.evaluate(id=>[...document.querySelectorAll('#shopGrid [data-offer]')].find(n=>JSON.parse(n.dataset.offer).id===id).click(),v.id);
   assert((await p.locator('.mb-inspector').innerText()).includes(v.name));
   if(v.type==='body')assert((await p.locator('.mb-inspector').innerText()).includes('瞄准时间惩罚'));
   await p.locator('[data-mb-confirm]').click();assert((await p.locator('#dealBox').innerText()).includes(v.name));
   await p.evaluate(()=>{const b=document.querySelector('#dealBox .go');b.click();b.click();});
-  assert.equal(await p.evaluate(()=>Save.credits),before-v.proposed.price);
+  assert.equal(await p.evaluate(()=>Save.credits),before-Math.round(v.proposed.price*3));
   assert(await p.evaluate(id=>Save.stash.some(e=>e.gear?.equip?.gear?.id===id),v.id));
  }
  await p.screenshot({path:path.join(out,offline?'ui-offline-shop.png':'ui-shop.png')});
- await p.evaluate(ids=>{for(const id of ids){const type=id.startsWith('helmet')?'helmet':'body';Save.addGearStash(EQUIP.armor(GEAR.make(type,id)));}Safehouse.route('stash');},variants.filter(v=>v.level===4).map(v=>v.id));
- for(const v of variants){await p.locator('[aria-label="搜索库存"]').fill(v.name);await p.locator('#stashGrid .scell:not(.empty)').click();const text=await p.locator('#itemTip').innerText();assert(text.includes(v.name));assert(text.includes(v.description.split('\n')[0]));if(v.type==='body')assert(text.includes('瞄准时间'));
+ await p.evaluate(ids=>{for(const id of ids){if(Save.stash.some(e=>e.gear?.equip?.gear?.id===id))continue;const type=id.startsWith('helmet')?'helmet':'body';Save.addGearStash(EQUIP.armor(GEAR.make(type,id)));}Safehouse.route('stash');},variants.filter(v=>v.level===4).map(v=>v.id));
+ for(const v of variants){await p.locator('[aria-label="搜索库存"]').fill(v.name);await p.locator('#stashGrid .scell:not(.empty)').first().click();const text=await p.locator('#itemTip').innerText();assert(text.includes(v.name));assert(text.includes(v.description.split('\n')[0]));if(v.type==='body')assert(text.includes('瞄准时间'));
   assert(await p.evaluate(id=>{const e=Save.stash.find(e=>e.gear?.equip?.gear?.id===id);const type=e.gear.equip.gear.type;if(!Base.equipFromStash(e,type))return false;Save.save();Save.flush();Save.load();return Save.gear[type].id===id;},v.id));
  }
  await p.screenshot({path:path.join(out,offline?'ui-offline-stash.png':'ui-stash.png')});

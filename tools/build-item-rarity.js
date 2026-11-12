@@ -8,7 +8,7 @@ function build(){
  assert.equal(review.items.length,collectibles.length);
  for(const row of review.items)assert.equal(items.find(i=>i.id===row.id)?.r,row.rarity);
 
- const first=review.items.filter(r=>r.batch==='first'),second=review.items.filter(r=>r.batch==='life-2'),third=review.items.filter(r=>r.batch==='life-3'),fourth=review.items.filter(r=>r.batch==='elec-1'),fifth=review.items.filter(r=>r.batch==='ind-1'),sixth=review.items.filter(r=>r.batch==='med-1'),seventh=review.items.filter(r=>r.batch==='collect-1'),eighth=review.items.filter(r=>r.batch==='mil-1'),ninth=review.items.filter(r=>r.batch==='intel-1'),tenth=review.items.filter(r=>r.batch==='occ-1');
+ const first=review.items.filter(r=>r.batch==='first'),second=review.items.filter(r=>r.batch==='life-2'),third=review.items.filter(r=>r.batch==='life-3'),fourth=review.items.filter(r=>r.batch==='elec-1'),fifth=review.items.filter(r=>r.batch==='ind-1'),sixth=review.items.filter(r=>r.batch==='med-1'),seventh=review.items.filter(r=>r.batch==='collect-1'),eighth=review.items.filter(r=>r.batch==='mil-1'),ninth=review.items.filter(r=>r.batch==='intel-1'),tenth=review.items.filter(r=>r.batch==='occ-1'),eleventh=review.items.filter(r=>r.batch==='egg-2');
  const colorNames=['白','绿','蓝','紫','金','红'];
  const ratio=[6,10,25,27,23,9];
  const countBy=(list,k)=>list.filter(r=>r.rarity===k).length;
@@ -18,7 +18,7 @@ function build(){
  const distHead=`| 等级 | ${tiers.map(t=>t.k+' '+t.name).join(' | ')} | 合计 |\n| --- | ${tiers.map(()=>'---:').join(' | ')} | ---: |`;
  const distRow=(name,list)=>`| ${name} | ${tiers.map(t=>countBy(list,t.k)).join(' | ')} | ${list.length} |`;
  const ratioRow=`| 目标比例 | ${ratio.map(r=>r+'%').join(' | ')} | 100% |`;
- const distTable=[distHead,distRow('第一批',first),distRow('第二批',second),distRow('第三批',third),distRow('第四批',fourth),distRow('第五批',fifth),distRow('第六批',sixth),distRow('第七批',seventh),distRow('第八批',eighth),distRow('第九批',ninth),distRow('第十批',tenth),distRow('合计',review.items),ratioRow].join('\n');
+ const distTable=[distHead,distRow('第一批',first),distRow('第二批',second),distRow('第三批',third),distRow('第四批',fourth),distRow('第五批',fifth),distRow('第六批',sixth),distRow('第七批',seventh),distRow('第八批',eighth),distRow('第九批',ninth),distRow('第十批',tenth),distRow('第十一批',eleventh),distRow('合计',review.items),ratioRow].join('\n');
 
  /* 价格带直接读 ECONOMY（economy.json 生成），不再手写，避免文档与数值脱节 */
  const money=v=>'¥'+v.toLocaleString('en-US');
@@ -31,7 +31,7 @@ function build(){
 
 收集品采用 **寻常 → 良品 → 上乘 → 稀见 → 珍罕 → 孤品**，颜色为 **白 → 绿 → 蓝 → 紫 → 金 → 红**。
 
-本文按十批记录：**第一批 ${first.length} 件**（原有物品的稀有度重评，只调整稀有度与依赖它的配置，ID、类别、描述、价格、重量和贴图保留）；
+本文按十一批记录：**第一批 ${first.length} 件**（原有物品的稀有度重评，只调整稀有度与依赖它的配置，ID、类别、描述、价格、重量和贴图保留）；
 **第二批 ${second.length} 件**（生活器物首次扩充后仍然保留的部分，见 [生活器物](LIFE_COLLECTIBLES.md)）；
 **第三批 ${third.length} 件**（生活用品库重构时新增的生活器物与消费电子）；
 **第四批 ${fourth.length} 件**（电子产品扩充，见 [精选电子产品](ELECTRONICS.md)）；
@@ -40,13 +40,14 @@ function build(){
 **第七批 ${seventh.length} 件**（文物藏品扩充，见 [文物藏品](COLLECTIBLES.md)）；
 **第八批 ${eighth.length} 件**（军事收集品，见 [军事收集品](MILITARY_COLLECTIBLES.md)）；
 **第九批 ${ninth.length} 件**（情报收集品，见 [情报收集品](INTEL_COLLECTIBLES.md)）；
-**第十批 ${tenth.length} 件**（神秘学物品，见 [神秘学物品](OCCULT_COLLECTIBLES.md)）。当前共 **${collectibles.length} 件**收集品。
+**第十批 ${tenth.length} 件**（神秘学物品，见 [神秘学物品](OCCULT_COLLECTIBLES.md)）；
+**第十一批 ${eleventh.length} 件**（2026-11-08 新增彩蛋，见 [彩蛋藏品](EASTER_EGGS.md)）。当前共 **${collectibles.length} 件**收集品。
 
 其中归属第一批的 13 件文物藏品在 2026-10 做过整批修订：稀有度不变，但文案全部重写、金条重量由 5kg 改为 1kg，
 随后又补入第七批 8 件，文物藏品增至 21 件，
 见 [文物藏品](COLLECTIBLES.md)。本文的「第一批……描述保留」只描述当轮重评，不约束后续修订。
 
-## 十批的数量分布
+## 各批的数量分布
 
 ${distTable}
 
@@ -163,6 +164,6 @@ ${oddTable}
 [机器可读逐件评级](rarity.json) · [物品分类](CLASSIFICATION.md) · [Wiki](../../wiki.html#items)
 `;
  fs.writeFileSync(path.join(root,'design/items/RARITY.md'),md);
- console.log(`已生成六级稀有度说明：${collectibles.length} 件收集品（${first.length} + ${second.length} + ${third.length} + ${fourth.length} + ${fifth.length} + ${sixth.length} + ${seventh.length} + ${eighth.length} + ${ninth.length} + ${tenth.length}）`);
+ console.log(`已生成六级稀有度说明：${collectibles.length} 件收集品（${first.length} + ${second.length} + ${third.length} + ${fourth.length} + ${fifth.length} + ${sixth.length} + ${seventh.length} + ${eighth.length} + ${ninth.length} + ${tenth.length} + ${eleventh.length}）`);
 }
 module.exports={build};if(require.main===module)build();

@@ -47,6 +47,8 @@ const MedQuick = {
       const chosen = Medical.preferredEntry(g.entries);
       const part = Medical.isPartial(chosen) ? chosen : null;
       g.max = max;
+      /* 轮盘扇区 / 快捷栏要用的同款容量条比例，按「优先被使用的那件」算 */
+      g.ratio = CapBar.ratio(chosen);
       /* 效果品的「容量」是次数，别显示成 HP 容量那种 N/M */
       g.text = g.item.effect
         ? (g.count > 1 ? '×' + g.count + ' · ' + Medical.capText(chosen) : Medical.capText(chosen))
@@ -337,6 +339,7 @@ const MedWheel = {
       const it = this.sectors[i].item;
 
       this.tile(c, it, lx, ly - 26 * k, 40 * k, on);
+      c.globalAlpha = 1;
       c.fillStyle = on ? '#f0f7f4' : '#b8ccc4';
       c.font = Math.round(12 * k) + 'px "Microsoft YaHei", sans-serif';
       c.textAlign = 'center';
@@ -345,6 +348,14 @@ const MedWheel = {
       c.fillStyle = on ? '#9fe4c9' : '#6f8a82';
       c.font = Math.round(10 * k) + 'px Consolas, monospace';
       c.fillText(this.sectors[i].text, lx, ly + 26 * k);
+      /* 容量 / 次数条：和物品格、护甲耐久条同一套配色（绿=剩余，灰=已消耗）。
+         轮盘底是半透明遮罩，先铺一层 .dbar 的深色底 + 1px 边框，灰段才看得清。 */
+      const bw = 40 * k, bx = lx - bw / 2, by = ly + 34 * k;
+      const ratio = this.sectors[i].ratio == null ? 1 : this.sectors[i].ratio;
+      c.fillStyle = '#1b2b26'; c.fillRect(bx - 1, by - 1, bw + 2, 5);
+      c.fillStyle = '#0a1210'; c.fillRect(bx, by, bw, 3);
+      c.fillStyle = '#47534e'; c.fillRect(bx, by, bw, 3);
+      c.fillStyle = '#74b477'; c.fillRect(bx, by, bw * ratio, 3);
       c.globalAlpha = 1;
     }
 
@@ -412,6 +423,8 @@ const MedBar = {
       id: p ? p.group.id : null,
       name: p ? (p.group.item.short || p.group.item.name) : '',
       text: p ? p.group.text : '无医疗品',
+      ratio: p ? CapBar.ratio(p.entry) : null,
+      capLabel: p ? CapBar.label(p.entry) : '',
       empty: !p
     };
   },
@@ -427,7 +440,7 @@ const MedBar = {
     }
     if (el.style.display !== 'flex') el.style.display = 'flex';
 
-    /* 只有换药才重建结构；治疗中容量每帧都在变，那种情况只改文字，
+    /* 只有换药才重建结构；治疗中容量每帧都在变，那种情况只改文字和条的宽度，
        免得每帧新建一个 <img> 造成闪烁 */
     if (st.id !== this._id) {
       this._id = st.id;
@@ -437,10 +450,25 @@ const MedBar = {
           '<span class="mk">5</span>' +
           (st.id ? Icons.tag(st.id, 'mic') : '<span class="mic ph"></span>') +
           '<span class="mtx"></span>' +
+          /* 同款容量条压在 pill 底边，不占 flex 宽度；满了整条绿 */
+          (st.id ? '<i class="dbar dbar-capacity"><b class="dg"></b><b class="ds"></b></i>' : '') +
         '</span>';
       this._txt = el.querySelector('.mtx');
+      this._bar = el.querySelector('.dbar-capacity');
+      this._g = this._bar && this._bar.querySelector('.dg');
+      this._s = this._bar && this._bar.querySelector('.ds');
     }
     if (this._txt && this._txt.textContent !== st.text) this._txt.textContent = st.text;
+    if (this._g && this._s && st.ratio != null) {
+      const g = (st.ratio * 100).toFixed(2) + '%', s = ((1 - st.ratio) * 100).toFixed(2) + '%';
+      if (this._g.style.width !== g) this._g.style.width = g;
+      if (this._s.style.width !== s) this._s.style.width = s;
+      if (this._bar.title !== st.capLabel) {
+        this._bar.title = st.capLabel;
+        /* 无 DOM 的单测里 querySelector 给的是轻量假节点，不一定有 DOM API */
+        if (typeof this._bar.setAttribute === 'function') this._bar.setAttribute('aria-label', st.capLabel);
+      }
+    }
   }
 };
 

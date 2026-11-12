@@ -52,11 +52,13 @@ Object.assign(Game, {
     if (this.state === 'menu' && !this.player) return;
 
     // 摄像机偏移可能让坐标变成负的（震屏时），必须再夹一次
-    const maxCX = Math.max(0, M.W * CFG.TILE - CFG.VIEW_W);
-    const maxCY = Math.max(0, M.H * CFG.TILE - CFG.VIEW_H);
+    const aimZoom = typeof RangeAim !== 'undefined' ? RangeAim.zoom() : 1;
+    const maxCX = Math.max(0, M.W * CFG.TILE - CFG.VIEW_W / aimZoom);
+    const maxCY = Math.max(0, M.H * CFG.TILE - CFG.VIEW_H / aimZoom);
     const camX = Math.round(U.clamp(this.cam.x + this.shakeX, 0, maxCX));
     const camY = Math.round(U.clamp(this.cam.y + this.shakeY, 0, maxCY));
 
+    c.save(); c.scale(aimZoom, aimZoom);
     this.renderTerrain(c, camX, camY);
     this.renderObjects(c, camX, camY);
     if (this.debug) this.renderOccupancy(c, camX, camY);
@@ -70,6 +72,7 @@ Object.assign(Game, {
     if (typeof Range !== 'undefined' && Range.active) Range.render(c, camX, camY);
     this.renderNoiseEdge(c);
     if(typeof DoorTest!=='undefined')DoorTest.render(c,camX,camY);
+    c.restore();
     this.renderHUD(c);
 
     /* 准星：张开幅度 = 当前散布，位置带开火抖动，颜色随后坐力变暖。
@@ -78,8 +81,10 @@ Object.assign(Game, {
     if (this.state === 'playing' && !this.lootOpen && this.player && !this.player.dead) {
       const P = this.player;
       const R = CFG.RECOIL;
-      const ax = P._aimValid ? P.aimPoint.x - camX : this.input.mx;
-      const ay = P._aimValid ? P.aimPoint.y - camY : this.input.my;
+      const cursor = typeof RangeAim !== 'undefined' && RangeAim.active()
+        ? RangeAim.screenCursor(camX, camY) : {x:this.input.mx,y:this.input.my};
+      const ax = P._aimValid ? (P.aimPoint.x - camX) * aimZoom : this.input.mx;
+      const ay = P._aimValid ? (P.aimPoint.y - camY) * aimZoom : this.input.my;
       const kx = ax + P.crossKick.x;
       const ky = ay + P.crossKick.y;
       const hot = P.recoil;
@@ -87,17 +92,17 @@ Object.assign(Game, {
       /* 鼠标原点：只在没锁定鼠标时画。
          锁定之后系统光标已经消失，准星就是唯一的指针 —— 再画一个参考点
          反而会让人以为"鼠标和准星是两个东西"。 */
-      const off = Math.hypot(kx - this.input.mx, ky - this.input.my);
+      const off = Math.hypot(kx - cursor.x, ky - cursor.y);
       if (!this.pointerLocked && off > 1.6) {
         c.lineWidth = 1;
         c.strokeStyle = 'rgba(152,182,174,0.36)';
         c.beginPath();
-        c.arc(this.input.mx, this.input.my, 2.8, 0, 6.29);
+        c.arc(cursor.x, cursor.y, 2.8, 0, 6.29);
         c.stroke();
         /* 一条极淡的连线：说明准星是"被推过去"的，不是鼠标自己跑了 */
         c.strokeStyle = 'rgba(152,182,174,0.13)';
         c.beginPath();
-        c.moveTo(this.input.mx, this.input.my);
+        c.moveTo(cursor.x, cursor.y);
         c.lineTo(kx, ky);
         c.stroke();
       }
@@ -110,8 +115,8 @@ Object.assign(Game, {
       /* 只有十字线，没有圆环。
          线的内端从中心点算起：静止时贴着中心，散布一大四条线就整条往外推，
          同时线本身也拉长一点，所以张开时是"往外散"而不是原地变胖。 */
-      const armIn = R.crossInner + P.spread * R.crossScale;
-      const armLen = R.crossArm + P.spread * R.crossScale * 0.35 + R.crossArmGrow * hot;
+      const armIn = R.crossInner + P.spread * R.crossScale * aimZoom;
+      const armLen = R.crossArm + P.spread * R.crossScale * aimZoom * 0.35 + R.crossArmGrow * hot;
       const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
       const strokeArms = (in0, out0) => {
         c.beginPath();
@@ -1025,8 +1030,14 @@ Object.assign(Game, {
       const p = U.clamp(a.t / a.total, 0, 1);
       c.fillStyle = 'rgba(8,14,12,0.9)';
       c.fillRect(bx, by, bw, 8);
-      c.fillStyle = a.type === 'extract' ? '#3fbf9b' : '#8a7d5a';
+      c.fillStyle = a.type === 'extract' ? '#3fbf9b' : a.type === 'unlock' ? '#d3b273' : '#8a7d5a';
       c.fillRect(bx, by, bw * p, 8);
+      /* 开锁单独标出剩余秒数和「别动」，免得玩家以为卡住了 */
+      if (a.type === 'unlock') {
+        c.fillStyle = '#e3c98a';
+        c.font = '11px monospace';
+        c.fillText('开锁中 · ' + Math.max(0, a.total - a.t).toFixed(1) + 's · 别动', CFG.VIEW_W / 2, by - 9);
+      }
     }
 
     /* --- Toast --- */

@@ -220,28 +220,44 @@ const CFG = {
     /* 钥匙链：只放钥匙，不占背包格、不计负重与背包价值，
        但钥匙的耐久消耗照常算进局内战损。只在局外调整。 */
     CHAIN: 6,
-    CARRY: 45,
-    // 负重档位：[上限 kg, 移速倍率, 噪声倍率, 名称]
+    CARRY: 75,
+    /* 负重档位：[上限 kg, 移速倍率, 噪声倍率, 名称]
+       三档门槛约为上限的 1/3、2/3、满值（75 → 25/50/75），
+       这样「背满 = 重载」的手感与 45kg 时代一致，多出来的容量不会全掉进超载。
+       超载档只在越过上限的边界情况（换装、作弊存档）里才会命中。 */
     TIERS: [
-      [15, 1.00, 1.00, '轻装'],
-      [30, 0.90, 1.00, '中载'],
-      [45, 0.75, 1.50, '重载'],
+      [25, 1.00, 1.00, '轻装'],
+      [50, 0.90, 1.00, '中载'],
+      [75, 0.75, 1.50, '重载'],
       [999, 0.55, 2.00, '超载']
     ]
   },
 
-  /* ---------- 护甲修理 ----------
-     每修一次都把耐久补满到「当前上限」，同时吃掉一部分上限：护甲不是无限修的。
-     一件甲的耐修程度 rep（0~100，写在护甲数据里）决定同样的损伤要付多少上限：
-       上限损耗 = round(缺失耐久 × (1 - rep/100) × WEAR)
-       修理费   = 护甲原价 ÷ 原厂耐久 × 缺失耐久 × COST，取整到 10，最低 MIN_FEE
-     费用拿「原厂耐久」当分母：当前上限会越修越低，用它折算会让同一件甲越修越便宜。
-     上限掉到 MIN_MAX 就不能再修了，那时只剩卖掉或换新。 */
+  /* ---------- 护甲修理（战斗系统 V1）----------
+     完全维修把耐久补到「修完后的新上限」，同时按材质耐修系数 Kr 吃掉一截上限：
+       ΔDmax = (Dmax − D) × Kr        D'max = D' = Dmax − ΔDmax
+     Kr 只由护甲材质决定（见 MATERIALS），数值越大这件甲越不耐用。
+     装备表里的「耐修」rep（0~100）是给玩家看的展示值，不参与公式。
+     修理费沿用旧口径：原价 ÷ 原厂耐久 × 缺失耐久 × COST，取整到 10，最低 MIN_FEE，
+     分母用「原厂耐久」而非已削的当前上限，免得同一件甲越修越便宜。
+     上限掉到 MIN_MAX 就判结构报废，只剩卖掉或换新。 */
   REPAIR: {
-    WEAR: 0.55,      // 上限损耗系数：rep 越高，同样的缺失耐久只掉更少的上限
     COST: 0.45,      // 每点缺失耐久的修理费占「原价/原厂耐久」的比例
     MIN_FEE: 100,    // 最低收费，免得修一级甲收个位数
     MIN_MAX: 4       // 上限跌到这里就判为结构报废，不再接受修理
+  },
+
+  /* ---------- 护甲材质（战斗系统 V1）----------
+     四种材质，三个系数各管一段：
+       Kb 钝伤倍率      未穿透时 H = 0.08 × B × Kb
+       Kd 耐久损耗倍率  ΔD = min[D, B(0.035+0.009P) × Kd]
+       Kr 耐修损耗系数  ΔDmax = (Dmax−D) × Kr
+     材质挂在护甲模板上；实例只存 id，参数一律从这里查，不要复制到枪械/敌人代码里。 */
+  MATERIALS: {
+    aramid:  { id: 'aramid',  label: '芳纶纤维',       Kb: 1.25, Kd: 0.75, Kr: 0.035 },
+    pe:      { id: 'pe',      label: '聚乙烯复合材料', Kb: 0.90, Kd: 0.90, Kr: 0.050 },
+    ceramic: { id: 'ceramic', label: '防弹陶瓷',       Kb: 0.55, Kd: 1.35, Kr: 0.090 },
+    steel:   { id: 'steel',   label: '装甲钢',         Kb: 0.75, Kd: 0.70, Kr: 0.015 }
   },
 
   /* ---------- 战斗 ---------- */
@@ -267,23 +283,57 @@ const CFG = {
     HEAD_MULT: 1.5      // 爆头伤害倍率
   },
 
+  /* ---------- 战斗系统 V1 的四个结算常量 ----------
+     公式全部集中在 js/combat.js 的 Combat.resolve()，这里只放可调参数。
+       A  = LV_SCALE × L − WEAR_SPAN × (1 − D/Dmax)
+       H  = 穿透 ? B : BLUNT_RATIO × B × Kb
+       ΔD = min[D, B × (DUR_BASE + DUR_PER_PEN × P) × Kd]                     */
+  COMBAT_MODEL: {
+    LV_SCALE: 10,        // 有效防护值每级 +10
+    WEAR_SPAN: 10,       // 耐久从满到空最多削掉 10 点有效防护
+    BLUNT_RATIO: 0.08,   // 未穿透时的钝伤比例
+    DUR_BASE: 0.035,     // 每发基础磨甲系数
+    DUR_PER_PEN: 0.009   // 每点穿透力追加的磨甲系数
+  },
+
   /* ---------- 弹药口径 ----------
      口径是独立枚举，任何地方判断弹种都走 caliber 字段，不看名字。
      同一口径的枪共用这一口径下的所有等级弹药，跨口径绝对不能混用。 */
   AMMO: {
-    /* 弹药等级：伤害系数与穿透等级分开存。
-       本版两者数值相同，但结构上分开，后面要拆开时不用改数据。 */
+    /* 等级名称（掉落 / 商店 / UI）。dmgMul 恒为 1、pen 只是等级别名：
+       V1 起伤害与穿透都读 FLESH 的固定值，这两个字段不再参与任何结算。 */
     TIERS: [
-      { lv: 1, name: '普通',     dmgMul: 0.90, pen: 1 },
-      { lv: 2, name: '改良',     dmgMul: 1.00, pen: 2 },
-      { lv: 3, name: '钢芯',     dmgMul: 1.05, pen: 3 },
-      { lv: 4, name: '穿甲',     dmgMul: 1.10, pen: 4 },
-      { lv: 5, name: '特种穿甲', dmgMul: 1.15, pen: 5 }
+      { lv: 1, name: '普通',     dmgMul: 1, pen: 1 },
+      { lv: 2, name: '改良',     dmgMul: 1, pen: 2 },
+      { lv: 3, name: '钢芯',     dmgMul: 1, pen: 3 },
+      { lv: 4, name: '穿甲',     dmgMul: 1, pen: 4 },
+      { lv: 5, name: '特种穿甲', dmgMul: 1, pen: 5 }
     ],
 
-    /* 护甲穿透矩阵：行 = 弹药穿透等级（1~5），列 = 护甲等级（1~6）。
-       数值是"打完护甲之后还能落到人身上的伤害比例"。
-       高级护甲对低级弹药的保护是有意做得很强的，不要为了平衡把它抹平。 */
+    /* 固定肉伤 B / 穿透力 P：FLESH[口径][等级−1] = { B, P }。
+       取消 U.rand(dmgMin,dmgMax) 与「按等级增长肉伤」，同口径同弹药结果确定。
+       不同枪械用同一弹药时以这里为基础，武器级修正需显式配置（当前没有）。 */
+    FLESH: {
+      '556':    [ {B:37,P:16}, {B:35,P:24}, {B:33,P:33}, {B:31,P:43}, {B:28,P:55} ],
+      '545x39': [ {B:40,P:15}, {B:37,P:24}, {B:35,P:34}, {B:32,P:45}, {B:28,P:59} ],
+      '762x39': [ {B:47,P:18}, {B:44,P:27}, {B:41,P:35}, {B:38,P:45}, {B:35,P:58} ],
+      '9mm':    [ {B:31,P:8},  {B:29,P:15}, {B:27,P:22}, {B:25,P:30}, {B:23,P:39} ],
+      '45acp':  [ {B:40,P:9},  {B:38,P:17}, {B:35,P:25}, {B:33,P:32}, {B:30,P:39} ]
+    },
+
+    /* 12 Gauge 专项暂缓：先给一组临时兼容 B/P，六颗弹丸各自独立走同一结算函数，
+       不做特殊穿透结算。等专项方案定了只替换这一行，不影响其它口径。 */
+    SHOTGUN_COMPAT: [ {B:8,P:6}, {B:9,P:10}, {B:10,P:14}, {B:11,P:18}, {B:12,P:22} ],
+
+    /* 异常体 / 机械造物保留各自的专属基础肉伤（t.dmg），只补一个按装备等级
+       映射的兼容穿透力，索引 0 用于无甲 / 无弹药来源。 */
+    LEGACY_ENEMY_PEN: [3, 10, 20, 30, 42, 55],
+
+    /* 没有弹药来源的兜底穿透力（旧字段，等价于新系统里的 P=3）。 */
+    UNARMED_PEN: 3,
+
+    /* 以下两项是旧 5×6 比例矩阵时代的遗留数据，V1 起不参与任何结算。
+       保留仅供历史报告与旧存档对照；新代码一律走 js/combat.js 的 Combat。 */
     MATRIX: {
       1: [0.80, 0.60, 0.40, 0.25, 0.15, 0.15],
       2: [1.00, 0.80, 0.60, 0.40, 0.25, 0.15],
@@ -291,18 +341,21 @@ const CFG = {
       4: [1.00, 1.00, 1.00, 0.80, 0.60, 0.40],
       5: [1.00, 1.00, 1.00, 1.00, 0.80, 0.60]
     },
-
-    /* 被护甲挡下的伤害换算成耐久损耗的系数。
-       0.5 是首轮测试值，调平衡就动这里，别去改矩阵。 */
-    DURABILITY_FACTOR: 0.5,
-
-    /* 没有弹药来源的伤害（近战、敌人的制式射击）按这个穿透等级结算。 */
-    UNARMED_PEN: 3
+    DURABILITY_FACTOR: 0.5
   },
 
   /* ---------- 后坐力 ----------
      recoil 是 0~1 的一个值，驱动准星张开与弹道散布。
      开火累加，停火衰减；移动时累加更快、恢复更慢。
+
+     【六参数模型】这里的数字是全枪共用的**物理基准**，武器只存倍率：
+       纵向冲击 = axis.v.kick × recoilVMul
+       横向冲击 = axis.h.kick × recoilHMul
+       连射增长 = perShot     × spreadGrowthMul
+       基础散布 = spreadBase  × spreadMul
+       满散布   = spreadMax   × spreadMul
+     改全游戏手感只改这里（连随机扰动、上限、回正速度也在这里），
+     不要往单把枪上写死数字。派生入口：Firearms.derive()。
      -------------------------------------------------- */
   RECOIL: {
     perShot: 0.075,         // 每发累加
@@ -312,9 +365,11 @@ const CFG = {
     max: 1.0,               // 上限
 
     decayDelay: 0.15,       // 停火后多久开始恢复（秒）
-    decay: 0.55,            // 静止时每秒恢复多少（0~1 的值）
-    decayMoveMult: 0.50,    // 移动中恢复打折
-    decaySneakMult: 1.30,   // 潜行时恢复更快
+    /* 散布按半衰期恢复：静止时每 decayHalfLife 秒减半，指数衰减、天然帧率无关。
+       从满散布（1.0）回落到 1% 约 1.2s；想让全游戏枪口回得更快/更慢就只改这一个数。 */
+    decayHalfLife: 0.18,
+    decayMoveMult: 0.50,    // 移动中的半衰期倍率：<1 更慢（0.50 → 半衰期 0.36s）
+    decaySneakMult: 1.30,   // 潜行中的半衰期倍率：>1 更快（1.30 → 半衰期约 0.138s）
 
     spreadBase: 0.040,      // recoil=0 时的散布（弧度）
     spreadMax: 0.260,       // recoil=1 时的散布
@@ -426,7 +481,7 @@ const CFG = {
        所以调这里只改「摸到的是哪一件红」，不改出货率。
        概率**按容器品质给**（eggByQuality）：好东西才配藏彩蛋。
        废弃 / 普通箱子 0，充实 1%、优质 4%、贵重 12%、秘藏 25%。
-       秘藏箱红里四件就有一件是彩蛋，摸钥匙房的人才是主要受众。
+       秘藏箱每四件红就有一件被换成彩蛋，摸钥匙房的人才是主要受众。
        eggChance 是没有品质信息的抽取（尸体、指定池）的兜底值，
        同时是总开关：置 0 = 关闭彩蛋掉落，不用改调用点。 */
     eggChance: 0.02,
@@ -474,6 +529,10 @@ const CFG = {
   /* ---------- 撤离 ---------- */
   EXTRACT_TIME: 6.0,        // 撤离读条
   EXTRACT_RADIUS: 34,
+
+  /* ---------- 钥匙房 ----------
+     插钥匙转动要读条，期间任何操作都会打断；只有读完才扣钥匙耐久。 */
+  LOCK_TIME: 1.5,
 
   /* ---------- 节奏工具 ---------- */
   QUIET_TIME: 30,           // 击杀后安静期
@@ -587,6 +646,20 @@ const CALIBERS = {
       320,
       800,
       2000
+    ],
+    "ammoNames": [
+      "M856 曳光弹",
+      "FMJ 全被甲弹",
+      "M855",
+      "M855A1 EPR",
+      "M995 AP"
+    ],
+    "ammoShortNames": [
+      "M856",
+      "556 FMJ",
+      "M855",
+      "M855A1",
+      "M995 AP"
     ]
   },
   "762x39": {
@@ -606,6 +679,20 @@ const CALIBERS = {
       420,
       1000,
       2500
+    ],
+    "ammoNames": [
+      "SP 软尖弹",
+      "FMJ 全被甲弹",
+      "PS gzh",
+      "BP gzh",
+      "MAI AP"
+    ],
+    "ammoShortNames": [
+      "762 SP",
+      "762 FMJ",
+      "PS gzh",
+      "BP gzh",
+      "MAI AP"
     ]
   },
   "9mm": {
@@ -625,6 +712,20 @@ const CALIBERS = {
       180,
       450,
       1100
+    ],
+    "ammoNames": [
+      "PSO gzh",
+      "Green Tracer 绿色曳光弹",
+      "Pst gzh",
+      "AP 6.3",
+      "PBP gzh"
+    ],
+    "ammoShortNames": [
+      "PSO gzh",
+      "绿曳光",
+      "Pst gzh",
+      "AP 6.3",
+      "PBP gzh"
     ]
   },
   "45acp": {
@@ -644,6 +745,20 @@ const CALIBERS = {
       250,
       600,
       1500
+    ],
+    "ammoNames": [
+      "Hydra-Shok JHP",
+      "Lasermatch FMJ",
+      "Match FMJ",
+      "AP",
+      "AP-HC 高硬芯穿甲弹"
+    ],
+    "ammoShortNames": [
+      "HydraShk",
+      "LaserFMJ",
+      "MatchFMJ",
+      "45 AP",
+      "AP-HC"
     ]
   },
   "12g": {
@@ -682,6 +797,55 @@ const CALIBERS = {
       370,
       900,
       2250
+    ],
+    "ammoNames": [
+      "SP 软尖弹",
+      "FMJ 全被甲弹",
+      "PP gs",
+      "BP gs",
+      "BS gs"
+    ],
+    "ammoShortNames": [
+      "545 SP",
+      "545 FMJ",
+      "PP gs",
+      "BP gs",
+      "BS gs"
+    ]
+  },
+  "68x51": {
+    "id": "68x51",
+    "name": "6.8×51mm",
+    "short": "6.8",
+    "label": "6.8×51mm",
+    "damage": [
+      42,
+      47
+    ],
+    "stack": 60,
+    "weight": 0.024,
+    "defaultLevel": 4,
+    "ammunition": [
+      {
+        "level": 4,
+        "name": "6.8×51mm SIG FMJ",
+        "price": 2500,
+        "B": 47,
+        "P": 49,
+        "iconId": "ammo_68x51_fmj",
+        "shopAvailable": true,
+        "description": "全金属被甲弹，承担本口径的常规供弹。"
+      },
+      {
+        "level": 5,
+        "name": "6.8×51mm SIG Hybrid",
+        "price": 7500,
+        "B": 42,
+        "P": 63,
+        "iconId": "ammo_68x51_hybrid",
+        "shopAvailable": false,
+        "description": "采用混合材料弹壳的高级装药。Hybrid描述弹壳结构，不直接等同穿甲弹头；伤害与穿透为游戏平衡设定。"
+      }
     ]
   }
 };
@@ -689,6 +853,13 @@ const CALIBERS = {
 /* config 不依赖 core.js，这里自带一个夹取，避免加载顺序问题 */
 function clampNum(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
 
+/* ------------------------------------------------------------
+   遗留弹道 API（战斗系统 V1 之前）。
+   ratio/resolve/hit 仍按旧的 5×6 比例矩阵工作，仅供历史测试与旧报告对照；
+   运行时伤害结算一律走 js/combat.js 的 Combat.resolve()，
+   玩家、敌人、枪械都不要再调用这三个方法。
+   tier/caliber/caliberName/ammoId 是纯数据工具，仍在正常使用。
+   ------------------------------------------------------------ */
 const BALLISTICS = {
   /* 弹药等级配置（1~5） */
   tier(lv) {
@@ -702,6 +873,20 @@ const BALLISTICS = {
 
   /* 弹药 id 只有这一种拼法：ammo_{口径}_{等级} */
   ammoId(caliber, lv) { return 'ammo_' + caliber + '_' + lv; },
+  levels(caliber) { return CALIBERS[caliber]?.ammunition?.map(a=>a.level)||[1,2,3,4,5]; },
+  defaultLevel(caliber) { return CALIBERS[caliber]?.defaultLevel||1; },
+
+  /* 战斗系统 V1：弹药固定肉伤 B / 穿透力 P 的唯一查询入口。
+     放在 config.js 是因为大量只加载 config.js + data.js 的离线生成脚本也要读弹药数据；
+     js/combat.js 的 Combat.ammo() 委托到这里，不在别处重复写口径/等级兜底。 */
+  flesh(caliber, level) {
+    const special=CALIBERS[caliber]?.ammunition;
+    if(special){const a=special.find(a=>a.level===Number(level))||special.find(a=>a.level===this.defaultLevel(caliber));return {B:a.B,P:a.P,caliber,level:a.level,compat:false};}
+    const lv = clampNum(Math.round(Number(level) || 1), 1, 5);
+    const A = CFG.AMMO, compat = caliber === '12g';
+    const table = compat ? A.SHOTGUN_COMPAT : (A.FLESH[caliber] || A.FLESH['9mm']);
+    return Object.assign({}, table[lv - 1] || table[0], { caliber, level: lv, compat });
+  },
 
   /* 穿透比例：没穿护甲 / 护甲已失效 = 1（全额） */
   ratio(pen, armorLevel) {

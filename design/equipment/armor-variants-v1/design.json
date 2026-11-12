@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "status": "integrated_initial_testing",
-  "scope": "8件I–IV护甲变体与48px图标已接入，统一身体护甲瞄准时间惩罚；不增加特殊抗性和套装",
+  "status": "integrated_combat_v1",
+  "scope": "8件I–IV护甲变体与48px图标已接入，统一身体护甲瞄准时间惩罚；不增加特殊抗性和套装 战斗系统 V1 起新增材质（Kb/Kd/Kr），rep 仅作耐修度展示；维修上限损耗由材质 Kr 决定；高等级钢甲标称耐久与瞄准惩罚已压缩。",
   "preIntegration": {
     "status": "implemented_initial_tests",
     "keep": [
@@ -24,18 +24,19 @@
       "bodyAimPenaltyPct": {
         "body1": 0,
         "body2": 10,
-        "body3": 20,
-        "body4": 30,
-        "body5": 45,
-        "body6": 60,
+        "body3": 12,
+        "body4": 22,
+        "body5": 32,
+        "body6": 45,
         "body1_leather": 4,
         "body2_concealed": 4,
-        "body3_fragmentation": 30,
-        "body4_lightplate": 14
+        "body3_fragmentation": 22,
+        "body4_lightplate": 10
       },
       "helmetAimPenaltyPct": 0,
       "aimFormula": "effectiveAimTime = weaponAimTime * (1 + bodyAimPenaltyPct / 100)",
-      "note": "首轮测试值已接入；保留candidateOnly字段兼容原设计与构建器，不代表最终平衡。weaponAimTime独立于击发延迟windup。"
+      "note": "首轮测试值已接入；保留candidateOnly字段兼容原设计与构建器，不代表最终平衡。weaponAimTime独立于击发延迟windup。",
+      "formula": "effectiveAimTime = weaponAimTime * (1 + bodyAimPenaltyPct / 100)"
     }
   },
   "runtimeFindings": {
@@ -77,7 +78,8 @@
         "durability": 28,
         "weight": 0.85,
         "price": 2400,
-        "repair": 70
+        "repair": 91,
+        "material": "pe"
       },
       "role": "I级耐用选择，以更高重量换取持续使用能力。",
       "source": "民用骑行用品",
@@ -102,7 +104,8 @@
         "durability": 55,
         "weight": 2,
         "price": 3600,
-        "repair": 76
+        "repair": 95,
+        "material": "aramid"
       },
       "aimHandlingProposal": "瞄准准备时间 +4%；不直接降低移速，不影响收束后的稳定精度。",
       "role": "I级较耐用的工装防护，重量更高。",
@@ -128,7 +131,8 @@
         "durability": 24,
         "weight": 0.6,
         "price": 7200,
-        "repair": 66
+        "repair": 91,
+        "material": "pe"
       },
       "role": "II级轻便选择，以较少耐久换取更低携带重量。",
       "source": "城市救援与检修作业用品",
@@ -153,7 +157,8 @@
         "durability": 45,
         "weight": 1.8,
         "price": 10800,
-        "repair": 72
+        "repair": 95,
+        "material": "aramid"
       },
       "aimHandlingProposal": "瞄准准备时间 +4%；不直接降低移速，不影响收束后的稳定精度。",
       "role": "II级低负担选择，缩短连续承伤余量。",
@@ -179,7 +184,8 @@
         "durability": 60,
         "weight": 1.7,
         "price": 18000,
-        "repair": 62
+        "repair": 90,
+        "material": "pe"
       },
       "role": "III级耐用选择，重量显著增加。",
       "source": "旧公共安全装备库存",
@@ -201,10 +207,11 @@
         "price": 28000
       },
       "proposed": {
-        "durability": 110,
+        "durability": 100,
         "weight": 5.2,
         "price": 33600,
-        "repair": 58
+        "repair": 93,
+        "material": "aramid"
       },
       "aimHandlingProposal": "瞄准准备时间 +30%；不直接降低移速，不影响收束后的稳定精度。",
       "role": "III级持续防护选择，牺牲负重余量。",
@@ -230,7 +237,8 @@
         "durability": 50,
         "weight": 1.35,
         "price": 57600,
-        "repair": 60
+        "repair": 91,
+        "material": "pe"
       },
       "role": "IV级轻便选择，保持等级但减少可消耗耐久。",
       "source": "专业安保采购与轻装护送装备",
@@ -255,7 +263,8 @@
         "durability": 90,
         "weight": 4.7,
         "price": 102000,
-        "repair": 55
+        "repair": 91,
+        "material": "pe"
       },
       "aimHandlingProposal": "瞄准准备时间 +14%；不直接降低移速，不影响收束后的稳定精度。",
       "role": "IV级轻装主力替代品，减少承伤余量换取携带空间。",

@@ -2,11 +2,12 @@
    护甲修理
    局外限定：战局里没有工位，也没有时间坐下来拆甲。
 
-   一件甲不是无限修的。每次修理补满耐久，同时按「耐修程度 rep」和
-   这次补回多少耐久削掉一截上限：
-       上限损耗 = round(缺失耐久 × (1 - rep/100) × CFG.REPAIR.WEAR)
-       修理费   = 原价 ÷ 原厂耐久 × 缺失耐久 × CFG.REPAIR.COST
-   上限掉到 CFG.REPAIR.MIN_MAX 就不能再修了 —— 那时只剩卖掉或换新。
+   一件甲不是无限修的（战斗系统 V1）。完全维修补满耐久，同时按材质耐修
+   系数 Kr 削掉一截上限：
+       ΔDmax = (Dmax − D) × Kr        D'max = D' = Dmax − ΔDmax
+       修理费 = 原价 ÷ 原厂耐久 × 缺失耐久 × CFG.REPAIR.COST
+   Kr 只由护甲材质决定（CFG.MATERIALS）；模板里的 rep 是给玩家看的耐修度
+   展示值，不参与公式。上限掉到 MIN_MAX 就不能再修 —— 只剩卖掉或换新。
 
    入口只有两个，都挂在 base.js 统一手势的钩子上，不另接管任何格子：
      · 装备槽右键菜单  → Base.extraGearActs
@@ -19,11 +20,18 @@ const Repair = {
     return (d && d.dur) || (g && g.max) || 0;
   },
 
-  /* 耐修程度 0~100：越高，同样的损伤只掉更少的上限 */
+  /* 耐修度 0~100：V1 起只是 UI 展示值（越高越耐修），
+     实际维修损耗用材质的 Kr，见 Combat.repairLoss()。 */
   repOf(g) {
     const d = GEAR.def(g && g.type, g && (g.id || g.lv));
     const rep = (d && d.rep != null) ? d.rep : (g && g.rep != null ? g.rep : 50);
     return U.clamp(Math.round(rep), 0, 100);
+  },
+
+  /* Kr 损耗会让上限出现两位小数；显示时去掉无意义的尾零 */
+  fmt(n) {
+    const v = Math.round((Number(n) || 0) * 100) / 100;
+    return Number.isInteger(v) ? String(v) : v.toFixed(2).replace(/0$/, '');
   },
 
   /* 报价：ok=false 时 reason 说明为什么不能修 */
@@ -33,18 +41,20 @@ const Repair = {
     const max = Math.max(0, Number(g.max) || 0);
     const dur = U.clamp(Number(g.dur) || 0, 0, max);
     const lost = Math.round((max - dur) * 10) / 10;
-    const wear = U.clamp((100 - rep) / 100 * CFG.REPAIR.WEAR, 0, 1);
-    const capLoss = Math.max(1, Math.round(lost * wear));
-    const newMax = Math.round(max - capLoss);
+    /* V1：上限损耗只按材质 Kr 算，保留两位小数，不再取整、也没有最低 1 点。
+       Kr > 0 保证 newMax 一定不高于维修前的 max。 */
+    const r = Combat.repairLoss(g);
+    const newMax = Math.round(r.newMax * 100) / 100;
+    const capLoss = Math.round((max - newMax) * 100) / 100;
     const per = base > 0 ? (Number(g.price) || 0) / base : 0;
     const fee = Math.max(CFG.REPAIR.MIN_FEE, Math.round(per * lost * CFG.REPAIR.COST / 10) * 10);
 
     let reason = '';
     if (dur >= max - 1e-6) reason = '耐久是满的，不用修';
-    else if (newMax < CFG.REPAIR.MIN_MAX) reason = '上限只剩 ' + Math.round(max) + '，这件已经修不动了';
+    else if (newMax < CFG.REPAIR.MIN_MAX) reason = '上限只剩 ' + this.fmt(max) + '，这件已经修不动了';
 
     return {
-      rep, base, max, dur, lost, capLoss, newMax, fee,
+      rep, base, max, dur, lost, Kr: r.Kr, capLoss, newMax, fee,
       ok: !reason, reason
     };
   },
@@ -78,15 +88,17 @@ const Repair = {
       kind: 'repair',
       title: '修理护甲',
       name: g.name,
-      sub: '防护 Lv' + g.lv + ' · ' + GEAR[g.type].label,
+      sub: '防护 Lv' + g.lv + ' · ' + GEAR[g.type].label + ' · ' +
+        Combat.materialOf(g).label + ' · 耐修 ' + q.rep,
       icon: GEAR.icon(g),
       short: g.short,
       price: q.fee,
       priceLabel: '修理费',
       hideBalance: true,
       bar: '<div class="dbar-box">' + DuraBar.html(g, {cap: q.newMax, dur: q.dur}) +
-        '<span class="dbar-cap">耐久 ' + Math.ceil(q.dur) + ' → ' + q.newMax +
-        ' · 上限 ' + Math.round(q.max) + ' → ' + q.newMax + '</span></div>',
+        '<span class="dbar-cap">耐久 ' + this.fmt(q.dur) + ' → ' + this.fmt(q.newMax) +
+        ' · 上限 ' + this.fmt(q.max) + ' → ' + this.fmt(q.newMax) +
+        '（材质耐修损耗 ×' + q.Kr + '）</span></div>',
       goLabel: '确认修理',
       can: Save.credits >= q.fee,
       onGo: () => this.apply(where, entry, key, q.fee)
@@ -119,8 +131,8 @@ const Repair = {
     if (typeof Ctx !== 'undefined') Ctx.hide();
     Base.render();
     Game.sfx('gear');
-    Base.note('修理完成：' + g.name + ' 耐久 ' + Math.ceil(g.dur) + '，上限 ' +
-      Math.round(g.max) + ' / ' + Math.round(q.base) + '（-' + formatMoney(q.fee) + '）');
+    Base.note('修理完成：' + g.name + ' 耐久 ' + this.fmt(g.dur) + '，上限 ' +
+      this.fmt(g.max) + ' / ' + this.fmt(q.base) + '（-' + formatMoney(q.fee) + '）');
     return true;
   },
 

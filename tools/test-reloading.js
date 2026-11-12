@@ -15,13 +15,13 @@ function fresh(rounds=[]){
 function reload(p){assert(p.tryReload());p.reloadT=0;p.finishReloadIfDone();}
 let p=fresh();p.bag.addAmmo('ammo_556_1',4);p.bag.addAmmo('ammo_556_3',8);p.bag.addAmmo('ammo_9mm_5',50);
 reload(p);assert.equal(p.mag,12);assert.equal(p.weapon.rounds.join(','),[...Array(4).fill('ammo_556_1'),...Array(8).fill('ammo_556_3')].join(','));
-for(let n=0;n<4;n++){p.fireCd=0;assert(p.tryShoot());assert.equal(Game.bullets.at(-1).pen,1);}
+for(let n=0;n<4;n++){p.fireCd=0;assert(p.tryShoot());assert.equal(Game.bullets.at(-1).pen,c.BALLISTICS.flesh('556',1).P);}
 assert.equal(p.ammoId,'ammo_556_3');
 assert(p.unloadWeapon());assert.equal(p.mag,0);assert.equal(p.bag.ammoCount('ammo_556_3'),8);
 assert(p.unloadWeapon());assert.equal(p.bag.ammoCount('ammo_556_3'),8);
 console.log('OK: mixed reload, caliber isolation, firing order, exact unload and repeated unload');
 p=fresh(['ammo_556_1','ammo_556_5']);
-p.bag.slots=Array.from({length:23},()=>({item:ITEM_BY_ID.life01,n:1}));
+p.bag.slots=Array.from({length:c.bagSlots()-1},()=>({item:ITEM_BY_ID.life01,n:1}));
 const before=JSON.stringify(p.bag.slots);assert.equal(p.unloadWeapon(),false);assert.equal(JSON.stringify(p.bag.slots),before);assert.equal(p.mag,2);
 assert.equal(p.loadAmmo('ammo_556_3'),false);assert.equal(p.weapon.ammo,'ammo_556_1');
 console.log('OK: multi-type return rolls back entirely when a later stack cannot fit');

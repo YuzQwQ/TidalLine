@@ -35,6 +35,7 @@ const Save = {
   },
   meleeGiftClaimed: false,
   attachmentRecovery: [],
+  attachmentsVersion: 2,
   commissionBoard: null,
   runs: 0,
   bestHaul: 0,        // 单局带出价值的历史最高（结算页的"新纪录"用）
@@ -81,7 +82,9 @@ const Save = {
         this.mail=[]; this.mailBatches={};
         return;
       }
-      const d = JSON.parse(raw);
+      const d = typeof AttachmentMigration!=='undefined'?AttachmentMigration.load(raw,this.key):JSON.parse(raw);
+      this._loadBlocked=false;
+      this.attachmentsVersion=d.attachmentsVersion||2;
       /* 2026-11 异常遗物补充批次把两件红品让出编号：逆流沙漏 odd04→odd17、瓶中风暴 odd05→odd18。
          旧存档（v<4）里的 odd04/05 指的是这两件红品，必须搬过去；v4 起 odd04/05 是新的一级样本，
          不能再映射，所以按存档版本而不是按 id 无条件迁移。 */
@@ -131,6 +134,7 @@ const Save = {
       if(this._ammoSpill.length)this.stash=this.normalizeList([...this.stash,...this._ammoSpill]);
       this._ammoSpill=null;
     } catch (e) {
+      if(e.attachmentMigrationFailed){this._loadBlocked=true;throw e;}
       if (!Array.isArray(this.bag) || !this.bag.length) this.bag = this.defaultBag();
     }
   },
@@ -172,6 +176,7 @@ const Save = {
   _saveT: 0,
 
   save() {
+    if(this._loadBlocked)return false;
     this._dirty = true;
     if (this._saveT) return;                       // 已经有一次待写
     this._saveT = (typeof setTimeout === 'function' ? setTimeout(() => this.flush(), 400) : 0) || 0;
@@ -179,6 +184,7 @@ const Save = {
   },
 
   flush() {
+    if(this._loadBlocked)return false;
     if (this._saveT) {
       if (typeof clearTimeout === 'function') clearTimeout(this._saveT);
       this._saveT = 0;
@@ -188,6 +194,7 @@ const Save = {
     try {
       localStorage.setItem(this.key, JSON.stringify({
         v: 4,
+        attachmentsVersion: this.attachmentsVersion,
         codex: this.codex,
         /* 仓库不再叠放，条目数会变多；整份存，别再截尾丢东西 */
         stash: this.stash,
@@ -297,11 +304,14 @@ const Save = {
       const items = [];
       for (const e of (Array.isArray(letter.items) ? letter.items : [])) {
         const id = e && Medical.canonicalId(e.id);
-        const item = id && ITEM_BY_ID[id];
+        let item = id && ITEM_BY_ID[id], gear=null;
+        if(e.gear?.equip?.kind==='gun')gear=this.migrateGun(e.gear.equip);
+        else if(e.gear?.equip?.kind==='attachment'||String(id||'').startsWith('g_att_'))gear=EQUIP.attachment(e.gear?.equip?.attachment||id.slice(2));
+        if(gear)item=gear;
         if (!item) continue;
         const max = ItemCapacity.max(item);
         const n = Math.max(1, Math.floor(Number(e.n) || 1));
-        if (!max) { items.push({ id, n }); continue; }
+        if (!max) { items.push({ id:gear?gear.id:id, n, ...(gear?{gear}:{}) }); continue; }
         const cap = typeof e.cap === 'number' ? U.clamp(e.cap, 0, max) : max;
         if (cap <= 0) continue;
         items.push(cap >= max - 1e-6 ? { id, n } : { id, n: 1, cap });
@@ -468,6 +478,11 @@ function unitPrice(it) {
   if (!it) return 0;
   return (it.sell != null) ? it.sell : it.price;
 }
+
+/* 购买加价：枪械 / 弹药 / 配件 / 近战 / 头甲背包一律 ×3。
+   只作用于「买」的展示与结算；price / sell 不动，回收价（unitPrice）保持原样。 */
+const BUY_MARKUP = 3;
+function buyPrice(base) { return Math.round((Number(base) || 0) * BUY_MARKUP); }
 
 /* 当前价值：钥匙按剩余耐久折算，其余沿用 unitPrice。
    3000 万的十次钥匙开过一次，现值就是 2700 万 —— 仓库总估价、

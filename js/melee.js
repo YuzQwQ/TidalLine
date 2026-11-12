@@ -277,13 +277,13 @@ meleeWrap(Base,'unequip',function(original,key){if(key!=='melee')return original
   Save.addGearStash(Save.gear.melee);Save.gear.melee=null;Save.save();this.closePicker();this.render();this.gearVoice('melee',true);return true;
 });
 for(const key of ['askSell','sell'])meleeWrap(Base,key,function(original,e,...args){if(stashItem(e)?.equip?.bound){this.note('首次赠送的绑定刀具不可出售',true);return false;}return original.call(this,e,...args);});
-Base.buyMelee=function(id){const d=MeleeSystem.def(id);if(!d?.available||Save.credits<d.price||Save.stash.length>=STASH_SLOTS)return false;
-  Save.credits-=d.price;Save.addGearStash(EQUIP.melee(id));Save.save();this.render();return true;
+Base.buyMelee=function(id){const d=MeleeSystem.def(id);if(!d?.available||Save.credits<buyPrice(d.price)||Save.stash.length>=STASH_SLOTS)return false;
+  Save.credits-=buyPrice(d.price);Save.addGearStash(EQUIP.melee(id));Save.save();this.render();return true;
 };
 meleeWrap(Base,'renderGunShop',function(original,el){original.call(this,el);const title=document.createElement('div');title.className='shop-cat';title.textContent='近战武器';el.appendChild(title);
   for(const d of MELEE.filter(d=>d.available)){const cell=document.createElement('div');cell.className='scell r'+d.r;cell.dataset.melee=d.id;
-    cell.innerHTML=Icons.gearIcon(d.id,'刀')+'<span class="cn">'+esc(d.short)+'</span><span class="pr">'+formatMoney(d.price)+'</span>';
-    cell.onclick=()=>Deal.show({kind:'buy',title:'买入近战武器',name:d.name,sub:'真实伤害 '+d.damage+' · '+d.w+'kg',icon:d.id,price:d.price,can:Save.credits>=d.price&&Save.stash.length<STASH_SLOTS,onGo:()=>this.buyMelee(d.id)},cell.getBoundingClientRect());
+    cell.innerHTML=Icons.gearIcon(d.id,'刀')+'<span class="cn">'+esc(d.short)+'</span><span class="pr">'+formatMoney(buyPrice(d.price))+'</span>';
+    cell.onclick=()=>Deal.show({kind:'buy',title:'买入近战武器',name:d.name,sub:'真实伤害 '+d.damage+' · '+d.w+'kg',icon:d.id,price:buyPrice(d.price),can:Save.credits>=buyPrice(d.price)&&Save.stash.length<STASH_SLOTS,onGo:()=>this.buyMelee(d.id)},cell.getBoundingClientRect());
     cell.oncontextmenu=e=>{e.preventDefault();Tips.show(EQUIP.melee(d.id),cell.getBoundingClientRect(),'左键买入');};el.appendChild(cell);
   }
 });

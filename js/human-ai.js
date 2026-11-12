@@ -1,18 +1,18 @@
 /* Human profiles share player weapon physics; AI owns bounded trigger groups and reaction pauses. */
 const HUMAN_UNIT_DEFS = {
-  scav: {...ENEMY_TYPES.scav,hp:60,tactical:true,
+  scav: {...ENEMY_TYPES.scav,hp:90,tactical:true,
     weapons:[['m16a1',17.5],['galil_arm',17.5],['glock17',18],['aks74u',12],['g36c',10],
       ['pp19_01',5],['mp155',4],['rem870',3],['m1911a1',3],['beretta92',3],['fn_fnc',3],['sig550',2],['ak12',2]],
     levels:ENEMY_LOADOUT.levelWeights.map((weight,i)=>[i+1,weight]),
     helmetChance:ENEMY_LOADOUT.helmetChance,bodyChance:ENEMY_LOADOUT.bodyChance,condition:[1,1],
     reserve:[ENEMY_LOADOUT.ammoMin,ENEMY_LOADOUT.ammoMax],aim:.85,aimError:.14,aimErrorMinPx:14,burst:[2,3],pause:[1.8,2.4],search:8},
-  holdout: {name:'据点看守',short:'看',color:'#b8a26b',hp:80,speed:42,sight:10,fov:110*Math.PI/180,hear:1,
+  holdout: {name:'据点看守',short:'看',color:'#b8a26b',hp:110,speed:42,sight:10,fov:110*Math.PI/180,hear:1,
     range:6*CFG.TILE,cd:1.5,faction:'scav',human:true,arrow:true,tactical:true,
     injuryType:'shotgun',weapons:[['rem870',50],['mp155',40],['saiga12',10]],levels:[[2,80],[3,20]],helmetChance:.65,bodyChance:.85,
     reserve:12,aim:.75,aimError:.05,burst:1,pause:[1.5,1.8],
     warning:1,guardRadius:3,leash:8,chaseLimit:6,quietReset:10,search:8,
     desc:'守着楼院和物资的人。工装、旧头盔和短霰弹枪，足够让陌生人在门口停一停。'},
-  retriever: {name:'受雇回收员',short:'回',color:'#7c9684',hp:100,speed:50,sight:13,fov:110*Math.PI/180,hear:1,
+  retriever: {name:'受雇回收员',short:'回',color:'#7c9684',hp:145,speed:50,sight:13,fov:110*Math.PI/180,hear:1,
     bonusMeleePool: RARE_MELEE_POOL,
     range:11*CFG.TILE,cd:1.6,faction:'scav',human:true,arrow:true,tactical:true,
     injuryType:'bullet',weapons:[['akm',25],['an94',15],['mk47_mod2',13],['mp5a3',12],['ump45',10],
@@ -43,7 +43,7 @@ const HumanAI={
     e.body=Math.random()<d.bodyChance?GEAR.random('body',e.gearLv):null;
     for(const g of [e.helmet,e.body])if(g)g.dur=g.max*U.rand(...(d.condition||[.6,.9]));
     e.weaponId=this.rollWeapon(d);const w=this.weapon(e);
-    e.ammoId=BALLISTICS.ammoId(w.caliber,e.gearLv);e.penLevel=e.gearLv;
+    e.ammoId=BALLISTICS.ammoId(w.caliber,e.gearLv);e.penLevel=Combat.ammo(w.caliber,e.gearLv).P;
     e.spawnId=String(spawn.id||('human-'+(++this.sequence)));
     e.squadId=e.key==='retriever'?String(spawn.squadId||'').trim():'';
     if(spawn.facing||e.key!=='scav')e.angle=({s:Math.PI/2,n:-Math.PI/2,e:0,w:Math.PI})[spawn.facing||'s']??Math.PI/2;
@@ -166,7 +166,7 @@ const HumanAI={
     const hitMeta=Debuff.enemyAttack({...e.t,injuryType:w.pellets>1?'shotgun':'bullet'});
     Firearms.emit(w,{x:e.x,y:e.y,angle:Math.atan2(dy,dx),spread:Firearms.spread(w,a.recoil)+Debuff.spreadAdd(e),ammo,faction:e.t.faction,meta:hitMeta});
     Firearms.kick(a,w);a.mag--;a.shots++;a.fireFlash=.12;a.fireCd=Math.max(60/w.rpm,w.cycleTime||0);
-    Noise.emit(e.x,e.y,CFG.NOISE.shoot*.8,'shot');Game.sfx('shot',{gun:w.id});return true;
+    Noise.emit(e.x,e.y,CFG.NOISE.shoot*.8*(w.noiseRadius??1),'shot');Game.sfx('shot',{gun:w.id});return true;
   },
   canShoot(e,obs){return !!obs&&U.dist(e.x,e.y,obs.x,obs.y)<=Math.min(e.t.range,this.weapon(e).range)&&this.clear(e.x,e.y,obs.x,obs.y,true);},
   finishBurst(e){

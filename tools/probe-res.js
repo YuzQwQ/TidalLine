@@ -3,7 +3,7 @@ document.getElementById('startVeil').style.display = 'none';
 Game.startRun(Save.loadout);
 const cv = document.getElementById('game');
 const avg = (fn, n) => { const a = performance.now(); for (let i = 0; i < n; i++) fn(); return (performance.now() - a) / n; };
-for (const e of Game.enemies) { e.dead = false; e.hp = 60; }
+for (const e of Game.enemies) { e.dead = false; e.hp = e.maxHp || 90; }
 Game.input.keys.mouseDown = true;
 await sleep(1500);
 const upd = avg(() => Game.update(1 / 60), 600);

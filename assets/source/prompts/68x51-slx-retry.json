@@ -1,0 +1,5 @@
+{
+  "mode": "built-in image_gen",
+  "firstAttempt": "output rejected by image service; no usable output",
+  "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A detached SIG SLX suppressor accessory, elongated cylindrical dark gray metal body, subtle longitudinal flow channels, broad Clutch-LOK mounting collar with scalloped locking ring. One detached accessory only, no firearm. This is a nonviolent inventory illustration of an unloaded, detached accessory for a fictional video game, with no complete firearm, no people, no firing and no action scene. Focus solely on the cylindrical accessory silhouette."
+}

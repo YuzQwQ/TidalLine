@@ -3,7 +3,7 @@
   "reports": [
     {
       "file": "index.html",
-      "types": 12,
+      "types": 19,
       "limits": [
         120,
         360,
@@ -25,7 +25,7 @@
     },
     {
       "file": "潮汐线.html",
-      "types": 12,
+      "types": 19,
       "limits": [
         120,
         360,

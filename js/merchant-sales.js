@@ -1,6 +1,6 @@
 /* Merchant sell view reuses the live warehouse node and renderer. */
 const MerchantSales={
- mounted:false,cart:new Map(),selected:null,category:'all',quality:'all',query:'',sort:'sellableValue',token:null,context:null,
+ mounted:false,cart:new Map(),selected:null,category:'all',quality:'all',query:'',sort:'sellableValue',token:null,context:null,layout:null,
  active(){return !Safehouse.demo&&Safehouse.view==='merchant'&&MerchantUI.mode==='sell';},
  esc(s){return MerchantUI.esc(s);},
  mount(){if(this.mounted||!MerchantUI.detail)return;this.mounted=true;const d=MerchantUI.detail;
@@ -51,7 +51,17 @@ const MerchantSales={
  MerchantUI.setMode=function(mode){if(!Safehouse.demo&&mode==='sell'){this.mode=mode;this.selected=null;Tips.hide();Deal.hide();Base.page=0;this.applyMode();MerchantSales.sync();Base.renderStash();return;}const r=setMode.apply(this,arguments);MerchantSales.sync();return r;};
  Base.stashList=function(){return MerchantSales.active()?MerchantSales.list():list.apply(this,arguments);};
  Base.renderStash=function(){const r=render.apply(this,arguments);MerchantSales.decorate();return r;};
- Base.gridMetrics=function(){if(!MerchantSales.active())return metrics.apply(this,arguments);const grid=document.getElementById('stashGrid'),w=Math.max(200,grid.clientWidth-20),h=Math.max(150,grid.clientHeight-20),gap=9,cols=Math.max(2,Math.floor((w+gap)/90)),cell=(w-gap*(cols-1))/cols;return {cols,rows:Math.max(2,Math.floor((h+gap)/(cell+gap))),cell};};
+ /* 容器还在 display:none（例如视图刚切换）时 clientWidth/clientHeight 为 0，
+    旧写法会退化成 200×150 的兜底尺寸算出 2 列，格子被拉成 300px 大方块。
+    此时沿用上一次的有效布局，等容器可见后由 setMode / refresh 重排。 */
+ Base.gridMetrics=function(){
+  if(!MerchantSales.active())return metrics.apply(this,arguments);
+  const grid=document.getElementById('stashGrid'),gap=9,w=grid.clientWidth-20,h=grid.clientHeight-20;
+  if(w<=0||h<=0)return MerchantSales.layout||{cols:7,rows:5,cell:90};
+  const cols=Math.max(2,Math.floor((Math.max(200,w)+gap)/90));
+  const cell=(Math.max(200,w)-gap*(cols-1))/cols;
+  return MerchantSales.layout={cols,rows:Math.max(2,Math.floor((Math.max(150,h)+gap)/(cell+gap))),cell};
+ };
  const hide=Deal.hide,close=Base.close;
  Deal.hide=function(){if(Sales.warehouseToken){Sales.cancel(Sales.warehouseToken);Sales.warehouseToken=null;}return hide.apply(this,arguments);};
  Base.close=function(){MerchantSales.reset();MerchantSales.context=null;Deal.hide();return close.apply(this,arguments);};

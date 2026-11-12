@@ -13,14 +13,16 @@ const ctx = { console, Math, Object, Array };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/config.js'), 'utf8'), ctx);
+/* data.js 生成弹药条目时要查 Combat.ammo()，必须先加载战斗系统 */
+vm.runInContext(fs.readFileSync(path.join(dir, 'js/combat.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/data.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'js/attachment-data.js'), 'utf8'), ctx);
 vm.runInContext(
-  'globalThis.WEAPONS=WEAPONS;globalThis.HELMETS=HELMETS;globalThis.BODIES=BODIES;' +
+  'globalThis.CFG=CFG;globalThis.WEAPONS=WEAPONS;globalThis.HELMETS=HELMETS;globalThis.BODIES=BODIES;' +
   'globalThis.MELEE=MELEE;globalThis.BAGS=BAGS;globalThis.BASE_BAG_SLOTS=BASE_BAG_SLOTS;globalThis.RARITY=RARITY;', ctx);
 
 const ATTACHMENTS=vm.runInContext('Object.values(ATTACHMENT_DEFS)',ctx);
-const { WEAPONS, HELMETS, BODIES, BAGS, BASE_BAG_SLOTS, RARITY, MELEE } = ctx;
+const { WEAPONS, HELMETS, BODIES, BAGS, BASE_BAG_SLOTS, RARITY, MELEE, CFG } = ctx;
 
 const GEAR_DIR = path.join(dir, 'assets', 'gear');
 const hasIcon = id => fs.existsSync(path.join(GEAR_DIR, id + '.png'));
@@ -115,7 +117,7 @@ function armorCard(type, g) {
       <div class="thumb">${thumb(id)}</div>
       <div class="meta">
         <div class="name">${esc(g.name)}<i class="tag">Lv${g.lv} ${tag} · ${esc(RARITY[rarity-1].name)}</i><i class="tag dim">${esc(g.short)}</i></div>
-        <div class="sub"><code>${esc(id)}.png</code> · 防护 <b class="dr">Lv${g.lv}</b> · 耐久 ${g.dur} · 耐修 ${g.rep ?? 50} · ${g.w}kg${move} · ${money(g.price)}</div>
+        <div class="sub"><code>${esc(id)}.png</code> · 防护 <b class="dr">Lv${g.lv}</b> · ${esc((CFG.MATERIALS[g.material||'aramid']||{}).label||'芳纶纤维')} · 耐久 ${g.dur} · 耐修 ${g.rep ?? 50} · ${g.w}kg${move} · ${money(g.price)}</div>
         <div class="vis"><b>画什么</b>${esc(g.visual || VISUAL[id] || '')}</div><div class="desc">${esc(g.desc || '')}</div>
       </div>
     </div>`;
@@ -190,7 +192,7 @@ const html = `<!DOCTYPE html>
 </section>
 
 <section class="cat"><h2>近战武器<em>melee</em><i>${MELEE.length} 张 · 4 切换</i></h2><p><a href="assets/item-art/melee/index.html">持刀动画与原稿</a> · 折叠刀、战斗刀、三棱军刺、应急救援刀与工业撬棍有售；重型丛林砍刀与廓尔喀弯刀由受雇回收员背包或防水补给箱以每容器 1% 总概率额外掉落，触发后等概率抽取一把。首次赠刀绑定不可出售。</p><div class="grid">${MELEE.map(d=>`<div class="item lv${d.r}"><div class="thumb">${thumb(d.id)}</div><div class="meta"><div class="name">${esc(d.name)}<i class="tag">${RARITY[d.r-1].name}</i></div><div class="sub">${d.id}.png · ${d.w}kg · ${money(d.price)}</div><div class="desc">${d.descEmphasis ? esc(d.desc).replace(esc(d.descEmphasis),"<strong>"+esc(d.descEmphasis)+"</strong>") : esc(d.desc)}</div><div class="vis">${d.positioning ? esc(d.positioning)+" · " : ""}真实伤害 ${d.damage} · 间隔 ${d.interval}秒 · 前摇 ${d.windup}秒 · 扇角 ${d.angle}° · 半径 ${d.radius}格</div></div></div>`).join('')}</div></section>
-<section class="cat" id="attachments"><h2>枪械配件<em>attachments</em><i>${ATTACHMENTS.length} 件 · 五槽位</i></h2><p><a href="design/weapons/attachments-v1/art/index.html">配件原稿、统一视角与预览</a> · 绿蓝军火商有售，紫色通过搜刮获得。局内外均可即时改装。</p><div class="grid">${ATTACHMENTS.map(a=>`<div class="item lv${a.r}"><div class="thumb">${thumb(a.id)}</div><div class="meta"><div class="name">${esc(a.name)}<i class="tag">${RARITY[a.r-1].name}</i></div><div class="sub">${a.id} · ${a.w}kg · ${money(a.price)}</div><div class="desc">${esc(a.description)}</div><div class="vis">${Object.entries(a.statModifiers).map(([k,v])=>({aimTime:"瞄准时间",baseSpread:"基础散布",recoilHorizontal:"横向后坐力",recoilVertical:"纵向后坐力",recoilRecovery:"双轴回正速度",reloadTime:"装填时间",magazineCapacity:"弹匣容量",pelletSpread:"弹丸扩散"}[k])+" "+(v>0?"+":"")+Math.round(v*100)+"%").join(" · ")}</div></div></div>`).join('')}</div></section>
+<section class="cat" id="attachments"><h2>枪械配件<em>attachments</em><i>${ATTACHMENTS.length} 件 · 五槽位</i></h2><p><a href="design/weapons/attachments-v1/art/index.html">配件原稿、统一视角与预览</a> · 绿蓝军火商有售，紫色通过搜刮获得。局内外均可即时改装。</p><div class="grid">${ATTACHMENTS.map(a=>`<div class="item lv${a.r}"><div class="thumb">${thumb(a.id)}</div><div class="meta"><div class="name">${esc(a.name)}<i class="tag">${RARITY[a.r-1].name}</i></div><div class="sub">${a.id} · ${a.w}kg · ${money(a.price)}</div><div class="desc">${esc(a.description)}</div><div class="vis">${Object.entries(a.statModifiers).map(([k,v])=>({aimTime:"瞄准时间",baseSpread:"基础散布",spreadGrowth:"连射散布增长",recoilHorizontal:"横向后坐力",recoilVertical:"纵向后坐力",reloadTime:"装填时间",magazineCapacity:"弹匣容量",pelletSpread:"弹丸扩散"}[k])+" "+(v>0?"+":"")+Math.round(v*100)+"%").join(" · ")}</div></div></div>`).join('')}</div></section>
 <footer>
   清单由 <code>gen-gear-sheet.js</code> 生成，数据来自 <code>js/data.js</code> 的 WEAPONS / HELMETS / BODIES / BAGS。<br>
   图标共用 <code>assets/gear/</code>，已接入藏身处、局内装备槽和尸体装备区。更新贴图后重跑本脚本刷新进度，

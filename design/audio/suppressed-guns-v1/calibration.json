@@ -1,0 +1,603 @@
+{
+  "template": {
+    "pitchSemitones": 9,
+    "gain": 0.64,
+    "highpass": 180,
+    "lowShelfHz": 380,
+    "lowShelfDb": -9,
+    "highShelfHz": 2600,
+    "highShelfDb": -4,
+    "peakHz": 3400,
+    "peakDb": 5.5,
+    "peakQ": 1.4,
+    "lowpass": 9600,
+    "end": 0.13
+  },
+  "rows": [
+    {
+      "id": "m4a1",
+      "name": "M4A1",
+      "category": "rifle",
+      "sampleProfile": "rifle",
+      "measurements": [
+        {
+          "id": "shot_rifle",
+          "rms": 0.022392719799770762,
+          "peak": 0.33788615465164185
+        }
+      ],
+      "rms": 0.022392719799770762,
+      "peak": 0.33788615465164185,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 1,
+      "processedRms": 0.022392719799770762,
+      "processedPeak": 0.33788615465164185,
+      "relativeToM4": 1
+    },
+    {
+      "id": "akm",
+      "name": "AKM",
+      "category": "rifle",
+      "sampleProfile": "ak47",
+      "measurements": [
+        {
+          "id": "shot_ak47",
+          "rms": 0.01468333356519496,
+          "peak": 0.1725323349237442
+        }
+      ],
+      "rms": 0.01468333356519496,
+      "peak": 0.1725323349237442,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 1.55,
+      "processedRms": 0.02275916702605219,
+      "processedPeak": 0.2674251191318035,
+      "relativeToM4": 1.0163645698047443
+    },
+    {
+      "id": "famas_f1",
+      "name": "FAMAS F1",
+      "category": "rifle",
+      "sampleProfile": "famas",
+      "measurements": [
+        {
+          "id": "shot_famas",
+          "rms": 0.027033917420079868,
+          "peak": 0.5035974979400635
+        }
+      ],
+      "rms": 0.027033917420079868,
+      "peak": 0.5035974979400635,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 0.83,
+      "processedRms": 0.02243815145866629,
+      "processedPeak": 0.4179859232902527,
+      "relativeToM4": 1.0020288584549695
+    },
+    {
+      "id": "pp19_01",
+      "name": "PP-19-01 Vityaz",
+      "category": "smg",
+      "sampleProfile": "smg",
+      "measurements": [
+        {
+          "id": "shot_smg",
+          "rms": 0.01742343481022197,
+          "peak": 0.26715996861457825
+        }
+      ],
+      "rms": 0.01742343481022197,
+      "peak": 0.26715996861457825,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 1.29,
+      "processedRms": 0.022476230905186342,
+      "processedPeak": 0.34463635951280597,
+      "relativeToM4": 1.0037293864328367
+    },
+    {
+      "id": "mp5a3",
+      "name": "MP5A3",
+      "category": "smg",
+      "sampleProfile": "mp5",
+      "measurements": [
+        {
+          "id": "shot_mp5",
+          "rms": 0.009713758135377714,
+          "peak": 0.20942533016204834
+        }
+      ],
+      "rms": 0.009713758135377714,
+      "peak": 0.20942533016204834,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 2.31,
+      "processedRms": 0.022438781292722518,
+      "processedPeak": 0.4837725126743317,
+      "relativeToM4": 1.002056985188205
+    },
+    {
+      "id": "ump45",
+      "name": "UMP45",
+      "category": "smg",
+      "sampleProfile": "ump45",
+      "measurements": [
+        {
+          "id": "shot_ump45",
+          "rms": 0.03410611120443425,
+          "peak": 0.6330955028533936
+        }
+      ],
+      "rms": 0.03410611120443425,
+      "peak": 0.6330955028533936,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 0.66,
+      "processedRms": 0.022510033394926604,
+      "processedPeak": 0.4178430318832398,
+      "relativeToM4": 1.0052389167642353
+    },
+    {
+      "id": "glock17",
+      "name": "Glock 17",
+      "category": "pistol",
+      "sampleProfile": "pistol",
+      "measurements": [
+        {
+          "id": "shot_pistol_1",
+          "rms": 0.010996240410428107,
+          "peak": 0.1610059291124344
+        },
+        {
+          "id": "shot_pistol_2",
+          "rms": 0.008199540394636502,
+          "peak": 0.12578704953193665
+        },
+        {
+          "id": "shot_pistol_3",
+          "rms": 0.011570322529234818,
+          "peak": 0.17956465482711792
+        }
+      ],
+      "rms": 0.010360536171417105,
+      "peak": 0.17956465482711792,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 2.16,
+      "processedRms": 0.022378758130260946,
+      "processedPeak": 0.3878596544265747,
+      "relativeToM4": 0.9993765085423005
+    },
+    {
+      "id": "m1911a1",
+      "name": "M1911A1",
+      "category": "pistol",
+      "sampleProfile": "pistol",
+      "measurements": [
+        {
+          "id": "shot_pistol_1",
+          "rms": 0.010996240410428107,
+          "peak": 0.1610059291124344
+        },
+        {
+          "id": "shot_pistol_2",
+          "rms": 0.008199540394636502,
+          "peak": 0.12578704953193665
+        },
+        {
+          "id": "shot_pistol_3",
+          "rms": 0.011570322529234818,
+          "peak": 0.17956465482711792
+        }
+      ],
+      "rms": 0.010360536171417105,
+      "peak": 0.17956465482711792,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 2.16,
+      "processedRms": 0.022378758130260946,
+      "processedPeak": 0.3878596544265747,
+      "relativeToM4": 0.9993765085423005
+    },
+    {
+      "id": "beretta92",
+      "name": "Beretta 92FS",
+      "category": "pistol",
+      "sampleProfile": "pistol",
+      "measurements": [
+        {
+          "id": "shot_pistol_1",
+          "rms": 0.010996240410428107,
+          "peak": 0.1610059291124344
+        },
+        {
+          "id": "shot_pistol_2",
+          "rms": 0.008199540394636502,
+          "peak": 0.12578704953193665
+        },
+        {
+          "id": "shot_pistol_3",
+          "rms": 0.011570322529234818,
+          "peak": 0.17956465482711792
+        }
+      ],
+      "rms": 0.010360536171417105,
+      "peak": 0.17956465482711792,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 2.16,
+      "processedRms": 0.022378758130260946,
+      "processedPeak": 0.3878596544265747,
+      "relativeToM4": 0.9993765085423005
+    },
+    {
+      "id": "m16a1",
+      "name": "M16A1",
+      "category": "rifle",
+      "sampleProfile": "m16a1",
+      "measurements": [
+        {
+          "id": "shot_m16",
+          "rms": 0.005097208362910075,
+          "peak": 0.08341173082590103
+        }
+      ],
+      "rms": 0.005097208362910075,
+      "peak": 0.08341173082590103,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 4.39,
+      "processedRms": 0.022376744713175228,
+      "processedPeak": 0.3661774983257055,
+      "relativeToM4": 0.999286594628148
+    },
+    {
+      "id": "galil_arm",
+      "name": "Galil ARM",
+      "category": "rifle",
+      "sampleProfile": "galil_arm",
+      "measurements": [
+        {
+          "id": "shot_galil",
+          "rms": 0.042630423733202874,
+          "peak": 0.8908758163452148
+        }
+      ],
+      "rms": 0.042630423733202874,
+      "peak": 0.8908758163452148,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 0.53,
+      "processedRms": 0.022594124578597524,
+      "processedPeak": 0.4721641826629639,
+      "relativeToM4": 1.0089942079670386
+    },
+    {
+      "id": "aks74u",
+      "name": "AKS-74U",
+      "category": "rifle",
+      "sampleProfile": "aks74u",
+      "measurements": [
+        {
+          "id": "shot_aks74u",
+          "rms": 0.03679371952668732,
+          "peak": 0.6342445611953735
+        }
+      ],
+      "rms": 0.03679371952668732,
+      "peak": 0.6342445611953735,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 0.61,
+      "processedRms": 0.022444168911279264,
+      "processedPeak": 0.38688918232917785,
+      "relativeToM4": 1.0022975820699114
+    },
+    {
+      "id": "g36c",
+      "name": "G36C",
+      "category": "rifle",
+      "sampleProfile": "g36c",
+      "measurements": [
+        {
+          "id": "shot_g36c",
+          "rms": 0.025508183952599763,
+          "peak": 0.4182547330856323
+        }
+      ],
+      "rms": 0.025508183952599763,
+      "peak": 0.4182547330856323,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 0.88,
+      "processedRms": 0.022447201878287793,
+      "processedPeak": 0.36806416511535645,
+      "relativeToM4": 1.0024330264034111
+    },
+    {
+      "id": "fn_fnc",
+      "name": "FN FNC",
+      "category": "rifle",
+      "sampleProfile": "fn_fnc",
+      "measurements": [
+        {
+          "id": "shot_fnfnc",
+          "rms": 0.019653115247923392,
+          "peak": 0.47330448031425476
+        }
+      ],
+      "rms": 0.019653115247923392,
+      "peak": 0.47330448031425476,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 1.14,
+      "processedRms": 0.022404551382632667,
+      "processedPeak": 0.5395671075582504,
+      "relativeToM4": 1.0005283673876018
+    },
+    {
+      "id": "sig550",
+      "name": "SIG SG 550",
+      "category": "rifle",
+      "sampleProfile": "sig550",
+      "measurements": [
+        {
+          "id": "shot_sg550",
+          "rms": 0.042374512190750634,
+          "peak": 0.6260095238685608
+        }
+      ],
+      "rms": 0.042374512190750634,
+      "peak": 0.6260095238685608,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 0.53,
+      "processedRms": 0.022458491461097838,
+      "processedPeak": 0.33178504765033723,
+      "relativeToM4": 1.0029371894935133
+    },
+    {
+      "id": "an94",
+      "name": "AN-94",
+      "category": "rifle",
+      "sampleProfile": "an94",
+      "measurements": [
+        {
+          "id": "shot_an94",
+          "rms": 0.021509836092409106,
+          "peak": 0.395010381937027
+        }
+      ],
+      "rms": 0.021509836092409106,
+      "peak": 0.395010381937027,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 1.04,
+      "processedRms": 0.02237022953610547,
+      "processedPeak": 0.4108107972145081,
+      "relativeToM4": 0.9989956439473904
+    },
+    {
+      "id": "aug_a1",
+      "name": "AUG A1",
+      "category": "rifle",
+      "sampleProfile": "aug_a1",
+      "measurements": [
+        {
+          "id": "shot_aug",
+          "rms": 0.02057864033730629,
+          "peak": 0.368192583322525
+        }
+      ],
+      "rms": 0.02057864033730629,
+      "peak": 0.368192583322525,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 1.09,
+      "processedRms": 0.022430717967663858,
+      "processedPeak": 0.4013299158215523,
+      "relativeToM4": 1.0016968982880536
+    },
+    {
+      "id": "groza1",
+      "name": "OTs-14-1A Groza-1「雷暴」",
+      "category": "rifle",
+      "sampleProfile": "groza1",
+      "measurements": [
+        {
+          "id": "shot_groza",
+          "rms": 0.015516130773726178,
+          "peak": 0.29172950983047485
+        }
+      ],
+      "rms": 0.015516130773726178,
+      "peak": 0.29172950983047485,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 1.44,
+      "processedRms": 0.022343228314165697,
+      "processedPeak": 0.4200904941558838,
+      "relativeToM4": 0.997789840356705
+    },
+    {
+      "id": "ak12",
+      "name": "AK-12",
+      "category": "rifle",
+      "sampleProfile": "ak12",
+      "measurements": [
+        {
+          "id": "shot_ak12",
+          "rms": 0.029128190411418713,
+          "peak": 0.48669302463531494
+        }
+      ],
+      "rms": 0.029128190411418713,
+      "peak": 0.48669302463531494,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 0.77,
+      "processedRms": 0.02242870661679241,
+      "processedPeak": 0.3747536289691925,
+      "relativeToM4": 1.0016070766455987
+    },
+    {
+      "id": "mk47_mod2",
+      "name": "MK47 MOD.2「Mutant」",
+      "category": "rifle",
+      "sampleProfile": "mk47_mod2",
+      "measurements": [
+        {
+          "id": "shot_mk47",
+          "rms": 0.005516260569395081,
+          "peak": 0.05851031467318535
+        }
+      ],
+      "rms": 0.005516260569395081,
+      "peak": 0.05851031467318535,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09"
+      ],
+      "compensation": 4.06,
+      "processedRms": 0.022396017911744025,
+      "processedPeak": 0.23755187757313248,
+      "relativeToM4": 1.0001472850106086
+    },
+    {
+      "id": "mcx_spear",
+      "name": "SIG MCX SPEAR",
+      "category": "rifle",
+      "sampleProfile": "spear",
+      "measurements": [
+        {
+          "id": "shot_spear",
+          "rms": 0.036568550903555645,
+          "peak": 0.6395257711410522
+        }
+      ],
+      "rms": 0.036568550903555645,
+      "peak": 0.6395257711410522,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09",
+        "att_muzzle11"
+      ],
+      "compensation": 0.61,
+      "processedRms": 0.022306816051168944,
+      "processedPeak": 0.3901107203960419,
+      "relativeToM4": 0.9961637644122757
+    },
+    {
+      "id": "rm277",
+      "name": "GD RM277",
+      "category": "rifle",
+      "sampleProfile": "rm277",
+      "measurements": [
+        {
+          "id": "shot_rm277",
+          "rms": 0.0283794125921513,
+          "peak": 0.38327187299728394
+        }
+      ],
+      "rms": 0.0283794125921513,
+      "peak": 0.38327187299728394,
+      "muzzles": [
+        "att_muzzle07",
+        "att_muzzle08",
+        "att_muzzle09",
+        "att_muzzle12"
+      ],
+      "compensation": 0.79,
+      "processedRms": 0.02241973594779953,
+      "processedPeak": 0.30278477966785433,
+      "relativeToM4": 1.0012064701505818
+    }
+  ],
+  "referenceRms": 0.022392719799770762,
+  "gains": {
+    "m4a1": 1,
+    "akm": 1.55,
+    "famas_f1": 0.83,
+    "pp19_01": 1.29,
+    "mp5a3": 2.31,
+    "ump45": 0.66,
+    "glock17": 2.16,
+    "m1911a1": 2.16,
+    "beretta92": 2.16,
+    "m16a1": 4.39,
+    "galil_arm": 0.53,
+    "aks74u": 0.61,
+    "g36c": 0.88,
+    "fn_fnc": 1.14,
+    "sig550": 0.53,
+    "an94": 1.04,
+    "aug_a1": 1.09,
+    "groza1": 1.44,
+    "ak12": 0.77,
+    "mk47_mod2": 4.06,
+    "mcx_spear": 0.61,
+    "rm277": 0.79
+  }
+}

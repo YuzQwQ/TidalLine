@@ -1,0 +1,9 @@
+{
+  "id": "mcx_spear",
+  "group": "gear",
+  "name": "SIG MCX SPEAR",
+  "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A coyote-tan SIG MCX SPEAR rifle, traditional layout, long slotted handguard, continuous flat top rail, side charging handle, folding telescopic stock at LEFT, short straight 20-round magazine in front of pistol grip, barrel points RIGHT and slightly up. Bare rifle with iron sights, no optical sight and no suppressor.",
+  "source": "assets/item-art/68x51-v1/sources/mcx_spear.png",
+  "target": "assets/gear/mcx_spear.png",
+  "generator": "built-in image_gen"
+}

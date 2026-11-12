@@ -686,7 +686,7 @@ const Loot = {
     return base * (item.lootW == null ? 1 : item.lootW);
   },
 
-  /* 彩蛋池：数据里带 egg 标记的收集品（当前四件，等概率）。 */
+  /* 彩蛋池：数据里带 egg 标记的收集品（当前七件，等概率；池大小不影响总彩蛋率）。 */
   eggPool() { return ITEMS.filter(it => it.egg); },
 
   /* 某个容器品质的红后中签率。
@@ -742,7 +742,8 @@ const Loot = {
     pct[4] += CONTAINER_QUALITY[quality].pct[5] || 0;
     let roll = Math.random() * pct.reduce((a,b)=>a+b,0), level = 5;
     for(let i=0;i<pct.length;i++){roll-=pct[i];if(roll<0){level=i+1;break;}}
-    const caliber=U.pick(Object.keys(options.count)),item=ammoItem(caliber,level);
+    const eligible=Object.keys(options.count).filter(cal=>BALLISTICS.levels(cal).includes(level));
+    const caliber=U.pick(eligible.length?eligible:Object.keys(options.count)),item=ammoItem(caliber,level)||defaultAmmo(caliber);
     return {item,n:U.randInt(...options.count[caliber])};
   },
 

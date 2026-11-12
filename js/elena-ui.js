@@ -48,5 +48,13 @@ const ElenaUI={
  const apply=Safehouse.applyView,mode=MerchantUI.setMode,identity=MerchantUI.renderIdentity;
  Safehouse.applyView=function(){const r=apply.apply(this,arguments);ElenaUI.sync();return r;};
  MerchantUI.renderIdentity=function(){const r=identity.apply(this,arguments);const ph=this.detail.querySelector('.mb-person-photo .mb-portrait-placeholder'),c=MERCHANT_UI_CONFIG[this.key];if(ph&&!SAFEHOUSE_CONFIG.merchants[this.key].asset)ph.innerHTML='<strong>'+this.esc(c.initial||'V')+'</strong><span>'+this.esc(c.english)+'</span><small>人物立绘待补充</small>';return r;};
- MerchantUI.setMode=function(value){if(this.key==='elena'&&!['sell','commissions','personal'].includes(value))return;if(this.key==='elena'&&['commissions','personal'].includes(value)){ElenaUI.closeConfirm();this.mode=value;this.selected=null;Tips.hide();Deal.hide();MerchantSales.sync();ElenaUI.sync();return;}const r=mode.apply(this,arguments);ElenaUI.sync();return r;};
+ MerchantUI.setMode=function(value){
+  if(this.key==='elena'&&!['sell','commissions','personal'].includes(value))return;
+  if(this.key==='elena'&&['commissions','personal'].includes(value)){ElenaUI.closeConfirm();this.mode=value;this.selected=null;Tips.hide();Deal.hide();MerchantSales.sync();ElenaUI.sync();return;}
+  /* 委托 / 人物档案页把整块商品目录隐藏了。切回出售时，若让 MerchantSales 先在
+     display:none 的容器里量格子，会退化成 2 列超大方块（贴图跟着被拉大），
+     直到翻页或筛选才重排。先同步视图恢复目录显示，再进入出售逻辑。 */
+  if(this.key==='elena'&&value==='sell'&&!Safehouse.demo){this.mode=value;ElenaUI.sync();}
+  const r=mode.apply(this,arguments);ElenaUI.sync();return r;
+ };
 }

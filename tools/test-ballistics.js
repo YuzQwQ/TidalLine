@@ -91,54 +91,58 @@ test('步枪装不进 9mm / 12g，冲锋枪与手枪共用 9mm', () => {
   assert.equal(R.loadAmmo('ammo_9mm_3'), true, '手枪也吃 9mm');
 });
 
-test('25 种弹药的 id、等级、价格与需求一致', () => {
+test('30 种弹药的 id、等级、价格与固定 B/P 一致', () => {
   const expect = {
     ammo_556_1: [1, 60], ammo_556_2: [2, 140], ammo_556_3: [3, 320], ammo_556_4: [4, 800], ammo_556_5: [5, 2000],
     ammo_9mm_1: [1, 35], ammo_9mm_2: [2, 80], ammo_9mm_3: [3, 180], ammo_9mm_4: [4, 450], ammo_9mm_5: [5, 1100],
     ammo_12g_1: [1, 80], ammo_12g_2: [2, 180], ammo_12g_3: [3, 400], ammo_12g_4: [4, 900], ammo_12g_5: [5, 2200]
   };
-  for(const [cal,prices] of Object.entries({'762x39':[80,180,420,1000,2500],'45acp':[50,110,250,600,1500]}))prices.forEach((price,i)=>expect['ammo_'+cal+'_'+(i+1)]=[i+1,price]);
+  for(const [cal,prices] of Object.entries({'762x39':[80,180,420,1000,2500],'45acp':[50,110,250,600,1500],'545x39':[70,160,370,900,2250]}))prices.forEach((price,i)=>expect['ammo_'+cal+'_'+(i+1)]=[i+1,price]);
   const ammo = ITEMS.filter(i => i.cat === 'ammo');
-  assert.equal(ammo.length, 25);
-  assert.equal(Object.keys(expect).length, 25);
+  assert.equal(ammo.length, 30);
+  assert.equal(Object.keys(expect).length, 30);
   for (const item of ammo) {
     const [lv, price] = expect[item.id];
     assert.equal(item.level, lv, item.id + ' 等级');
     assert.equal(item.price, price, item.id + ' 价格');
-    const t = BALLISTICS.tier(lv);
-    assert.equal(item.dmgMul, t.dmgMul, item.id + ' 伤害系数应来自统一表');
-    assert.equal(item.penLevel, t.pen, item.id + ' 穿透等级应来自统一表');
+    assert.equal(item.dmgMul, 1, item.id + ' V1 起不再有等级伤害成长');
+    const spec = BALLISTICS.flesh(item.caliber, lv);
+    assert.equal(item.B, spec.B, item.id + ' 固定肉伤');
+    assert.equal(item.P, spec.P, item.id + ' 穿透力');
     assert(item.noLoot && item.noCodex, item.id + ' 不该进掉落/图鉴');
-    assert.equal(item.stack, { '12g':20, '556':60, '9mm':90, '762x39':60, '45acp':90 }[item.caliber]);
+    assert.equal(item.stack, { '12g':20, '556':60, '9mm':90, '762x39':60, '45acp':90, '545x39':60 }[item.caliber]);
   }
   assert.equal(ITEMS.filter(i => i.id === 'ammo').length, 0, '老的通用弹药应该已经去掉');
 });
 
-console.log('\n=== B. 伤害系数 ===');
-test('武器基础伤害 20 × 五档系数 = 18/20/21/22/23', () => {
-  const want = [18, 20, 21, 22, 23];
+console.log('\n=== B. 固定肉伤 / 穿透力 ===');
+test('五档弹药固定 B/P，武器随机伤害与等级系数已取消', () => {
   for (let lv = 1; lv <= 5; lv++) {
     const P = raid('rifle', []);
     P.weapons[0].ammo = 'ammo_556_' + lv;
     Game.bullets = [];
-    fixedDamage(20, () => P.tryShoot());
+    fixedDamage(20, () => P.tryShoot());     // 把 U.rand 钉成 20，也不该改变子弹伤害
+    const spec = BALLISTICS.flesh('556', lv);
     assert.equal(Game.bullets.length, 1, 'Lv' + lv + ' 应该只打出一颗');
-    assert(near(Game.bullets[0].dmg, want[lv - 1], 1e-9),
-      'Lv' + lv + ' 期望 ' + want[lv - 1] + '，实际 ' + Game.bullets[0].dmg);
-    assert.equal(Game.bullets[0].pen, lv, 'Lv' + lv + ' 穿透等级应随子弹走');
+    assert.equal(Game.bullets[0].dmg, spec.B, 'Lv' + lv + ' 基础肉伤');
+    assert.equal(Game.bullets[0].pen, spec.P, 'Lv' + lv + ' 穿透力随子弹走');
   }
 });
 
-test('霰弹单颗弹丸也吃系数，六颗各自独立', () => {
+test('霰弹六颗弹丸共享同一份兼容 B/P，各自独立', () => {
   const P = raid('shotgun', []);
   P.weapons[0].ammo = 'ammo_12g_4';
   Game.bullets = [];
   fixedDamage(10, () => P.tryShoot());
+  const spec = BALLISTICS.flesh('12g', 4);
   assert.equal(Game.bullets.length, 6);
-  for (const b of Game.bullets) assert(near(b.dmg, 11, 1e-9), '10 × 1.10 = 11');
+  for (const b of Game.bullets) {
+    assert.equal(b.dmg, spec.B);
+    assert.equal(b.pen, spec.P);
+  }
 });
 
-console.log('\n=== C. 穿透矩阵 ===');
+console.log('\n=== C. 遗留比例矩阵（仅历史 API 自检，不参与运行时结算）===');
 test('需求里给出的 8 组对照全部命中', () => {
   const cases = [
     // [弹药等级, 护甲等级, 期望生命伤害]（基础伤害 20，已含弹药系数）
@@ -168,31 +172,46 @@ test('矩阵本身：行列都是单调的，且同格 100% 时不吃伤害', ()
   }
 });
 
-console.log('\n=== D/E/F. 耐久、击毁、完全穿透 ===');
-test('D：20 伤害 / Lv3 弹 / Lv5 甲 → 8 生命、挡 12、耗 6 耐久', () => {
-  const r = BALLISTICS.resolve(20, 3, 5, 150);
-  assert(near(r.health, 8), 'health=' + r.health);
-  assert(near(r.blocked, 12), 'blocked=' + r.blocked);
-  assert(near(r.durabilityLoss, 6), 'durabilityLoss=' + r.durabilityLoss);
+console.log('\n=== D/E/F. 有效防护值、钝伤、磨甲 ===');
+const Combat = vm.runInContext('Combat', c);
+test('D：A = 10L − 10(1−D/Dmax)，满耐久 / 半耐久 / 失效', () => {
+  for (let L = 1; L <= 6; L++) {
+    const g = GEAR.make('body', L);
+    assert.equal(Combat.effectiveArmor(g), 10 * L, 'Lv' + L + ' 满耐久');
+    g.dur = g.max / 2;
+    assert.equal(Combat.effectiveArmor(g), 10 * L - 5, 'Lv' + L + ' 半耐久');
+    g.dur = 0;
+    assert.equal(Combat.effectiveArmor(g), 0, 'Lv' + L + ' 失效');
+  }
 });
 
-test('E：耐久只剩 3 时按比例挡，最终 14 伤害、耐久归零', () => {
-  const r = BALLISTICS.resolve(20, 3, 5, 3);
-  assert(near(r.health, 14), 'health=' + r.health);
-  assert(near(r.durabilityLoss, 3), 'durabilityLoss=' + r.durabilityLoss);
+test('E：P≥A 全额 B，P<A 只吃 0.08·B·Kb，不叠加；磨甲与穿透无关', () => {
+  const g = GEAR.make('body', 4);            // A=40，陶瓷 Kb .55 Kd 1.35
+  const pen = Combat.resolve({ B: 31, P: 40, part: 'body', armor: g });
+  const blunt = Combat.resolve({ B: 31, P: 39, part: 'body', armor: g });
+  assert(pen.penetrated && near(pen.health, 31));
+  assert(blunt.blunt && near(blunt.health, 0.08 * 31 * 0.55));
+  assert(pen.durabilityLoss > 0 && blunt.durabilityLoss > 0, '穿透成功一样磨甲');
+  const headFar = Combat.resolve({ B: 31, P: 40, part: 'head', armor: g, mul: 0.55 });
+  assert.equal(headFar.durabilityLoss, pen.durabilityLoss, '磨甲与部位倍率、距离衰减无关');
+  assert(near(headFar.health, 31 * CFG.COMBAT.HEAD_MULT * 0.55), '倍率只作用于生命伤害');
 });
 
-test('F：完全穿透时护甲不掉耐久', () => {
-  const r = BALLISTICS.resolve(20, 5, 2, 60);
-  assert(near(r.health, 20));
-  assert.equal(r.durabilityLoss, 0);
-  const noArmor = BALLISTICS.resolve(20, 1, 0, 0);
-  assert(near(noArmor.health, 20) && noArmor.durabilityLoss === 0, '没甲就是满伤害');
+test('F：ΔD = min[D, B(0.035+0.009P)·Kd]，本发判定用命中前耐久', () => {
+  const B = 40, P = 16, g = GEAR.make('body', 3, 0.4);
+  const r = Combat.resolve({ B, P, part: 'body', armor: g });
+  assert(r.blunt, '命中前 A≈20.05 > P=16，仍是钝伤');
+  assert.equal(r.durabilityLoss, 0.4, '按剩余耐久封顶');
+  assert(near(r.health, 0.08 * B * CFG.MATERIALS.aramid.Kb));
+  Combat.applyDurability(r);
+  assert.equal(g.dur, 0);
+  const next = Combat.resolve({ B, P, part: 'body', armor: g });
+  assert(next.penetrated && near(next.health, B) && next.durabilityLoss === 0);
 });
 
 test('非法数值不会算出负数或 NaN', () => {
-  for (const [base, pen, lv, dur] of [[-5, 3, 4, 10], [20, 0, 4, 10], [20, 9, 9, 10], [20, 3, 4, -1], [NaN, 3, 4, 10]]) {
-    const r = BALLISTICS.resolve(base, pen, lv, dur);
+  for (const [B, P, part] of [[-5, 33, 'body'], [20, 0, 'body'], [NaN, 33, 'head'], [20, 999, 'body']]) {
+    const r = Combat.resolve({ B, P, part, armor: GEAR.make('body', 4, 10) });
     assert(Number.isFinite(r.health) && r.health >= 0, 'health=' + r.health);
     assert(Number.isFinite(r.durabilityLoss) && r.durabilityLoss >= 0, 'loss=' + r.durabilityLoss);
   }
@@ -209,27 +228,26 @@ test('一次开火 = 1 发弹药 + 6 颗弹丸', () => {
   assert.equal(P.bag.ammoCount('ammo_12g_1'), before, '备弹不该在开火时就被扣');
 });
 
-test('六颗弹丸各自结算护甲：打穿之后剩下的吃满伤害', () => {
-  const P = raid('shotgun', []);
-  const e = dummy({ body: { lv: 4, dur: 3 }, hp: 500 });
-  /* Lv1 弹打 Lv4 甲：留 25%，每颗 10 伤害挡 7.5、耗 3.75 耐久
-     第 1 颗只挡得住 3/3.75，第 2 颗起护甲已碎，全额进血 */
+test('六颗弹丸各自结算：第一颗磨空甲，后续全额伤害', () => {
+  raid('shotgun', []);
+  const e = dummy({ body: { lv: 4, dur: 0.5 }, hp: 500 });   // 陶瓷 Kb .55 / Kd 1.35
+  const spec = BALLISTICS.flesh('12g', 4);                      // B=11, P=18
   let total = 0;
   for (let i = 0; i < 6; i++) {
     const hp0 = e.hp;
-    shoot(e, 10, 1, 'body');
+    shoot(e, spec.B, spec.P, 'body');
     total += hp0 - e.hp;
   }
-  const first = 10 - 7.5 * (3 / 3.75);
-  assert(near(total, first + 10 * 5, 1e-9), '总伤害 ' + total);
+  const blunt = 0.08 * spec.B * CFG.MATERIALS.ceramic.Kb;
+  assert(near(total, blunt + spec.B * 5, 1e-9), '总伤害 ' + total);
   assert.equal(e.body.dur, 0, '护甲这一轮被打穿');
 });
 
 test('打空的弹丸不伤人也不磨甲', () => {
   const P = raid('shotgun', []);
-  const e = dummy({ body: { lv: 4, dur: 115 }, hp: 500 });
+  const e = dummy({ body: { lv: 4, dur: 110 }, hp: 500 });
   const dur0 = e.body.dur, hp0 = e.hp;
-  const b = new Bullet(e.x + 40, e.y, -Math.PI / 2, 600, 'player', 10, 600, 1);
+  const b = new Bullet(e.x + 40, e.y, -Math.PI / 2, 600, 'player', 10, 600, 16);
   b.hitSegment(e.x + 40, e.y, e.x + 40, e.y - 80);    // 明显偏离
   assert.equal(e.hp, hp0, '没打中就不掉血');
   assert.equal(e.body.dur, dur0, '没打中就不掉耐久');
@@ -328,11 +346,14 @@ test('武器伪物品带着装填弹种，换枪不会换回默认弹', () => {
   assert.equal(bad.equip.ammo, 'ammo_556_1');
 });
 
-test('敌人护甲同样走新结算，尸体上留下的是打剩下的耐久', () => {
+test('敌人护甲与玩家同规则，尸体上留下的是打剩下的耐久', () => {
   const e = dummy({ body: { lv: 2, dur: 60 }, hp: 500 });
-  shoot(e, 20, 1, 'body');            // Lv1 打 Lv2：留 60%
-  assert(near(500 - e.hp, 12, 1e-9), '生命伤害 ' + (500 - e.hp));
-  assert(near(e.body.dur, 60 - 8 * CFG.AMMO.DURABILITY_FACTOR, 1e-9), '耐久 ' + e.body.dur);
+  const B = 20, P = 16;                    // A=20，P<A → 钝伤
+  const mat = CFG.MATERIALS[e.body.material];
+  shoot(e, B, P, 'body');
+  assert(near(500 - e.hp, 0.08 * B * mat.Kb, 1e-9), '生命伤害 ' + (500 - e.hp));
+  assert(near(e.body.dur, 60 - Math.min(60, B * (0.035 + 0.009 * P) * mat.Kd), 1e-9),
+    '耐久 ' + e.body.dur);
 });
 
 console.log('\n通过 ' + checks + ' 组弹药/护甲检查');

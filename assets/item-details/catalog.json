@@ -68,146 +68,498 @@
       "height": 1244
     },
     {
-      "key": "gear/att_mag_12g_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_12g_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_12g_ext.png",
-      "sourceHash": "312f618a2b388a1340c52ccd99dcc092f958e73bed2fa06d05b90870124eba88",
+      "key": "gear/att_grip05",
+      "source": "assets/item-art/attachments-v2/sources/att_grip05.png",
+      "target": "assets/item-art/attachments-v2/sources/att_grip05.png",
+      "sourceHash": "66e555053e35702a4964fdb87acfc4bdeb063490b61b28dda8395406a7a44f16",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_12g_quick",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_12g_quick.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_12g_quick.png",
-      "sourceHash": "2368cbb1a3386d51ad6961b3971c74a23dbee0ba7684c8b4886e6df6fa973491",
+      "key": "gear/att_grip06",
+      "source": "assets/item-art/attachments-v2/sources/att_grip06.png",
+      "target": "assets/item-art/attachments-v2/sources/att_grip06.png",
+      "sourceHash": "ef7b617765d55d4b53cbce563b93bc3f272f26e0441b350db1fc9121154cb51e",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_12g_quick_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_12g_quick_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_12g_quick_ext.png",
-      "sourceHash": "4771a3db3ecd2b82b66d8766d4b0a0f643c9cd696c26a81a84adc5681a144eb6",
+      "key": "gear/att_grip07",
+      "source": "assets/item-art/attachments-v2/sources/att_grip07.png",
+      "target": "assets/item-art/attachments-v2/sources/att_grip07.png",
+      "sourceHash": "f6f55d2f823312405fad50947c154a253ff0b3b68ebe0aec9a4c34c21d24d013",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_45acp_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_45acp_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_45acp_ext.png",
-      "sourceHash": "bf251c344ef8485f23fb3aec87da5c8e5b8633c63fa11f8445891dfd13a7fe91",
+      "key": "gear/att_grip08",
+      "source": "assets/item-art/attachments-v2/sources/att_grip08.png",
+      "target": "assets/item-art/attachments-v2/sources/att_grip08.png",
+      "sourceHash": "e0410bd2faef2fe9704c6e5820b5ebe0571b45ecf78cacbe4367e28d21cfd751",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_45acp_quick",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick.png",
-      "sourceHash": "9ce80da7406254acbe37bdb617038e06a0b56cd5ce1400fff92c294a97125f82",
+      "key": "gear/att_mag_12g_saiga_12",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_12g_saiga_12.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_12g_saiga_12.png",
+      "sourceHash": "44a073b4c65c061fcbfa8edb9e1f44b2c087ea1ade5c096027ef0410068eab2b",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_45acp_quick_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_45acp_quick_ext.png",
-      "sourceHash": "219e61965c4337cb570e4d11bf2a882d28644da49aa3d9bb0a2441c5d7b9d40e",
+      "key": "gear/att_mag_12g_saiga_20",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_12g_saiga_20.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_12g_saiga_20.png",
+      "sourceHash": "4f928265eeedde3482bb60b00c50b817a410b1e600ad0a918d91aa2c22552101",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_545x39_ext",
-      "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_ext.png",
-      "target": "assets/item-art/assault-expansion/sources/att_mag_545x39_ext.png",
-      "sourceHash": "dd6bd4d96b6d0dcf08d5e68cb8fe727a3ced50ad102d3d93143b0ec6322f53cb",
+      "key": "gear/att_mag_12g_saiga_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_12g_saiga_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_12g_saiga_competition.png",
+      "sourceHash": "d162e900b5358464e241a7d166ddb3df16e162e4715da628a3fd0780ea7e93e0",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_545x39_quick",
-      "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick.png",
-      "target": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick.png",
-      "sourceHash": "f74a85d5552bd07c375689bd18907c8fa8d5126ef607a7ada94c2a2e9b80d5e3",
+      "key": "gear/att_mag_12g_saiga_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_12g_saiga_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_12g_saiga_polymer.png",
+      "sourceHash": "893cb163d98378d32730540aa2bd0305d4563fd68f9764d368328c25d32ea305",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_545x39_quick_ext",
-      "source": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick_ext.png",
-      "target": "assets/item-art/assault-expansion/sources/att_mag_545x39_quick_ext.png",
-      "sourceHash": "a57548ffceeadcac2fdbf28c64b3e27945faab15358827a396a08841eed088d4",
+      "key": "gear/att_mag_45acp_m1911_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_45acp_m1911_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_45acp_m1911_competition.png",
+      "sourceHash": "081e8959cbf234b62425c342da0cead30f81860aaedb25109992ba475fef2ec8",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_556_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_556_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_556_ext.png",
-      "sourceHash": "b6d8b316fac66e9e7a67d574ef433368fdb597adf86394fddb0df17de5809cd9",
+      "key": "gear/att_mag_45acp_m1911_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_45acp_m1911_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_45acp_m1911_polymer.png",
+      "sourceHash": "a62351e507e407519f61a6eef3ab3f212b0676d793fe476f3510b752d957b29a",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_556_quick",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_556_quick.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_556_quick.png",
-      "sourceHash": "ecdf9dbd06bd149fe57e945c500c678f291dc61475e37be4f6d12ecb7b10fa9e",
-      "width": 1312,
-      "height": 1199
-    },
-    {
-      "key": "gear/att_mag_556_quick_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_556_quick_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_556_quick_ext.png",
-      "sourceHash": "01bebb77729a4ed5c8d952f57c5bbc51f95c9460de069e15fffa2b5ded025953",
+      "key": "gear/att_mag_45acp_ump_35",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_45acp_ump_35.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_45acp_ump_35.png",
+      "sourceHash": "2ca66b0850bb6c3146eb1a348c327ed8520a070bfce50cb28057d52dc5806183",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_762x39_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_762x39_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_762x39_ext.png",
-      "sourceHash": "80d06fd1a29d77bb7571ce24007b579bb95259df112048bd2b85396b0ccf407a",
+      "key": "gear/att_mag_45acp_ump_50",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_45acp_ump_50.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_45acp_ump_50.png",
+      "sourceHash": "635e35a9aa3982f680b1cda1e8785c2ff4b3989e95ba2ba7d369e2052b5efe21",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_762x39_quick",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_762x39_quick.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_762x39_quick.png",
-      "sourceHash": "7cf98a79c4688cf8861e14d06dc0cde5f1542eda1f9ce7e3a0243190a854fb79",
+      "key": "gear/att_mag_45acp_ump_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_45acp_ump_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_45acp_ump_competition.png",
+      "sourceHash": "4ad3c509b9578a2790b2fba0e22fcde8be7a6e3cbf7d4da9e9587e5d07a2d2a3",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_762x39_quick_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_762x39_quick_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_762x39_quick_ext.png",
-      "sourceHash": "52c4e909f07661859a24fdce308613b8215b2b0e1e1d5ad992f7d68a0b0d605c",
+      "key": "gear/att_mag_45acp_ump_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_45acp_ump_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_45acp_ump_polymer.png",
+      "sourceHash": "7ab74cc14abfe68960a4678140484c89661ec9cfcf7ea352bb96474895ae8406",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_9mm_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_9mm_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_9mm_ext.png",
-      "sourceHash": "a9db59b6ee210308bddfff7248b6758dfce2c389bbdc06f6105149467b990409",
+      "key": "gear/att_mag_545x39_45",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_545x39_45.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_545x39_45.png",
+      "sourceHash": "ec213d1a735730ad5df4c7fe83e42e64ad11855be6eedd3a53e9e7e30657d200",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_9mm_quick",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_9mm_quick.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_9mm_quick.png",
-      "sourceHash": "41f8fbfee59d3e9ddad7d8b868943fe1285a6126a3c61f3c2d101502fb63a53c",
+      "key": "gear/att_mag_545x39_60",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_545x39_60.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_545x39_60.png",
+      "sourceHash": "f454a70962adb9130aea4b4c6feba68e82c785efc3eb507be5b9f73a4bf7287e",
       "width": 1254,
       "height": 1254
     },
     {
-      "key": "gear/att_mag_9mm_quick_ext",
-      "source": "design/weapons/attachments-v1/art/sources/att_mag_9mm_quick_ext.png",
-      "target": "design/weapons/attachments-v1/art/sources/att_mag_9mm_quick_ext.png",
-      "sourceHash": "14c4837341b3cda02328d8731d47cbc9f73f8dbc91838685bb9320800707b69e",
+      "key": "gear/att_mag_545x39_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_545x39_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_545x39_competition.png",
+      "sourceHash": "f5fe27fb7b06fdd99385a0c3d5711765c7e3c4f93a07215448e4adf604f80130",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_545x39_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_545x39_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_545x39_polymer.png",
+      "sourceHash": "059def980203fa2b55de5aca16f3624ce6d98d42881a521967026d92ffed234f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_40",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_40.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_40.png",
+      "sourceHash": "9353e7b8fd173ae782e8c62a7426ef7ff91797ea729b28aa2c750244299e7b4a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_60",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_60.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_60.png",
+      "sourceHash": "12c79ed13bedcc51505bd934f5f35d5d2bc93bec787f66d44dcbe2064d301c61",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_aug_42",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_aug_42.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_aug_42.png",
+      "sourceHash": "7c06f44430af275bd520d7e05a23db75a8c0637986269f3bd3ba4893e4c2fbc2",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_aug_60",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_aug_60.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_aug_60.png",
+      "sourceHash": "c7b91b4ecef0b251180aa3c611ed493ee77697ef4562dad799d3e2fa05830397",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_aug_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_aug_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_aug_competition.png",
+      "sourceHash": "426a93b6c68dcdd5b730320b5852ce3b945ef15fdedd6b5e7651e8945556e044",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_aug_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_aug_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_aug_polymer.png",
+      "sourceHash": "488d5e19024cdde5c1f4e938ff6238a0fbd17f1458ede3e290f299383971610a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_competition.png",
+      "sourceHash": "7605ba5ffb1a2520ffce04b8a3e7ca7698ae8968c0a88d233e351168d5bcb106",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_famas_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_famas_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_famas_competition.png",
+      "sourceHash": "fa439c8a48c457fad154961c2f73014e65eea7d14341380f1ff554fd166f579b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_famas_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_famas_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_famas_polymer.png",
+      "sourceHash": "a4e339db1631d9a912ab9d681aae9acda1fdb9362ac1c9e039d30b0b63f21165",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_g36_40",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_g36_40.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_g36_40.png",
+      "sourceHash": "e2c61abf4d9c176c40df6f097cfed6f74df456e3d22ac1b6c71c624371bfa59a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_g36_60",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_g36_60.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_g36_60.png",
+      "sourceHash": "9883ce16da7ad10e428ea8b374dc73cd8ec6bb2a87e4620f69b85c28ec5ce557",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_g36_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_g36_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_g36_competition.png",
+      "sourceHash": "04a85610c983d361cc131d98272ef02a0cfaa00979c38489d7683f3db00aaf4f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_g36_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_g36_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_g36_polymer.png",
+      "sourceHash": "443f7426c0d65f18f469564456776b654953824e484ab79a2e3ead4c1f397aff",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_galil_50",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_galil_50.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_galil_50.png",
+      "sourceHash": "77dc27eeed542820bd29c855fdffc0f9f64441218a7534fcb8b87b28a3cb2c83",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_galil_75",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_galil_75.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_galil_75.png",
+      "sourceHash": "904dd7b1b16b3977c17ef54613ef18208a76a72e13e4be82dd1539db04dd023d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_galil_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_galil_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_galil_competition.png",
+      "sourceHash": "2381952fd44f5375257ddbd2e50cf1b4b1fb87d8e13434c52a799c985c9482c0",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_galil_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_galil_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_galil_polymer.png",
+      "sourceHash": "a80a2bd53cbe298a13490e3f5a5d041ca4440ce11c5efef2c083f422392248a9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_polymer.png",
+      "sourceHash": "40bb5c4511d34f2ff3ffc9cc499978ce25555d6cc8b79b1aa02b7c5d37bdb734",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_sig550_40",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_sig550_40.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_sig550_40.png",
+      "sourceHash": "f09d3d5e4d33b8521b270661284b45047431c567410eb06574e9c9805ef8168a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_sig550_60",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_sig550_60.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_sig550_60.png",
+      "sourceHash": "0fe960623de76fdd932ec6bd9685b506c8a97927e4699d1343db08767ac70a15",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_sig550_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_sig550_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_sig550_competition.png",
+      "sourceHash": "3e8c67bc79486addf7e706d70fe821b46f1d3fb00981ea01e2f7761f879776f6",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_556_sig550_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_556_sig550_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_556_sig550_polymer.png",
+      "sourceHash": "93b735726b4d997566d49c1f557a14b8f7b358a9b11a307ce5a12727db1ebc7c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_68x51_rm277_25",
+      "source": "assets/item-art/68x51-v1/sources/att_mag_68x51_rm277_25.png",
+      "target": "assets/item-art/68x51-v1/sources/att_mag_68x51_rm277_25.png",
+      "sourceHash": "516399c8f81eb2bb0f9d494600e3db0f557dd206a420b30d1b46275476605f42",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_68x51_rm277_competition",
+      "source": "assets/item-art/68x51-v1/sources/att_mag_68x51_rm277_competition.png",
+      "target": "assets/item-art/68x51-v1/sources/att_mag_68x51_rm277_competition.png",
+      "sourceHash": "4909a245d6465041d4fbf1e52a3db92d30b3b7c3888de72b0d5238f0a22fcd98",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_68x51_rm277_polymer",
+      "source": "assets/item-art/68x51-v1/sources/att_mag_68x51_rm277_polymer.png",
+      "target": "assets/item-art/68x51-v1/sources/att_mag_68x51_rm277_polymer.png",
+      "sourceHash": "b764efed81adccb2272ef962ffd28fe6dbd95a12dea1c25b8b2a1c5632b70ca2",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_68x51_sr25_pattern_25",
+      "source": "assets/item-art/68x51-v1/sources/att_mag_68x51_sr25_pattern_25.png",
+      "target": "assets/item-art/68x51-v1/sources/att_mag_68x51_sr25_pattern_25.png",
+      "sourceHash": "a730fbcdc6931aaaf579bd8187e4bb5fda958dbeea417eb43cfc0245fea9c2a5",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_68x51_sr25_pattern_competition",
+      "source": "assets/item-art/68x51-v1/sources/att_mag_68x51_sr25_pattern_competition.png",
+      "target": "assets/item-art/68x51-v1/sources/att_mag_68x51_sr25_pattern_competition.png",
+      "sourceHash": "a7d02fe97bfda530c6167c685e2f23d0602a2f348af64ad280d2a01c056d06de",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_68x51_sr25_pattern_polymer",
+      "source": "assets/item-art/68x51-v1/sources/att_mag_68x51_sr25_pattern_polymer.png",
+      "target": "assets/item-art/68x51-v1/sources/att_mag_68x51_sr25_pattern_polymer.png",
+      "sourceHash": "5942615d41326e4984fc763d91df53f4a5a18639c1cc091f508250b01431a41c",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_762x39_40",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_762x39_40.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_762x39_40.png",
+      "sourceHash": "e6065ab4370c6d8dfc4bf5033d3e66e93185a57d8142757dc2d49482e9a95c6a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_762x39_75",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_762x39_75.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_762x39_75.png",
+      "sourceHash": "94f949a8e87bdb5fa0828ea26b3f3c0599460cf93af8a36c8dadb306ba17264a",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_762x39_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_762x39_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_762x39_competition.png",
+      "sourceHash": "496a95cdda57bf88d1531126037cdd73cf707b41e42aad13bf9b040f72418039",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_762x39_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_762x39_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_762x39_polymer.png",
+      "sourceHash": "d186cbddb1becd2a5bd29ebd2d5141ff18c3504808e25bc88713e58a4d7e574f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_beretta92_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_beretta92_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_beretta92_competition.png",
+      "sourceHash": "439b26433e1c73f77cc81ea0f898ba27fa445fdc95a0424573fa7924c93f4247",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_beretta92_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_beretta92_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_beretta92_polymer.png",
+      "sourceHash": "afe7bab6aa6e0993f2b70b022292d8bd609250bf9d12ab1105df6efab1786677",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_glock_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_glock_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_glock_competition.png",
+      "sourceHash": "92a7870d9752ddd78f0f3d7b1a3aea9f1802a9691fe0348d8aa757f1b7ecfff6",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_glock_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_glock_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_glock_polymer.png",
+      "sourceHash": "af8f1165fdeef6762ee7e09c063e758f77786431bcaf15fb0acb900765d6a684",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_mp5_40",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_mp5_40.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_mp5_40.png",
+      "sourceHash": "40c59a654195ea09425317773892f0c0e6da542093bd417e322033b831d89ac7",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_mp5_50",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_mp5_50.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_mp5_50.png",
+      "sourceHash": "c182478f39d7da10bd2cda1b4d98167c19ebac2e995bdf252d835817d3666e0f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_mp5_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_mp5_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_mp5_competition.png",
+      "sourceHash": "d3f0dec065c250f8a75e62abb467f9deab2bcea8bfc6fcc6cb01be45de425546",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_mp5_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_mp5_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_mp5_polymer.png",
+      "sourceHash": "6e5623f4c86b7f2b7b3ab7d21637fe7b7486ebd74e21d780734008e400c34785",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_vityaz_40",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_vityaz_40.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_vityaz_40.png",
+      "sourceHash": "a853caeeef1088ebd6f62d45081902a81c4876c9de58f4c6aee6fc72a40be64f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_vityaz_50",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_vityaz_50.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_vityaz_50.png",
+      "sourceHash": "ba3b272448b593fa426623f402abe7ace4ded32e8b0c32ae7283613c2f1cab0d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_vityaz_competition",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_vityaz_competition.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_vityaz_competition.png",
+      "sourceHash": "553c6302a19798a9bb602bd19d23e9dd74fae7082346465d6724a346cac530af",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_mag_9mm_vityaz_polymer",
+      "source": "assets/item-art/attachments-v2/sources/att_mag_9mm_vityaz_polymer.png",
+      "target": "assets/item-art/attachments-v2/sources/att_mag_9mm_vityaz_polymer.png",
+      "sourceHash": "9cc30d23d9804eb0ae25b939a94ec20d874c6f63404e19da4e5b366939c996b1",
       "width": 1254,
       "height": 1254
     },
@@ -260,6 +612,54 @@
       "height": 1254
     },
     {
+      "key": "gear/att_muzzle07",
+      "source": "assets/item-art/attachments-v2/sources/att_muzzle07.png",
+      "target": "assets/item-art/attachments-v2/sources/att_muzzle07.png",
+      "sourceHash": "a143a54b9bce7152d2f11c13c204da0a14854982dea43810e46921816f97823e",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_muzzle08",
+      "source": "assets/item-art/attachments-v2/sources/att_muzzle08.png",
+      "target": "assets/item-art/attachments-v2/sources/att_muzzle08.png",
+      "sourceHash": "1594342bbc54e81bf901a8fac6fde1ac4a23f91ba38fbbe3bdd8c68d6774328f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_muzzle09",
+      "source": "assets/item-art/attachments-v2/sources/att_muzzle09.png",
+      "target": "assets/item-art/attachments-v2/sources/att_muzzle09.png",
+      "sourceHash": "43568612ecf9c8742190c0e3c358ee7ec32fac5c3f52a6f33ba9d741b28199a6",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_muzzle10",
+      "source": "assets/item-art/attachments-v2/sources/att_muzzle10.png",
+      "target": "assets/item-art/attachments-v2/sources/att_muzzle10.png",
+      "sourceHash": "180ea85e168b3ed867236fd9e3419af7a2d6059585fee2532a5c87c5f69c1a32",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_muzzle11",
+      "source": "assets/item-art/68x51-v1/sources/att_muzzle11.png",
+      "target": "assets/item-art/68x51-v1/sources/att_muzzle11.png",
+      "sourceHash": "942a0192a69da5fd528f66657fec0937275355230f4c666a9be585e724f942bc",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "key": "gear/att_muzzle12",
+      "source": "assets/item-art/68x51-v1/sources/att_muzzle12.png",
+      "target": "assets/item-art/68x51-v1/sources/att_muzzle12.png",
+      "sourceHash": "7010e8c2a4f8c31ecc68927e124986d03ca939c8ba1dd3bae8a70bfdfb0d097c",
+      "width": 1264,
+      "height": 1244
+    },
+    {
       "key": "gear/att_optic01",
       "source": "design/weapons/attachments-v1/art/sources/att_optic01.png",
       "target": "design/weapons/attachments-v1/art/sources/att_optic01.png",
@@ -292,6 +692,38 @@
       "height": 1254
     },
     {
+      "key": "gear/att_optic05",
+      "source": "assets/item-art/attachments-v2/sources/att_optic05.png",
+      "target": "assets/item-art/attachments-v2/sources/att_optic05.png",
+      "sourceHash": "be18adfeb2319ed19d1c1d3ec3272e8e0a5170cd28f7a00e37d1705479a30eb8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_optic06",
+      "source": "assets/item-art/attachments-v2/sources/att_optic06.png",
+      "target": "assets/item-art/attachments-v2/sources/att_optic06.png",
+      "sourceHash": "35cc3f309c10e0debae30d3f5568adb44559c71157cd9e4dc0c0bc71de2befe7",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_optic07",
+      "source": "assets/item-art/attachments-v2/sources/att_optic07.png",
+      "target": "assets/item-art/attachments-v2/sources/att_optic07.png",
+      "sourceHash": "5a00401cf3d000f596742d423cceff41fdfb3dfb16ea9fa5a8cde6cc3ab1a0b2",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_optic08",
+      "source": "assets/item-art/attachments-v2/sources/att_optic08.png",
+      "target": "assets/item-art/attachments-v2/sources/att_optic08.png",
+      "sourceHash": "d61a9e9054c10b80a8c17bf431a2ab92e8c8d301586b22ad62f1aac0a9f465c5",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "gear/att_stock01",
       "source": "design/weapons/attachments-v1/art/sources/att_stock01.png",
       "target": "design/weapons/attachments-v1/art/sources/att_stock01.png",
@@ -312,6 +744,38 @@
       "source": "design/weapons/attachments-v1/art/sources/att_stock03.png",
       "target": "design/weapons/attachments-v1/art/sources/att_stock03.png",
       "sourceHash": "0de74285dfad6a73d5e884d6f3ea3694bd0022036466906caefa9b27b624af16",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_stock04",
+      "source": "assets/item-art/attachments-v2/sources/att_stock04.png",
+      "target": "assets/item-art/attachments-v2/sources/att_stock04.png",
+      "sourceHash": "84abcf9e6ab9495744d9405e3dadab112656ed3dda5b08afb5a53fe9644afb68",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_stock05",
+      "source": "assets/item-art/attachments-v2/sources/att_stock05.png",
+      "target": "assets/item-art/attachments-v2/sources/att_stock05.png",
+      "sourceHash": "9966b5a05fc9ad72a45b045c618d4acdab041c29a031188a9a23b6548412ba16",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_stock06",
+      "source": "assets/item-art/attachments-v2/sources/att_stock06.png",
+      "target": "assets/item-art/attachments-v2/sources/att_stock06.png",
+      "sourceHash": "4b12a4f3b0bf3a951ad5c6e0c1b7efbc2caa7e6173838b226f133714dbc6d7b1",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "gear/att_stock07",
+      "source": "assets/item-art/attachments-v2/sources/att_stock07.png",
+      "target": "assets/item-art/attachments-v2/sources/att_stock07.png",
+      "sourceHash": "95b43c5f64afce49505f891b6aba7a084bed5da2b9a13a688b02f5a336ab8ea0",
       "width": 1254,
       "height": 1254
     },
@@ -612,6 +1076,14 @@
       "height": 1254
     },
     {
+      "key": "gear/mcx_spear",
+      "source": "assets/item-art/68x51-v1/sources/mcx_spear.png",
+      "target": "assets/item-art/68x51-v1/sources/mcx_spear.png",
+      "sourceHash": "1de264f2213fa93b68b54eb5356fe458edb88da1e1c346b46076d231d4cf16af",
+      "width": 1278,
+      "height": 1230
+    },
+    {
       "key": "gear/melee01",
       "source": "assets/item-art/melee/sources/melee01.png",
       "target": "assets/item-art/melee/sources/melee01.png",
@@ -708,6 +1180,14 @@
       "height": 1254
     },
     {
+      "key": "gear/rm277",
+      "source": "assets/item-art/68x51-v1/sources/rm277.png",
+      "target": "assets/item-art/68x51-v1/sources/rm277.png",
+      "sourceHash": "dc71139e521c047c2c086b09bc585745731d4ea0488ca3ca0cb76148d8272805",
+      "width": 1536,
+      "height": 1024
+    },
+    {
       "key": "gear/saiga12",
       "source": "design/weapons/arsenal-v1/art/sources/saiga12.png",
       "target": "design/weapons/arsenal-v1/art/sources/saiga12.png",
@@ -760,6 +1240,22 @@
       "source": "assets/item-art/ammunition/sources/ammo_556.png",
       "target": "assets/item-art/ammunition/sources/ammo_556.png",
       "sourceHash": "85834f3820b72b3164bca94d0a4e05222bc9a1ad6d83518b0afc87ea3ded144d",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ammo_68x51_fmj",
+      "source": "assets/item-art/68x51-v1/sources/ammo_68x51_fmj.png",
+      "target": "assets/item-art/68x51-v1/sources/ammo_68x51_fmj.png",
+      "sourceHash": "0fcd945fd6e8b24d5824cc07ca74a5182c88e714f5101bc4d2f5720fa1dc4f42",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/ammo_68x51_hybrid",
+      "source": "assets/item-art/68x51-v1/sources/ammo_68x51_hybrid.png",
+      "target": "assets/item-art/68x51-v1/sources/ammo_68x51_hybrid.png",
+      "sourceHash": "6bcb76b58ca6dc60d12558d468486d559a2abcb9d500a34bdd7169df9ecb98b5",
       "width": 1254,
       "height": 1254
     },
@@ -900,6 +1396,14 @@
       "height": 1254
     },
     {
+      "key": "items/collect_secret01",
+      "source": "assets/item-art/easter-eggs-v2/sources/collect_secret01.png",
+      "target": "assets/item-art/easter-eggs-v2/sources/collect_secret01.png",
+      "sourceHash": "122a14edc072dc06efaf6f4d1c1e705175bfcee5f98991d30032108243c851e9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
       "key": "items/door_key_bank_vault",
       "source": "assets/item-art/keys-v1/sources/door_key_bank_vault.png",
       "target": "assets/item-art/keys-v1/sources/door_key_bank_vault.png",
@@ -936,6 +1440,22 @@
       "source": "assets/item-art/keys-v1/sources/door_key_watchshop.png",
       "target": "assets/item-art/keys-v1/sources/door_key_watchshop.png",
       "sourceHash": "7eb71c4b291b875130b14d93a8c5d3c56840c939066aba034dc40469a66f6b02",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec_secret01",
+      "source": "assets/item-art/easter-eggs-v2/sources/elec_secret01.png",
+      "target": "assets/item-art/easter-eggs-v2/sources/elec_secret01.png",
+      "sourceHash": "0f6980b75b14eb7fd9f93929d900a89ecf95f8ceb363afe4f6f38f05d44fc915",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "key": "items/elec_secret02",
+      "source": "assets/item-art/easter-eggs-v2/sources/elec_secret02.png",
+      "target": "assets/item-art/easter-eggs-v2/sources/elec_secret02.png",
+      "sourceHash": "70fd582d945eb1adb37b6ae4e034d7dccfd980c4947020184eebdc79bf7b2cc9",
       "width": 1254,
       "height": 1254
     },

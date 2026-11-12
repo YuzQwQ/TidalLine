@@ -221,20 +221,17 @@ const Mail = {
       l.claimed = true; Save.save(); this.render(); this.refreshBadge();
       return true;
     }
-    const left = [];
-    let moved = 0;
-    for (const e of l.items) {
-      if (!Save.canAddStash(e.id, e.n || 1)) { left.push(e); continue; }
-      Save.addStash(e.id, e.n || 1, e.cap);
-      moved++;
-    }
-    if (left.length) {
+    const left = l.items.filter(e=>!e.gear&&!Save.canAddStash(e.id,e.n||1));
+    const next=Save.normalizeList([...Save.stash,...l.items.flatMap(e=>e.gear?Array.from({length:e.n||1},()=>({...e,n:1})):[e])]);
+    const moved=l.items.length;
+    if (left.length||next.length>STASH_SLOTS) {
       /* 仓库放不下就整封留着：领一半会出现"那几件去哪了"的问题 */
-      this.notify('仓库放不下 ' + left.length + ' 件附件，先清出位置再来领', true);
+      this.notify('仓库空间不足，先清出位置再领取整封附件', true);
       Save.save();
       this.render();
       return false;
     }
+    Save.stash=next;
     if (l.credits > 0) {
       Save.credits += l.credits;
       this.notify('已领取 ' + formatMoney(l.credits) + ' 与 ' + moved + ' 件附件');
@@ -344,7 +341,7 @@ const Mail = {
 
   /* 附件卡片：和背包格同一套稀有度色，耐久按当前剩余折算价值 */
   card(entry) {
-    const item = ITEM_BY_ID[entry && entry.id];
+    const item = entry?.gear || ITEM_BY_ID[entry && entry.id];
     if (!item) return '';
     const val = entryValue(item, entry);
     const max = ItemCapacity.max(item);
@@ -354,7 +351,9 @@ const Mail = {
         '<b>' + esc(item.name) + '</b>' +
         '<span>' + esc(RARITY[U.clamp((item.r || 1) - 1, 0, RARITY.length - 1)].name) +
           ' · ' + formatMoney(val) + '</span>' +
-        (max ? '<em>' + ItemCapacity.label(item) + ' ' + ItemCapacity.text(entry) + '</em>' : '') +
+        (max ? '<em>' + ItemCapacity.label(item) + ' ' + ItemCapacity.value(entry) + '</em>' : '') +
+        /* 医疗品附件和格子 / 详情浮窗同款，挂一条容量 / 次数条 */
+        (CapBar.html(entry) ? '<div class="mi-capbar">' + CapBar.html(entry) + '</div>' : '') +
       '</div></div>';
   }
 };

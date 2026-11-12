@@ -180,8 +180,12 @@ Object.assign(Game, {
     }
 
     /* 世界坐标下的鼠标位置 */
-    K.wx = K.mx + this.cam.x;
-    K.wy = K.my + this.cam.y;
+    const aimZoom = typeof RangeAim !== 'undefined' ? RangeAim.zoom() : 1;
+    K.wx = K.mx / aimZoom + this.cam.x;
+    K.wy = K.my / aimZoom + this.cam.y;
+    if (typeof RangeAim !== 'undefined' && RangeAim.active()) {
+      const point = RangeAim.worldPoint(this); K.wx = point.x; K.wy = point.y;
+    }
 
     K.aimAngle = Math.atan2(K.wy - P.y, K.wx - P.x);
     if (K.dodgePressed) Medical.cancel();
@@ -259,7 +263,8 @@ Object.assign(Game, {
 
     /* 视野 */
     const pt = M.tx(P.x), pty = M.ty(P.y);
-    M.computeFOV(pt, pty, CFG.FOV.RADIUS);
+    M.computeFOV(pt, pty, typeof ShootingStance!=='undefined'?ShootingStance.visionRadius(P):CFG.FOV.RADIUS);
+    if(typeof ShootingStance!=='undefined')ShootingStance.clipVision(P);
     M.applyCone(P.x, P.y, P.angle,
       (P.sneaking ? CFG.FOV.SNEAK_ANGLE : CFG.FOV.ANGLE) / 2,
       CFG.FOV.NEAR);
@@ -300,7 +305,10 @@ Object.assign(Game, {
         }
         this.search = null;
         this._searchBar = null;
-        SFX.play('pickup');
+        /* 翻出红 / 金品质（孤品 r6、珍罕 r5）时换成一段高稀有度结算音；
+           逐件搜索按稀有度读条 2.1~3.0s，间隔足够，不会叠在一起。 */
+        if((e?.item?.r||1)>=5)SFX.play('loot_rare_reveal');
+        else SFX.play('pickup');
         this.renderLootList();
         this.stepAutoSearch();      // 还在自动模式就接着搜下一件
       }
@@ -324,7 +332,7 @@ Object.assign(Game, {
 
     /* 死亡 / 淹死 */
     if (P.dead) this.beginDying();
-    else P.tickAnimation(dt, !!this.lootOpen || !!(this.action && ['search', 'corpse'].includes(this.action.type)));
+    else P.tickAnimation(dt, !!this.lootOpen || !!(this.action && ['search', 'corpse', 'unlock'].includes(this.action.type)));
 
     /* 靶场：满视野、无限弹匣、弹孔与读数。放在最后，读完这一帧的状态再采样 */
     if (typeof Range !== 'undefined' && Range.active) Range.tick(dt);
@@ -524,9 +532,50 @@ Object.assign(Game, {
     return next !== idx;
   },
 
+  /* 真正改变门状态的唯一入口：踹门 / 扣钥匙耐久 / 解锁 / 开合 / 发声 / 提示。
+     读条完成时也走这里，所以「开锁成功才扣耐久」只有一条路径。 */
+  applyDoor(d,x,y){
+    let doorAction={ok:true};
+    if(!d.open&&typeof DoorSystem!=='undefined'){
+      doorAction=DoorSystem.prepareOpen(d,this.player);
+      if(!doorAction.ok){this.toast(doorAction.message);return false;}
+    }
+    d.open=!d.open;
+    Noise.emit(M.cx(x),M.cy(y),CFG.NOISE.door*(doorAction.kicked?2:1),'door');
+    /* 开门 / 关门同一段；受阻门被踹开的那一下换成更重的踹门声。 */
+    SFX.play(doorAction.kicked?'door_kick':'door_open_alt');
+    this.toast(doorAction.kicked?'门已踹开':doorAction.unlocked?(doorAction.keyBroken?'已开锁，钥匙耐久耗尽':'已开锁，钥匙耐久 -1'):d.open?'门开了':'门关上了');
+    return true;
+  },
+
+  /* 开锁读条中断：只清状态，绝不碰钥匙耐久和门。 */
+  cancelUnlock(reason){
+    if(this.action?.type!=='unlock')return;
+    this.action=null;
+    this.toast(reason||'开锁中断');
+  },
+
+  /* 「任何动作都会打断」：起手那一刻按下的键先记进 action.keys，
+     之后只要有新按键、鼠标动作、位移或角色进入别的动作状态，就算打断。
+     松开起手的 E 不算（快照里已有，比较的是新增按键）。 */
+  unlockInterrupted(a){
+    if(this.state!=='playing'||this.lootOpen||this.bagOpen||this.player.dead)return'开锁中断';
+    const K=this.input,P=this.player,d=a.target;
+    if(!d||d.open||d.unlocked)return'门状态已变化';
+    /* 起手时就记下与门的距离：门的可交互半径比容器宽，用固定阈值会把
+       合法起手（站在稍远处）当成「走远」立刻打断。 */
+    if(U.dist(P.x,P.y,M.cx(a.x),M.cy(a.y))>a.dist+8)return'离门太远';
+    for(const k in K.keys)if(K.keys[k]&&!a.keys[k])return'被打断了';
+    if(K.mouseDown||K.mousePressed||K.dodgePressed||K.reloadPressed||K.interactPressed)return'被打断了';
+    if(Math.hypot(P.vx,P.vy)>12)return'被打断了';
+    if(P.dodgeT>0||P.reloadT>0||P.meleeActive)return'被打断了';
+    return null;
+  },
+
   handleInteract() {
     // 正在读条 → 取消
     if (this.action) {
+      if(this.action.type==='unlock'){this.cancelUnlock('开锁中断');return;}
       this.action = null;
       this.toast('中断');
       return;
@@ -546,12 +595,19 @@ Object.assign(Game, {
         }));
         if(occupied){this.toast('门口有人，暂时无法关门');return;}
       }
-      let doorAction={ok:true};
-      if(!d.open&&typeof DoorSystem!=='undefined'){doorAction=DoorSystem.prepareOpen(d,this.player);if(!doorAction.ok){this.toast(doorAction.message);return;}}
-      d.open = !d.open;
-      Noise.emit(M.cx(it.obj.x), M.cy(it.obj.y), CFG.NOISE.door*(doorAction.kicked?2:1), 'door');
-      SFX.play('door');
-      this.toast(doorAction.kicked?'门已踹开':doorAction.unlocked?(doorAction.keyBroken?'已开锁，钥匙耐久耗尽':'已开锁，钥匙耐久 -1'):d.open ? '门开了' : '门关上了');
+      /* 钥匙房：插钥匙要先读条。这里只确认身上有钥匙，既不改门状态也不碰耐久，
+         扣耐久与解锁统一放到读条完成的 applyDoor → prepareOpen。 */
+      if(!d.open&&d.doorType==='locked'&&!d.unlocked&&typeof DoorSystem!=='undefined'){
+        const hint=DoorSystem.unlockHint(d,this.player);
+        if(hint){this.toast(hint);return;}
+        this.action={type:'unlock',t:0,total:CFG.LOCK_TIME,target:d,
+          x:it.obj.x,y:it.obj.y,keys:{...this.input.keys},
+          dist:U.dist(this.player.x,this.player.y,M.cx(it.obj.x),M.cy(it.obj.y))};
+        if(typeof SFX!=='undefined')SFX.play('unlock_key');
+        this.toast('开锁中 · '+CFG.LOCK_TIME.toFixed(1)+' 秒，别动');
+        return;
+      }
+      this.applyDoor(d,it.obj.x,it.obj.y);
       return;
     }
 
@@ -605,6 +661,17 @@ Object.assign(Game, {
        期间允许走路（30% 速度），冲刺/攻击/切枪/闪避会各自调 Medical.cancel。 */
     if (a.type === 'heal') {
       Medical.tick(a, dt);
+      return;
+    }
+    /* 钥匙房开锁：每帧先查打断，再推进；只有走满 1.5s 才轮到 applyDoor 扣耐久。 */
+    if (a.type === 'unlock') {
+      const why=this.unlockInterrupted(a);
+      if(why){this.cancelUnlock(why);return;}
+      a.t+=dt;
+      if(a.t>=a.total){
+        this.action=null;
+        this.applyDoor(a.target,a.x,a.y);
+      }
       return;
     }
     a.t += dt;

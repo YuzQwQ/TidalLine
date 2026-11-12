@@ -10,7 +10,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'output/melee-batch-0
     page.on('pageerror',e=>errors.push(String(e)));
     await page.goto(pathToFileURL(path.join(root,file)).href+'#base');
     await page.waitForFunction(()=>typeof MerchantUI!=='undefined'&&MerchantUI.mounted&&Icons.gear.melee07);
-    await page.evaluate(()=>{Save.credits=2000000;Save.stash=[];MerchantUI.open('gun');});
+    await page.evaluate(()=>{Save.credits=10000000;Save.stash=[];MerchantUI.open('gun');});
     await page.locator('[data-mb-filter="melee"]').click();
     assert.deepEqual(await page.locator('#shopGrid [data-melee]:visible').evaluateAll(c=>c.map(x=>x.dataset.melee)),['melee01','melee02','melee04','melee05','melee06']);
     for(const id of ['melee05','melee06','melee04']){
@@ -24,7 +24,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'output/melee-batch-0
       await page.locator('[data-mb-confirm]').click();
       await page.locator('#dealBox .go').click();
     }
-    assert.equal(await page.evaluate(()=>Save.credits),1137500);
+    assert.equal(await page.evaluate(()=>Save.credits),7412500);
     const state=await page.evaluate(()=>{
       const denied=['melee03','melee07'].map(id=>Base.buyMelee(id));
       const e=Save.stash.find(e=>e.gear?.equip?.melee==='melee06');

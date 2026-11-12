@@ -1,0 +1,65 @@
+{
+  "mode": "built-in image_gen",
+  "prompts": [
+    {
+      "id": "mcx_spear",
+      "group": "gear",
+      "name": "SIG MCX SPEAR",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A coyote-tan SIG MCX SPEAR rifle, traditional layout, long slotted handguard, continuous flat top rail, side charging handle, folding telescopic stock at LEFT, short straight 20-round magazine in front of pistol grip, barrel points RIGHT and slightly up. Bare rifle with iron sights, no optical sight and no suppressor."
+    },
+    {
+      "id": "rm277",
+      "group": "gear",
+      "name": "GD RM277",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A coyote-tan General Dynamics RM277 bullpup rifle, distinctive thick one-piece rear stock on LEFT, short 20-round box magazine BEHIND pistol grip near the rear, raised continuous top rail, vented slim front handguard and exposed barrel pointing RIGHT and slightly up. Bare rifle, no optic, no suppressor. Clearly bullpup silhouette."
+    },
+    {
+      "id": "att_muzzle11",
+      "group": "gear",
+      "name": "SIG SLX 战术抑制器",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A detached SIG SLX suppressor accessory, elongated cylindrical dark gray metal body, subtle longitudinal flow channels, broad Clutch-LOK mounting collar with scalloped locking ring. One detached accessory only, no firearm."
+    },
+    {
+      "id": "att_muzzle12",
+      "group": "gear",
+      "name": "Delta P BREVIS II 抑制器",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A detached Delta P BREVIS II suppressor accessory, extremely short and thick charcoal-gray cylinder, broad flat front face, stepped mounting neck, rugged textured metal. Squat silhouette clearly distinct from a long thin suppressor. One detached accessory only, no firearm."
+    },
+    {
+      "id": "ammo_68x51_fmj",
+      "group": "items",
+      "name": "6.8×51mm SIG FMJ",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A small open plain cardboard ammunition box holding several brass rifle cartridges, two loose cartridges leaning immediately against the same box. Long bottleneck brass cases, copper pointed FMJ projectiles. Treat box and its contained ammunition as one compact inventory unit. No readable markings."
+    },
+    {
+      "id": "ammo_68x51_hybrid",
+      "group": "items",
+      "name": "6.8×51mm SIG Hybrid",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A small open charcoal ammunition box holding several hybrid-case rifle cartridges, two loose cartridges leaning immediately against the same box. Brass bottleneck upper cases with clearly SILVER steel case heads at base, copper pointed projectiles. Keep copper bullet tips unpainted; silver is on bottom case head, not a silver armor-piercing tip. Box and ammunition form one compact inventory unit. No readable markings."
+    },
+    {
+      "id": "att_mag_68x51_sr25_pattern_competition",
+      "group": "gear",
+      "name": "sr25_pattern competition",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: One detached short 20-round SR-25 pattern broad nearly straight dark gunmetal ribbed steel box magazine, reinforced thick competition floorplate. Entire magazine in three-quarter view, upright with slight diagonal lean, exactly ONE magazine, no firearm, no drum, no extra objects."
+    },
+    {
+      "id": "att_mag_68x51_sr25_pattern_polymer",
+      "group": "gear",
+      "name": "sr25_pattern polymer",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: One detached short 20-round SR-25 pattern broad nearly straight matte black molded polymer box magazine, shallow waffle-textured body and lightweight floorplate. Entire magazine in three-quarter view, upright with slight diagonal lean, exactly ONE magazine, no firearm, no drum, no extra objects."
+    },
+    {
+      "id": "att_mag_68x51_rm277_competition",
+      "group": "gear",
+      "name": "rm277 competition",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: One detached short 20-round RM277 broad slightly curved dark gunmetal ribbed steel box magazine, reinforced thick competition floorplate. Entire magazine in three-quarter view, upright with slight diagonal lean, exactly ONE magazine, no firearm, no drum, no extra objects."
+    },
+    {
+      "id": "att_mag_68x51_rm277_polymer",
+      "group": "gear",
+      "name": "rm277 polymer",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: One detached short 20-round RM277 broad slightly curved matte black molded polymer box magazine, shallow waffle-textured body and lightweight floorplate. Entire magazine in three-quarter view, upright with slight diagonal lean, exactly ONE magazine, no firearm, no drum, no extra objects."
+    }
+  ]
+}

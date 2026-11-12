@@ -1,7 +1,7 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict');
 const root=path.resolve(__dirname,'..'),h=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0];
 const c=new Function('require','__dirname',h+'\nreturn ctx;')(require,root),{Game,Save,CFG,GEAR,Base,Player,Enemy,WEAPONS}=c;
-const {EQUIP,ARMOR_VARIANTS,HELMETS,BODIES,M,BACKPACK,BALLISTICS,Loot}=vm.runInContext('({EQUIP,ARMOR_VARIANTS,HELMETS,BODIES,M,BACKPACK,BALLISTICS,Loot})',c);
+const {EQUIP,ARMOR_VARIANTS,HELMETS,BODIES,M,BACKPACK,BALLISTICS,Loot,Combat}=vm.runInContext('({EQUIP,ARMOR_VARIANTS,HELMETS,BODIES,M,BACKPACK,BALLISTICS,Loot,Combat})',c);
 const proposal=JSON.parse(fs.readFileSync(path.join(root,'design/equipment/armor-variants-v1/design.json')));let checks=0;
 function test(name,fn){fn();checks++;console.log('OK: '+name);}
 Game.init();
@@ -17,25 +17,30 @@ test('20 unique models; legacy level lookup and exact 8 proposed definitions',()
 });
 test('all model IDs and durability survive repeated save/load, including stash/bag and legacy move',()=>{
  for(const d of ARMOR_VARIANTS){fresh();Save.credits=184652;Save.hp=71;const g=GEAR.make(d.type,d.id,11);Save.gear[d.type]=g;Save.stash=[{id:'legacy-entry',n:1,gear:EQUIP.armor(g)}];Save.bag=[{id:'legacy-entry',n:1,gear:EQUIP.armor(g)}];Save.save();Save.flush();for(let i=0;i<3;i++){Save.load();assert.equal(Save.gear[d.type].id,d.id);assert.equal(Save.gear[d.type].dur,11);assert.equal(Save.stash[0].gear.equip.gear.id,d.id);assert.equal(Save.bag[0].gear.equip.gear.id,d.id);assert.equal(Save.credits,184652);assert.equal(Save.hp,71);Save.save();Save.flush();}}
- Save.gear.body={type:'body',lv:6,dur:19,move:.88};Save.save();Save.flush();Save.load();assert.equal(Save.gear.body.id,'body6');assert.equal(Save.gear.body.dur,19);assert.equal(Save.gear.body.aimPenaltyPct,60);assert.equal(Save.gear.body.move,1);
+ Save.gear.body={type:'body',lv:6,dur:19,move:.88};Save.save();Save.flush();Save.load();assert.equal(Save.gear.body.id,'body6');assert.equal(Save.gear.body.dur,19);assert.equal(Save.gear.body.aimPenaltyPct,45);assert.equal(Save.gear.body.move,1);
 });
 test('variant equip, replace, unload, raid synchronization and failure preserve model semantics',()=>{
  fresh();Save.gear.body=GEAR.make('body',3,17);Save.addGearStash(EQUIP.armor(GEAR.make('body','body4_lightplate',41)));const entry=Save.stash[0];assert(Base.equipFromStash(entry,'body'));assert.equal(Save.gear.body.id,'body4_lightplate');assert.equal(Save.gear.body.dur,41);assert(Save.stash.some(e=>e.gear.equip.gear.id==='body3'&&e.gear.equip.gear.dur===17));Base.unequip('body');assert(Save.stash.some(e=>e.gear.equip.gear.id==='body4_lightplate'));
  Save.gear.body=GEAR.make('body','body4_lightplate',41);Game.startRun(null);assert.equal(Game.player.body.id,'body4_lightplate');Game.syncGear();assert.equal(Save.gear.body.dur,41);
 });
-test('public stock keeps I–III only; all six new public models buy at exact prices',()=>{
- fresh();Save.credits=1000000;for(const d of ARMOR_VARIANTS){const n=Save.stash.length,b=Save.credits;Base.buyArmor(d.type,d.id);if(d.lv<=3){assert.equal(Save.stash.length,n+1);assert.equal(Save.credits,b-d.price);assert.equal(Save.stash.at(-1).gear.equip.gear.id,d.id);}else{assert.equal(Save.stash.length,n);assert.equal(Save.credits,b);}}
+test('public stock keeps I–IV only; all six new public models buy at exact prices',()=>{
+ fresh();Save.credits=10000000;for(const d of ARMOR_VARIANTS){const n=Save.stash.length,b=Save.credits;Base.buyArmor(d.type,d.id);if(d.lv<=4){assert.equal(Save.stash.length,n+1);assert.equal(Save.credits,b-Math.round(d.price*3));assert.equal(Save.stash.at(-1).gear.equip.gear.id,d.id);}else{assert.equal(Save.stash.length,n);assert.equal(Save.credits,b);}}
 });
 test('level pools select both variants without changing level, quantity or penetration',()=>{
  for(const type of ['helmet','body'])for(let lv=1;lv<=6;lv++){const ids=new Set();for(let i=0;i<100;i++){const g=GEAR.random(type,lv);assert.equal(g.lv,lv);ids.add(g.id);}assert.equal(ids.size,lv<=4?2:1);}
- for(const d of ARMOR_VARIANTS){const a=BALLISTICS.hit(10,Math.min(6,d.lv+1),GEAR.make(d.type,d.lv)),b=BALLISTICS.hit(10,Math.min(6,d.lv+1),GEAR.make(d.type,d.id));assert.equal(a.health,b.health);assert.equal(a.durabilityLoss,b.durabilityLoss);}
+ /* V1：满耐久时 A 只由等级决定（10L），同级原款与变体防护值一致；
+    钝伤/磨甲则按各自材质，不再要求数值相等。 */
+ for(const d of ARMOR_VARIANTS){const P=d.lv*10-1;
+  const a=Combat.resolve({B:10,P,part:'body',armor:GEAR.make(d.type,d.lv)});
+  const b=Combat.resolve({B:10,P,part:'body',armor:GEAR.make(d.type,d.id)});
+  assert.equal(a.A,10*d.lv);assert.equal(a.A,b.A);assert.equal(a.penetrated,b.penetrated);}
 });
 const timing=[];
 test('4 weapons × 10 bodies × 30/60/144FPS aiming follows the formula to within one frame',()=>{
  for(const id of Object.keys(WEAPONS))for(const d of BODIES)for(const fps of [30,60,144]){const p=new Player(900,900);p.weapons=[{...WEAPONS[id],magCur:30}];p.slot=0;p.body=GEAR.make('body',d.id);p.checkAimProfile();const expected=WEAPONS[id].aimTime*(1+d.aimPenaltyPct/100);let frames=0;while(p.aimRemaining>1e-10&&frames<300){p.updateAim(1/fps);frames++;}const elapsed=frames/fps;assert(Math.abs(elapsed-expected)<=1/fps+1e-8);timing.push({weapon:id,body:d.id,fps,expected,elapsed});}
 });
 test('settled accuracy, firing rate, reload and actual mouse direction remain independent of penalty',()=>{
- for(const id of ['body2','body2_concealed','body4','body4_lightplate']){const p=fresh(id);p.moving=true;p.updateAim(0);const n=p.mag;p.fireCd=0;assert(p.tryShoot());assert.equal(p.mag,n-1);assert.equal(p.fireCd,60/p.weapon.rpm);assert(p.aimRemaining>0);p.moving=false;p.aimRemaining=0;p.recoil=0;p.syncSpread();assert.equal(p.spread,p.weapon.spreadBase);p.update(1/60,{mx:0,my:0,sneak:false,sprint:false,dodge:false,aimAngle:1.1});assert.equal(p.angle,1.1);}
+ for(const id of ['body2','body2_concealed','body4','body4_lightplate']){const p=fresh(id);p.moving=true;p.updateAim(0);const n=p.mag;p.fireCd=0;assert(p.tryShoot());assert.equal(p.mag,n-1);assert.equal(p.fireCd,60/p.weapon.rpm);assert(p.aimRemaining>0);p.moving=false;p.aimRemaining=0;p.recoil=0;p.syncSpread();assert.equal(p.spread,vm.runInContext('Firearms',c).derive(p.weapon).spreadBase);p.update(1/60,{mx:0,my:0,sneak:false,sprint:false,dodge:false,aimAngle:1.1});assert.equal(p.angle,1.1);}
 });
 test('changing gun/body, dodging and reloading cannot erase remaining preparation',()=>{
  const p=fresh('body4');p.checkAimProfile();p.aimRemaining=.2;p.body=GEAR.make('body','body4_lightplate');p.fireCd=0;p.tryShoot();assert(p.aimRemaining>=p.aimTime);p.weapons[1]={...WEAPONS.pistol,magCur:12};p.switchWeapon(1);assert(p.aimRemaining>=p.aimTime);p.dodgeT=.1;p.updateAim(.05);assert(p.aimRemaining>=p.aimTime);p.dodgeT=0;p.reloadT=.3;p.updateAim(.05);assert(p.aimRemaining>=p.aimTime);

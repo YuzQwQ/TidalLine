@@ -5,7 +5,8 @@ function build(){
  const review=JSON.parse(fs.readFileSync(path.join(dir,'classification.json'),'utf8')),context=vm.createContext({});
  for(const f of ['config.js','data.js'])vm.runInContext(fs.readFileSync(path.join(root,'js',f),'utf8'),context);
  const {items,cats,groups,groupOf}=vm.runInContext('({items:ITEMS,cats:CATS,groups:ITEM_GROUPS,groupOf:itemGroup})',context);
- assert.equal(items.length,review.items.length);
+ /* 弹药派生、钥匙单独管，评审表只覆盖其余物品 */
+ assert.equal(items.filter(i=>i.cat!=='ammo'&&i.cat!=='key').length,review.items.length);
  for(const r of review.items){const item=items.find(i=>i.id===r.id);assert.equal(item?.cat,r.category);assert.equal(groupOf(item),r.group);}
  const esc=s=>String(s).replace(/\|/g,'／').replace(/\n/g,' '),codex=items.filter(i=>!i.noCodex).length;
  const nCollect=items.filter(i=>groupOf(i)==='collectible').length,nSupply=items.filter(i=>groupOf(i)==='supply').length;

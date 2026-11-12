@@ -79,8 +79,8 @@ const Tips = {
     if (it.cat === 'ammo') {
       const A = AMMO_BY_ID[it.id] || it;
       rows.push(['等级', 'Lv' + it.level + ' · ' + BALLISTICS.caliberName(it.caliber)]);
-      rows.push(['伤害系数', '×' + A.dmgMul.toFixed(2)]);
-      rows.push(['穿透等级', 'Lv' + A.penLevel]);
+      rows.push(['基础肉伤', A.B]);
+      rows.push(['穿透力', A.P + (A.compat ? ' · 临时兼容值' : '')]);
     }
     if (it.cat === 'key') {
       rows.push(['钥匙编号',it.number||it.id],['耐久上限',it.maxDur],['开锁消耗','每次1点，耗尽后移除']);
@@ -95,26 +95,35 @@ const Tips = {
     if (it.equip && it.equip.kind === 'armor') {
       const g = it.equip.gear;
       const st = GEAR.state(g);
+      const mat = Combat.materialOf(g);
+      const fmax = Number.isInteger(g.max) ? g.max : g.max.toFixed(1);
       rows.push(['部位', GEAR[g.type].label]);
       rows.push(['防护等级', 'Lv' + g.lv + (st === 'broken' ? ' · 已失效' : '')]);
-      rows.push(['耐久', Math.ceil(g.dur) + ' / ' + g.max]);
+      rows.push(['材质', mat.label]);
+      rows.push(['钝伤 / 磨损 / 耐修', '×' + mat.Kb + ' / ×' + mat.Kd + ' / ' + mat.Kr]);
+      rows.push(['有效防护值', Combat.effectiveArmor(g).toFixed(1)]);
+      rows.push(['耐修度', (g.rep == null ? 50 : g.rep) + ' / 100']);
+      rows.push(['耐久', Math.ceil(g.dur) + ' / ' + fmax]);
       const adef = GEAR.def(g.type, g.id || g.lv) || {};
       if (adef.dur && g.max < adef.dur)
-        rows.push(['耐久上限', Math.round(g.max) + ' / ' + adef.dur + '（已修）']);
+        rows.push(['耐久上限', fmax + ' / ' + adef.dur + '（已修）']);
     } else if (it.equip && it.equip.kind === 'gun') {
       if(it.equip.kind === 'melee')return MELEE.find(x=>x.id===it.equip.melee)?.desc || '';
   const w = Attachments.resolve(it.equip.gun,it.equip.attachments);
       if (w) {
         const A = AMMO_BY_ID[it.equip.ammo] || defaultAmmo(w.caliber);
         rows.push(['口径', BALLISTICS.caliberName(w.caliber)]);
-        rows.push(['伤害', w.dmgMin + '–' + w.dmgMax + (w.pellets>1?' ×'+w.pellets:'') + ' · 弹匣 ' + w.mag + ' 发']);
+        /* V1：伤害由弹药固定 B 决定，武器不再随机 dmgMin~dmgMax */
+        rows.push(['基础肉伤', (A && A.B != null ? A.B : '—') +
+          (w.pellets>1?' ×'+w.pellets+' 弹丸':'') + ' · 弹匣 ' + w.mag + ' 发']);
         rows.push(['射速', w.rpm + ' 发/分']);
+        rows.push(['画面放大',(w.adsZoom??1.15).toFixed(2)+'×'],['视距倍率',(w.adsView??1.15).toFixed(2)+'×'],['精瞄散布修正',Math.round(((w.adsSpread??1)-1)*100)+'%'],['腰射散布修正',Math.round(((w.hipSpread??1)-1)*100)+'%'],['枪声范围',Math.round((w.noiseRadius??1)*100)+'%']);
         if(w.burstRPM)rows.push(['两连发射速',w.burstRPM+' 发/分 · 首发后坐力延迟结算']);
           rows.push(['射击模式',Gunplay.labels[it.equip.fireMode||w.defaultMode]+' · 支持 '+w.modes.map(m=>Gunplay.labels[m]).join('/')]);
           rows.push(['装填',w.reloadType==='tube'?w.reloadTime+'秒／发':w.reloadTime+'秒／弹匣']);
         if (A) {
           rows.push(['弹种', A.name + '（Lv' + A.level + '）']);
-          rows.push(['穿透 / 系数', 'Lv' + A.penLevel + ' · ×' + A.dmgMul.toFixed(2)]);
+          rows.push(['穿透力', A.P + (A.compat ? ' · 临时兼容值' : '')]);
         }
         rows.push(['余弹', (it.equip.mag || 0) + ' 发']);
       }
@@ -128,13 +137,15 @@ const Tips = {
       if (Save.gear.back && Save.gear.back.id === it.equip.bag) rows.push(['状态', '当前装备']);
     }
 
+    if(it.equip?.kind==='attachment'){const a=ATTACHMENT_DEFS[it.equip.attachment];if(a){rows.push(['槽位',Attachments.slotNames[a.subtype]],['配件效果',Attachments.describe(a.id)]);if(a.magazineFamily)rows.push(['弹匣接口',ATTACHMENT_MAGAZINE_FAMILIES[a.magazineFamily].label]);}}
     rows.push(['重量', it.w.toFixed(2) + ' kg']);
     if (it.equip && it.equip.kind === 'armor') {
       const g = it.equip.gear;
       if(g.type==='body') rows.push(['瞄准时间','+'+(g.aimPenaltyPct||0)+'%']);
     }
     rows.push([partial ? '现值' : '单价', formatMoney(cur)]);
-    if (partial) rows.push(['原价', formatMoney(price) + ' · 按剩余耐久折算']);
+    if (partial) rows.push(['原价', formatMoney(price) + ' · 按剩余' +
+      (it.cat === 'key' ? '耐久' : it.effect ? '次数' : '容量') + '折算']);
     if (it.sell != null) rows.push(['回收价', formatMoney(it.sell)]);
 
     /* 图鉴：只登记真正的收藏品，消耗品和装备不算 */
@@ -147,6 +158,8 @@ const Tips = {
 
     const desc = it.desc || (it.equip ? equipDesc(it) : '');
     const original=typeof Game!=='undefined'&&Game.state==='base';
+    /* 护甲是耐久条；医疗品同款画容量 / 次数条，都放在名字下面 */
+    const capBar = (typeof CapBar !== 'undefined' && entry) ? CapBar.html(entry) : '';
 
     box.innerHTML =
       '<div class="tip-top">' +
@@ -169,7 +182,8 @@ const Tips = {
         '</span>' +
       '</div>' +
       (it.equip && it.equip.kind === 'armor'
-        ? '<div class="tip-dura">' + DuraBar.html(it.equip.gear) + '</div>' : '') +
+        ? '<div class="tip-dura">' + DuraBar.html(it.equip.gear) + '</div>'
+        : (capBar ? '<div class="tip-dura">' + capBar + '</div>' : '')) +
       /* 枪：名字下面一排配件槽点，装了什么一眼可见 */
       (it.equip && it.equip.kind === 'gun' ? SlotDots.line(it) : '') +
       '</div>' +
@@ -417,6 +431,10 @@ const SFX = {
     uiConfirm: 0.085,  // 出发这类一次性大动作，可以抬头一点
     uiNotify: 0.07,
     door: 0.08,
+    /* 插钥匙转动：比开门声轻一点，读条起手响一次，读满后再接开门声 */
+    unlock: 0.07,
+    doorKick: 0.095,       // 踹开受阻门：比普通开关门重一档
+    rareReveal: 0.085,     // 红 / 金品质物品翻出来时的结算音
     search: 0.055,
     bagZip: 0.045,     // 开背包的拉链：比搜索更轻，只是个"打开了"的触感
     drop: 0.055,
@@ -537,7 +555,10 @@ const SFX = {
     mk47_mod2:{ ids: ['shot_mk47'],  rate: 1.00, jitter: 0.035, vol: 1.02 },  // 7.62×39
     sig550:   { ids: ['shot_sg550'], rate: 1.00, jitter: 0.040, vol: 1.00 },  // 5.56 步枪（武器 id sig550：SIG SG 550）
     galil_arm:{ ids: ['shot_galil'], rate: 1.00, jitter: 0.040, vol: 1.00 },  // 5.56 步枪
-    ump45:    { ids: ['shot_ump45'], rate: 1.10, jitter: 0.045, vol: 0.95 }   // .45 冲锋枪
+    ump45:    { ids: ['shot_ump45'], rate: 1.10, jitter: 0.045, vol: 0.95 },  // .45 冲锋枪
+    /* 6851 口径（6.8×51mm）两把高初速步枪：基准步枪音色，vol 略高更"砸" */
+    spear:    { ids: ['shot_spear'], rate: 1.00, jitter: 0.045, vol: 1.02 },  // SIG MCX SPEAR
+    rm277:    { ids: ['shot_rm277'], rate: 1.00, jitter: 0.045, vol: 1.02 }   // GD RM277
   },
   /* 型号 → 专属枪声。键是 WEAPONS 里的 id，值是 SHOT_SAMPLE 的键。
      没登记的型号自动按 category 走通用那条（m4a1 走 rifle、其余 9mm 冲锋枪走 smg…）。
@@ -545,13 +566,22 @@ const SFX = {
   SHOT_MODEL: { akm: 'ak47', famas_f1: 'famas', mp5a3: 'mp5',
     m16a1: 'm16a1', ak12: 'ak12', aks74u: 'aks74u', an94: 'an94', aug_a1: 'aug_a1',
     fn_fnc: 'fn_fnc', g36c: 'g36c', groza1: 'groza1', mk47_mod2: 'mk47_mod2',
-    sig550: 'sig550', galil_arm: 'galil_arm', ump45: 'ump45' },
+    sig550: 'sig550', galil_arm: 'galil_arm', ump45: 'ump45',
+    mcx_spear: 'spear', rm277: 'rm277' },
 
   /* 型号 → 专属换弹。没登记的走上面 SEQ 那套三段拼接；
      登记了就播整段原生录音——动作节奏是录音里自带的，不重排时间轴。
      调用方（tryReload / Gunplay.startReload）把武器 id 用 opts.model 传进来。
      G36C / Groza / UMP45 用了用户收集的整段换弹录音（与切枪尾段同源）。 */
   RELOAD_SAMPLE: { mp5a3: 'reload_mp5', g36c: 'reload_g36c', groza1: 'reload_groza', ump45: 'reload_ump45', galil_arm: 'reload_galil' },
+
+  /* 6851 口径两把枪的换弹：先换弹夹（reload_6851，源偏轻，已按 LOUD.reload 归一放大）
+     再拉栓复位（switch_6851）作换弹尾声，与切枪共用同一段录音。
+     键用 'reload' 以便 stopSeq('reload') 在换弹被打断时一并掐掉尾段。 */
+  RELOAD_SEQ: {
+    mcx_spear: [['reload_6851', 0], ['switch_6851', 2.4]],
+    rm277:     [['reload_6851', 0], ['switch_6851', 2.4]]
+  },
 
   shotCursor: {},     // 枪型 → 下一个该用第几条变体
 
@@ -747,7 +777,7 @@ const SFX = {
     if (/^reload_/.test(id)) return this.LOUD.reload;
     /* 开火采样：各枪（含手枪的三个变体）和预留的 AK 都按枪声档对齐。
        这样换哪把枪、换哪段录音，最终 RMS 都一样，不会出现某把枪特别响。 */
-    if (/^shot_(rifle|smg|shotgun|pistol_[123]|ak47|famas|mp5|m16a1|ak12|aks74u|an94|aug_a1|fn_fnc|g36c|groza1|mk47_mod2|sg550|galil|ump45)$/.test(id)) return this.LOUD.shot;
+    if (/^shot_(rifle|smg|shotgun|pistol_[123]|ak47|famas|mp5|m16a1|ak12|aks74u|an94|aug_a1|fn_fnc|g36c|groza1|mk47_mod2|sg550|galil|ump45|spear|rm277)$/.test(id)) return this.LOUD.shot;
     if (id === 'shot_pistol_silent') return this.LOUD.shot * 0.55;
     if (id === 'shot_shotgun_pump') return this.LOUD.switch;
     /* 近战挥砍与出售结算走自己的档，别落进 0.08 的默认值 */
@@ -763,6 +793,13 @@ const SFX = {
     if (id === 'break') return this.LOUD.break;
     /* 冲刺起步 */
     if (id === 'sprint') return this.LOUD.sprint;
+    /* 钥匙房开锁读条起手的一段「插钥匙 + 转动」 */
+    if (id === 'unlock_key') return this.LOUD.unlock;
+    /* 新一批音效 2 的另外四条：开门 / 踹门 / 红金结算 / 交易结算 */
+    if (id === 'door_open_alt') return this.LOUD.door;
+    if (id === 'door_kick') return this.LOUD.doorKick;
+    if (id === 'loot_rare_reveal') return this.LOUD.rareReveal;
+    if (id === 'trade_settle') return this.LOUD.sell;
     /* 玩家挨打：整局最需要"被听见"的一次反馈，压在枪声之下、拾取之上 */
     if (id === 'hurt') return this.LOUD.hurt;
     /* 战斗人声池：同一池子里的每一条都对齐到同一个目标响度，
@@ -879,6 +916,36 @@ const SFX = {
     return this.loading;
   },
 
+  /* Shared accepted M4 timbre; source-specific gains are calibrated separately. */
+  RANGE_M4_SUPPRESSOR:{pitchSemitones:9,gain:.64,highpass:180,lowShelfHz:380,lowShelfDb:-9,highShelfHz:2600,highShelfDb:-4,peakHz:3400,peakDb:5.5,peakQ:1.4,lowpass:9600,end:.13},
+  get RANGE_AKM_SUPPRESSOR(){return this.RANGE_M4_SUPPRESSOR;},
+  RANGE_SUPPRESSOR_GAINS:{"m4a1":1,"akm":1.55,"famas_f1":0.83,"pp19_01":1.29,"mp5a3":2.31,"ump45":0.66,"glock17":2.16,"m1911a1":2.16,"beretta92":2.16,"m16a1":4.39,"galil_arm":0.53,"aks74u":0.61,"g36c":0.88,"fn_fnc":1.14,"sig550":0.53,"an94":1.04,"aug_a1":1.09,"groza1":1.44,"ak12":0.77,"mk47_mod2":4.06,"mcx_spear":0.61,"rm277":0.79},
+  get RANGE_AKM_SUPPRESSOR_GAIN(){return this.RANGE_SUPPRESSOR_GAINS.akm;},
+  _suppressorMuzzle(modelId){
+    return ['att_muzzle11','att_muzzle12','att_muzzle09','att_muzzle08'].find(id=>Attachments.compatible(modelId,id))||null;
+  },
+  _rangeSuppressedProfile(modelId,opts){
+    if(typeof Range==='undefined'||!Range.active||!Game.rangeMode||M.map?.id!==RANGE_MAP.id)return null;
+    if(!this._suppressorMuzzle(modelId))return null;
+    const variant=opts?.rangeSuppressorVariant||(modelId==='akm'?opts?.rangeAKMVariant:null);
+    if(variant)return variant==='suppressed'?this.RANGE_M4_SUPPRESSOR:null;
+    const id=opts?.attachments?.muzzle,a=ATTACHMENT_DEFS[id];
+    return a?.subtype==='muzzle'&&a.statModifiers.noiseRadius<0&&Attachments.compatible(modelId,id)?this.RANGE_M4_SUPPRESSOR:null;
+  },
+  _suppressedEnvelope(g,base,t,p){
+    const level=base*p.gain,a=g.gain;
+    // A hard 2ms strike followed by a quick body drop gives a dry nail-like snap.
+    a.setValueAtTime(level*1.10,t);a.linearRampToValueAtTime(level*1.20,t+.002);
+    a.exponentialRampToValueAtTime(Math.max(.00001,level*.35),t+(p.bodyTime??.018));
+    a.exponentialRampToValueAtTime(Math.max(.00001,level*.06),t+(p.tailTime??.075));
+    a.linearRampToValueAtTime(0,t+p.end);
+  },
+  _suppressedGraph(c,tail,nodes,p){
+    for(const [type,freq,db,q]of [['highpass',p.highpass,0],['lowshelf',p.lowShelfHz,p.lowShelfDb],['highshelf',p.highShelfHz,p.highShelfDb],['peaking',p.peakHz,p.peakDb,p.peakQ],['lowpass',p.lowpass,0]]){
+      const f=c.createBiquadFilter();f.type=type;f.frequency.value=freq;f.Q.value=q??.707;f.gain.value=db;tail.connect(f);tail=f;nodes.push(f);
+    }
+    return tail;
+  },
   _playSample(id, opts) {
     const buf = this.samples[id];
     if (!buf) return false;
@@ -886,24 +953,29 @@ const SFX = {
     const s = c.createBufferSource();
     s.buffer = buf;
     /* 音高微扰：同一段素材连播会听出"复读机"，±6% 就能散开 */
-    if (opts && opts.rate) s.playbackRate.value = opts.rate;
+    const suppression=opts?.rangeSuppressedProfile;
+    s.playbackRate.value = ((opts && opts.rate)||1)*(suppression?Math.pow(2,suppression.pitchSemitones/12):1);
     const g = c.createGain();
     /* 基准增益来自解码时的响度对齐；vol 只做场合性的微调（潜行脚步、落步） */
     const base = this.gainOf[id] != null ? this.gainOf[id] : 0.4;
-    g.gain.value = base * ((opts && opts.vol != null) ? opts.vol : 1);
+    g.gain.value = base * ((opts && opts.vol != null) ? opts.vol : 1)*(suppression?(opts.rangeSuppressedGain??1):1);
+    const at=c.currentTime+((opts&&opts.delay)||0);
+    if(suppression)this._suppressedEnvelope(g,g.gain.value,at,suppression);
     s.connect(g);
     const chain = [g];
     let tail = g;
+    if(suppression)tail=this._suppressedGraph(c,tail,chain,suppression);
     /* 远处的枪声要在同一条录音上"闷掉"，而不是另换一个音色 */
     if (opts && opts.lp) {
       const lp = c.createBiquadFilter();
       lp.type = 'lowpass';
       lp.frequency.value = opts.lp;
-      g.connect(lp); tail = lp; chain.push(lp);
+      tail.connect(lp); tail = lp; chain.push(lp);
     }
     tail.connect(this.master || c.destination);
     this._autoFree(s, chain);
-    s.start(c.currentTime + ((opts && opts.delay) || 0));
+    s.start(at);
+    if(suppression)s.stop(at+suppression.end+.01);
     return true;
   },
 
@@ -923,7 +995,7 @@ const SFX = {
     const played = this._playSample(ready[n % ready.length], {
       rate: (p.rate || 1) * (o.rate || 1) * (1 - j + Math.random() * j * 2),
       vol: (p.vol || 1) * (o.vol != null ? o.vol : 1) * (1 - jv + Math.random() * jv * 2),
-      lp: o.lp
+      lp: o.lp,delay:o.delay,rangeSuppressedProfile:o.rangeSuppressedProfile,rangeSuppressedGain:o.rangeSuppressedGain
     });
     /* 泵动枪补一声拉泵。敌人开火（lp 压过的那路）不加——那是远处的枪，
        不该听见上膛的细节；半自动霰弹（pump 显式 false）也不加。 */
@@ -1145,9 +1217,10 @@ const SFX = {
   _playSeq(name, seq) {
     this.stopSeq(name);
     const timers = [];
-    for (const [id, at] of seq) {
-      if (at <= 0) this._playSample(id);
-      else timers.push(setTimeout(() => this._playSample(id), at * 1000));
+    for (const [id, at, vol] of seq) {
+      const o = vol != null ? { vol } : undefined;
+      if (at <= 0) this._playSample(id, o);
+      else timers.push(setTimeout(() => this._playSample(id, o), at * 1000));
     }
     this.seqTimers[name] = timers;
   },
@@ -1254,7 +1327,7 @@ const SFX = {
     const on = name => !only || only.has(name);
 
     const out = c.createGain();
-    const vol = (prof.vol || 1) * (o.vol != null ? o.vol : 1) * this.CAL.shot;
+    const vol = (prof.vol || 1) * (o.vol != null ? o.vol : 1) * this.CAL.shot*(o.rangeSuppressedProfile?(o.rangeSuppressedGain??1):1);
     out.gain.value = vol;
 
     /* 后级：先过削波（要的就是"炸"），再按需低通（敌人的枪声隔着一段距离） */
@@ -1266,6 +1339,7 @@ const SFX = {
       ws.oversample = '2x';
       tail.connect(ws); tail = ws; extra.push(ws);
     }
+    if(o.rangeSuppressedProfile){this._suppressedEnvelope(out,vol,t,o.rangeSuppressedProfile);tail=this._suppressedGraph(c,tail,extra,o.rangeSuppressedProfile);}
     if (o.lp) {
       const lp = c.createBiquadFilter();
       lp.type = 'lowpass'; lp.frequency.value = o.lp;
@@ -1276,7 +1350,7 @@ const SFX = {
     setTimeout(() => { for (const nd of extra) { try { nd.disconnect(); } catch (e) {} } }, 1600);
 
     /* 每发都有 ±4% 的音高和 ±6% 的音量抖动，连射才不会像循环播放 */
-    const rate = (o.rate || 1) * (0.96 + this._rand() * 0.08);
+    const rate = (o.rate || 1) * (0.96 + this._rand() * 0.08)*(o.rangeSuppressedProfile?Math.pow(2,o.rangeSuppressedProfile.pitchSemitones/12):1);
     const P = prof;
     const made = [];
     /* 单层音量乘子：不放大的话，尾音这种层单独听几乎听不见 */
@@ -1444,6 +1518,8 @@ const SFX = {
     /* 换弹：这把枪有专属的整段录音就放录音（动作节奏是原生的），
        没有才落到 SEQ 那套三段拼接。必须排在 SEQ 之前。 */
     if (name === 'reload' && opts && opts.model) {
+      const seq = this.RELOAD_SEQ && this.RELOAD_SEQ[opts.model];
+      if (seq) { this._playSeq('reload', seq); return; }
       const own = this.RELOAD_SAMPLE[opts.model];
       if (own && this.samples[own]) {
         this._playSample(own, { rate: 0.99 + Math.random() * 0.02 });
@@ -1469,9 +1545,12 @@ const SFX = {
       const gunId = (model && this.SHOT_MODEL[modelId]) || (model && model.category) || modelId;
       /* 拉泵声只给真有泵动周期的枪（rem870 的 cycleTime 0.8s）。
          saiga12 / mp155 是半自动，开一枪跟一句"咔啦"就露馅了。 */
-      const shotOpts = Object.assign({}, opts, { pump: !!(model && model.cycleTime > 0) });
+      const suppression=this._rangeSuppressedProfile(modelId,opts);
+      const shotOpts = Object.assign({}, opts, { pump: !!(model && model.cycleTime > 0),rangeSuppressedProfile:suppression,rangeSuppressedGain:suppression?(this.RANGE_SUPPRESSOR_GAINS[modelId]??1):1 });
       if (this._playGun(gunId, shotOpts)) return;
       const gun = this.GUN[gunId] || this.GUN.rifle;
+      // These gains were measured from recordings, not the synthetic fallback.
+      if(suppression)shotOpts.rangeSuppressedGain=1;
       return this._shot(gun, shotOpts, gunId);
     }
     /* 敌人的枪声：用同一批手枪录音压低 + 低通，听得出是别人在打，

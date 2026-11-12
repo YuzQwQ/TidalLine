@@ -209,6 +209,8 @@ const Game = {
       if (k === 'escape') {
         /* 轮盘优先：Esc 只收轮盘，正在进行的治疗不动 */
         if (AmmoQuick.abortWheel() || MedQuick.abortWheel()) { Tips.hide(); return; }
+        /* 开锁读条：Esc 也是「任何动作」之一，直接中断，不扣耐久 */
+        if (this.action?.type === 'unlock') { this.cancelUnlock('开锁中断'); Tips.hide(); return; }
         if (Medical.cancel()) { Tips.hide(); return; }
         if (this.lootOpen) this.closeLoot();
         else if (this.bagOpen) this.toggleBag();
@@ -245,9 +247,10 @@ const Game = {
       /* 点回画面就把焦点从调参框上收回来，否则 WASD 还在输入框里 */
       const ae = document.activeElement;
       if (ae && ae.blur && ae.tagName === 'INPUT') ae.blur();
-      if (!this.lootOpen && !this.bagOpen) this.wantLock();
+      // Keep the native pointer available for inventory and menu interaction.
       if (e.button === 0) {K.mouseDown = true;K.mousePressed=true;}
-      if (e.button === 2) K.dodgePressed = true;
+      // Legacy input is available only when the range comparison toggle disables stances.
+      if(e.button===2&&(typeof ShootingStance==='undefined'||!ShootingStance.active()))K.dodgePressed=true;
     });
     window.addEventListener('mouseup', e => {
       if (e.button === 0) K.mouseDown = false;
@@ -258,7 +261,9 @@ const Game = {
        触控板一次滑动会连发好几个 wheel，按 40px 折算一格、单次最多两格；
        到表头 / 表尾就停住，不循环。 */
     window.addEventListener('wheel', e => {
-      if (this.state !== 'playing' || this.lootOpen || this.bagOpen || this.action) return;
+      /* 滚轮换交互目标同样是动作：开锁读条期间滚一下就中断 */
+      if (this.action) { if (this.action.type === 'unlock') this.cancelUnlock('开锁中断'); return; }
+      if (this.state !== 'playing' || this.lootOpen || this.bagOpen) return;
       if (typeof Range !== 'undefined' && Range.active) return;
       if (typeof MedWheel !== 'undefined' && MedWheel.isOpen && MedWheel.isOpen()) return;
       if (typeof AmmoWheel !== 'undefined' && AmmoWheel.isOpen && AmmoWheel.isOpen()) return;
@@ -436,12 +441,13 @@ const Game = {
 
   /* 钥匙链的耐久写回存档：局内每开一次锁、以及关页 / 刷新前各调一次。
      耐久归零的那把按规则直接销毁，不进仓库也不留在链上。 */
-  syncRaidChain() {
+  syncRaidChain(consumed) {
     const P = this.player;
     if (!P || !P.bag || !Array.isArray(P.bag.chain)) return false;
-    /* 靶场和门测试走 rangeMode，不会把存档里的链条搬进来：
-       这时局内是空链、存档里却还有钥匙，别让空数组把存档覆盖掉。 */
-    if (!P.bag.chain.length && (Save.chain || []).length) return false;
+    /* 空链保护：关页 / 刷新 / 靶场里局内链可能还没装好，别让空数组把存档
+       里的钥匙抹掉。但「刚开锁把最后一把钥匙用尽」也是真实的空链 —— 只有
+       prepareOpen 会传 consumed=true，此时必须写回清空，否则刷新后碎钥匙复活。 */
+    if (!consumed && !P.bag.chain.length && (Save.chain || []).length) return false;
     const rows = P.bag.chain.filter(s => s && s.item && ItemCapacity.remaining(s) >= 1)
       .map(s => ({ id: s.item.id, n: s.n || 1, ...(s.cap == null ? {} : { cap: s.cap }) }));
     const same = rows.length === (Save.chain || []).length &&

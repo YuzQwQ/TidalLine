@@ -55,7 +55,7 @@ const BaseKeychain = {
       const entry = Save.chain[i], it = entry && stashItem(entry), cell = Base.makeBagCell(entry);
       cell.dataset.chainSlot = i;
       if (it) {
-        cell.title = it.name + ' · ' + ItemCapacity.text(entry) + ' · 双击移回背包 · 右键更多';
+        cell.title = it.name + ' · ' + CapBar.readout(entry) + ' · 双击移回背包 · 右键更多';
         cell.onclick = ev => {
           if (ev && (ev.ctrlKey || ev.metaKey)) { Tips.hide(); this.transfer(entry, 'chain', 'bag'); return; }
           this.open(entry, cell);
@@ -73,7 +73,7 @@ const BaseKeychain = {
   open(entry, node) {
     if (!Save.chain.includes(entry)) return;
     const item = stashItem(entry);
-    const extra = item && ItemCapacity.max(item) ? [[ItemCapacity.label(item), ItemCapacity.text(entry)]] : null;
+    const extra = item && ItemCapacity.max(item) ? [[ItemCapacity.label(item), ItemCapacity.value(entry)]] : null;
     Tips.show(item, node.getBoundingClientRect(), '', extra, entry);
   },
 

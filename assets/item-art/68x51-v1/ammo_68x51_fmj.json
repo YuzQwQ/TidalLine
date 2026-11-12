@@ -1,0 +1,9 @@
+{
+  "id": "ammo_68x51_fmj",
+  "group": "items",
+  "name": "6.8×51mm SIG FMJ",
+  "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: A small open plain cardboard ammunition box holding several brass rifle cartridges, two loose cartridges leaning immediately against the same box. Long bottleneck brass cases, copper pointed FMJ projectiles. Treat box and its contained ammunition as one compact inventory unit. No readable markings.",
+  "source": "assets/item-art/68x51-v1/sources/ammo_68x51_fmj.png",
+  "target": "assets/items/ammo_68x51_fmj.png",
+  "generator": "built-in image_gen"
+}

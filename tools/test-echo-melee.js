@@ -1,7 +1,7 @@
 /* Regression: AI position snapshots must never receive melee health damage. */
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict');
 const root=path.resolve(__dirname,'..'),h=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0],c=new Function('require','__dirname',h+'\nreturn ctx;')(require,root);
-const {Game,Enemy,Player,GEAR,M,Noise,CFG}=c,{BALLISTICS}=vm.runInContext('({BALLISTICS})',c);let groups=0;
+const {Game,Enemy,Player,GEAR,M,Noise,CFG}=c,{BALLISTICS,Combat}=vm.runInContext('({BALLISTICS,Combat})',c);let groups=0;
 function arena(){Game.init();M.load(Array(40).fill('.'.repeat(40)),null,[],null);M.tideEnabled=false;c.Quiet.clear();Game.state='playing';Game.time=0;Game.enemies=[];Game.bullets=[];Game.corpses=[];Game.particles=[];Game.toasts=[];Game.stats={kills:0,found:0,newItems:[]};Noise.clear();Game.player=new Player(1000,1000);}
 function enemy(k,x=300,y=300){const e=new Enemy(k,x,y,0);Game.enemies.push(e);return e;}
 function test(name,fn){arena();fn();groups++;console.log('OK: '+name);}
@@ -11,7 +11,7 @@ test('normal AI acquires and damages a nearby scav while the player is distant',
  const after=scav.hp;echo.update(1/60);assert.equal(scav.hp,after,'cooldown prevents duplicate hits');
 });
 test('actual victim hurt applies torso armor, durability and melee injury metadata',()=>{
- const echo=enemy('echo'),scav=enemy('scav',320,300);scav.body=GEAR.make('body',3);echo.target={kind:'enemy',ref:scav};const snapshot=echo.currentTargetPos(),hp=scav.hp,dur=scav.body.dur,expected=BALLISTICS.hit(echo.t.dmg,CFG.AMMO.UNARMED_PEN,scav.body);
+ const echo=enemy('echo'),scav=enemy('scav',320,300);scav.body=GEAR.make('body',3);echo.target={kind:'enemy',ref:scav};const snapshot=echo.currentTargetPos(),hp=scav.hp,dur=scav.body.dur,expected=Combat.resolve({B:echo.t.dmg,P:echo.penLevel,part:'body',armor:scav.body});
  const hurt=scav.hurt;let args;scav.hurt=function(...a){args=a;return hurt.apply(this,a);};echo.attack(snapshot);
  assert.equal(scav.hp,hp-expected.health);assert.equal(scav.body.dur,Math.max(0,dur-expected.durabilityLoss));assert.equal(args[1],'echo');assert.equal(args[2],'body');assert.equal(args[4],'melee');assert(args[5]);assert(!Object.hasOwn(snapshot,'hp'));
 });

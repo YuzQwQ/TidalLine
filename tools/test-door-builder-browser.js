@@ -25,7 +25,12 @@ const root=path.resolve(__dirname,'..'),folder=path.join(root,'assets/source/doo
     const count=await p.evaluate(()=>M.doors.length);await click(14,11);assert.equal(await p.evaluate(()=>M.doors.length),count,'door allowed on floor');
     await p.evaluate(()=>{Game.player.bag.slots=[];Game.player.bag.safe=[];Game.player.x=M.cx(13);Game.player.y=M.cy(10);Game.updateCamera(true);});
     await p.locator('[data-door-wrong]').click();await mode('play');await p.keyboard.press('e');await p.waitForTimeout(60);assert.equal(await p.evaluate(()=>M.at(12,10).door.open),false);
-    await p.locator('[data-door-key]').click();await p.keyboard.press('e');await p.waitForTimeout(60);assert(await p.evaluate(()=>M.at(12,10).door.open&&M.at(12,10).door.unlocked),JSON.stringify(await p.evaluate(()=>({door:M.at(12,10).door,bag:Game.player.bag.slots,pos:[Game.player.x,Game.player.y],mode:DoorTest.mode,state:Game.state,key:Game.input.interactPressed,candidates:Game.findInteractables().map(i=>({type:i.type,x:i.obj.x,y:i.obj.y})),action:Game.action,toasts:Game.toasts}))));
+    /* 钥匙房开锁现在是 1.5s 读条：按 E 只起手，读满才解锁并扣耐久。 */
+    await p.locator('[data-door-key]').click();await p.keyboard.press('e');
+    await p.waitForFunction(()=>Game.action?.type==='unlock');
+    assert(await p.evaluate(()=>!M.at(12,10).door.open&&!M.at(12,10).door.unlocked&&Game.player.bag.slots.some(e=>e.item?.id==='custom_room_key')),'读条起手不能开门或扣耐久');
+    await p.evaluate(()=>Game.updateAction(Game.action.total+0.1));
+    assert(await p.evaluate(()=>M.at(12,10).door.open&&M.at(12,10).door.unlocked),JSON.stringify(await p.evaluate(()=>({door:M.at(12,10).door,bag:Game.player.bag.slots,pos:[Game.player.x,Game.player.y],mode:DoorTest.mode,state:Game.state,key:Game.input.interactPressed,candidates:Game.findInteractables().map(i=>({type:i.type,x:i.obj.x,y:i.obj.y})),action:Game.action,toasts:Game.toasts}))));
     await mode('wall');await click(13,10);assert.equal(await p.evaluate(()=>M.at(13,10).solid),false,'paint trapped player');
     await p.locator('[data-door-states]').click();assert(await p.evaluate(()=>!M.at(12,10).door.open&&!M.at(12,10).door.unlocked&&M.at(4,11).solid),'reset lost custom layout');
     await p.locator('[data-door-undo]').click();assert.equal(await p.evaluate(()=>M.at(12,10).door.open),true);

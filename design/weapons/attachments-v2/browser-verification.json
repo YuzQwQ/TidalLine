@@ -1,0 +1,247 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "migration": {
+        "version": 2,
+        "part": "att_mag_556_40",
+        "mag": 39,
+        "backup": true,
+        "mail": "att_mag_12g_saiga_competition"
+      },
+      "shopCount": 69,
+      "modified": {
+        "part": "att_mag_556_polymer",
+        "mag": 30,
+        "surplus": 9,
+        "credits": 9991000
+      },
+      "mail": {
+        "ok": true,
+        "exists": true,
+        "claimed": true
+      },
+      "optics": [
+        {
+          "id": "att_optic01",
+          "zoom": 1.15,
+          "view": 1.15,
+          "span": 1094.3999999999996,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.02,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 1
+        },
+        {
+          "id": "att_optic02",
+          "zoom": 1.15,
+          "view": 1.15,
+          "span": 1094.3999999999996,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.0176,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.88
+        },
+        {
+          "id": "att_optic03",
+          "zoom": 1.4,
+          "view": 1.6,
+          "span": 1353.6000000000004,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.016,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.8
+        },
+        {
+          "id": "att_optic04",
+          "zoom": 1.4,
+          "view": 2,
+          "span": 1584,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.013999999999999999,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.7
+        },
+        {
+          "id": "att_optic05",
+          "zoom": 1.15,
+          "view": 1.15,
+          "span": 1094.3999999999996,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.019,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.95
+        },
+        {
+          "id": "att_optic06",
+          "zoom": 1.4,
+          "view": 1.45,
+          "span": 1267.1999999999998,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.017,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.85
+        },
+        {
+          "id": "att_optic07",
+          "zoom": 1.4,
+          "view": 1.8,
+          "span": 1468.8000000000002,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.015600000000000001,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.78
+        },
+        {
+          "id": "att_optic08",
+          "zoom": 1.4,
+          "view": 2.4,
+          "span": 1814.3999999999996,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.013000000000000001,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.65
+        }
+      ],
+      "passed": true
+    },
+    {
+      "file": "潮汐线.html",
+      "migration": {
+        "version": 2,
+        "part": "att_mag_556_40",
+        "mag": 39,
+        "backup": true,
+        "mail": "att_mag_12g_saiga_competition"
+      },
+      "shopCount": 69,
+      "modified": {
+        "part": "att_mag_556_polymer",
+        "mag": 30,
+        "surplus": 9,
+        "credits": 9991000
+      },
+      "mail": {
+        "ok": true,
+        "exists": true,
+        "claimed": true
+      },
+      "optics": [
+        {
+          "id": "att_optic01",
+          "zoom": 1.15,
+          "view": 1.15,
+          "span": 1094.3999999999996,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.02,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 1
+        },
+        {
+          "id": "att_optic02",
+          "zoom": 1.15,
+          "view": 1.15,
+          "span": 1094.3999999999996,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.0176,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.88
+        },
+        {
+          "id": "att_optic03",
+          "zoom": 1.4,
+          "view": 1.6,
+          "span": 1353.6000000000004,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.016,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.8
+        },
+        {
+          "id": "att_optic04",
+          "zoom": 1.4,
+          "view": 2,
+          "span": 1584,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.013999999999999999,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.7
+        },
+        {
+          "id": "att_optic05",
+          "zoom": 1.15,
+          "view": 1.15,
+          "span": 1094.3999999999996,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.019,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.95
+        },
+        {
+          "id": "att_optic06",
+          "zoom": 1.4,
+          "view": 1.45,
+          "span": 1267.1999999999998,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.017,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.85
+        },
+        {
+          "id": "att_optic07",
+          "zoom": 1.4,
+          "view": 1.8,
+          "span": 1468.8000000000002,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.015600000000000001,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.78
+        },
+        {
+          "id": "att_optic08",
+          "zoom": 1.4,
+          "view": 2.4,
+          "span": 1814.3999999999996,
+          "hip": 0.04,
+          "shoulder": 0.028999999999999998,
+          "ads": 0.013000000000000001,
+          "base": 0.04,
+          "precision": 0.5,
+          "adsMul": 0.65
+        }
+      ],
+      "passed": true
+    }
+  ]
+}

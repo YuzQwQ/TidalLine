@@ -1,0 +1,345 @@
+{
+  "mode": "built-in image_gen",
+  "prompts": [
+    {
+      "id": "att_optic05",
+      "name": "开放式机械瞄具",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: detachable iron sights, rear aperture and front post, no glass."
+    },
+    {
+      "id": "att_optic06",
+      "name": "紧凑棱镜瞄具",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: compact short prism optic, thick rectangular-tubular housing, integrated low rail."
+    },
+    {
+      "id": "att_optic07",
+      "name": "低倍可变光学瞄具",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: medium tubular variable power scope with knurled rear magnification ring."
+    },
+    {
+      "id": "att_optic08",
+      "name": "远程战术瞄准镜",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: large long-range tactical scope, oversized objective bell and tall adjustment turrets."
+    },
+    {
+      "id": "att_grip05",
+      "name": "短型阻手器",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: ultra short wedge hand stop, textured polymer, minimal rail foot."
+    },
+    {
+      "id": "att_grip06",
+      "name": "加重垂直握把",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: heavy thick ribbed vertical foregrip, broad metal clamp and weighted base."
+    },
+    {
+      "id": "att_grip07",
+      "name": "稳定战术握把",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: extended contoured forward angled tactical foregrip with rubber palm support."
+    },
+    {
+      "id": "att_grip08",
+      "name": "轻型竞技握把",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: slim skeletonized competition foregrip, angular cutouts and narrow thumb shelf."
+    },
+    {
+      "id": "att_stock04",
+      "name": "轻量镂空枪托",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: light skeletonized stock, triangular hollow cutouts, slim struts."
+    },
+    {
+      "id": "att_stock05",
+      "name": "加重稳定枪托",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: heavy solid fixed stock with broad rubber buttpad, olive polymer body."
+    },
+    {
+      "id": "att_stock06",
+      "name": "缓冲减震枪托",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: mechanical buffer stock with short exposed buffer cylinder and adjustable shoulder pad."
+    },
+    {
+      "id": "att_stock07",
+      "name": "精英战术枪托",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: premium tactical stock, adjustable cheek rest and reinforced lower strut."
+    },
+    {
+      "id": "att_muzzle07",
+      "name": "鸟笼式消焰器",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: short classic birdcage flash hider, five elongated steel slots."
+    },
+    {
+      "id": "att_muzzle08",
+      "name": "紧凑型消音器",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: short compact matte black suppressor cylinder with machined endcap."
+    },
+    {
+      "id": "att_muzzle09",
+      "name": "重型战术消音器",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long heavy thick graphite suppressor, segmented tube and reinforced mounting collar."
+    },
+    {
+      "id": "att_muzzle10",
+      "name": "高效多孔制退器",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: angular multi-port muzzle brake with rectangular side vents and small upper ports."
+    },
+    {
+      "id": "att_mag_556_competition",
+      "name": "STANAG 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; gently curved ribbed aluminum STANAG rifle magazine."
+    },
+    {
+      "id": "att_mag_556_polymer",
+      "name": "STANAG 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; gently curved ribbed aluminum STANAG rifle magazine."
+    },
+    {
+      "id": "att_mag_556_40",
+      "name": "STANAG 40发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; gently curved ribbed aluminum STANAG rifle magazine."
+    },
+    {
+      "id": "att_mag_556_60",
+      "name": "STANAG 60发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; gently curved ribbed aluminum STANAG rifle magazine."
+    },
+    {
+      "id": "att_mag_545x39_competition",
+      "name": "AK 5.45 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; long curved narrow AK-74 magazine, reddish brown bakelite and black steel feed lips."
+    },
+    {
+      "id": "att_mag_545x39_polymer",
+      "name": "AK 5.45 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; long curved narrow AK-74 magazine, reddish brown bakelite and black steel feed lips."
+    },
+    {
+      "id": "att_mag_545x39_45",
+      "name": "AK 5.45 45发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; long curved narrow AK-74 magazine, reddish brown bakelite and black steel feed lips."
+    },
+    {
+      "id": "att_mag_545x39_60",
+      "name": "AK 5.45 60发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; long curved narrow AK-74 magazine, reddish brown bakelite and black steel feed lips."
+    },
+    {
+      "id": "att_mag_762x39_competition",
+      "name": "AK 7.62 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; strongly curved thick banana AK magazine, reinforced feed lips."
+    },
+    {
+      "id": "att_mag_762x39_polymer",
+      "name": "AK 7.62 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; strongly curved thick banana AK magazine, reinforced feed lips."
+    },
+    {
+      "id": "att_mag_762x39_40",
+      "name": "AK 7.62 40发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; strongly curved thick banana AK magazine, reinforced feed lips."
+    },
+    {
+      "id": "att_mag_762x39_75",
+      "name": "AK 7.62 75发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; strongly curved thick banana AK magazine, reinforced feed lips."
+    },
+    {
+      "id": "att_mag_556_famas_competition",
+      "name": "FAMAS 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; short straight FAMAS magazine, narrow rectangular steel body."
+    },
+    {
+      "id": "att_mag_556_famas_polymer",
+      "name": "FAMAS 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; short straight FAMAS magazine, narrow rectangular steel body."
+    },
+    {
+      "id": "att_mag_556_galil_competition",
+      "name": "Galil 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; curved robust Galil steel magazine, broad ribbed sides."
+    },
+    {
+      "id": "att_mag_556_galil_polymer",
+      "name": "Galil 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; curved robust Galil steel magazine, broad ribbed sides."
+    },
+    {
+      "id": "att_mag_556_galil_50",
+      "name": "Galil 50发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; curved robust Galil steel magazine, broad ribbed sides."
+    },
+    {
+      "id": "att_mag_556_galil_75",
+      "name": "Galil 75发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; curved robust Galil steel magazine, broad ribbed sides."
+    },
+    {
+      "id": "att_mag_556_g36_competition",
+      "name": "G36 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; G36 translucent smoke polymer magazine with chunky coupling studs."
+    },
+    {
+      "id": "att_mag_556_g36_polymer",
+      "name": "G36 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; G36 translucent smoke polymer magazine with chunky coupling studs."
+    },
+    {
+      "id": "att_mag_556_g36_40",
+      "name": "G36 40发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; G36 translucent smoke polymer magazine with chunky coupling studs."
+    },
+    {
+      "id": "att_mag_556_g36_60",
+      "name": "G36 60发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; G36 translucent smoke polymer magazine with chunky coupling studs."
+    },
+    {
+      "id": "att_mag_556_sig550_competition",
+      "name": "SIG 550 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; SIG 550 curved smoke polymer magazine with side coupling lugs."
+    },
+    {
+      "id": "att_mag_556_sig550_polymer",
+      "name": "SIG 550 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; SIG 550 curved smoke polymer magazine with side coupling lugs."
+    },
+    {
+      "id": "att_mag_556_sig550_40",
+      "name": "SIG 550 40发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; SIG 550 curved smoke polymer magazine with side coupling lugs."
+    },
+    {
+      "id": "att_mag_556_sig550_60",
+      "name": "SIG 550 60发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; SIG 550 curved smoke polymer magazine with side coupling lugs."
+    },
+    {
+      "id": "att_mag_556_aug_competition",
+      "name": "AUG 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; AUG waffle-pattern translucent smoke polymer magazine, curved lower body."
+    },
+    {
+      "id": "att_mag_556_aug_polymer",
+      "name": "AUG 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; AUG waffle-pattern translucent smoke polymer magazine, curved lower body."
+    },
+    {
+      "id": "att_mag_556_aug_42",
+      "name": "AUG 42发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; AUG waffle-pattern translucent smoke polymer magazine, curved lower body."
+    },
+    {
+      "id": "att_mag_556_aug_60",
+      "name": "AUG 60发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; AUG waffle-pattern translucent smoke polymer magazine, curved lower body."
+    },
+    {
+      "id": "att_mag_9mm_vityaz_competition",
+      "name": "Vityaz 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; narrow straight Vityaz SMG magazine, black polymer ribbed body and angled feed neck."
+    },
+    {
+      "id": "att_mag_9mm_vityaz_polymer",
+      "name": "Vityaz 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; narrow straight Vityaz SMG magazine, black polymer ribbed body and angled feed neck."
+    },
+    {
+      "id": "att_mag_9mm_vityaz_40",
+      "name": "Vityaz 40发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; narrow straight Vityaz SMG magazine, black polymer ribbed body and angled feed neck."
+    },
+    {
+      "id": "att_mag_9mm_vityaz_50",
+      "name": "Vityaz 50发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; narrow straight Vityaz SMG magazine, black polymer ribbed body and angled feed neck."
+    },
+    {
+      "id": "att_mag_9mm_mp5_competition",
+      "name": "MP5 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; slim curved MP5 steel SMG magazine, smooth curved spine."
+    },
+    {
+      "id": "att_mag_9mm_mp5_polymer",
+      "name": "MP5 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; slim curved MP5 steel SMG magazine, smooth curved spine."
+    },
+    {
+      "id": "att_mag_9mm_mp5_40",
+      "name": "MP5 40发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; slim curved MP5 steel SMG magazine, smooth curved spine."
+    },
+    {
+      "id": "att_mag_9mm_mp5_50",
+      "name": "MP5 50发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; slim curved MP5 steel SMG magazine, smooth curved spine."
+    },
+    {
+      "id": "att_mag_45acp_ump_competition",
+      "name": "UMP 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; wide straight UMP polymer SMG magazine, deep strengthening ribs."
+    },
+    {
+      "id": "att_mag_45acp_ump_polymer",
+      "name": "UMP 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; wide straight UMP polymer SMG magazine, deep strengthening ribs."
+    },
+    {
+      "id": "att_mag_45acp_ump_35",
+      "name": "UMP 35发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; wide straight UMP polymer SMG magazine, deep strengthening ribs."
+    },
+    {
+      "id": "att_mag_45acp_ump_50",
+      "name": "UMP 50发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; wide straight UMP polymer SMG magazine, deep strengthening ribs."
+    },
+    {
+      "id": "att_mag_9mm_glock_competition",
+      "name": "Glock 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; compact straight Glock pistol magazine, black polymer over steel and angled floorplate."
+    },
+    {
+      "id": "att_mag_9mm_glock_polymer",
+      "name": "Glock 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; compact straight Glock pistol magazine, black polymer over steel and angled floorplate."
+    },
+    {
+      "id": "att_mag_9mm_beretta92_competition",
+      "name": "Beretta 92 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; slim steel Beretta pistol magazine with flat compact metal floorplate."
+    },
+    {
+      "id": "att_mag_9mm_beretta92_polymer",
+      "name": "Beretta 92 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; slim steel Beretta pistol magazine with flat compact metal floorplate."
+    },
+    {
+      "id": "att_mag_45acp_m1911_competition",
+      "name": "M1911 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; very slim single-stack M1911 steel pistol magazine, seven-round proportions."
+    },
+    {
+      "id": "att_mag_45acp_m1911_polymer",
+      "name": "M1911 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; very slim single-stack M1911 steel pistol magazine, seven-round proportions."
+    },
+    {
+      "id": "att_mag_12g_saiga_competition",
+      "name": "Saiga-12 竞赛型弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity reinforced metal magazine with broad ergonomic competition floorplate; thick broad Saiga shotgun box magazine, reinforced polymer housing."
+    },
+    {
+      "id": "att_mag_12g_saiga_polymer",
+      "name": "Saiga-12 聚合物弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: standard-capacity lightweight black molded polymer magazine; thick broad Saiga shotgun box magazine, reinforced polymer housing."
+    },
+    {
+      "id": "att_mag_12g_saiga_12",
+      "name": "Saiga-12 12发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: long extended box magazine, distinctly elongated body; thick broad Saiga shotgun box magazine, reinforced polymer housing."
+    },
+    {
+      "id": "att_mag_12g_saiga_20",
+      "name": "Saiga-12 20发弹鼓",
+      "prompt": "Use case: stylized-concept. Asset type: single game inventory icon. Pixel art, detailed realistic 1990s industrial military equipment, crisp hard-surface pixel clusters, restrained pixel shading, gunmetal gray, charcoal and muted olive. Three-quarter isometric product view, consistent viewpoint, fully visible and centered, fills 85% of a square canvas. Genuine transparent background. No floor, no exterior cast shadow, no scene, no complete gun, no human hands, no text, labels, numbers, logos or watermark. Must remain readable at 40 by 40 pixels. Subject: broad circular drum with a short interface-specific feed tower; thick broad Saiga shotgun box magazine, reinforced polymer housing."
+    }
+  ]
+}

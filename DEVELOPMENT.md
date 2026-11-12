@@ -198,15 +198,15 @@ game-render.js  →  renderDamageText：画在雾之后、HUD 之前
   开箱 0 / 0.6 / 1.2 / 1.8 / 2.6 / 3.6 秒，后两档必须站定且全程发声；每箱抽 1–2 或 2–3 件，秘藏固定 3 件。
   25 种容器（每档 3–5 种）用 `cats` 声明类别偏好，强度由 CFG.LOOT.catPref 统一控制（当前 ×9）；
   同品质的稀有度曲线完全一致，偏好只改"出哪一类"。六条曲线见 design/items/CONTAINER_QUALITY.md
-- 221 件物品分为 170 件收集品和 51 件物资（30 种弹药 + 21 件医疗品）；收集品九类，六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 31 件，见 design/items/LIFE_COLLECTIBLES.md；电子产品 17 件，见 design/items/ELECTRONICS.md；工业器材 17 件，见 design/items/INDUSTRIAL.md；医疗收集品 14 件，见 design/items/MEDICAL_COLLECTIBLES.md；文物藏品 22 件，见 design/items/COLLECTIBLES.md；军事收集品 17 件，见 design/items/MILITARY_COLLECTIBLES.md；情报收集品 17 件，见 design/items/INTEL_COLLECTIBLES.md；神秘学物品 17 件，见 design/items/OCCULT_COLLECTIBLES.md；异常遗物 14 件，见 design/items/ODD_COLLECTIBLES.md；
+- 232 件物品分为 173 件收集品和 59 件物资（30 种弹药 + 21 件医疗品 + 8 把钥匙）；收集品九类，六级稀有度。分类依据见 design/items/CLASSIFICATION.md，生活用品按三层结构收敛为 31 件，见 design/items/LIFE_COLLECTIBLES.md；电子产品 19 件，见 design/items/ELECTRONICS.md；工业器材 17 件，见 design/items/INDUSTRIAL.md；医疗收集品 14 件，见 design/items/MEDICAL_COLLECTIBLES.md；文物藏品 23 件，见 design/items/COLLECTIBLES.md；军事收集品 17 件，见 design/items/MILITARY_COLLECTIBLES.md；情报收集品 17 件，见 design/items/INTEL_COLLECTIBLES.md；神秘学物品 17 件，见 design/items/OCCULT_COLLECTIBLES.md；异常遗物 14 件，见 design/items/ODD_COLLECTIBLES.md；
   逐条数值（编号 / 类别 / 名称 / 稀有度 / 重量 / 价值 / 简称 / 描述 / 画什么）见 design/items/ITEM_INDEX.md，由 `node tools/gen-item-index.js` 从 ITEMS 生成
 - 手术包拆成绿 / 蓝 / 紫 / 金四档（12 / 8 / 5 / 3 秒每层，2 / 4 / 6 / 8 次，紫金术后带 30 / 90 秒镇痛），
   绿蓝进医生货架、紫金靠探索；夹板改为 3 次 / ¥20,000。见 [手术包重构](design/items/SURGERY_V1.md)。
-- 异常遗物补到 14 件（不含 4 件彩蛋）：新增 `odd04`–`odd12` 九件，覆盖寻常到珍罕五档，
+- 异常遗物补到 14 件（不含挂在 `odd` 下的 4 件彩蛋；2026-11-08 新增的 3 件彩蛋归文物/电子类，不计入）：新增 `odd04`–`odd12` 九件，覆盖寻常到珍罕五档，
   解决"这一类只有紫/红、偏好它的容器抽低档只能回落"的问题。见 [异常遗物补充](design/items/ODD_COLLECTIBLES.md)。
   同日两件红档样本让号（逆流沙漏 `odd04→odd17`、瓶中风暴 `odd05→odd18`），存档版本从 `v3` 升到 `v4`：
   `v<4` 的旧档在读档时把仓库 / 背包 / 保险箱 / 图鉴里的旧 ID 搬过去，`v4` 起不再迁移。
-- 单格背包按品质提供14／18／22／26／30格 + 安全箱4格 + 45kg负重上限，负重四档影响移速和噪声
+- 单格背包按品质提供14／18／22／26／30格 + 安全箱4格 + 75kg负重上限，负重四档（25／50／75kg）影响移速和噪声
 - 未录入的物品在搜刮面板里有橙色「新」角标
 
 **交互选项滚轮**：`Game.findInteractables()` 把附近所有容器、尸体、门、撤离点都列成候选，
@@ -264,7 +264,7 @@ game-render.js  →  renderDamageText：画在雾之后、HUD 之前
 （回收价 / 当前信用点 / 成交后），确认才卖；右键看详情。「卖掉所有寻常物」一键清仓（只清白色那一级）。
 卖出不影响图鉴记录——这是 v0.3 定下的规则：**拥有过就算收录，卖掉不撤销**。
 
-**3. 背包** —— 左边按装备容量显示背包格子，和局内背包是**同一套格子 UI**（同样的稀有度描边、数量角标、剩余容量角标），
+**3. 背包** —— 左边按装备容量显示背包格子，和局内背包是**同一套格子 UI**（同样的稀有度描边、数量角标，医疗品的容量 / 次数与钥匙的剩余耐久都在底边挂同款进度条），
 格子边长跟着左栏宽度自适应铺满。装什么就带什么：预览里看到多少发子弹、几卷绷带，进图就是多少。
 仓库和背包之间靠**同一个物品浮窗**搬：仓库那侧多一个「放入背包」（整叠搬），背包那侧多一个「放回仓库」。
 搬之前先算格子和负重，算不过就原地不动——不会吞东西。
@@ -358,50 +358,30 @@ B切换射击模式；短按R装填，长按R选择优先弹种。半自动每�
 
 模型参数、后坐力、迁移规则、掉落和美术记录详见 [枪械扩充实装说明](design/weapons/arsenal-v1/README.md)。旧四种ID自动迁移；原弹数保留，超过新容量的弹药退回仓库，不改变余额。
 
-### 六级头盔 / 六级护甲
+### 六级头盔 / 六级护甲（战斗系统 V1 起改版）
 
-护甲**没有固定减伤百分比**。能挡多少只看三件事：来弹的穿透等级、护甲等级、当前耐久。
-矩阵在 `js/config.js` 的 `CFG.AMMO.MATRIX`，数值是"打完护甲后还能落到血上的比例"：
+旧的 5×6 穿透比例矩阵与「按挡下的伤害扣耐久」已被
+[战斗系统 V1](design/equipment/combat-v1/README.md) 替换。当前规则：弹药带固定基础肉伤 B 与
+穿透力 P，护甲按材质与剩余耐久算有效防护值 `A = 10L − 10(1 − D/Dmax)`；
+`P ≥ A` 或护甲失效时吃全额 B，否则只吃 `0.08 × B × 材质钝伤倍率 Kb` 的钝伤；
+每发按 `min[D, B(0.035+0.009P) × Kd]` 磨甲，**穿透成功一样磨甲**。
+本发耐久损耗不影响本发穿透判定；部位倍率与距离衰减在结算之后乘，不再预乘进伤害。
+旧的 `CFG.AMMO.MATRIX` 与 `BALLISTICS.ratio/resolve/hit` 保留为遗留 API，运行时不再调用。
 
-| 弹药 \ 护甲 | Lv1 | Lv2 | Lv3 | Lv4 | Lv5 | Lv6 |
-|---|---|---|---|---|---|---|
-| Lv1 | 80% | 60% | 40% | 25% | 15% | 15% |
-| Lv2 | 100% | 80% | 60% | 40% | 25% | 15% |
-| Lv3 | 100% | 100% | 80% | 60% | 40% | 25% |
-| Lv4 | 100% | 100% | 100% | 80% | 60% | 40% |
-| Lv5 | 100% | 100% | 100% | 100% | 80% | 60% |
+| 等级 | 头盔耐久 | 护甲耐久 原→新 | 护甲瞄准时间 原→新 | 常见材质 |
+|---|---|---|---|---|
+| 一 | 20 / 28 | 40、55（不变） | +0%、+4% | 芳纶 / 聚乙烯 |
+| 二 | 30 / 24 | 60、45（不变） | +10%、+4% | 聚乙烯 / 芳纶 |
+| 三 | 45 / 60 | 85、110→100 | +20→+12%、+30→+22% | 芳纶 / 聚乙烯 |
+| 四 | 65 / 50 | 115→110、90 | +30→+22%、+14→+10% | 陶瓷 / 聚乙烯 |
+| 五 | 85 | 150→135 | +45→+32% | 陶瓷盔 / 装甲钢甲 |
+| 六 | 110 | 190→165 | +60→+45% | 装甲钢 |
 
-| 等级 | 头盔耐久 | 护甲耐久 | 护甲瞄准时间 |
-|---|---|---|---|
-| 一 | 20 | 40 | — |
-| 二 | 30 | 60 | +10% |
-| 三 | 45 | 85 | +20% |
-| 四 | 65 | 115 | +30% |
-| 五 | 85 | 150 | +45% |
-| 六 | 110 | 190 | +60% |
+身体护甲的代价仍是**瞄准准备时间**（`aimTime = 武器瞄准时间 × (1 + 惩罚/100)`），
+头盔不额外引入视野或瞄准惩罚，重量统一进负重分档。
+维修改为 `ΔDmax = (Dmax−D) × 材质 Kr`，装备上的「耐修度」只是展示值。
 
-身体护甲的代价是**瞄准准备时间**（`aimPenaltyPct`），不是移速：`aimTime = 武器瞄准时间 × (1 + 惩罚/100)`。
-变体款各带自己的惩罚（皮革背心 +4%、轻型插板 +14%、旧式防片衣 +30%），
-移速统一由负重分档决定，不吃第二重惩罚。
-
-**耐久是消耗品，按"挡下的伤害"扣**：
-
-```text
-挡住伤害 = 进入护甲前的伤害 × (1 − 穿透比例)
-理论耐久损耗 = 挡住伤害 × 0.5      // CFG.AMMO.DURABILITY_FACTOR
-```
-
-- 完全穿透（比例 100%）：本次**不掉耐久**
-- 耐久够挡：血量伤害 = 进入伤害 × 穿透比例，耐久照扣
-- 耐久不够挡（会被打穿）：按剩余耐久 / 理论损耗折算，护甲只提供部分防护，
-  剩下的伤害照样进血，耐久归零
-
-所以"只剩 3 点耐久的重甲"只挡得住这一发的 3/6，挡完之后就废了，不会继续完整抵挡。
-
-**部位倍率先并进伤害**：爆头 ×1.5 → 再交给护甲结算，不会出现两处各乘一次。
-头盔只管爆头，护甲只管身体，互不参与。
-
-敌人（拾荒者）身上的 Lv1–2 盔甲走同一套逻辑，尸体上捡到的就是打剩下的耐久。
+敌人（拾荒者）身上的护甲走同一套结算，尸体上捡到的就是打剩下的耐久。
 
 ### 修理与耐修程度
 
@@ -437,6 +417,11 @@ B切换射击模式；短按R装填，长按R选择优先弹种。半自动每�
 | 绿 | 当前耐久 |
 | 灰 | 已经打掉、还在当前上限以内的耐久 |
 | 红 | 被修理吃掉的上限（修过才有） |
+
+同一份 `js/durabar.js` 里还有 `CapBar`：医疗品的 `healCap` 容量、`effect.uses` 次数与钥匙的 `maxDur`
+剩余耐久都按这套读图显示，整条按原始上限铺满，只有绿（剩余）和灰（已消耗）两段，满的整条绿；
+不画红色段，因为这几类都不会被「修」掉上限。格子上不再有数字角标，精确读数留在悬浮 `title`
+与详情浮窗的数字行里。详见 [医疗系统说明](design/items/MEDICAL.md) 与 [钥匙说明](design/items/KEYS.md)。
 
 从右往左掉：满耐久整条绿，挨打时绿色右端退、灰色补上来，修过以后右边多出一截永久红色。
 它挂在仓库格、背包格、保险箱格、备战页装备槽、局内背包格、局内装备槽、尸体装备格，
@@ -806,26 +791,32 @@ mousedown 会冒泡到 `document`，触发 `Deal.hide()`，而 `Deal.hide` 又�
 
 ### 彩蛋藏品
 
-四件隐藏藏品（`odd13`–`odd16`）走一条独立支线，不参与任何常规抽取池：
+七件隐藏藏品走一条独立支线，不参与任何常规抽取池。首版四件 `odd13`–`odd16` 挂在异常遗物下，
+2026-11-08 新增三件按题材归位：`collect_secret01` 无忧之丘（文物藏品）、
+`elec_secret01` 极伪 RXT 6090 Ti 与 `elec_secret02` 诺鸡鸭 3310（电子产品）。
 
 ```
 容器抽一件 ──→ 是红色（r6）吗？
                  ├─ 否 → 就是它
-                 └─ 是 → 再掷 CFG.LOOT.eggChance（2%）
+                 └─ 是 → 按容器品质再掷 CFG.LOOT.eggByQuality
+                           （废弃/普通 0、充实 1%、优质 4%、贵重 12%、秘藏 25%）
                            ├─ 没中 → 还是原来的红件
-                           └─ 中了 → 从四件彩蛋里等概率换一件
+                           └─ 中了 → 从七件彩蛋里等概率换一件
 ```
 
 - 数据侧只多一个 `egg: true` 标记：`Loot.roll` 与 `Loot.pickFromPool` 都按它过滤，
   所以彩蛋不会挤进红色池把其它孤品的概率摊薄；回声体、拾荒者背包、商人货架自然也不会出。
 - 彩蛋本身也是 r6，所以 `CONTAINER_QUALITY` 的六档曲线**一格不动**——
-  `test-item-rarity.js` 的实测分布断言仍然精确通过。秘藏箱单件 8% × 2% = 0.16%，
-  普通箱 0.1% × 2% = 0.002%；四件均分。
-- 想关掉就把 `eggChance` 改 0；想再加一件，只在 `ITEMS` 里补一条带 `egg: true` 的红色条目即可，
-  池过滤和均分都按数据走。
-- 详情浮窗在「异常遗物 · 孤品」后面多一枚金色 `彩蛋` 标签（`.tip-egg`）；格子、背包、搜刮界面
-  不加任何记号——彩蛋该由玩家自己发现。立绘走 `DETAIL_ART` 原图通道，
-  背包图标由 `tools/prepare-easter-egg-icons.js` 从同一张原稿缩出来。
+  `test-item-rarity.js` 的实测分布断言仍然精确通过。全图摸一遍期望 0.85 个、撞见 57%，
+  秘藏箱单抽 2.00%、单箱约 6%；七件均分（每件 0.857%/箱）。
+  池子从四件扩到七件**不改变总彩蛋率**，只是指定某一件的概率从 1/4 降到 1/7。
+- `eggChance` 是总开关（也是没有品质信息时的兜底值），置 0 即关闭彩蛋掉落。
+  想再加一件，在 `ITEMS` 里补一条带 `egg: true` 的红色条目，并同步三份设计表与立绘/图标即可，
+  池过滤和均分都按数据走（完整链路见 [彩蛋说明](design/items/EASTER_EGGS.md)）。
+- 详情浮窗在「品类 · 孤品」后面多一枚金色 `彩蛋` 标签（`.tip-egg`）；格子、背包、搜刮界面
+  不加任何记号——彩蛋该由玩家自己发现。两批 1254×1254 立绘走 `DETAIL_ART` 原图通道
+  （`assets/item-art/easter-eggs-v1|v2/`），背包图标由
+  `node tools/prepare-easter-egg-icons.js [id...]` 从同一张原稿缩出。
 
 完整规则与概率表见 [design/items/EASTER_EGGS.md](design/items/EASTER_EGGS.md)。
 
@@ -856,6 +847,10 @@ mousedown 会冒泡到 `document`，触发 `Deal.hide()`，而 `Deal.hide` 又�
 - 张开幅度 = 当前散布，所以站着不动准星会自动收回来
 - 每开一枪准星随机抖一下（位移上限 ±16px），约 0.1 秒回弹
 - 后坐力越高颜色越偏暖（青白 → 橙红）
+
+> **恢复公式已更新（2026-11-09 晚）**：下表「1.8 秒回满 / 移动打五折」是当时的线性实现。
+> 现在改为半衰期 0.18s（移动 0.36s、潜行 ≈0.138s），延迟 0.15s 与上限 1.0 不变，
+> 详见文末「散布恢复改为半衰期」。
 
 后坐力是一个 0~1 的值：
 
@@ -932,7 +927,7 @@ R = M + D * recoilVertical + N * recoilHorizontal
 只保留 `AIM_DEAD`（12px）朝向死区：鼠标正好压在角色中心时 `atan2` 没有稳定解，
 沿用上一次有效方向免得乱抖；鼠标穿过去、离开死区就翻向另一侧。
 压枪拉过头可能翻 180° 是这份自由的代价，但贴身甩枪终于跟手。
-`AIM_DEAD` 仍在靶场「双轴后坐力」组里可调；`keep` 参数与滑块已一并移除。
+`AIM_DEAD` 已随全局滑块一起退出靶场面板，只留在 `CFG.P` 里；`keep` 参数与滑块更早移除。
 
 验收（`run-test.js` 双轴后坐力段）：鼠标从右侧 40px 穿过玩家拉到左侧 40px，
 准星与鼠标点的距离恒等于 `rV`（偏差 0）；`rV=0` 且鼠标压在玩家中心时
@@ -1517,7 +1512,8 @@ node tools/audio-slice.js <输入> <输出> <起> <止> [--trim=0.05] [--rms=0.1
 | `js/data.js` | 生成 | 地图 JSON、物品表、敌人表。由 `tools/build-linhai-map.js` 和 `tools/build-economy.js` 重写 |
 | `js/core.js` | 623 | 工具函数、噪声、寻路、`Loot` 掉落 |
 | `js/entities.js` | 1527 | `Player` / `Enemy` / `Bullet` / `Corpse` / `Bag` |
-| `js/common.js` | 29 | `ITEM_BY_ID` 索引、`esc()`、`bagSlots()` 携带容量 |
+| `js/common.js` | 41 | `ITEM_BY_ID` 索引、`esc()`、`ItemCapacity` 容量口径、`bagSlots()` 携带容量 |
+| `js/durabar.js` | 117 | `DuraBar` 护甲耐久条、`CapBar` 医疗容量 / 次数 + 钥匙耐久条（同一套 `.dbar`） |
 | `js/medical.js` | 242 | `Medical`：治疗容量池、启动/持续流程、条目容量 |
 | `js/art.js` | 279 | `Icons`（物品与装备图标）、`Art`（角色/物件/地形贴图） |
 | `js/ui.js` | 1451 | `Tips` 详情浮窗、`Ctx` 右键菜单、`Deal` 交易框、`SFX` 音效 |
@@ -1591,10 +1587,11 @@ python -m http.server 8765
 第一次 `pointerdown` / `keydown` 上（浏览器只认真实手势，早于手势的 `play()` 都是白响）。
 - `index.html#base` —— 直接打开藏身处
 - `index.html#base,demo` —— 打开藏身处并灌一批测试物资（不写存档，只改内存）
-- `index.html#range` —— 开发者靶场：空房间 + 钢板靶 + 落点墙，左侧面板实时调
-  射速 / 击发延迟 / 后坐力 / 回正 / 散布 / 准星 / 弹速 / 射程 / 弹丸数 / 双轴后坐力。
-  `F2` 收起面板，`F3` 清弹孔，`F4` 复位靶子；「复制 JSON」导出与默认值的差异，
-  调参数据存 localStorage（`tide.range.tune.v1`），靶场内不写游戏存档。
+- `index.html#range` —— 开发者靶场：空房间 + 靶子 + 落点墙，左侧面板只调六项
+  手感（射速 / 瞄准时间 / 纵向后坐力 × / 横向后坐力 × / 连射扩散增长 × / 基础散布 ×），
+  下方实时显示派生出来的冲击像素与散布角度。`F2` 收起面板，`F3` 清弹孔，`F4` 复位靶子；
+  「复制 JSON」导出与默认值的差异，调参数据存 localStorage（`tide.range.tune.v2`，
+  读到旧 `v1` 会自动折成倍率），靶场内不写游戏存档。
   实现见 `js/range.js`，地图是代码生成的（`RANGE_MAP`），不进选图页。
   双击 `range.html` 可免去打 `#range`（它只是 `location.replace` 到 `index.html#range`）。
 
@@ -1605,18 +1602,16 @@ python -m http.server 8765
 # 1. 靶场里点「导出 .json」，得到 tide-tune.json（浏览器下载目录）
 # 2. 先看会改什么
 node tools/apply-tune.js tide-tune.json --dry
-# 3. 写回 js/data.js 与 js/config.js，顺便跑回归
+# 3. 写回 design/weapons/arsenal-v1/arsenal.json，重生成 data.js，顺便跑回归
 node tools/apply-tune.js tide-tune.json --test
 ```
 
-脚本只替换数字字面量（注释、字段顺序、同行排布全部保留），改完 `git diff`
-只会有那几个数字的变化。几个注意点：
+脚本只写每把枪的六项倍率，然后调用 `tools/build-arsenal.js` 重生成 `js/data.js`
+（`--no-build` 只改设计表）。全局物理参数不从这里走 —— 那是 `js/config.js` 的
+`CFG.RECOIL`，直接手改。几个注意点：
 
-- 分成 `weapons`（每把枪自己的字段，写进 `js/data.js` 的 `WEAPONS`）和
-  `recoil`（全局，写进 `js/config.js` 的 `RECOIL`）
-- `RECOIL` 顶层的 `max / decay / decayDelay` 和 `RECOIL.axis` 里的同名字段重名，
-  脚本会先把 axis 整块摘出来再改顶层，不会串味
-- `anim`（开火动作速度）是运行时字段，没有配置项，脚本会提示并忽略
+- 源文件是 `arsenal.json`，`data.js` 是生成物；直接改 `data.js` 下次构建会被覆盖
+- 数值会按面板范围夹一次（例如 `recoilVMul` 0.1–3），越界会打印提示
 - localStorage 按地址隔离：`127.0.0.1:8123` 和双击本地文件各存一份，互不相通
 
 ## 测试
@@ -1659,7 +1654,7 @@ node run-test.js     # mock 浏览器环境跑完整游戏流程和动画状态�
 5. 精英敌人
 
 
-医疗系统已开放：18件医疗品中5件可恢复HP，改成**启动 + 持续治疗 + 容量**制——启动阶段不回血，之后按每秒速率恢复、回多少扣多少容量，满血或容量耗尽收工；治疗期间能走路但只有 30% 速度，冲刺/攻击/换弹/切枪/闪避/死亡会打断，普通受击不打断。用过的药单独占一格并显示剩余容量，容量跨撤离与存档保留。局外立即生效。[医疗系统说明](design/items/MEDICAL.md)。
+医疗系统已开放：18件医疗品中5件可恢复HP，改成**启动 + 持续治疗 + 容量**制——启动阶段不回血，之后按每秒速率恢复、回多少扣多少容量，满血或容量耗尽收工；治疗期间能走路但只有 30% 速度，冲刺/攻击/换弹/切枪/闪避/死亡会打断，普通受击不打断。用过的药单独占一格，**容量 / 次数与头盔护甲同款，用底边进度条显示**（`CapBar`），容量跨撤离与存档保留。局外立即生效。[医疗系统说明](design/items/MEDICAL.md)。
 
 医疗交互（`js/medhud.js`，四块都只读 `Medical` 的数据，自己不存数值）：
 
@@ -1711,3 +1706,164 @@ node run-test.js     # mock 浏览器环境跑完整游戏流程和动画状态�
 ### 商人批量出售
 
 四位商人按主营收购，统一原回收价。新增共享库存查询、Sales事务服务与商人出售适配；仓库网格、分页与物品状态继续共用，存档失败回滚。仓库原单件与寻常收集品出售也使用同一服务，范围与价格保留。详见 [三栏出售与验收说明](design/ui/merchant-sales-v1/README.md)。旧文中维克托仅购买的首版限制已由本轮替代。
+
+### 钥匙房开锁读条
+
+局内上锁铁门不再按 E 秒开。现在先播一段插钥匙声（`unlock_key`），画布中央走 1.5 秒金色读条（`CFG.LOCK_TIME`），读满才由 `Game.applyDoor()` 调用 `DoorSystem.prepareOpen()` 扣 1 点钥匙耐久、置 `unlocked` 并开门；起手只有只读的 `DoorSystem.unlockHint()` 检查，任何打断都不消耗耐久。新增按键、鼠标、闪避／换弹／近战、位移、面板、走远、滚轮、Esc、再按 E、受击都会中断（`Game.unlockInterrupted()` / `cancelUnlock()`）。`syncRaidChain(true)` 区分「刚消耗完钥匙」与「关页时空链保护」，最后一把钥匙用尽也会正确写回空链。验证 `node tools/test-key-unlock-readbar-browser.js`（开发／离线两版、18 种打断动作、读满／未读满／无钥匙／已解锁／耐久耗尽）。
+
+新一批音效 5 条由 `node tools/import-unlock-audio-v1.js` 转成 16bit 单声道 WAV 并登记 `assets/audio/manifest.json`，现已全部接线：`unlock_key` 开锁读条起手；`door_open_alt` 所有开门／关门；`door_kick` 受阻门被踹开那一下；`loot_rare_reveal` 逐件搜索翻出 r5 珍罕（金）／r6 孤品（红）时；`trade_settle` 局外任何购买、卖出、付费服务成交，包含改枪工坊购买配件。
+
+交易结算音统一在 `js/trade-audio.js`：包装 `Base.buy*`、`TradeMerchant.buy`、`Clinic.pay`、`Repair.apply`，用「调用前后 `Save.credits` 是否下降」判定成交，调用期间吞掉内部的 `pickup`／`sell`／`buy`，结束后只响一次；卖出、委托领奖、改枪付款不经过购买入口，改由 `Game.sfx('sell'/'buy')` 重定向到同一条音效。旧的 `sell.wav` 与合成 `door` 音保留作兜底，不再由交易／门交互调用。响度档在 `SFX.LOUD`（`doorKick` 0.095、`rareReveal` 0.085，交易复用 `sell` 0.07）。`node build.js --assets-only` 会把它们一并内联进离线版。
+
+### 伊莲娜出售页首屏布局
+
+伊莲娜默认进入私人委托页，该页把整块商品目录隐藏。切到「出售」时若先让 MerchantSales 在 display:none 的容器里量格子，clientWidth/Height 为 0，会退化成 2 列、一页 4 个 300px 以上的大格子，图标也被撑到尺寸上限；翻页或筛选标签触发重排后才恢复。`js/elena-ui.js` 现在切回出售前先同步视图恢复目录显示，`js/merchant-sales.js` 的 gridMetrics 在容器零尺寸时沿用上一次有效布局，不再退回 200×150 兜底尺寸。首次打开即与任意操作后的列数、格宽、图标尺寸一致。验证：`node tools/test-elena-sell-grid-browser.js`（开发／离线、3 种视口、4 条进入路径）。
+
+### 战斗系统 V1 · 确定性穿透与护甲材质
+
+按规范六步部署：统一配置 → 独立结算函数 → 玩家/敌人接入 → UI/维修/交易迁移 →
+旧存档兼容 → 自动化战斗测试。新增 `js/combat.js`（`Combat.resolve()` 是纯函数，
+`applyDurability()` 是唯一耐久写回入口），登记进 `index.html`、`build.js`、`run-test.js`、
+`smoke-test.js` 与所有自建 vm 加载器。弹药取消 `U.rand(dmgMin,dmgMax)` 与按等级成长，
+改为 `CFG.AMMO.FLESH` 的固定 B/P；护甲新增四种材质（`CFG.MATERIALS` 的 Kb/Kd/Kr）；
+维修改用材质 Kr，`CFG.REPAIR.WEAR` 与 rep 公式移除。
+
+**四个实现决策**（已确认）：材质 Kr 进维修公式、装备「耐修」仅作展示；
+头部倍率与距离衰减在结算之后乘；肉伤完全固定、取消随机；12 Gauge 用临时兼容 B/P
+统一走新函数（六弹丸各自结算），专项方案待定。
+
+保留的旧逻辑：`HEAD_MULT 1.5`、距离衰减 260→640（最低 ×0.55）、
+`Debuff.onHit` 按实际掉血 ≥0.5 判重伤/骨折/流血、手术与开锁读条受击打断、
+机械造物/异常体无 `debuffs`、玩家近战 `trueDamage` 绕过护甲与爆头倍率。
+旧存档由 `GEAR.make` 重建时自动补材质/耐修/最大耐久，并把超过新模板的旧 `max` 夹回新 `dur`。
+
+验证：`node tools/test-combat-v1.js`（192 项，逐条覆盖 9 条验收标准）、
+`node tools/test-combat-v1-browser.js`（开发／离线两版 38 项，确认离线包内联了结算模块）、
+`node tools/report-combat-v1.js`（20 护甲 × 30 弹药 = 600 组交叉矩阵，
+输出穿透枪数 / 击杀枪数 / 护甲消耗 / 累计钝伤至 `design/balance/combat-v1/`）、
+`node run-test.js` 576/0、`node smoke-test.js` 31/0。
+完整公式、数据表与数值观察见 [战斗系统 V1](design/equipment/combat-v1/README.md)。
+
+**数值观察（未擅自调平衡）**：`A = 10L` 使 I~III 级甲在全新状态下对 Lv3 及以上弹药
+第一发即被穿透，高级甲的生存价值主要来自 A 下降前的钝伤阶段。这是给定公式与弹药表的
+直接结果，本轮原样落地；如要调整，需另行决定改 `LV_SCALE` 还是改弹药 P。
+
+### 第二批敌人 HP 调整（无甲单位补偿）
+
+按本版数值落地：拾荒者 60→**90**、回响体 22→**110**、潮汐守卫 72→**175**、
+据点看守 80→**110**、受雇回收员 100→**145**。回响体与潮汐守卫不穿护甲、也没有材质钝伤阶段，
+因此涨幅最大（×5 / ×2.43）；三种人形单位沿用「有甲 + 更高血」的同一档思路。**本轮只改 HP**，
+速度、视距、攻击节奏、伤害、装备概率、掉落与布点一律不动。
+
+定义分两处：`js/data.js` 的基础三种、`js/human-ai.js` 的人形三种。**拾荒者两处都写了 `hp`**，
+必须同步，否则 `Object.assign(ENEMY_TYPES, HUMAN_UNIT_DEFS)` 会用旧值把数据表覆盖回去。
+`Enemy` 构造的 `hp / maxHp` 都取自 `t.hp`；低血量逃跑判据 `hp < maxHp × 0.3` 是相对值，
+行为阈值不受影响。
+
+同步范围：`tools/test-human-firearms.js` 与 `test-human-firearms-browser.js` 的 HP 断言、
+`tools/test-combat-v1.js` 去掉写死的 72、`tools/probe-res.js` 改用 `maxHp`；
+两份基线 `design/enemies/{scav-accuracy,weapon-pools}-v1/baseline.json` 的 `profiles.*.hp`
+（专项测试会 `deepEqual` 整份敌人定义）；`design/balance/enemies-current/` 的数值总表与快照附表
+（`node tools/report-enemy-balance.js`）；`design/enemies/shared-firearms-v1/README.md` 的交火节奏表
+与验证说明；两份历史提案／首版接入报告只加数值更新提示，保留当时的 48／60 记录不伪改历史；
+`shared-firearms-v1/browser-verification.json` 与 `echo-melee-v1/browser-verification.json`
+由对应浏览器测试重跑覆盖。当前完整数值见 [敌人数值总表](design/balance/enemies-current/README.md)。
+
+验证：`run-test.js` 576/0、`smoke-test.js` 31/0、浏览器专项 8/8 全绿；
+`node build.js --assets-only` 重建离线版（37690.9 KB），快照确认离线／开发敌人定义零差异。
+HP 相关 Node 专项 7/10 通过，3 个失败均为上一轮已存在的历史基线：
+`test-scav-accuracy`（战斗 V1 的 `FLESH` 弹药表未进旧基线）、
+`test-human-weapon-pools`（`linhai-old-quarter/layout.json` 重编译后地图哈希未重记）、
+`test-melee`（背包满时卸近战），均与本次 HP 无关，本轮未处理。
+
+### 靶场战斗测试台（敌人靶 / 配件 / 弹药等级）
+
+三个方向按确认结果落地：敌人靶 + 数值面板、面板内调试改装、同口径 Lv1–Lv5。
+完整说明见 [靶场战斗测试台 V1](design/range/loadout-v1/README.md)。
+
+**同步方式是不复制数值**：`js/range.js` 新增 `RDummy`，HP 直接读 `ENEMY_TYPES[key].hp`，
+护甲由 `GEAR.random(type, lv)` 生成，穿戴概率与等级沿用 `HUMAN_UNIT_DEFS`；
+结算走 `Combat.resolve()` + `applyDurability()` 这条与实战相同的纯函数链。
+所以上一轮的 90／110／175／110／145 不需要在靶场另写一份常量。
+面板四个区块：敌人靶（含实战/无甲/Lv1–6 护甲档、剩余 HP、材质、A、最近一发、击杀枪数）、
+弹药等级、配件改装、战斗数值表；选择写进 `tide.range.tune.v1` 跨刷新保留。
+
+**顺手修了一个真实 bug**：`RTarget.hurt()` 旧按 6 参写，而 `Bullet.resolveHit` 传的是 7 参
+（`B / 阵营 / 部位 / P / 伤害类型 / meta / 距离衰减`），于是致伤 `meta` 对象被当成倍率，
+玩家实弹打钢板靶会算出 `NaN`，距离衰减也一直没生效。现在两处都按 7 参接，
+`test-range-headshots.js` 的 8800 发步进回归仍全绿。
+
+配件改装走 `Attachments.resolve(W.id, parts)` 的纯派生；不调用 `commit`，
+不扣款、不动库存、不写存档。弹药切换用 `ammoItem(caliber, lv)` 与 `magazineRounds()`
+按口径过滤，12 Gauge 自动落到 `SHOTGUN_COMPAT`，跨口径装不进去。
+（2026-11-09 晚修正：旧写法在装完配件后又 `apply()`，把配件算出的散布/后坐盖回了调参快照，
+所以「点了配件但数值没变」。现在改为「原厂枪 + 六项」当基准再让配件派生。）
+
+验证：新增 `tools/test-range-loadout-browser.js`（开发＋离线 **68 项**）、
+`run-test.js` 576/0、`smoke-test.js` 31/0、`test-range-headshots.js` 8800 发通过，
+离线版 `node build.js --assets-only` 重建（37708.9 KB）。
+`index.html` 的 `#rangePanel` CSS 增加测试台样式并放宽可见高度。
+
+### 靶场调参压缩为六项 · 全局物理常量下沉
+
+靶场原来有 28 个滑块，大半是「全枪共用」的物理常量（两轴冲击、水平随机、上限、回正延迟与速度、
+准星抖动、弹速/射程/弹丸数）。逐局覆盖这些值只会让靶场里的枪和实战永久脱节，也把真正要调的
+东西埋掉了。现在：
+
+**每把枪只存六项**：`rpm / aimTime / recoilVMul / recoilHMul / spreadGrowthMul / spreadMul`
+（`design/weapons/arsenal-v1/arsenal.json` → `tools/build-arsenal.js` → `js/data.js`）。
+物理绝对值全部来自 `js/config.js` 的 `CFG.RECOIL`，由 `Firearms.derive(w)` 相乘：
+
+```
+V = axis.v.kick(3.4) × recoilVMul      H = axis.h.kick(2.4) × recoilHMul
+G = perShot(0.075)   × spreadGrowthMul Smin = spreadBase(0.040) × spreadMul
+                                       Smax = spreadMax(0.260) × spreadMul
+```
+
+面板只剩六项，下方实时显示派生出的 px / 弧度；「高级调参」「双轴后坐力」「弹道与伤害」等
+全局组全部删除。`Range.apply()` 不再改写 `CFG.RECOIL`，退出靶场也不需要还原。
+
+**迁移**：23 把枪按「V/H/G/基础散布与迁移前一致」折算，步枪零漂移，冲锋枪/霰弹的 V/H/G 误差
+<0.1%。基础与满散布按新模型共用一个 `spreadMul`（全局满/基比 6.5），旧三族的 5.6 / 4.89 会在
+满散布上产生既定差异：SMG/霰弹 ±7.5%、手枪 ±14%，取两端相对误差相等的倍率，23 把枪最大
+偏差 14.2%。旧 `v1` localStorage 会把「每发后坐力 / 基础散布」折成倍率，全局滑块丢弃。
+
+**配件语义跟着改**：`baseSpread → spreadMul`、`spreadGrowth → spreadGrowthMul`、
+`recoilVertical/Horizontal → 对应倍率`；删除 `recoilRecovery`，精密枪托改为「连射散布增长 -20%」。
+`Attachments.resolve(id, parts, base)` 新增第三个参数，让靶场把「原厂枪 + 六项」当基准再派生配件。
+
+**修掉两个真实 bug**：
+1. 面板点击只看 `e.target.dataset`，点在配件按钮里的说明文字（`<small>`）上时目标变成子元素，
+   `data-part` 读不到 —— 表现为「点配件没反应」。改为向上 `closest('[data-part]')` 一类的查找。
+2. 装完配件后又 `Range.apply()`，把配件算出的散布/后坐盖回调参快照 —— 表现为「配件数值没生效」。
+   现在改装与调参相乘，互不覆盖（`mul = 调参 × 配件系数`）。
+
+**验证**：`tools/test-range-loadout-browser.js` 扩到开发＋离线 **94 项**（六项面板、无全局滑块、
+派生读数联动、点 `<small>` 装配件、倍率与调参相乘、重置保留配件、v1 迁移）；
+`run-test.js` 581/0、`smoke-test.js` 31/0；`test-attachments`、`test-arsenal`、
+`test-assault-batch-03`、`test-assault-expansion`、`test-human-firearms`、`test-armor-variants`
+等按六参数模型更新；离线版已重建。
+
+### 散布恢复改为半衰期（线性 0.55/s → 0.18s 半衰期）
+
+旧实现是线性递减：`recoil -= 0.55 × dt`（移动再乘 0.50），满散布要 1.8s 才回到 0，
+一梭子按到底后枪口收敛太慢。现在改成指数半衰期：
+
+```js
+const stance = s.sneaking ? R.decaySneakMult : s.moving ? R.decayMoveMult : 1;
+s.recoil *= Math.pow(0.5, dt * stance / R.decayHalfLife);
+if (s.recoil < 0.01) s.recoil = 0;
+```
+
+- `CFG.RECOIL.decayHalfLife = 0.18` 取代 `decay: 0.55`；恢复延迟 0.15s、上限 1.0 不变。
+- 静止：0.18s 减半、0.36s 到 25%，满散布回落到 <1% 约 1.2s（旧 1.8s）。
+- 移动半衰期 `0.18 / 0.50 = 0.36s`；潜行 `0.18 / 1.30 ≈ 0.138s`。
+- **顺带修掉一个倍率叠加 bug**：旧写法把 `decayMoveMult × decaySneakMult` 相乘，
+  潜行挪动时是 0.65×，比静止还慢，与「潜行恢复更快」的设计相反。现在按潜行优先取单一项。
+- 指数衰减逐帧相乘，30/60/144FPS 结果一致；低于 0.01 直接归零，避免无限拖尾。
+- 玩家与人类敌人共用 `Firearms.recover()`，一处改动双方同时生效；双轴 `rH/rV` 本来就是
+  指数衰减（`decay 7.5/5.0`），本次未改。
+
+验证：新增 `node tools/test-recoil-recovery.js`（11 项：常量、半衰期、延迟、移动/潜行倍率、
+潜行优先、帧率无关、归零阈值、`Player.update` 集成、敌人共用）；`run-test.js` 581/0、
+`tools/test-attachments.js` 19/19。靶场不暴露恢复参数，面板与六项调参不受影响。

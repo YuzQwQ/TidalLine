@@ -1,5 +1,9 @@
 # 枪械扩充 V1 · 实装说明
 
+> **数值已更新**：战斗系统 V1 起伤害与穿透以弹药表固定 B/P 为准，
+> 本页的「伤害系数 ×dmgMul / 穿透等级 / 比例矩阵」描述已过时。
+> 当前规则见 [战斗系统 V1](../../equipment/combat-v1/README.md)。
+
 配置源为 [arsenal.json](arsenal.json)，价格由 design/items/economy.json 同步。原始需求保存在 [SPEC.md](SPEC.md)。美术审阅入口为 [art/index.html](art/index.html)。
 
 | 型号 | 口径 | 基础伤害 | RPM | 容量 | 装填 | 模式 | 价格 |
@@ -28,7 +32,17 @@
 
 ## 后坐力与散布
 
-沿用 R=M+N×H+D×V 的局部坐标系。四种类别分别有基础冲击，再乘型号倍率；V只做准星视觉位移，没有额外伤害或散布。瞄准中心误差每发采样一次，霰弹再独立采样六枚弹丸扩散，不再把动态准星散布重复加到弹丸上。护甲瞄准时间惩罚、命中部位、弹药系数和穿透矩阵保持原规则。
+沿用 R=M+N×H+D×V 的局部坐标系。V只做准星视觉位移，没有额外伤害或散布。瞄准中心误差每发采样一次，霰弹再独立采样六枚弹丸扩散，不再把动态准星散布重复加到弹丸上。护甲瞄准时间惩罚、命中部位、弹药系数和穿透矩阵保持原规则。
+
+2026-11-09 起改成**六参数模型**：每把枪只存 `rpm / aimTime / recoilVMul / recoilHMul / spreadGrowthMul / spreadMul`，物理绝对值统一取 `CFG.RECOIL`：
+
+```
+V = axis.v.kick(3.4) × recoilVMul      H = axis.h.kick(2.4) × recoilHMul
+G = perShot(0.075)   × spreadGrowthMul Smin = spreadBase(0.040) × spreadMul
+                                       Smax = spreadMax(0.260) × spreadMul
+```
+
+水平随机 ±0.9px、两轴上限 30/±16、回正延迟与速度、散布恢复延迟 0.15s 与半衰期 0.18s、散布上限 1.0 都是全局常量，不写在枪上。`Firearms.derive(w)` 是唯一派生入口。旧数据迁移时把 `recoilBaseV/H` 折进倍率（冲锋枪 2.6/1.8 → 0.765/0.75 等），V/H/G 与基础散布保持原值；基础与满散布共用一个 `spreadMul`，旧 SMG 满散布 +7.5%、手枪 ±14%（旧三族的满/基比是 5.6 / 4.89，新模型统一 6.5）。
 
 ## 物品、交易与掉落
 

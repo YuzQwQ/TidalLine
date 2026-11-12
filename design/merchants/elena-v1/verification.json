@@ -3,7 +3,7 @@
   "reports": [
     {
       "offline": false,
-      "checks": 867,
+      "checks": 933,
       "viewports": [
         1920,
         1440,
@@ -18,7 +18,7 @@
     },
     {
       "offline": true,
-      "checks": 867,
+      "checks": 933,
       "viewports": [
         1920,
         1440,

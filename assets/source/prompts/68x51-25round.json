@@ -1,0 +1,17 @@
+{
+  "mode": "built-in image_gen",
+  "prompts": [
+    {
+      "id": "att_mag_68x51_sr25_pattern_25",
+      "group": "gear",
+      "name": "SR-25 25发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: One detached SR-25 pattern 25-round rifle box magazine, subtly longer than a standard 20-round magazine, dark gunmetal ribbed metal with reinforced floorplate, broad nearly straight rectangular body, upright slightly diagonal three-quarter view. Exactly ONE magazine, no other magazine, no drum, no firearm."
+    },
+    {
+      "id": "att_mag_68x51_rm277_25",
+      "group": "gear",
+      "name": "RM277 25发扩容弹匣",
+      "prompt": "Use case: stylized-concept. Asset type: one TidalLine game inventory icon. Detailed pixel art with crisp pixel clusters and restrained industrial shading, matching 1990s tactical equipment inventory art. Three-quarter side product view, isolated and fully centered, true transparent background, no ground plane or shadow outside object, no text, no labels, no numbers, no logos or watermark. Readable at 40x40 pixels inside a 48x48 game icon. Exactly one inventory object. Subject: One detached RM277 pattern 25-round rifle box magazine, subtly longer than a standard 20-round magazine, dark gunmetal ribbed metal with reinforced floorplate, broad nearly straight rectangular body, upright slightly diagonal three-quarter view. Exactly ONE magazine, no other magazine, no drum, no firearm."
+    }
+  ]
+}

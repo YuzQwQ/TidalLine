@@ -191,9 +191,9 @@ test('护甲商人只卖前三档背包', () => {
 
 test('买背包后进仓库、扣钱', () => {
   fresh();
-  Save.credits = 20000;
+  Save.credits = 100000;
   assert.equal(Base.buyBag('bag02'), true);
-  assert.equal(Save.credits, 20000 - 18000);
+  assert.equal(Save.credits, 100000 - 54000);
   assert.equal(Save.stash.filter(e => e.gear && e.gear.equip.kind === 'bag').length, 1);
 });
 

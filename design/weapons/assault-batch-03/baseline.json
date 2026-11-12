@@ -1417,9 +1417,9 @@
         "stock.replaceable"
       ],
       "statModifiers": {
-        "recoilRecovery": 0.25,
         "baseSpread": -0.08,
-        "aimTime": 0.05
+        "aimTime": 0.05,
+        "spreadGrowth": -0.2
       },
       "visual": "precision buttstock, heavy graphite body, raised cheek rest, adjustable flat shoulder pad with two small silver adjustment knobs, restrained 1990s industrial design"
     },

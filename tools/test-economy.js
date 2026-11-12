@@ -5,10 +5,12 @@ const c=new Function('require','__dirname',harness+'\nreturn ctx;')(require,root
 const {Game,Save,Base,ITEMS,GEAR,EQUIP,WEAPONS,WEAPON_ALIASES}=c;
 const {Medical,formatMoney}=vm.runInContext('({Medical,formatMoney})',c);Game.init();
 const medical=[2000,5000,12000,35000,95000,2500,6000,18000,3000,20000,40000,195000,25000,65000,180000,7000,55000,150000];
-assert.equal(ITEMS.length,221);
+/* 三份设计表覆盖非弹药、非钥匙的物品；另外 30 种弹药与 8 把钥匙单独管 */
+assert.equal(ITEMS.length,spec.items.length+ITEMS.filter(i=>i.cat==='ammo'||i.cat==='key').length);
 for(const item of ITEMS){
  if(item.cat==='ammo')continue;   // 弹药价格在 AMMO_TABLE 里单独定，不跟着 economy.json 走
  if(item.cat==='medical')continue; // 医疗品的字段快照由 test-medical.js 校，这里只管价
+ if(item.cat==='key')continue;      // 钥匙价格由 design/items/keys.json 单独写入
  const row=spec.items.find(i=>i.id===item.id);assert(row);assert.equal(item.price,row.price);
  const {price,...rest}=JSON.parse(JSON.stringify(item));assert.deepEqual(rest,row.nonPrice,item.id+'价格之外字段变化');
  if(row.group==='collectible'){const band=spec.collectionBands.find(b=>b.rarity===item.r);assert(price>=band.min&&(band.max===null||price<=band.max));}
@@ -19,7 +21,14 @@ for(const [type,prices]of [['helmet',[2000,6000,15000,48000,120000,350000]],['bo
  for(let lv=1;lv<=6;lv++){
   const g=GEAR.def(type,lv),old=spec.baseline[type==='helmet'?'helmets':'bodies'][lv-1];assert.equal(g.price,prices[lv-1]);
   // Repairability was introduced after the economy snapshot; validate it separately.
-  const {price,rep,...a}=JSON.parse(JSON.stringify(g)),{price:_old,rep:_oldRep,...b}=old;assert(Number.isFinite(rep)&&rep>=0&&rep<=100);delete b.dr;assert.deepEqual(a,b,'防护数值不随价格变化');
+  /* V1 新增材质、改了耐久/瞄准惩罚/耐修，这些字段单独校验；
+     名称/等级/重量等静态字段仍与价格基线一致。 */
+  const {price,rep,material,dur,aimPenaltyPct,...a}=JSON.parse(JSON.stringify(g));
+  const {price:_old,rep:_oldRep,dur:_oldDur,aimPenaltyPct:_oldAim,...b}=old;
+  assert(Number.isFinite(rep)&&rep>=0&&rep<=100);
+  assert(c.CFG.MATERIALS[material],'材质必须已在 CFG.MATERIALS 登记');
+  assert(dur>0&&Number.isFinite(aimPenaltyPct));
+  delete b.dr;assert.deepEqual(a,b,'静态字段不随价格变化');
  }
 }
 /* 武器价格与各字段的权威校验在 test-arsenal（对着 design/weapons 规格表逐把核）。
@@ -54,9 +63,9 @@ Save.save();Save.flush();Save.load();assert.equal(Save.credits,12345);assert.equ
 assert.equal(Save.stash.find(e=>e.gear&&e.gear.equip&&e.gear.equip.kind==='gun').gear.equip.mag,7);
 Base.open();Save.credits=100000;Save.stash=[];Save.bag=[];Save.addBag('ammo_556_1',30);Save.addBag('ammo_9mm_1',20);Save.addBag('ammo_12g_1',10);Save.addBag('heal01',3);
 assert.equal(Save.bagWeight()>0,true);assert.equal(Save.bag.length>=4,true);
-Save.credits=100000;Base.buyArmor('helmet',2);assert.equal(Save.credits,94000);assert.equal(Save.stash[0].gear.price,6000);
+Save.credits=100000;Base.buyArmor('helmet',2);assert.equal(Save.credits,82000);assert.equal(Save.stash[0].gear.price,6000);
 const armorEntry=Save.stash[0],Sales=vm.runInContext('Sales',c);assert.equal(Sales.quote('shop',armorEntry).unit,3000);
 // The old warehouse sell entry now redirects to merchants, without granting cash.
-Base.sell(armorEntry,1);assert.equal(Save.credits,94000);assert(Save.stash.includes(armorEntry));
-Base.buyMedical('heal01');assert.equal(Save.credits,92000);assert.equal(Save.stashCount('heal01'),1);
+Base.sell(armorEntry,1);assert.equal(Save.credits,82000);assert(Save.stash.includes(armorEntry));
+Base.buyMedical('heal01');assert.equal(Save.credits,80000);assert.equal(Save.stashCount('heal01'),1);
 console.log('OK: 收集品价格带 / 医疗价 / 防具与枪械别名 / 属性与稀有度不变 / 医生报价 / 新档6万 / 背包负重 / 旧余额保留 / 旧装备按新价估值且耐久余弹保留 / 实际购买与商人出售报价');

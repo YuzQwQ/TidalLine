@@ -1,8 +1,13 @@
 const fs=require('fs'),path=require('path'),assert=require('assert/strict'),crypto=require('crypto'),http=require('http'),{pathToFileURL}=require('url'),{chromium}=require('playwright');
 const root=path.resolve(__dirname,'..'),catalog=require('../assets/item-details/catalog.json'),out=path.join(root,'output/detail-art');
 for(const a of catalog.assets){const b=fs.readFileSync(path.join(root,a.source));assert.equal(b.readUInt32BE(16),a.width);assert.equal(b.readUInt32BE(20),a.height);assert(a.width>48&&a.height>48,a.key);assert.equal(crypto.createHash('sha256').update(b).digest('hex'),a.sourceHash);assert.equal(a.target,a.source,'must use actual original');}
-/* 正在绘制的红档新件：图标是占位图、详情原图还没交，允许它们暂时缺失 */
-const pending=new Set(require('../design/items/classification.json').items.filter(i=>i.pendingArt).map(i=>'items/'+i.id));
+/* 正在绘制的红档新件：图标是占位图、详情原图还没交，允许它们暂时缺失。
+   另外三把无独立贴图的通用 / 测试钥匙（keys.json 里没有 iconId）共用一个图标，
+   本来就没有对应的详情原稿，也按"允许回落"处理 —— 别把它们算成缺图。 */
+const pending=new Set([
+ ...require('../design/items/classification.json').items.filter(i=>i.pendingArt).map(i=>'items/'+i.id),
+ ...require('../design/items/keys.json').filter(k=>!k.iconId).map(k=>'items/'+k.id)
+]);
 assert.deepEqual(catalog.missing.filter(k=>!pending.has(k)),[],'缺详情原图');
 const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));if(!file.startsWith(root+path.sep))return res.writeHead(403).end();fs.readFile(file,(e,b)=>e?res.writeHead(404).end():res.writeHead(200,{'Content-Type':file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.png')?'image/png':'text/html;charset=utf-8'}).end(b));});
 (async()=>{

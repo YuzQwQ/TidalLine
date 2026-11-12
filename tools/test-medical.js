@@ -38,10 +38,11 @@ function advance(sec,step=0.05){
   return t;
 }
 
-test('物品 id 唯一、21医疗品、170图鉴与准确参数',()=>{
+test('物品 id 唯一、21医疗品、图鉴总数与准确参数',()=>{
   /* 物品总数由数据决定（新武器/新物品落地时不写死） */
   assert(ITEMS.length>=183);assert.equal(new Set(ITEMS.map(i=>i.id)).size,ITEMS.length);assert(!byId.med01);
-  assert.equal(ITEMS.filter(i=>!i.noCodex).length,170);
+  /* 进了图鉴的就是收集品，数量跟着数据走（加彩蛋 / 钥匙时不用再手改） */
+  assert.equal(ITEMS.filter(i=>!i.noCodex).length,ITEMS.filter(i=>c.itemGroup(i)==='collectible').length);
   const spec=require('../design/items/medical.json');assert.equal(spec.items.length,21);
   for(const item of spec.items){const actual=byId[item.id];for(const key of ['name','r','w','price','stack','desc','visual'])assert.equal(actual[key],item[key]);assert(actual.noCodex);assert.equal(actual.cat,'medical');assert.equal(!!actual.noLoot,!(actual.heal||actual.effect));}
   assert.equal(byId.heal01.price,2000);assert.equal(byId.ammo_556_1.stack,60);

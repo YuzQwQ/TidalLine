@@ -1,0 +1,54 @@
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),{pathToFileURL}=require('url'),{chromium}=require('playwright');
+const root=path.resolve(__dirname,'..'),out=path.join(root,'design/weapons/attachments-v2');
+(async()=>{const browser=await chromium.launch({channel:'msedge',headless:true}),reports=[];fs.mkdirSync(out,{recursive:true});
+try{for(const file of ['index.html','潮汐线.html']){
+ const p=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[],tag=file==='index.html'?'runtime':'offline';
+ p.on('pageerror',e=>errors.push(e.message));
+ await p.addInitScript(()=>{localStorage.clear();localStorage.setItem('tideline_save_v1',JSON.stringify({v:4,credits:10000000,hp:100,stash:[],bag:[],safe:[],gear:{weapons:[{equip:{kind:'gun',gun:'m4a1',mag:39,ammo:'ammo_556_1',rounds:[...Array(30).fill('ammo_556_1'),...Array(9).fill('ammo_556_5')],attachments:{magazine:'att_mag_556_ext'}}},null,null]},mail:[{id:'legacy',title:'旧弹匣',items:[{id:'g_att_mag_12g_quick',n:1}],claimed:false}]}));});
+ await p.goto(pathToFileURL(path.join(root,file)).href+'#base');
+ await p.waitForFunction(()=>typeof StorageUI!=='undefined'&&StorageUI.mounted);
+ const migration=await p.evaluate(()=>({version:Save.attachmentsVersion,part:Save.gear.weapons[0].equip.attachments.magazine,mag:Save.gear.weapons[0].equip.mag,backup:!!localStorage.getItem(Save.key+'_attachments_v1_backup'),mail:Save.mail[0].items[0].gear.equip.attachment}));
+ assert(migration.version===2&&migration.part==='att_mag_556_40'&&migration.mag===39&&migration.backup&&migration.mail==='att_mag_12g_saiga_competition');
+ await p.evaluate(()=>MerchantUI.open('gun'));
+ const shop=await p.evaluate(()=>({ids:MerchantUI.offers.filter(o=>o.meta.kind==='attachment').map(o=>o.meta.id),expected:Object.values(ATTACHMENT_DEFS).filter(a=>a.r<=3).length}));
+ assert.equal(shop.ids.length,shop.expected);assert(shop.ids.includes('att_mag_545x39_45'));assert(!shop.ids.some(id=>/_quick|_ext$/.test(id)));
+ await p.evaluate(()=>{MerchantUI.filter='attachment';MerchantUI.applyFilters();});
+ await p.screenshot({path:path.join(out,tag+'-shop.png')});
+ await p.evaluate(()=>ModUI.openTarget(Attachments.targets().find(t=>t.owner==='base-equipped')));
+ await p.locator('[data-mod-slot="magazine"]').click();
+ const choices=await p.locator('[data-mod-choice]').evaluateAll(els=>els.map(e=>e.dataset.modChoice));
+ assert.deepEqual(choices.sort(),['att_mag_556_competition','att_mag_556_polymer','att_mag_556_40','att_mag_556_60'].sort());
+ await p.locator('[data-mod-choice="att_mag_556_polymer"]').click();
+ assert((await p.locator('.mod-stats').innerText()).includes('枪声范围'));
+ await p.screenshot({path:path.join(out,tag+'-gunsmith.png')});
+ await p.locator('[data-mod-apply]').click();await p.locator('[data-mod-pay]').click();
+ const modified=await p.evaluate(()=>{const eq=Save.gear.weapons[0].equip;Save.flush();return{part:eq.attachments.magazine,mag:eq.mag,surplus:Save.stashCount('ammo_556_5'),credits:Save.credits};});
+ assert(modified.part==='att_mag_556_polymer'&&modified.mag===30&&modified.surplus===9&&modified.credits===9991000);
+ const fullMail=await p.evaluate(()=>{const previous=Save.stash;Save.stash=Array.from({length:STASH_SLOTS},()=>({id:'life01',n:1}));const before=JSON.stringify(Save.stash),credits=Save.credits;
+ const ok=Mail.claim('legacy'),unchanged=before===JSON.stringify(Save.stash)&&credits===Save.credits&&!Save.mail.find(l=>l.id==='legacy').claimed;Save.stash=previous;return{ok,unchanged};});
+ assert(!fullMail.ok&&fullMail.unchanged,'full stash refuses gear mail atomically');
+ const mail=await p.evaluate(()=>{const ok=Mail.claim('legacy');Save.flush();return{ok,exists:Save.stash.some(e=>e.gear?.equip.attachment==='att_mag_12g_saiga_competition'),claimed:Save.mail.find(l=>l.id==='legacy').claimed};});assert(mail.ok&&mail.exists&&mail.claimed);
+ // New tab/context for range checks so the inventory fixture cannot affect prototypes.
+ const r=await browser.newPage({viewport:{width:1440,height:1000}});r.on('pageerror',e=>errors.push(e.message));
+ await r.goto(pathToFileURL(path.join(root,file)).href+'#range');await r.waitForFunction(()=>typeof RangeAim!=='undefined'&&RangeAim.active());
+ const optics=await r.evaluate(()=>{RangeAim.right=false;const P=Game.player;P.recoil=0;P.frameTravel=0;P.sprinting=false;return Array.from({length:8},(_,i)=>{
+  const id='att_optic'+String(i+1).padStart(2,'0');Range.setPart('optic',id);const w=P.weapon,s=RangeAim.state(P),d=Firearms.derive(w);
+  s.a=0;const hip=RangeAim.spread(P);s.a=.55;const shoulder=RangeAim.spread(P);s.a=1;const ads=RangeAim.spread(P);
+  const bounds=RangeAim.observation({x:3000,y:3000},RangeAim.opticZoom(w),10000,10000,RangeAim.opticView(w));
+  return{id,zoom:RangeAim.opticZoom(w),view:RangeAim.opticView(w),span:bounds.right-bounds.left,hip,shoulder,ads,base:d.spreadBase,precision:RangeAim.precision(w),adsMul:w.adsSpread};
+ });});
+ const zooms=[1.15,1.15,1.4,1.4,1.15,1.4,1.4,1.4],views=[1.15,1.15,1.6,2,1.15,1.45,1.8,2.4];
+ optics.forEach((o,i)=>{assert.equal(o.zoom,zooms[i]);assert.equal(o.view,views[i]);assert(Math.abs(o.hip-o.base)<1e-8);assert(Math.abs(o.shoulder-o.base*(1+(o.precision-1)*.55))<1e-8);assert(Math.abs(o.ads-o.base*o.precision*o.adsMul)<1e-8)});
+ assert(optics.every(o=>o.id==='att_optic08'||o.span<optics[7].span),'long tactical optic has the furthest observation range');
+ await r.evaluate(()=>{Range.setPart('grip','att_grip05');Range.setPart('muzzle','att_muzzle09');Range.refreshPanel();});
+ await r.mouse.move(950,450);await r.mouse.down({button:'right'});await r.waitForTimeout(1000);
+ assert(Math.abs(await r.evaluate(()=>RangeAim.zoom())-1.4)<.02);
+ await r.screenshot({path:path.join(out,tag+'-range.png')});await r.mouse.up({button:'right'});
+ await r.close();
+ const formal=await browser.newPage();formal.on('pageerror',e=>errors.push(e.message));await formal.goto(pathToFileURL(path.join(root,file)).href+'#play');
+ await formal.waitForFunction(()=>typeof Game!=='undefined'&&Game.state==='playing');
+ assert(await formal.evaluate(()=>RangeAim.active()&&RangeAim.zoom()===1));await formal.close();
+ assert.deepEqual(errors,[]);reports.push({file,migration,shopCount:shop.ids.length,modified,mail,optics,passed:true});await p.close();
+}}finally{await browser.close();}
+fs.writeFileSync(path.join(out,'browser-verification.json'),JSON.stringify({passed:true,reports},null,2)+'\n');console.log('PASS: V2 migration, 69 shop parts, interface-only gunsmith, real purchase/shrink, mail claim, eight optics and formal-raid activation; development/offline');
+})().catch(e=>{console.error(e);process.exitCode=1});

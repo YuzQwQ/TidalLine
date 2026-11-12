@@ -1361,6 +1361,33 @@
       "batch": "first",
       "previousRarity": 6,
       "previousName": "孤品"
+    },
+    {
+      "id": "collect_secret01",
+      "name": "无忧之丘",
+      "rarity": 6,
+      "reason": "画面具有极高的文化辨识度，古典装裱与数字艺术构图难以复制；作为隐藏彩蛋统一红色孤品，掉落由独立彩蛋权重控制。",
+      "batch": "egg-2",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "elec_secret01",
+      "name": "极伪 RXT 6090 Ti",
+      "rarity": 6,
+      "reason": "制造工艺无法复现、硬件规格远超当前工业水平且无同型号产销记录；隐藏彩蛋统一红色孤品，走独立彩蛋权重。",
+      "batch": "egg-2",
+      "previousRarity": 6,
+      "previousName": "孤品"
+    },
+    {
+      "id": "elec_secret02",
+      "name": "诺鸡鸭 3310",
+      "rarity": 6,
+      "reason": "结构完整性与耐久表现无法解释、回收记录独特；致敬经典移动电话的隐藏彩蛋，统一红色孤品，走独立彩蛋权重。",
+      "batch": "egg-2",
+      "previousRarity": 6,
+      "previousName": "孤品"
     }
   ]
 }

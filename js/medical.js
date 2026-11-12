@@ -370,10 +370,10 @@ const Medical = {
     const max = this.capOf(item);
     const cur = this.entryCap(entry);
     const capText = max ? Math.ceil(cur) + ' / ' + max : '—';
-    /* 启动与速率已经在「效果」那行写了，这里只补当前容量这个会变的值 */
+    /* 传 entry 让详情浮窗也挂上同款容量 / 次数条；数值行继续给精确读数 */
     Tips.show(item, node.getBoundingClientRect(), '医疗物品操作', this.ready(item) ? [
-      ['当前容量', capText]
-    ] : null);
+      [ItemCapacity.label(item), capText]
+    ] : null, entry);
     const box = document.getElementById('itemTip');
     const hp = this.stashLike(where) ? Save.hp : Game.player.hp;
     const usable = this.canUse(item, where, hp, entry);

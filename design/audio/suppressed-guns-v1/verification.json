@@ -1,0 +1,3643 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "file": "index.html",
+      "cases": [
+        {
+          "id": "m4a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_rifle",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_rifle",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0.075
+            },
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0.15
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "akm",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_ak47",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_ak47",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0
+            },
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0.1
+            },
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0.2
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "famas_f1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_famas",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_famas",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0
+            },
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0.06
+            },
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0.12
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "pp19_01",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_smg",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_smg",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0
+            },
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "mp5a3",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_mp5",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_mp5",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0
+            },
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0.075
+            },
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0.15
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "ump45",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_ump45",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_ump45",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0
+            },
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0.1
+            },
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0.2
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "mp155",
+          "excluded": true,
+          "forced": null
+        },
+        {
+          "id": "rem870",
+          "excluded": true,
+          "forced": null
+        },
+        {
+          "id": "saiga12",
+          "excluded": true,
+          "forced": null
+        },
+        {
+          "id": "glock17",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_pistol_2",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_pistol_3",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.16666666666666666
+            },
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.3333333333333333
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "m1911a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_pistol_3",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_pistol_1",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.2
+            },
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.4
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "beretta92",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_pistol_1",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_pistol_2",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.16666666666666666
+            },
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.3333333333333333
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "m16a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_m16",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_m16",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0
+            },
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0.08
+            },
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0.16
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "galil_arm",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_galil",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_galil",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            },
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0.09230769230769231
+            },
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0.18461538461538463
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "aks74u",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_aks74u",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_aks74u",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            },
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "g36c",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_g36c",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_g36c",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0
+            },
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0.08
+            },
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0.16
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "fn_fnc",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_fnfnc",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_fnfnc",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0
+            },
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0.09230769230769231
+            },
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0.18461538461538463
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "sig550",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_sg550",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_sg550",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            },
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "an94",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_an94",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_an94",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0
+            },
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0.1
+            },
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0.2
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "aug_a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_aug",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_aug",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0
+            },
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "groza1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_groza",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_groza",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0
+            },
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "ak12",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_ak12",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_ak12",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0
+            },
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "mk47_mod2",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_mk47",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_mk47",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0
+            },
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0.09230769230769231
+            },
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0.18461538461538463
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "mcx_spear",
+          "muzzle": "att_muzzle11",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_spear",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_spear",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            },
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0.075
+            },
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0.15
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "rm277",
+          "muzzle": "att_muzzle12",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_rm277",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_rm277",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0
+            },
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        }
+      ],
+      "audio": {
+        "rows": [
+          {
+            "id": "m4a1",
+            "rms": 0.022392719799770762,
+            "peak": 0.33788615465164185,
+            "tail": 4.435177362995615e-25,
+            "parts": [
+              {
+                "id": "shot_rifle",
+                "rms": 0.022392719799770762,
+                "peak": 0.33788615465164185,
+                "tail": 4.435177362995615e-25
+              }
+            ]
+          },
+          {
+            "id": "akm",
+            "rms": 0.022759165435204586,
+            "peak": 0.2674252688884735,
+            "tail": 3.1020914969421014e-23,
+            "parts": [
+              {
+                "id": "shot_ak47",
+                "rms": 0.022759165435204586,
+                "peak": 0.2674252688884735,
+                "tail": 3.1020914969421014e-23
+              }
+            ]
+          },
+          {
+            "id": "famas_f1",
+            "rms": 0.022438156120399875,
+            "peak": 0.4179860055446625,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_famas",
+                "rms": 0.022438156120399875,
+                "peak": 0.4179860055446625,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "pp19_01",
+            "rms": 0.022476235376592366,
+            "peak": 0.3446368873119354,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_smg",
+                "rms": 0.022476235376592366,
+                "peak": 0.3446368873119354,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "mp5a3",
+            "rms": 0.022438774378674246,
+            "peak": 0.4837724566459656,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_mp5",
+                "rms": 0.022438774378674246,
+                "peak": 0.4837724566459656,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "ump45",
+            "rms": 0.02251003692110587,
+            "peak": 0.41784313321113586,
+            "tail": 2.480608098195637e-24,
+            "parts": [
+              {
+                "id": "shot_ump45",
+                "rms": 0.02251003692110587,
+                "peak": 0.41784313321113586,
+                "tail": 2.480608098195637e-24
+              }
+            ]
+          },
+          {
+            "id": "glock17",
+            "rms": 0.022378758924885903,
+            "peak": 0.38785913586616516,
+            "tail": 1.4157289048264385e-23,
+            "parts": [
+              {
+                "id": "shot_pistol_1",
+                "rms": 0.023751879296415163,
+                "peak": 0.3477726876735687,
+                "tail": 0
+              },
+              {
+                "id": "shot_pistol_2",
+                "rms": 0.017711005618454047,
+                "peak": 0.2716999650001526,
+                "tail": 1.4157289048264385e-23
+              },
+              {
+                "id": "shot_pistol_3",
+                "rms": 0.024991899946304505,
+                "peak": 0.38785913586616516,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "m1911a1",
+            "rms": 0.022378758924885903,
+            "peak": 0.38785913586616516,
+            "tail": 2.796852514986372e-24,
+            "parts": [
+              {
+                "id": "shot_pistol_1",
+                "rms": 0.023751879296415163,
+                "peak": 0.3477726876735687,
+                "tail": 2.796852514986372e-24
+              },
+              {
+                "id": "shot_pistol_2",
+                "rms": 0.017711005618454047,
+                "peak": 0.2716999650001526,
+                "tail": 0
+              },
+              {
+                "id": "shot_pistol_3",
+                "rms": 0.024991899946304505,
+                "peak": 0.38785913586616516,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "beretta92",
+            "rms": 0.022378758924885903,
+            "peak": 0.38785913586616516,
+            "tail": 1.845231808243491e-23,
+            "parts": [
+              {
+                "id": "shot_pistol_1",
+                "rms": 0.023751879296415163,
+                "peak": 0.3477726876735687,
+                "tail": 2.796852514986372e-24
+              },
+              {
+                "id": "shot_pistol_2",
+                "rms": 0.017711005618454047,
+                "peak": 0.2716999650001526,
+                "tail": 0
+              },
+              {
+                "id": "shot_pistol_3",
+                "rms": 0.024991899946304505,
+                "peak": 0.38785913586616516,
+                "tail": 1.845231808243491e-23
+              }
+            ]
+          },
+          {
+            "id": "m16a1",
+            "rms": 0.022376737185624957,
+            "peak": 0.3661774694919586,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_m16",
+                "rms": 0.022376737185624957,
+                "peak": 0.3661774694919586,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "galil_arm",
+            "rms": 0.02259412500780902,
+            "peak": 0.47216400504112244,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_galil",
+                "rms": 0.02259412500780902,
+                "peak": 0.47216400504112244,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "aks74u",
+            "rms": 0.022444166169204475,
+            "peak": 0.38688844442367554,
+            "tail": 4.120917371383695e-24,
+            "parts": [
+              {
+                "id": "shot_aks74u",
+                "rms": 0.022444166169204475,
+                "peak": 0.38688844442367554,
+                "tail": 4.120917371383695e-24
+              }
+            ]
+          },
+          {
+            "id": "g36c",
+            "rms": 0.02244720673880163,
+            "peak": 0.36806443333625793,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_g36c",
+                "rms": 0.02244720673880163,
+                "peak": 0.36806443333625793,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "fn_fnc",
+            "rms": 0.022404557592088443,
+            "peak": 0.5395658016204834,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_fnfnc",
+                "rms": 0.022404557592088443,
+                "peak": 0.5395658016204834,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "sig550",
+            "rms": 0.022458489087506885,
+            "peak": 0.33178475499153137,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_sg550",
+                "rms": 0.022458489087506885,
+                "peak": 0.33178475499153137,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "an94",
+            "rms": 0.022370225598019534,
+            "peak": 0.4108103811740875,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_an94",
+                "rms": 0.022370225598019534,
+                "peak": 0.4108103811740875,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "aug_a1",
+            "rms": 0.022430713531478737,
+            "peak": 0.4013303518295288,
+            "tail": 1.4630405777429315e-24,
+            "parts": [
+              {
+                "id": "shot_aug",
+                "rms": 0.022430713531478737,
+                "peak": 0.4013303518295288,
+                "tail": 1.4630405777429315e-24
+              }
+            ]
+          },
+          {
+            "id": "groza1",
+            "rms": 0.02234322606018598,
+            "peak": 0.42008960247039795,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_groza",
+                "rms": 0.02234322606018598,
+                "peak": 0.42008960247039795,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "ak12",
+            "rms": 0.0224286985679338,
+            "peak": 0.37475353479385376,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_ak12",
+                "rms": 0.0224286985679338,
+                "peak": 0.37475353479385376,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "mk47_mod2",
+            "rms": 0.022396014483168525,
+            "peak": 0.23755225539207458,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_mk47",
+                "rms": 0.022396014483168525,
+                "peak": 0.23755225539207458,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "mcx_spear",
+            "rms": 0.022306813413099702,
+            "peak": 0.3901100754737854,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_spear",
+                "rms": 0.022306813413099702,
+                "peak": 0.3901100754737854,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "rm277",
+            "rms": 0.022419734460508697,
+            "peak": 0.3027847409248352,
+            "tail": 6.624111043177628e-25,
+            "parts": [
+              {
+                "id": "shot_rm277",
+                "rms": 0.022419734460508697,
+                "peak": 0.3027847409248352,
+                "tail": 6.624111043177628e-25
+              }
+            ]
+          }
+        ],
+        "template": {
+          "pitchSemitones": 9,
+          "gain": 0.64,
+          "highpass": 180,
+          "lowShelfHz": 380,
+          "lowShelfDb": -9,
+          "highShelfHz": 2600,
+          "highShelfDb": -4,
+          "peakHz": 3400,
+          "peakDb": 5.5,
+          "peakQ": 1.4,
+          "lowpass": 9600,
+          "end": 0.13
+        },
+        "gains": {
+          "m4a1": 1,
+          "akm": 1.55,
+          "famas_f1": 0.83,
+          "pp19_01": 1.29,
+          "mp5a3": 2.31,
+          "ump45": 0.66,
+          "glock17": 2.16,
+          "m1911a1": 2.16,
+          "beretta92": 2.16,
+          "m16a1": 4.39,
+          "galil_arm": 0.53,
+          "aks74u": 0.61,
+          "g36c": 0.88,
+          "fn_fnc": 1.14,
+          "sig550": 0.53,
+          "an94": 1.04,
+          "aug_a1": 1.09,
+          "groza1": 1.44,
+          "ak12": 0.77,
+          "mk47_mod2": 4.06,
+          "mcx_spear": 0.61,
+          "rm277": 0.79
+        }
+      },
+      "fallback": {
+        "enabled": true,
+        "gain": 1
+      },
+      "passed": true
+    },
+    {
+      "file": "潮汐线.html",
+      "cases": [
+        {
+          "id": "m4a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_rifle",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_rifle",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0.075
+            },
+            {
+              "id": "shot_rifle",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0.15
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "akm",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_ak47",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_ak47",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0
+            },
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0.1
+            },
+            {
+              "id": "shot_ak47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.55,
+              "delay": 0.2
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "famas_f1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_famas",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_famas",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0
+            },
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0.06
+            },
+            {
+              "id": "shot_famas",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.83,
+              "delay": 0.12
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "pp19_01",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_smg",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_smg",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0
+            },
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_smg",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.29,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "mp5a3",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_mp5",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_mp5",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0
+            },
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0.075
+            },
+            {
+              "id": "shot_mp5",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.31,
+              "delay": 0.15
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "ump45",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_ump45",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_ump45",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0
+            },
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0.1
+            },
+            {
+              "id": "shot_ump45",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.66,
+              "delay": 0.2
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "mp155",
+          "excluded": true,
+          "forced": null
+        },
+        {
+          "id": "rem870",
+          "excluded": true,
+          "forced": null
+        },
+        {
+          "id": "saiga12",
+          "excluded": true,
+          "forced": null
+        },
+        {
+          "id": "glock17",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_pistol_2",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_pistol_3",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.16666666666666666
+            },
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.3333333333333333
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "m1911a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_pistol_3",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_pistol_1",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.2
+            },
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.4
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "beretta92",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_pistol_1",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_pistol_2",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_pistol_1",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0
+            },
+            {
+              "id": "shot_pistol_2",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.16666666666666666
+            },
+            {
+              "id": "shot_pistol_3",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 2.16,
+              "delay": 0.3333333333333333
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "m16a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_m16",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_m16",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0
+            },
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0.08
+            },
+            {
+              "id": "shot_m16",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.39,
+              "delay": 0.16
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "galil_arm",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_galil",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_galil",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            },
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0.09230769230769231
+            },
+            {
+              "id": "shot_galil",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0.18461538461538463
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "aks74u",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_aks74u",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_aks74u",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            },
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_aks74u",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "g36c",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_g36c",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_g36c",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0
+            },
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0.08
+            },
+            {
+              "id": "shot_g36c",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.88,
+              "delay": 0.16
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "fn_fnc",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_fnfnc",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_fnfnc",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0
+            },
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0.09230769230769231
+            },
+            {
+              "id": "shot_fnfnc",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.14,
+              "delay": 0.18461538461538463
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "sig550",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_sg550",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_sg550",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0
+            },
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_sg550",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.53,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "an94",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_an94",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_an94",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0
+            },
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0.1
+            },
+            {
+              "id": "shot_an94",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.04,
+              "delay": 0.2
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "aug_a1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_aug",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_aug",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0
+            },
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_aug",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.09,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "groza1",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_groza",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_groza",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0
+            },
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_groza",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 1.44,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "ak12",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_ak12",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_ak12",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0
+            },
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_ak12",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.77,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "mk47_mod2",
+          "muzzle": "att_muzzle09",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_mk47",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_mk47",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0
+            },
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0.09230769230769231
+            },
+            {
+              "id": "shot_mk47",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 4.06,
+              "delay": 0.18461538461538463
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "mcx_spear",
+          "muzzle": "att_muzzle11",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_spear",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_spear",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0
+            },
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0.075
+            },
+            {
+              "id": "shot_spear",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.61,
+              "delay": 0.15
+            }
+          ],
+          "previewPreservesMag": true
+        },
+        {
+          "id": "rm277",
+          "muzzle": "att_muzzle12",
+          "fired": true,
+          "magConsumed": 2,
+          "live": [
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0
+            }
+          ],
+          "dry": [
+            {
+              "id": "shot_rm277",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            }
+          ],
+          "compare": [
+            {
+              "id": "shot_rm277",
+              "suppressed": false,
+              "sameTemplate": true,
+              "gain": 1,
+              "delay": 0
+            },
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0
+            }
+          ],
+          "burst": [
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0
+            },
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0.08571428571428572
+            },
+            {
+              "id": "shot_rm277",
+              "suppressed": true,
+              "sameTemplate": true,
+              "gain": 0.79,
+              "delay": 0.17142857142857143
+            }
+          ],
+          "previewPreservesMag": true
+        }
+      ],
+      "audio": {
+        "rows": [
+          {
+            "id": "m4a1",
+            "rms": 0.022392719799770762,
+            "peak": 0.33788615465164185,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_rifle",
+                "rms": 0.022392719799770762,
+                "peak": 0.33788615465164185,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "akm",
+            "rms": 0.022759165435204586,
+            "peak": 0.2674252688884735,
+            "tail": 3.1022321136728294e-23,
+            "parts": [
+              {
+                "id": "shot_ak47",
+                "rms": 0.022759165435204586,
+                "peak": 0.2674252688884735,
+                "tail": 3.1022321136728294e-23
+              }
+            ]
+          },
+          {
+            "id": "famas_f1",
+            "rms": 0.022438156120399875,
+            "peak": 0.4179860055446625,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_famas",
+                "rms": 0.022438156120399875,
+                "peak": 0.4179860055446625,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "pp19_01",
+            "rms": 0.022476235376589253,
+            "peak": 0.3446368873119354,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_smg",
+                "rms": 0.022476235376589253,
+                "peak": 0.3446368873119354,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "mp5a3",
+            "rms": 0.02243877437867459,
+            "peak": 0.4837724566459656,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_mp5",
+                "rms": 0.02243877437867459,
+                "peak": 0.4837724566459656,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "ump45",
+            "rms": 0.02251003692110587,
+            "peak": 0.41784313321113586,
+            "tail": 2.480536327081571e-24,
+            "parts": [
+              {
+                "id": "shot_ump45",
+                "rms": 0.02251003692110587,
+                "peak": 0.41784313321113586,
+                "tail": 2.480536327081571e-24
+              }
+            ]
+          },
+          {
+            "id": "glock17",
+            "rms": 0.022378758924885903,
+            "peak": 0.38785913586616516,
+            "tail": 1.845231808243491e-23,
+            "parts": [
+              {
+                "id": "shot_pistol_1",
+                "rms": 0.023751879296415163,
+                "peak": 0.3477726876735687,
+                "tail": 0
+              },
+              {
+                "id": "shot_pistol_2",
+                "rms": 0.017711005618454047,
+                "peak": 0.2716999650001526,
+                "tail": 1.415647187948825e-23
+              },
+              {
+                "id": "shot_pistol_3",
+                "rms": 0.024991899946304505,
+                "peak": 0.38785913586616516,
+                "tail": 1.845231808243491e-23
+              }
+            ]
+          },
+          {
+            "id": "m1911a1",
+            "rms": 0.022378758924885903,
+            "peak": 0.38785913586616516,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_pistol_1",
+                "rms": 0.023751879296415163,
+                "peak": 0.3477726876735687,
+                "tail": 0
+              },
+              {
+                "id": "shot_pistol_2",
+                "rms": 0.017711005618454047,
+                "peak": 0.2716999650001526,
+                "tail": 0
+              },
+              {
+                "id": "shot_pistol_3",
+                "rms": 0.024991899946304505,
+                "peak": 0.38785913586616516,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "beretta92",
+            "rms": 0.022378758924885903,
+            "peak": 0.38785913586616516,
+            "tail": 1.415647187948825e-23,
+            "parts": [
+              {
+                "id": "shot_pistol_1",
+                "rms": 0.023751879296415163,
+                "peak": 0.3477726876735687,
+                "tail": 2.796852514986372e-24
+              },
+              {
+                "id": "shot_pistol_2",
+                "rms": 0.017711005618454047,
+                "peak": 0.2716999650001526,
+                "tail": 1.415647187948825e-23
+              },
+              {
+                "id": "shot_pistol_3",
+                "rms": 0.024991899946304505,
+                "peak": 0.38785913586616516,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "m16a1",
+            "rms": 0.022376737185624957,
+            "peak": 0.3661774694919586,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_m16",
+                "rms": 0.022376737185624957,
+                "peak": 0.3661774694919586,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "galil_arm",
+            "rms": 0.02259412500780902,
+            "peak": 0.47216400504112244,
+            "tail": 3.335509182803629e-25,
+            "parts": [
+              {
+                "id": "shot_galil",
+                "rms": 0.02259412500780902,
+                "peak": 0.47216400504112244,
+                "tail": 3.335509182803629e-25
+              }
+            ]
+          },
+          {
+            "id": "aks74u",
+            "rms": 0.022444166169204475,
+            "peak": 0.38688844442367554,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_aks74u",
+                "rms": 0.022444166169204475,
+                "peak": 0.38688844442367554,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "g36c",
+            "rms": 0.02244720673880163,
+            "peak": 0.36806443333625793,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_g36c",
+                "rms": 0.02244720673880163,
+                "peak": 0.36806443333625793,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "fn_fnc",
+            "rms": 0.022404557592088443,
+            "peak": 0.5395658016204834,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_fnfnc",
+                "rms": 0.022404557592088443,
+                "peak": 0.5395658016204834,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "sig550",
+            "rms": 0.022458489087506885,
+            "peak": 0.33178475499153137,
+            "tail": 6.714879662768148e-24,
+            "parts": [
+              {
+                "id": "shot_sg550",
+                "rms": 0.022458489087506885,
+                "peak": 0.33178475499153137,
+                "tail": 6.714879662768148e-24
+              }
+            ]
+          },
+          {
+            "id": "an94",
+            "rms": 0.022370225598019534,
+            "peak": 0.4108103811740875,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_an94",
+                "rms": 0.022370225598019534,
+                "peak": 0.4108103811740875,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "aug_a1",
+            "rms": 0.022430713531478737,
+            "peak": 0.4013303518295288,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_aug",
+                "rms": 0.022430713531478737,
+                "peak": 0.4013303518295288,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "groza1",
+            "rms": 0.02234322606018598,
+            "peak": 0.42008960247039795,
+            "tail": 4.854850651681748e-24,
+            "parts": [
+              {
+                "id": "shot_groza",
+                "rms": 0.02234322606018598,
+                "peak": 0.42008960247039795,
+                "tail": 4.854850651681748e-24
+              }
+            ]
+          },
+          {
+            "id": "ak12",
+            "rms": 0.0224286985679338,
+            "peak": 0.37475353479385376,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_ak12",
+                "rms": 0.0224286985679338,
+                "peak": 0.37475353479385376,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "mk47_mod2",
+            "rms": 0.022396014483168525,
+            "peak": 0.23755225539207458,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_mk47",
+                "rms": 0.022396014483168525,
+                "peak": 0.23755225539207458,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "mcx_spear",
+            "rms": 0.022306813413099702,
+            "peak": 0.3901100754737854,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_spear",
+                "rms": 0.022306813413099702,
+                "peak": 0.3901100754737854,
+                "tail": 0
+              }
+            ]
+          },
+          {
+            "id": "rm277",
+            "rms": 0.022419734460508697,
+            "peak": 0.3027847409248352,
+            "tail": 0,
+            "parts": [
+              {
+                "id": "shot_rm277",
+                "rms": 0.022419734460508697,
+                "peak": 0.3027847409248352,
+                "tail": 0
+              }
+            ]
+          }
+        ],
+        "template": {
+          "pitchSemitones": 9,
+          "gain": 0.64,
+          "highpass": 180,
+          "lowShelfHz": 380,
+          "lowShelfDb": -9,
+          "highShelfHz": 2600,
+          "highShelfDb": -4,
+          "peakHz": 3400,
+          "peakDb": 5.5,
+          "peakQ": 1.4,
+          "lowpass": 9600,
+          "end": 0.13
+        },
+        "gains": {
+          "m4a1": 1,
+          "akm": 1.55,
+          "famas_f1": 0.83,
+          "pp19_01": 1.29,
+          "mp5a3": 2.31,
+          "ump45": 0.66,
+          "glock17": 2.16,
+          "m1911a1": 2.16,
+          "beretta92": 2.16,
+          "m16a1": 4.39,
+          "galil_arm": 0.53,
+          "aks74u": 0.61,
+          "g36c": 0.88,
+          "fn_fnc": 1.14,
+          "sig550": 0.53,
+          "an94": 1.04,
+          "aug_a1": 1.09,
+          "groza1": 1.44,
+          "ak12": 0.77,
+          "mk47_mod2": 4.06,
+          "mcx_spear": 0.61,
+          "rm277": 0.79
+        }
+      },
+      "fallback": {
+        "enabled": true,
+        "gain": 1
+      },
+      "passed": true
+    }
+  ]
+}
