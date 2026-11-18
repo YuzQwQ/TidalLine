@@ -1,7 +1,7 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict');
 const root=path.resolve(__dirname,'..'),h=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0];
 const c=new Function('require','__dirname',h+'\nreturn ctx;')(require,root),{Game,Save,CFG,GEAR,Base,Player,Enemy,WEAPONS}=c;
-const {EQUIP,ARMOR_VARIANTS,HELMETS,BODIES,M,BACKPACK,BALLISTICS,Loot,Combat}=vm.runInContext('({EQUIP,ARMOR_VARIANTS,HELMETS,BODIES,M,BACKPACK,BALLISTICS,Loot,Combat})',c);
+const {EQUIP,ARMOR_VARIANTS,HELMETS,BODIES,M,BACKPACK,BALLISTICS,Loot,Combat,buyPrice}=vm.runInContext('({EQUIP,ARMOR_VARIANTS,HELMETS,BODIES,M,BACKPACK,BALLISTICS,Loot,Combat,buyPrice})',c);
 const proposal=JSON.parse(fs.readFileSync(path.join(root,'design/equipment/armor-variants-v1/design.json')));let checks=0;
 function test(name,fn){fn();checks++;console.log('OK: '+name);}
 Game.init();
@@ -24,7 +24,7 @@ test('variant equip, replace, unload, raid synchronization and failure preserve 
  Save.gear.body=GEAR.make('body','body4_lightplate',41);Game.startRun(null);assert.equal(Game.player.body.id,'body4_lightplate');Game.syncGear();assert.equal(Save.gear.body.dur,41);
 });
 test('public stock keeps I–IV only; all six new public models buy at exact prices',()=>{
- fresh();Save.credits=10000000;for(const d of ARMOR_VARIANTS){const n=Save.stash.length,b=Save.credits;Base.buyArmor(d.type,d.id);if(d.lv<=4){assert.equal(Save.stash.length,n+1);assert.equal(Save.credits,b-Math.round(d.price*3));assert.equal(Save.stash.at(-1).gear.equip.gear.id,d.id);}else{assert.equal(Save.stash.length,n);assert.equal(Save.credits,b);}}
+ fresh();Save.credits=300000000;for(const d of ARMOR_VARIANTS){const n=Save.stash.length,b=Save.credits;Base.buyArmor(d.type,d.id);if(d.lv<=4){assert.equal(Save.stash.length,n+1);assert.equal(Save.credits,b-buyPrice(d.price));assert.equal(Save.stash.at(-1).gear.equip.gear.id,d.id);}else{assert.equal(Save.stash.length,n);assert.equal(Save.credits,b);}}
 });
 test('level pools select both variants without changing level, quantity or penetration',()=>{
  for(const type of ['helmet','body'])for(let lv=1;lv<=6;lv++){const ids=new Set();for(let i=0;i<100;i++){const g=GEAR.random(type,lv);assert.equal(g.lv,lv);ids.add(g.id);}assert.equal(ids.size,lv<=4?2:1);}

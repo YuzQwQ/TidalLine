@@ -132,7 +132,7 @@ function noThrow(name, fn) {
 
 const { Game, M, CFG, U, Save, ITEMS, Noise, Quiet, Base, Art, ART, GEAR, WEAPONS, HELMETS, BODIES, EQUIP, SIDEARM_SLOT,
   Range, RANGE_MAP, RANGE_GEO, RANGE_PARAMS, RANGE_DEF_W, BACKPACK, bagSlots,
-  Firearms, Attachments, ATTACHMENT_DEFS } = ctx;
+  Firearms, Attachments, ATTACHMENT_DEFS, buyPrice } = ctx;
 
 console.log('\n=== 启动 ===');
 noThrow('Save.load()', () => Save.load());
@@ -1406,7 +1406,7 @@ Base.buyArmor('helmet', 2);
 ok('买下一顶二级头盔', Save.stash.filter(e => e.gear).length === 1);
 ok('买来的是崭新（满耐久）',
   Save.stash.find(e => e.gear).gear.equip.gear.dur === GEAR.def('helmet', 2).dur);
-ok('买东西扣钱', Save.credits === cBuy - Math.round(GEAR.def('helmet', 2).price * 3),
+ok('买东西扣钱', Save.credits === cBuy - buyPrice(GEAR.def('helmet', 2).price),
   cBuy + ' → ' + Save.credits);
 
 const nShop = Save.stash.length;
@@ -1479,7 +1479,7 @@ ok('军火商能买到枪', Save.stash.filter(e => e.gear).length === 1);
 const smgEntry = Save.stash.find(e => e.gear);
 ok('买来的枪是满弹匣', smgEntry.gear.equip.mag === WEAPONS.smg.mag,
   smgEntry.gear.equip.mag + ' / ' + WEAPONS.smg.mag);
-ok('买枪扣钱', Save.credits === cGun - Math.round(WEAPONS.smg.price * 3), cGun + ' → ' + Save.credits);
+ok('买枪扣钱', Save.credits === cGun - buyPrice(WEAPONS.smg.price), cGun + ' → ' + Save.credits);
 ok('枪的买价和回收价对得上',
   smgEntry.gear.sell === Math.floor(WEAPONS.smg.price * 0.5), '¥' + smgEntry.gear.sell);
 

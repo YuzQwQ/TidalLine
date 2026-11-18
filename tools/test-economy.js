@@ -3,6 +3,7 @@ const root=path.resolve(__dirname,'..'),spec=require('../design/items/economy.js
 const harness=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0];
 const c=new Function('require','__dirname',harness+'\nreturn ctx;')(require,root);
 const {Game,Save,Base,ITEMS,GEAR,EQUIP,WEAPONS,WEAPON_ALIASES}=c;
+const buyPrice=c.buyPrice;
 const {Medical,formatMoney}=vm.runInContext('({Medical,formatMoney})',c);Game.init();
 const medical=[2000,5000,12000,35000,95000,2500,6000,18000,3000,20000,40000,195000,25000,65000,180000,7000,55000,150000];
 /* 三份设计表覆盖非弹药、非钥匙的物品；另外 30 种弹药与 8 把钥匙单独管 */
@@ -63,9 +64,9 @@ Save.save();Save.flush();Save.load();assert.equal(Save.credits,12345);assert.equ
 assert.equal(Save.stash.find(e=>e.gear&&e.gear.equip&&e.gear.equip.kind==='gun').gear.equip.mag,7);
 Base.open();Save.credits=100000;Save.stash=[];Save.bag=[];Save.addBag('ammo_556_1',30);Save.addBag('ammo_9mm_1',20);Save.addBag('ammo_12g_1',10);Save.addBag('heal01',3);
 assert.equal(Save.bagWeight()>0,true);assert.equal(Save.bag.length>=4,true);
-Save.credits=100000;Base.buyArmor('helmet',2);assert.equal(Save.credits,82000);assert.equal(Save.stash[0].gear.price,6000);
+const H2=buyPrice(6000);Save.credits=100000;Base.buyArmor('helmet',2);assert.equal(Save.credits,100000-H2);assert.equal(Save.stash[0].gear.price,6000);
 const armorEntry=Save.stash[0],Sales=vm.runInContext('Sales',c);assert.equal(Sales.quote('shop',armorEntry).unit,3000);
 // The old warehouse sell entry now redirects to merchants, without granting cash.
-Base.sell(armorEntry,1);assert.equal(Save.credits,82000);assert(Save.stash.includes(armorEntry));
-Base.buyMedical('heal01');assert.equal(Save.credits,80000);assert.equal(Save.stashCount('heal01'),1);
+Base.sell(armorEntry,1);assert.equal(Save.credits,100000-H2);assert(Save.stash.includes(armorEntry));
+Base.buyMedical('heal01');assert.equal(Save.credits,100000-H2-2000);assert.equal(Save.stashCount('heal01'),1);
 console.log('OK: 收集品价格带 / 医疗价 / 防具与枪械别名 / 属性与稀有度不变 / 医生报价 / 新档6万 / 背包负重 / 旧余额保留 / 旧装备按新价估值且耐久余弹保留 / 实际购买与商人出售报价');

@@ -17,8 +17,10 @@ const HUMAN_UNIT_DEFS = {
   retriever: {name:'受雇回收员',short:'回',color:'#7c9684',hp:145,speed:50,sight:16,fov:125*Math.PI/180,hear:1,
     bonusMeleePool: RARE_MELEE_POOL,
     range:11*CFG.TILE,cd:1.6,faction:'scav',human:true,arrow:true,tactical:true,
-    injuryType:'bullet',weapons:[['akm',25],['an94',15],['mk47_mod2',13],['mp5a3',12],['ump45',10],
-      ['m4a1',10],['famas_f1',6],['aug_a1',5],['groza1',4]],levels:[[3,80],[4,20]],helmetChance:.9,bodyChance:1,
+    /* 枪池下移到以三级为主：原来 9 把全是紫/橙，杀四个回收员等于白捡四把紫枪，
+       前后期都绕开了武器商。现在 60% 三級、36% 四级、4% 五级。 */
+    injuryType:'bullet',weapons:[['ak12',20],['sig550',16],['fn_fnc',14],['pp19_01',10],['mp5a3',12],['ump45',10],
+      ['akm',7],['an94',4],['mk47_mod2',3],['m4a1',3],['famas_f1',1]],levels:[[3,80],[4,20]],helmetChance:.9,bodyChance:1,
     reserve:30,aim:.65,aimError:.04,burst:3,pause:[1.6,2.0],
     search:8,radioRange:10,radioGap:1,rolePeriod:6,coverRadius:6,coverPath:8,
     desc:'带着回收清单进入环礁湾的专业人员。先确认目标，再决定带走多少别的东西。'}

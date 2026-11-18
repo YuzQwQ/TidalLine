@@ -775,18 +775,32 @@ const Loot = {
     return {item,n:U.randInt(...options.count[caliber])};
   },
 
+  /* LOOT.gearDamp 的取值入口：把 helmet / body 归到 armor 一档。
+     返回 null 表示不抑制（整表缺失，或该种类没列）。 */
+  gearDamp(kind) {
+    const G = CFG.LOOT && CFG.LOOT.gearDamp;
+    if (!G) return null;
+    const k = (kind === 'helmet' || kind === 'body') ? 'armor' : kind;
+    return G[k] || null;
+  },
+
   /* 按容器品质的稀有度曲线掷一件装备，等级分布与同容器的弹药池一致
-     （红档份额并入金档）；种类在 kinds 之间等概率抽。 */
+     （红档份额并入金档）；种类在 kinds 之间等概率抽。
+     档位抑制：先定种类，再按 LOOT.gearDamp 把该种类的高档权重乘掉后归一。
+     这一步必须在掷等级之前做 —— 装备不走 roll()，否则「紫枪白捡」压不下来。 */
   rollGear(quality, options, itemPool) {
+    const kinds = (options && options.kinds) || ['helmet', 'body', 'bag'];
+    const kind = U.pick(kinds);
+    const damp = this.gearDamp(kind);
+
     const src = CONTAINER_QUALITY[quality].pct;
-    const pct = src.slice(0, 5);
-    pct[4] += src[5] || 0;
+    const pct = src.slice(0, 5).map((v, i) => v * (damp ? (damp[i + 1] == null ? 1 : damp[i + 1]) : 1));
+    pct[4] += (damp ? (damp[5] == null ? 1 : damp[5]) : 1) * (src[5] || 0);
+
     let roll = Math.random() * pct.reduce((a, b) => a + b, 0), lv = 5;
     for (let i = 0; i < pct.length; i++) { roll -= pct[i]; if (roll < 0) { lv = i + 1; break; } }
 
-    const kinds = (options && options.kinds) || ['helmet', 'body', 'bag'];
-    const kind = U.pick(kinds);
-    /* 背包只有五档，护甲只掷到五级，所以 lv 一定在各自表里 */
+    /* 背包只有五档，护甲只擲到五级，所以 lv 一定在各自表里 */
     const guns=kind==='gun'?Object.values(WEAPONS).filter(w=>w.rarity===lv):[];
     const item = kind === 'gun' ? (guns.length ? EQUIP.gun(U.pick(guns).id,0) : null)
       : kind === 'bag' ? EQUIP.bag('bag0' + lv) : EQUIP.armor(GEAR.random(kind, lv));
@@ -795,8 +809,11 @@ const Loot = {
   },
 
   rollAttachment(quality,cats,itemPool){
-    const pct=CONTAINER_QUALITY[quality].pct;let r=Math.random()*pct.reduce((a,b)=>a+b,0),level=6;
-    for(let i=0;i<pct.length;i++){r-=pct[i];if(r<0){level=i+1;break;}}
+    const pct=CONTAINER_QUALITY[quality].pct;
+    const damp=this.gearDamp('attachment');
+    const adj=pct.map((v,i)=>v*(damp?(damp[i+1]==null?1:damp[i+1]):1));
+    let r=Math.random()*adj.reduce((a,b)=>a+b,0),level=6;
+    for(let i=0;i<adj.length;i++){r-=adj[i];if(r<0){level=i+1;break;}}
     const pool=Object.values(ATTACHMENT_DEFS).filter(a=>a.r===level);
     return pool.length?{item:EQUIP.attachment(U.pick(pool).id),n:1}:this.roll(quality,cats,itemPool);
   },
@@ -804,7 +821,8 @@ const Loot = {
   /* Dedicated crates retain their accessory share even when a rarity has no parts. */
   rollAvailableAttachment(quality){
     const pct=CONTAINER_QUALITY[quality].pct;
-    const groups=pct.map((weight,i)=>({weight,pool:Object.values(ATTACHMENT_DEFS).filter(a=>a.r===i+1)})).filter(g=>g.weight>0&&g.pool.length);
+    const damp=this.gearDamp('attachment');
+    const groups=pct.map((weight,i)=>({weight:weight*(damp?(damp[i+1]==null?1:damp[i+1]):1),pool:Object.values(ATTACHMENT_DEFS).filter(a=>a.r===i+1)})).filter(g=>g.weight>0&&g.pool.length);
     if(!groups.length)throw Error('武器箱的配件池为空');
     let roll=Math.random()*groups.reduce((sum,g)=>sum+g.weight,0),chosen=groups[groups.length-1];
     for(const group of groups){roll-=group.weight;if(roll<0){chosen=group;break;}}

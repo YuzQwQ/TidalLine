@@ -22,10 +22,10 @@
           "availableOnShelf": false
         }
       ],
-      "cash": 12000,
+      "cash": 1200000,
       "rewards": [],
       "materialValue": 8800,
-      "rewardValue": 12000
+      "rewardValue": 1200000
     },
     {
       "id": "elena_workshop_parts",
@@ -47,10 +47,10 @@
           "availableOnShelf": true
         }
       ],
-      "cash": 25000,
+      "cash": 1500000,
       "rewards": [],
       "materialValue": 18700,
-      "rewardValue": 25000
+      "rewardValue": 1500000
     },
     {
       "id": "elena_clinic_archive",
@@ -72,7 +72,7 @@
           "availableOnShelf": true
         }
       ],
-      "cash": 22000,
+      "cash": 2200000,
       "rewards": [
         {
           "id": "heal03",
@@ -82,7 +82,7 @@
         }
       ],
       "materialValue": 23600,
-      "rewardValue": 34000
+      "rewardValue": 2212000
     },
     {
       "id": "elena_clock_collection",
@@ -104,7 +104,7 @@
           "availableOnShelf": true
         }
       ],
-      "cash": 90000,
+      "cash": 2500000,
       "rewards": [
         {
           "id": "att_optic02",
@@ -114,7 +114,7 @@
         }
       ],
       "materialValue": 73000,
-      "rewardValue": 96750
+      "rewardValue": 2506750
     },
     {
       "id": "elena_evacuation_voices",
@@ -136,7 +136,7 @@
           "availableOnShelf": false
         }
       ],
-      "cash": 310000,
+      "cash": 4000000,
       "rewards": [
         {
           "id": "att_mag_556_60",
@@ -146,7 +146,7 @@
         }
       ],
       "materialValue": 244000,
-      "rewardValue": 328000
+      "rewardValue": 4018000
     },
     {
       "id": "elena_mirror_records",
@@ -168,7 +168,7 @@
           "availableOnShelf": false
         }
       ],
-      "cash": 450000,
+      "cash": 4500000,
       "rewards": [
         {
           "id": "body4",
@@ -178,7 +178,7 @@
         }
       ],
       "materialValue": 388000,
-      "rewardValue": 492500
+      "rewardValue": 4542500
     }
   ]
 }

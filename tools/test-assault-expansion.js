@@ -2,7 +2,7 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict');
 const root=path.resolve(__dirname,'..'),h=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0];
 const c=new Function('require','__dirname',h+'\nreturn ctx;')(require,root);
-const {Game,Save,Player,Base,WEAPONS,CFG,U}=c;
+const {Game,Save,Player,Base,WEAPONS,CFG,U,buyPrice}=c;
 const {Gunplay:G,EQUIP:E,Attachments:A,BACKPACK,CALIBERS,AMMO_ITEMS,BALLISTICS,Loot,CONTAINER_TYPES,ATTACHMENT_DEFS:D,ART}=vm.runInContext('({Gunplay,EQUIP,Attachments,BACKPACK,CALIBERS,AMMO_ITEMS,BALLISTICS,Loot,CONTAINER_TYPES,ATTACHMENT_DEFS,ART})',c);
 const spec=require('../design/weapons/assault-expansion-v1/weapons.json'),baseline=require('../design/weapons/assault-expansion-v1/baseline.json');
 const ids=spec.weapons.map(w=>w.id),near=(a,b)=>assert(Math.abs(a-b)<1e-7,`${a} != ${b}`),plain=x=>JSON.parse(JSON.stringify(x));
@@ -86,8 +86,8 @@ test('expanded 5.45 mixed magazines survive save/load, warehousing, selling with
  }
 });
 test('new shop offers respect rarity policy; all new guns and 5.45 grades enter existing loot pools',()=>{
- Game.state='base';Save.credits=1e7;Save.stash=[];for(const id of ids){const cash=Save.credits,n=Save.stash.length,allowed=WEAPONS[id].rarity<=3;assert.equal(Base.buyGun(id),allowed);assert.equal(cash-Save.credits,allowed?Math.round(WEAPONS[id].price*3):0);assert.equal(Save.stash.length-n,allowed?1:0);}
- const random=c.Math.random,pct=vm.runInContext('CONTAINER_QUALITY.fine.pct',c);try{for(const id of ids){const w=WEAPONS[id],group=Object.values(WEAPONS).filter(x=>x.rarity===w.rarity),index=group.findIndex(x=>x.id===id);const roll=(pct.slice(0,w.rarity-1).reduce((a,b)=>a+b,0)+pct[w.rarity-1]/2)/pct.reduce((a,b)=>a+b,0),draws=[roll,0,(index+.5)/group.length];c.Math.random=()=>draws.shift()??.5;const r=Loot.rollGear('fine',{kinds:['gun']});assert.equal(r.item.equip.gun,id);assert.equal(r.item.equip.mag,0);}}finally{c.Math.random=random;}
+ Game.state='base';Save.credits=1e7;Save.stash=[];for(const id of ids){const cash=Save.credits,n=Save.stash.length,allowed=WEAPONS[id].rarity<=3;assert.equal(Base.buyGun(id),allowed);assert.equal(cash-Save.credits,allowed?buyPrice(WEAPONS[id].price):0);assert.equal(Save.stash.length-n,allowed?1:0);}
+ const random=c.Math.random,pct=vm.runInContext('CONTAINER_QUALITY.fine.pct',c);try{for(const id of ids){const w=WEAPONS[id],group=Object.values(WEAPONS).filter(x=>x.rarity===w.rarity),index=group.findIndex(x=>x.id===id);const damp=vm.runInContext('CFG.LOOT.gearDamp.gun',c),adj=pct.slice(0,5).map((v,i)=>v*(damp[i+1]==null?1:damp[i+1]));adj[4]+=(damp[6]==null?1:damp[6])*(pct[5]||0);const roll=(adj.slice(0,w.rarity-1).reduce((a,b)=>a+b,0)+adj[w.rarity-1]/2)/adj.reduce((a,b)=>a+b,0),draws=[0,roll,(index+.5)/group.length];c.Math.random=()=>draws.shift()??.5;const r=Loot.rollGear('fine',{kinds:['gun']});assert.equal(r.item.equip.gun,id);assert.equal(r.item.equip.mag,0);}}finally{c.Math.random=random;}
  assert(CONTAINER_TYPES.Q.gearPool);assert(CONTAINER_TYPES.K.gearPool);assert(!CONTAINER_TYPES.Z.gearPool);
 });
 fs.writeFileSync(path.join(root,'design/weapons/assault-expansion-v1/verification.json'),JSON.stringify({passed,failures,timing},null,2)+'\n');console.log(`Assault expansion: ${passed} groups passed, ${failures.length} failed`);

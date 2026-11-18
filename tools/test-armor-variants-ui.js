@@ -2,6 +2,8 @@
 const fs=require('fs'),path=require('path'),http=require('http'),assert=require('assert/strict'),{pathToFileURL}=require('url'),{chromium}=require('playwright');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'design/equipment/armor-variants-v1');
 const variants=JSON.parse(fs.readFileSync(path.join(out,'design.json'))).variants;
+const _vm=require('vm'),_h=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0];
+const buyPrice=new Function('require','__dirname',_h+'\nreturn ctx.buyPrice;')(require,root);
 const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));if(!f.startsWith(root+path.sep))return res.writeHead(403).end();fs.readFile(f,(e,b)=>{if(e)return res.writeHead(404).end();res.setHeader('Content-Type',f.endsWith('.js')?'text/javascript':f.endsWith('.css')?'text/css':f.endsWith('.png')?'image/png':f.endsWith('.json')?'application/json':'text/html;charset=utf-8');res.end(b);});});
 (async()=>{let browser;const reports=[];await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
 try{browser=await chromium.launch({channel:'msedge',headless:true});
@@ -20,9 +22,10 @@ for(const offline of [false,true]){
   await p.evaluate(id=>[...document.querySelectorAll('#shopGrid [data-offer]')].find(n=>JSON.parse(n.dataset.offer).id===id).click(),v.id);
   assert((await p.locator('.mb-inspector').innerText()).includes(v.name));
   if(v.type==='body')assert((await p.locator('.mb-inspector').innerText()).includes('瞄准时间惩罚'));
+  const quoted=await p.evaluate(()=>MerchantUI.selected&&MerchantUI.selected.price);
   await p.locator('[data-mb-confirm]').click();assert((await p.locator('#dealBox').innerText()).includes(v.name));
   await p.evaluate(()=>{const b=document.querySelector('#dealBox .go');b.click();b.click();});
-  assert.equal(await p.evaluate(()=>Save.credits),before-Math.round(v.proposed.price*3));
+  assert.equal(await p.evaluate(n=>Save.credits===n,before-quoted),true,'扣款 = 选中报价 '+quoted+'，基准 '+buyPrice(v.proposed.price));
   assert(await p.evaluate(id=>Save.stash.some(e=>e.gear?.equip?.gear?.id===id),v.id));
  }
  await p.screenshot({path:path.join(out,offline?'ui-offline-shop.png':'ui-shop.png')});

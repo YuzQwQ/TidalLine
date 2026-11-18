@@ -1,5 +1,10 @@
 {
-  "passed": 19,
-  "failures": [],
+  "passed": 18,
+  "failures": [
+    {
+      "name": "current build map snapshots and armor penetration matrix remain unchanged",
+      "error": "AssertionError [ERR_ASSERTION]: 正式地图在记录后发生变化；请核对外部地图编辑后再显式记录基线\n+ actual - expected\n\n  [\n    {\n      id: 'linhai-old-quarter',\n      sha256: '91f22932b19ffab12c65e15e8700e8b2200e7d578a1fba046439254426f5004b'\n    },\n    {\n      id: 'fenced-zone',\n+     sha256: '355e1c2acff8a2a4707ab0e563c10ba647ab6d002a2485b3c8fe405999e2604e'\n-     sha256: '3005b92662fb02ba6b152c26b79402b4db1c7db1a8932c7bfec1b3de9ec3c778'\n    }\n  ]\n\n    at Object.check (D:\\develop\\project\\tide\\tools\\check-elena-map-snapshots.js:8:102)\n    at D:\\develop\\project\\tide\\tools\\test-attachments.js:127:246\n    at test (D:\\develop\\project\\tide\\tools\\test-attachments.js:5:89)\n    at Object.<anonymous> (D:\\develop\\project\\tide\\tools\\test-attachments.js:127:1)\n    at Module._compile (node:internal/modules/cjs/loader:1705:14)\n    at Object..js (node:internal/modules/cjs/loader:1838:10)\n    at Module.load (node:internal/modules/cjs/loader:1441:32)\n    at Function._load (node:internal/modules/cjs/loader:1263:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)"
+    }
+  ],
   "compatibilityPairs": 2325
 }

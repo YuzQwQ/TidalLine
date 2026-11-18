@@ -788,7 +788,7 @@ const Base = {
           : '<span class="gl">Lv' + it.level + '</span>';
         cell.innerHTML = ico +
           '<span class="cn">' + esc(it.short) + '</span>' +
-          '<span class="pr">' + formatMoney(buyPrice(it.price)) + ' / 发</span>';
+          '<span class="pr">' + formatMoney(ammoBuyPrice(it.price)) + ' / 发</span>';
         cell.title = it.name + ' · 基础肉伤 ' + it.B + ' · 穿透力 ' + it.P +
           (it.compat ? '（临时兼容值）' : '') +
           ' · 单次最多 ' + this.SHOP_AMMO_MAX_STACKS + ' 组（' + stackLimit(it)*this.SHOP_AMMO_MAX_STACKS + ' 发）';
@@ -809,7 +809,7 @@ const Base = {
     if(!this.sellsAmmo(item))return {ok:false,reason:'该弹药暂不出售',total:0};
     const max=stackLimit(item)*this.SHOP_AMMO_MAX_STACKS;
     if(!Number.isInteger(quantity)||quantity<1||quantity>max)return {ok:false,item,max,total:0,reason:'请选择1–'+max+'发弹药'};
-    const total=buyPrice(item.price)*quantity;
+    const total=ammoBuyPrice(item.price)*quantity;
     const reason=Save.credits<total?'信用点不足':!Save.canAddStash(id,quantity)?'仓库空间不足，无法放入这批弹药':'';
     return {ok:!reason,item,max,quantity,total,reason};
   },

@@ -43,7 +43,7 @@
         }
       ],
       "rewards": {
-        "cash": 12000,
+        "cash": 1200000,
         "items": []
       }
     },
@@ -63,7 +63,7 @@
         }
       ],
       "rewards": {
-        "cash": 25000,
+        "cash": 1500000,
         "items": []
       }
     },
@@ -83,7 +83,7 @@
         }
       ],
       "rewards": {
-        "cash": 22000,
+        "cash": 2200000,
         "items": [
           {
             "kind": "item",
@@ -109,7 +109,7 @@
         }
       ],
       "rewards": {
-        "cash": 90000,
+        "cash": 2500000,
         "items": [
           {
             "kind": "attachment",
@@ -135,7 +135,7 @@
         }
       ],
       "rewards": {
-        "cash": 310000,
+        "cash": 4000000,
         "items": [
           {
             "kind": "attachment",
@@ -161,7 +161,7 @@
         }
       ],
       "rewards": {
-        "cash": 450000,
+        "cash": 4500000,
         "items": [
           {
             "kind": "armor",

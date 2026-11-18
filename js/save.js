@@ -479,10 +479,19 @@ function unitPrice(it) {
   return (it.sell != null) ? it.sell : it.price;
 }
 
-/* 购买加价：枪械 / 弹药 / 配件 / 近战 / 头甲背包一律 ×3。
-   只作用于「买」的展示与结算；price / sell 不动，回收价（unitPrice）保持原样。 */
-const BUY_MARKUP = 3;
+/* 购买加价：枪械 / 配件 / 近战 / 头甲背包一律 ×9。
+   只作用于「买」的展示与结算；price / sell 不动，回收价（unitPrice）保持原样。
+   为什么是 9 而不是 3：按「摸 60 箱」的中位收益约 1194 万估，
+   ×3 时顶配一套只要 235 万，一局能买五套，死一次几乎无感；
+   ×9 之后顶配约 705 万，一局收益 ≈ 两套，死亡才开始真的疼。 */
+const BUY_MARKUP = 9;
+/* 弹药单独一档 ×3。
+   弹药是「按发」计价的耗材，跟着 ×9 会让一局 240 发 6.8 变成 540 万，
+   光子弹就吃掉半局收益 —— 那不是压力，是劝退。×3 后 240 发约 180 万，
+   占一局收益 12%，正好落在「消耗 10–20%」的目标区间里。 */
+const AMMO_MARKUP = 3;
 function buyPrice(base) { return Math.round((Number(base) || 0) * BUY_MARKUP); }
+function ammoBuyPrice(base) { return Math.round((Number(base) || 0) * AMMO_MARKUP); }
 
 /* 当前价值：钥匙按剩余耐久折算，其余沿用 unitPrice。
    3000 万的十次钥匙开过一次，现值就是 2700 万 —— 仓库总估价、

@@ -43,7 +43,9 @@ const MerchantUI={
     if(meta.kind==='armor')item=EQUIP.armor(GEAR.make(meta.type,meta.id||meta.lv));else if(meta.kind==='bag')item=EQUIP.bag(meta.id);else if(meta.kind==='gun')item=EQUIP.gun(meta.id);else if(meta.kind==='melee')item=EQUIP.melee(meta.id);else item=ITEM_BY_ID[meta.id];
     if(!item)return null;if(meta.kind==='medical')category=item.medicalGroup;if(meta.kind==='collectible')category=item.cat;
     const basePrice = meta.price ?? item.price;
-    const marked = ['gun','armor','bag','ammo','melee','attachment'].includes(meta.kind) ? buyPrice(basePrice) : basePrice;
+    /* 弹药按发计价，走独立的 ×3；其余装备走 ×9。两者混用会让子弹钱压过枪钱。 */
+    const marked = meta.kind === 'ammo' ? ammoBuyPrice(basePrice)
+      : ['gun','armor','bag','melee','attachment'].includes(meta.kind) ? buyPrice(basePrice) : basePrice;
     return {key:JSON.stringify(meta),meta,item,category,quantity,price:marked*quantity,cell,confirm:cell.onclick};
   },
   decorate(){

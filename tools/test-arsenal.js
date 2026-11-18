@@ -1,7 +1,7 @@
 /* Exercise actual controller, inventory and migration, without browser timing noise. */
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict');
 const root=path.resolve(__dirname,'..'),h=fs.readFileSync(path.join(root,'run-test.js'),'utf8').split('let pass = 0')[0];
-const c=new Function('require','__dirname',h+'\nreturn ctx;')(require,root),{Game,Save,Player,WEAPONS,U,CFG,Base}=c;
+const c=new Function('require','__dirname',h+'\nreturn ctx;')(require,root),{Game,Save,Player,WEAPONS,U,CFG,Base,buyPrice}=c;
 const {EQUIP,Gunplay,CALIBERS,AMMO_ITEMS,AMMO_BY_ID,BACKPACK,Loot,CONTAINER_TYPES,Medical,MELEE,MAP_CATALOG}=vm.runInContext('({EQUIP,Gunplay,CALIBERS,AMMO_ITEMS,AMMO_BY_ID,BACKPACK,Loot,CONTAINER_TYPES,Medical,MELEE,MAP_CATALOG})',c);
 const spec=require('../design/weapons/arsenal-v1/arsenal.json');
 Game.init();let count=0;const reports=[];
@@ -65,7 +65,7 @@ test('old IDs, mixed ammo and excess shotgun shell migrate idempotently without 
 });
 test('firing mode persists through warehouse and raid; all shop prices and class-slot restrictions remain valid',()=>{
  let p=fresh();Gunplay.setMode(p,'semi');Game.syncGear();Save.save();Save.flush();Save.load();assert.equal(Save.gear.weapons[0].equip.fireMode,'semi');p.fillWeapons(Save.gear.weapons);assert.equal(p.weapon.fireMode,'semi');
- Save.stash=[];Save.credits=1e7;for(const w of Object.values(WEAPONS)){const cash=Save.credits;if(w.shopAvailable===false){assert.equal(Base.buyGun(w.id),false);assert.equal(Save.credits,cash);continue;}assert(Base.buyGun(w.id));const item=Save.stash.at(-1).gear;assert.equal(cash-Save.credits,Math.round(w.price*3));assert.equal(item.equip.mag,w.mag);assert.equal(item.sell,Math.floor(w.price/2));assert.equal(Base.equipFromStash(Save.stash.at(-1),w.slot==='secondary'?'w0':'w2'),false);}
+ Save.stash=[];Save.credits=5e7;for(const w of Object.values(WEAPONS)){const cash=Save.credits;if(w.shopAvailable===false){assert.equal(Base.buyGun(w.id),false);assert.equal(Save.credits,cash);continue;}assert(Base.buyGun(w.id));const item=Save.stash.at(-1).gear;assert.equal(cash-Save.credits,buyPrice(w.price));assert.equal(item.equip.mag,w.mag);assert.equal(item.sell,Math.floor(w.price/2));assert.equal(Base.equipFromStash(Save.stash.at(-1),w.slot==='secondary'?'w0':'w2'),false);}
 });
 test('loot only uses existing special pools, with all new calibers and exact tier/color semantics',()=>{
  assert.equal(CONTAINER_TYPES.Q.ammoPool.chance,.25);assert.equal(CONTAINER_TYPES.K.gearPool.chance,.1);assert(!CONTAINER_TYPES.Z.ammoPool);assert(!CONTAINER_TYPES.Z.gearPool);
