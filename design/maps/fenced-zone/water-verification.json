@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "editor": {
+    "key": "~",
+    "painted": "~",
+    "undone": true,
+    "reopened": "~",
+    "art": "canal_water",
+    "walkable": false,
+    "opaque": false
+  },
+  "index.html": {
+    "waterCells": 153,
+    "art": "canal_water",
+    "blocked": true,
+    "opaque": false,
+    "boxes": 0
+  },
+  "潮汐线.html": {
+    "waterCells": 153,
+    "art": "canal_water",
+    "blocked": true,
+    "opaque": false,
+    "boxes": 0
+  }
+}

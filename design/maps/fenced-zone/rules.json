@@ -1,0 +1,54 @@
+{
+  "id": "fenced-zone",
+  "_note": "地形原型：64×44，四功能区，15房间及基座，10门，零实体层。复用共享校验器，临海路专用M1–M6不适用于本图。",
+  "expect": {
+    "width": 64,
+    "height": 44,
+    "tileSize": 32,
+    "buildings": 4,
+    "rooms": 15,
+    "portals": 10,
+    "windows": null,
+    "props": 0,
+    "containers": 0,
+    "enemies": 0,
+    "containerTypes": 0,
+    "containerTypesUsed": 0,
+    "exits": 3,
+    "bridges": 0,
+    "routes": 3,
+    "windowsMin": null
+  },
+  "enemySpacing": {
+    "between": 1,
+    "fromSpawn": 12,
+    "fromExit": 6
+  },
+  "portal": {
+    "maxWidth": 3
+  },
+  "canal": {
+    "x": [
+      44,
+      58
+    ]
+  },
+  "specialChecks": [],
+  "special": {
+    "minExitsPerBuilding": 2,
+    "tide": {
+      "southMarsh": [
+        44,
+        36,
+        58,
+        42
+      ],
+      "seExit": [
+        59,
+        38,
+        61,
+        42
+      ]
+    }
+  }
+}

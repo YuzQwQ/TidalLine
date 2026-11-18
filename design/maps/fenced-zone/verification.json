@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "boxes": 0,
+  "enemies": 0,
+  "spawn": {
+    "x": 14,
+    "y": 42
+  },
+  "pois": 48,
+  "width": 64,
+  "height": 44,
+  "connectedDryTiles": 2338,
+  "exits": 3,
+  "developmentAndOffline": true
+}
