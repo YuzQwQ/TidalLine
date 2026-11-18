@@ -87,6 +87,8 @@ assets/
 
 ### 4.1 地面（ground）
 
+`rule.walkable` 必须显式声明为布尔值：普通地面为 `true`，不可涉水的河水为 `false`。水面使用 `~` 字符、`canal_water` 贴图，不遮挡视线；可在任意地图的「地面」分类直接刷。
+
 ```json
 {
   "group": "tiles", "id": "ground_concrete_plain_01", "name": "平整水泥 A",
@@ -155,6 +157,16 @@ assets/
 - 不写 `visual` 时绘制盒 = `footprint`，即旧行为。
 
 ### 4.4 方向变体（scene-component）
+
+帐篷等可进入物件可声明 `paint.collisionCells: []` 与 `paint.collisionRects`。
+后者为相对占地左上角、单位为格的 `[x,y,宽,高]` 薄矩形；只在矩形范围阻挡移动与弹道，寻路会绕行。
+例如横向 3×2 帐篷用 `[[0,0,3,0.0625],[0,1.9375,3,0.0625]]`，两端保持开放。
+方向变体可用 `paintOverride` 覆盖 `visual`、`collisionRects`、`canopy`；编辑器放置和 R 旋转会保存对应朝向的数据。
+只有固定朝向的物资堆、大门可用 `paint.fixedFacing: true`，避免自动换成不存在的方向图。
+直接使用完整多格画布时不声明 `large`，仅在另有 `_large*` 三图时声明。
+
+可刷的新墙体以 `role: "terrain-component"`、独立 `ch`、`rule: {art: id, solid: true, walkable: false, opaque: true}` 登记。
+构建器会将其加入 `terrains` 并出现在编辑器「地面」中；配套 `<id>_face_s` / `<id>_face_e` 分别提供南立面与东短侧面。
 
 ```json
 { "group": "props", "id": "bed_clinic_side", "name": "诊疗床 · 侧面",

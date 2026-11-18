@@ -77,7 +77,7 @@
         const [x, y] = queue[i];
         for (const [dx, dy] of dirs) {
           const nx = x + dx, ny = y + dy, k = key(nx, ny);
-          if (walk(nx, ny, blocked) && !parents.has(k)) { parents.set(k, key(x, y)); queue.push([nx, ny]); }
+          if (walk(nx, ny, blocked) && !Core.propBoundaryBlocked(data,x,y,nx,ny) && !parents.has(k)) { parents.set(k, key(x, y)); queue.push([nx, ny]); }
         }
       }
       return parents;

@@ -82,13 +82,15 @@
   }
   const usable = im => im && im.complete && im.naturalWidth > 0;
 
+  function paintWall(g,x,y,art,edges){
+    const cap=image('tiles',art),front=image('tiles',art+'_face_s'),side=image('tiles',art+'_face_e');
+    if(usable(cap)){g.drawImage(cap,x,y-TILE/2,TILE,TILE);g.drawImage(cap,0,0,32,16,x,y+TILE/2,TILE,TILE/2);}
+    if(edges.south&&usable(front))g.drawImage(front,x,y,TILE,TILE);
+    if(edges.east&&usable(side))g.drawImage(side,x+TILE-4,y-TILE/2,4,TILE*1.5);
+  }
+
   function doorAxis(data, p) {
-    const [x, y] = p.cells[0];
-    if (p.cells.length > 1) return p.cells[1][0] === x ? 'vertical' : 'horizontal';
-    const wall = (cx, cy) => ['#', 'X', 'w'].includes((data.rows[cy] || '')[cx]);
-    const v = Number(wall(x, y - 1)) + Number(wall(x, y + 1));
-    const h = Number(wall(x - 1, y)) + Number(wall(x + 1, y));
-    return v > h ? 'vertical' : 'horizontal';
+    return Core.doorAxis(data,p);
   }
 
   /* docVersion 进缓存键：地形改一个字符时 id/尺寸都不变，只有版本号能告诉这里要重建。 */
@@ -114,6 +116,23 @@
         if (usable(im)) g.drawImage(im, sx * TILE, sy * TILE, TILE, TILE);
       }
     }
+    // 新墙体复用墙顶+南立面+东短侧面，向北伸出半格，地形占格不变。
+    const wallCells=[];
+    for(let y=0;y<data.height;y++)for(let x=0;x<data.width;x++){
+      const rule=data.legend[data.rows[y]?.[x]];
+      if(!rule?.solid)continue;
+      const [sx,sy]=Core.project(x,y,rot,data.width,data.height);wallCells.push({sx,sy,art:rule.art});
+    }
+    const portalAxes=new Map(),sidePortals=new Set();
+    for(const p of data.portals.filter(p=>p.kind==='door')){
+      const axis=doorAxis(data,p),screenAxis=rot%180?(axis==='vertical'?'horizontal':'vertical'):axis;
+      for(const[x,y]of p.cells){const [sx,sy]=Core.project(x,y,rot,data.width,data.height),key=sx+','+sy;portalAxes.set(key,screenAxis);if(root.DoorVisual.isSidePortal({...p,axis:screenAxis}))sidePortals.add(key);}
+    }
+    const joined=(sx,sy)=>{const [x,y]=Core.unproject(sx,sy,rot,data.width,data.height),ch=data.rows[y]?.[x];return data.legend[ch]?.solid||['#','X'].includes(ch)||portalAxes.get(sx+','+sy)==='horizontal';};
+    for(const {sx,sy,art}of wallCells.sort((a,b)=>a.sy-b.sy)){
+      const x=sx*TILE,y=sy*TILE;
+      paintWall(g,x,y,art,{south:!joined(sx,sy+1)&&!sidePortals.has(sx+','+(sy+1)),east:!joined(sx+1,sy)});
+    }
     for (const o of Art.resolveOverlays(data)) {
       const [sx, sy] = Core.project(o.x, o.y, rot, data.width, data.height);
       const im = image('props', Art.rotateArt(o.art, rot).art);
@@ -130,26 +149,24 @@
         const cells=p.cells.map(([x,y])=>Core.project(x,y,rot,data.width,data.height));
         const left=Math.min(...cells.map(c=>c[0])),top=Math.min(...cells.map(c=>c[1]));
         const width=Math.max(...cells.map(c=>c[0]))-left+1,height=Math.max(...cells.map(c=>c[1]))-top+1;
-        const neighbor=p.cells.flatMap(([cx,cy])=>[[cx-1,cy],[cx+1,cy],[cx,cy-1],[cx,cy+1]]).find(([cx,cy])=>['#','X'].includes(data.rows[cy]?.[cx]));
-        const material=neighbor?data.legend[data.rows[neighbor[1]][neighbor[0]]]?.art:'wall';
+        const material=Core.doorMaterial(data,p);
         if(root.DoorVisual.isSidePortal({...p,axis:rotated})){
           const floorCell=p.cells.flatMap(([cx,cy])=>[[cx+1,cy],[cx-1,cy],[cx,cy+1],[cx,cy-1]]).find(([cx,cy])=>data.legend[data.rows[cy]?.[cx]]?.walkable);
           const floor=image('tiles',floorCell?(data.legend[data.rows[floorCell[1]][floorCell[0]]]?.art||'floor'):'floor');
           const rect={x:left*TILE,y:top*TILE,w:TILE,h:TILE};
           if(usable(floor))g.drawImage(floor,rect.x,rect.y,TILE,TILE);
           const turn={w:'n',n:'e',e:'s',s:'w'};let kickFrom=p.kickFrom||(axis==='vertical'?'w':'n');for(let angle=0;angle<rot;angle+=90)kickFrom=turn[kickFrom];
-          root.DoorVisual.sidePortal(g,rect,{...p,kickFrom,barred:p.doorType==='barricade'},image('tiles',material||'wall'));
+          root.DoorVisual.sidePortal(g,rect,{...p,kickFrom,barred:p.doorType==='barricade'},image('tiles',material||'wall'),material);
           continue;
         }
         const rect={x:left*TILE,y:top*TILE-(rotated==='vertical'?TILE/2:0),w:width*TILE,h:height*TILE};
         if(rotated==='horizontal'){
-          const surface=image('tiles',material||'wall');
           const floorCell=p.cells.flatMap(([cx,cy])=>[[cx,cy+1],[cx,cy-1]]).find(([cx,cy])=>data.legend[data.rows[cy]?.[cx]]?.walkable);
           const floor=image('tiles',floorCell?(data.legend[data.rows[floorCell[1]][floorCell[0]]]?.art||'floor'):'floor');
           for(const[cx,cy]of cells){
             const cell={x:cx*TILE,y:cy*TILE,w:TILE,h:TILE};
             if(usable(floor))g.drawImage(floor,cell.x,cell.y,TILE,TILE);
-            root.DoorVisual.wallLayer(g,cell,rect,p,()=>{if(usable(surface))g.drawImage(surface,cell.x,cell.y,TILE,TILE);});
+            root.DoorVisual.wallLayer(g,cell,rect,p,()=>paintWall(g,cell.x,cell.y,material,{south:true,east:false}));
           }
         }
         g.drawImage(im,rect.x,rect.y,rect.w,rect.h);
@@ -228,7 +245,7 @@
   function visualOf(ent) {
     if (Array.isArray(ent.visual)) return ent.visual;
     const [fw, fh] = ent.footprint || [1, 1];
-    const d = Art.paintDefaults(Art.resolvePropArt(ent));
+    const d = Art.paintDefaults(Art.resolvePropArt(ent),ent.facing);
     return d && Array.isArray(d.visual) ? d.visual : [fw, fh];
   }
 

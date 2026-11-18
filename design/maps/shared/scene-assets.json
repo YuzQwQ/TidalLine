@@ -28,8 +28,17 @@
     {
       "group": "tiles",
       "id": "canal_water",
-      "name": "canal_water",
-      "role": "terrain-component"
+      "name": "河水 · 不可通行",
+      "role": "ground",
+      "material": "water",
+      "ch": "~",
+      "rule": {
+        "name": "河水 · 不可通行",
+        "art": "canal_water",
+        "walkable": false,
+        "opaque": false,
+        "color": "#438697"
+      }
     },
     {
       "group": "tiles",
@@ -1746,6 +1755,363 @@
         1,
         1
       ]
+    },
+    {
+      "group": "props",
+      "id": "pump_body",
+      "name": "离心泵体",
+      "role": "prop",
+      "usage": "泵房小型实体组件；不可搜索，碰撞仅占一格，绘制保持原比例。",
+      "paint": {
+        "kind": "prop",
+        "type": "pump_body",
+        "label": "离心泵体",
+        "name": "离心泵体",
+        "footprint": [
+          1,
+          1
+        ],
+        "visual": [
+          1.5,
+          1.25
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "pump_motor",
+      "name": "泵用电机",
+      "role": "prop",
+      "usage": "泵房小型实体组件；不可搜索，碰撞仅占一格，绘制保持原比例。",
+      "paint": {
+        "kind": "prop",
+        "type": "pump_motor",
+        "label": "泵用电机",
+        "name": "泵用电机",
+        "footprint": [
+          1,
+          1
+        ],
+        "visual": [
+          1.5,
+          1
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "pump_valve_pipe",
+      "name": "阀门管组",
+      "role": "prop",
+      "usage": "泵房小型实体组件；不可搜索，碰撞仅占一格，绘制保持原比例。",
+      "paint": {
+        "kind": "prop",
+        "type": "pump_valve_pipe",
+        "label": "阀门管组",
+        "name": "阀门管组",
+        "footprint": [
+          1,
+          1
+        ],
+        "visual": [
+          1.25,
+          1.25
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "pump_control_box",
+      "name": "泵房配电控制箱",
+      "role": "prop",
+      "usage": "泵房小型实体组件；不可搜索，碰撞仅占一格，绘制保持原比例。",
+      "paint": {
+        "kind": "prop",
+        "type": "pump_control_box",
+        "label": "泵房配电控制箱",
+        "name": "泵房配电控制箱",
+        "footprint": [
+          1,
+          1
+        ],
+        "visual": [
+          1,
+          1.5
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "fence_chainlink",
+      "name": "铁丝网围栏",
+      "role": "prop",
+      "paint": {
+        "kind": "prop",
+        "type": "fence_chainlink",
+        "label": "铁丝网围栏",
+        "name": "铁丝网围栏",
+        "footprint": [
+          2,
+          1
+        ],
+        "visual": [
+          2,
+          1.5
+        ],
+        "opaque": false
+      }
+    },
+    {
+      "group": "props",
+      "id": "fence_chainlink_side",
+      "name": "铁丝网围栏 · 竖向下接立柱",
+      "role": "scene-component",
+      "variantOf": "fence_chainlink",
+      "facing": "side",
+      "paintOverride": {
+        "visual": [
+          1,
+          2.5
+        ]
+      }
+    },
+    {
+      "group": "props",
+      "id": "fence_chainlink_post",
+      "name": "围栏独立立柱",
+      "role": "prop",
+      "paint": {
+        "kind": "prop",
+        "type": "fence_chainlink_post",
+        "label": "围栏独立立柱",
+        "name": "围栏独立立柱",
+        "footprint": [
+          1,
+          1
+        ],
+        "visual": [
+          1,
+          1.5
+        ],
+        "fixedFacing": true,
+        "opaque": false
+      }
+    },
+    {
+      "group": "props",
+      "id": "fence_gate_closed",
+      "name": "围栏大门 · 闭合",
+      "role": "prop",
+      "paint": {
+        "kind": "prop",
+        "type": "fence_gate_closed",
+        "label": "围栏大门 · 闭合",
+        "name": "围栏大门 · 闭合",
+        "footprint": [
+          2,
+          1
+        ],
+        "visual": [
+          2,
+          1
+        ],
+        "fixedFacing": true,
+        "opaque": false
+      }
+    },
+    {
+      "group": "props",
+      "id": "fence_gate_half_open",
+      "name": "围栏大门 · 半开",
+      "role": "prop",
+      "paint": {
+        "kind": "prop",
+        "type": "fence_gate_half_open",
+        "label": "围栏大门 · 半开",
+        "name": "围栏大门 · 半开",
+        "footprint": [
+          2,
+          1
+        ],
+        "visual": [
+          2,
+          1.5
+        ],
+        "fixedFacing": true,
+        "opaque": false
+      }
+    },
+    {
+      "group": "props",
+      "id": "tent_relief",
+      "name": "救灾帐篷",
+      "role": "prop",
+      "paint": {
+        "kind": "prop",
+        "type": "tent_relief",
+        "label": "救灾帐篷",
+        "name": "救灾帐篷",
+        "footprint": [
+          3,
+          2
+        ],
+        "visual": [
+          3,
+          2.5
+        ],
+        "collisionCells": [],
+        "collisionRects": [
+          [
+            0,
+            0,
+            3,
+            0.0625
+          ],
+          [
+            0,
+            1.9375,
+            3,
+            0.0625
+          ]
+        ],
+        "canopy": {
+          "fadeRows": 2,
+          "opacity": 0.3
+        }
+      }
+    },
+    {
+      "group": "props",
+      "id": "tent_relief_side",
+      "name": "救灾帐篷 · 纵向",
+      "role": "scene-component",
+      "variantOf": "tent_relief",
+      "facing": "side",
+      "paintOverride": {
+        "visual": [
+          2,
+          3.5
+        ],
+        "collisionRects": [
+          [
+            0,
+            0,
+            0.0625,
+            3
+          ],
+          [
+            1.9375,
+            0,
+            0.0625,
+            3
+          ]
+        ],
+        "canopy": {
+          "fadeRows": 3,
+          "opacity": 0.3
+        }
+      }
+    },
+    {
+      "group": "props",
+      "id": "supply_tarp_stack",
+      "name": "篷布物资堆",
+      "role": "prop",
+      "paint": {
+        "kind": "prop",
+        "type": "supply_tarp_stack",
+        "label": "篷布物资堆",
+        "name": "篷布物资堆",
+        "footprint": [
+          1,
+          1
+        ],
+        "fixedFacing": true
+      }
+    },
+    {
+      "group": "tiles",
+      "id": "ground_gravel_01",
+      "name": "碎石地面 A",
+      "role": "ground",
+      "material": "gravel",
+      "ch": "5",
+      "rule": {
+        "name": "碎石地面 A",
+        "walkable": true,
+        "opaque": false,
+        "color": "#73746b",
+        "art": "ground_gravel_01"
+      }
+    },
+    {
+      "group": "tiles",
+      "id": "ground_gravel_02",
+      "name": "碎石地面 B",
+      "role": "ground",
+      "material": "gravel",
+      "ch": "6",
+      "rule": {
+        "name": "碎石地面 B",
+        "walkable": true,
+        "opaque": false,
+        "color": "#73746b",
+        "art": "ground_gravel_02"
+      }
+    },
+    {
+      "group": "tiles",
+      "id": "wall_brick",
+      "name": "旧砖墙",
+      "role": "terrain-component",
+      "ch": "8",
+      "rule": {
+        "name": "旧砖墙",
+        "walkable": false,
+        "opaque": true,
+        "solid": true,
+        "art": "wall_brick",
+        "color": "#70766b"
+      }
+    },
+    {
+      "group": "tiles",
+      "id": "wall_brick_face_s",
+      "name": "旧砖墙 · 正面",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "wall_brick_face_e",
+      "name": "旧砖墙 · 侧面",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "wall_concrete",
+      "name": "灰水泥墙",
+      "role": "terrain-component",
+      "ch": "9",
+      "rule": {
+        "name": "灰水泥墙",
+        "walkable": false,
+        "opaque": true,
+        "solid": true,
+        "art": "wall_concrete",
+        "color": "#70766b"
+      }
+    },
+    {
+      "group": "tiles",
+      "id": "wall_concrete_face_s",
+      "name": "灰水泥墙 · 正面",
+      "role": "terrain-component"
+    },
+    {
+      "group": "tiles",
+      "id": "wall_concrete_face_e",
+      "name": "灰水泥墙 · 侧面",
+      "role": "terrain-component"
     }
   ]
 }

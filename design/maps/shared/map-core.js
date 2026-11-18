@@ -50,6 +50,36 @@
     return !!(rule && rule.walkable);
   }
 
+  function isWallTerrain(data,x,y) {
+    const ch=terrainAt(data,x,y);
+    return ch==='#'||ch==='X'||data.legend[ch]?.solid===true;
+  }
+
+  function doorAxis(data,p) {
+    const [x,y]=p.cells[0];
+    if(p.cells.length>1)return p.cells[1][0]===x?'vertical':'horizontal';
+    if(['vertical','horizontal'].includes(p.axis))return p.axis;
+    const wall=(x,y)=>isWallTerrain(data,x,y)||terrainAt(data,x,y)==='w';
+    return Number(wall(x,y-1))+Number(wall(x,y+1))>Number(wall(x-1,y))+Number(wall(x+1,y))?'vertical':'horizontal';
+  }
+
+  function doorMaterial(data,p) {
+    const vertical=doorAxis(data,p)==='vertical';
+    for(const [x,y]of p.cells)for(const[dx,dy]of vertical?[[0,-1],[0,1],[-1,0],[1,0]]:[[-1,0],[1,0],[0,-1],[0,1]]){
+      if(isWallTerrain(data,x+dx,y+dy))return data.legend[terrainAt(data,x+dx,y+dy)]?.art||'wall';
+    }return p.wallMaterial||'wall';
+  }
+
+  // 四邻域路线跨越物件薄边界时不可直穿；同格内部仍可走。
+  function propBoundaryBlocked(data,x,y,nx,ny) {
+    const x0=x+.5,y0=y+.5,x1=nx+.5,y1=ny+.5;
+    for(const p of data.props||[])for(const r of p.collisionRects||[]){
+      const left=p.x+r[0],top=p.y+r[1],right=left+r[2],bottom=top+r[3];
+      if(x===nx && x0>=left && x0<=right && Math.max(y0,y1)>=top && Math.min(y0,y1)<=bottom)return true;
+      if(y===ny && y0>=top && y0<=bottom && Math.max(x0,x1)>=left && Math.min(x0,x1)<=right)return true;
+    }return false;
+  }
+
   function clone(data) {
     return JSON.parse(JSON.stringify(data));
   }
@@ -130,7 +160,7 @@
 
   return {
     SCHEMA_VERSION, FIELD_ORDER, DERIVED_FIELDS,
-    key, parseKey, cellsOfRect, rectSize, terrainAt, isWalkableTerrain,
+    key, parseKey, cellsOfRect, rectSize, terrainAt, isWalkableTerrain, isWallTerrain, doorAxis, doorMaterial, propBoundaryBlocked,
     clone, normalizeForSave, parse, serialize, coerce,
     project, unproject, rotatedSize, summary
   };

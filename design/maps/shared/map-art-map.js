@@ -16,7 +16,7 @@
   };
 
   const Library=typeof module==='object'&&module.exports?require('./scene-library.js'):globalThis.SceneLibrary;
-  for(const a of (Library&&Library.grounds)||[])TILE_ART[a.ch]=a.id;
+  for(const a of [...((Library&&Library.grounds)||[]),...((Library&&Library.terrains)||[])])TILE_ART[a.ch]=a.id;
 
   /* 旋转族：只有这些资源在视图旋转时需要换变体。
    * 其余地块与道具都烘焙了左上光照，整图旋转会让光向错误，所以保持屏幕轴对齐。 */
@@ -60,7 +60,7 @@
   for(const a of (Library&&Library.placeables)||[]){
     if(!a.paint)continue;
     const extra={};
-    if(Array.isArray(a.paint.visual))extra.visual=a.paint.visual.slice();
+    for(const field of ['visual','collisionCells','collisionRects','canopy','opaque','fixedFacing'])if(a.paint[field]!==undefined)extra[field]=JSON.parse(JSON.stringify(a.paint[field]));
     if(Object.keys(extra).length)PAINT_DEFAULTS[a.id]=extra;
   }
 
@@ -220,9 +220,13 @@
 
   /* 某张贴图基名在登记表里声明的绘制参数；没有就返回 null。
      调用方负责与地图记录合并（地图记录里已写明的字段优先）。 */
-  function paintDefaults(art) {
+  function paintDefaults(art, facing) {
     const d = PAINT_DEFAULTS[art];
-    return d ? JSON.parse(JSON.stringify(d)) : null;
+    if(!d)return null;
+    const out=JSON.parse(JSON.stringify(d));
+    const variant=(Library.assets||[]).find(a=>a.variantOf===art&&a.facing===facing);
+    if(variant&&variant.paintOverride)Object.assign(out,JSON.parse(JSON.stringify(variant.paintOverride)));
+    return out;
   }
 
   return {

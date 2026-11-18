@@ -20,7 +20,7 @@
     const row = d.rows[y];
     if (typeof row !== 'string' || row[x] === ch) return false;
     if(!d.legend[ch]){
-      const a=Library.grounds.find(a=>a.ch===ch);
+      const a=[...Library.grounds,...(Library.terrains||[])].find(a=>a.ch===ch);
       if(!a)return false;
       d.legend[ch]=Core.clone(a.rule);
     }
@@ -126,11 +126,11 @@
    * 只删 portals 里的记录、不动地形，会留下"地形还是门洞、数据里没有对应记录"的孤儿格：
    * G8 只遍历 portals，查不出来，但游戏里那就是一道看不见的出入口。
    * 只封真正是开口的字符（+ / w），桥面（= -）与阶梯（s）不碰。 */
-  function sealShut(d, cells) {
+  function sealShut(d, cells, wallCh='#') {
     let n = 0;
     for (const c of cells || []) {
       const ch = terrain(d, c[0], c[1]);
-      if ((ch === '+' || ch === '/' || ch === 'w') && setTerrain(d, c[0], c[1], '#')) n++;
+      if ((ch === '+' || ch === '/' || ch === 'w') && setTerrain(d, c[0], c[1], wallCh)) n++;
     }
     return n;
   }
@@ -236,6 +236,7 @@
     if (sel.kind !== 'prop') return { ok: false, reason: '只有家具能转（转视角用 Shift+R）' };
     const e = resolve(d, sel);
     if (!e) return { ok: false, reason: '实体已不存在' };
+    if((root.MapArtMap.paintDefaults(e.type)||{}).fixedFacing)return {ok:false,reason:'该素材为固定朝向，请选择对应的素材'};
     const [w, h] = footprintOf(e);
     const multi = w * h > 1;
     if (multi) {
@@ -245,6 +246,8 @@
     }
     const next = root.MapArtMap.nextFacing(e.facing || 'front', multi ? 2 : 1);
     if (next === 'front') delete e.facing; else e.facing = next;
+    const defaults=root.MapArtMap.paintDefaults(e.type,next);
+    if(defaults)for(const field of ['visual','collisionCells','collisionRects','canopy','opaque'])if(defaults[field]!==undefined)e[field]=Core.clone(defaults[field]);
     return { ok: true, facing: next, footprint: (e.footprint || [1, 1]).slice() };
   }
 
@@ -307,7 +310,8 @@
       const bad = placementProblem(d, x, y, w, h, null);
       if (bad) return { ok: false, reason: bad };
       /* 靠墙自动转：侧面意味着宽高互换，换过去放不下就老老实实摆正面。 */
-      let facing = deriveFacing(d, x, y, w, h);
+      let facing = material.fixedFacing ? 'front' : (material.facing || deriveFacing(d, x, y, w, h));
+      if(root.MapArtMap.facingsOf(material.type).includes('side') && facing==='back' && !root.MapArtMap.facingsOf(material.type).includes('back'))facing='front';
       let fp = [w, h];
       if (facing === 'side' && w * h > 1) {
         if (!placementProblem(d, x, y, h, w, null)) fp = [h, w];
@@ -333,6 +337,8 @@
       if (Array.isArray(material.visual)) {
         rec.visual = (fp[0] === w && fp[1] === h) ? material.visual.slice() : [material.visual[1], material.visual[0]];
       }
+      const defaults=root.MapArtMap.paintDefaults(material.type,facing)||{};
+      for(const field of ['visual','collisionCells','collisionRects','canopy','opaque'])if(defaults[field]!==undefined)rec[field]=Core.clone(defaults[field]);
       d.props.push(rec);
       return { ok: true, id: rec.id, label: rec.name };
     }
@@ -383,7 +389,7 @@
     if (!inBounds(d, x, y)) return { ok: false, reason: '超出地图边界' };
     const ch = terrain(d, x, y);
     /* + 也接受：地形已经画成门洞、portals 里却没有记录时，这一步正好把记录补上。 */
-    if (ch !== '#' && ch !== '+') return { ok: false, reason: '门要开在墙上，(' + x + ', ' + y + ') 现在是「' + ch + '」' };
+    if (!Core.isWallTerrain(d,x,y) && ch !== '+') return { ok: false, reason: '门要开在墙上，(' + x + ', ' + y + ') 现在是「' + ch + '」' };
     if (d.portals.some(p => p.cells.some(c => c[0] === x && c[1] === y))) return { ok: false, reason: '这里已经有门洞了' };
     if (d.windows.some(w => w.cells.some(c => c[0] === x && c[1] === y))) return { ok: false, reason: '这里已经有橱窗了' };
 
@@ -413,6 +419,9 @@
       kind: kind || 'door',
       width: 1
     };
+    rec.axis=Core.doorAxis(d,rec);
+    rec.wallMaterial=Core.doorMaterial(d,rec);
+    rec.wallCh=ch==='+'?'#':ch;
     if (!rec.building) delete rec.building;
     setTerrain(d, x, y, '+');
     d.portals.push(rec);
@@ -435,7 +444,7 @@
     if (i < 0) return { ok: false, reason: '找不到实体' };
     /* 门 / 窗是多格坐标集合，一个实体可能横跨好几格：先封墙再摘记录，
      * 顺序反了就拿不到 cells 了。 */
-    const sealed = (hit.kind === 'portal' || hit.kind === 'window') ? sealShut(d, hit.ref.cells) : 0;
+    const sealed = (hit.kind === 'portal' || hit.kind === 'window') ? sealShut(d, hit.ref.cells,hit.ref.wallCh||'#') : 0;
     list.splice(i, 1);
     return { ok: true, id: hit.ref.id, kind: hit.kind, sealed };
   }

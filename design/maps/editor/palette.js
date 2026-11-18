@@ -37,7 +37,7 @@
       id: 'ground', name: '地面', hint: '地形字符', unit: '种', paintable: true,
       items(data) {
         const legend = { ...data.legend };
-        for(const a of Library.grounds)if(!legend[a.ch])legend[a.ch]=a.rule;
+        for(const a of [...Library.grounds,...(Library.terrains||[])])if(!legend[a.ch])legend[a.ch]=a.rule;
         return Object.entries(legend).map(([ch, rule]) => ({
           key: ch, label: rule.name, art:rule.art||root.MapArtMap.TILE_ART[ch], count: countChar(data.rows, ch), swatch: rule.color,
           detail: ch + ' · ' + (rule.walkable ? '可通行' : '不可通行') + ' · ' + (rule.opaque ? '挡视线' : '可透视'),

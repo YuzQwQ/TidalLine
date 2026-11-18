@@ -22,6 +22,14 @@ const ROLES = {
 
 function fail(msg) { throw new Error(msg); }
 
+function validateBoundary(p,footprint,key){
+  if(p.collisionRects===undefined)return;
+  if(!Array.isArray(p.collisionRects))fail('薄边界必须是矩形数组：'+key);
+  for(const r of p.collisionRects){
+    if(!Array.isArray(r)||r.length!==4||!r.every(Number.isFinite)||r[0]<0||r[1]<0||r[2]<=0||r[3]<=0||r[0]+r[2]>footprint[0]||r[1]+r[3]>footprint[1])fail('薄边界越出 footprint：'+key);
+  }
+}
+
 function readPng(file, key) {
   let b;
   try { b = fs.readFileSync(file); } catch (e) { fail('图片不存在：' + key + '（' + file + '）'); }
@@ -45,8 +53,8 @@ function build() {
     keys.add(key);
 
     if (a.role === 'ground' && (!a.ch || a.ch.length !== 1 || !a.rule
-      || a.rule.art !== a.id || a.rule.walkable !== true || a.rule.opaque !== false)) {
-      fail('地面规则不完整（ch / rule.art / walkable=true / opaque=false）：' + key);
+      || a.rule.art !== a.id || typeof a.rule.walkable !== 'boolean' || a.rule.opaque !== false)) {
+      fail('地面规则不完整（ch / rule.art / walkable布尔值 / opaque=false）：' + key);
     }
     if (a.role === 'prop') {
       const p = a.paint;
@@ -66,6 +74,7 @@ function build() {
           fail('visual 只能放大贴图，不能小于 footprint：' + key);
         }
       }
+      validateBoundary(p,p.footprint,key);
       /* 多格家具靠 _large 把两格铺满，少一张就会退回单格图、留白一整格 */
       if (a.large) {
         for (const sfx of ['_large', '_large_side', '_large_back']) {
@@ -95,6 +104,12 @@ function build() {
     const base = byId.get(a.variantOf);
     if (!base) fail('方向变体找不到基名：' + a.id + ' → ' + a.variantOf);
     if (base.variantOf) fail('方向变体的基名不能再是方向变体：' + a.id);
+    if(a.paintOverride){
+      const fp=a.facing==='side'?base.paint.footprint.slice().reverse():base.paint.footprint;
+      validateBoundary(a.paintOverride,fp,a.id);
+      const visual=a.paintOverride.visual;
+      if(visual&&(!Array.isArray(visual)||visual.length!==2||visual.some((n,i)=>!Number.isFinite(n)||n<fp[i])))fail('变体绘制盒不能小于占地：'+a.id);
+    }
   }
 
   /* 目录里有一张没登记的 PNG = 画好了却永远加载不到，直接拦下 */
@@ -107,11 +122,13 @@ function build() {
   }
 
   const grounds = assets.filter(a => a.role === 'ground');
-  if (new Set(grounds.map(a => a.ch)).size !== grounds.length) fail('基础地面的 ch 不能重复');
+  const terrains = assets.filter(a => a.role === 'terrain-component' && a.ch);
+  for(const a of terrains)if(!a.rule || a.rule.art!==a.id || a.rule.walkable!==false || a.rule.solid!==true)fail('墙体材质规则不完整：'+a.id);
+  if (new Set([...grounds,...terrains].map(a => a.ch)).size !== grounds.length+terrains.length) fail('地形的 ch 不能重复');
   const placeables = assets.filter(a => a.role === 'prop');
   const decals = assets.filter(a => a.role === 'decal');
 
-  const content = { assets, grounds, placeables, decals };
+  const content = { assets, grounds, terrains, placeables, decals };
   fs.writeFileSync(path.join(dir, 'scene-library.js'),
     '/* 自动生成：node tools/build-scene-library.js；请编辑 scene-assets.json */\n' +
     '(function(root){const library=' + JSON.stringify(content) +
@@ -123,7 +140,7 @@ function build() {
     .replace(/\n?\/\* BEGIN SCENE LIBRARY \*\/[\s\S]*?\/\* END SCENE LIBRARY \*\/\n?/g, '')
     .replace(/\n+$/, '');
   const extra = assets
-    .filter(a => a.role === 'ground' || a.role === 'decal' || a.role === 'prop' || a.variantOf)
+    .filter(a => a.role === 'ground' || a.role === 'terrain-component' || a.role === 'decal' || a.role === 'prop' || a.variantOf)
     .map(a => ({ group: a.group, id: a.id }));
   data += '\n/* BEGIN SCENE LIBRARY */\nfor(const a of ' + JSON.stringify(extra) +
     '){if(!ART[a.group].includes(a.id))ART[a.group].push(a.id);}\n/* END SCENE LIBRARY */\n';
