@@ -1077,7 +1077,9 @@ const Base = {
       grid.appendChild(cell);
     }
 
-    const w = Save.bagWeight();
+    /* 这里的 kg 是「背出去的总重」：背包 + 安全箱 + 身上装备。
+       只看背包会让人以为还能塞，进图才发现被装备重量吃掉一截。 */
+    const w = Attachments.carriedWeight();
     const meta = document.getElementById('bagMeta');
     if (meta) meta.textContent = Save.bag.length + ' / ' + bagSlots() + ' 格 · ' +
       w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
@@ -1098,7 +1100,7 @@ const Base = {
   /* 背包还能不能塞下：先算再动，算不过就不搬，绝不吞东西 */
   bagBlock(it, n) {
     if (!it) return '物品不存在';
-    if (Save.bagWeight() + Save.safeWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
+    if (Attachments.carriedWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
     const stack = stackLimit(it);
     let room = 0;
     for (const e of Save.bag) {
@@ -1158,6 +1160,8 @@ const Base = {
     const eq = it?.equip;
     if (eq?.kind !== 'gun') return false;
     const bag = new Bag();
+    /* 退弹也是往包里塞东西，要按「背出去的总重」判，只算背包内容会放行。 */
+    bag.extraWeight = Math.max(0, Attachments.carriedWeight() - Save.bagWeight() - Save.safeWeight());
     bag.slots = Save.bag.map(e => ({item:stashItem(e), n:e.n||1, cap:e.cap}));
     const rounds = magazineRounds(Attachments.resolve(eq.gun,eq.attachments), eq.mag, eq.ammo, eq.rounds), counts = {};
     for (const id of rounds) counts[id] = (counts[id]||0)+1;
@@ -1500,7 +1504,7 @@ const MapSelect = {
     }
     const map=MAP_CATALOG.find(m=>m.id===this.selectedId);
     document.getElementById('mapSelectedName').textContent=map.title;
-    const bagN=Save.bag.length, bagW=Save.bagWeight()+Save.safeWeight();
+    const bagN=Save.bag.length, bagW=Attachments.carriedWeight();
     document.getElementById('mapSupplyCost').textContent='背包 ' + bagN + ' / ' + bagSlots() +
       ' 格 · 保险箱 '+Save.safe.length+' / '+CFG.BAG.SAFE+' 格 · ' + bagW.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
     document.getElementById('mapSelectionHint').textContent=

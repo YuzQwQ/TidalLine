@@ -531,6 +531,16 @@ const Game = {
     const start=M.navigationPoint(sp.x,sp.y);
     this.player = new Player(start.x,start.y);
     this.player.hp = Save.hp;
+    /* 武器与护甲先装配，再倒背包 —— 背包的容量判定比的是「总负重」
+       （bag.carryWeight() → player.totalWeight），装备没上身就等于漏算 15kg。
+       护甲拷一份实例出来，耐久变化写回 Save.gear。 */
+    this.player.fillWeapons(Save.gear.weapons);
+    // Empty gun slots are valid; melee equipment is selected by the melee integration.
+    this.player.helmet = Save.gear.helmet ? Object.assign({}, Save.gear.helmet) : null;
+    this.player.body = Save.gear.body ? Object.assign({}, Save.gear.body) : null;
+    /* 背包：拷一份，它只提供容量，没有耐久所以不会在局内变化 */
+    this.player.back = Save.gear.back ? Object.assign({}, Save.gear.back) : null;
+
     /* 默认从藏身处的背包里装（没传 loadout 就是这条路）；
        传了旧式 loadout（{ammo556:30,...}）的调用点按老规矩发东西，
        调试入口和测试还在用这种写法。 */
@@ -542,14 +552,6 @@ const Game = {
     /* 带入清单：结算时要把「自己背进来的东西」从收获价值里扣掉，
        否则带一把 3000 万的钥匙进去、原样带出来，结算就凭空多 3000 万。 */
     this.broughtIn = this.snapshotBroughtIn();
-
-    // 武器与护甲：护甲拷一份实例出来，耐久变化写回 Save.gear
-    this.player.fillWeapons(Save.gear.weapons);
-    // Empty gun slots are valid; melee equipment is selected by the melee integration.
-    this.player.helmet = Save.gear.helmet ? Object.assign({}, Save.gear.helmet) : null;
-    this.player.body = Save.gear.body ? Object.assign({}, Save.gear.body) : null;
-    /* 背包：拷一份，它只提供容量，没有耐久所以不会在局内变化 */
-    this.player.back = Save.gear.back ? Object.assign({}, Save.gear.back) : null;
 
     // 敌人
     if(typeof HumanAI!=='undefined')HumanAI.sequence=0;

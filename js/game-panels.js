@@ -935,8 +935,14 @@ Object.assign(Game, {
       }
     }
 
-    const w = P.bag.weight(), t = P.bag.tier();
-    document.getElementById('bagWeight').textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
+    /* 负重条显示的是「压在身上的总重」，不是背包内容 —— 跟移速、档位、
+       能不能再捡东西用的是同一个数（P.totalWeight）。显示 bag.weight()
+       会出现「条子才一半却已经跑不动」的矛盾。 */
+    const w = P.totalWeight, t = P.tier;
+    const el = document.getElementById('bagWeight');
+    el.textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
+    el.title = '总负重 ' + w.toFixed(1) + ' kg（背包 ' + P.bag.weight().toFixed(1) +
+      ' + 装备 ' + Math.max(0, w - P.bag.weight()).toFixed(1) + '）';
     document.getElementById('bagValue').textContent = formatMoney(P.bag.value());
     const bar = document.getElementById('bagBar');
     bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';

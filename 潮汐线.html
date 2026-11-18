@@ -9838,18 +9838,30 @@ function segDist(ax, ay, bx, by, cx, cy) {
 }
 
 class Bag {
-  constructor() {
+  /* owner 是玩家对象：给了它，容量判定就按「总负重」算（背包内容 + 安全箱 +
+     身上的武器 / 头盔 / 护甲 / 背包自重），也就是玩家真正扛在身上的重量。
+     不给 owner 时（局外临时实例）退回只算背包，调用方自己补装备重量。 */
+  constructor(owner) {
+    this.owner = owner || null;
     this.slots = [];        // [{ item, n }]
     this.safe = [];         // 安全箱
     /* 钥匙链：只用来开门，不参与 capacity / weight / value 的计算，
        所以塞满 6 把钥匙也不会挤占背包格或抬高背包价值。 */
     this.chain = [];
   }
+  /* 只算背包内容 + 安全箱。脚上跑的负重不是这个，见 carryWeight()。 */
   weight() {
     let w = 0;
     for (const s of this.slots) w += s.item.w * s.n;
     for (const s of this.safe) w += s.item.w * s.n;
     return w;
+  }
+  /* 真正压在身上的重量 —— 容量上限（CFG.BAG.CARRY）比的就是这个。
+     历史包袱：早先 canAdd / add 只比 weight()，于是背着 15kg 装备还能再塞满
+     75kg 背包，实际 90kg 在跑（移速已经掉到超载档）。这里统一口径。
+     没有 owner 的局外临时实例用 extraWeight 手动补上装备自重。 */
+  carryWeight() {
+    return this.owner ? this.owner.totalWeight : this.weight() + (this.extraWeight || 0);
   }
   value() {
     let v = 0;
@@ -9859,7 +9871,7 @@ class Bag {
   }
   count() { return this.slots.length; }
 
-  tier() { return weightTier(this.weight()); }
+  tier() { return weightTier(this.carryWeight()); }
 
   canAdd(item, n, cap) {
     n = Math.max(1, n | 0);
@@ -9874,7 +9886,7 @@ class Bag {
     /* 不可堆叠的一件一格，要几格就占几格 */
     const need = stack > 1 ? Math.ceil(n / stack) : n;
     if (this.slots.length + need > bagSlots()) return { ok: false, why: '背包满了' };
-    if (this.weight() + item.w * n > CFG.BAG.CARRY) return { ok: false, why: '太重了' };
+    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return { ok: false, why: '太重了' };
     return { ok: true };
   }
 
@@ -9901,7 +9913,7 @@ class Bag {
     /* 剩下的新开格：不可堆叠的一件一格 */
     const need = stack > 1 ? Math.ceil(n / stack) : n;
     if (this.slots.length + need > bagSlots()) return false;
-    if (this.weight() + item.w * n > CFG.BAG.CARRY) return false;
+    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return false;
     while (n > 0) {
       const put = Math.min(stack, n);
       this.slots.push(ItemCapacity.max(item)
@@ -9952,6 +9964,9 @@ class Bag {
   addAmmo(id, n) {
     const item = AMMO_BY_ID[id];
     if (!item || n <= 0) return false;
+    /* 弹药也要过重量关。原来这里只看格子，子弹又轻又按 30 发一堆，
+       等于一条绕过负重上限的后门：别的物品塞不下时还能再压两百发子弹进去。 */
+    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return false;
     const stack = stackLimit(item);
     let left = n;
     for (const s of this.slots) {
@@ -9980,7 +9995,7 @@ class Player {
     this.maxHp = CFG.P.HP;
     this.angle = 0;
     this.vx = 0; this.vy = 0;
-    this.bag = new Bag();
+    this.bag = new Bag(this);
     // 武器：0/1 主武器，2 副武器（startRun 时按配装填真实武器对象）
     this.weapons = [null, null, null];
     this.slot = 0;
@@ -10053,13 +10068,14 @@ class Player {
   }
   get ammoId() { const a = this.ammoItem; return a ? a.id : null; }
 
-  /* 总重量 = 背包里的东西 + 安全箱 + 身上的武器 + 头盔 + 护甲 + 背包自身 */
+  /* 总重量 = 背包里的东西 + 安全箱 + 身上的武器 + 头盔 + 护甲 + 背包自身 + 近战 */
   get totalWeight() {
     let w = this.bag.weight();
     for (const x of this.weapons) if (x) w += x.w;
     if (this.helmet) w += this.helmet.w;
     if (this.body) w += this.body.w;
     if (this.back) w += this.back.w;
+    if (this.melee) w += this.melee.w || 0;
     return w;
   }
 
@@ -16980,7 +16996,9 @@ const Base = {
       grid.appendChild(cell);
     }
 
-    const w = Save.bagWeight();
+    /* 这里的 kg 是「背出去的总重」：背包 + 安全箱 + 身上装备。
+       只看背包会让人以为还能塞，进图才发现被装备重量吃掉一截。 */
+    const w = Attachments.carriedWeight();
     const meta = document.getElementById('bagMeta');
     if (meta) meta.textContent = Save.bag.length + ' / ' + bagSlots() + ' 格 · ' +
       w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
@@ -17001,7 +17019,7 @@ const Base = {
   /* 背包还能不能塞下：先算再动，算不过就不搬，绝不吞东西 */
   bagBlock(it, n) {
     if (!it) return '物品不存在';
-    if (Save.bagWeight() + Save.safeWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
+    if (Attachments.carriedWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
     const stack = stackLimit(it);
     let room = 0;
     for (const e of Save.bag) {
@@ -17061,6 +17079,8 @@ const Base = {
     const eq = it?.equip;
     if (eq?.kind !== 'gun') return false;
     const bag = new Bag();
+    /* 退弹也是往包里塞东西，要按「背出去的总重」判，只算背包内容会放行。 */
+    bag.extraWeight = Math.max(0, Attachments.carriedWeight() - Save.bagWeight() - Save.safeWeight());
     bag.slots = Save.bag.map(e => ({item:stashItem(e), n:e.n||1, cap:e.cap}));
     const rounds = magazineRounds(Attachments.resolve(eq.gun,eq.attachments), eq.mag, eq.ammo, eq.rounds), counts = {};
     for (const id of rounds) counts[id] = (counts[id]||0)+1;
@@ -17403,7 +17423,7 @@ const MapSelect = {
     }
     const map=MAP_CATALOG.find(m=>m.id===this.selectedId);
     document.getElementById('mapSelectedName').textContent=map.title;
-    const bagN=Save.bag.length, bagW=Save.bagWeight()+Save.safeWeight();
+    const bagN=Save.bag.length, bagW=Attachments.carriedWeight();
     document.getElementById('mapSupplyCost').textContent='背包 ' + bagN + ' / ' + bagSlots() +
       ' 格 · 保险箱 '+Save.safe.length+' / '+CFG.BAG.SAFE+' 格 · ' + bagW.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
     document.getElementById('mapSelectionHint').textContent=
@@ -18394,6 +18414,16 @@ const Game = {
     const start=M.navigationPoint(sp.x,sp.y);
     this.player = new Player(start.x,start.y);
     this.player.hp = Save.hp;
+    /* 武器与护甲先装配，再倒背包 —— 背包的容量判定比的是「总负重」
+       （bag.carryWeight() → player.totalWeight），装备没上身就等于漏算 15kg。
+       护甲拷一份实例出来，耐久变化写回 Save.gear。 */
+    this.player.fillWeapons(Save.gear.weapons);
+    // Empty gun slots are valid; melee equipment is selected by the melee integration.
+    this.player.helmet = Save.gear.helmet ? Object.assign({}, Save.gear.helmet) : null;
+    this.player.body = Save.gear.body ? Object.assign({}, Save.gear.body) : null;
+    /* 背包：拷一份，它只提供容量，没有耐久所以不会在局内变化 */
+    this.player.back = Save.gear.back ? Object.assign({}, Save.gear.back) : null;
+
     /* 默认从藏身处的背包里装（没传 loadout 就是这条路）；
        传了旧式 loadout（{ammo556:30,...}）的调用点按老规矩发东西，
        调试入口和测试还在用这种写法。 */
@@ -18405,14 +18435,6 @@ const Game = {
     /* 带入清单：结算时要把「自己背进来的东西」从收获价值里扣掉，
        否则带一把 3000 万的钥匙进去、原样带出来，结算就凭空多 3000 万。 */
     this.broughtIn = this.snapshotBroughtIn();
-
-    // 武器与护甲：护甲拷一份实例出来，耐久变化写回 Save.gear
-    this.player.fillWeapons(Save.gear.weapons);
-    // Empty gun slots are valid; melee equipment is selected by the melee integration.
-    this.player.helmet = Save.gear.helmet ? Object.assign({}, Save.gear.helmet) : null;
-    this.player.body = Save.gear.body ? Object.assign({}, Save.gear.body) : null;
-    /* 背包：拷一份，它只提供容量，没有耐久所以不会在局内变化 */
-    this.player.back = Save.gear.back ? Object.assign({}, Save.gear.back) : null;
 
     // 敌人
     if(typeof HumanAI!=='undefined')HumanAI.sequence=0;
@@ -21398,8 +21420,14 @@ Object.assign(Game, {
       }
     }
 
-    const w = P.bag.weight(), t = P.bag.tier();
-    document.getElementById('bagWeight').textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
+    /* 负重条显示的是「压在身上的总重」，不是背包内容 —— 跟移速、档位、
+       能不能再捡东西用的是同一个数（P.totalWeight）。显示 bag.weight()
+       会出现「条子才一半却已经跑不动」的矛盾。 */
+    const w = P.totalWeight, t = P.tier;
+    const el = document.getElementById('bagWeight');
+    el.textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
+    el.title = '总负重 ' + w.toFixed(1) + ' kg（背包 ' + P.bag.weight().toFixed(1) +
+      ' + 装备 ' + Math.max(0, w - P.bag.weight()).toFixed(1) + '）';
     document.getElementById('bagValue').textContent = formatMoney(P.bag.value());
     const bar = document.getElementById('bagBar');
     bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';

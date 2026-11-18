@@ -134,18 +134,30 @@ function segDist(ax, ay, bx, by, cx, cy) {
 }
 
 class Bag {
-  constructor() {
+  /* owner 是玩家对象：给了它，容量判定就按「总负重」算（背包内容 + 安全箱 +
+     身上的武器 / 头盔 / 护甲 / 背包自重），也就是玩家真正扛在身上的重量。
+     不给 owner 时（局外临时实例）退回只算背包，调用方自己补装备重量。 */
+  constructor(owner) {
+    this.owner = owner || null;
     this.slots = [];        // [{ item, n }]
     this.safe = [];         // 安全箱
     /* 钥匙链：只用来开门，不参与 capacity / weight / value 的计算，
        所以塞满 6 把钥匙也不会挤占背包格或抬高背包价值。 */
     this.chain = [];
   }
+  /* 只算背包内容 + 安全箱。脚上跑的负重不是这个，见 carryWeight()。 */
   weight() {
     let w = 0;
     for (const s of this.slots) w += s.item.w * s.n;
     for (const s of this.safe) w += s.item.w * s.n;
     return w;
+  }
+  /* 真正压在身上的重量 —— 容量上限（CFG.BAG.CARRY）比的就是这个。
+     历史包袱：早先 canAdd / add 只比 weight()，于是背着 15kg 装备还能再塞满
+     75kg 背包，实际 90kg 在跑（移速已经掉到超载档）。这里统一口径。
+     没有 owner 的局外临时实例用 extraWeight 手动补上装备自重。 */
+  carryWeight() {
+    return this.owner ? this.owner.totalWeight : this.weight() + (this.extraWeight || 0);
   }
   value() {
     let v = 0;
@@ -155,7 +167,7 @@ class Bag {
   }
   count() { return this.slots.length; }
 
-  tier() { return weightTier(this.weight()); }
+  tier() { return weightTier(this.carryWeight()); }
 
   canAdd(item, n, cap) {
     n = Math.max(1, n | 0);
@@ -170,7 +182,7 @@ class Bag {
     /* 不可堆叠的一件一格，要几格就占几格 */
     const need = stack > 1 ? Math.ceil(n / stack) : n;
     if (this.slots.length + need > bagSlots()) return { ok: false, why: '背包满了' };
-    if (this.weight() + item.w * n > CFG.BAG.CARRY) return { ok: false, why: '太重了' };
+    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return { ok: false, why: '太重了' };
     return { ok: true };
   }
 
@@ -197,7 +209,7 @@ class Bag {
     /* 剩下的新开格：不可堆叠的一件一格 */
     const need = stack > 1 ? Math.ceil(n / stack) : n;
     if (this.slots.length + need > bagSlots()) return false;
-    if (this.weight() + item.w * n > CFG.BAG.CARRY) return false;
+    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return false;
     while (n > 0) {
       const put = Math.min(stack, n);
       this.slots.push(ItemCapacity.max(item)
@@ -248,6 +260,9 @@ class Bag {
   addAmmo(id, n) {
     const item = AMMO_BY_ID[id];
     if (!item || n <= 0) return false;
+    /* 弹药也要过重量关。原来这里只看格子，子弹又轻又按 30 发一堆，
+       等于一条绕过负重上限的后门：别的物品塞不下时还能再压两百发子弹进去。 */
+    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return false;
     const stack = stackLimit(item);
     let left = n;
     for (const s of this.slots) {
@@ -276,7 +291,7 @@ class Player {
     this.maxHp = CFG.P.HP;
     this.angle = 0;
     this.vx = 0; this.vy = 0;
-    this.bag = new Bag();
+    this.bag = new Bag(this);
     // 武器：0/1 主武器，2 副武器（startRun 时按配装填真实武器对象）
     this.weapons = [null, null, null];
     this.slot = 0;
@@ -349,13 +364,14 @@ class Player {
   }
   get ammoId() { const a = this.ammoItem; return a ? a.id : null; }
 
-  /* 总重量 = 背包里的东西 + 安全箱 + 身上的武器 + 头盔 + 护甲 + 背包自身 */
+  /* 总重量 = 背包里的东西 + 安全箱 + 身上的武器 + 头盔 + 护甲 + 背包自身 + 近战 */
   get totalWeight() {
     let w = this.bag.weight();
     for (const x of this.weapons) if (x) w += x.w;
     if (this.helmet) w += this.helmet.w;
     if (this.body) w += this.body.w;
     if (this.back) w += this.back.w;
+    if (this.melee) w += this.melee.w || 0;
     return w;
   }
 
