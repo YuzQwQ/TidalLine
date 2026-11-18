@@ -326,10 +326,10 @@ const Art = {
       west:!joined(at(x-1,y)), east:!joined(at(x+1,y)) };
   },
 
-  drawWallFaces(c, x, y, size, edges) {
-    const front = this.get('tiles','wall_face_s'), side = this.get('tiles','wall_face_e');
+  drawWallFaces(c, x, y, size, edges, material='wall') {
+    const front = this.get('tiles',material+'_face_s'), side = this.get('tiles',material+'_face_e');
     const h = size, w = size * 4 / 32, topY = y - size / 2;
-    const top = this.get('tiles','wall');
+    const top = this.get('tiles',material);
     if(top){ c.drawImage(top,x,topY,size,size); c.drawImage(top,0,0,32,16,x,y+size/2,size,size/2); }
     if (edges.north) {
       c.fillStyle = 'rgba(211,216,192,0.35)'; c.fillRect(x,topY,size,1);

@@ -13,16 +13,17 @@
       return{sx:metal?9:8,sy:7,sw:metal?13:16,sh:23,x:hingeX-(west?16:0)*u,y:rect.y+5*u,w:16*u,h:22*u,hingeX};
     },
     // One logical tile: north/south jambs join the wall; only the leaf changes state.
-    sidePortal(c,rect,d,stone){
+    sidePortal(c,rect,d,stone,material='wall'){
       const u=rect.w/32,x=rect.x,y=rect.y,w=rect.w,h=rect.h,j=5*u;
       const metal=d.safe||d.reinforced||d.doorType==='locked',locked=d.doorType==='locked'&&!d.unlocked;
+      const tone=material==='wall_brick'?['#655045','#c6ac91','#766052','#453c36']:material==='wall_concrete'?['#505452','#bfc1b8','#6b706c','#3e4542']:['#3a463b','#c4c2a8','#596451','#344337'];
       c.save();
       for(const top of [y,y+h-j]){
-        c.fillStyle='#3a463b';c.fillRect(x,top,w,j);
+        c.fillStyle=tone[0];c.fillRect(x,top,w,j);
         if(stone)c.drawImage(stone,0,0,stone.naturalWidth||32,5,x,top,w,j);
-        c.fillStyle='#c4c2a8';c.fillRect(x,top,w,u);
-        c.fillStyle='#596451';c.fillRect(x+w-2*u,top,2*u,j);
-        c.fillStyle='#344337';c.fillRect(x,top+j-u,w,u);
+        c.fillStyle=tone[1];c.fillRect(x,top,w,u);
+        c.fillStyle=tone[2];c.fillRect(x+w-2*u,top,2*u,j);
+        c.fillStyle=tone[3];c.fillRect(x,top+j-u,w,u);
         if(metal){
           c.fillStyle='#263b37';c.fillRect(x+11*u,top,10*u,j);
           c.fillStyle='#8eaaa0';c.fillRect(x+12*u,top+u,8*u,u);

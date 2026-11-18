@@ -283,7 +283,7 @@ Object.assign(Game, {
         const bright=CFG.FOV.BRIGHT_NOW;
         c.save();c.beginPath();c.rect(sx,overhang?sy-size/2:sy,size,overhang?size/2:size);c.clip();
         if(overhang)c.globalAlpha*=this.wallTopAlpha(x,y);
-        Art.drawWallFaces(c,sx,sy,size,edges);
+        Art.drawWallFaces(c,sx,sy,size,edges,t.art||'wall');
         if(bright<1){c.fillStyle='rgba(4,8,7,'+(1-bright)+')';c.fillRect(sx,sy-size/2,size,size*1.5);}
         c.restore();
       }
@@ -549,7 +549,9 @@ Object.assign(Game, {
       const rect=Art.propRect(prop,image,TS);
       c.save();
       // 树冠在角色之后绘制；视野外与地面共同接受暗层覆盖。
-      c.beginPath();for(const [x,y]of cells)c.rect(x*TS-camX,y*TS-camY,TS,TS);c.clip();
+      c.beginPath();for(const [x,y]of cells)c.rect(x*TS-camX,y*TS-camY,TS,TS);
+      if(prop.collisionRects)c.rect(rect.x-camX,rect.y-camY,rect.w,rect.h);
+      c.clip();
       c.globalAlpha=this.canopyAlpha(prop);
       c.drawImage(image,rect.sx,rect.sy,rect.sw,rect.sh,rect.x-camX,rect.y-camY,rect.w,rect.h);
       c.restore();

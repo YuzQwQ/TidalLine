@@ -208,7 +208,8 @@ const CFG = {
     LEVEL: [0.0, 1.55, 3.0] // 三阶段结束时的水位
   },
   RAID: {
-    DURATION: { 'linhai-old-quarter': 1200 },
+    /* 围栏区保留 12 分钟三阶段涨潮；此前没有显式条目，靠 CFG.TIDE.ROUND 兜底。 */
+    DURATION: { 'linhai-old-quarter': 1200, 'fenced-zone': 720 },
     WARN_REMAINING: [300, 180, 60]
   },
 

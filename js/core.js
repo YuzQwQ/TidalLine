@@ -79,6 +79,8 @@ const M = {
     this.tideEnabled = map ? map.tideEnabled : true;
     this.tideLevel = 0;
     this.doors = [];
+    this.propBoundaryRects = [];
+    this.propBoundaryGrid = new Map();
     this.playerSpawn = {x:0,y:0};
     this.H = rows.length;
     this.W = rows[0].length;
@@ -152,6 +154,15 @@ const M = {
       if(!Number.isInteger(prop.x)||!Number.isInteger(prop.y))throw new Error('物件坐标必须为整数: '+prop.id);
       const [pw,ph]=this.propSize(prop);
       if(prop.x<0||prop.y<0||pw>this.W-prop.x||ph>this.H-prop.y)throw new Error('场景摆设越界: '+prop.id);
+      // 帐篷只在长边保留薄碰撞，内部格子与短边入口保持可走。
+      for(const rect of prop.collisionRects||[]){
+        if(!Array.isArray(rect)||rect.length!==4||!rect.every(Number.isFinite)||rect[0]<0||rect[1]<0||rect[2]<=0||rect[3]<=0||rect[0]+rect[2]>pw||rect[1]+rect[3]>ph)throw new Error('物件薄边界越界: '+prop.id);
+        const r=[(prop.x+rect[0])*CFG.TILE,(prop.y+rect[1])*CFG.TILE,rect[2]*CFG.TILE,rect[3]*CFG.TILE];
+        this.propBoundaryRects.push({rect:r,opaque:prop.opaque!==false});
+        for(let y=Math.floor(r[1]/CFG.TILE);y<Math.ceil((r[1]+r[3])/CFG.TILE);y++)for(let x=Math.floor(r[0]/CFG.TILE);x<Math.ceil((r[0]+r[2])/CFG.TILE);x++){
+          const key=x+','+y,list=this.propBoundaryGrid.get(key)||[];list.push(r);this.propBoundaryGrid.set(key,list);
+        }
+      }
       const cells=this.propCollisionCells(prop);
       for(const [x,y] of cells){
         const tile=this.at(x,y);
@@ -178,6 +189,10 @@ const M = {
     const exits = this.extracts || [];
     this.infiltration = null;
     for (const ex of exits) ex.closed = false;
+    /* 固定入场的地图（围栏区·临时安置点）不从撤离点里抽入场点：
+       playerSpawn 保持 M.load 从地形 'P' 读出的主入口，所有撤离点都可用。
+       临海路没有这个标记，继续走「随机抽一个撤离点入场并封闭它」的旧规则。 */
+    if (this.map && this.map.fixedEntrance) return null;
     const candidates = exits.filter(ex => ex.spawnable !== false);
     if (exits.length < 2 || candidates.length < 2) return null;
     const pick = candidates[Math.min(candidates.length - 1, Math.floor(rand() * candidates.length))];
@@ -208,17 +223,28 @@ const M = {
   },
 
   // 墙体实体只占原格；北侧半格墙顶是绘制投影，不参与碰撞、弹道和视线。
-  wallCell(t) { return !!(t&&t.solid&&!t.wallCap&&t.terrainCh!=='w'&&(t.ch==='#'||t.art==='wall')); },
+  wallCell(t) { return !!(t&&t.solid&&!t.wallCap&&t.terrainCh!=='w'&&(t.ch==='#'||t.art==='wall'||t.art?.startsWith('wall_'))); },
   wallAtPoint(wx,wy) {
     return this.wallCell(this.at(this.tx(wx),this.ty(wy)));
   },
   walkable(x,y) { return this.baseWalkable(x,y); },
   navigationPoint(x,y) { return {x:this.cx(x),y:this.cy(y)}; },
-  walkablePoint(wx,wy) { return this.baseWalkable(this.tx(wx),this.ty(wy))&&!this.wallAtPoint(wx,wy); },
+  walkablePoint(wx,wy) { return this.baseWalkable(this.tx(wx),this.ty(wy))&&!this.wallAtPoint(wx,wy)&&!this.boundaryBlocked(wx,wy,wx,wy); },
+  boundaryBlocked(x0,y0,x1,y1,opaqueOnly=false) {
+    for(const entry of this.propBoundaryRects||[]){
+      if(opaqueOnly&&!entry.opaque)continue;
+      const [x,y,w,h]=entry.rect;let lo=0,hi=1;
+      for(const [a,d,min,max] of [[x0,x1-x0,x,x+w],[y0,y1-y0,y,y+h]]){
+        if(!d){if(a<min||a>max){hi=-1;break;}}
+        else{const t0=(min-a)/d,t1=(max-a)/d;lo=Math.max(lo,Math.min(t0,t1));hi=Math.min(hi,Math.max(t0,t1));}
+      }
+      if(lo<=hi)return true;
+    }return false;
+  },
   collisionRects(x,y) {
     const size=CFG.TILE;
     if(!this.baseWalkable(x,y))return [[x*size,y*size,size,size]];
-    return [];
+    return this.propBoundaryGrid?.get(x+','+y)||[];
   },
 
   /* 是否挡视线。
@@ -236,7 +262,7 @@ const M = {
   // 不可走的水面、驳岸允许子弹越过；玻璃、实体家具与门仍阻挡弹道。
   blocksShot(x,y,wx=this.cx(x),wy=this.cy(y)) {
     const t=this.at(x,y);
-    return !t || this.wallAtPoint(wx,wy) || t.solid || t.container || !!(t.prop&&!t.prop.ground)
+    return !t || this.boundaryBlocked(wx,wy,wx,wy) || this.wallAtPoint(wx,wy) || t.solid || t.container || !!(t.prop&&!t.prop.ground)
       || t.terrainCh==='w' || !!(t.door&&!t.door.open);
   },
 
@@ -359,6 +385,7 @@ const M = {
 
   /* 两点之间是否通视（敌人用，简化的直线检查） */
   lineOfSight(x0, y0, x1, y1) {
+    if(this.boundaryBlocked(this.cx(x0),this.cy(y0),this.cx(x1),this.cy(y1),true))return false;
     let dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
     let sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
     let err = dx - dy;
@@ -468,6 +495,7 @@ const M = {
         const ny = cy + (d === 2 ? 1 : d === 3 ? -1 : 0);
         if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
         if (!this.walkable(nx, ny)) continue;
+        if(this.boundaryBlocked(this.cx(cx),this.cy(cy),this.cx(nx),this.cy(ny)))continue;
         const ni = ny * W + nx;
         if (closed[ni]) continue;
         const ng = g[cur] + 1;

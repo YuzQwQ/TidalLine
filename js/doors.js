@@ -41,10 +41,13 @@ const DoorSystem={
     return{ok:true};
   },
   label(d,p){if(d.open)return'关门';if(d.doorType==='barricade'&&!d.breached)return this.normalSide(d,p)?'踹开':'门被另一侧挡住';if(d.doorType==='locked'&&!d.unlocked)return this.hasKey(d,p)?'用钥匙开锁':'上锁（需要对应钥匙）';return'开门';},
-  wallTop(d,x,y){
+  wallMaterial(d,x,y){
     const candidates=(d.cells||[[x,y]]).flatMap(([cx,cy])=>d.axis==='vertical'?[[cx,cy-1],[cx,cy+1],[cx-1,cy],[cx+1,cy]]:[[cx-1,cy],[cx+1,cy],[cx,cy-1],[cx,cy+1]]);
-    for(const [cx,cy]of candidates){const t=M.at(cx,cy);if(M.wallCell(t))return Art.get('tiles',t.art||'wall')||Art.get('tiles','wall');}
-    return Art.get('tiles','wall');
+    for(const [cx,cy]of candidates){const t=M.at(cx,cy);if(M.wallCell(t))return t.art||'wall';}
+    return d.wallMaterial||'wall';
+  },
+  wallTop(d,x,y){
+    return Art.get('tiles',this.wallMaterial(d,x,y))||Art.get('tiles','wall');
   },
   drawCap(c,d,x,y,size,camX,camY){
     if(this.isStudy(d)){
@@ -69,11 +72,11 @@ const DoorSystem={
     if(d.axis==='vertical')return;
     const world=Art.doorRect(d,image,x,y,size),rect={x:world.x-camX,y:world.y-camY,w:world.w,h:world.h};
     const sx=x*size-camX,sy=y*size-camY;
-    DoorVisual.wallLayer(c,{x:sx,y:sy,w:size,h:size},rect,d,()=>Art.drawWallFaces(c,sx,sy,size,Art.wallEdges(x,y)));
+    DoorVisual.wallLayer(c,{x:sx,y:sy,w:size,h:size},rect,d,()=>Art.drawWallFaces(c,sx,sy,size,Art.wallEdges(x,y),this.wallMaterial(d,x,y)));
   },
   drawStudy(c,d,image,rect){
     const barred=d.doorType==='barricade'&&!d.breached&&!this.normalSide(d,Game.player);
-    DoorVisual.sidePortal(c,rect,{...d,barred},this.wallTop(d,d.x,d.y));
+    DoorVisual.sidePortal(c,rect,{...d,barred},this.wallTop(d,d.x,d.y),this.wallMaterial(d,d.x,d.y));
   },
   drawStudyGround(c,d,size,camX,camY){
     if(!d.open)return;const metal=d.safe||d.reinforced||d.doorType==='locked',image=Art.get('props',metal?'sdoor':'door');if(!image)return;

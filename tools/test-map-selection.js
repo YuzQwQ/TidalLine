@@ -44,14 +44,20 @@ const root=path.resolve(__dirname,'..'),output=path.join(root,'output/map-select
   const old=await page.evaluate(()=>{
    Game.state='ended';
    const result={id:Game.mapId,title:M.map.title,width:M.W,height:M.H,boxes:Game.boxes.length,enemies:Game.enemies.length,exits:M.extracts.length,props:M.map.props.length,credits:Save.credits,ammo:Save.stashCount('ammo'),safe:M.extracts.every(ex=>M.findPath(M.playerSpawn.x,M.playerSpawn.y,ex.x,ex.y)),stand:Game.enemies.every(e=>canStand(e.x,e.y,e.r))};
-   Game.time=600;Game.updateTide();result.tide=Game.tideLevel;result.dockBlocked=!M.walkable(52,37);
+   Game.time=600;Game.updateTide();result.tide=Game.tideLevel;result.dockBlocked=!M.walkable(40,40);
    Game.startRun(undefined,'fenced-zone');Game.state='ended';
    const stableStart=Game.enemies.every(e=>canStand(e.x,e.y,e.r));Game.state='playing';for(let i=0;i<600;i++)Game.update(1/60);Game.state='ended';
    result.simulation=stableStart&&!Game.player.dead&&Game.enemies.filter(e=>!e.dead).every(e=>canStand(e.x,e.y,e.r));
    return result;
   });
-  assert.equal(old.id,'fenced-zone');assert.equal(old.title,'围栏区');assert.equal(old.width,64);assert.equal(old.height,44);assert.equal(old.boxes,41);assert.equal(old.enemies,24);assert.equal(old.exits,3);assert.equal(old.props,42);
-  assert.equal(old.credits,200000-cost);assert.equal(old.ammo,0);assert(old.safe&&old.stand&&old.tide>1.05&&old.dockBlocked&&old.simulation,'旧地图通路/潮汐/出生碰撞必须保留');
+  const fc=await page.evaluate(()=>({containers:FENCED_MAP.containers.length,loot:FENCED_MAP.lootSpawns.length,enemies:FENCED_MAP.enemies.length,props:FENCED_MAP.props.length,pois:FENCED_MAP.pois.length}));
+  assert.equal(old.id,'fenced-zone');assert.equal(old.title,'围栏区 · 临时安置点');assert.equal(old.width,64);assert.equal(old.height,44);
+  /* Game.boxes = 全部容器 + 本局随机出货的地面散落物，所以按编译快照推区间而不是写死数字 */
+  assert(old.boxes>=fc.containers&&old.boxes<=fc.containers+fc.loot,'容器与地面散落物数量越界：'+old.boxes);
+  assert.equal(old.enemies,fc.enemies);assert.equal(old.exits,3);assert.equal(old.props,fc.props);
+  assert(fc.pois>=4,'围栏区应登记四个功能区');
+  assert.equal(fc.containers,0,'地形原型不放容器');assert.equal(fc.loot,0,'地形原型不放散落物');assert.equal(fc.enemies,0,'地形原型不放敌人');
+  assert.equal(old.credits,200000-cost);assert.equal(old.ammo,0);assert(old.safe&&old.stand&&old.tide>1.05&&old.dockBlocked&&old.simulation,'地图通路/潮汐/出生碰撞必须保留：'+JSON.stringify(old));
   await enterMap('linhai-old-quarter');
   assert(await page.evaluate(()=>{Game.state='ended';return M.W===72&&M.H===56&&M.extracts.length===2&&!M.tideEnabled&&M.map.id==='linhai-old-quarter'&&M.map.props.length===RAID_MAP.props.length&&Game.enemies.length===RAID_MAP.enemies.length&&M.at(29,28).art==='canal_steps_w';}),'临海路切换失败');
   await enterMap('fenced-zone');
