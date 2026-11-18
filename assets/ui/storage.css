@@ -64,3 +64,11 @@
   animation: none;
   --rarity-border-angle: 10deg;
 }
+
+/* 收藏标记角标：格子右上角。有标记时数量角标让到左上，两者不重叠。
+   颜色由内联的 stroke 决定（四种符号各有自己的色），这里只管位置和投影。
+   仓库主网格用 .scell，背包与保险箱用 .cell，两套都要覆盖。 */
+.cell,.scell{position:relative}
+.cell .fav-badge,.scell .fav-badge{position:absolute;top:1px;right:2px;width:14px;height:14px;display:grid;place-items:center;z-index:3;pointer-events:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.65))}
+.cell .fav-badge svg,.scell .fav-badge svg{display:block}
+.cell.has-fav .qty,.scell.has-fav .qty{right:auto;left:3px}

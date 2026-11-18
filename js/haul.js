@@ -120,10 +120,18 @@ const Haul = {
       const have = this.have(q.mats);
       const lines = Object.entries(q.mats).map(([id, need]) => {
         const got = have[id] || 0, enough = got >= need;
-        const nm = ITEM_BY_ID[id]?.name || id;
-        return `<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:0.5px solid rgba(255,255,255,.06);">
-          <span>${nm}</span>
-          <b style="font-weight:500;color:${enough ? '#52e8b3' : '#d98b6b'}">${got} / ${need}</b></div>`;
+        const it = ITEM_BY_ID[id], nm = it?.name || id;
+        const fav = (typeof Favorites !== 'undefined') ? Favorites.get(id) : -1;
+        /* 一行一个材料：贴图 + 名称 + 持有/需求 + 收藏角标。
+           左键看详情、右键出菜单（和仓库格子同一套）。 */
+        return `<div class="haul-mat${fav >= 0 ? ' has-fav' : ''}" data-mat="${id}" `
+          + `title="${nm} · 左键看详情 · 右键更多" `
+          + `style="display:flex;align-items:center;gap:8px;font-size:13px;padding:5px 2px;border-bottom:0.5px solid rgba(255,255,255,.06);cursor:pointer;position:relative;">`
+          + `${it ? Icons.bagTag(it, 'ico-mat') : '<span class="ico-mat"></span>'}`
+          + `<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${nm}</span>`
+          + `<b style="font-weight:500;color:${enough ? '#52e8b3' : '#d98b6b'}">${got} / ${need}</b>`
+          + (fav >= 0 ? Favorites.badge(id) : '')
+          + `</div>`;
       }).join('');
       matsHTML = `<div style="margin-top:14px;"><small style="display:block;color:#8a9a90;font-size:11px;margin-bottom:6px;">升级材料 · 从仓库扣除</small>${lines}</div>`;
 
@@ -162,17 +170,48 @@ const Haul = {
         满级 78kg、满载 ×0.88 移速且没有噪声惩罚。正式游戏里材料从仓库扣，这里只做展示。</p>`;
     } else {
       content.innerHTML = this.panelHTML();
-      const btn = content.querySelector('[data-haul-up]');
-      if (btn) btn.onclick = () => {
-        const r = this.upgrade();
-        if (!r.ok) { if (typeof Base !== 'undefined') Base.note(r.why, true); return; }
-        content.innerHTML = this.panelHTML();
-        const again = content.querySelector('[data-haul-up]');
-        if (again) again.onclick = btn.onclick;
-        if (typeof Safehouse !== 'undefined') Safehouse.refresh();
-        if (typeof Base !== 'undefined') { Base.render(); Base.renderStash(); }
-      };
+      this.bind(content);
     }
     if (!d.open) d.showModal();
+  },
+
+  /* 面板里的交互：升级按钮 + 材料行（左键详情 / 右键菜单） */
+  bind(content) {
+    if (!content) return;
+    const btn = content.querySelector('[data-haul-up]');
+    if (btn) btn.onclick = () => {
+      const r = this.upgrade();
+      if (!r.ok) { if (typeof Base !== 'undefined') Base.note(r.why, true); return; }
+      if (typeof Safehouse !== 'undefined') Safehouse.refresh();
+      if (typeof Base !== 'undefined') { Base.render(); Base.renderStash(); }
+      this.repaint();
+    };
+    content.querySelectorAll('[data-mat]').forEach(row => {
+      const id = row.dataset.mat, item = ITEM_BY_ID[id];
+      if (!item) return;
+      const entry = { id, n: 1 };
+      row.onclick = () => {
+        if (typeof Base !== 'undefined') Base.showItem(entry, 'stash', row);
+      };
+      row.oncontextmenu = ev => {
+        ev.preventDefault(); ev.stopPropagation();
+        if (typeof Ctx === 'undefined' || typeof Base === 'undefined') return;
+        const entries = [{ label: '详情', onClick: () => Base.showItem(entry, 'stash', row) }];
+        if (typeof Favorites !== 'undefined') {
+          for (const x of Favorites.menuEntries(id, () => this.repaint())) entries.push(x);
+        }
+        Ctx.show(ev.clientX, ev.clientY, entries);
+      };
+    });
+  },
+
+  /* 只重画面板，不关不重开（升级后、改完标记后） */
+  repaint() {
+    const root = typeof Safehouse !== 'undefined' ? Safehouse.root : null;
+    const d = root && root.querySelector('dialog');
+    if (!d) return;
+    const content = d.querySelector('.sh-dialog-content');
+    content.innerHTML = this.panelHTML();
+    this.bind(content);
   }
 };

@@ -37,6 +37,9 @@ const Save = {
   attachmentRecovery: [],
   attachmentsVersion: 2,
   commissionBoard: null,
+  /* 收藏标记：{ itemId: 0~3 }，见 js/favorites.js。纯粹是玩家自己的备忘，
+     不影响价格、掉落或任何数值，所以连版本号都不用升。 */
+  favorites: {},
   /* 藏身处设施等级。目前只有转运区（haul）：
      0 徒手 / 1 帆布拖车 / 2 加固车架 / 3 滑轮组 / 4 电动绞盘。
      负重上限、档位、满载惩罚全部由它决定，见 common.js 的 carryLimit()。 */
@@ -121,6 +124,12 @@ const Save = {
       this.mailBatches = (d.mailBatches && typeof d.mailBatches === 'object') ? d.mailBatches : {};
       /* 设施等级：老存档没有这个字段，按 0 级算（等于以前的「无搬运工具」）。
          越界值夹回合法区间，避免手改存档把档位表读穿。 */
+      /* 收藏标记：只收合法物品 id 与 0~3 的整数，别让手改存档把角标画崩 */
+      const fav = (d.favorites && typeof d.favorites === 'object') ? d.favorites : {};
+      this.favorites = {};
+      for (const [id, v] of Object.entries(fav)) {
+        if (ITEM_BY_ID[id] && Number.isInteger(v) && v >= 0 && v < 4) this.favorites[id] = v;
+      }
       const fac = (d.facilities && typeof d.facilities === 'object') ? d.facilities : {};
       const maxHaul = CFG.BAG.HAUL.CAP.length - 1;
       this.facilities = { haul: Math.max(0, Math.min(maxHaul, Number(fac.haul) | 0)) };
@@ -223,6 +232,7 @@ const Save = {
         attachmentRecovery: this.attachmentRecovery,
         commissionBoard: this.commissionBoard,
         facilities: this.facilities,
+        favorites: this.favorites,
         bestHaul: this.bestHaul
       }));
       return true;

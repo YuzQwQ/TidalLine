@@ -1007,17 +1007,41 @@ const Base = {
     return moved;
   },
 
+  /* 物品格子的右键菜单：详情 + 收藏标记 + 该语境自己的动作。
+     仓库和背包都走这一个，别再各写一套 —— 收藏是跨页面的能力，
+     分两处实现早晚会漂移。 */
+  itemMenu(e, where, cell, ev, extra) {
+    const it = where === 'gear' ? e : stashItem(e);
+    if (!it || !ev) return;
+    if (ev.preventDefault) ev.preventDefault();
+    if (ev.stopPropagation) ev.stopPropagation();
+    const redraw = () => {
+      if (where === 'bag') this.renderBag();
+      else if (where === 'stash') this.renderStash();
+    };
+    const entries = [{ label: '详情', onClick: () => this.showItem(e, where, cell) }];
+    if (typeof Favorites !== 'undefined') {
+      for (const x of Favorites.menuEntries(it.id, redraw)) entries.push(x);
+    }
+    if (extra) for (const x of extra) entries.push(x);
+    Ctx.show(ev.clientX, ev.clientY, entries);
+  },
+
   makeBagCell(e) {
     const cell=document.createElement('div'),it=e?stashItem(e):null;
     if(!it){cell.className='cell empty';cell.textContent='·';return cell;}
     const n=e.n||1,armor=DuraBar.of(it),dots=SlotDots.html(it),capBar=CapBar.html(e);
+    const favLv = (typeof Favorites !== 'undefined') ? Favorites.get(it.id) : -1;
     cell.className='cell '+RARITY[U.clamp((it.r||1)-1,0,RARITY.length-1)].cls+(it.equip?' eq':'')+
-      ((armor||capBar)?' has-dbar':'')+(dots?' has-dots':'')+(it.egg?' egg-item':'');
+      ((armor||capBar)?' has-dbar':'')+(dots?' has-dots':'')+(it.egg?' egg-item':'')+
+      (favLv>=0?' has-fav':'');
     cell.innerHTML=Icons.bagTag(it,'ico-bag')+'<span class="cn">'+esc(it.short||it.name)+'</span>'+
       (n>1?'<span class="qty">'+n+'</span>':'')+
       /* 医疗容量 / 次数、钥匙剩余耐久：都在底边挂同款进度条 */
-      (armor?DuraBar.html(armor):capBar)+dots;
-    cell.title=it.name+(CapBar.readout(e)?' · '+CapBar.readout(e):'')+' · '+(it.w*n).toFixed(2)+'kg · 单击看详情';
+      (armor?DuraBar.html(armor):capBar)+dots+
+      (favLv>=0?Favorites.badge(it.id):'');
+    cell.title=it.name+(CapBar.readout(e)?' · '+CapBar.readout(e):'')+
+      (favLv>=0?' · 收藏：'+FAV_MARKS[favLv].name:'')+' · '+(it.w*n).toFixed(2)+'kg · 单击看详情 · 右键更多';
     return cell;
   },
 
@@ -1054,24 +1078,19 @@ const Base = {
           this.toStash(e);
         };
         cell.oncontextmenu = ev => {
-          ev.preventDefault();
-          ev.stopPropagation();
-          const entries = [
-            { label: '详情', onClick: () => this.showItem(e, 'bag', cell) },
-            { label: '卸下', onClick: () => this.toStash(e) }
-          ];
+          const extra = [{ label: '卸下', onClick: () => this.toStash(e) }];
           if (Medical.is(it)) {
             const usable = Medical.canUse(it, 'basebag');
-            entries.push({
+            extra.push({
               label: Medical.actionLabel(it, 'basebag'),
               disabled: !usable,
               onClick: () => { if (usable) Medical.use(e, 'basebag'); }
             });
           }
           if (typeof BaseSafe !== 'undefined')
-            entries.push({ label: '存入保险箱', onClick: () => BaseSafe.transfer(e, 'bag', 'safe') });
-          for (const a of this.extraActsFor(e, 'bag', cell)) entries.push(a);
-          Ctx.show(ev.clientX, ev.clientY, entries);
+            extra.push({ label: '存入保险箱', onClick: () => BaseSafe.transfer(e, 'bag', 'safe') });
+          for (const a of this.extraActsFor(e, 'bag', cell)) extra.push(a);
+          this.itemMenu(e, 'bag', cell, ev, extra);
         };
       }
       grid.appendChild(cell);
@@ -1353,25 +1372,33 @@ const Base = {
       const armor = DuraBar.of(it);      // 护甲在格子底边挂一条耐久条
       const dots = SlotDots.html(it);    // 枪在底边挂一排配件槽点
       const capBar = CapBar.html(e);     // 医疗品同款：容量 / 次数条
+      const favLv = (typeof Favorites !== 'undefined') ? Favorites.get(it.id) : -1;
       cell.className = 'scell r' + (it.r || 1) + (it.equip ? ' eq' : '') +
-        ((armor || capBar) ? ' has-dbar' : '') + (dots ? ' has-dots' : '') + (it.egg ? ' egg-item' : '');
+        ((armor || capBar) ? ' has-dbar' : '') + (dots ? ' has-dots' : '') + (it.egg ? ' egg-item' : '') +
+        (favLv >= 0 ? ' has-fav' : '');
       cell.innerHTML =
         Icons.bagTag(it, '') +
         '<span class="cn">' + esc(it.short || it.name) + '</span>' +
         (n > 1 ? '<span class="qty">' + n + '</span>' : '') +
         /* 医疗容量 / 次数、钥匙剩余耐久：都在底边挂同款进度条 */
-        (armor ? DuraBar.html(armor) : capBar) + dots;
+        (armor ? DuraBar.html(armor) : capBar) + dots +
+        (favLv >= 0 ? Favorites.badge(it.id) : '');
       cell.title = it.name + (CapBar.readout(e) ? ' · ' + CapBar.readout(e) : '') +
-          ' · ' + it.w.toFixed(2) + 'kg · ' +
-        '估价 ' + formatMoney(entryValue(it, e) * n) + ' · 成交价以商人报价为准 · 左键看详情';
-      /* 仓库只有左键看详情、双击放进背包；右键不弹菜单（别让两套入口打架） */
+          (favLv >= 0 ? ' · 收藏：' + FAV_MARKS[favLv].name : '') + ' · ' + it.w.toFixed(2) + 'kg · ' +
+        '估价 ' + formatMoney(entryValue(it, e) * n) + ' · 成交价以商人报价为准 · 左键看详情 · 右键更多';
+      /* 左键详情、双击放进背包、右键详情 + 收藏 + 出售。
+         右键原本是禁用的（怕和左键打架），但收藏标记需要一层菜单入口，
+         仓库和背包统一走 itemMenu()。 */
       cell.onclick = () => this.showItem(e, 'stash', cell);
       cell.ondblclick = (ev) => {
         if (ev && ev.preventDefault) ev.preventDefault();
         Tips.hide();
         this.toBag(e);
       };
-      cell.oncontextmenu = (ev) => { if (ev) ev.preventDefault(); };
+      cell.oncontextmenu = (ev) => this.itemMenu(e, 'stash', cell, ev, [
+        { label: '放进背包', onClick: () => this.toBag(e) },
+        { label: '前往出售', onClick: () => this.goToSell() }
+      ]);
       grid.appendChild(cell);
     }
 

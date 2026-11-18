@@ -1,6 +1,6 @@
 /* Shared presentation controller. Runtime uses Base/Save; demo uses an isolated snapshot. */
 const Safehouse = {
-  root:null, view:'home', demo:false, broadcastIndex:0, timer:null, paused:false,
+  root:null, view:'home', demo:false, broadcastIndex:0, timer:null, paused:false, archFilter:-1,
   icon(name){
     const shapes={home:'M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10',box:'m3 7 9-4 9 4v11l-9 4-9-4Zm0 0 9 4 9-4M12 11v11',cart:'M2 4h3l3 11h11l3-8H6M9 20h.1M18 20h.1',task:'M8 4H4v18h16V4h-4M8 2h8v5H8ZM8 12h8M8 17h6',pin:'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0ZM15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0',archive:'M5 3h14v19H5ZM9 7h6M9 12h6M9 17h4',radio:'M5 11v9M9 9v13M13 11v9M18 5a10 10 0 0 1 0 14M3 4l12-3',cross:'M9 2h6v7h7v6h-7v7H9v-7H2V9h7Z',tool:'m5 3 5 5-3 3-5-5a6 6 0 0 0 7 8l8 8 5-5-8-8a6 6 0 0 0-9-6Z',gear:'m9 2 6 0 1 4 4 1 2 5-3 3 1 4-5 3-3-3-4 1-4-5 3-3-1-4 4-1ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0',bed:'M3 7v15M21 11v11M3 17h18M3 11h18M7 7h4v4H7Z',haul:'M2 15h12V6H2ZM14 9h4l3 4v2h-7M6 20a2 2 0 1 1 0-.1M17 20a2 2 0 1 1 0-.1',heart:'M12 21 3 12a6 6 0 0 1 9-8 6 6 0 0 1 9 8ZM3 12h5l2-4 3 8 2-4h6',arrow:'m4 5 7 7-7 7m9-14 7 7-7 7',person:'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 22v-3a8 8 0 0 1 16 0v3',mail:'M3 5h18v14H3ZM3 6l9 7 9-7'};
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+(shapes[name]||shapes.box)+'"/></svg>';
@@ -23,6 +23,8 @@ const Safehouse = {
     root.querySelector('.sh-room-img').src=this.asset('room');
     if(legacy){legacy.hidden=true;root.appendChild(legacy);}
     const work=root.querySelector('.sh-work');if(nav)work.appendChild(nav);if(main)work.appendChild(main);
+    /* 档案是独立页面：与仓库 / 商人同级，自己占一块，不再用 dialog 弹窗 */
+    if(!work.querySelector('.sh-archive')){const arch=document.createElement('div');arch.className='sh-archive';arch.hidden=true;work.appendChild(arch);}
     if(demo){const p=document.createElement('div');p.className='sh-demo-work';p.innerHTML='<h2>完整布局预览</h2><p>此页不连接存档。请打开游戏体验仓库、商人、备战与地图选择。</p><a href="../../../index.html#base">打开游戏 ↗</a>';work.appendChild(p);}
     root.addEventListener('click',e=>{const target=e.target.closest('[data-sh]');if(target)this.route(target.dataset.sh);const radio=e.target.closest('[data-radio]');if(radio){if(radio.dataset.radio==='pause')this.paused=!this.paused;else this.broadcastIndex=(this.broadcastIndex+Number(radio.dataset.radio)+SAFEHOUSE_CONFIG.broadcasts.length)%SAFEHOUSE_CONFIG.broadcasts.length;this.renderBroadcast();this.syncTimer();}});
     root.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.sh-stat[role="button"]')){e.preventDefault();this.route(e.target.dataset.sh);}});
@@ -39,6 +41,9 @@ const Safehouse = {
   refresh(){
     if(!this.root)return;const s=this.snapshot();
     for(const key of ['credits','storage','durability'])this.root.querySelector('[data-sh-value="'+key+'"]').textContent=s[key];
+    /* 钱包宽度受限，完整数字挂 title，鼠标停上去还能看到 */
+    const walletEl=this.root.querySelector('[data-sh-value="credits"]');
+    if(walletEl)walletEl.title='信用点 '+s.credits;
     this.root.querySelector('[data-sh-value="hp"]').textContent='生命 '+Math.round(s.hp*10)/10+' / '+s.maxHp;
     this.root.querySelector('[data-sh-value="injury"]').textContent=s.injury;
     this.root.querySelector('.sh-hp-track i').style.width=Math.max(0,Math.min(100,s.hp/s.maxHp*100))+'%';
@@ -47,11 +52,18 @@ const Safehouse = {
   applyView(){
     if(!this.root)return;
     if(!this.demo&&typeof Music!=='undefined'&&typeof Music.setScene==='function')Music.setScene(this.view==='merchant'||this.view==='doctor'?'shop':'lobby');
-    const home=this.view==='home';this.root.dataset.view=this.view;
+    const home=this.view==='home',isArch=this.view==='archive';this.root.dataset.view=this.view;
     this.root.querySelector('.sh-home').hidden=!home;this.root.querySelector('.sh-work').hidden=home;
+    /* 档案页占满工作区：Base 的主体和那排商人页签都要让位，
+       否则档案页顶上会挂着「护甲商人 / 军火商 / 医生 / 贸易商」。 */
+    const archEl=this.root.querySelector('.sh-archive'),mainEl=this.root.querySelector('.base-main');
+    const baseNav=this.root.querySelector('.base-nav');
+    if(archEl)archEl.hidden=!isArch;
+    if(mainEl)mainEl.hidden=isArch;
+    if(baseNav)baseNav.style.display=isArch?'none':'';
     const merchant=['traders','doctor'].includes(this.view);
     for(const n of this.root.querySelectorAll('.sh-top [data-sh]')){const on=n.dataset.sh===this.view||(merchant&&n.dataset.sh==='traders');n.classList.toggle('on',on);if(n.tagName==='BUTTON')n.setAttribute('aria-current',on?'page':'false');}
-    this.root.querySelector('[data-sh-work-title]').textContent={gunsmith:'装备台 · 枪械改装',loadout:'备战 · 装备与携带',stash:'仓库 · 物资管理',traders:'商人 · 交易与补给',doctor:'医生 · 药品与治疗'}[this.view]||'';
+    this.root.querySelector('[data-sh-work-title]').textContent={gunsmith:'装备台 · 枪械改装',loadout:'备战 · 装备与携带',stash:'仓库 · 物资管理',traders:'商人 · 交易与补给',doctor:'医生 · 药品与治疗',archive:'档案 · 收集图鉴'}[this.view]||'';
     const profile=this.root.querySelector('.sh-merchant-profile');profile.hidden=!merchant;
     if(merchant){const m=SAFEHOUSE_CONFIG.merchants[this.demo?(this.view==='doctor'?'doctor':'shop'):Base.tab]||SAFEHOUSE_CONFIG.merchants.shop;const key=m.asset;if(profile.dataset.asset!==(key||'pending')){profile.innerHTML='<img alt="'+m.name+'"><div><b>'+m.name+'</b><small>'+m.role+'</small><p>“'+m.quote+'”</p></div>';if(key)profile.querySelector('img').src=this.asset(key);else profile.querySelector('img').remove();profile.dataset.asset=key||'pending';}}
   },
@@ -62,20 +74,81 @@ const Safehouse = {
     if(id==='haul'&&typeof Haul!=='undefined'){this.stopTimer();Haul.open(this.demo);return;}
     if(id==='settings'){this.explain('界面与功能状态','全局身份成长、设施升级和任务系统仍在规划中。环礁湾播报使用固定文本，可通过底部按钮暂停自动切换；界面不保存虚构进度。');return;}
     if(id==='recovery'){this.explain('角色恢复','伤势与自动恢复尚未开放。现阶段请在备战中使用医疗品，或前往医生购买收费治疗。');return;}
-    if(id==='archive'){this.archive();return;}
     if(id==='maps'){if(this.demo)this.explain('出发行动','游戏中此按钮将打开现有地图选择，保留围栏区等已开放地图。最终确认才启动行动；本独立原型不启动游戏。');else{this.stopTimer();MapSelect.open();}return;}
-    if(!['home','gunsmith','loadout','stash','traders','doctor'].includes(id)){this.explain('功能尚未开放','入口已预留，等待对应系统接入。当前操作不会改变资金、库存或任务状态。');return;}
+    if(!['home','gunsmith','loadout','stash','traders','doctor','archive'].includes(id)){this.explain('功能尚未开放','入口已预留，等待对应系统接入。当前操作不会改变资金、库存或任务状态。');return;}
     this.view=id;
-    if(!this.demo){Tips.hide();Deal.hide();Ctx.hide();Base.closePicker();if(['traders','doctor'].includes(id))Base.tab=id==='doctor'?'doctor':(['shop','gun','doctor','viktor'].includes(Base.tab)?Base.tab:'shop');else Base.tab='stash';this.applyView();Base.page=0;Base.render();if(id!=='home')Base.renderStash();}
+    if(!this.demo){
+      Tips.hide();Deal.hide();Ctx.hide();Base.closePicker();
+      if(id!=='archive'){
+        if(['traders','doctor'].includes(id))Base.tab=id==='doctor'?'doctor':(['shop','gun','doctor','viktor'].includes(Base.tab)?Base.tab:'shop');
+        else Base.tab='stash';
+      }
+      this.applyView();
+      /* 档案页自己渲染，不去驱动仓库 / 商人那套视图 */
+      if(id==='archive')this.renderArchive();
+      else{Base.page=0;Base.render();if(id!=='home')Base.renderStash();}
+    }
     this.refresh();
     if(id==='gunsmith'&&!this.demo&&typeof ModUI!=='undefined')ModUI.showPage();
   },
   explain(title,text){const d=this.root.querySelector('dialog');d.querySelector('.sh-dialog-content').innerHTML='<small class="sh-kicker">TIDAL LINE / 功能说明</small><h2></h2><p></p>';d.querySelector('h2').textContent=title;d.querySelector('p').textContent=text;if(!d.open)d.showModal();},
-  archive(){
-    if(this.demo){this.explain('档案 · 收集图鉴','游戏中读取真实的收集记录。任务档案、人物关系与历史线索预留在这里，不在本原型伪造发现记录。');return;}
-    const d=this.root.querySelector('dialog'),items=ITEMS.filter(i=>!i.noCodex);
-    d.querySelector('.sh-dialog-content').innerHTML='<small class="sh-kicker">ARCHIVE / 收集记录</small><h2>收集图鉴 · '+Save.codexCount()+' / '+items.length+'</h2><p>已发现物品显示名称与次数；未发现内容保持未知。</p><div class="sh-codex">'+items.map(i=>'<div><b>'+ (Save.codex[i.id]?esc(i.name):'未发现')+'</b><small>'+(Save.codex[i.id]?'收录 '+Save.codex[i.id].count+' 次':'未知藏品')+'</small></div>').join('')+'</div>';
-    if(!d.open)d.showModal();
+  /* ---------------- 档案 · 收集图鉴 ----------------
+     独立页面（和仓库 / 商人同级），不是弹窗。
+     已发现的收集品显示原图与名称，没发现的只占一个问号位置。
+     收藏标记在这里管理：顶部按标记筛选，右键任何格子都能改标记。 */
+  renderArchive(){
+    const box=this.root&&this.root.querySelector('.sh-archive');
+    if(!box)return;
+    const all=ITEMS.filter(i=>!i.noCodex&&itemGroup(i)==='collectible');
+    const found=id=>!!(Save.codex&&Save.codex[id]);
+    const times=id=>{const c=Save.codex&&Save.codex[id];return c?(c.count||1):0;};
+    const filter=Number.isInteger(this.archFilter)?this.archFilter:-1;
+    const got=all.filter(i=>found(i.id)).length;
+
+    const chip=(label,v,n)=>'<button data-arch-filter="'+v+'" class="'+(filter===v?'on':'')+'">'+label+'<small>'+n+'</small></button>';
+    const filters=[chip('全部',-1,all.length)]
+      .concat(FAV_MARKS.map((m,i)=>chip(FAV_MARKS[i].name,i,Favorites.count(i))));
+
+    const list=all.filter(i=>filter<0||Favorites.get(i.id)===filter)
+      .sort((a,b)=>(found(b.id)?1:0)-(found(a.id)?1:0)||(b.r-a.r)||a.id.localeCompare(b.id));
+
+    const cells=list.map(i=>{
+      const has=found(i.id),fav=Favorites.get(i.id),n=times(i.id);
+      return '<button class="sh-arch-cell r'+i.r+(has?' found':' unknown')+(fav>=0?' has-fav':'')+'" data-arch="'+i.id+'" '
+        +'title="'+(has?esc(i.name)+' · 收录 '+n+' 次 · 左键看详情 · 右键标记':'未发现')+'">'
+        +(has?Icons.bagTag(i,'ico-arch'):'<span class="sh-arch-q">?</span>')
+        +'<span class="sh-arch-name">'+(has?esc(i.name):'未发现')+'</span>'
+        +(has&&n>1?'<small class="sh-arch-count">×'+n+'</small>':'')
+        +(fav>=0?Favorites.badge(i.id):'')
+        +'</button>';
+    }).join('');
+
+    box.innerHTML='<div class="sh-arch-head"><div><small>ARCHIVE / 收集记录</small>'
+      +'<h1>收集图鉴 <b>'+got+' / '+all.length+'</b></h1>'
+      +'<p>被发现的收集品会留下外观与名称，没发现的只占一个位置。右键任何格子可以改收藏标记。</p></div>'
+      +'<div class="sh-arch-filters">'+filters.join('')+'</div></div>'
+      +'<div class="sh-arch-grid">'+(cells||'<p class="sh-arch-empty">这个标记下还没有物品。</p>')+'</div>';
+
+    box.querySelectorAll('[data-arch-filter]').forEach(b=>{
+      b.onclick=()=>{this.archFilter=Number(b.dataset.archFilter);this.renderArchive();};
+    });
+    box.querySelectorAll('[data-arch]').forEach(cell=>{
+      const id=cell.dataset.arch,item=ITEM_BY_ID[id];
+      if(!item)return;
+      const entry={id,n:1};
+      cell.onclick=()=>{
+        if(!found(id)){this.explain('尚未发现','这件收集品还没有记录。带它撤离一次，或者从商人那里换到一件。');return;}
+        if(typeof Base!=='undefined')Base.showItem(entry,'stash',cell);
+      };
+      cell.oncontextmenu=ev=>{
+        ev.preventDefault();ev.stopPropagation();
+        if(!found(id)){this.explain('尚未发现','还没见过的物品不提供标记。');return;}
+        if(typeof Ctx==='undefined'||typeof Base==='undefined')return;
+        const entries=[{label:'详情',onClick:()=>Base.showItem(entry,'stash',cell)}];
+        for(const x of Favorites.menuEntries(id,()=>this.renderArchive()))entries.push(x);
+        Ctx.show(ev.clientX,ev.clientY,entries);
+      };
+    });
   },
   renderBroadcast(){if(!this.root)return;const b=SAFEHOUSE_CONFIG.broadcasts[this.broadcastIndex];this.root.querySelector('[data-sh-channel]').textContent=b.channel;this.root.querySelector('[data-sh-broadcast]').textContent=b.text;this.root.querySelector('[data-sh-radio-title]').textContent=b.title+' · 固定广播';this.root.querySelector('[data-sh-dots]').innerHTML=SAFEHOUSE_CONFIG.broadcasts.map((x,i)=>'<i class="'+(i===this.broadcastIndex?'on':'')+'"></i>').join('');const p=this.root.querySelector('[data-radio="pause"]');p.textContent=this.paused?'播放':'暂停';p.setAttribute('aria-label',this.paused?'播放自动播报':'暂停自动播报');},
   stopTimer(){if(this.timer!==null){clearInterval(this.timer);this.timer=null;}},
