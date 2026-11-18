@@ -10964,7 +10964,7 @@ class Enemy {
     Combat.applyDurability(res);
     this.hurtFlash = 0.12;
     // 被打会立刻警觉
-    if (this.t.tactical) HumanAI.hurt(this,fromFaction);
+    if (this.t.tactical) HumanAI.hurt(this, fromFaction, (meta && meta.fromX != null) ? { x: meta.fromX, y: meta.fromY } : null);
     if (!this.t.tactical && this.hp > 0 && (this.state === 'patrol' || this.state === 'suspect')) {
       this.enterCombat();
       if (!this.target) this.target = { kind: 'player' };
@@ -11115,7 +11115,13 @@ class Bullet {
     /* 敌人：部位倍率与护甲穿透都在 hurt 里统一算；
        钢板靶只吃伤害数字，不喷血也算命中音 */
     const dummy = !!actor.isRangeTarget;
-    const dealt = actor.hurt(B, this.faction, part, this.pen, undefined, this.meta, mul);
+    /* 给受击方一个来向：沿弹道反推 4 格，AI 据此转身、记录记忆点并侧移。
+       同一次攻击的弹丸共享 this.meta，所以这里另建一份，不改原对象。 */
+    const hitMeta = Object.assign({}, this.meta || {}, {
+      fromX: this.x - Math.cos(this.angle) * 4 * CFG.TILE,
+      fromY: this.y - Math.sin(this.angle) * 4 * CFG.TILE
+    });
+    const dealt = actor.hurt(B, this.faction, part, this.pen, undefined, hitMeta, mul);
     Game.impact(actor.x, actor.y, this.angle, !dummy, part === 'head');
     /* 命中反馈：打身体和打头是两段录音（660770 / 660769）。
        连打十几发时同一段会听成机械节拍，所以音高抖 ±3% 把重复感散开。 */
@@ -11308,19 +11314,21 @@ Player.prototype.unloadWeapon=function(...args){const result=gunOriginal.unload.
 /* ===== human-ai.js ===== */
 /* Human profiles share player weapon physics; AI owns bounded trigger groups and reaction pauses. */
 const HUMAN_UNIT_DEFS = {
-  scav: {...ENEMY_TYPES.scav,hp:90,tactical:true,
+  /* 索敌视野放宽到 14 格 / 120°：原来 11 格 + 97° 的扇形，玩家绕到侧面 2 格以外
+     就完全看不见，站在身边发呆的情况多半来自这里。 */
+  scav: {...ENEMY_TYPES.scav,hp:90,tactical:true,sight:14,fov:120*Math.PI/180,
     weapons:[['m16a1',17.5],['galil_arm',17.5],['glock17',18],['aks74u',12],['g36c',10],
       ['pp19_01',5],['mp155',4],['rem870',3],['m1911a1',3],['beretta92',3],['fn_fnc',3],['sig550',2],['ak12',2]],
     levels:ENEMY_LOADOUT.levelWeights.map((weight,i)=>[i+1,weight]),
     helmetChance:ENEMY_LOADOUT.helmetChance,bodyChance:ENEMY_LOADOUT.bodyChance,condition:[1,1],
     reserve:[ENEMY_LOADOUT.ammoMin,ENEMY_LOADOUT.ammoMax],aim:.85,aimError:.14,aimErrorMinPx:14,burst:[2,3],pause:[1.8,2.4],search:8},
-  holdout: {name:'据点看守',short:'看',color:'#b8a26b',hp:110,speed:42,sight:10,fov:110*Math.PI/180,hear:1,
+  holdout: {name:'据点看守',short:'看',color:'#b8a26b',hp:110,speed:42,sight:13,fov:125*Math.PI/180,hear:1,
     range:6*CFG.TILE,cd:1.5,faction:'scav',human:true,arrow:true,tactical:true,
     injuryType:'shotgun',weapons:[['rem870',50],['mp155',40],['saiga12',10]],levels:[[2,80],[3,20]],helmetChance:.65,bodyChance:.85,
     reserve:12,aim:.75,aimError:.05,burst:1,pause:[1.5,1.8],
     warning:1,guardRadius:3,leash:8,chaseLimit:6,quietReset:10,search:8,
     desc:'守着楼院和物资的人。工装、旧头盔和短霰弹枪，足够让陌生人在门口停一停。'},
-  retriever: {name:'受雇回收员',short:'回',color:'#7c9684',hp:145,speed:50,sight:13,fov:110*Math.PI/180,hear:1,
+  retriever: {name:'受雇回收员',short:'回',color:'#7c9684',hp:145,speed:50,sight:16,fov:125*Math.PI/180,hear:1,
     bonusMeleePool: RARE_MELEE_POOL,
     range:11*CFG.TILE,cd:1.6,faction:'scav',human:true,arrow:true,tactical:true,
     injuryType:'bullet',weapons:[['akm',25],['an94',15],['mk47_mod2',13],['mp5a3',12],['ump45',10],
@@ -11361,11 +11369,23 @@ const HumanAI={
       recoil:0,rV:0,rH:0,sinceShot:99,moving:false,phase:null,phaseT:0,phaseTotal:0,
       memory:null,engaged:false,warningStart:null,lastContact:-Infinity,lastRadio:-Infinity,lastPlan:-Infinity,
       guardX:p.x,guardY:p.y,returning:false,holdHome:false,pursuit:0,aimed:false,burstLeft:0,
-      fireFlash:0,notice:'',noticeUntil:0,repath:0,retaliateUntil:0};
+      fireFlash:0,notice:'',noticeUntil:0,repath:0,retaliateUntil:0,
+      /* 交战中已经锁过一次目标：后续瞄准按 warm 系数缩短（见 aimDuration）。
+         aimLost 记「目标丢失持续了多久」，超过阈值才把 warm 清掉。 */
+      aimPrep:false,aimLost:0,flinch:null,shuffleT:0};
     e.anim={state:'idle',time:0,progress:0};
   },
   weapon(e){if(e.gun?.id!==e.weaponId)e.gun=Attachments.resolve(e.weaponId,{});return e.gun;},
-  aimDuration(e){const w=this.weapon(e);return Math.max(e.t.aim,w.aimTime*(1+(e.body?.aimPenaltyPct||0)/100));},
+  /* 反应时间的总闸。
+     第一次看见目标要完整举枪（拾荒者 0.85s / 回收员 0.65s），
+     已经锁定过之后按 WARM 比例缩短 —— 否则玩家卡在射程边缘匀速走，
+     每走一次都白嫖一整套瞄准，最后变成无伤点杀。 */
+  WARM: 0.45,
+  AIM_LOST: 1.2,      // 目标离开射界或视线超过这个秒数，这一轮举枪才作废
+  aimDuration(e){
+    const w=this.weapon(e),a=e.ai,b=Math.max(e.t.aim,w.aimTime*(1+(e.body?.aimPenaltyPct||0)/100));
+    return a&&a.aimPrep?b*this.WARM:b;
+  },
   aimAngle(e,obs){
     // A world-space error floor keeps close-range aim from collapsing onto the head circle.
     // Draw once per trigger group; weapon spread and recoil still use the shared firearm model.
@@ -11391,7 +11411,8 @@ const HumanAI={
   sees(e,o){
     if(!o||o.dead)return false;const d=U.dist(e.x,e.y,o.x,o.y);
     if(d>e.t.sight*CFG.TILE*e.senseMult())return false;
-    if(d>2*CFG.TILE&&Math.abs(U.angDiff(Math.atan2(o.y-e.y,o.x-e.x),e.angle))>e.t.fov/2)return false;
+    /* 贴身 3 格内不吃扇形限制：贴到脸上还看不见，比视野窄更难解释。 */
+    if(d>3*CFG.TILE&&Math.abs(U.angDiff(Math.atan2(o.y-e.y,o.x-e.x),e.angle))>e.t.fov/2)return false;
     return this.clear(e.x,e.y,o.x,o.y);
   },
   observe(e){
@@ -11410,14 +11431,26 @@ const HumanAI={
       this.remember(o,obs);o.ai.engaged=true;this.notice(o,'收到，查看最后位置。');
     }
   },
-  hurt(e,from){
+  /* 受击反应：不管看没看见，先转身朝来向、记一个记忆点、侧向挪一步。
+     origin 是沿弹道反推出来的开枪位置；拿不到方向（近战、爆炸）时退化成原地转身 + 随机侧移。
+     原来没看见人时把 memory 记成「自己脚下」，于是它朝原地走 —— 挨了枪不还手也不动，
+     远距离点杀就完全没有代价。 */
+  hurt(e,from,origin){
     const a=e.ai;if(!a)return;
-    a.engaged=true;a.lastContact=a.clock;a.retaliateUntil=a.clock+2;
-    const obs=this.observe(e);if(obs)this.remember(e,obs);
-    else if(!a.memory)a.memory={x:e.x,y:e.y,time:a.clock,kind:from==='player'?'player':'enemy'};
+    a.engaged=true;a.lastContact=a.clock;a.retaliateUntil=a.clock+3;
+    const obs=this.observe(e);if(obs){this.remember(e,obs);a.aimPrep=true;}
+    if(origin){
+      a.memory={x:origin.x,y:origin.y,time:a.clock,kind:from==='player'?'player':'enemy'};
+      e.angle=Math.atan2(origin.y-e.y,origin.x-e.x);
+      a.flinch={x:origin.x,y:origin.y,until:a.clock+.45,side:Math.random()<.5?1:-1};
+    }else if(!a.memory){
+      a.memory={x:e.x,y:e.y,time:a.clock,kind:from==='player'?'player':'enemy'};
+      a.flinch={x:e.x,y:e.y,until:a.clock+.45,side:Math.random()<.5?1:-1};
+      e.angle+=Math.PI*(.6+Math.random()*.8);
+    }
     // Do not clear phases/cooldowns: ordinary damage does not stun or grant faster attacks.
   },
-  phase(e,name,duration){const a=e.ai;a.phase=name;a.phaseT=duration;a.phaseTotal=duration;},
+  phase(e,name,duration){const a=e.ai;a.phase=name;a.phaseT=duration;a.phaseTotal=duration;a.aimLost=0;},
   animate(e,dt,moved){
     const a=e.ai;let state='idle',progress=0;
     if(a.fireFlash>0){state='shoot';progress=1-a.fireFlash/.12;}
@@ -11437,6 +11470,25 @@ const HumanAI={
     e.patrolCd-=dt;if(e.patrolCd>0){e.angle+=dt*.25;return;}
     e.patrolCd=2;const x=M.tx(e.homeX)+U.randInt(-e.patrolRadius,e.patrolRadius),y=M.ty(e.homeY)+U.randInt(-e.patrolRadius,e.patrolRadius);
     if(M.walkable(x,y)){const p=M.navigationPoint(x,y);if(canStand(p.x,p.y,e.r))e.setPathTo(x,y);}
+  },
+  /* 交火间隙的短距离侧移：每 0.8 秒换一侧，速度是正常移动的 60%。
+     组间停顿有 1.6-2.4 秒，原来这段时间它站着不动，玩家会把这两秒当安全窗口。 */
+  shuffle(e,obs,dt){
+    const a=e.ai;
+    if(!a.shuffleGoal||a.clock>=a.shuffleT){
+      a.shuffleT=a.clock+.8;
+      const side=Math.random()<.5?1:-1;
+      const ang=Math.atan2(e.y-obs.y,e.x-obs.x)+Math.PI/2*side;
+      const d=CFG.TILE*(1.5+Math.random());
+      let tx=e.x+Math.cos(ang)*d,ty=e.y+Math.sin(ang)*d;
+      /* 一侧是墙就换另一侧，两侧都不行才放弃这次侧移。 */
+      if(!M.walkable(M.tx(tx),M.ty(ty))){
+        const alt=Math.atan2(e.y-obs.y,e.x-obs.x)-Math.PI/2*side;
+        tx=e.x+Math.cos(alt)*d;ty=e.y+Math.sin(alt)*d;
+      }
+      a.shuffleGoal=M.walkable(M.tx(tx),M.ty(ty))?{x:tx,y:ty}:null;
+    }
+    if(a.shuffleGoal)this.move(e,a.shuffleGoal,dt,e.t.speed*.6);
   },
   // One bounded BFS generates paths for all candidates; no per-candidate A* or map-wide search.
   cover(e,target,flank){
@@ -11494,13 +11546,17 @@ const HumanAI={
     }
     if(a.phase==='pump'){a.phaseT-=dt;if(a.phaseT<=1e-9)a.phase=null;return true;}
     if(!this.canShoot(e,obs)){
+      /* 举枪被打断时先不清零：目标只是短暂走出射界或视线（绕柱、换掩体）的话，
+         进度留着，重新入镜接着举完。超过 AIM_LOST 秒才判定这一轮作废。 */
+      if(a.phase==='aim'&&(a.aimLost+=dt)<=this.AIM_LOST)return false;
       if(a.phase==='burst')this.finishBurst(e);else a.phase=null;
       a.aimed=false;return false;
     }
+    a.aimLost=0;
     if(a.phase==='aim'){
       e.angle=Math.atan2(obs.y-e.y,obs.x-e.x);a.phaseT-=dt;
       if(a.phaseT<=1e-9){
-        a.aimed=true;a.shotAngle=this.aimAngle(e,obs);
+        a.aimed=true;a.aimPrep=true;a.shotAngle=this.aimAngle(e,obs);
         a.targetDistance=U.dist(e.x,e.y,obs.x,obs.y);a.burstLeft=this.groupSize(e);a.moving=false;
         if(this.shot(e,a.shotAngle))a.burstLeft--;else{this.finishBurst(e);return true;}
         if(a.burstLeft<=0||a.mag<=0){this.finishBurst(e);if(w.cycleTime>0)this.phase(e,'pump',w.cycleTime);}
@@ -11531,7 +11587,18 @@ const HumanAI={
     if(obs){this.remember(e,obs);if(e.key!=='holdout')a.engaged=true;if(e.key==='retriever')this.radio(e,obs);}
     if(!obs)a.aimed=false;
     if(a.memory&&a.clock-a.memory.time>d.search)a.memory=null;
+    /* 脱战 8 秒后忘掉「已经校过枪」，再用完整反应时间接敌。 */
+    if(a.clock-a.lastContact>8)a.aimPrep=false;
     const done=()=>{const moved=U.dist(x0,y0,e.x,e.y);a.moving=moved>.01;this.animate(e,dt,moved);};
+    /* 受击慌乱：0.45 秒的侧向挪步，不打断开火，但「挨了枪原地不动」不再成立。 */
+    if(a.flinch){
+      if(a.clock>=a.flinch.until)a.flinch=null;
+      else if(!a.phase){
+        const ang=Math.atan2(a.flinch.y-e.y,a.flinch.x-e.x)+Math.PI/2*a.flinch.side;
+        const tx=e.x+Math.cos(ang)*CFG.TILE*1.1,ty=e.y+Math.sin(ang)*CFG.TILE*1.1;
+        if(M.walkable(M.tx(tx),M.ty(ty)))this.move(e,{x:tx,y:ty},dt,e.t.speed*1.2);
+      }
+    }
     if(this.advancePhase(e,dt,obs)){done();return;}
     if(a.mag===0&&a.reserve>0){this.startReload(e);done();return;}
     const exhausted=a.mag===0&&a.reserve===0;
@@ -11576,6 +11643,9 @@ const HumanAI={
           }
         }
         this.attack(e,obs);
+        /* 组间停顿（拾荒者 1.8-2.4s / 回收员 1.6-2.0s）不再原地立正，
+           侧移一小段；回收员有自己的找掩体逻辑，这里不插手。 */
+        if(!a.phase&&a.cd>0&&e.key!=='retriever')this.shuffle(e,obs,dt);
       }else{a.moveGoal=null;this.move(e,a.memory,dt);if(U.dist(e.x,e.y,a.memory.x,a.memory.y)<8)e.angle+=dt*.7;}
     }else{
       if(a.engaged){a.engaged=false;a.returning=true;a.aimed=false;e.path=null;}

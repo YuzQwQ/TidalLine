@@ -1332,7 +1332,7 @@ class Enemy {
     Combat.applyDurability(res);
     this.hurtFlash = 0.12;
     // 被打会立刻警觉
-    if (this.t.tactical) HumanAI.hurt(this,fromFaction);
+    if (this.t.tactical) HumanAI.hurt(this, fromFaction, (meta && meta.fromX != null) ? { x: meta.fromX, y: meta.fromY } : null);
     if (!this.t.tactical && this.hp > 0 && (this.state === 'patrol' || this.state === 'suspect')) {
       this.enterCombat();
       if (!this.target) this.target = { kind: 'player' };
@@ -1483,7 +1483,13 @@ class Bullet {
     /* 敌人：部位倍率与护甲穿透都在 hurt 里统一算；
        钢板靶只吃伤害数字，不喷血也算命中音 */
     const dummy = !!actor.isRangeTarget;
-    const dealt = actor.hurt(B, this.faction, part, this.pen, undefined, this.meta, mul);
+    /* 给受击方一个来向：沿弹道反推 4 格，AI 据此转身、记录记忆点并侧移。
+       同一次攻击的弹丸共享 this.meta，所以这里另建一份，不改原对象。 */
+    const hitMeta = Object.assign({}, this.meta || {}, {
+      fromX: this.x - Math.cos(this.angle) * 4 * CFG.TILE,
+      fromY: this.y - Math.sin(this.angle) * 4 * CFG.TILE
+    });
+    const dealt = actor.hurt(B, this.faction, part, this.pen, undefined, hitMeta, mul);
     Game.impact(actor.x, actor.y, this.angle, !dummy, part === 'head');
     /* 命中反馈：打身体和打头是两段录音（660770 / 660769）。
        连打十几发时同一段会听成机械节拍，所以音高抖 ±3% 把重复感散开。 */
