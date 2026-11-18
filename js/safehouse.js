@@ -2,7 +2,7 @@
 const Safehouse = {
   root:null, view:'home', demo:false, broadcastIndex:0, timer:null, paused:false,
   icon(name){
-    const shapes={home:'M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10',box:'m3 7 9-4 9 4v11l-9 4-9-4Zm0 0 9 4 9-4M12 11v11',cart:'M2 4h3l3 11h11l3-8H6M9 20h.1M18 20h.1',task:'M8 4H4v18h16V4h-4M8 2h8v5H8ZM8 12h8M8 17h6',pin:'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0ZM15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0',archive:'M5 3h14v19H5ZM9 7h6M9 12h6M9 17h4',radio:'M5 11v9M9 9v13M13 11v9M18 5a10 10 0 0 1 0 14M3 4l12-3',cross:'M9 2h6v7h7v6h-7v7H9v-7H2V9h7Z',tool:'m5 3 5 5-3 3-5-5a6 6 0 0 0 7 8l8 8 5-5-8-8a6 6 0 0 0-9-6Z',gear:'m9 2 6 0 1 4 4 1 2 5-3 3 1 4-5 3-3-3-4 1-4-5 3-3-1-4 4-1ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0',bed:'M3 7v15M21 11v11M3 17h18M3 11h18M7 7h4v4H7Z',heart:'M12 21 3 12a6 6 0 0 1 9-8 6 6 0 0 1 9 8ZM3 12h5l2-4 3 8 2-4h6',arrow:'m4 5 7 7-7 7m9-14 7 7-7 7',person:'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 22v-3a8 8 0 0 1 16 0v3',mail:'M3 5h18v14H3ZM3 6l9 7 9-7'};
+    const shapes={home:'M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10',box:'m3 7 9-4 9 4v11l-9 4-9-4Zm0 0 9 4 9-4M12 11v11',cart:'M2 4h3l3 11h11l3-8H6M9 20h.1M18 20h.1',task:'M8 4H4v18h16V4h-4M8 2h8v5H8ZM8 12h8M8 17h6',pin:'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0ZM15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0',archive:'M5 3h14v19H5ZM9 7h6M9 12h6M9 17h4',radio:'M5 11v9M9 9v13M13 11v9M18 5a10 10 0 0 1 0 14M3 4l12-3',cross:'M9 2h6v7h7v6h-7v7H9v-7H2V9h7Z',tool:'m5 3 5 5-3 3-5-5a6 6 0 0 0 7 8l8 8 5-5-8-8a6 6 0 0 0-9-6Z',gear:'m9 2 6 0 1 4 4 1 2 5-3 3 1 4-5 3-3-3-4 1-4-5 3-3-1-4 4-1ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0',bed:'M3 7v15M21 11v11M3 17h18M3 11h18M7 7h4v4H7Z',haul:'M2 15h12V6H2ZM14 9h4l3 4v2h-7M6 20a2 2 0 1 1 0-.1M17 20a2 2 0 1 1 0-.1',heart:'M12 21 3 12a6 6 0 0 1 9-8 6 6 0 0 1 9 8ZM3 12h5l2-4 3 8 2-4h6',arrow:'m4 5 7 7-7 7m9-14 7 7-7 7',person:'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 22v-3a8 8 0 0 1 16 0v3',mail:'M3 5h18v14H3ZM3 6l9 7 9-7'};
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+(shapes[name]||shapes.box)+'"/></svg>';
   },
   asset(key){const p=SAFEHOUSE_CONFIG.assets[key];return (!this.demo&&window.__UI_ASSETS__?.[key])||((this.demo?'../../../':'')+p);},
@@ -58,6 +58,8 @@ const Safehouse = {
   route(id){
     const planned=SAFEHOUSE_CONFIG.nav.find(x=>x.id===id&&x.state==='planned')||SAFEHOUSE_CONFIG.facilities.find(x=>x.action===id&&x.state==='planned');
     if(planned){this.explain(planned.label||planned.name,planned.message);return;}
+    /* 转运区不走 view 切换，直接开升级面板（和档案一样是弹窗） */
+    if(id==='haul'&&typeof Haul!=='undefined'){this.stopTimer();Haul.open(this.demo);return;}
     if(id==='settings'){this.explain('界面与功能状态','全局身份成长、设施升级和任务系统仍在规划中。环礁湾播报使用固定文本，可通过底部按钮暂停自动切换；界面不保存虚构进度。');return;}
     if(id==='recovery'){this.explain('角色恢复','伤势与自动恢复尚未开放。现阶段请在备战中使用医疗品，或前往医生购买收费治疗。');return;}
     if(id==='archive'){this.archive();return;}

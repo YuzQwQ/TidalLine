@@ -13,6 +13,9 @@ const SAFEHOUSE_CONFIG = {
     {id:'bench',name:'装备台',subtitle:'改装枪械',icon:'tool',x:42,y:38,action:'gunsmith',state:'live'},
     {id:'medical',name:'医疗角',subtitle:'医疗用品与治疗',icon:'cross',x:70,y:44,action:'doctor',state:'live'},
     {id:'storage',name:'储物区',subtitle:'入库与回收',icon:'box',x:18,y:73,action:'stash',state:'live'},
+    /* 转运区：搬运工具决定负重上限与满载手感。等级存在 Save.facilities.haul，
+       数值与升级逻辑见 js/haul.js 与 config.js 的 BAG.HAUL。 */
+    {id:'haul',name:'转运区',subtitle:'负重与搬运',icon:'haul',x:32,y:60,action:'haul',state:'live'},
     {id:'workshop',name:'制作工位',subtitle:'设施规划',icon:'gear',x:43,y:64,action:'workshop',state:'planned',message:'制作工位已预留。配方、材料消耗、制造队列及设施升级尚未开放。'},
     {id:'living',name:'生活区',subtitle:'设施规划',icon:'bed',x:58,y:51,action:'living',state:'planned',message:'生活区已预留。伤势恢复与设施升级尚未开放，不会自动恢复生命值。'}
   ],

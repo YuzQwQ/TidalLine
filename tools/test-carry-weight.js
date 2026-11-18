@@ -100,11 +100,11 @@ console.log('\n=== 3. 边界：恰好到上限放行，多 0.1 拒绝 ===');
   while (player.bag.add(heavy, 1)) { /* 装到 75kg */ }
   ok('装满后总重卡在上限', near(player.totalWeight, CAP, 0.01), player.totalWeight + 'kg');
   const one = player.bag.removeAt(player.bag.slots.length - 1);
-  ok('回收后总重 74kg', near(player.totalWeight, 74, 0.01), player.totalWeight + 'kg');
+  ok('回收后总重 = 上限 − 1', near(player.totalWeight, CAP - 1, 0.01), player.totalWeight + 'kg');
   const exact = { id: 'probe2', name: '整一公斤', w: 1, cat: 'life', r: 1 };
-  ok('74 + 1 = 75：刚好等于上限时放行', player.bag.canAdd(exact, 1).ok, player.totalWeight + 'kg');
+  ok('上限 − 1 再放 1kg：刚好等于上限时放行', player.bag.canAdd(exact, 1).ok, player.totalWeight + 'kg');
   const over = { id: 'probe3', name: '超一点点', w: 1.1, cat: 'life', r: 1 };
-  ok('74 + 1.1 = 75.1：超出则拒绝', !player.bag.canAdd(over, 1).ok);
+  ok('多 0.1kg 则拒绝', !player.bag.canAdd(over, 1).ok);
 }
 
 console.log('\n=== 4. addAmmo 也要过重量关 ===');

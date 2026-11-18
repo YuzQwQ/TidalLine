@@ -1721,7 +1721,7 @@ window.addEventListener('error', function (e) {
       <span style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline">背包 <span style="font-size:11px;letter-spacing:0;color:#bd9d83">本局损耗 <b id="raidLoss" aria-live="polite">¥0</b></span></span><span style="color:#4d7d70">Tab 关闭 · 世界不会暂停</span>
     </div>
     <div class="eqbar w6" id="eqStrip"></div>
-    <div class="stat"><span>负重 <b id="bagWeight">0.0 / 75 kg</b></span><span>价值 <b id="bagValue">0</b></span></div>
+    <div class="stat"><span>负重 <b id="bagWeight">0.0 / 45 kg</b></span><span>价值 <b id="bagValue">0</b></span></div>
     <div class="bar" id="bagBar"><i style="width:0%"></i></div>
     <div class="grid24" id="bagGrid"></div>
     <div class="stat"><span style="color:#3f6d5f">安全箱（死亡不掉落 · 点击物品可移入）</span></div>
@@ -2160,15 +2160,41 @@ const CFG = {
     /* 钥匙链：只放钥匙，不占背包格、不计负重与背包价值，
        但钥匙的耐久消耗照常算进局内战损。只在局外调整。 */
     CHAIN: 6,
-    CARRY: 75,
-    /* 负重档位：[上限 kg, 移速倍率, 噪声倍率, 名称]
-       三档门槛约为上限的 1/3、2/3、满值（75 → 25/50/75），
-       这样「背满 = 重载」的手感与 45kg 时代一致，多出来的容量不会全掉进超载。
-       超载档只在越过上限的边界情况（换装、作弊存档）里才会命中。 */
+    /* 基础负重上限 = 转运区 0 级。运行时一律走 carryLimit()，不要直接读这个数。
+       为什么是 45 而不是 75：实测 34 格（远征包 + 安全箱）装满约 66kg，
+       定 75 等于「一开局就永远不卡重量」——负重系统在这个项目里等于不存在。
+       45 刚好落在「有 30 格包的人会觉得紧」的位置，新手 4~18 格则被格子先卡住，
+       所以压到 45 不会让新人难受，只会让中期开始真的要做取舍。 */
+    CARRY: 45,
+    /* ---------- 转运区（搬运工具）----------
+       搬运能力决定三件事：扛多少、扛满多慢、扛满多吵。
+       上限只加 45→78（+73%），但真正的价值在后两行：
+       满载移速 0.75→0.88、满载噪声 1.50→1.00，满级「背满也能潜行」。
+       75kg 落在 3 级(68) 与 4 级(78) 之间，就是设计上「中等偏上」的位置。 */
+    HAUL: {
+      NAME:  ['徒手', '帆布拖车', '加固车架', '滑轮组', '电动绞盘'],
+      DESC:  ['', '绑在腰上的帆布拖架，能多挂一点', '钢架与加固绑带，走起来稳一些', '两段滑轮与挂钩，重载不再拖脚', '接上电网的绞盘，满载也能安静地走'],
+      CAP:   [45, 52, 60, 68, 78],
+      MOVE:  [0.75, 0.77, 0.80, 0.84, 0.88],
+      NOISE: [1.50, 1.45, 1.38, 1.25, 1.00],
+      /* 轻装 / 中载 门槛占上限的比例，重载 = 上限本身 */
+      BANDS: [0.34, 0.67],
+      COST:  [0, 250000, 800000, 2000000, 4500000],
+      /* 每级要交的材料：{ id: 件数 }。全是 r1~r2 的工业件，本身也占重量 */
+      MATS: [
+        {},
+        { ind04: 4, ind07: 1 },
+        { ind06: 5, ind04: 4, ind07: 3 },
+        { ind01: 6, ind02: 5, ind06: 6, ind07: 5 },
+        { ind01: 10, ind08: 6, ind02: 10, elec04: 10 }
+      ]
+    },
+    /* 负重档位：[上限 kg, 移速倍率, 噪声倍率, 名称]。这只是 0 级的快照，
+       运行时要按当前转运区等级算，用 carryTiers()。 */
     TIERS: [
-      [25, 1.00, 1.00, '轻装'],
-      [50, 0.90, 1.00, '中载'],
-      [75, 0.75, 1.50, '重载'],
+      [15.3, 1.00, 1.00, '轻装'],
+      [30.15, 0.94, 1.00, '中载'],
+      [45, 0.75, 1.50, '重载'],
       [999, 0.55, 2.00, '超载']
     ]
   },
@@ -8665,7 +8691,7 @@ const Attachments={
     if(next.length>limit)return{...result,reason:raid?'背包空间不足，无法返还物品或余弹':'仓库空间不足，无法返还物品或余弹',extra};
     const mass=list=>list.reduce((n,e)=>n+this.entryItem(e).w*(e.n||1),0),was=raid?Game.player.totalWeight:this.carriedWeight();
     const diff=raid?mass(next)-mass(inv)+(t.owner==='raid-equipped'?gun.w-current.w:0):t.owner!=='stash'?gun.w-current.w:0;
-    if(was+diff>CFG.BAG.CARRY+1e-6&&diff>1e-6)return{...result,reason:'改装后负重过高',extra};
+    if(was+diff>carryLimit()+1e-6&&diff>1e-6)return{...result,reason:'改装后负重过高',extra};
     return{...result,ok:!result.reason,next,gun,extra,source:src};
   },
   // Vendor providers are independent of the UI, so additional merchants can be added here.
@@ -8688,7 +8714,7 @@ const Attachments={
     const total=buys.reduce((n,b)=>n+b.price,0),groups=[];for(const b of buys){let g=groups.find(x=>x.vendor===b.vendor);if(!g){g={vendor:b.vendor,items:[]};groups.push(g);}g.items.push(b);}
     const quote=JSON.stringify({gun:eq,changes,buys,owned:[...used].map(e=>this.entryItem(e).equip.attachment)});
     const diff=t.owner==='stash'?0:gun.w-current.w;
-    const reason=!changes.length?'请选择要改装的配件':rows.length>STASH_SLOTS?'仓库空间不足，无法返还配件或余弹':diff>1e-6&&this.carriedWeight()+diff>CFG.BAG.CARRY+1e-6?'改装后负重过高':Save.credits<total?'信用点不足':'';
+    const reason=!changes.length?'请选择要改装的配件':rows.length>STASH_SLOTS?'仓库空间不足，无法返还配件或余弹':diff>1e-6&&this.carriedWeight()+diff>carryLimit()+1e-6?'改装后负重过高':Save.credits<total?'信用点不足':'';
     return {ok:!reason,reason,before,after,gun,next:rows,changes,buys,groups,total,quote,extra};
   },
   commitPlan(t,draft,quote){const r=this.plan(t,draft);if(!r.ok)return r;if(quote!==r.quote)return {...r,ok:false,reason:'购买内容或枪械状态已变化，请重新确认'};
@@ -9814,9 +9840,10 @@ function moveEntity(e, dx, dy) {
 }
 
 /* ---------------- 背包 ---------------- */
-/* 负重 → 档位（装备重量也算进去，所以单独抽出来） */
+/* 负重 → 档位（装备重量也算进去，所以单独抽出来）
+   档位表跟着转运区等级变（右侧门槛与满载惩罚都会动），不能读静态配置。 */
 function weightTier(w) {
-  const T = CFG.BAG.TIERS;
+  const T = (typeof carryTiers === 'function') ? carryTiers() : CFG.BAG.TIERS;
   for (let i = 0; i < T.length; i++) {
     if (w <= T[i][0]) return { i, move: T[i][1], noise: T[i][2], name: T[i][3] };
   }
@@ -9856,7 +9883,7 @@ class Bag {
     for (const s of this.safe) w += s.item.w * s.n;
     return w;
   }
-  /* 真正压在身上的重量 —— 容量上限（CFG.BAG.CARRY）比的就是这个。
+  /* 真正压在身上的重量 —— 容量上限（carryLimit()）比的就是这个。
      历史包袱：早先 canAdd / add 只比 weight()，于是背着 15kg 装备还能再塞满
      75kg 背包，实际 90kg 在跑（移速已经掉到超载档）。这里统一口径。
      没有 owner 的局外临时实例用 extraWeight 手动补上装备自重。 */
@@ -9886,7 +9913,7 @@ class Bag {
     /* 不可堆叠的一件一格，要几格就占几格 */
     const need = stack > 1 ? Math.ceil(n / stack) : n;
     if (this.slots.length + need > bagSlots()) return { ok: false, why: '背包满了' };
-    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return { ok: false, why: '太重了' };
+    if (this.carryWeight() + item.w * n > carryLimit() + 1e-6) return { ok: false, why: '太重了' };
     return { ok: true };
   }
 
@@ -9913,7 +9940,7 @@ class Bag {
     /* 剩下的新开格：不可堆叠的一件一格 */
     const need = stack > 1 ? Math.ceil(n / stack) : n;
     if (this.slots.length + need > bagSlots()) return false;
-    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return false;
+    if (this.carryWeight() + item.w * n > carryLimit() + 1e-6) return false;
     while (n > 0) {
       const put = Math.min(stack, n);
       this.slots.push(ItemCapacity.max(item)
@@ -9966,7 +9993,7 @@ class Bag {
     if (!item || n <= 0) return false;
     /* 弹药也要过重量关。原来这里只看格子，子弹又轻又按 30 发一堆，
        等于一条绕过负重上限的后门：别的物品塞不下时还能再压两百发子弹进去。 */
-    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return false;
+    if (this.carryWeight() + item.w * n > carryLimit() + 1e-6) return false;
     const stack = stackLimit(item);
     let left = n;
     for (const s of this.slots) {
@@ -11812,6 +11839,33 @@ function esc(s) {
 function bagSlots() {
   const g = Save.gear && Save.gear.back;
   return (g && g.slots) || BASE_BAG_SLOTS;
+}
+
+/* ------------------------------------------------------------
+   转运区：搬运工具等级 → 负重上限 / 档位
+   运行时所有负重判定都必须走这两个函数，不要再直接读 CFG.BAG.CARRY
+   （它是 0 级的值，只是兜底与文档）。
+   ------------------------------------------------------------ */
+function haulLevel() {
+  const n = CFG.BAG.HAUL.CAP.length - 1;
+  const v = (typeof Save !== 'undefined' && Save && Save.facilities && Save.facilities.haul) | 0;
+  return Math.max(0, Math.min(n, v));
+}
+function carryLimit() { return CFG.BAG.HAUL.CAP[haulLevel()]; }
+
+/* 档位表：[上限, 移速, 噪声, 名称]
+   轻装 / 中载 是上限的固定比例，重载就是上限本身。
+   重载那一行的移速与噪声跟着等级走 —— 这才是「搬运工具」的实际手感，
+   兜满 68kg 时 0 级要走 0.75 倍速、1.5 倍噪声，4 级则是 0.88 倍速、零噪声惩罚。 */
+function carryTiers() {
+  const H = CFG.BAG.HAUL, lv = haulLevel();
+  const cap = H.CAP[lv];
+  return [
+    [cap * H.BANDS[0], 1.00, 1.00, '轻装'],
+    [cap * H.BANDS[1], 0.94, 1.00, '中载'],
+    [cap, H.MOVE[lv], H.NOISE[lv], '重载'],
+    [999, 0.55, 2.00, '超载']
+  ];
 }
 
 </script>
@@ -15440,6 +15494,10 @@ const Save = {
   attachmentRecovery: [],
   attachmentsVersion: 2,
   commissionBoard: null,
+  /* 藏身处设施等级。目前只有转运区（haul）：
+     0 徒手 / 1 帆布拖车 / 2 加固车架 / 3 滑轮组 / 4 电动绞盘。
+     负重上限、档位、满载惩罚全部由它决定，见 common.js 的 carryLimit()。 */
+  facilities: { haul: 0 },
   /* 彩蛋保底计数：连续「摸到红但没中彩蛋」的次数。玩家界面上不显示，
      只在 Loot.eggSwap 里累加 / 清零。见 CFG.LOOT.eggPityRamp。 */
   eggPity: 0,
@@ -15518,6 +15576,11 @@ const Save = {
       this.chain = Array.isArray(d.chain) ? d.chain : [];
       this.mail = Array.isArray(d.mail) ? d.mail : [];
       this.mailBatches = (d.mailBatches && typeof d.mailBatches === 'object') ? d.mailBatches : {};
+      /* 设施等级：老存档没有这个字段，按 0 级算（等于以前的「无搬运工具」）。
+         越界值夹回合法区间，避免手改存档把档位表读穿。 */
+      const fac = (d.facilities && typeof d.facilities === 'object') ? d.facilities : {};
+      const maxHaul = CFG.BAG.HAUL.CAP.length - 1;
+      this.facilities = { haul: Math.max(0, Math.min(maxHaul, Number(fac.haul) | 0)) };
 
       // 配装：老存档没有就补默认，缺字段逐项兜底
       const g = d.gear || {};
@@ -15616,6 +15679,7 @@ const Save = {
         meleeGiftClaimed: this.meleeGiftClaimed,
         attachmentRecovery: this.attachmentRecovery,
         commissionBoard: this.commissionBoard,
+        facilities: this.facilities,
         bestHaul: this.bestHaul
       }));
       return true;
@@ -17001,10 +17065,10 @@ const Base = {
     const w = Attachments.carriedWeight();
     const meta = document.getElementById('bagMeta');
     if (meta) meta.textContent = Save.bag.length + ' / ' + bagSlots() + ' 格 · ' +
-      w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
+      w.toFixed(1) + ' / ' + carryLimit() + ' kg';
     const bar = document.getElementById('bagBar');
     if (bar && bar.querySelector) {
-      bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';
+      bar.querySelector('i').style.width = Math.min(100, w / carryLimit() * 100) + '%';
     }
     /* 空包时按钮变灰：点它只会得到一句「背包已经是空的」，不如直接说明白 */
     const clear = document.getElementById('btnClearBag');
@@ -17019,7 +17083,7 @@ const Base = {
   /* 背包还能不能塞下：先算再动，算不过就不搬，绝不吞东西 */
   bagBlock(it, n) {
     if (!it) return '物品不存在';
-    if (Attachments.carriedWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
+    if (Attachments.carriedWeight() + it.w * n > carryLimit() + 1e-6) return '太重了';
     const stack = stackLimit(it);
     let room = 0;
     for (const e of Save.bag) {
@@ -17425,7 +17489,7 @@ const MapSelect = {
     document.getElementById('mapSelectedName').textContent=map.title;
     const bagN=Save.bag.length, bagW=Attachments.carriedWeight();
     document.getElementById('mapSupplyCost').textContent='背包 ' + bagN + ' / ' + bagSlots() +
-      ' 格 · 保险箱 '+Save.safe.length+' / '+CFG.BAG.SAFE+' 格 · ' + bagW.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
+      ' 格 · 保险箱 '+Save.safe.length+' / '+CFG.BAG.SAFE+' 格 · ' + bagW.toFixed(1) + ' / ' + carryLimit() + ' kg';
     document.getElementById('mapSelectionHint').textContent=
       '带什么由背包决定：子弹和药物回来还留在包里，其它东西自动入库。';
     document.getElementById('btnMapStart').disabled=false;
@@ -21425,12 +21489,12 @@ Object.assign(Game, {
        会出现「条子才一半却已经跑不动」的矛盾。 */
     const w = P.totalWeight, t = P.tier;
     const el = document.getElementById('bagWeight');
-    el.textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
+    el.textContent = w.toFixed(1) + ' / ' + carryLimit() + ' kg · ' + t.name;
     el.title = '总负重 ' + w.toFixed(1) + ' kg（背包 ' + P.bag.weight().toFixed(1) +
       ' + 装备 ' + Math.max(0, w - P.bag.weight()).toFixed(1) + '）';
     document.getElementById('bagValue').textContent = formatMoney(P.bag.value());
     const bar = document.getElementById('bagBar');
-    bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';
+    bar.querySelector('i').style.width = Math.min(100, w / carryLimit() * 100) + '%';
     bar.classList.toggle('warn', t.i >= 2);
 
   },
@@ -22432,14 +22496,14 @@ const MeleeSystem = {
   equipBag(index) {
     const p=Game.player,entry=p?.bag.slots[index],item=entry?.item;
     if(this.locked() || !this.def(item))return false;
-    if(p.totalWeight>CFG.BAG.CARRY){Game.toast('负重过高，先清理背包');return false;}
+    if(p.totalWeight>carryLimit()){Game.toast('负重过高，先清理背包');return false;}
     const old=p.melee;p.melee=this.normalize(item);this.cancel(p);
     if(old)p.bag.slots[index]={item:old,n:1};else p.bag.slots.splice(index,1);
     Game.syncGear();Game.renderBag();return true;
   },
   unequipRaid() {
     const p=Game.player;if(!p?.melee || this.locked())return false;
-    if(p.bag.slots.length>=bagSlots() || p.totalWeight>CFG.BAG.CARRY){Game.toast('背包空间或负重不足');return false;}
+    if(p.bag.slots.length>=bagSlots() || p.totalWeight>carryLimit()){Game.toast('背包空间或负重不足');return false;}
     p.bag.slots.push({item:p.melee,n:1});p.melee=null;p.meleeActive=false;this.cancel(p);
     Game.syncGear();Game.renderBag();return true;
   },
@@ -22643,7 +22707,7 @@ meleeWrap(Base,'renderPicker',function(original){if(this.picker!=='melee')return
 meleeWrap(Base,'equipFromStash',function(original,entry,key){if(key!=='melee')return original.call(this,entry,key);
   const it=stashItem(entry);if(!Save.stash.includes(entry)||!MeleeSystem.def(it))return false;
   const pWeight=Save.bagWeight()+Save.gear.weapons.reduce((n,w)=>n+(w?.w||0),0)+(Save.gear.body?.w||0)+(Save.gear.helmet?.w||0)+(Save.gear.back?.w||0)+it.w;
-  if(pWeight>CFG.BAG.CARRY){this.note('装备后负重过高',true);return false;}
+  if(pWeight>carryLimit()){this.note('装备后负重过高',true);return false;}
   Save.stash.splice(Save.stash.indexOf(entry),1);const old=Save.gear.melee;
   Save.gear.melee=MeleeSystem.normalize(it);if(old)Save.addGearStash(old);
   Save.save();this.closePicker();this.render();this.gearVoice('melee',false);return true;
@@ -22681,7 +22745,7 @@ meleeWrap(Game,'takeGear',function(original,entry,index){
   const item=entry?.item,p=this.player;
   if(item?.equip?.kind!=='melee')return original.call(this,entry,index);
   if(!p || MeleeSystem.locked() || !this.lootOpen || this.lootOpen.items[index]!==entry)return false;
-  if(p.totalWeight+item.w>CFG.BAG.CARRY){this.toast('太重了');return false;}
+  if(p.totalWeight+item.w>carryLimit()){this.toast('太重了');return false;}
   if(!p.melee)p.melee=MeleeSystem.normalize(item);
   else {const check=p.bag.canAdd(item,1);if(!check.ok){this.toast(check.why);return false;}p.bag.add(item,1);}
   this.lootOpen.items[index]=null;this.syncGear();this.syncBoxState(this.lootOpen);
@@ -24329,6 +24393,9 @@ const SAFEHOUSE_CONFIG = {
     {id:'bench',name:'装备台',subtitle:'改装枪械',icon:'tool',x:42,y:38,action:'gunsmith',state:'live'},
     {id:'medical',name:'医疗角',subtitle:'医疗用品与治疗',icon:'cross',x:70,y:44,action:'doctor',state:'live'},
     {id:'storage',name:'储物区',subtitle:'入库与回收',icon:'box',x:18,y:73,action:'stash',state:'live'},
+    /* 转运区：搬运工具决定负重上限与满载手感。等级存在 Save.facilities.haul，
+       数值与升级逻辑见 js/haul.js 与 config.js 的 BAG.HAUL。 */
+    {id:'haul',name:'转运区',subtitle:'负重与搬运',icon:'haul',x:32,y:60,action:'haul',state:'live'},
     {id:'workshop',name:'制作工位',subtitle:'设施规划',icon:'gear',x:43,y:64,action:'workshop',state:'planned',message:'制作工位已预留。配方、材料消耗、制造队列及设施升级尚未开放。'},
     {id:'living',name:'生活区',subtitle:'设施规划',icon:'bed',x:58,y:51,action:'living',state:'planned',message:'生活区已预留。伤势恢复与设施升级尚未开放，不会自动恢复生命值。'}
   ],
@@ -24354,7 +24421,7 @@ SAFEHOUSE_CONFIG.merchants.elena={name:'伊莲娜·莫罗',role:'私人收藏家
 const Safehouse = {
   root:null, view:'home', demo:false, broadcastIndex:0, timer:null, paused:false,
   icon(name){
-    const shapes={home:'M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10',box:'m3 7 9-4 9 4v11l-9 4-9-4Zm0 0 9 4 9-4M12 11v11',cart:'M2 4h3l3 11h11l3-8H6M9 20h.1M18 20h.1',task:'M8 4H4v18h16V4h-4M8 2h8v5H8ZM8 12h8M8 17h6',pin:'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0ZM15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0',archive:'M5 3h14v19H5ZM9 7h6M9 12h6M9 17h4',radio:'M5 11v9M9 9v13M13 11v9M18 5a10 10 0 0 1 0 14M3 4l12-3',cross:'M9 2h6v7h7v6h-7v7H9v-7H2V9h7Z',tool:'m5 3 5 5-3 3-5-5a6 6 0 0 0 7 8l8 8 5-5-8-8a6 6 0 0 0-9-6Z',gear:'m9 2 6 0 1 4 4 1 2 5-3 3 1 4-5 3-3-3-4 1-4-5 3-3-1-4 4-1ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0',bed:'M3 7v15M21 11v11M3 17h18M3 11h18M7 7h4v4H7Z',heart:'M12 21 3 12a6 6 0 0 1 9-8 6 6 0 0 1 9 8ZM3 12h5l2-4 3 8 2-4h6',arrow:'m4 5 7 7-7 7m9-14 7 7-7 7',person:'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 22v-3a8 8 0 0 1 16 0v3',mail:'M3 5h18v14H3ZM3 6l9 7 9-7'};
+    const shapes={home:'M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10',box:'m3 7 9-4 9 4v11l-9 4-9-4Zm0 0 9 4 9-4M12 11v11',cart:'M2 4h3l3 11h11l3-8H6M9 20h.1M18 20h.1',task:'M8 4H4v18h16V4h-4M8 2h8v5H8ZM8 12h8M8 17h6',pin:'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0ZM15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0',archive:'M5 3h14v19H5ZM9 7h6M9 12h6M9 17h4',radio:'M5 11v9M9 9v13M13 11v9M18 5a10 10 0 0 1 0 14M3 4l12-3',cross:'M9 2h6v7h7v6h-7v7H9v-7H2V9h7Z',tool:'m5 3 5 5-3 3-5-5a6 6 0 0 0 7 8l8 8 5-5-8-8a6 6 0 0 0-9-6Z',gear:'m9 2 6 0 1 4 4 1 2 5-3 3 1 4-5 3-3-3-4 1-4-5 3-3-1-4 4-1ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0',bed:'M3 7v15M21 11v11M3 17h18M3 11h18M7 7h4v4H7Z',haul:'M2 15h12V6H2ZM14 9h4l3 4v2h-7M6 20a2 2 0 1 1 0-.1M17 20a2 2 0 1 1 0-.1',heart:'M12 21 3 12a6 6 0 0 1 9-8 6 6 0 0 1 9 8ZM3 12h5l2-4 3 8 2-4h6',arrow:'m4 5 7 7-7 7m9-14 7 7-7 7',person:'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 22v-3a8 8 0 0 1 16 0v3',mail:'M3 5h18v14H3ZM3 6l9 7 9-7'};
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+(shapes[name]||shapes.box)+'"/></svg>';
   },
   asset(key){const p=SAFEHOUSE_CONFIG.assets[key];return (!this.demo&&window.__UI_ASSETS__?.[key])||((this.demo?'../../../':'')+p);},
@@ -24410,6 +24477,8 @@ const Safehouse = {
   route(id){
     const planned=SAFEHOUSE_CONFIG.nav.find(x=>x.id===id&&x.state==='planned')||SAFEHOUSE_CONFIG.facilities.find(x=>x.action===id&&x.state==='planned');
     if(planned){this.explain(planned.label||planned.name,planned.message);return;}
+    /* 转运区不走 view 切换，直接开升级面板（和档案一样是弹窗） */
+    if(id==='haul'&&typeof Haul!=='undefined'){this.stopTimer();Haul.open(this.demo);return;}
     if(id==='settings'){this.explain('界面与功能状态','全局身份成长、设施升级和任务系统仍在规划中。环礁湾播报使用固定文本，可通过底部按钮暂停自动切换；界面不保存虚构进度。');return;}
     if(id==='recovery'){this.explain('角色恢复','伤势与自动恢复尚未开放。现阶段请在备战中使用医疗品，或前往医生购买收费治疗。');return;}
     if(id==='archive'){this.archive();return;}
@@ -24439,6 +24508,181 @@ if(typeof Base!=='undefined'){
   Base.close=function(){Safehouse.stopTimer();if(typeof Music!=='undefined'&&typeof Music.closePlayer==='function'){Music.closePlayer();if(typeof Music.setScene==='function')Music.setScene('lobby');}return close.apply(this,arguments);};
   Base.render=function(){const r=render.apply(this,arguments);Safehouse.refresh();return r;};
 }
+
+</script>
+<script>
+/* ===== haul.js ===== */
+/* ============================================================
+   转运区：搬运工具升级
+   ------------------------------------------------------------
+   负重上限、档位、满载惩罚全部由 CFG.BAG.HAUL 决定（见 common.js 的
+   carryLimit / carryTiers）。这里只负责三件事：报价、扣料、刷新。
+
+   材料从**仓库**扣，不从背包扣 —— 升级是据点行为，不是带在身上做的。
+   这些工业件本身都有重量，所以「攒材料」这件事会挤占你的负重，
+   这也是为什么 0 级只有 45kg 时，攒满 36 件材料要跑好几趟。
+   ============================================================ */
+const Haul = {
+  level() { return haulLevel(); },
+  maxLevel() { return CFG.BAG.HAUL.CAP.length - 1; },
+  isMax() { return this.level() >= this.maxLevel(); },
+  name(lv) { return CFG.BAG.HAUL.NAME[lv == null ? this.level() : lv]; },
+
+  /* 当前等级的实测数值 */
+  stats(lv) {
+    const H = CFG.BAG.HAUL, i = lv == null ? this.level() : lv;
+    return { cap: H.CAP[i], move: H.MOVE[i], noise: H.NOISE[i], name: H.NAME[i] };
+  },
+
+  /* 下一级的报价；满级返回 null */
+  quote() {
+    if (this.isMax()) return null;
+    const lv = this.level() + 1, H = CFG.BAG.HAUL;
+    return {
+      level: lv, name: H.NAME[lv], desc: H.DESC[lv] || '',
+      cost: H.COST[lv], mats: H.MATS[lv] || {},
+      cap: H.CAP[lv], move: H.MOVE[lv], noise: H.NOISE[lv]
+    };
+  },
+
+  /* 仓库里每种材料各有几件 */
+  have(mats) {
+    const out = {};
+    for (const id of Object.keys(mats || {})) {
+      out[id] = Save.stash.reduce((n, e) => n + (e.id === id ? (e.n || 1) : 0), 0);
+    }
+    return out;
+  },
+
+  /* 能不能升：返回 { ok, why, short:[...] } */
+  check() {
+    const q = this.quote();
+    if (!q) return { ok: false, why: '已经是最高等级' };
+    const have = this.have(q.mats);
+    const short = [];
+    for (const [id, need] of Object.entries(q.mats)) {
+      if ((have[id] || 0) < need) short.push({ id, need, got: have[id] || 0 });
+    }
+    if (Save.credits < q.cost) return { ok: false, why: '信用点不足', short, have };
+    if (short.length) {
+      const names = short.map(s => (ITEM_BY_ID[s.id]?.name || s.id) + ' ' + s.got + '/' + s.need).join('、');
+      return { ok: false, why: '材料不足：' + names, short, have };
+    }
+    return { ok: true, why: '', short, have, quote: q };
+  },
+
+  /* 从仓库扣掉 n 件某物；不够就一件也不扣，返回 false */
+  takeFromStash(id, n) {
+    const total = Save.stash.reduce((s, e) => s + (e.id === id ? (e.n || 1) : 0), 0);
+    if (total < n) return false;
+    let left = n;
+    for (let i = Save.stash.length - 1; i >= 0 && left > 0; i--) {
+      const e = Save.stash[i];
+      if (e.id !== id) continue;
+      const got = Math.min(left, e.n || 1);
+      e.n = (e.n || 1) - got;
+      left -= got;
+      if (e.n <= 0) Save.stash.splice(i, 1);
+    }
+    return left === 0;
+  },
+
+  upgrade() {
+    const r = this.check();
+    if (!r.ok) return r;
+    const q = r.quote;
+    /* 先扣材料再扣钱：材料不够时 check 已经拦住了，这里只是防御 */
+    for (const [id, need] of Object.entries(q.mats)) {
+      if (!this.takeFromStash(id, need)) return { ok: false, why: '材料扣除失败' };
+    }
+    Save.credits -= q.cost;
+    Save.facilities = Save.facilities || {};
+    Save.facilities.haul = q.level;
+    Save.save();
+    if (typeof Game !== 'undefined' && Game.sfx) Game.sfx('ui');
+    return { ok: true, level: q.level, name: q.name };
+  },
+
+  /* ---------------- 面板 ---------------- */
+  fmt(n) { return '¥' + (n || 0).toLocaleString('en-US'); },
+
+  panelHTML() {
+    const cur = this.stats(), q = this.quote(), lv = this.level(), max = this.maxLevel();
+    const rows = [
+      ['负重上限', cur.cap + ' kg', q ? q.cap + ' kg' : '—'],
+      ['满载移速', '×' + cur.move.toFixed(2), q ? '×' + q.move.toFixed(2) : '—'],
+      ['满载噪声', '×' + cur.noise.toFixed(2), q ? '×' + q.noise.toFixed(2) : '—']
+    ];
+    const stat = rows.map(([label, a, b]) => `
+      <div style="flex:1;min-width:0;padding:10px 12px;background:var(--sh-panel,#151b1a);border:0.5px solid rgba(255,255,255,.08);border-radius:8px;">
+        <small style="display:block;color:#8a9a90;font-size:11px;">${label}</small>
+        <b style="font-weight:500;font-size:15px;">${a}${q ? ' <span style="color:#52e8b3">→ ' + b + '</span>' : ''}</b>
+      </div>`).join('');
+
+    let matsHTML = '';
+    let footHTML = '';
+    if (!q) {
+      matsHTML = '<p style="color:#8a9a90;font-size:13px;">搬运能力已经到顶。现在满载 78kg 也不会变慢、不会变吵。</p>';
+    } else {
+      const have = this.have(q.mats);
+      const lines = Object.entries(q.mats).map(([id, need]) => {
+        const got = have[id] || 0, enough = got >= need;
+        const nm = ITEM_BY_ID[id]?.name || id;
+        return `<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:0.5px solid rgba(255,255,255,.06);">
+          <span>${nm}</span>
+          <b style="font-weight:500;color:${enough ? '#52e8b3' : '#d98b6b'}">${got} / ${need}</b></div>`;
+      }).join('');
+      matsHTML = `<div style="margin-top:14px;"><small style="display:block;color:#8a9a90;font-size:11px;margin-bottom:6px;">升级材料 · 从仓库扣除</small>${lines}</div>`;
+
+      const chk = this.check();
+      const afford = Save.credits >= q.cost;
+      footHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;flex-wrap:wrap;">
+          <span style="font-size:13px;color:${afford ? '#8a9a90' : '#d98b6b'};">费用 ${this.fmt(q.cost)} · 持有 ${this.fmt(Save.credits)}</span>
+          <button data-haul-up class="mb-gold" ${chk.ok ? '' : 'disabled'} style="padding:8px 20px;">${chk.ok ? '升级到 ' + q.name : (chk.why.split('：')[0])}</button>
+        </div>
+        ${chk.ok ? '' : `<p style="font-size:12px;color:#8a9a90;margin-top:8px;">${chk.why}</p>`}`;
+    }
+
+    return `
+      <small class="sh-kicker">HAULAGE / 转运区</small>
+      <h2>${cur.name} <span style="font-size:13px;font-weight:400;color:#8a9a90;">Lv${lv} / ${max}</span></h2>
+      <p>搬运工具决定你能扛多少、扛满时走多快、有多吵。重量上限只是明面数字，
+      真正的差别在满载手感：背满还能正常跑、正常潜行的，只有最后一级。</p>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">${stat}</div>
+      ${q && q.desc ? `<p style="font-size:13px;color:#8a9a90;margin-top:12px;">下一级 · ${q.name}：${q.desc}</p>` : ''}
+      ${matsHTML}
+      ${footHTML}`;
+  },
+
+  /* 点开面板。演示状态（藏身处原型）只展示，不写存档。 */
+  open(demo) {
+    const root = typeof Safehouse !== 'undefined' ? Safehouse.root : null;
+    const d = root && root.querySelector('dialog');
+    if (!d) return;
+    const content = d.querySelector('.sh-dialog-content');
+    if (demo) {
+      content.innerHTML = `
+        <small class="sh-kicker">HAULAGE / 转运区（演示）</small>
+        <h2>转运区</h2>
+        <p>搬运工具决定负重上限与满载手感：0 级 45kg、满载 ×0.75 移速；
+        满级 78kg、满载 ×0.88 移速且没有噪声惩罚。正式游戏里材料从仓库扣，这里只做展示。</p>`;
+    } else {
+      content.innerHTML = this.panelHTML();
+      const btn = content.querySelector('[data-haul-up]');
+      if (btn) btn.onclick = () => {
+        const r = this.upgrade();
+        if (!r.ok) { if (typeof Base !== 'undefined') Base.note(r.why, true); return; }
+        content.innerHTML = this.panelHTML();
+        const again = content.querySelector('[data-haul-up]');
+        if (again) again.onclick = btn.onclick;
+        if (typeof Safehouse !== 'undefined') Safehouse.refresh();
+        if (typeof Base !== 'undefined') { Base.render(); Base.renderStash(); }
+      };
+    }
+    if (!d.open) d.showModal();
+  }
+};
 
 </script>
 <script>
@@ -24942,7 +25186,7 @@ const StorageLoadout={
 const help=document.createElement('p');help.className='st-loadout-help';help.textContent='装备格：左键换装 · 右键详情与卸下 ｜ 仓库：单击看详情 · 双击放进背包';this.el.appendChild(help);this.sync();
  },
  sync(){if(!this.el)return;const active=Safehouse.view==='stash';if(active&&this.pane.parentNode!==this.el.querySelector('.st-loadout-mount'))this.el.querySelector('.st-loadout-mount').appendChild(this.pane);if(!active&&this.pane.parentNode!==this.anchor.parentNode)this.anchor.after(this.pane);if(active)this.update();},
- update(){if(!this.el)return;const items=this.items();this.el.querySelector('[data-st-loadout-value]').textContent=formatMoney(items.reduce((n,it)=>n+(it?.price||0),0));this.el.querySelector('[data-st-loadout-weight]').textContent=Attachments.carriedWeight().toFixed(1)+' / '+CFG.BAG.CARRY+' kg';this.el.querySelector('[data-st-loadout-slots]').textContent=Save.bag.length+' / '+bagSlots()+' 格';},
+ update(){if(!this.el)return;const items=this.items();this.el.querySelector('[data-st-loadout-value]').textContent=formatMoney(items.reduce((n,it)=>n+(it?.price||0),0));this.el.querySelector('[data-st-loadout-weight]').textContent=Attachments.carriedWeight().toFixed(1)+' / '+carryLimit()+' kg';this.el.querySelector('[data-st-loadout-slots]').textContent=Save.bag.length+' / '+bagSlots()+' 格';},
  decorate(){const items=this.items(),rows=document.querySelectorAll('#baseGear .slot');rows.forEach((row,i)=>{const item=items[i];if(item)row.classList.add('r'+item.r);row.dataset.equipKey=this.keys[i];if(Safehouse.view==='stash'){row.insertAdjacentHTML('afterbegin','<small class="st-slot-label">'+esc(Base.slotLabel(this.keys[i]))+'</small>');const text=row.querySelector('.slot-txt span');if(text){const eq=item?.equip;let info='点击选择';if(eq?.kind==='gun')info=eq.mag+' / '+Attachments.resolve(eq.gun,eq.attachments).mag+' 发';if(eq?.kind==='armor')info='Lv'+eq.gear.lv+' · '+Math.ceil(eq.gear.dur)+'/'+eq.gear.max;if(eq?.kind==='bag')info=eq.slots+' 格';if(eq?.kind==='melee')info=eq.bound?'绑定':'近战';text.textContent=info;}}});this.update();},
  equip(entry,node){if(!Save.stash.includes(entry))return false;const item=stashItem(entry),eq=item?.equip;if(!eq||eq.kind==='attachment')return false;
   if(eq.kind==='gun'){const w=Attachments.resolve(eq.gun,eq.attachments);if(w.slot==='primary'){Ctx.show(node.getBoundingClientRect().left,node.getBoundingClientRect().bottom,[0,1].map(i=>({label:'主武器 '+(i+1)+' · '+(Save.gear.weapons[i]?.name||'空槽'),onClick:()=>{if(Save.stash.includes(entry))Base.equipFromStash(entry,'w'+i);}})));return true;}return Base.equipFromStash(entry,'w2');}
@@ -24981,7 +25225,7 @@ const BaseSafe={
   if(!entry.gear&&stackLimit(item)>1)for(const e of next){if(e.gear||e.id!==entry.id)continue;const put=Math.min(left,Math.max(0,stackLimit(item)-e.n));e.n+=put;left-=put;if(!left)break;}
   while(left>0){const put=Math.min(left,entry.gear?1:stackLimit(item));next.push({...entry,n:put});left-=put;}
   if(next.length>limit&&next.length>dest.length){Base.note(to==='safe'?'保险箱空间不足':to==='bag'?'背包空间不足':'仓库空间不足',true);return false;}
-  if(from==='stash'&&to!=='stash'&&Attachments.carriedWeight()+item.w*n>CFG.BAG.CARRY+1e-6){Base.note('超过携带负重，无法转移',true);return false;}
+  if(from==='stash'&&to!=='stash'&&Attachments.carriedWeight()+item.w*n>carryLimit()+1e-6){Base.note('超过携带负重，无法转移',true);return false;}
   const field=k=>k==='safe'?'safe':k==='bag'?'bag':'stash';Save[field(from)]=src.filter(e=>e!==entry);Save[field(to)]=next;Save.save();Save.flush();Tips.hide();Base.render();Base.note('已将'+item.name+'放入'+({safe:'保险箱',bag:'背包',stash:'仓库'}[to]));Game.sfx('pickup');return true;
  },
   render(){const grid=document.getElementById('baseBagGrid');if(!grid)return;let box=document.getElementById('baseSafeSection');if(!box){box=document.createElement('section');box.id='baseSafeSection';box.className='base-safe-section';grid.after(box);}
@@ -25027,7 +25271,7 @@ const BaseKeychain = {
     }
     if (to === 'bag') {
       if (Save.bag.length >= bagSlots()) { Base.note('背包空间不足', true); return false; }
-      if (Attachments.carriedWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) { Base.note('超过携带负重，无法转移', true); return false; }
+      if (Attachments.carriedWeight() + item.w * n > carryLimit() + 1e-6) { Base.note('超过携带负重，无法转移', true); return false; }
     }
     src.splice(src.indexOf(entry), 1);
     dest.push({ ...entry });

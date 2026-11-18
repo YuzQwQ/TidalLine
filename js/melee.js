@@ -56,14 +56,14 @@ const MeleeSystem = {
   equipBag(index) {
     const p=Game.player,entry=p?.bag.slots[index],item=entry?.item;
     if(this.locked() || !this.def(item))return false;
-    if(p.totalWeight>CFG.BAG.CARRY){Game.toast('负重过高，先清理背包');return false;}
+    if(p.totalWeight>carryLimit()){Game.toast('负重过高，先清理背包');return false;}
     const old=p.melee;p.melee=this.normalize(item);this.cancel(p);
     if(old)p.bag.slots[index]={item:old,n:1};else p.bag.slots.splice(index,1);
     Game.syncGear();Game.renderBag();return true;
   },
   unequipRaid() {
     const p=Game.player;if(!p?.melee || this.locked())return false;
-    if(p.bag.slots.length>=bagSlots() || p.totalWeight>CFG.BAG.CARRY){Game.toast('背包空间或负重不足');return false;}
+    if(p.bag.slots.length>=bagSlots() || p.totalWeight>carryLimit()){Game.toast('背包空间或负重不足');return false;}
     p.bag.slots.push({item:p.melee,n:1});p.melee=null;p.meleeActive=false;this.cancel(p);
     Game.syncGear();Game.renderBag();return true;
   },
@@ -267,7 +267,7 @@ meleeWrap(Base,'renderPicker',function(original){if(this.picker!=='melee')return
 meleeWrap(Base,'equipFromStash',function(original,entry,key){if(key!=='melee')return original.call(this,entry,key);
   const it=stashItem(entry);if(!Save.stash.includes(entry)||!MeleeSystem.def(it))return false;
   const pWeight=Save.bagWeight()+Save.gear.weapons.reduce((n,w)=>n+(w?.w||0),0)+(Save.gear.body?.w||0)+(Save.gear.helmet?.w||0)+(Save.gear.back?.w||0)+it.w;
-  if(pWeight>CFG.BAG.CARRY){this.note('装备后负重过高',true);return false;}
+  if(pWeight>carryLimit()){this.note('装备后负重过高',true);return false;}
   Save.stash.splice(Save.stash.indexOf(entry),1);const old=Save.gear.melee;
   Save.gear.melee=MeleeSystem.normalize(it);if(old)Save.addGearStash(old);
   Save.save();this.closePicker();this.render();this.gearVoice('melee',false);return true;
@@ -305,7 +305,7 @@ meleeWrap(Game,'takeGear',function(original,entry,index){
   const item=entry?.item,p=this.player;
   if(item?.equip?.kind!=='melee')return original.call(this,entry,index);
   if(!p || MeleeSystem.locked() || !this.lootOpen || this.lootOpen.items[index]!==entry)return false;
-  if(p.totalWeight+item.w>CFG.BAG.CARRY){this.toast('太重了');return false;}
+  if(p.totalWeight+item.w>carryLimit()){this.toast('太重了');return false;}
   if(!p.melee)p.melee=MeleeSystem.normalize(item);
   else {const check=p.bag.canAdd(item,1);if(!check.ok){this.toast(check.why);return false;}p.bag.add(item,1);}
   this.lootOpen.items[index]=null;this.syncGear();this.syncBoxState(this.lootOpen);

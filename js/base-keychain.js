@@ -21,7 +21,7 @@ const BaseKeychain = {
     }
     if (to === 'bag') {
       if (Save.bag.length >= bagSlots()) { Base.note('背包空间不足', true); return false; }
-      if (Attachments.carriedWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) { Base.note('超过携带负重，无法转移', true); return false; }
+      if (Attachments.carriedWeight() + item.w * n > carryLimit() + 1e-6) { Base.note('超过携带负重，无法转移', true); return false; }
     }
     src.splice(src.indexOf(entry), 1);
     dest.push({ ...entry });

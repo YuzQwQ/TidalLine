@@ -39,3 +39,30 @@ function bagSlots() {
   const g = Save.gear && Save.gear.back;
   return (g && g.slots) || BASE_BAG_SLOTS;
 }
+
+/* ------------------------------------------------------------
+   转运区：搬运工具等级 → 负重上限 / 档位
+   运行时所有负重判定都必须走这两个函数，不要再直接读 CFG.BAG.CARRY
+   （它是 0 级的值，只是兜底与文档）。
+   ------------------------------------------------------------ */
+function haulLevel() {
+  const n = CFG.BAG.HAUL.CAP.length - 1;
+  const v = (typeof Save !== 'undefined' && Save && Save.facilities && Save.facilities.haul) | 0;
+  return Math.max(0, Math.min(n, v));
+}
+function carryLimit() { return CFG.BAG.HAUL.CAP[haulLevel()]; }
+
+/* 档位表：[上限, 移速, 噪声, 名称]
+   轻装 / 中载 是上限的固定比例，重载就是上限本身。
+   重载那一行的移速与噪声跟着等级走 —— 这才是「搬运工具」的实际手感，
+   兜满 68kg 时 0 级要走 0.75 倍速、1.5 倍噪声，4 级则是 0.88 倍速、零噪声惩罚。 */
+function carryTiers() {
+  const H = CFG.BAG.HAUL, lv = haulLevel();
+  const cap = H.CAP[lv];
+  return [
+    [cap * H.BANDS[0], 1.00, 1.00, '轻装'],
+    [cap * H.BANDS[1], 0.94, 1.00, '中载'],
+    [cap, H.MOVE[lv], H.NOISE[lv], '重载'],
+    [999, 0.55, 2.00, '超载']
+  ];
+}

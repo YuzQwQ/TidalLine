@@ -110,9 +110,10 @@ function moveEntity(e, dx, dy) {
 }
 
 /* ---------------- 背包 ---------------- */
-/* 负重 → 档位（装备重量也算进去，所以单独抽出来） */
+/* 负重 → 档位（装备重量也算进去，所以单独抽出来）
+   档位表跟着转运区等级变（右侧门槛与满载惩罚都会动），不能读静态配置。 */
 function weightTier(w) {
-  const T = CFG.BAG.TIERS;
+  const T = (typeof carryTiers === 'function') ? carryTiers() : CFG.BAG.TIERS;
   for (let i = 0; i < T.length; i++) {
     if (w <= T[i][0]) return { i, move: T[i][1], noise: T[i][2], name: T[i][3] };
   }
@@ -152,7 +153,7 @@ class Bag {
     for (const s of this.safe) w += s.item.w * s.n;
     return w;
   }
-  /* 真正压在身上的重量 —— 容量上限（CFG.BAG.CARRY）比的就是这个。
+  /* 真正压在身上的重量 —— 容量上限（carryLimit()）比的就是这个。
      历史包袱：早先 canAdd / add 只比 weight()，于是背着 15kg 装备还能再塞满
      75kg 背包，实际 90kg 在跑（移速已经掉到超载档）。这里统一口径。
      没有 owner 的局外临时实例用 extraWeight 手动补上装备自重。 */
@@ -182,7 +183,7 @@ class Bag {
     /* 不可堆叠的一件一格，要几格就占几格 */
     const need = stack > 1 ? Math.ceil(n / stack) : n;
     if (this.slots.length + need > bagSlots()) return { ok: false, why: '背包满了' };
-    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return { ok: false, why: '太重了' };
+    if (this.carryWeight() + item.w * n > carryLimit() + 1e-6) return { ok: false, why: '太重了' };
     return { ok: true };
   }
 
@@ -209,7 +210,7 @@ class Bag {
     /* 剩下的新开格：不可堆叠的一件一格 */
     const need = stack > 1 ? Math.ceil(n / stack) : n;
     if (this.slots.length + need > bagSlots()) return false;
-    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return false;
+    if (this.carryWeight() + item.w * n > carryLimit() + 1e-6) return false;
     while (n > 0) {
       const put = Math.min(stack, n);
       this.slots.push(ItemCapacity.max(item)
@@ -262,7 +263,7 @@ class Bag {
     if (!item || n <= 0) return false;
     /* 弹药也要过重量关。原来这里只看格子，子弹又轻又按 30 发一堆，
        等于一条绕过负重上限的后门：别的物品塞不下时还能再压两百发子弹进去。 */
-    if (this.carryWeight() + item.w * n > CFG.BAG.CARRY + 1e-6) return false;
+    if (this.carryWeight() + item.w * n > carryLimit() + 1e-6) return false;
     const stack = stackLimit(item);
     let left = n;
     for (const s of this.slots) {

@@ -6,7 +6,7 @@ const BaseSafe={
   if(!entry.gear&&stackLimit(item)>1)for(const e of next){if(e.gear||e.id!==entry.id)continue;const put=Math.min(left,Math.max(0,stackLimit(item)-e.n));e.n+=put;left-=put;if(!left)break;}
   while(left>0){const put=Math.min(left,entry.gear?1:stackLimit(item));next.push({...entry,n:put});left-=put;}
   if(next.length>limit&&next.length>dest.length){Base.note(to==='safe'?'保险箱空间不足':to==='bag'?'背包空间不足':'仓库空间不足',true);return false;}
-  if(from==='stash'&&to!=='stash'&&Attachments.carriedWeight()+item.w*n>CFG.BAG.CARRY+1e-6){Base.note('超过携带负重，无法转移',true);return false;}
+  if(from==='stash'&&to!=='stash'&&Attachments.carriedWeight()+item.w*n>carryLimit()+1e-6){Base.note('超过携带负重，无法转移',true);return false;}
   const field=k=>k==='safe'?'safe':k==='bag'?'bag':'stash';Save[field(from)]=src.filter(e=>e!==entry);Save[field(to)]=next;Save.save();Save.flush();Tips.hide();Base.render();Base.note('已将'+item.name+'放入'+({safe:'保险箱',bag:'背包',stash:'仓库'}[to]));Game.sfx('pickup');return true;
  },
   render(){const grid=document.getElementById('baseBagGrid');if(!grid)return;let box=document.getElementById('baseSafeSection');if(!box){box=document.createElement('section');box.id='baseSafeSection';box.className='base-safe-section';grid.after(box);}

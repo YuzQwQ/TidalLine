@@ -940,12 +940,12 @@ Object.assign(Game, {
        会出现「条子才一半却已经跑不动」的矛盾。 */
     const w = P.totalWeight, t = P.tier;
     const el = document.getElementById('bagWeight');
-    el.textContent = w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg · ' + t.name;
+    el.textContent = w.toFixed(1) + ' / ' + carryLimit() + ' kg · ' + t.name;
     el.title = '总负重 ' + w.toFixed(1) + ' kg（背包 ' + P.bag.weight().toFixed(1) +
       ' + 装备 ' + Math.max(0, w - P.bag.weight()).toFixed(1) + '）';
     document.getElementById('bagValue').textContent = formatMoney(P.bag.value());
     const bar = document.getElementById('bagBar');
-    bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';
+    bar.querySelector('i').style.width = Math.min(100, w / carryLimit() * 100) + '%';
     bar.classList.toggle('warn', t.i >= 2);
 
   },

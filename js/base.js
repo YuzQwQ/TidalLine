@@ -1082,10 +1082,10 @@ const Base = {
     const w = Attachments.carriedWeight();
     const meta = document.getElementById('bagMeta');
     if (meta) meta.textContent = Save.bag.length + ' / ' + bagSlots() + ' 格 · ' +
-      w.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
+      w.toFixed(1) + ' / ' + carryLimit() + ' kg';
     const bar = document.getElementById('bagBar');
     if (bar && bar.querySelector) {
-      bar.querySelector('i').style.width = Math.min(100, w / CFG.BAG.CARRY * 100) + '%';
+      bar.querySelector('i').style.width = Math.min(100, w / carryLimit() * 100) + '%';
     }
     /* 空包时按钮变灰：点它只会得到一句「背包已经是空的」，不如直接说明白 */
     const clear = document.getElementById('btnClearBag');
@@ -1100,7 +1100,7 @@ const Base = {
   /* 背包还能不能塞下：先算再动，算不过就不搬，绝不吞东西 */
   bagBlock(it, n) {
     if (!it) return '物品不存在';
-    if (Attachments.carriedWeight() + it.w * n > CFG.BAG.CARRY + 1e-6) return '太重了';
+    if (Attachments.carriedWeight() + it.w * n > carryLimit() + 1e-6) return '太重了';
     const stack = stackLimit(it);
     let room = 0;
     for (const e of Save.bag) {
@@ -1506,7 +1506,7 @@ const MapSelect = {
     document.getElementById('mapSelectedName').textContent=map.title;
     const bagN=Save.bag.length, bagW=Attachments.carriedWeight();
     document.getElementById('mapSupplyCost').textContent='背包 ' + bagN + ' / ' + bagSlots() +
-      ' 格 · 保险箱 '+Save.safe.length+' / '+CFG.BAG.SAFE+' 格 · ' + bagW.toFixed(1) + ' / ' + CFG.BAG.CARRY + ' kg';
+      ' 格 · 保险箱 '+Save.safe.length+' / '+CFG.BAG.SAFE+' 格 · ' + bagW.toFixed(1) + ' / ' + carryLimit() + ' kg';
     document.getElementById('mapSelectionHint').textContent=
       '带什么由背包决定：子弹和药物回来还留在包里，其它东西自动入库。';
     document.getElementById('btnMapStart').disabled=false;

@@ -37,6 +37,10 @@ const Save = {
   attachmentRecovery: [],
   attachmentsVersion: 2,
   commissionBoard: null,
+  /* 藏身处设施等级。目前只有转运区（haul）：
+     0 徒手 / 1 帆布拖车 / 2 加固车架 / 3 滑轮组 / 4 电动绞盘。
+     负重上限、档位、满载惩罚全部由它决定，见 common.js 的 carryLimit()。 */
+  facilities: { haul: 0 },
   /* 彩蛋保底计数：连续「摸到红但没中彩蛋」的次数。玩家界面上不显示，
      只在 Loot.eggSwap 里累加 / 清零。见 CFG.LOOT.eggPityRamp。 */
   eggPity: 0,
@@ -115,6 +119,11 @@ const Save = {
       this.chain = Array.isArray(d.chain) ? d.chain : [];
       this.mail = Array.isArray(d.mail) ? d.mail : [];
       this.mailBatches = (d.mailBatches && typeof d.mailBatches === 'object') ? d.mailBatches : {};
+      /* 设施等级：老存档没有这个字段，按 0 级算（等于以前的「无搬运工具」）。
+         越界值夹回合法区间，避免手改存档把档位表读穿。 */
+      const fac = (d.facilities && typeof d.facilities === 'object') ? d.facilities : {};
+      const maxHaul = CFG.BAG.HAUL.CAP.length - 1;
+      this.facilities = { haul: Math.max(0, Math.min(maxHaul, Number(fac.haul) | 0)) };
 
       // 配装：老存档没有就补默认，缺字段逐项兜底
       const g = d.gear || {};
@@ -213,6 +222,7 @@ const Save = {
         meleeGiftClaimed: this.meleeGiftClaimed,
         attachmentRecovery: this.attachmentRecovery,
         commissionBoard: this.commissionBoard,
+        facilities: this.facilities,
         bestHaul: this.bestHaul
       }));
       return true;

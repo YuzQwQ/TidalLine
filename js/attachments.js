@@ -67,7 +67,7 @@ const Attachments={
     if(next.length>limit)return{...result,reason:raid?'背包空间不足，无法返还物品或余弹':'仓库空间不足，无法返还物品或余弹',extra};
     const mass=list=>list.reduce((n,e)=>n+this.entryItem(e).w*(e.n||1),0),was=raid?Game.player.totalWeight:this.carriedWeight();
     const diff=raid?mass(next)-mass(inv)+(t.owner==='raid-equipped'?gun.w-current.w:0):t.owner!=='stash'?gun.w-current.w:0;
-    if(was+diff>CFG.BAG.CARRY+1e-6&&diff>1e-6)return{...result,reason:'改装后负重过高',extra};
+    if(was+diff>carryLimit()+1e-6&&diff>1e-6)return{...result,reason:'改装后负重过高',extra};
     return{...result,ok:!result.reason,next,gun,extra,source:src};
   },
   // Vendor providers are independent of the UI, so additional merchants can be added here.
@@ -90,7 +90,7 @@ const Attachments={
     const total=buys.reduce((n,b)=>n+b.price,0),groups=[];for(const b of buys){let g=groups.find(x=>x.vendor===b.vendor);if(!g){g={vendor:b.vendor,items:[]};groups.push(g);}g.items.push(b);}
     const quote=JSON.stringify({gun:eq,changes,buys,owned:[...used].map(e=>this.entryItem(e).equip.attachment)});
     const diff=t.owner==='stash'?0:gun.w-current.w;
-    const reason=!changes.length?'请选择要改装的配件':rows.length>STASH_SLOTS?'仓库空间不足，无法返还配件或余弹':diff>1e-6&&this.carriedWeight()+diff>CFG.BAG.CARRY+1e-6?'改装后负重过高':Save.credits<total?'信用点不足':'';
+    const reason=!changes.length?'请选择要改装的配件':rows.length>STASH_SLOTS?'仓库空间不足，无法返还配件或余弹':diff>1e-6&&this.carriedWeight()+diff>carryLimit()+1e-6?'改装后负重过高':Save.credits<total?'信用点不足':'';
     return {ok:!reason,reason,before,after,gun,next:rows,changes,buys,groups,total,quote,extra};
   },
   commitPlan(t,draft,quote){const r=this.plan(t,draft);if(!r.ok)return r;if(quote!==r.quote)return {...r,ok:false,reason:'购买内容或枪械状态已变化，请重新确认'};
