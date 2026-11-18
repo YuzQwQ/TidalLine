@@ -1,0 +1,80 @@
+{
+  "batch": "wall-batch-03",
+  "status": "ready",
+  "promptRecord": "assets/source/prompts/wall-batch-03-generation.json",
+  "geometry": {
+    "top": [
+      32,
+      32
+    ],
+    "south": [
+      32,
+      32
+    ],
+    "east": [
+      4,
+      48
+    ],
+    "visual": [
+      32,
+      48
+    ],
+    "collision": [
+      32,
+      32
+    ],
+    "northOverhang": 16
+  },
+  "assets": [
+    {
+      "id": "wall_concrete_cap_v1",
+      "name": "灰水泥墙 · 墙顶",
+      "size": [
+        32,
+        32
+      ],
+      "status": "ready",
+      "source": "assets/source/wall-batch-03/sources/wall_concrete_cap_v1.png",
+      "draft": "assets/source/wall-batch-03/wall_concrete_cap_v1.png",
+      "runtimeId": "wall_concrete",
+      "target": "assets/tiles/wall_concrete.png"
+    },
+    {
+      "id": "wall_concrete_south_v1",
+      "name": "灰水泥墙 · 南向立面",
+      "size": [
+        32,
+        32
+      ],
+      "status": "ready",
+      "source": "assets/source/wall-batch-03/sources/wall_concrete_south_v1.png",
+      "draft": "assets/source/wall-batch-03/wall_concrete_south_v1.png",
+      "runtimeId": "wall_concrete_face_s",
+      "target": "assets/tiles/wall_concrete_face_s.png"
+    },
+    {
+      "id": "wall_concrete_east_v1",
+      "name": "灰水泥墙 · 东向短侧面",
+      "size": [
+        4,
+        48
+      ],
+      "status": "ready",
+      "source": "assets/source/wall-batch-03/sources/wall_concrete_east_v1.png",
+      "draft": "assets/source/wall-batch-03/wall_concrete_east_v1.png",
+      "sourceCrop": {
+        "left": 529,
+        "top": 0,
+        "width": 87,
+        "height": 1374
+      },
+      "runtimeId": "wall_concrete_face_e",
+      "target": "assets/tiles/wall_concrete_face_e.png"
+    }
+  ],
+  "integration": {
+    "date": "2026-11-13",
+    "registry": "design/maps/shared/scene-assets.json",
+    "test": "tools/test-camp-assets.js"
+  }
+}

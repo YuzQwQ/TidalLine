@@ -1,0 +1,39 @@
+{
+  "batch": "碎石地面 A/B",
+  "date": "2026-11-12",
+  "mode": "built-in image_gen",
+  "delivery": "32×32全不透明、共用16色调色板、2px共用周期边界，适合A/B混铺",
+  "note": "原稿由image_gen生成并保留。交付使用项目既有地块整理方式：最近邻缩小、共同边界与统一调色板；本轮为源素材审核，不修改地图或运行时目录。",
+  "items": [
+    {
+      "id": "ground_gravel_01",
+      "name": "碎石地面 A",
+      "status": "draft-for-review",
+      "kind": "ground",
+      "material": "gravel",
+      "size": [
+        32,
+        32
+      ],
+      "source": "assets/source/gravel-batch-01/sources/ground_gravel_01.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-e91f0d82-ba95-43a8-8361-05399d47929f.png",
+      "draft": "assets/source/gravel-batch-01/ground_gravel_01.png",
+      "prompt": "Use case: stylized-concept. Generate ONE SEAMLESS TILING CRUSHED-GRAVEL GROUND TEXTURE, variant A, for the 1990s coastal pixel-art survival game 潮汐线. Input reference shows only the existing subdued brightness and muted grey-green/grey-brown palette: gravel is a NEW material, not plain soil or concrete. Final production tile is 32x32 pixels: crisp intentional small pixel clusters, 8–16 muted colors, simplified angular irregular stone shapes about 1–3 logical pixels each. Full-bleed OPAQUE square texture, no margins, no border, no separate slab or pile. Camera STRAIGHT TOP DOWN, flat diffuse lighting, absolutely no perspective, bevel, rim lighting, cast shadow or vignette. Subject is flat COMPACTED SMALL CRUSHED STONE across the whole tile, used for a relief-supply yard: many small low-contrast angular grey stones partly sunk into dusty olive-grey compacted fines. Around half the surface has readable tiny angular gravel grains; other half is dusty fine aggregate filling gaps. The material should be visibly stonier than the plain soil in reference but calm enough under game props. Restrained medium value palette around dusty grey-olive #74776B, fine lighter stone faces near #85887A, muted dark crevices near #62675C, a few grey-brown stones. No bright white stones, no black holes, no glints, no wet reflections. Stone sizes evenly small and fairly consistent, no large cobblestones or flagstone pavement. Uniform quiet distribution without a central motif. A couple of very subtle dustier patches. The left-right and top-bottom edges must tile seamlessly; quiet same-density outermost band, no obvious seam, no dark frame or large stone cutoffs at boundary. No isolated large rock, no plant/grass, trash, sticks, footprints, wheel tracks, puddles, cracks, markings, text or UI. Render as an enlarged authentic low-resolution pixel texture, not photorealistic gravel and not blurry procedural noise. ONE texture tile only, not a sheet or repeated preview."
+    },
+    {
+      "id": "ground_gravel_02",
+      "name": "碎石地面 B",
+      "status": "draft-for-review",
+      "kind": "ground",
+      "material": "gravel",
+      "size": [
+        32,
+        32
+      ],
+      "source": "assets/source/gravel-batch-01/sources/ground_gravel_02.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-330b50c2-dc5e-447c-89bf-e07d75cbb4b0.png",
+      "draft": "assets/source/gravel-batch-01/ground_gravel_02.png",
+      "prompt": "Use case: precise-object-edit. Create VARIANT B of this exact gravel ground tile, to be mixed randomly with variant A in a 32x32 pixel-art game. PRESERVE the material, mean brightness, grey-olive / grey-brown palette, stone size, stone density, lighting, contrast and pixel-cluster style of the reference. Make ONLY SUBTLE local variation inside the CENTER: shift the positions of about one quarter of the tiny angular grey stones, swap a few stone cluster shapes, and slightly move the soft dusty bare-fines patches. Some areas can be fractionally dustier and others fractionally stonier, but keep average brightness visually identical and density nearly identical. Critically KEEP the OUTERMOST BORDER BAND (outer 6 percent on all four sides) unchanged so A and B can share tile seams. No large distinctive new feature, no new cracks, grass, dirt trail, footprints, tire tracks, puddles, gravel pile, larger cobblestones, debris or markings. FULL-BLEED OPAQUE square 90-degree top-down texture, same framing and scale as reference, absolutely no margins, border, bevel, perspective, vignette or cast shadow. Restrained 8–16 color small-cluster pixel art intended for 32x32 tile. Output ONE variant B tile, not a comparison or tiling sheet. It should look like a subtle sibling, not a different terrain material."
+    }
+  ]
+}

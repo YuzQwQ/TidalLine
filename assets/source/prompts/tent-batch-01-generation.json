@@ -1,0 +1,194 @@
+{
+  "batch": "救灾帐篷 · 横纵双向",
+  "date": "2026-11-12",
+  "mode": "built-in image_gen",
+  "styleReference": "design/maps/WALL_VOLUME.md",
+  "camera": "75度高角度正交俯视；地面占地固定，侧墙向北增高16px",
+  "note": "v2修正v1误画为地布的问题：采用完整灰蓝帆布篷顶、长轴屋脊及南/东短立面，篷顶遮住北/西侧墙。v1去顶图保留作室内参考。沿长边薄边界碰撞、短边可进入的规划不变。当前为源素材样稿，未改地图或运行时。",
+  "items": [
+    {
+      "id": "tent_relief_horizontal_v1",
+      "name": "救灾帐篷 · 横向 3×2",
+      "status": "draft-for-review",
+      "footprint": [
+        3,
+        2
+      ],
+      "spriteSize": [
+        96,
+        80
+      ],
+      "source": "assets/source/tent-batch-01/sources/tent_relief_horizontal_v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-b5048247-484c-4f10-a073-98acc3595e8d.png",
+      "draft": "tent-horizontal-v1.png",
+      "collision": {
+        "mode": "thin-long-edge-boundaries",
+        "units": "tile",
+        "thickness": 0.0625,
+        "segments": [
+          [
+            0,
+            0,
+            3,
+            0
+          ],
+          [
+            0,
+            2,
+            3,
+            2
+          ]
+        ],
+        "openEnds": [
+          "west",
+          "east"
+        ],
+        "interior": "walkable"
+      },
+      "drawOffsetPixels": [
+        0,
+        -16
+      ],
+      "prompt": "Use case: stylized-concept. Make ONE standalone CUTAWAY DISASTER-RELIEF CANVAS TENT scene sprite for the Chinese 2D survival game 潮汐线. Reference 1 is the EXACT spatial/camera reference: 75-degree high-angle orthographic top-down game architecture, grid-aligned rectangular floor, wall top edges and short south/east wall faces raised toward SCREEN NORTH, north/west edges thin; no isometric rhombus, no diagonal footprint, no perspective convergence. Reference 2 is pixel-art material style only. Muted weathered BLUE-GRAY canvas long side walls, gray-green thin tubular support posts, restrained beige seams and stitched patches, dirty pale gray-beige waterproof groundsheet inside. Entire roof/canopy REMOVED AS AN ARCHITECTURAL CUTAWAY so the player and floor can be clearly seen: no opaque pitched roof or overhead roof cloth. Only the two LONG OUTSIDE EDGES have thin raised canvas wall strips; the two SHORT ENDS are clearly OPEN WALK-THROUGH ENTRANCES, with tiny rolled-up canvas door flaps and slim side posts, no wall spanning across either short end, no door threshold blocking passage. Side walls should be very thin relative to the interior, not whole-tile-wide solid blocks. Frame and a few subtle canvas creases make it recognizably a temporary relief tent, not a stone building. Do not add freestanding diagonal guy ropes or stakes outside footprint. EMPTY interior: no beds, boxes, furniture, supplies, characters, labels or symbols. Clean deliberate pixel-art clusters, readable 32px-per-tile game sprite, muted colors, small upper-left highlights; north-facing wall tops lighter, south face medium, east face darker, maintain fixed screen-aligned lighting. Genuinely transparent background OUTSIDE the tent, groundsheet INSIDE may be opaque. Full uncut sprite centered, no ground scenery, external cast shadow, checkerboard, text, logos, red crosses, UI or borders. ORIENTATION: footprint EXACTLY THREE tiles EAST-WEST across by TWO tiles NORTH-SOUTH deep. Floor rectangle has 3:2 width:height ratio, horizontal long axis strictly screen LEFT-RIGHT. Continuous thin canvas side walls only along the TOP/NORTH and BOTTOM/SOUTH long edges; both LEFT/WEST and RIGHT/EAST short edges are OPEN passages. Use slim rolled-back entrance flaps at left and right, no end-wall across those edges. Camera follows masonry-wall reference: ground footprint remains 96x64 logical pixels, only wall elevation can extend up by about 16 logical pixels, giving a 96x80 drawing envelope. Show the empty floor continuous from left opening to right opening. Front/south canvas wall has a short visible face, rear/north wall only its top lip and inward cloth. Top rail may suggest collapsed roof supports but no pole or beam crossing and obscuring the floor. Landscape-oriented composition. Draw ONLY this horizontal orientation."
+    },
+    {
+      "id": "tent_relief_vertical_v1",
+      "name": "救灾帐篷 · 纵向 2×3",
+      "status": "draft-for-review",
+      "footprint": [
+        2,
+        3
+      ],
+      "spriteSize": [
+        64,
+        112
+      ],
+      "source": "assets/source/tent-batch-01/sources/tent_relief_vertical_v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-af2ca1ee-72ee-4953-8de0-6d6d61b5a1fc.png",
+      "draft": "tent-vertical-v1.png",
+      "collision": {
+        "mode": "thin-long-edge-boundaries",
+        "units": "tile",
+        "thickness": 0.0625,
+        "segments": [
+          [
+            0,
+            0,
+            0,
+            3
+          ],
+          [
+            2,
+            0,
+            2,
+            3
+          ]
+        ],
+        "openEnds": [
+          "north",
+          "south"
+        ],
+        "interior": "walkable"
+      },
+      "drawOffsetPixels": [
+        0,
+        -16
+      ],
+      "prompt": "Use case: stylized-concept. Make ONE standalone CUTAWAY DISASTER-RELIEF CANVAS TENT scene sprite for the Chinese 2D survival game 潮汐线. Reference 1 is the EXACT spatial/camera reference: 75-degree high-angle orthographic top-down game architecture, grid-aligned rectangular floor, wall top edges and short south/east wall faces raised toward SCREEN NORTH, north/west edges thin; no isometric rhombus, no diagonal footprint, no perspective convergence. Reference 2 is pixel-art material style only. Muted weathered BLUE-GRAY canvas long side walls, gray-green thin tubular support posts, restrained beige seams and stitched patches, dirty pale gray-beige waterproof groundsheet inside. Entire roof/canopy REMOVED AS AN ARCHITECTURAL CUTAWAY so the player and floor can be clearly seen: no opaque pitched roof or overhead roof cloth. Only the two LONG OUTSIDE EDGES have thin raised canvas wall strips; the two SHORT ENDS are clearly OPEN WALK-THROUGH ENTRANCES, with tiny rolled-up canvas door flaps and slim side posts, no wall spanning across either short end, no door threshold blocking passage. Side walls should be very thin relative to the interior, not whole-tile-wide solid blocks. Frame and a few subtle canvas creases make it recognizably a temporary relief tent, not a stone building. Do not add freestanding diagonal guy ropes or stakes outside footprint. EMPTY interior: no beds, boxes, furniture, supplies, characters, labels or symbols. Clean deliberate pixel-art clusters, readable 32px-per-tile game sprite, muted colors, small upper-left highlights; north-facing wall tops lighter, south face medium, east face darker, maintain fixed screen-aligned lighting. Genuinely transparent background OUTSIDE the tent, groundsheet INSIDE may be opaque. Full uncut sprite centered, no ground scenery, external cast shadow, checkerboard, text, logos, red crosses, UI or borders. ORIENTATION: footprint EXACTLY TWO tiles EAST-WEST across by THREE tiles NORTH-SOUTH deep. Floor rectangle has 2:3 width:height ratio, vertical long axis strictly screen UP-DOWN. Continuous thin canvas side walls only along LEFT/WEST and RIGHT/EAST long edges; BOTH TOP/NORTH and BOTTOM/SOUTH short edges are OPEN entrances. Clear open top entrance and clear open bottom entrance, no cross-wall at either end. All posts equal size, no shrinking far end, absolutely no diagonal north-south receding tent. According to masonry-wall reference, the left/west wall reads chiefly as a narrow top edge; right/east wall has only a slim darker side face. Ground footprint remains 64x96 logical pixels; limited wall elevation extends at most 16 logical pixels toward screen north, giving a 64x112 drawing envelope. Slim rolled-up entrance flaps at TOP and BOTTOM. Show uninterrupted empty floor from top opening to bottom opening. Portrait composition. Draw ONLY this vertical orientation."
+    },
+    {
+      "id": "tent_relief_horizontal_v2",
+      "name": "救灾帐篷 · 横向篷顶修正版",
+      "status": "draft-for-review",
+      "source": "assets/source/tent-batch-01/sources/tent_relief_horizontal_v2.png",
+      "draft": "tent-horizontal-v2.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-e38059ab-c024-4edb-8fa0-b0e6377425b4.png",
+      "footprint": [
+        3,
+        2
+      ],
+      "spriteSize": [
+        96,
+        80
+      ],
+      "roof": "full-pitched-canvas",
+      "occlusion": "roof-covers-north-and-west-sidewalls",
+      "prompt": "Use case: precise-object-edit. CORRECT the supplied tent sprite: the earlier image mistakenly shows a beige INTERIOR FLOOR with its roof missing. The user wants the ACTUAL OUTER TENT ROOF seen from ABOVE, not a roofless cutaway. Replace the large beige floor area with a COMPLETE OPAQUE BLUE-GRAY PITCHED CANVAS ROOF covering the entire tent. Roof has a clearly raised ridge along the LONG axis, TWO sloping taut fabric planes meeting at that ridge, a pale stitched ridge seam, a few believable tension creases and restrained worn patches. Make roof volume unmistakable: it must read as canvas draped over an A-frame, NOT a flat groundsheet, open tray, swimming pool or building interior. Keep matching muted blue-gray cloth, beige stitching, weathered gray-green supports and original pixel-art style. Camera follows the supplied masonry-game reference: 75-degree high-angle ORTHOGRAPHIC TOP-DOWN, axis-aligned rectangular ground footprint, NO isometric diagonal footprint, NO vanishing point, no farther-end scaling. All wall/roof elevation projects toward SCREEN NORTH/up, ground baseline fixed. Roof is drawn ON TOP and OCCLUDES the rear side walls and interior: NO exposed tall NORTH/BACK side wall sitting above the roof, NO raised back rail standing in front of/over the roof, NO visible full beige interior floor. ONLY exposed SOUTH/FRONT wall face and a very thin darker EAST/RIGHT wall face can be visible BELOW roof eaves. North and west side walls are hidden behind/under the roof except tiny edge outlines. No pipes, steel bars or frame grid across roof surface. Both SHORT ENDS retain rolled-back entrances, clearly open in the gable ends UNDER roof ends; do not close the entrances with a solid cloth wall. Long sides remain closed cloth walls. Empty tent structure, no furniture, supplies, people, ropes sprawling outside footprint, flags, text or logos. Transparent OUTSIDE the tent only; the entire canvas roof is opaque. Fixed upper-left light, crisp restrained pixel-art clusters, no exterior cast shadow or environment. One complete centered uncut tent sprite, not multiple variants or diagram. ORIENTATION: THREE tiles WIDE east-west and TWO tiles DEEP north-south. HORIZONTAL long axis exactly screen left-right. Raised ridge runs HORIZONTALLY across the roof. Left and right short gable ends are the entrances, tucked UNDER roof overhang. Critical user correction: the ENTIRE upper/north canvas SIDE WALL that was visible in the old sprite must now be HIDDEN UNDER THE ROOF. The upper part of the image must be the northern sloping roof plane itself, not an upright blue wall/band behind a beige floor. South/front long wall appears as only a short dark-blue face below the roof bottom eave. Maintain axis-aligned 3x2 ground footprint and limited northward elevation envelope of 96x80 logical pixels. Landscape asset.",
+      "collision": {
+        "mode": "thin-long-edge-boundaries",
+        "units": "tile",
+        "thickness": 0.0625,
+        "segments": [
+          [
+            0,
+            0,
+            3,
+            0
+          ],
+          [
+            0,
+            2,
+            3,
+            2
+          ]
+        ],
+        "openEnds": [
+          "west",
+          "east"
+        ],
+        "interior": "walkable"
+      },
+      "drawOffsetPixels": [
+        0,
+        -16
+      ]
+    },
+    {
+      "id": "tent_relief_vertical_v2",
+      "name": "救灾帐篷 · 纵向篷顶修正版",
+      "status": "draft-for-review",
+      "source": "assets/source/tent-batch-01/sources/tent_relief_vertical_v2.png",
+      "draft": "tent-vertical-v2.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-a0c46235-2039-4aea-bb12-a0eb4b2ae186.png",
+      "footprint": [
+        2,
+        3
+      ],
+      "spriteSize": [
+        64,
+        112
+      ],
+      "roof": "full-pitched-canvas",
+      "occlusion": "roof-covers-north-and-west-sidewalls",
+      "prompt": "Use case: precise-object-edit. CORRECT the supplied tent sprite: the earlier image mistakenly shows a beige INTERIOR FLOOR with its roof missing. The user wants the ACTUAL OUTER TENT ROOF seen from ABOVE, not a roofless cutaway. Replace the large beige floor area with a COMPLETE OPAQUE BLUE-GRAY PITCHED CANVAS ROOF covering the entire tent. Roof has a clearly raised ridge along the LONG axis, TWO sloping taut fabric planes meeting at that ridge, a pale stitched ridge seam, a few believable tension creases and restrained worn patches. Make roof volume unmistakable: it must read as canvas draped over an A-frame, NOT a flat groundsheet, open tray, swimming pool or building interior. Keep matching muted blue-gray cloth, beige stitching, weathered gray-green supports and original pixel-art style. Camera follows the supplied masonry-game reference: 75-degree high-angle ORTHOGRAPHIC TOP-DOWN, axis-aligned rectangular ground footprint, NO isometric diagonal footprint, NO vanishing point, no farther-end scaling. All wall/roof elevation projects toward SCREEN NORTH/up, ground baseline fixed. Roof is drawn ON TOP and OCCLUDES the rear side walls and interior: NO exposed tall NORTH/BACK side wall sitting above the roof, NO raised back rail standing in front of/over the roof, NO visible full beige interior floor. ONLY exposed SOUTH/FRONT wall face and a very thin darker EAST/RIGHT wall face can be visible BELOW roof eaves. North and west side walls are hidden behind/under the roof except tiny edge outlines. No pipes, steel bars or frame grid across roof surface. Both SHORT ENDS retain rolled-back entrances, clearly open in the gable ends UNDER roof ends; do not close the entrances with a solid cloth wall. Long sides remain closed cloth walls. Empty tent structure, no furniture, supplies, people, ropes sprawling outside footprint, flags, text or logos. Transparent OUTSIDE the tent only; the entire canvas roof is opaque. Fixed upper-left light, crisp restrained pixel-art clusters, no exterior cast shadow or environment. One complete centered uncut tent sprite, not multiple variants or diagram. ORIENTATION: TWO tiles WIDE east-west and THREE tiles LONG north-south. VERTICAL long axis exactly screen up-down. Roof ridge runs VERTICALLY straight up-down; both roof slopes lie left/right of ridge. Western/left long wall is covered by the roof silhouette; eastern/right wall is only a thin darker exposed face beneath right eave, not a broad vertical wall surrounding an exposed beige floor. TOP/NORTH and BOTTOM/SOUTH short gable ends are entrances under the roof ends, bottom entrance may show a small dark triangular opening with rolled-back canvas flaps; do not show the entire internal floor. Keep both ends equal width and no diagonal receding perspective. Axis-aligned 2x3 ground footprint, limited screen-north elevation envelope 64x112 logical pixels. Portrait asset.",
+      "collision": {
+        "mode": "thin-long-edge-boundaries",
+        "units": "tile",
+        "thickness": 0.0625,
+        "segments": [
+          [
+            0,
+            0,
+            0,
+            3
+          ],
+          [
+            2,
+            0,
+            2,
+            3
+          ]
+        ],
+        "openEnds": [
+          "north",
+          "south"
+        ],
+        "interior": "walkable"
+      },
+      "drawOffsetPixels": [
+        0,
+        -16
+      ]
+    }
+  ]
+}

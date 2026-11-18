@@ -1,0 +1,196 @@
+{
+  "batch": "tent-batch-01",
+  "status": "ready",
+  "promptRecord": "assets/source/prompts/tent-batch-01-generation.json",
+  "assets": [
+    {
+      "id": "tent_relief_horizontal_v1",
+      "name": "救灾帐篷 · 横向 3×2",
+      "source": "assets/source/tent-batch-01/sources/tent_relief_horizontal_v1.png",
+      "draft": "tent-horizontal-v1.png",
+      "footprint": [
+        3,
+        2
+      ],
+      "spriteSize": [
+        96,
+        80
+      ],
+      "collision": {
+        "mode": "thin-long-edge-boundaries",
+        "units": "tile",
+        "thickness": 0.0625,
+        "segments": [
+          [
+            0,
+            0,
+            3,
+            0
+          ],
+          [
+            0,
+            2,
+            3,
+            2
+          ]
+        ],
+        "openEnds": [
+          "west",
+          "east"
+        ],
+        "interior": "walkable"
+      },
+      "drawOffsetPixels": [
+        0,
+        -16
+      ],
+      "status": "superseded-roofless-reference"
+    },
+    {
+      "id": "tent_relief_vertical_v1",
+      "name": "救灾帐篷 · 纵向 2×3",
+      "source": "assets/source/tent-batch-01/sources/tent_relief_vertical_v1.png",
+      "draft": "tent-vertical-v1.png",
+      "footprint": [
+        2,
+        3
+      ],
+      "spriteSize": [
+        64,
+        112
+      ],
+      "collision": {
+        "mode": "thin-long-edge-boundaries",
+        "units": "tile",
+        "thickness": 0.0625,
+        "segments": [
+          [
+            0,
+            0,
+            0,
+            3
+          ],
+          [
+            2,
+            0,
+            2,
+            3
+          ]
+        ],
+        "openEnds": [
+          "north",
+          "south"
+        ],
+        "interior": "walkable"
+      },
+      "drawOffsetPixels": [
+        0,
+        -16
+      ],
+      "status": "superseded-roofless-reference"
+    },
+    {
+      "id": "tent_relief_horizontal_v2",
+      "name": "救灾帐篷 · 横向篷顶修正版",
+      "status": "ready",
+      "source": "assets/source/tent-batch-01/sources/tent_relief_horizontal_v2.png",
+      "draft": "tent-horizontal-v2.png",
+      "footprint": [
+        3,
+        2
+      ],
+      "spriteSize": [
+        96,
+        80
+      ],
+      "roof": "full-pitched-canvas",
+      "occlusion": "roof-covers-north-and-west-sidewalls",
+      "collision": {
+        "mode": "thin-long-edge-boundaries",
+        "units": "tile",
+        "thickness": 0.0625,
+        "segments": [
+          [
+            0,
+            0,
+            3,
+            0
+          ],
+          [
+            0,
+            2,
+            3,
+            2
+          ]
+        ],
+        "openEnds": [
+          "west",
+          "east"
+        ],
+        "interior": "walkable"
+      },
+      "drawOffsetPixels": [
+        0,
+        -16
+      ],
+      "runtimeId": "tent_relief",
+      "target": "assets/props/tent_relief.png"
+    },
+    {
+      "id": "tent_relief_vertical_v2",
+      "name": "救灾帐篷 · 纵向篷顶修正版",
+      "status": "ready",
+      "source": "assets/source/tent-batch-01/sources/tent_relief_vertical_v2.png",
+      "draft": "tent-vertical-v2.png",
+      "footprint": [
+        2,
+        3
+      ],
+      "spriteSize": [
+        64,
+        112
+      ],
+      "roof": "full-pitched-canvas",
+      "occlusion": "roof-covers-north-and-west-sidewalls",
+      "collision": {
+        "mode": "thin-long-edge-boundaries",
+        "units": "tile",
+        "thickness": 0.0625,
+        "segments": [
+          [
+            0,
+            0,
+            0,
+            3
+          ],
+          [
+            2,
+            0,
+            2,
+            3
+          ]
+        ],
+        "openEnds": [
+          "north",
+          "south"
+        ],
+        "interior": "walkable"
+      },
+      "drawOffsetPixels": [
+        0,
+        -16
+      ],
+      "runtimeId": "tent_relief_side",
+      "target": "assets/props/tent_relief_side.png"
+    }
+  ],
+  "activeVariants": [
+    "tent_relief_horizontal_v2",
+    "tent_relief_vertical_v2"
+  ],
+  "integration": {
+    "date": "2026-11-13",
+    "registry": "design/maps/shared/scene-assets.json",
+    "test": "tools/test-camp-assets.js"
+  }
+}

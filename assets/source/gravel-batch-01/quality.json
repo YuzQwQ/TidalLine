@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "size": [
+    32,
+    32
+  ],
+  "opaque": true,
+  "maxColors": 16,
+  "sharedRimPixels": 240,
+  "periodicOppositeEdges": true,
+  "changedInteriorPixels": 561,
+  "relativeLuminanceDifference": 0.0020231548537167055,
+  "scope": "art-review-only"
+}

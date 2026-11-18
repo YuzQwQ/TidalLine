@@ -1,0 +1,70 @@
+{
+  "batch": "灰水泥墙材质样稿",
+  "date": "2026-11-12",
+  "mode": "built-in image_gen",
+  "geometry": {
+    "top": [
+      32,
+      32
+    ],
+    "south": [
+      32,
+      32
+    ],
+    "east": [
+      4,
+      48
+    ],
+    "visual": [
+      32,
+      48
+    ],
+    "collision": [
+      32,
+      32
+    ],
+    "northOverhang": 16
+  },
+  "note": "保留灰石墙与红砖墙，新增灰水泥材质审核样稿，不覆盖运行时。原稿保留；最近邻缩至原生尺寸、16色量化、拼接边配对；东侧裁除生成器产生的背景。",
+  "items": [
+    {
+      "id": "wall_concrete_cap_v1",
+      "name": "灰水泥墙 · 墙顶",
+      "size": [
+        32,
+        32
+      ],
+      "status": "draft-for-review",
+      "source": "assets/source/wall-batch-03/sources/wall_concrete_cap_v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-2104f8ef-3fd8-4ec2-aedb-34824048c6ae.png",
+      "draft": "assets/source/wall-batch-03/wall_concrete_cap_v1.png",
+      "prompt": "Use case: stylized-concept. Create ONE component texture of a weathered GREY CAST-CONCRETE WALL for the Chinese 2D survival game 潮汐线. The reference is geometry and game PIXEL-ART STYLE only; create a new grey cement material, not the reference's old stone/plaster wall and not red brick. Muted NEUTRAL TO SLIGHTLY COOL GREY concrete, broad quiet planes, sparse tiny pores, a few light scuffs and hairline cracks, restrained formwork marks, very subtle damp weathering. No warm brown stone blocks, red/orange brick, tiled masonry grid, moss/grass, giant fractures, rubble, writing or graffiti. Deliberate crisp LOW-RESOLUTION pixel clusters, 8–16 quiet colours, intended for a small game tile, not photoreal noise. Consistent upper-left illumination and existing 75-degree high-angle orthographic wall rendering: cap brighter, south face medium value, east side darker. This is ONE FULL-BLEED OPAQUE FLAT MATERIAL TEXTURE, edge-to-edge, not an isolated 3D wall block or entire scene. No transparent margins, frame, floor, vignette, perspective, cast shadows or surrounding objects. COMPONENT: TOP CAP, square 32x32 logical pixels, straight-down top-surface material only. Light cool grey around #a2aaa7 with slightly lighter worn patches #b2b8b3 and shallow darker blemishes #8b9590. Smooth cast-cement capping, broad calm areas, extremely few shallow hairline marks, no big aggregate pebbles or decorative grout pattern. Tiny irregular worn edge spots only if tile still seamless. No visible vertical face in this image. Repeat seamlessly both left-right and top-bottom, no obvious feature crossing edges at mismatched positions. Full opaque square canvas."
+    },
+    {
+      "id": "wall_concrete_south_v1",
+      "name": "灰水泥墙 · 南向立面",
+      "size": [
+        32,
+        32
+      ],
+      "status": "draft-for-review",
+      "source": "assets/source/wall-batch-03/sources/wall_concrete_south_v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-03596316-d239-4125-bf23-8111d15dbc0c.png",
+      "draft": "assets/source/wall-batch-03/wall_concrete_south_v1.png",
+      "prompt": "Use case: stylized-concept. Create ONE component texture of a weathered GREY CAST-CONCRETE WALL for the Chinese 2D survival game 潮汐线. The reference is geometry and game PIXEL-ART STYLE only; create a new grey cement material, not the reference's old stone/plaster wall and not red brick. Muted NEUTRAL TO SLIGHTLY COOL GREY concrete, broad quiet planes, sparse tiny pores, a few light scuffs and hairline cracks, restrained formwork marks, very subtle damp weathering. No warm brown stone blocks, red/orange brick, tiled masonry grid, moss/grass, giant fractures, rubble, writing or graffiti. Deliberate crisp LOW-RESOLUTION pixel clusters, 8–16 quiet colours, intended for a small game tile, not photoreal noise. Consistent upper-left illumination and existing 75-degree high-angle orthographic wall rendering: cap brighter, south face medium value, east side darker. This is ONE FULL-BLEED OPAQUE FLAT MATERIAL TEXTURE, edge-to-edge, not an isolated 3D wall block or entire scene. No transparent margins, frame, floor, vignette, perspective, cast shadows or surrounding objects. COMPONENT: SOUTH-FACING vertical FRONT FACE ONLY, square 32x32 logical pixels. Mid-grey cast cement around #747c79, broad mostly smooth surface. At most one very faint straight formwork line and a couple of tiny subdued round tie-hole impressions, one or two very short hairline cracks. Keep industrial concrete character visibly distinct from stone blocks: NO brick courses or masonry mortar. Very narrow lighter upper lip, middle is broad unbroken grey cement, bottom 3–4 logical pixels slightly darker #4e5c57 with a little faint descending water staining. Subtle tonal range, no huge dark stain. Left-right seamlessly repeatable, top and foot bands align on edges. This front face is distinctly darker than the light top cap. No view of top surface, side surface or ground; fill opaque square."
+    },
+    {
+      "id": "wall_concrete_east_v1",
+      "name": "灰水泥墙 · 东向短侧面",
+      "size": [
+        4,
+        48
+      ],
+      "status": "draft-for-review",
+      "source": "assets/source/wall-batch-03/sources/wall_concrete_east_v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-e9336f48-b3a5-423e-b2aa-24319aee5e5c.png",
+      "draft": "assets/source/wall-batch-03/wall_concrete_east_v1.png",
+      "prompt": "Use case: stylized-concept. Create ONE component texture of a weathered GREY CAST-CONCRETE WALL for the Chinese 2D survival game 潮汐线. The reference is geometry and game PIXEL-ART STYLE only; create a new grey cement material, not the reference's old stone/plaster wall and not red brick. Muted NEUTRAL TO SLIGHTLY COOL GREY concrete, broad quiet planes, sparse tiny pores, a few light scuffs and hairline cracks, restrained formwork marks, very subtle damp weathering. No warm brown stone blocks, red/orange brick, tiled masonry grid, moss/grass, giant fractures, rubble, writing or graffiti. Deliberate crisp LOW-RESOLUTION pixel clusters, 8–16 quiet colours, intended for a small game tile, not photoreal noise. Consistent upper-left illumination and existing 75-degree high-angle orthographic wall rendering: cap brighter, south face medium value, east side darker. This is ONE FULL-BLEED OPAQUE FLAT MATERIAL TEXTURE, edge-to-edge, not an isolated 3D wall block or entire scene. No transparent margins, frame, floor, vignette, perspective, cast shadows or surrounding objects. COMPONENT: narrow EAST-FACING side-shading texture, production target FOUR pixels wide by FORTY-EIGHT pixels high. Dark cool grey cement around #4b5753 to #59625c, one subdued fine highlight along left edge, sparse tiny scuffs and very faint damp traces near bottom. Far simpler than front: no brick joints or elaborate crack network. Must read as a thin darker SIDE FACE beneath the light top cap. Paint the complete opaque material as a portrait strip, the actual material fills ALL edges, no white/black empty canvas around a central pole. Simplified logical few-column pixel shading, not an isolated object. Top-bottom continuation should be smooth. Portrait canvas."
+    }
+  ]
+}

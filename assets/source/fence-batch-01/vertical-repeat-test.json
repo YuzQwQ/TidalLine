@@ -1,0 +1,103 @@
+{
+  "source": "fence-vertical-v1.png",
+  "countPerMode": 4,
+  "placements": [
+    {
+      "mode": "grid",
+      "segment": 4,
+      "left": 228,
+      "top": 199,
+      "width": 90,
+      "height": 200,
+      "groundAnchor": [
+        260,
+        396
+      ]
+    },
+    {
+      "mode": "endpoint",
+      "segment": 4,
+      "left": 859,
+      "top": 199,
+      "width": 90,
+      "height": 200,
+      "groundAnchor": [
+        891,
+        396
+      ]
+    },
+    {
+      "mode": "grid",
+      "segment": 3,
+      "left": 228,
+      "top": 327,
+      "width": 90,
+      "height": 200,
+      "groundAnchor": [
+        260,
+        524
+      ]
+    },
+    {
+      "mode": "endpoint",
+      "segment": 3,
+      "left": 832,
+      "top": 327,
+      "width": 90,
+      "height": 200,
+      "groundAnchor": [
+        864,
+        524
+      ]
+    },
+    {
+      "mode": "grid",
+      "segment": 2,
+      "left": 228,
+      "top": 455,
+      "width": 90,
+      "height": 200,
+      "groundAnchor": [
+        260,
+        652
+      ]
+    },
+    {
+      "mode": "endpoint",
+      "segment": 2,
+      "left": 805,
+      "top": 455,
+      "width": 90,
+      "height": 200,
+      "groundAnchor": [
+        837,
+        652
+      ]
+    },
+    {
+      "mode": "grid",
+      "segment": 1,
+      "left": 228,
+      "top": 583,
+      "width": 90,
+      "height": 200,
+      "groundAnchor": [
+        260,
+        780
+      ]
+    },
+    {
+      "mode": "endpoint",
+      "segment": 1,
+      "left": 778,
+      "top": 583,
+      "width": 90,
+      "height": 200,
+      "groundAnchor": [
+        810,
+        780
+      ]
+    }
+  ],
+  "diagnosis": "原样稿含横向透视偏移与远近缩放，不适合直接按南北网格拼接。"
+}

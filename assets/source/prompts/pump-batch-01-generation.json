@@ -1,0 +1,52 @@
+{
+  "batch": "pump-batch-01",
+  "created": "2026-11-12",
+  "generator": "image_gen.imagegen",
+  "transparent_background": true,
+  "references": [
+    "assets/source/wall-volume/scene-after.png",
+    "assets/source/fence-batch-01/style-reference.png"
+  ],
+  "assets": [
+    {
+      "id": "pump_body_v1",
+      "name": "离心泵体",
+      "size": [
+        48,
+        40
+      ],
+      "prompt": "Use case: stylized-concept. Create ONE SMALL standalone industrial SCENE PROP sprite for the pump-house of the 1990s coastal pixel-art survival game 潮汐线. References are STYLE AND CAMERA ONLY: muted weathered gray-green machinery, deliberate crisp pixel-art clusters, compact readable silhouette, upper-left highlights. Camera is the project's HIGH 75-degree ORTHOGRAPHIC overhead view: TOP surfaces dominate, only short SOUTH/front and thin darker EAST/right faces visible; no isometric diamond, no strong low-angle product view, no front-facing technical poster, no perspective convergence. Mostly dull gray-green painted cast iron, dark steel and sparse orange-brown rust at bolts and edges, modest damp grime, no extravagant corrosion. Prioritize simple readable outlines at about 32–48 pixels, not photoreal microtexture. ONE complete uncut object centered on genuinely transparent canvas, fills about 80–85% with transparent margins. No floor, room, pipes extending beyond canvas, large foundation slab, cast shadow, people, text, numbers, labels, logos, UI, glow or sci-fi details. SUBJECT: a compact STANDALONE CENTRIFUGAL WATER PUMP HOUSING, WITHOUT an attached electric motor. Chunky snail/volute-shaped cast-iron casing with clearly curved round top housing, bolted cover rim, one large SHORT circular inlet flange pointing toward screen left, one SHORT outlet flange pointing screen up, small exposed coupling hub toward screen right. Flange holes and the volute shape should read clearly from above. Two short built-in mounting feet with bolt holes, no long skid base. Dull gray-green paint, edges worn to dark steel, tiny rust at flange bolts. Industrial water pump rather than turbine, fan, fuel engine or entire pump-and-motor installation. Single small compact mechanism, nearly square overall outline, clear top view.",
+      "origin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-a016fbbd-8e05-4718-b555-aaeb82979966.png"
+    },
+    {
+      "id": "pump_motor_v1",
+      "name": "泵用电机",
+      "size": [
+        48,
+        32
+      ],
+      "prompt": "Use case: stylized-concept. Create ONE SMALL standalone industrial SCENE PROP sprite for the pump-house of the 1990s coastal pixel-art survival game 潮汐线. References are STYLE AND CAMERA ONLY: muted weathered gray-green machinery, deliberate crisp pixel-art clusters, compact readable silhouette, upper-left highlights. Camera is the project's HIGH 75-degree ORTHOGRAPHIC overhead view: TOP surfaces dominate, only short SOUTH/front and thin darker EAST/right faces visible; no isometric diamond, no strong low-angle product view, no front-facing technical poster, no perspective convergence. Mostly dull gray-green painted cast iron, dark steel and sparse orange-brown rust at bolts and edges, modest damp grime, no extravagant corrosion. Prioritize simple readable outlines at about 32–48 pixels, not photoreal microtexture. ONE complete uncut object centered on genuinely transparent canvas, fills about 80–85% with transparent margins. No floor, room, pipes extending beyond canvas, large foundation slab, cast shadow, people, text, numbers, labels, logos, UI, glow or sci-fi details. SUBJECT: one SEPARATE OLD INDUSTRIAL ELECTRIC MOTOR, horizontal axis left-right. Squat ribbed cylindrical cast-metal motor housing in gray-green, longitudinal cooling fins, compact round fan cover at LEFT end, short exposed shaft/coupling at RIGHT end. Small rectangular electrical terminal box on TOP of the motor, only a small cable gland stub, no loose long cables. Two small mounting feet below, no huge platform. From high overhead, top fins and terminal box are primary shapes, end faces show only slightly. No pump housing attached, no engine cylinders/exhaust, no compressor tank. Compact low machine, not a giant generator.",
+      "origin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-0783e921-6555-4ece-8418-e4cd46af5235.png"
+    },
+    {
+      "id": "pump_valve_pipe_v1",
+      "name": "阀门管组",
+      "size": [
+        40,
+        40
+      ],
+      "prompt": "Use case: stylized-concept. Create ONE SMALL standalone industrial SCENE PROP sprite for the pump-house of the 1990s coastal pixel-art survival game 潮汐线. References are STYLE AND CAMERA ONLY: muted weathered gray-green machinery, deliberate crisp pixel-art clusters, compact readable silhouette, upper-left highlights. Camera is the project's HIGH 75-degree ORTHOGRAPHIC overhead view: TOP surfaces dominate, only short SOUTH/front and thin darker EAST/right faces visible; no isometric diamond, no strong low-angle product view, no front-facing technical poster, no perspective convergence. Mostly dull gray-green painted cast iron, dark steel and sparse orange-brown rust at bolts and edges, modest damp grime, no extravagant corrosion. Prioritize simple readable outlines at about 32–48 pixels, not photoreal microtexture. ONE complete uncut object centered on genuinely transparent canvas, fills about 80–85% with transparent margins. No floor, room, pipes extending beyond canvas, large foundation slab, cast shadow, people, text, numbers, labels, logos, UI, glow or sci-fi details. SUBJECT: a COMPACT SHORT WATER PIPE AND VALVE ASSEMBLY, one short L-shaped iron pipe with two stubby bolted flange ends, one round old oxide-red handwheel valve visible prominently from ABOVE near the elbow, and a tiny off-white round pressure gauge on a short fitting. Thin flange bolts, dull green-gray pipe, sparse rust near joints. Handwheel should be small dark brick-red, not bright neon red. Everything tightly grouped as ONE small connected pipe unit, no sprawling network, no long tubes leaving the crop, no separate loose pieces, no big pedestal. True high overhead view makes the circular handwheel readable.",
+      "origin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-0202589a-ade3-43ab-bb1d-be47f30b0548.png"
+    },
+    {
+      "id": "pump_control_box_v1",
+      "name": "泵房配电控制箱",
+      "size": [
+        32,
+        48
+      ],
+      "prompt": "Use case: stylized-concept. Create ONE SMALL standalone industrial SCENE PROP sprite for the pump-house of the 1990s coastal pixel-art survival game 潮汐线. References are STYLE AND CAMERA ONLY: muted weathered gray-green machinery, deliberate crisp pixel-art clusters, compact readable silhouette, upper-left highlights. Camera is the project's HIGH 75-degree ORTHOGRAPHIC overhead view: TOP surfaces dominate, only short SOUTH/front and thin darker EAST/right faces visible; no isometric diamond, no strong low-angle product view, no front-facing technical poster, no perspective convergence. Mostly dull gray-green painted cast iron, dark steel and sparse orange-brown rust at bolts and edges, modest damp grime, no extravagant corrosion. Prioritize simple readable outlines at about 32–48 pixels, not photoreal microtexture. ONE complete uncut object centered on genuinely transparent canvas, fills about 80–85% with transparent margins. No floor, room, pipes extending beyond canvas, large foundation slab, cast shadow, people, text, numbers, labels, logos, UI, glow or sci-fi details. SUBJECT: one SMALL SELF-CONTAINED 1990s PUMP ELECTRICAL CONTROL BOX, a compact upright rectangular gray-green sheet-metal cabinet with slim raised mounting tabs and a very short cable gland stub below. Broad TOP plane and short front plane from above, a slightly inclined upper-front instrument panel lets the viewer see ONE small round analog meter, two tiny muted red/green indicator buttons, and one dark mechanical toggle/rotary switch. Lower front is a plain metal access panel with a narrow seam and simple small handle, restrained use wear. Not a modern touchscreen, not a huge rack, not a radio, no display text or digits. Modest tall single-object silhouette, no oversized legs or concrete foundation.",
+      "origin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-e24c61c2-d7fb-4206-bd43-9ea4d670df87.png"
+    }
+  ]
+}

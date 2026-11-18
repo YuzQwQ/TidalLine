@@ -1,0 +1,35 @@
+{
+  "batch": "supply-batch-01",
+  "status": "ready",
+  "promptRecord": "assets/source/prompts/supply-batch-01-generation.json",
+  "assets": [
+    {
+      "id": "supply_tarp_stack_v1",
+      "name": "篷布物资堆 · 单格装饰",
+      "status": "ready",
+      "plannedRole": "prop",
+      "footprint": [
+        1,
+        1
+      ],
+      "spriteSize": [
+        32,
+        32
+      ],
+      "searchable": false,
+      "collisionFootprint": [
+        1,
+        1
+      ],
+      "source": "assets/source/supply-batch-01/sources/supply_tarp_stack_v1.png",
+      "draft": "supply-tarp-stack-v1.png",
+      "runtimeId": "supply_tarp_stack",
+      "target": "assets/props/supply_tarp_stack.png"
+    }
+  ],
+  "integration": {
+    "date": "2026-11-13",
+    "registry": "design/maps/shared/scene-assets.json",
+    "test": "tools/test-camp-assets.js"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "batch": "铁丝网围栏样稿",
+  "date": "2026-11-12",
+  "mode": "built-in image_gen",
+  "items": [
+    {
+      "id": "fence_chainlink_straight_v1",
+      "status": "draft-for-review",
+      "source": "assets/source/fence-batch-01/sources/fence_chainlink_straight_v1.png",
+      "prompt": "Use case: stylized-concept. Create ONE isolated modular scene sprite of an old CHAIN-LINK WIRE FENCE straight segment for the 2D top-down survival game 潮汐线. Input reference is STYLE ONLY: use its restrained gritty low-resolution pixel art, deliberate square pixel clusters, muted gray-green metal and sparse orange-brown rust, simple upper-left highlights. Do not reproduce any reference object. Subject: a continuous HORIZONTAL left-to-right chain-link security fence panel, with two slender upright galvanized steel posts at the far left and far right, a straight thin horizontal top rail and thin lower tension wire, taut open DIAMOND wire mesh between posts. A single straight strand of barbed wire slightly above top rail with sparse small barb knots, not huge concertina coils. The mesh must have REAL TRANSPARENT HOLES: empty transparent alpha between thin metal wires. Medium/coarse diamond mesh, about 10–12 columns by 5–6 rows, readable when reduced to 64 pixels wide. Mild corrosion at post bases, wire intersections and top clamps. Posts are fixed fence posts with small flat bottom ends, NO freestanding tripod legs, no large feet, no masonry base, no ground. Camera: elevated slightly top-down view consistent with reference sprites, see a tiny top face of post caps and rail, but NO isometric diagonal layout; top and bottom rails must run parallel to horizontal screen axis, both posts same height, no vanishing-point narrowing. A reusable straight fence module, NO gate, no damage holes, no signage, no plants, no people, no other objects. Entire object visible, centered in a wide 3:2 transparent canvas, subject fills 88% of width, comfortable transparent margins around all four edges. Crisp low-resolution sprite artwork intended to become a 64x48 pixel scene asset; no photorealism, no smooth 3D render, no fuzzy shadows or atmospheric effects. Genuine transparent alpha background including all diamond holes, no checkerboard painted into image, no background color, no text, no UI."
+    },
+    {
+      "id": "fence_chainlink_vertical_v1",
+      "name": "锈蚀铁丝网围栏 · 南北直段",
+      "prompt": "Use case: stylized-concept. Generate ONE modular vertical / NORTH-SOUTH CHAIN-LINK FENCE sprite for the same 2D top-down game as the reference horizontal fence. Reference 1 shows the EXACT material, cap, clamps, rust, diamond mesh and single top barbed strand to preserve; reference 2 is pixel art style only. This is a NEW CAMERA / DIRECTION of the same fence, NOT a 90 degree rotation of a flat image. The fence segment runs along the MAP NORTH-SOUTH axis, length receding from lower foreground toward upper background. Camera is a high 3/4 top-down side view, slightly offset from the fence plane so the foreshortened open diamond mesh is visible as a NARROW STRIP. Two UPRIGHT end posts: the far post at upper end of sprite, near post at lower end; each post rises vertically up from its own foot, with its cap ABOVE its own foot. Longitudinal top rail and lower tension wire recede approximately up-down on screen, almost parallel to screen Y, with only a slight sideways offset for readable depth. The entire composition is tall and NARROW, NOT a broad front-facing panel, NOT two tall posts standing to left and right, NOT a sideways ladder, NOT a fallen fence. Mesh plane is foreshortened with real transparent holes, moderately coarse diamonds to retain readable wire at small size. Galvanized gray-green metal, thin tubular rails and posts, sparse brown-orange corrosion, same small pale gray post caps and rectangular rusted clamp collars as reference. Single sparse straight barbed strand above top rail, no large razor coils. Keep long rails straight and compatible with a grid-aligned north-south boundary. No freestanding feet, no concrete blocks, no ground, no extra objects, no text. Crisp deliberate pixel art, muted survival-game colors, upper-left lighting. Truly transparent canvas including mesh holes. Full uncut object in portrait 2:3 canvas, breathing room at all edges, no background or outer shadow. Intended narrow 32x64 sprite; use bold enough pixel clusters for downscaling.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-2d2864d1-b147-4d81-a887-86a253c3e121.png",
+      "source": "assets/source/fence-batch-01/sources/fence_chainlink_vertical_v1.png",
+      "draft": "fence-vertical-v1.png",
+      "status": "draft-for-review"
+    },
+    {
+      "id": "fence_chainlink_post_v1",
+      "name": "锈蚀铁丝网围栏 · 独立立柱",
+      "prompt": "Use case: stylized-concept. Generate ONE isolated UPRIGHT END / CORNER POST for the same chain-link security fence as reference 1. Reference 2 is pixel art style only. Exact matching gray-green galvanized metal, subdued brown-orange rust, same small pale metal cap with visible top face and dark rim, same simple tube thickness and two rusted rectangular CLAMP COLLARS near top and near bottom. One slender straight steel post, cap above foot, high 3/4 overhead perspective with a small right side face, upper-left highlights. At the upper clamp a tiny left and right connection bracket / bolt stub; at lower clamp tiny matching bolt stubs. Small stub above upper clamp to attach the barbed strand. Only the independent post: NO mesh panel, NO long rail, NO wires extending away, NO pair of posts, NO sign, NO concrete foundation, NO tripod legs, NO large feet. Bottom simply flat cut end of a fixed-in-ground fence post, slightly darker and rusted. Restrained low-resolution pixel art, deliberate crisp square clusters and readable metal highlights, same material and visual weight as a single post from the horizontal fence. A reusable joint component in a tall narrow silhouette, full object centered on genuinely transparent portrait canvas with generous empty space to either side, subject fills around 80 percent of HEIGHT. No ground, environment, text, UI, glow or cast shadow. Intended small 16x32 pixel component, not a photorealistic pole.",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-f7da8a01-8399-4f22-8d41-3b2446b8cc8d.png",
+      "source": "assets/source/fence-batch-01/sources/fence_chainlink_post_v1.png",
+      "draft": "fence-post-v1.png",
+      "status": "draft-for-review"
+    },
+    {
+      "id": "fence_chainlink_vertical_v2",
+      "name": "铁丝网围栏 · 严格俯视南北直段",
+      "status": "draft-for-review",
+      "source": "assets/source/fence-batch-01/sources/fence_chainlink_vertical_v2.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-50f5559f-4f0e-4404-a955-7faeb14cbd0a.png",
+      "draft": "fence-vertical-v2.png",
+      "prompt": "Use case: stylized-concept. Redesign ONE north-south chain-link fence sprite for a STRICT 90-DEGREE TOP-DOWN ORTHOGRAPHIC GAME. Reference images are ONLY for weathered gray-green galvanized metal color, sparse orange rust and pixel-art shading. DO NOT copy their side-view geometry. CRITICAL CAMERA: look STRAIGHT DOWN from directly overhead, no tilt, no isometric view, no perspective convergence, no visible vertical faces. The fence is a VERTICAL PLANE standing upright in the world, whose ground footprint runs NORTH-SOUTH (parallel to screen Y). Since we look straight down along gravity, the whole upright wire-mesh panel projects EDGE-ON into a VERY THIN STRAIGHT VERTICAL LINE. The user intentionally wants it to look like a line. Show ONLY the narrow TOP surface of the thin galvanized tubular top rail, small clamps, a very thin taut barbed tension wire along the same direction with a few short sparse side-pointing barb prongs. At each endpoint show a SMALL ROUND POST CAP viewed exactly from ABOVE: two identical circular top caps, equal size, both centers at EXACTLY the same screen X coordinate. DO NOT show the upright length of the posts: from above only caps can be seen. The connecting rail must be ruler-straight along screen Y, same width end to end. The tops of mesh wires collapse into the narrow line below the rail; NO visible broad mesh panel, NO diamond lattice spread across the canvas, NO upright pole elevation, NO ladder rungs, NO diagonal receding rail, NO distant smaller post, NO horizontal span. Overall visible shape: a long slender vertical gray-green metallic stroke with two small round endpoint dots and five or six tiny barbs sticking just a little to the sides. Actual scene target: 64 pixels length, main line 1–2 pixels thick, end caps only 3–4 pixels diameter, total width including sparse barbs at most 8–10 logical pixels. Pixel-art treatment consistent with existing survival game sprites: muted gray-green steel, tiny orange-brown rust spots and subdued upper-left highlight on top surface, crisp pixel clusters. Large genuinely TRANSPARENT portrait canvas, one centered vertical segment spanning 80–85% canvas height, lots of transparent empty space on BOTH sides, nothing else. No floor, cast shadow, glow, text, labels, background, border, vignette, or atmosphere. This is a precisely orthographic narrow modular north-south boundary asset, NOT an attractive three-quarter product illustration."
+    },
+    {
+      "id": "fence_chainlink_vertical_post_v1",
+      "name": "竖向铁丝网 · 下接立柱组合",
+      "status": "draft-for-review",
+      "source": "assets/source/fence-batch-01/sources/fence_chainlink_vertical_post_v1.png",
+      "draft": "fence-vertical-post-v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-0054fb62-8098-425f-bb38-abaefb3f2b56.png",
+      "references": [
+        "fence-vertical-v2.png",
+        "fence-post-v1.png"
+      ],
+      "mode": "built-in image_gen compositing",
+      "prompt": "Use case: compositing / precise-object-edit. Combine the TWO supplied transparent sprites into ONE new transparent sprite for a 2D game. Input image 1 is the approved strict top-down NORTH-SOUTH fence: a thin perfectly straight vertical line with small rust clamps, sparse barbs and round endpoint caps. Input image 2 is the approved standalone upright metal support post. BOTH are actual components to reuse, not loose style suggestions. Keep their gray-green metal, orange-brown corrosion and pixel-art texture. Required assembly: put the COMPLETE thin fence segment from image 1 in the UPPER portion, and attach the support post from image 2 DIRECTLY BELOW the LOWER END of the fence. Align the longitudinal centerline of the wire segment and the main shaft of the post on ONE EXACT SCREEN-VERTICAL axis. The top cap of the standalone post is the JOIN where the lower endpoint of the fence meets the post: merge/overlap the fence's small lower cap with the post's top cap, avoiding a double cap or gap. The metal post extends DOWNWARD from this join to the bottom of the assembled sprite. The post's visible length below the join should be around HALF the thin wire segment's length above the join. The support post main shaft should be around TWICE the thin wire rail's thickness. Preserve both upper and lower rusty clamp collars on the post and its small connector stubs. Preserve the original thin fence section, its sparse barbs and its small TOP endpoint cap. The image must show one SINGLE segment-and-lower-post assembly, not multiple variants or two separate objects. IMPORTANT: the UPPER wire portion must REMAIN A NARROW STRAIGHT LINE viewed directly from above; do NOT add broad diamond mesh, sideways fence plane, diagonal perspective, receding posts, foreshortening, ladder rungs or a second panel. The lower support post uses the already supplied upright-post sprite appearance exactly as requested by user; do not replace it with only a dot. Full uncut assembled object on genuinely transparent tall canvas, centered with generous transparent empty space on both sides and modest space above/below, upper-left shading consistent with originals. No ground, shadows outside the object, labels, lettering, background, glow or other objects. Produce only the assembled transparent bitmap."
+    },
+    {
+      "id": "fence_gate_closed_v1",
+      "name": "铁丝网围栏大门 · 闭合双开",
+      "status": "draft-for-review",
+      "source": "assets/source/fence-batch-01/sources/fence_gate_closed_v1.png",
+      "draft": "fence-gate-closed-v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-0629c685-0dbd-4bea-815c-da2cf257a024.png",
+      "requestedFootprint": [
+        1,
+        2
+      ],
+      "visualGrid": [
+        2,
+        1
+      ],
+      "spriteSize": [
+        64,
+        32
+      ],
+      "prompt": "Use case: stylized-concept. Generate ONE CLOSED DOUBLE-LEAF CHAIN-LINK SECURITY GATE sprite matching the supplied fence sprite for the 2D pixel-art survival game 潮汐线. Reference 1 gives the exact existing galvanized gray-green metal, small pale post caps, rusted clamp collars, diamond wire mesh and sparse top barbed strand. Reference 2 gives the restrained low-resolution game-sprite style. New subject: a HORIZONTAL vehicle gate, about TWO GRID CELLS WIDE and ONE GRID CELL HIGH in its visible artwork, designed as a 64x32 scene sprite. Width-to-height of the COMPLETE object around 2:1. Two sturdy but slender capped metal posts at left and right, two equal rectangular hinged gate leaves between them CLOSED flush together, clear narrow vertical central seam. Two or three small hinges along each outer post, a simple horizontal sliding bolt and tiny hanging old steel padlock at the CENTER make it obviously a GATE rather than a fixed fence. Each leaf has a thin squared tubular perimeter frame and taut open diamond chain-link mesh; one understated diagonal metal brace per leaf if readable, no excessive crisscross bars. Actual transparent alpha THROUGH all mesh holes. Medium/coarse diamond mesh that stays readable at 64px wide. Optional sparse short straight barbed wire along the top of EACH leaf, split at center so the leaves could open; do not bridge the two leaves with one fixed wire. Small orange-brown corrosion around hinges, bottom frame corners and bolt, restrained worn metal shading, dark gray-green main palette, upper-left highlights. Camera and alignment must match the approved HORIZONTAL reference fence: elevated slight overhead view revealing only a small top face of the post caps and rails, posts remain upright, left and right posts same height, top and bottom rails parallel to horizontal screen axis; no isometric diagonals, no converging perspective or vanishing point. Complete uncut object centered in wide 2:1 landscape canvas, occupies around 90% width with transparent margin around edges. This is a reusable single closed gate module. No open-state variant, no surroundings, no floor, no tall legs, no tripod feet, no concrete pillars, no masonry base, no opaque backing panel, no signage, no letters, no numbers, no UI, no aura or cast shadow. Crisp deliberate pixel-art clusters with enough simplified detail to reduce to 64x32. Genuine transparent background including mesh openings, no painted checkerboard, no photorealism or smooth 3D render."
+    },
+    {
+      "id": "fence_gate_half_open_v1",
+      "name": "铁丝网围栏大门 · 半开双扇",
+      "status": "draft-for-review",
+      "source": "assets/source/fence-batch-01/sources/fence_gate_half_open_v1.png",
+      "draft": "fence-gate-half-open-v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-81dbad0a-519c-4e7d-a176-eca537ef9a1b.png",
+      "variantOf": "fence_gate_closed_v1",
+      "requestedFootprint": [
+        1,
+        2
+      ],
+      "collisionFootprint": [
+        1,
+        2
+      ],
+      "visualGrid": [
+        2,
+        1.5
+      ],
+      "spriteSize": [
+        64,
+        48
+      ],
+      "prompt": "Use case: precise-object-edit. Create the HALF-OPEN STATE of the supplied CLOSED DOUBLE-LEAF CHAIN-LINK GATE. Input 1 is the actual approved closed gate: preserve its two outer gray-green galvanized steel posts, round pale top caps, rusty clamp collars, hinge positions, rectangular tubular leaf frames, fine diamond wire mesh, diagonal braces, split top barbed strands, small latch and rusty survival-game pixel art. Input 2 is STYLE ONLY. Change ONLY the OPENING ANGLES of the two gate leaves and the unlocked latch state. Both outer posts remain upright, same height/size, same screen X positions and same ground baseline as the closed gate. Both leaves swing OUTWARD TOWARD THE VIEWER / BOTTOM OF IMAGE by about 45–50 degrees about their respective OUTER vertical hinges. Left leaf remains hinged on the left post, right leaf remains hinged on the right post. Each leaf free meeting edge moves DOWNWARD into foreground and BACK toward its own hinge horizontally; the two free meeting edges thus SEPARATE, leaving an OBVIOUS CLEAR CENTRAL WALK-THROUGH GAP around one third of gate width. In overhead perspective the two leaves form a symmetric shallow open V with free edges nearer the foreground, but NEVER touch each other. Each open leaf is a foreshortened parallelogram with screen-vertical upright frame edges of equal height: no distant smaller post, no downward scale reduction, no distorted crooked panels. Top and bottom frame rails of each leaf slope down toward its free edge consistently because the leaf has physically rotated, not because the image was tilted. All hinge attachments remain connected to their posts. Chain-link holes and central gap must be genuinely TRANSPARENT. One unobtrusive small unlocked padlock hangs from one FREE EDGE latch, no bolt or chain stretching across the central gap. Sparse barbed wire remains attached to each leaf top, rotating WITH that leaf; no fixed barbed strand across the opening. The overall open sprite should occupy approximately TWO game grid cells WIDE by ONE AND A HALF cells HIGH, aspect ratio 4:3, intended 64x48 pixels; more vertical space than the 64x32 closed gate only because open leaves project forward. Do not enlarge the gate or posts arbitrarily. Single centered complete object, same elevated overhead camera and upper-left light as reference, muted gray-green metal and modest orange-brown rust, crisp low-resolution pixel art with readable simplified silhouette. Transparent margins all around, no cutoff. NO ground, no scene, no people, no extra doors, no text, no labels, no UI, no background, no aura or cast shadow. Output ONE half-open double gate, not a side-by-side comparison or sprite sheet."
+    }
+  ],
+  "note": "围栏与大门逐件审核样稿，原稿与各版保留。闭合大门画面约2×1格，半开画面约2×1.5格，实体碰撞均按用户指定1×2记录。此批仅绘图，未进入运行时目录或修改地图碰撞。"
+}

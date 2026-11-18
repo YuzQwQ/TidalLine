@@ -1,0 +1,42 @@
+{
+  "batch": "gravel-batch-01",
+  "status": "ready",
+  "promptRecord": "assets/source/prompts/gravel-batch-01-generation.json",
+  "assets": [
+    {
+      "id": "ground_gravel_01",
+      "name": "碎石地面 A",
+      "status": "ready",
+      "kind": "ground",
+      "material": "gravel",
+      "size": [
+        32,
+        32
+      ],
+      "source": "assets/source/gravel-batch-01/sources/ground_gravel_01.png",
+      "draft": "assets/source/gravel-batch-01/ground_gravel_01.png",
+      "runtimeId": "ground_gravel_01",
+      "target": "assets/tiles/ground_gravel_01.png"
+    },
+    {
+      "id": "ground_gravel_02",
+      "name": "碎石地面 B",
+      "status": "ready",
+      "kind": "ground",
+      "material": "gravel",
+      "size": [
+        32,
+        32
+      ],
+      "source": "assets/source/gravel-batch-01/sources/ground_gravel_02.png",
+      "draft": "assets/source/gravel-batch-01/ground_gravel_02.png",
+      "runtimeId": "ground_gravel_02",
+      "target": "assets/tiles/ground_gravel_02.png"
+    }
+  ],
+  "integration": {
+    "date": "2026-11-13",
+    "registry": "design/maps/shared/scene-assets.json",
+    "test": "tools/test-camp-assets.js"
+  }
+}

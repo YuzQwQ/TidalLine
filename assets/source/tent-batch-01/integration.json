@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "checks": [
+    "all-new-prop-thumbnails",
+    "place-undo-redo",
+    "fence-and-tent-direction",
+    "save-reopen",
+    "gravel-and-walls-paint",
+    "tent-short-end-entry",
+    "tent-long-edge-collision",
+    "actual-actor-movement",
+    "pathfinding-detour",
+    "line-of-sight",
+    "wall-material-faces",
+    "development-and-offline"
+  ]
+}

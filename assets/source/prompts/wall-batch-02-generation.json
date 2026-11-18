@@ -1,0 +1,70 @@
+{
+  "batch": "旧红砖墙材质样稿",
+  "date": "2026-11-12",
+  "mode": "built-in image_gen",
+  "geometry": {
+    "top": [
+      32,
+      32
+    ],
+    "south": [
+      32,
+      32
+    ],
+    "east": [
+      4,
+      48
+    ],
+    "visual": [
+      32,
+      48
+    ],
+    "collision": [
+      32,
+      32
+    ],
+    "northOverhang": 16
+  },
+  "note": "新材质样稿；保留原墙，不进入运行时目录或替换正式地图。原稿完整保留；图块做最近邻采样、16色量化、拼接边配对，东侧裁除模型产生的背景。",
+  "items": [
+    {
+      "id": "wall_brick_cap_v1",
+      "name": "旧砖墙 · 墙顶",
+      "size": [
+        32,
+        32
+      ],
+      "status": "draft-for-review",
+      "source": "assets/source/wall-batch-02/sources/wall_brick_cap_v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-d35e29e6-31e6-437a-883a-5653b3cb6961.png",
+      "draft": "assets/source/wall-batch-02/wall_brick_cap_v1.png",
+      "prompt": "Use case: stylized-concept. Create ONE texture component of a NEW weathered RED-BRICK WALL variant for Chinese 2D 1990s coastal survival game 潮汐线. Reference image is existing in-game wall geometry and pixel-art STYLE ONLY; preserve its 75-degree high-angle orthographic camera convention, fixed upper-left light and restrained small-pixel clusters. New wall material must be visibly different from the existing pale limestone/gray-green plaster wall: subdued dusty terracotta and grey-brown brick, grey-beige mortar, irregular residual old pale plaster and dark damp weathering, never saturated orange or bright red. Crisp deliberate LOW-RESOLUTION PIXEL ART, 8–16 muted colors, no photorealism or soft airbrush. This image is ONLY ONE FULL-BLEED OPAQUE TEXTURE SURFACE, not an isolated wall chunk, not an entire building, not a collage. Fill the canvas edge-to-edge with the material; no margins, transparent background, bevel around tile, decorative border, cast shadow, perspective scene, floor, objects, plants, grass, writing, signs or UI. SURFACE: TOP CAP viewed straight from above, logical 32x32 tile. Dusty light warm red-brown / pale terracotta fired-brick top surface, very worn quiet broad brick crowns and a few shallow grey-beige mortar joins; about two staggered brick courses across the square. Top planes brighter than wall front, base colors around #ad927c and #a48570 with a few darker brick chips #896f5c. Very thin traces of old grey-beige mortar/capping material in crevices, not a completely plastered beige slab. Keep top cap calm and broad, not dense noisy gravel or tiny mosaic. No visible vertical wall face in this component. Seamlessly tile both horizontally and vertically: no strong edge seams, edge brightness matches, bricks crossing edges continue naturally. Upper-left subtle highlight only, flat orthographic material. Square canvas."
+    },
+    {
+      "id": "wall_brick_south_v1",
+      "name": "旧砖墙 · 南向立面",
+      "size": [
+        32,
+        32
+      ],
+      "status": "draft-for-review",
+      "source": "assets/source/wall-batch-02/sources/wall_brick_south_v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-e82f0cda-55a6-4a7b-83bb-5957c270e723.png",
+      "draft": "assets/source/wall-batch-02/wall_brick_south_v1.png",
+      "prompt": "Use case: stylized-concept. Create ONE texture component of a NEW weathered RED-BRICK WALL variant for Chinese 2D 1990s coastal survival game 潮汐线. Reference image is existing in-game wall geometry and pixel-art STYLE ONLY; preserve its 75-degree high-angle orthographic camera convention, fixed upper-left light and restrained small-pixel clusters. New wall material must be visibly different from the existing pale limestone/gray-green plaster wall: subdued dusty terracotta and grey-brown brick, grey-beige mortar, irregular residual old pale plaster and dark damp weathering, never saturated orange or bright red. Crisp deliberate LOW-RESOLUTION PIXEL ART, 8–16 muted colors, no photorealism or soft airbrush. This image is ONLY ONE FULL-BLEED OPAQUE TEXTURE SURFACE, not an isolated wall chunk, not an entire building, not a collage. Fill the canvas edge-to-edge with the material; no margins, transparent background, bevel around tile, decorative border, cast shadow, perspective scene, floor, objects, plants, grass, writing, signs or UI. SURFACE: SOUTH-FACING vertical wall FRONT TEXTURE only, logical 32x32 tile. Four low horizontal courses of staggered old dusty terracotta bricks, muted red-brown #805e4c, #96715a, grey-beige thin mortar. Roughly 70–80 percent exposed brick; a few small irregular worn pale grey plaster remnants cover 20–30 percent, concentrated toward upper area, not a thick whole wall stripe. Slightly chipped brick edges. A very narrow pale coping lip at top; bottom 3–4 logical pixels darkened with grey-green damp/salt grime and darker foot line. No gaping holes, no enormous damage or graffiti. This is the MEDIUM-value face: noticeably darker than top cap, lighter than east face. Left-right seamless continuation, mortar courses line up on both edges. No view of a top floor plane, no 3D isolated rectangular block, no side face. Square canvas."
+    },
+    {
+      "id": "wall_brick_east_v1",
+      "name": "旧砖墙 · 东向短侧面",
+      "size": [
+        4,
+        48
+      ],
+      "status": "draft-for-review",
+      "source": "assets/source/wall-batch-02/sources/wall_brick_east_v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-59420a2b-6ade-44f0-b08c-1a4625182ae5.png",
+      "draft": "assets/source/wall-batch-02/wall_brick_east_v1.png",
+      "prompt": "Use case: stylized-concept. Create ONE texture component of a NEW weathered RED-BRICK WALL variant for Chinese 2D 1990s coastal survival game 潮汐线. Reference image is existing in-game wall geometry and pixel-art STYLE ONLY; preserve its 75-degree high-angle orthographic camera convention, fixed upper-left light and restrained small-pixel clusters. New wall material must be visibly different from the existing pale limestone/gray-green plaster wall: subdued dusty terracotta and grey-brown brick, grey-beige mortar, irregular residual old pale plaster and dark damp weathering, never saturated orange or bright red. Crisp deliberate LOW-RESOLUTION PIXEL ART, 8–16 muted colors, no photorealism or soft airbrush. This image is ONLY ONE FULL-BLEED OPAQUE TEXTURE SURFACE, not an isolated wall chunk, not an entire building, not a collage. Fill the canvas edge-to-edge with the material; no margins, transparent background, bevel around tile, decorative border, cast shadow, perspective scene, floor, objects, plants, grass, writing, signs or UI. SURFACE: narrow EAST-FACING vertical side face texture for a raised wall. Production target only FOUR pixels WIDE by FORTY-EIGHT pixels HIGH; source may be a portrait material strip for downscaling. Very simplified dark muted terracotta-brown brick/mortar segments, base #554b40 and #655342, sparse grey-green damp stains near foot, thin dull highlight on left edge, distinctly darker than south-facing wall. A few small horizontal mortar breaks down the height. No broad detailed bricks needed: low-detail narrow side shading is the goal. Full-bleed opaque PORTRAIT texture rectangle, NOT a pole with empty space, NOT a centered isolated slab on white, no margins. Top-bottom ends should continue smoothly for use in long vertical walls. No scene or objects, no 3D extruded block."
+    }
+  ]
+}

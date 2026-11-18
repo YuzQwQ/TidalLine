@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "date": "2026-11-13",
+  "ids": [
+    "pump_body",
+    "pump_motor",
+    "pump_valve_pipe",
+    "pump_control_box"
+  ],
+  "checks": [
+    "palette-thumbnail",
+    "place",
+    "undo-redo",
+    "save-reopen",
+    "single-cell-collision",
+    "proportional-small-visual",
+    "development-assets",
+    "offline-assets"
+  ]
+}

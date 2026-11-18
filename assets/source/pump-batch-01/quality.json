@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "id": "pump_body_v1",
+      "width": 48,
+      "height": 40,
+      "alphaValues": [
+        0,
+        255
+      ],
+      "transparentBorder": 2,
+      "paletteMax": 32
+    },
+    {
+      "id": "pump_motor_v1",
+      "width": 48,
+      "height": 32,
+      "alphaValues": [
+        0,
+        255
+      ],
+      "transparentBorder": 2,
+      "paletteMax": 32
+    },
+    {
+      "id": "pump_valve_pipe_v1",
+      "width": 40,
+      "height": 40,
+      "alphaValues": [
+        0,
+        255
+      ],
+      "transparentBorder": 2,
+      "paletteMax": 32
+    },
+    {
+      "id": "pump_control_box_v1",
+      "width": 32,
+      "height": 48,
+      "alphaValues": [
+        0,
+        255
+      ],
+      "transparentBorder": 2,
+      "paletteMax": 32
+    }
+  ]
+}

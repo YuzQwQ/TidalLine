@@ -1,0 +1,31 @@
+{
+  "batch": "物资堆场装饰样稿",
+  "date": "2026-11-12",
+  "mode": "built-in image_gen",
+  "note": "单格不可搜索装饰物；本轮绘制图片样稿并记录拟用占地，不修改运行时素材库或地图。",
+  "items": [
+    {
+      "id": "supply_tarp_stack_v1",
+      "name": "篷布物资堆 · 单格装饰",
+      "status": "draft-for-review",
+      "plannedRole": "prop",
+      "footprint": [
+        1,
+        1
+      ],
+      "spriteSize": [
+        32,
+        32
+      ],
+      "searchable": false,
+      "collisionFootprint": [
+        1,
+        1
+      ],
+      "source": "assets/source/supply-batch-01/sources/supply_tarp_stack_v1.png",
+      "draft": "supply-tarp-stack-v1.png",
+      "sourceOrigin": "C:\\Users\\Yuz\\.codex\\generated_images\\01a1ae6d-5e6b-7362-ae38-1abdc7b68b27\\exec-6b9187ca-cdb7-4bad-b2b5-fb9a19abb31a.png",
+      "prompt": "Use case: stylized-concept. Create ONE small decorative TARP-COVERED SUPPLY STACK for Chinese 2D survival game 潮汐线. Reference 1 is the approved faded blue-gray canvas material and stitching; reference 2 is ONLY the project's restrained gritty pixel-art style, not objects to copy. Subject: a SINGLE COMPACT SQUARISH STACK of two or three low rectangular relief-supply bundles packed closely together on a tiny weathered wooden pallet. Most of the stack is hidden under ONE faded gray-blue waterproof canvas tarpaulin, draped tightly across the uneven top and hanging down short sides. Two broad worn dark olive-brown woven webbing STRAPS cross over the tarp and tighten around the load, with ONE small dull metal buckle. Tarp has a few restrained folds, subtle edge stitching, one small beige stitched repair patch and modest dirt/wear. Just a tiny kraft-brown package corner and a few short wood pallet slat ends visible BELOW the tarp at the front bottom edge to suggest stacked provisions. Keep it looking like a bound wrapped MATERIAL PILE rather than a chest: no hinged lid, lid seam, handle, latch, lock, search icon or openable crate design. ONE connected object, no loose packages off to the sides, no people or extra props. Footprint EXACTLY ONE 32x32 game tile, compact near-square ground outline; final sprite target 32x32 with object fitting within central 28x28 and 2px transparent margins. Camera follows existing wall/prop convention: HIGH 75-DEGREE ORTHOGRAPHIC TOP-DOWN, grid-aligned square top outline, the broad tarp-covered TOP is dominant, SOUTH/front face a short strip, EAST/right face a very thin darker strip. North/back face and west face hidden from overhead view. No isometric diamond base, no diagonal camera, no perspective vanishing point. Upper-left highlights, muted blue-gray canvas, dusty brown wood and olive straps, deliberate crisp pixel-art clusters that read clearly at 32px, no photoreal fabric microtexture. No ground, external cast shadow, atmosphere, glow, labels, writing, numbers, logos, medical cross or UI. Truly TRANSPARENT background. Center the complete object, uncut, filling around 80–85% of a square canvas. Only one variant and one decorative stack."
+    }
+  ]
+}

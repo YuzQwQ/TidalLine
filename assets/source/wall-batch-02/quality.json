@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "scope": "source-art-review",
+  "opaque": true,
+  "sharedJoiningEdges": true,
+  "brightnessOrder": "cap > south > east",
+  "assets": [
+    {
+      "id": "wall_brick_cap_v1",
+      "size": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "meanLuminance": 128.8865195312501
+    },
+    {
+      "id": "wall_brick_south_v1",
+      "size": [
+        32,
+        32
+      ],
+      "colors": 16,
+      "meanLuminance": 106.91492617187548
+    },
+    {
+      "id": "wall_brick_east_v1",
+      "size": [
+        4,
+        48
+      ],
+      "colors": 16,
+      "meanLuminance": 72.12581875000005
+    }
+  ]
+}

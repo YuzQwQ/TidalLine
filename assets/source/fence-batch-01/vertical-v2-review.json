@@ -1,0 +1,20 @@
+{
+  "status": "draft-for-review",
+  "sourceBounds": [
+    539,
+    85,
+    584,
+    1347
+  ],
+  "projection": "strict-overhead",
+  "sprite": [
+    16,
+    64
+  ],
+  "repeatCount": 4,
+  "repeatOffset": [
+    0,
+    57
+  ],
+  "sourcePreserved": true
+}

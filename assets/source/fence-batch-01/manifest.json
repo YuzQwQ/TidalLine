@@ -1,0 +1,103 @@
+{
+  "batch": "fence-batch-01",
+  "status": "ready",
+  "promptRecord": "assets/source/prompts/fence-batch-01-generation.json",
+  "assets": [
+    {
+      "id": "fence_chainlink_straight_v1",
+      "name": "锈蚀铁丝网围栏 · 横向直段",
+      "source": "sources/fence_chainlink_straight_v1.png",
+      "status": "ready",
+      "runtimeId": "fence_chainlink",
+      "target": "assets/props/fence_chainlink.png"
+    },
+    {
+      "id": "fence_chainlink_vertical_v1",
+      "name": "锈蚀铁丝网围栏 · 南北直段",
+      "source": "sources/fence_chainlink_vertical_v1.png",
+      "draft": "fence-vertical-v1.png",
+      "status": "superseded-by-v2"
+    },
+    {
+      "id": "fence_chainlink_post_v1",
+      "name": "锈蚀铁丝网围栏 · 独立立柱",
+      "source": "sources/fence_chainlink_post_v1.png",
+      "draft": "fence-post-v1.png",
+      "status": "ready",
+      "runtimeId": "fence_chainlink_post",
+      "target": "assets/props/fence_chainlink_post.png"
+    },
+    {
+      "id": "fence_chainlink_vertical_v2",
+      "name": "铁丝网围栏 · 严格俯视南北直段",
+      "source": "sources/fence_chainlink_vertical_v2.png",
+      "draft": "fence-vertical-v2.png",
+      "status": "draft-for-review"
+    },
+    {
+      "id": "fence_chainlink_vertical_post_v1",
+      "name": "竖向铁丝网 · 下接立柱组合",
+      "status": "ready",
+      "source": "sources/fence_chainlink_vertical_post_v1.png",
+      "draft": "fence-vertical-post-v1.png",
+      "references": [
+        "fence-vertical-v2.png",
+        "fence-post-v1.png"
+      ],
+      "runtimeId": "fence_chainlink_side",
+      "target": "assets/props/fence_chainlink_side.png"
+    },
+    {
+      "id": "fence_gate_closed_v1",
+      "name": "铁丝网围栏大门 · 闭合双开",
+      "source": "sources/fence_gate_closed_v1.png",
+      "draft": "fence-gate-closed-v1.png",
+      "status": "ready",
+      "requestedFootprint": [
+        1,
+        2
+      ],
+      "visualGrid": [
+        2,
+        1
+      ],
+      "spriteSize": [
+        64,
+        32
+      ],
+      "runtimeId": "fence_gate_closed",
+      "target": "assets/props/fence_gate_closed.png"
+    },
+    {
+      "id": "fence_gate_half_open_v1",
+      "name": "铁丝网围栏大门 · 半开双扇",
+      "source": "sources/fence_gate_half_open_v1.png",
+      "draft": "fence-gate-half-open-v1.png",
+      "status": "ready",
+      "variantOf": "fence_gate_closed_v1",
+      "requestedFootprint": [
+        1,
+        2
+      ],
+      "collisionFootprint": [
+        1,
+        2
+      ],
+      "visualGrid": [
+        2,
+        1.5
+      ],
+      "spriteSize": [
+        64,
+        48
+      ],
+      "runtimeId": "fence_gate_half_open",
+      "target": "assets/props/fence_gate_half_open.png"
+    }
+  ],
+  "integration": {
+    "date": "2026-11-13",
+    "registry": "design/maps/shared/scene-assets.json",
+    "test": "tools/test-camp-assets.js"
+  }
+}
