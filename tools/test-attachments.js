@@ -20,7 +20,7 @@ test('93 definitions, 69 public offers and full 25×93 compatibility matrix',()=
   if(a.subtype==='muzzle')yes=a.id==='att_muzzle11'?w.id==='mcx_spear':a.id==='att_muzzle12'?w.id==='rm277':(w.category==='shotgun')===['att_muzzle05','att_muzzle06'].includes(a.id);
   if(a.subtype==='magazine')yes=!tube&&(a.compatibleWeapons?a.compatibleWeapons.includes(w.id):w.magazineFamily===a.magazineFamily)&&(a.calibers||[a.caliber]).includes(w.caliber);
   assert.equal(A.compatible(w.id,a.id),yes,w.id+'/'+a.id);
-  const item=EQUIP.attachment(a.id);assert.equal(item.stack,1);assert.equal(item.equip.kind,'attachment');assert(item.noCodex);assert.equal(item.sell,a.price/2);
+  const item=EQUIP.attachment(a.id);assert.equal(item.stack,1);assert.equal(item.equip.kind,'attachment');assert(item.noCodex);assert.equal(item.sell,Math.floor(a.price*0.7));
  }
  assert.equal(A.slotState('famas_f1',{},'stock'),'disabled');assert.equal(A.slotState('m4a1',{},'stock'),'empty');assert.equal(A.slotState('m4a1',{stock:'att_stock01'},'stock'),'installed');
 });
@@ -110,7 +110,7 @@ test('loose attachment pickup/drop/safe transfer and attached gun death follow e
 });
 test('installed parts follow warehouse/bag transfers, resale and raid equip without copying',()=>{
  base();const gun=EQUIP.gun('m4a1',39,null,null,{attachments:{magazine:'att_mag_556_40',optic:'att_optic01'}});Save.addGearStash(gun);const start=Save.credits;
- assert.equal(gun.sell,WEAPONS.m4a1.price/2+(D.att_mag_556_40.price+D.att_optic01.price)/2);
+ assert.equal(gun.sell,Math.floor((WEAPONS.m4a1.price+D.att_mag_556_40.price+D.att_optic01.price)*0.7));
  assert(Base.toBag(Save.stash[0]));assert.equal(Save.stash.length,0);assert.equal(Save.bag[0].gear.equip.mag,39);assert.equal(Save.bag[0].gear.equip.attachments.optic,'att_optic01');
  assert(Base.toStash(Save.bag[0]));assert.equal(Save.bag.length,0);assert.equal(Save.stash[0].gear.equip.mag,39);
  // Warehouse now routes to merchants; resale uses the shared, live sale authority.

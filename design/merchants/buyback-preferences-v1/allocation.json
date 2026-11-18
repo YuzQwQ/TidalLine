@@ -146,7 +146,7 @@
       "name": "铁皮饼干盒",
       "category": "life",
       "rarity": 2,
-      "referencePrice": 5400,
+      "referencePrice": 4320,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -162,7 +162,7 @@
       "name": "玻璃糖罐",
       "category": "life",
       "rarity": 2,
-      "referencePrice": 4600,
+      "referencePrice": 3680,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -178,7 +178,7 @@
       "name": "纪念瓷器套装",
       "category": "life",
       "rarity": 4,
-      "referencePrice": 45000,
+      "referencePrice": 20300,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -194,7 +194,7 @@
       "name": "银餐具一套",
       "category": "life",
       "rarity": 5,
-      "referencePrice": 250000,
+      "referencePrice": 75000,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -210,7 +210,7 @@
       "name": "老式台灯",
       "category": "life",
       "rarity": 2,
-      "referencePrice": 4800,
+      "referencePrice": 3840,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -226,7 +226,7 @@
       "name": "未拆封的毛巾",
       "category": "life",
       "rarity": 2,
-      "referencePrice": 4000,
+      "referencePrice": 3200,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -242,7 +242,7 @@
       "name": "双铃闹钟",
       "category": "life",
       "rarity": 3,
-      "referencePrice": 12000,
+      "referencePrice": 7200,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -258,7 +258,7 @@
       "name": "古董电熨斗",
       "category": "life",
       "rarity": 3,
-      "referencePrice": 11500,
+      "referencePrice": 6900,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -274,7 +274,7 @@
       "name": "老式缝纫机头",
       "category": "life",
       "rarity": 4,
-      "referencePrice": 48000,
+      "referencePrice": 21600,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -290,7 +290,7 @@
       "name": "手工丝绸礼服",
       "category": "life",
       "rarity": 4,
-      "referencePrice": 62000,
+      "referencePrice": 27900,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -306,7 +306,7 @@
       "name": "玻璃弹珠袋",
       "category": "life",
       "rarity": 2,
-      "referencePrice": 4200,
+      "referencePrice": 3360,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -322,7 +322,7 @@
       "name": "铁皮玩具火车",
       "category": "life",
       "rarity": 3,
-      "referencePrice": 14500,
+      "referencePrice": 8700,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -338,7 +338,7 @@
       "name": "家庭磁带盒",
       "category": "life",
       "rarity": 3,
-      "referencePrice": 13000,
+      "referencePrice": 7800,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -354,7 +354,7 @@
       "name": "发条旋转木马",
       "category": "life",
       "rarity": 5,
-      "referencePrice": 110000,
+      "referencePrice": 33000,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -386,7 +386,7 @@
       "name": "折叠城市地图",
       "category": "life",
       "rarity": 2,
-      "referencePrice": 4400,
+      "referencePrice": 3520,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -402,7 +402,7 @@
       "name": "售票检票钳",
       "category": "life",
       "rarity": 3,
-      "referencePrice": 10000,
+      "referencePrice": 6000,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -418,7 +418,7 @@
       "name": "按键式电话机",
       "category": "life",
       "rarity": 3,
-      "referencePrice": 13500,
+      "referencePrice": 8100,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -434,7 +434,7 @@
       "name": "经理日程簿",
       "category": "life",
       "rarity": 4,
-      "referencePrice": 26000,
+      "referencePrice": 11700,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -450,7 +450,7 @@
       "name": "船员帆布包",
       "category": "life",
       "rarity": 3,
-      "referencePrice": 15000,
+      "referencePrice": 9000,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -466,7 +466,7 @@
       "name": "旅馆服务铃",
       "category": "life",
       "rarity": 2,
-      "referencePrice": 5200,
+      "referencePrice": 4160,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -482,7 +482,7 @@
       "name": "旅行洗漱套装",
       "category": "life",
       "rarity": 4,
-      "referencePrice": 22000,
+      "referencePrice": 9900,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -498,7 +498,7 @@
       "name": "旅行保温杯",
       "category": "life",
       "rarity": 3,
-      "referencePrice": 11000,
+      "referencePrice": 6600,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -514,7 +514,7 @@
       "name": "真皮手提箱",
       "category": "life",
       "rarity": 5,
-      "referencePrice": 125000,
+      "referencePrice": 37500,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -530,7 +530,7 @@
       "name": "金丝眼镜",
       "category": "life",
       "rarity": 5,
-      "referencePrice": 95000,
+      "referencePrice": 28500,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -546,7 +546,7 @@
       "name": "便携式打字机",
       "category": "life",
       "rarity": 5,
-      "referencePrice": 160000,
+      "referencePrice": 48000,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -562,7 +562,7 @@
       "name": "零号打火机",
       "category": "life",
       "rarity": 6,
-      "referencePrice": 1200000,
+      "referencePrice": 220000,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -578,7 +578,7 @@
       "name": "收音机",
       "category": "elec",
       "rarity": 2,
-      "referencePrice": 7500,
+      "referencePrice": 6000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -594,7 +594,7 @@
       "name": "随身听",
       "category": "elec",
       "rarity": 4,
-      "referencePrice": 30000,
+      "referencePrice": 13500,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -610,7 +610,7 @@
       "name": "计算器",
       "category": "elec",
       "rarity": 2,
-      "referencePrice": 5000,
+      "referencePrice": 4000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -626,7 +626,7 @@
       "name": "电路板",
       "category": "elec",
       "rarity": 2,
-      "referencePrice": 6200,
+      "referencePrice": 4960,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -642,7 +642,7 @@
       "name": "掌上电子游戏机",
       "category": "elec",
       "rarity": 4,
-      "referencePrice": 36000,
+      "referencePrice": 16200,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -658,7 +658,7 @@
       "name": "即影相机",
       "category": "elec",
       "rarity": 4,
-      "referencePrice": 52000,
+      "referencePrice": 23400,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -674,7 +674,7 @@
       "name": "电子宠物机",
       "category": "elec",
       "rarity": 3,
-      "referencePrice": 18000,
+      "referencePrice": 10800,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -690,7 +690,7 @@
       "name": "微型录像机",
       "category": "elec",
       "rarity": 3,
-      "referencePrice": 24000,
+      "referencePrice": 14400,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -706,7 +706,7 @@
       "name": "加密寻呼机",
       "category": "elec",
       "rarity": 4,
-      "referencePrice": 48000,
+      "referencePrice": 21600,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -722,7 +722,7 @@
       "name": "便携式计算机",
       "category": "elec",
       "rarity": 4,
-      "referencePrice": 86000,
+      "referencePrice": 38700,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -738,7 +738,7 @@
       "name": "短波通信电台",
       "category": "elec",
       "rarity": 4,
-      "referencePrice": 72000,
+      "referencePrice": 32400,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -754,7 +754,7 @@
       "name": "航海电子定位仪",
       "category": "elec",
       "rarity": 5,
-      "referencePrice": 165000,
+      "referencePrice": 49500,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -770,7 +770,7 @@
       "name": "多通道数据记录器",
       "category": "elec",
       "rarity": 5,
-      "referencePrice": 260000,
+      "referencePrice": 78000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -786,7 +786,7 @@
       "name": "原型信号分析终端",
       "category": "elec",
       "rarity": 6,
-      "referencePrice": 1100000,
+      "referencePrice": 200000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -802,7 +802,7 @@
       "name": "「远望者」深海探测核心",
       "category": "elec",
       "rarity": 6,
-      "referencePrice": 4500000,
+      "referencePrice": 810000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -834,7 +834,7 @@
       "name": "轴承",
       "category": "ind",
       "rarity": 2,
-      "referencePrice": 5600,
+      "referencePrice": 4480,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -850,7 +850,7 @@
       "name": "压力表",
       "category": "ind",
       "rarity": 3,
-      "referencePrice": 14500,
+      "referencePrice": 8700,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -914,7 +914,7 @@
       "name": "绝缘胶带",
       "category": "ind",
       "rarity": 2,
-      "referencePrice": 4200,
+      "referencePrice": 3360,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -930,7 +930,7 @@
       "name": "黄铜阀门",
       "category": "ind",
       "rarity": 2,
-      "referencePrice": 6800,
+      "referencePrice": 5440,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -946,7 +946,7 @@
       "name": "电焊面罩",
       "category": "ind",
       "rarity": 2,
-      "referencePrice": 7200,
+      "referencePrice": 5760,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -962,7 +962,7 @@
       "name": "精密游标卡尺",
       "category": "ind",
       "rarity": 3,
-      "referencePrice": 16000,
+      "referencePrice": 9600,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -978,7 +978,7 @@
       "name": "工业陶瓷轴套",
       "category": "ind",
       "rarity": 3,
-      "referencePrice": 24000,
+      "referencePrice": 14400,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -994,7 +994,7 @@
       "name": "液压控制阀组",
       "category": "ind",
       "rarity": 4,
-      "referencePrice": 58000,
+      "referencePrice": 26100,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1010,7 +1010,7 @@
       "name": "高纯度钛合金锭",
       "category": "ind",
       "rarity": 4,
-      "referencePrice": 85000,
+      "referencePrice": 38300,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1026,7 +1026,7 @@
       "name": "精密陀螺组件",
       "category": "ind",
       "rarity": 5,
-      "referencePrice": 240000,
+      "referencePrice": 72000,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1042,7 +1042,7 @@
       "name": "零号标准量块组",
       "category": "ind",
       "rarity": 6,
-      "referencePrice": 800000,
+      "referencePrice": 140000,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1058,7 +1058,7 @@
       "name": "注射器",
       "category": "med",
       "rarity": 2,
-      "referencePrice": 5800,
+      "referencePrice": 4640,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1074,7 +1074,7 @@
       "name": "X 光片",
       "category": "med",
       "rarity": 2,
-      "referencePrice": 6000,
+      "referencePrice": 4800,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1090,7 +1090,7 @@
       "name": "组织切片标本盒",
       "category": "med",
       "rarity": 4,
-      "referencePrice": 42000,
+      "referencePrice": 18900,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1106,7 +1106,7 @@
       "name": "多参数生命监护仪",
       "category": "med",
       "rarity": 4,
-      "referencePrice": 76000,
+      "referencePrice": 34200,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1122,7 +1122,7 @@
       "name": "精密显微镜物镜组",
       "category": "med",
       "rarity": 4,
-      "referencePrice": 88000,
+      "referencePrice": 39600,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1138,7 +1138,7 @@
       "name": "便携式心脏除颤仪",
       "category": "med",
       "rarity": 4,
-      "referencePrice": 98000,
+      "referencePrice": 44100,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1154,7 +1154,7 @@
       "name": "精密注射泵",
       "category": "med",
       "rarity": 3,
-      "referencePrice": 28000,
+      "referencePrice": 16800,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1170,7 +1170,7 @@
       "name": "便携式心电图机",
       "category": "med",
       "rarity": 3,
-      "referencePrice": 32000,
+      "referencePrice": 19200,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1186,7 +1186,7 @@
       "name": "人工心脏瓣膜",
       "category": "med",
       "rarity": 5,
-      "referencePrice": 175000,
+      "referencePrice": 52500,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1202,7 +1202,7 @@
       "name": "机械循环辅助泵",
       "category": "med",
       "rarity": 5,
-      "referencePrice": 360000,
+      "referencePrice": 108000,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1218,7 +1218,7 @@
       "name": "重症呼吸机控制主机",
       "category": "med",
       "rarity": 5,
-      "referencePrice": 230000,
+      "referencePrice": 69000,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1234,7 +1234,7 @@
       "name": "「初生」零号培养样本",
       "category": "med",
       "rarity": 6,
-      "referencePrice": 1300000,
+      "referencePrice": 230000,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -1250,7 +1250,7 @@
       "name": "座钟",
       "category": "collect",
       "rarity": 4,
-      "referencePrice": 56000,
+      "referencePrice": 25200,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1266,7 +1266,7 @@
       "name": "黄铜怀表",
       "category": "collect",
       "rarity": 3,
-      "referencePrice": 17000,
+      "referencePrice": 10200,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1282,7 +1282,7 @@
       "name": "错版硬币",
       "category": "collect",
       "rarity": 5,
-      "referencePrice": 80000,
+      "referencePrice": 24000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1298,7 +1298,7 @@
       "name": "门牌铜片",
       "category": "collect",
       "rarity": 2,
-      "referencePrice": 5500,
+      "referencePrice": 4400,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1314,7 +1314,7 @@
       "name": "工业釉色母版",
       "category": "collect",
       "rarity": 6,
-      "referencePrice": 400000,
+      "referencePrice": 70000,
       "preferred": "elena",
       "rates": {
         "shop": 80,
@@ -1330,7 +1330,7 @@
       "name": "手绘航海图",
       "category": "collect",
       "rarity": 4,
-      "referencePrice": 96000,
+      "referencePrice": 43200,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1346,7 +1346,7 @@
       "name": "彩绘陶瓷面具",
       "category": "collect",
       "rarity": 2,
-      "referencePrice": 7200,
+      "referencePrice": 5760,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1362,7 +1362,7 @@
       "name": "环礁湾雕刻铜版",
       "category": "collect",
       "rarity": 6,
-      "referencePrice": 1800000,
+      "referencePrice": 320000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1378,7 +1378,7 @@
       "name": "黑胶唱片",
       "category": "collect",
       "rarity": 3,
-      "referencePrice": 16000,
+      "referencePrice": 9600,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1394,7 +1394,7 @@
       "name": "小幅油画",
       "category": "collect",
       "rarity": 4,
-      "referencePrice": 65000,
+      "referencePrice": 29300,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1410,7 +1410,7 @@
       "name": "限量游戏卡带",
       "category": "collect",
       "rarity": 4,
-      "referencePrice": 78000,
+      "referencePrice": 35100,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1426,7 +1426,7 @@
       "name": "电影首映海报",
       "category": "collect",
       "rarity": 3,
-      "referencePrice": 21000,
+      "referencePrice": 12600,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1442,7 +1442,7 @@
       "name": "机械腕表",
       "category": "collect",
       "rarity": 5,
-      "referencePrice": 220000,
+      "referencePrice": 66000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1458,7 +1458,7 @@
       "name": "金条",
       "category": "collect",
       "rarity": 5,
-      "referencePrice": 200000,
+      "referencePrice": 60000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1474,7 +1474,7 @@
       "name": "钢笔",
       "category": "collect",
       "rarity": 3,
-      "referencePrice": 18000,
+      "referencePrice": 10800,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1490,7 +1490,7 @@
       "name": "珐琅音乐盒",
       "category": "collect",
       "rarity": 5,
-      "referencePrice": 268000,
+      "referencePrice": 80500,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1506,7 +1506,7 @@
       "name": "蓝宝石胸针",
       "category": "collect",
       "rarity": 5,
-      "referencePrice": 340000,
+      "referencePrice": 102000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1538,7 +1538,7 @@
       "name": "矿石标本",
       "category": "collect",
       "rarity": 2,
-      "referencePrice": 5700,
+      "referencePrice": 4560,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1570,7 +1570,7 @@
       "name": "菊石化石",
       "category": "collect",
       "rarity": 3,
-      "referencePrice": 26000,
+      "referencePrice": 15600,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -1618,7 +1618,7 @@
       "name": "军用身份牌",
       "category": "mil",
       "rarity": 2,
-      "referencePrice": 5400,
+      "referencePrice": 4320,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1634,7 +1634,7 @@
       "name": "制式信号灯",
       "category": "mil",
       "rarity": 2,
-      "referencePrice": 6500,
+      "referencePrice": 5200,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1650,7 +1650,7 @@
       "name": "封锁区标识牌",
       "category": "mil",
       "rarity": 2,
-      "referencePrice": 7100,
+      "referencePrice": 5680,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1666,7 +1666,7 @@
       "name": "军用罗盘",
       "category": "mil",
       "rarity": 3,
-      "referencePrice": 19000,
+      "referencePrice": 11400,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1682,7 +1682,7 @@
       "name": "野战电话机",
       "category": "mil",
       "rarity": 3,
-      "referencePrice": 28000,
+      "referencePrice": 16800,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1698,7 +1698,7 @@
       "name": "制式枪机组件",
       "category": "mil",
       "rarity": 3,
-      "referencePrice": 34000,
+      "referencePrice": 20400,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1714,7 +1714,7 @@
       "name": "单筒夜视仪",
       "category": "mil",
       "rarity": 4,
-      "referencePrice": 90000,
+      "referencePrice": 40500,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1730,7 +1730,7 @@
       "name": "通信密钥模块",
       "category": "mil",
       "rarity": 4,
-      "referencePrice": 74000,
+      "referencePrice": 33300,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1746,7 +1746,7 @@
       "name": "野战剂量仪",
       "category": "mil",
       "rarity": 4,
-      "referencePrice": 68000,
+      "referencePrice": 30600,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1762,7 +1762,7 @@
       "name": "热成像观察仪",
       "category": "mil",
       "rarity": 5,
-      "referencePrice": 240000,
+      "referencePrice": 72000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1778,7 +1778,7 @@
       "name": "光学测距仪",
       "category": "mil",
       "rarity": 5,
-      "referencePrice": 190000,
+      "referencePrice": 57000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1794,7 +1794,7 @@
       "name": "指挥通信主机",
       "category": "mil",
       "rarity": 5,
-      "referencePrice": 420000,
+      "referencePrice": 126000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1810,7 +1810,7 @@
       "name": "首潮撤离标图板",
       "category": "mil",
       "rarity": 6,
-      "referencePrice": 1600000,
+      "referencePrice": 290000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1826,7 +1826,7 @@
       "name": "港口货运清单",
       "category": "intel",
       "rarity": 2,
-      "referencePrice": 5200,
+      "referencePrice": 4160,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1858,7 +1858,7 @@
       "name": "撤离登记卡",
       "category": "intel",
       "rarity": 2,
-      "referencePrice": 6800,
+      "referencePrice": 5440,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1874,7 +1874,7 @@
       "name": "城市建设蓝图",
       "category": "intel",
       "rarity": 3,
-      "referencePrice": 24000,
+      "referencePrice": 14400,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1890,7 +1890,7 @@
       "name": "磁带录音",
       "category": "intel",
       "rarity": 3,
-      "referencePrice": 29000,
+      "referencePrice": 17400,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1906,7 +1906,7 @@
       "name": "电报码底稿",
       "category": "intel",
       "rarity": 3,
-      "referencePrice": 32000,
+      "referencePrice": 19200,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1922,7 +1922,7 @@
       "name": "潮位观测日志",
       "category": "intel",
       "rarity": 4,
-      "referencePrice": 58000,
+      "referencePrice": 26100,
       "preferred": "doctor",
       "rates": {
         "shop": 80,
@@ -1938,7 +1938,7 @@
       "name": "封锁区通行名册",
       "category": "intel",
       "rarity": 4,
-      "referencePrice": 82000,
+      "referencePrice": 36900,
       "preferred": "shop",
       "rates": {
         "shop": 100,
@@ -1954,7 +1954,7 @@
       "name": "实验原始数据盘",
       "category": "intel",
       "rarity": 4,
-      "referencePrice": 96000,
+      "referencePrice": 43200,
       "preferred": "doctor",
       "rates": {
         "shop": 80,
@@ -1970,7 +1970,7 @@
       "name": "撤离电台录音带",
       "category": "intel",
       "rarity": 5,
-      "referencePrice": 220000,
+      "referencePrice": 66000,
       "preferred": "gun",
       "rates": {
         "shop": 80,
@@ -1986,7 +1986,7 @@
       "name": "异常区域勘测报告",
       "category": "intel",
       "rarity": 5,
-      "referencePrice": 310000,
+      "referencePrice": 93000,
       "preferred": "doctor",
       "rates": {
         "shop": 80,
@@ -2002,7 +2002,7 @@
       "name": "未公开调查卷宗",
       "category": "intel",
       "rarity": 5,
-      "referencePrice": 460000,
+      "referencePrice": 138000,
       "preferred": "doctor",
       "rates": {
         "shop": 80,
@@ -2018,7 +2018,7 @@
       "name": "首潮原始观测记录",
       "category": "intel",
       "rarity": 6,
-      "referencePrice": 3200000,
+      "referencePrice": 580000,
       "preferred": "doctor",
       "rates": {
         "shop": 80,
@@ -2050,7 +2050,7 @@
       "name": "摄影底片",
       "category": "intel",
       "rarity": 3,
-      "referencePrice": 14000,
+      "referencePrice": 8400,
       "preferred": "viktor",
       "rates": {
         "shop": 80,
@@ -2098,7 +2098,7 @@
       "name": "七结护符",
       "category": "occult",
       "rarity": 2,
-      "referencePrice": 6800,
+      "referencePrice": 5440,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2114,7 +2114,7 @@
       "name": "铜制占卜盘",
       "category": "occult",
       "rarity": 2,
-      "referencePrice": 8500,
+      "referencePrice": 6800,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2130,7 +2130,7 @@
       "name": "灰烬香炉",
       "category": "occult",
       "rarity": 2,
-      "referencePrice": 9200,
+      "referencePrice": 7360,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2146,7 +2146,7 @@
       "name": "观星仪式尺",
       "category": "occult",
       "rarity": 3,
-      "referencePrice": 22000,
+      "referencePrice": 13200,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2162,7 +2162,7 @@
       "name": "银丝封印针",
       "category": "occult",
       "rarity": 3,
-      "referencePrice": 34000,
+      "referencePrice": 20400,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2178,7 +2178,7 @@
       "name": "密仪蜡印",
       "category": "occult",
       "rarity": 3,
-      "referencePrice": 38000,
+      "referencePrice": 22800,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2194,7 +2194,7 @@
       "name": "黑曜石卜镜",
       "category": "occult",
       "rarity": 4,
-      "referencePrice": 78000,
+      "referencePrice": 35100,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2210,7 +2210,7 @@
       "name": "潮蚀符板",
       "category": "occult",
       "rarity": 4,
-      "referencePrice": 95000,
+      "referencePrice": 42800,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2226,7 +2226,7 @@
       "name": "逆序祷文卷",
       "category": "occult",
       "rarity": 4,
-      "referencePrice": 110000,
+      "referencePrice": 49500,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2242,7 +2242,7 @@
       "name": "镀金星盘核心",
       "category": "occult",
       "rarity": 5,
-      "referencePrice": 260000,
+      "referencePrice": 78000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2258,7 +2258,7 @@
       "name": "三重誓约戒",
       "category": "occult",
       "rarity": 5,
-      "referencePrice": 340000,
+      "referencePrice": 102000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2274,7 +2274,7 @@
       "name": "无声祈祷铃",
       "category": "occult",
       "rarity": 5,
-      "referencePrice": 480000,
+      "referencePrice": 144000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2290,7 +2290,7 @@
       "name": "第零页圣典",
       "category": "occult",
       "rarity": 6,
-      "referencePrice": 3600000,
+      "referencePrice": 650000,
       "preferred": "elena",
       "rates": {
         "shop": 60,
@@ -2306,7 +2306,7 @@
       "name": "回响结晶",
       "category": "odd",
       "rarity": 4,
-      "referencePrice": 42000,
+      "referencePrice": 18900,
       "preferred": "doctor",
       "rates": {
         "shop": 60,
@@ -2322,7 +2322,7 @@
       "name": "潮汐仪",
       "category": "odd",
       "rarity": 6,
-      "referencePrice": 6000000,
+      "referencePrice": 1080000,
       "preferred": "gun",
       "rates": {
         "shop": 60,
@@ -2338,7 +2338,7 @@
       "name": "停摆的怀表",
       "category": "odd",
       "rarity": 4,
-      "referencePrice": 60000,
+      "referencePrice": 27000,
       "preferred": "viktor",
       "rates": {
         "shop": 60,

@@ -25,7 +25,7 @@ const Attachments={
       w:src.w+mass,price:src.price+value};
   },
   slotState(id,installed,slot){const w=WEAPONS[canonicalWeaponId(id)];return !w?.attachmentSlots?.[slot]?'disabled':this.normalize(id,installed).installed[slot]?'installed':'empty';},
-  item(id){const d=ATTACHMENT_DEFS[id];return d?{id:'g_'+id,name:d.name,short:d.name,cat:'gear',r:d.r,w:d.w,price:d.price,sell:Math.floor(d.price/2),stack:1,noCodex:true,icon:id,desc:d.description,equip:{kind:'attachment',attachment:id}}:null;},
+  item(id){const d=ATTACHMENT_DEFS[id];return d?{id:'g_'+id,name:d.name,short:d.name,cat:'gear',r:d.r,w:d.w,price:d.price,sell:Math.floor(d.price*0.7),stack:1,noCodex:true,icon:id,desc:d.description,equip:{kind:'attachment',attachment:id}}:null;},
   describe(id){const a=ATTACHMENT_DEFS[id];if(!a)return '';const names={...this.modifierNames,adsSpread:'精瞄散布',hipSpread:'腰射散布',noiseRadius:'枪声范围'};return Object.entries(a.statModifiers).map(([k,v])=>k==='adsView'?'视距 '+v.toFixed(2)+'×':k==='adsZoom'?'画面 '+v.toFixed(2)+'×':k==='magazineCapacityFixed'?'固定 '+v+' 发':(names[k]||k)+' '+(v>0?'+':'')+Math.round(v*100)+'%').concat(a.subtype==='magazine'&&!a.statModifiers.magazineCapacityFixed?['原厂容量']:[],['兼容 '+Object.values(WEAPONS).filter(w=>this.compatible(w,a.id)).map(w=>w.short||w.id).join(' / ')]).join(' · ');},
   entryItem(e){return e?.item||e?.gear||(e&&ITEM_BY_ID[e.id])||null;},
   targets(){const out=[],raid=Game.state==='playing',add=(owner,index,entry,item)=>{if(item?.equip?.kind==='gun')out.push({owner,index,entry,ref:item,name:item.name});};

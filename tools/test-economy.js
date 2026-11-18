@@ -17,7 +17,7 @@ for(const item of ITEMS){
  if(row.group==='collectible'){const band=spec.collectionBands.find(b=>b.rarity===item.r);assert(price>=band.min&&(band.max===null||price<=band.max));}
 }
 medical.forEach((price,n)=>assert.equal(ITEMS.find(i=>i.id==='heal'+String(n+1).padStart(2,'0')).price,price));
-assert.equal(ITEMS.find(i=>i.id==='odd02').price,6000000);
+assert.equal(ITEMS.find(i=>i.id==='odd02').price,1080000);
 for(const [type,prices]of [['helmet',[2000,6000,15000,48000,120000,350000]],['body',[3000,9000,28000,85000,220000,650000]]]){
  for(let lv=1;lv<=6;lv++){
   const g=GEAR.def(type,lv),old=spec.baseline[type==='helmet'?'helmets':'bodies'][lv-1];assert.equal(g.price,prices[lv-1]);
@@ -57,15 +57,15 @@ let h=Save.stash.find(e=>e.id==='g_helmet4').gear;
 const wEntry=Save.stash.find(e=>e.gear&&e.gear.equip&&e.gear.equip.kind==='gun');
 assert(wEntry,'旧存档里的 g_smg 应迁移保留下来');
 let w=wEntry.gear;
-assert.equal(h.price,48000);assert.equal(h.equip.gear.price,48000);assert.equal(h.equip.gear.dur,17);assert.equal(h.sell,Math.floor(48000*.5*17/65));
-assert.equal(w.price,WEAPONS[w.equip.gun].price);assert.equal(w.sell,Math.floor(w.price/2));assert.equal(w.equip.mag,7);assert.equal(w.r,3);
+assert.equal(h.price,48000);assert.equal(h.equip.gear.price,48000);assert.equal(h.equip.gear.dur,17);assert.equal(h.sell,Math.floor(48000*.7*17/65));
+assert.equal(w.price,WEAPONS[w.equip.gun].price);assert.equal(w.sell,Math.floor(w.price*.7));assert.equal(w.equip.mag,7);assert.equal(w.r,3);
 assert.equal(Save.gear.helmet.price,48000);assert.equal(Save.gear.helmet.dur,13);assert.equal(Save.gear.body.price,220000);assert.equal(Save.gear.body.dur,77);
 Save.save();Save.flush();Save.load();assert.equal(Save.credits,12345);assert.equal(Save.stashCount('life01'),2);
 assert.equal(Save.stash.find(e=>e.gear&&e.gear.equip&&e.gear.equip.kind==='gun').gear.equip.mag,7);
 Base.open();Save.credits=100000;Save.stash=[];Save.bag=[];Save.addBag('ammo_556_1',30);Save.addBag('ammo_9mm_1',20);Save.addBag('ammo_12g_1',10);Save.addBag('heal01',3);
 assert.equal(Save.bagWeight()>0,true);assert.equal(Save.bag.length>=4,true);
 const H2=buyPrice(6000);Save.credits=100000;Base.buyArmor('helmet',2);assert.equal(Save.credits,100000-H2);assert.equal(Save.stash[0].gear.price,6000);
-const armorEntry=Save.stash[0],Sales=vm.runInContext('Sales',c);assert.equal(Sales.quote('shop',armorEntry).unit,3000);
+const armorEntry=Save.stash[0],Sales=vm.runInContext('Sales',c);assert.equal(Sales.quote('shop',armorEntry).unit,4200);
 // The old warehouse sell entry now redirects to merchants, without granting cash.
 Base.sell(armorEntry,1);assert.equal(Save.credits,100000-H2);assert(Save.stash.includes(armorEntry));
 Base.buyMedical('heal01');assert.equal(Save.credits,100000-H2-2000);assert.equal(Save.stashCount('heal01'),1);

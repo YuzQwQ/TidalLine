@@ -37,6 +37,9 @@ const Save = {
   attachmentRecovery: [],
   attachmentsVersion: 2,
   commissionBoard: null,
+  /* 彩蛋保底计数：连续「摸到红但没中彩蛋」的次数。玩家界面上不显示，
+     只在 Loot.eggSwap 里累加 / 清零。见 CFG.LOOT.eggPityRamp。 */
+  eggPity: 0,
   runs: 0,
   bestHaul: 0,        // 单局带出价值的历史最高（结算页的"新纪录"用）
   codexCount() { return ITEMS.filter(item=>!item.noCodex&&itemGroup(item)==='collectible'&&this.codex[item.id]).length; },
@@ -479,12 +482,15 @@ function unitPrice(it) {
   return (it.sell != null) ? it.sell : it.price;
 }
 
-/* 购买加价：枪械 / 配件 / 近战 / 头甲背包一律 ×9。
+/* 购买加价：枪械 / 配件 / 近战 / 头甲背包一律 ×3。
    只作用于「买」的展示与结算；price / sell 不动，回收价（unitPrice）保持原样。
-   为什么是 9 而不是 3：按「摸 60 箱」的中位收益约 1194 万估，
-   ×3 时顶配一套只要 235 万，一局能买五套，死一次几乎无感；
-   ×9 之后顶配约 705 万，一局收益 ≈ 两套，死亡才开始真的疼。 */
-const BUY_MARKUP = 9;
+
+   这条线在 2026-11-18 调整过一次：先试过 ×9，靠抬装备价格来压「一局能买五套」，
+   结果一把 RM277 标到 351 万，玩家直觉上直接不接受 —— 枪就该是几十万的东西。
+   正确的做法是把分母（一局收益）压下来，而不是把分子（装备）抬上去：
+   收集品按稀有度砍到 18%~80% 之后，一局约 380 万，×3 的顶配 261 万，
+   比值回到 1:1.45，且所有数字都在玩家能一眼读懂的范围内。 */
+const BUY_MARKUP = 3;
 /* 弹药单独一档 ×3。
    弹药是「按发」计价的耗材，跟着 ×9 会让一局 240 发 6.8 变成 540 万，
    光子弹就吃掉半局收益 —— 那不是压力，是劝退。×3 后 240 发约 180 万，

@@ -509,18 +509,18 @@ PG.bag.slots = full;
 console.log('\n=== 装备回收价 ===');
 const h4 = EQUIP.armor(GEAR.make('helmet', 4));
 ok('头盔回收价不超过买价', h4.sell <= h4.price, h4.sell + ' ≤ ' + h4.price);
-ok('满耐久按半价回收', h4.sell === Math.floor(GEAR.def('helmet',4).price * 0.5), '¥' + h4.sell);
+ok('满耐久按七成回收', h4.sell === Math.floor(GEAR.def('helmet',4).price * 0.7), '¥' + h4.sell);
 
 const body5 = EQUIP.armor(GEAR.make('body', 5));              // V1：135 耐久
 const body5w = EQUIP.armor(GEAR.make('body', 5, GEAR.def('body', 5).dur / 2));
 ok('耐久掉了回收价跟着掉', body5w.sell < body5.sell, body5.sell + ' → ' + body5w.sell);
-ok('回收价跟着耐久等比算', body5w.sell === Math.floor(GEAR.def('body', 5).price * 0.5 * 0.5));
+ok('回收价跟着耐久等比算', body5w.sell === Math.floor(GEAR.def('body', 5).price * 0.7 * 0.5));
 
 const broken = EQUIP.armor(GEAR.make('body', 6, 0));
 ok('耐久归零只剩保底价', broken.sell === 1, '¥' + broken.sell);
 
 const g1 = EQUIP.gun('rifle', 0);
-ok('枪按半价回收', g1.sell === Math.floor(WEAPONS.rifle.price * 0.5), '¥' + g1.sell);
+ok('枪按七成回收', g1.sell === Math.floor(WEAPONS.rifle.price * 0.7), '¥' + g1.sell);
 ok('枪的回收价也不超过买价', g1.sell <= g1.price);
 
 console.log('\n=== 装备进仓库 ===');
@@ -1481,7 +1481,7 @@ ok('买来的枪是满弹匣', smgEntry.gear.equip.mag === WEAPONS.smg.mag,
   smgEntry.gear.equip.mag + ' / ' + WEAPONS.smg.mag);
 ok('买枪扣钱', Save.credits === cGun - buyPrice(WEAPONS.smg.price), cGun + ' → ' + Save.credits);
 ok('枪的买价和回收价对得上',
-  smgEntry.gear.sell === Math.floor(WEAPONS.smg.price * 0.5), '¥' + smgEntry.gear.sell);
+  smgEntry.gear.sell === Math.floor(WEAPONS.smg.price * 0.7), '¥' + smgEntry.gear.sell);
 
 // 类型要匹配：副武器位不列主武器
 Save.addGearStash(EQUIP.gun('pistol', 9));
@@ -2394,9 +2394,9 @@ console.log('\n=== 彩蛋藏品 ===');
      vm.runInContext('ITEM_BY_ID.elec_secret01.cat', ctx) === 'elec' &&
      vm.runInContext('ITEM_BY_ID.elec_secret02.cat', ctx) === 'elec');
   ok('新增三件的价格与文案口径一致',
-     vm.runInContext('ITEM_BY_ID.collect_secret01.price', ctx) === 20010000 &&
-     vm.runInContext('ITEM_BY_ID.elec_secret01.price', ctx) === 60900000 &&
-     vm.runInContext('ITEM_BY_ID.elec_secret02.price', ctx) === 33100000);
+     vm.runInContext('ITEM_BY_ID.collect_secret01.price', ctx) === 3600000 &&
+     vm.runInContext('ITEM_BY_ID.elec_secret01.price', ctx) === 10960000 &&
+     vm.runInContext('ITEM_BY_ID.elec_secret02.price', ctx) === 5960000);
   /* 立绘按批次存放：v1 首版四件、v2 新增三件；两批都是 1254×1254 RGBA */
   const eggBatch = id => 'easter-eggs-' + (EGG_V2.includes(id) ? 'v2' : 'v1');
   ok('七件的 48px 图标与立绘原稿都在', eggs.every(e =>
@@ -2440,7 +2440,12 @@ console.log('\n=== 彩蛋藏品 ===');
   })(), String(eggs.length));
   CFG.LOOT.eggByQuality = keepTable;
 
-  /* 实测：秘藏箱 8% 红 × 25% = 2% 的彩蛋；红档总量不变 */
+  /* 实测：秘藏箱 8% 红 × 25% = 2% 的彩蛋；红档总量不变。
+     这一段验的是基础几何分布，所以把保底关掉（ramp=0），
+     保底本身另有专项断言。 */
+  const keepRampStat = CFG.LOOT.eggPityCap;
+  CFG.LOOT.eggPityCap = 0;
+  Save.eggPity = 0;
   const N = 120000, r = [0, 0, 0, 0, 0, 0];
   let egg = 0;
   for (let i = 0; i < N; i++) { const d = L.roll('secret'); if (d.item.egg) egg++; r[d.item.r - 1]++; }
@@ -2449,6 +2454,35 @@ console.log('\n=== 彩蛋藏品 ===');
   ok('红色总量仍是 8%（彩蛋从红里分，不额外增加）', Math.abs(redPct - 8) < 0.35, redPct.toFixed(2) + '%');
   ok('秘藏箱红里约 25% 是彩蛋', Math.abs(egg / Math.max(1, r[5]) * 100 - 25) < 1.6,
      (egg / Math.max(1, r[5]) * 100).toFixed(1) + '%');
+  CFG.LOOT.eggPityCap = keepRampStat;
+
+  /* 隐形保底：连续摸红不中会累加，到点必出，中签清零 */
+  const keepRandom = ctx.Math.random;
+  CFG.LOOT.eggPityCap = 12;
+  Save.eggPity = 0;
+  ctx.Math.random = () => 0.999;          // 永远差一点，测最坏情况
+  for (let i = 0; i < 5; i++) L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}, 'fine');
+  ok('保底计数随连续落空累加', Save.eggPity === 5, 'pity=' + Save.eggPity);
+  ok('未到阈值时中签率不加成（4% 仍然是 4%）', (() => {
+    Save.eggPity = 0;
+    const before = Math.random;
+    let calls = 0, last = 0;
+    ctx.Math.random = () => { calls++; return calls === 1 ? 0.03 : 0.999; };
+    const r = L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}, 'fine');   // 0.03 < 4% → 中
+    ctx.Math.random = before;
+    Save.eggPity = 5;
+    return r.item.egg === true;
+  })());
+  let allEgg = true;
+  for (let i = 0; i < 20; i++) {          // 每轮都从 cap-1 层起，必中
+    Save.eggPity = 11;
+    if (!L.eggSwap({item: ctx.ITEM_BY_ID['odd02'], n: 1}, 'fine').item.egg) allEgg = false;
+  }
+  ok('保底到点必出（第 12 个红百分百中签）', allEgg);
+  ok('中签后保底清零', Save.eggPity === 0, 'pity=' + Save.eggPity);
+  ctx.Math.random = keepRandom;
+  CFG.LOOT.eggPityCap = keepRampStat;
+  Save.eggPity = 0;
 }
 
 console.log('\n=== 随机入场 / 入场点封闭 ===');

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "date": "2026-10-27",
+  "date": "2026-11-18",
   "currency": "¥",
   "collectionBands": [
     {
@@ -12,31 +12,31 @@
     {
       "rarity": 2,
       "role": "普通收益",
-      "min": 4000,
-      "max": 9200
+      "min": 3000,
+      "max": 8000
     },
     {
       "rarity": 3,
       "role": "稳定收益",
-      "min": 9000,
-      "max": 38000
+      "min": 5000,
+      "max": 25000
     },
     {
       "rarity": 4,
       "role": "主力收益",
-      "min": 22000,
-      "max": 110000
+      "min": 9000,
+      "max": 55000
     },
     {
       "rarity": 5,
       "role": "高额收益",
-      "min": 80000,
-      "max": 480000
+      "min": 20000,
+      "max": 150000
     },
     {
       "rarity": 6,
       "role": "极稀有大奖",
-      "min": 200000,
+      "min": 70000,
       "max": null,
       "referenceUpper": 3000000
     }
@@ -586,7 +586,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 88,
-      "price": 5400,
+      "price": 4320,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life04",
@@ -604,7 +604,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 58,
-      "price": 4600,
+      "price": 3680,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life08",
@@ -621,7 +621,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 760,
-      "price": 45000,
+      "price": 20300,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life20",
@@ -639,7 +639,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 2400,
-      "price": 250000,
+      "price": 75000,
       "reason": "完整成套的纯银器具，以材料与成套保存定位于珍罕上沿。",
       "nonPrice": {
         "id": "life28",
@@ -657,7 +657,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 65,
-      "price": 4800,
+      "price": 3840,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life03",
@@ -674,7 +674,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 22,
-      "price": 4000,
+      "price": 3200,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life05",
@@ -692,7 +692,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 240,
-      "price": 12000,
+      "price": 7200,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life11",
@@ -709,7 +709,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 220,
-      "price": 11500,
+      "price": 6900,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life15",
@@ -727,7 +727,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 880,
-      "price": 48000,
+      "price": 21600,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life19",
@@ -745,7 +745,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 980,
-      "price": 62000,
+      "price": 27900,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life22",
@@ -763,7 +763,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 34,
-      "price": 4200,
+      "price": 3360,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life10",
@@ -781,7 +781,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 320,
-      "price": 14500,
+      "price": 8700,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life13",
@@ -799,7 +799,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 245,
-      "price": 13000,
+      "price": 7800,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life41",
@@ -817,7 +817,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 1320,
-      "price": 110000,
+      "price": 33000,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life43",
@@ -853,7 +853,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 48,
-      "price": 4400,
+      "price": 3520,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life36",
@@ -871,7 +871,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 185,
-      "price": 10000,
+      "price": 6000,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life37",
@@ -889,7 +889,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 260,
-      "price": 13500,
+      "price": 8100,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life38",
@@ -907,7 +907,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 560,
-      "price": 26000,
+      "price": 11700,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life47",
@@ -925,7 +925,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 320,
-      "price": 15000,
+      "price": 9000,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life44",
@@ -943,7 +943,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 85,
-      "price": 5200,
+      "price": 4160,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life45",
@@ -961,7 +961,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 480,
-      "price": 22000,
+      "price": 9900,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life46",
@@ -979,7 +979,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 210,
-      "price": 11000,
+      "price": 6600,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life39",
@@ -997,7 +997,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 1350,
-      "price": 125000,
+      "price": 37500,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life32",
@@ -1015,7 +1015,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 1250,
-      "price": 95000,
+      "price": 28500,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life33",
@@ -1032,7 +1032,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 1850,
-      "price": 160000,
+      "price": 48000,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "life48",
@@ -1050,7 +1050,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 3400,
-      "price": 1200000,
+      "price": 220000,
       "reason": "量产前的零号原型，独特制作身份形成大奖。",
       "nonPrice": {
         "id": "life49",
@@ -1069,7 +1069,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 240,
-      "price": 7500,
+      "price": 6000,
       "reason": "降为良品后按绿色档重新定价：量产的普通收音设备，能收到信号本就是它的功能；没有限量、原型或特殊工艺，只按\"还能用\"计。",
       "nonPrice": {
         "id": "elec01",
@@ -1086,7 +1086,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 520,
-      "price": 30000,
+      "price": 13500,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "elec02",
@@ -1103,7 +1103,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 72,
-      "price": 5000,
+      "price": 4000,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "elec03",
@@ -1120,7 +1120,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 130,
-      "price": 6200,
+      "price": 4960,
       "reason": "降为良品后按绿色档重新定价：实验所来源特殊，但本体只是通用电路板散件；停产不等于稀缺，按可用零件计。",
       "nonPrice": {
         "id": "elec04",
@@ -1137,7 +1137,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 620,
-      "price": 36000,
+      "price": 16200,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "elec05",
@@ -1155,7 +1155,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 790,
-      "price": 52000,
+      "price": 23400,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "elec06",
@@ -1190,7 +1190,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 110,
-      "price": 5600,
+      "price": 4480,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "ind02",
@@ -1207,7 +1207,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 280,
-      "price": 14500,
+      "price": 8700,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "ind03",
@@ -1224,7 +1224,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 140,
-      "price": 5800,
+      "price": 4640,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，医用注射器及其配套包装，作为医疗用品库存收集品，不属于可直接使用的针剂或治疗道具。",
       "nonPrice": {
         "id": "med02",
@@ -1241,7 +1241,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 190,
-      "price": 6000,
+      "price": 4800,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，医学影像检查资料，具有医疗记录及影像实物属性。",
       "nonPrice": {
         "id": "med03",
@@ -1258,7 +1258,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 960,
-      "price": 56000,
+      "price": 25200,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "antiq01",
@@ -1275,7 +1275,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 410,
-      "price": 17000,
+      "price": 10200,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "antiq02",
@@ -1292,7 +1292,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 1240,
-      "price": 80000,
+      "price": 24000,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "antiq04",
@@ -1309,7 +1309,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 96,
-      "price": 5500,
+      "price": 4400,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "antiq05",
@@ -1326,7 +1326,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 2600,
-      "price": 400000,
+      "price": 70000,
       "reason": "工业釉色标准母版，具工艺史身份。",
       "nonPrice": {
         "id": "antiq06",
@@ -1345,7 +1345,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 330,
-      "price": 16000,
+      "price": 9600,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "art01",
@@ -1362,7 +1362,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 1420,
-      "price": 65000,
+      "price": 29300,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "art02",
@@ -1379,7 +1379,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 2100,
-      "price": 220000,
+      "price": 66000,
       "reason": "仍正常运转的精密机械与贵重消费器具。",
       "nonPrice": {
         "id": "lux01",
@@ -1396,7 +1396,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 1680,
-      "price": 200000,
+      "price": 60000,
       "reason": "贵金属作为高负重、高价值的稳定交易物。",
       "nonPrice": {
         "id": "lux02",
@@ -1413,7 +1413,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 450,
-      "price": 18000,
+      "price": 10800,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "lux03",
@@ -1447,7 +1447,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 120,
-      "price": 5700,
+      "price": 4560,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "spec02",
@@ -1499,7 +1499,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 260,
-      "price": 14000,
+      "price": 8400,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "art03",
@@ -1516,7 +1516,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 680,
-      "price": 42000,
+      "price": 18900,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "odd01",
@@ -1533,7 +1533,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 3800,
-      "price": 6000000,
+      "price": 1080000,
       "reason": "微型海洋与交错圆环的孤品异常遗物，定为本轮最高大奖。",
       "nonPrice": {
         "id": "odd02",
@@ -1552,7 +1552,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 980,
-      "price": 60000,
+      "price": 27000,
       "reason": "结合用途、材料、工艺、保存状态及同稀有度内的相对定位定价。",
       "nonPrice": {
         "id": "odd03",
@@ -1606,7 +1606,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 6800,
-      "price": 6800,
+      "price": 5440,
       "reason": "异常遗物补充批次：按异常程度、可复现性与封存难度定价，落在该稀有度价格带内。",
       "nonPrice": {
         "id": "odd06",
@@ -1624,7 +1624,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 8400,
-      "price": 8400,
+      "price": 6720,
       "reason": "异常遗物补充批次：按异常程度、可复现性与封存难度定价，落在该稀有度价格带内。",
       "nonPrice": {
         "id": "odd07",
@@ -1642,7 +1642,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 19000,
-      "price": 19000,
+      "price": 11400,
       "reason": "异常遗物补充批次：按异常程度、可复现性与封存难度定价，落在该稀有度价格带内。",
       "nonPrice": {
         "id": "odd08",
@@ -1660,7 +1660,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 26000,
-      "price": 26000,
+      "price": 15600,
       "reason": "异常遗物补充批次：按异常程度、可复现性与封存难度定价，落在该稀有度价格带内。",
       "nonPrice": {
         "id": "odd09",
@@ -1678,7 +1678,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 32000,
-      "price": 32000,
+      "price": 19200,
       "reason": "异常遗物补充批次：按异常程度、可复现性与封存难度定价，落在该稀有度价格带内。",
       "nonPrice": {
         "id": "odd10",
@@ -1696,7 +1696,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 180000,
-      "price": 180000,
+      "price": 54000,
       "reason": "异常遗物补充批次：按异常程度、可复现性与封存难度定价，落在该稀有度价格带内。",
       "nonPrice": {
         "id": "odd11",
@@ -1714,7 +1714,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 260000,
-      "price": 260000,
+      "price": 78000,
       "reason": "异常遗物补充批次：按异常程度、可复现性与封存难度定价，落在该稀有度价格带内。",
       "nonPrice": {
         "id": "odd12",
@@ -1732,7 +1732,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 11451401,
-      "price": 22451401,
+      "price": 4040000,
       "reason": "按彩蛋定位二次调价：掉率从「红后 2%」改为按容器品质分级（秘藏 25%）后，彩蛋从「全图十局一遇」变成「两三局一遇」，单价同时整体上抬到两千万以上，让摸到的一瞬间就是本局最大的事；回收价仍按 50% 计。",
       "nonPrice": {
         "id": "odd13",
@@ -1751,7 +1751,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 12121212,
-      "price": 24121212,
+      "price": 4340000,
       "reason": "按彩蛋定位二次调价：掉率从「红后 2%」改为按容器品质分级（秘藏 25%）后，彩蛋从「全图十局一遇」变成「两三局一遇」，单价同时整体上抬到两千万以上，让摸到的一瞬间就是本局最大的事；回收价仍按 50% 计。",
       "nonPrice": {
         "id": "odd14",
@@ -1770,7 +1770,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 33333333,
-      "price": 55555555,
+      "price": 10000000,
       "reason": "按彩蛋定位二次调价：掉率从「红后 2%」改为按容器品质分级（秘藏 25%）后，彩蛋从「全图十局一遇」变成「两三局一遇」，单价同时整体上抬到两千万以上，让摸到的一瞬间就是本局最大的事；回收价仍按 50% 计。",
       "nonPrice": {
         "id": "odd15",
@@ -1789,7 +1789,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 8888888,
-      "price": 18888888,
+      "price": 3400000,
       "reason": "按彩蛋定位二次调价：掉率从「红后 2%」改为按容器品质分级（秘藏 25%）后，彩蛋从「全图十局一遇」变成「两三局一遇」，单价同时整体上抬到两千万以上，让摸到的一瞬间就是本局最大的事；回收价仍按 50% 计。",
       "nonPrice": {
         "id": "odd16",
@@ -1808,7 +1808,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 18000,
-      "price": 18000,
+      "price": 10800,
       "reason": "按专业设备的材料、工艺与保存状态定价，内置游戏程序的便携式电子娱乐设备；与掌上电子游戏机相比，强调的是虚拟宠物养成与电子玩具文化。",
       "nonPrice": {
         "id": "elec07",
@@ -1826,7 +1826,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 24000,
-      "price": 24000,
+      "price": 14400,
       "reason": "按专业设备的材料、工艺与保存状态定价，磁带影像记录电子设备，与即影相机的静态即时摄影功能区分。",
       "nonPrice": {
         "id": "elec08",
@@ -1844,7 +1844,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 48000,
-      "price": 48000,
+      "price": 21600,
       "reason": "按专业设备的材料、工艺与保存状态定价，专业数字通信电子设备，采用常规编码与解码技术，不涉及超自然。",
       "nonPrice": {
         "id": "elec09",
@@ -1862,7 +1862,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 86000,
-      "price": 86000,
+      "price": 38700,
       "reason": "按专业设备的材料、工艺与保存状态定价，具备通用运算能力的便携式计算设备。",
       "nonPrice": {
         "id": "elec10",
@@ -1880,7 +1880,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 72000,
-      "price": 72000,
+      "price": 32400,
       "reason": "按专业设备的材料、工艺与保存状态定价，常规无线电通信设备。",
       "nonPrice": {
         "id": "elec11",
@@ -1898,7 +1898,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 165000,
-      "price": 165000,
+      "price": 49500,
       "reason": "按专业设备的材料、工艺与保存状态定价，专业航海导航电子设备。",
       "nonPrice": {
         "id": "elec12",
@@ -1916,7 +1916,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 260000,
-      "price": 260000,
+      "price": 78000,
       "reason": "按专业设备的材料、工艺与保存状态定价，采用常规电子采集、数据处理与存储技术的科研设备。",
       "nonPrice": {
         "id": "elec13",
@@ -1934,7 +1934,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 880000,
-      "price": 1100000,
+      "price": 200000,
       "reason": "按专业设备的材料、工艺与保存状态定价，实验性电子信号分析设备，现有证据不表明设备本身存在异常性质。",
       "nonPrice": {
         "id": "elec14",
@@ -1953,7 +1953,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 2650000,
-      "price": 4500000,
+      "price": 810000,
       "reason": "按专业设备的材料、工艺与保存状态定价，采用常规电子测量、弱信号放大、数据采集与精密时钟技术的深海科研电子设备。虽用于探索人类尚不了解的海底环境，但没有证据表明其自身具有超自然性质，因此归入电子产品而非异常遗物。",
       "nonPrice": {
         "id": "elec15",
@@ -2026,7 +2026,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 4200,
-      "price": 4200,
+      "price": 3360,
       "reason": "按材料、工艺与保存状态定价，电工安装及维修消耗材料。",
       "nonPrice": {
         "id": "ind07",
@@ -2044,7 +2044,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 6800,
-      "price": 6800,
+      "price": 5440,
       "reason": "按材料、工艺与保存状态定价，工业管道控制配件。",
       "nonPrice": {
         "id": "ind08",
@@ -2062,7 +2062,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 7200,
-      "price": 7200,
+      "price": 5760,
       "reason": "按材料、工艺与保存状态定价，焊接作业专用防护工具，归工业器材而非玩家战斗头盔。",
       "nonPrice": {
         "id": "ind09",
@@ -2080,7 +2080,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 16000,
-      "price": 16000,
+      "price": 9600,
       "reason": "按材料、工艺与保存状态定价，工业长度测量工具。",
       "nonPrice": {
         "id": "ind10",
@@ -2098,7 +2098,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 24000,
-      "price": 24000,
+      "price": 14400,
       "reason": "按材料、工艺与保存状态定价，专业机械零件，主要用于耐磨与耐腐蚀工况。",
       "nonPrice": {
         "id": "ind11",
@@ -2116,7 +2116,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 58000,
-      "price": 58000,
+      "price": 26100,
       "reason": "按材料、工艺与保存状态定价，工业液压系统的专业控制组件。",
       "nonPrice": {
         "id": "ind12",
@@ -2134,7 +2134,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 85000,
-      "price": 85000,
+      "price": 38300,
       "reason": "按材料、工艺与保存状态定价，高价值工业金属原材料。",
       "nonPrice": {
         "id": "ind13",
@@ -2152,7 +2152,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 240000,
-      "price": 240000,
+      "price": 72000,
       "reason": "按材料、工艺与保存状态定价，精密机械惯性测量组件；虽可用于电子导航设备，但主要价值来自机械加工与精密制造。",
       "nonPrice": {
         "id": "ind14",
@@ -2170,7 +2170,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 720000,
-      "price": 800000,
+      "price": 140000,
       "reason": "按材料、工艺与保存状态定价，高精度工业计量标准器具，不具有已证实的超自然性质。",
       "nonPrice": {
         "id": "ind15",
@@ -2189,7 +2189,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 48000,
-      "price": 42000,
+      "price": 18900,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，具有完整研究编号与对应图谱的医学病理组织切片，价值来自专业制片工艺及可追溯的科研记录，而非玻璃载片本身。",
       "nonPrice": {
         "id": "med06",
@@ -2207,7 +2207,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 76000,
-      "price": 76000,
+      "price": 34200,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，用于持续观察多项生命体征的临床监护设备，属于专业医疗电子仪器，与用于诊断的心电图机及用于急救的除颤仪存在功能区别。",
       "nonPrice": {
         "id": "med07",
@@ -2225,7 +2225,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 88000,
-      "price": 88000,
+      "price": 39600,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，明确配属于医学显微检验系统的专业光学组件，其价值来自精密光学加工、校正工艺及完整的成套保存状态。",
       "nonPrice": {
         "id": "med08",
@@ -2243,7 +2243,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 88000,
-      "price": 98000,
+      "price": 44100,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，以电容储能、电击控制和基础心电监测为核心的专业急救电子设备，属于医疗收集品，不具备局内复活或治疗效果。",
       "nonPrice": {
         "id": "med13",
@@ -2261,7 +2261,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 28000,
-      "price": 28000,
+      "price": 16800,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，精密药液输注设备，以电子控制和机械传动为核心，属于医疗仪器收集品。",
       "nonPrice": {
         "id": "med10",
@@ -2279,7 +2279,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 160000,
-      "price": 175000,
+      "price": 52500,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，采用植入级材料和精密加工工艺制造的高价值人工机械心脏瓣膜，属于专业医疗植入器械收集品。",
       "nonPrice": {
         "id": "med09",
@@ -2297,7 +2297,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 420000,
-      "price": 360000,
+      "price": 108000,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，实验性机械循环支持设备的核心泵总成，具有精密医用流体机械与研发原型价值，不属于可使用的治疗或复活道具。",
       "nonPrice": {
         "id": "med11",
@@ -2315,7 +2315,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 230000,
-      "price": 230000,
+      "price": 69000,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，重症生命支持设备中可拆卸的控制模块，价值来自专业电子控制、监测系统及医疗设备制造工艺，并非完整呼吸机整机。",
       "nonPrice": {
         "id": "med14",
@@ -2333,7 +2333,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 1200000,
-      "price": 1300000,
+      "price": 230000,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，经固定、包埋处理的人工培养组织历史样本，具有明确的研究来源、技术突破意义及完整的原始记录。其孤品价值来自不可替代的科研历史身份，而非超自然性质。",
       "nonPrice": {
         "id": "med12",
@@ -2351,7 +2351,7 @@
       "name": "便携式心电图机",
       "group": "collectible",
       "rarity": 3,
-      "price": 32000,
+      "price": 19200,
       "previousPrice": 32000,
       "reason": "按专业医疗设备的材料、工艺与保存状态定价，用于记录心脏电活动的便携式临床诊断设备，具备信号采集和热敏打印功能，不提供局内医疗效果。",
       "nonPrice": {
@@ -2370,7 +2370,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 7200,
-      "price": 7200,
+      "price": 5760,
       "reason": "按材料、工艺、版本身份与保存状态定价，普通手工彩绘陶制品，保留较完整的传统造型，但没有特殊传承或名家身份。",
       "nonPrice": {
         "id": "antiq08",
@@ -2388,7 +2388,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 21000,
-      "price": 21000,
+      "price": 12600,
       "reason": "按材料、工艺、版本身份与保存状态定价，首映印刷批次、早期字体版本及保存状态形成收藏价值，而非普通量产海报。",
       "nonPrice": {
         "id": "art05",
@@ -2406,7 +2406,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 26000,
-      "price": 26000,
+      "price": 15600,
       "reason": "按材料、工艺、版本身份与保存状态定价，保存较完整、隔室结构清晰，且经过专业修整。",
       "nonPrice": {
         "id": "spec04",
@@ -2423,7 +2423,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 78000,
-      "price": 78000,
+      "price": 35100,
       "reason": "按材料、工艺、版本身份与保存状态定价，初回限量生产，盒装配件齐全，具有明确发行编号及小众收藏市场价值。",
       "nonPrice": {
         "id": "art04",
@@ -2441,7 +2441,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 96000,
-      "price": 96000,
+      "price": 43200,
       "reason": "按材料、工艺、版本身份与保存状态定价，原始手绘版本、可追溯的测量记录及旧港口历史价值。",
       "nonPrice": {
         "id": "antiq07",
@@ -2459,7 +2459,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 268000,
-      "price": 268000,
+      "price": 80500,
       "reason": "按材料、工艺、版本身份与保存状态定价，银质胎体、手工多层珐琅、精密音乐机芯、限量制作及可追溯的工坊记录。",
       "nonPrice": {
         "id": "lux04",
@@ -2477,7 +2477,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 340000,
-      "price": 340000,
+      "price": 102000,
       "reason": "按材料、工艺、版本身份与保存状态定价，天然蓝宝石主石、铂金底座、钻石镶嵌、设计师作品身份及完整鉴定记录。",
       "nonPrice": {
         "id": "lux05",
@@ -2495,7 +2495,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 1650000,
-      "price": 1800000,
+      "price": 320000,
       "reason": "按材料、工艺、版本身份与保存状态定价，唯一原始雕刻母版、完整制作记录、重要城市历史背景，以及无法由后续印刷品取代的工艺与历史价值。",
       "nonPrice": {
         "id": "antiq09",
@@ -2550,7 +2550,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 5400,
-      "price": 5400,
+      "price": 4320,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，制式量产识别牌，材质低贱；价值来自成对保存与可辨认的压印。",
       "nonPrice": {
         "id": "mil03",
@@ -2568,7 +2568,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 6500,
-      "price": 6500,
+      "price": 5200,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，制式光电信号器材，灯罩完整但电池仓锈死，属可修复的普通装备。",
       "nonPrice": {
         "id": "mil04",
@@ -2586,7 +2586,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 7100,
-      "price": 7100,
+      "price": 5680,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，制式警戒牌，量产金属板；价值来自两次安装留下的螺孔与布防痕迹。",
       "nonPrice": {
         "id": "mil05",
@@ -2604,7 +2604,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 19000,
-      "price": 19000,
+      "price": 11400,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，液体阻尼结构与精密光学件，军用规格高于民用指南针，但仍是量产装备。",
       "nonPrice": {
         "id": "mil06",
@@ -2621,7 +2621,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 28000,
-      "price": 28000,
+      "price": 16800,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，坚固机箱与专用线路端子构成成套通信装备；线被剪断不影响本体价值。",
       "nonPrice": {
         "id": "mil07",
@@ -2639,7 +2639,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 34000,
-      "price": 34000,
+      "price": 20400,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，精密加工、统一检验钢印与未拆封状态；按备件计价，不按武器计价。",
       "nonPrice": {
         "id": "mil08",
@@ -2657,7 +2657,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 90000,
-      "price": 90000,
+      "price": 40500,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，像增强器与精密光学组件，产量有限且民用不可替代。",
       "nonPrice": {
         "id": "mil09",
@@ -2675,7 +2675,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 74000,
-      "price": 74000,
+      "price": 33300,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，金属屏蔽外壳、系统级配套与完好封签；价值在制造与配套属性，不在内容。",
       "nonPrice": {
         "id": "mil10",
@@ -2693,7 +2693,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 68000,
-      "price": 68000,
+      "price": 30600,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，专用探测元件与完整校准附件，属专业测量器材中的高价品类。",
       "nonPrice": {
         "id": "mil11",
@@ -2711,7 +2711,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 240000,
-      "price": 240000,
+      "price": 72000,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，早期红外探测器与专用处理单元，技术稀缺且已被后续型号取代。",
       "nonPrice": {
         "id": "mil12",
@@ -2729,7 +2729,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 190000,
-      "price": 190000,
+      "price": 57000,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，高精度棱镜组、光轴调校工艺与原厂证书，同系列产量低。",
       "nonPrice": {
         "id": "mil13",
@@ -2747,7 +2747,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 420000,
-      "price": 420000,
+      "price": 126000,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，系统级通信控制设备，模块化电子结构与车辆配套属性，民用不可替代。",
       "nonPrice": {
         "id": "mil14",
@@ -2765,7 +2765,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 1600000,
-      "price": 1600000,
+      "price": 290000,
       "reason": "按军用器材的材料、制造工艺与配套属性定价，首次撤离行动中使用的原始标图板，具有可追溯的使用记录、独特修改痕迹及不可由后续复制品替代的历史身份；真实性与唯一性须由配套档案证明。",
       "nonPrice": {
         "id": "mil15",
@@ -2784,7 +2784,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 5200,
-      "price": 5200,
+      "price": 4160,
       "reason": "按资料的来源、完整度与不可重复性定价，普通业务文件，但保留较完整的交接信息与物流记录。",
       "nonPrice": {
         "id": "intel01",
@@ -2819,7 +2819,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 6800,
-      "price": 6800,
+      "price": 5440,
       "reason": "按资料的来源、完整度与不可重复性定价，单张登记卡并不稀缺，但能够保存灾变期间居民撤离组织的具体信息。",
       "nonPrice": {
         "id": "intel03",
@@ -2837,7 +2837,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 24000,
-      "price": 24000,
+      "price": 14400,
       "reason": "按资料的来源、完整度与不可重复性定价，专业施工资料，包含普通公开地图无法体现的地下设施信息。",
       "nonPrice": {
         "id": "intel04",
@@ -2855,7 +2855,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 29000,
-      "price": 29000,
+      "price": 17400,
       "reason": "按资料的来源、完整度与不可重复性定价，非公开会议记录的原始录音，有待验证的历史信息价值。",
       "nonPrice": {
         "id": "intel05",
@@ -2873,7 +2873,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 32000,
-      "price": 32000,
+      "price": 19200,
       "reason": "按资料的来源、完整度与不可重复性定价，保存完整的原始报文底稿，具备来源和时间信息，但其内容未必属于高级机密。",
       "nonPrice": {
         "id": "intel07",
@@ -2891,7 +2891,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 58000,
-      "price": 58000,
+      "price": 26100,
       "reason": "按资料的来源、完整度与不可重复性定价，连续观测资料、完整测量记录及具有研究意义的数据差异。",
       "nonPrice": {
         "id": "intel06",
@@ -2909,7 +2909,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 82000,
-      "price": 82000,
+      "price": 36900,
       "reason": "按资料的来源、完整度与不可重复性定价，非公开的区域通行记录，包含可用于核对人员活动及封锁制度的信息。",
       "nonPrice": {
         "id": "intel08",
@@ -2927,7 +2927,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 96000,
-      "price": 96000,
+      "price": 43200,
       "reason": "按资料的来源、完整度与不可重复性定价，连续性较好的原始实验数据，具有潜在的科研与调查价值，但需要专业条件才能读取。",
       "nonPrice": {
         "id": "intel09",
@@ -2945,7 +2945,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 220000,
-      "price": 220000,
+      "price": 66000,
       "reason": "按资料的来源、完整度与不可重复性定价，具有可核对的来源、完整原始载体及重要事件记录价值，区别于普通会议录音。",
       "nonPrice": {
         "id": "intel10",
@@ -2963,7 +2963,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 310000,
-      "price": 310000,
+      "price": 93000,
       "reason": "按资料的来源、完整度与不可重复性定价，跨机构的专业勘测资料，包含难以重复取得的原始观测结果。",
       "nonPrice": {
         "id": "intel11",
@@ -2981,7 +2981,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 460000,
-      "price": 460000,
+      "price": 138000,
       "reason": "按资料的来源、完整度与不可重复性定价，多来源证据、完整调查程序记录及较高的历史研究价值；价格不取决于是否存在惊人结论。",
       "nonPrice": {
         "id": "intel12",
@@ -2999,7 +2999,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 1850000,
-      "price": 3200000,
+      "price": 580000,
       "reason": "按资料的来源、完整度与不可重复性定价，可追溯的原始观测载体、不可重复的事件现场记录，以及后续研究对该份记录的引用关系；不可替代性来自原始性与历史重要性，而不是纸张本身具有异常力量。",
       "nonPrice": {
         "id": "intel13",
@@ -3053,7 +3053,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 6800,
-      "price": 6800,
+      "price": 5440,
       "reason": "按仪式用途、工艺与传承记录定价，具有完整的传统编结工艺与铜制组件，但材质并不昂贵。",
       "nonPrice": {
         "id": "occ03",
@@ -3070,7 +3070,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 8500,
-      "price": 8500,
+      "price": 6800,
       "reason": "按仪式用途、工艺与传承记录定价，黄铜加工与细密刻纹具备一定手工价值，属于较常见的仪式用具。",
       "nonPrice": {
         "id": "occ04",
@@ -3088,7 +3088,7 @@
       "group": "collectible",
       "rarity": 2,
       "previousPrice": 9200,
-      "price": 9200,
+      "price": 7360,
       "reason": "按仪式用途、工艺与传承记录定价，陶制器身完整，具有手工釉面与长期仪式使用痕迹，价值高于普通香炉。",
       "nonPrice": {
         "id": "occ05",
@@ -3105,7 +3105,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 22000,
-      "price": 22000,
+      "price": 13200,
       "reason": "按仪式用途、工艺与传承记录定价，具有精细机械铰链、特殊刻度与完整的传统制作工艺。",
       "nonPrice": {
         "id": "occ06",
@@ -3123,7 +3123,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 34000,
-      "price": 34000,
+      "price": 20400,
       "reason": "按仪式用途、工艺与传承记录定价，银质材料、精细绕丝工艺和较完整的仪式形制。",
       "nonPrice": {
         "id": "occ07",
@@ -3141,7 +3141,7 @@
       "group": "collectible",
       "rarity": 3,
       "previousPrice": 38000,
-      "price": 38000,
+      "price": 22800,
       "reason": "按仪式用途、工艺与传承记录定价，精密阴刻工艺、完整印面及专门的仪式用途，而非普通办公印章。",
       "nonPrice": {
         "id": "occ08",
@@ -3159,7 +3159,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 78000,
-      "price": 78000,
+      "price": 35100,
       "reason": "按仪式用途、工艺与传承记录定价，大块完整黑曜石的切割抛光工艺、银质支架及传统用途，具有较高工艺与收藏价值。",
       "nonPrice": {
         "id": "occ09",
@@ -3177,7 +3177,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 95000,
-      "price": 95000,
+      "price": 42800,
       "reason": "按仪式用途、工艺与传承记录定价，遗址来源、特殊雕刻纹样及有限的可比对同类实物，使其具有一定研究价值。",
       "nonPrice": {
         "id": "occ10",
@@ -3194,7 +3194,7 @@
       "group": "collectible",
       "rarity": 4,
       "previousPrice": 110000,
-      "price": 110000,
+      "price": 49500,
       "reason": "按仪式用途、工艺与传承记录定价，罕见文字变体、特殊仪式结构及语言研究价值。",
       "nonPrice": {
         "id": "occ11",
@@ -3212,7 +3212,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 260000,
-      "price": 260000,
+      "price": 78000,
       "reason": "按仪式用途、工艺与传承记录定价，复杂金属加工、镀金工艺、特殊刻度体系及较少见的完整核心组件。",
       "nonPrice": {
         "id": "occ12",
@@ -3230,7 +3230,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 340000,
-      "price": 340000,
+      "price": 102000,
       "reason": "按仪式用途、工艺与传承记录定价，贵金属复合工艺、特殊机械结构、完整形制以及可追溯的仪式传承。",
       "nonPrice": {
         "id": "occ13",
@@ -3248,7 +3248,7 @@
       "group": "collectible",
       "rarity": 5,
       "previousPrice": 480000,
-      "price": 480000,
+      "price": 144000,
       "reason": "按仪式用途、工艺与传承记录定价，银质工艺、早期完整形制与可追溯的传承记录，区别于普通宗教铃铛和现代仿制品。",
       "nonPrice": {
         "id": "occ14",
@@ -3266,7 +3266,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 1800000,
-      "price": 3600000,
+      "price": 650000,
       "reason": "按仪式用途、工艺与传承记录定价，已知唯一的早期原始残页，具有可追溯的文献传承关系；价值来自难以替代的历史身份及对整个仪式传统的研究意义，不以超自然能力为前提。",
       "nonPrice": {
         "id": "occ15",
@@ -3285,7 +3285,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 450000,
-      "price": 450000,
+      "price": 80000,
       "reason": "红档扩充（普通红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "life50",
@@ -3304,7 +3304,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 3800000,
-      "price": 3800000,
+      "price": 680000,
       "reason": "红档扩充（稀有红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "life51",
@@ -3323,7 +3323,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 600000,
-      "price": 600000,
+      "price": 110000,
       "reason": "红档扩充（普通红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "elec16",
@@ -3342,7 +3342,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 4600000,
-      "price": 4600000,
+      "price": 830000,
       "reason": "红档扩充（稀有红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "elec17",
@@ -3361,7 +3361,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 1200000,
-      "price": 1200000,
+      "price": 220000,
       "reason": "红档扩充（良好红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "ind16",
@@ -3380,7 +3380,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 4200000,
-      "price": 4200000,
+      "price": 760000,
       "reason": "红档扩充（稀有红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "ind17",
@@ -3399,7 +3399,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 550000,
-      "price": 550000,
+      "price": 100000,
       "reason": "红档扩充（普通红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "med16",
@@ -3418,7 +3418,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 4800000,
-      "price": 4800000,
+      "price": 860000,
       "reason": "红档扩充（稀有红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "med17",
@@ -3437,7 +3437,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 3600000,
-      "price": 3600000,
+      "price": 650000,
       "reason": "红档扩充（稀有红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "antiq10",
@@ -3456,7 +3456,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 500000,
-      "price": 500000,
+      "price": 90000,
       "reason": "红档扩充（普通红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "mil16",
@@ -3475,7 +3475,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 4200000,
-      "price": 4200000,
+      "price": 760000,
       "reason": "红档扩充（稀有红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "mil17",
@@ -3494,7 +3494,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 480000,
-      "price": 480000,
+      "price": 90000,
       "reason": "红档扩充（普通红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "intel14",
@@ -3513,7 +3513,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 1500000,
-      "price": 1500000,
+      "price": 270000,
       "reason": "红档扩充（良好红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "intel15",
@@ -3532,7 +3532,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 650000,
-      "price": 650000,
+      "price": 120000,
       "reason": "红档扩充（普通红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "occ16",
@@ -3551,7 +3551,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 1400000,
-      "price": 1400000,
+      "price": 250000,
       "reason": "红档扩充（良好红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "occ17",
@@ -3570,7 +3570,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 600000,
-      "price": 600000,
+      "price": 110000,
       "reason": "红档扩充（普通红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "odd17",
@@ -3589,7 +3589,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 1700000,
-      "price": 1700000,
+      "price": 310000,
       "reason": "红档扩充（良好红）：价格按该档区间定价，不参与常规折价推导。",
       "nonPrice": {
         "id": "odd18",
@@ -3696,7 +3696,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 20010000,
-      "price": 20010000,
+      "price": 3600000,
       "reason": "2026-11-08 新增彩蛋：定价按文案的型号数字梗（20,010,000 / 60,900,000 / 33,100,000），落在红色孤品价格带内，回收价按 50% 计。",
       "nonPrice": {
         "id": "collect_secret01",
@@ -3715,7 +3715,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 60900000,
-      "price": 60900000,
+      "price": 10960000,
       "reason": "2026-11-08 新增彩蛋：定价按文案的型号数字梗（20,010,000 / 60,900,000 / 33,100,000），落在红色孤品价格带内，回收价按 50% 计。",
       "nonPrice": {
         "id": "elec_secret01",
@@ -3734,7 +3734,7 @@
       "group": "collectible",
       "rarity": 6,
       "previousPrice": 33100000,
-      "price": 33100000,
+      "price": 5960000,
       "reason": "2026-11-08 新增彩蛋：定价按文案的型号数字梗（20,010,000 / 60,900,000 / 33,100,000），落在红色孤品价格带内，回收价按 50% 计。",
       "nonPrice": {
         "id": "elec_secret02",

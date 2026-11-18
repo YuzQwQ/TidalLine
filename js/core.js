@@ -734,14 +734,35 @@ const Loot = {
      中签率按容器品质取（eggByQuality），废弃 / 普通箱子恒为 0 ——
      彩蛋不在垃圾堆里，只有贵重与秘藏箱才有。没有品质信息时用 eggChance 兜底。
      因为彩蛋本身也是 r6，稀有度分布一格不动，只是「红色里有几成是彩蛋」。
-     chance 为 0 或没有彩蛋数据时原样返回，所以关掉功能不需要改调用点。 */
+
+     隐形保底：连续「摸到红但没中」会累加一个计数（存在 Save.eggPity，
+     跨局不清零）。计数没到 LOOT.eggPityCap 之前，中签率完全按 eggByQuality 走，
+     一点不加成；到第 Cap 个红时必出，然后清零。
+     为什么不做「概率递增」：那是把保底写成了常态加成 —— 实测把首局出彩蛋率
+     从 0.8% 抬到 35%，彩蛋就不再是彩蛋了。硬阈值只截掉最坏情况的尾巴，
+     正常出货手感一格不动，玩家只会觉得「再背也不会一直不出」。 */
+  eggPity() {
+    const s = (typeof Save !== 'undefined' && Save) ? Save.eggPity : this._eggPity;
+    return Number.isFinite(s) && s > 0 ? s : 0;
+  },
+  setEggPity(v) {
+    if (typeof Save !== 'undefined' && Save) { Save.eggPity = v; Save._dirty = true; }
+    else this._eggPity = v;
+  },
+
   eggSwap(pick, quality) {
-    const chance = this.eggChanceFor(quality);
-    const eggs = chance > 0 ? this.eggPool() : null;
-    if (!pick || !pick.item || !eggs || !eggs.length) return pick;
+    const base = this.eggChanceFor(quality);
+    if (!pick || !pick.item || !(base > 0)) return pick;
     if (pick.item.r !== ((CFG.LOOT && CFG.LOOT.eggRarity) || 6)) return pick;
-    if (Math.random() >= chance) return pick;
-    return { item: U.pick(eggs), n: 1 };
+    const eggs = this.eggPool();
+    if (!eggs.length) return pick;
+
+    const cap = (CFG.LOOT && CFG.LOOT.eggPityCap) || 0;
+    const pity = this.eggPity();
+    const chance = (cap > 0 && pity >= cap - 1) ? 1 : base;
+    if (Math.random() < chance) { this.setEggPity(0); return { item: U.pick(eggs), n: 1 }; }
+    this.setEggPity(pity + 1);
+    return pick;
   },
 
   /* 一次抽取走哪个池。弹药与装备各判各的，弹药优先；

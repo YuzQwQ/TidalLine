@@ -11,21 +11,21 @@
           "id": "life08",
           "name": "玻璃糖罐",
           "n": 1,
-          "best": 4600,
+          "best": 3680,
           "availableOnShelf": false
         },
         {
           "id": "life10",
           "name": "玻璃弹珠袋",
           "n": 1,
-          "best": 4200,
+          "best": 3360,
           "availableOnShelf": false
         }
       ],
-      "cash": 1200000,
+      "cash": 400000,
       "rewards": [],
-      "materialValue": 8800,
-      "rewardValue": 1200000
+      "materialValue": 7040,
+      "rewardValue": 400000
     },
     {
       "id": "elena_workshop_parts",
@@ -36,21 +36,21 @@
           "id": "ind03",
           "name": "压力表",
           "n": 1,
-          "best": 14500,
+          "best": 8700,
           "availableOnShelf": false
         },
         {
           "id": "ind07",
           "name": "绝缘胶带",
           "n": 1,
-          "best": 4200,
+          "best": 3360,
           "availableOnShelf": true
         }
       ],
-      "cash": 1500000,
+      "cash": 500000,
       "rewards": [],
-      "materialValue": 18700,
-      "rewardValue": 1500000
+      "materialValue": 12060,
+      "rewardValue": 500000
     },
     {
       "id": "elena_clinic_archive",
@@ -61,18 +61,18 @@
           "id": "med03",
           "name": "X 光片",
           "n": 2,
-          "best": 6000,
+          "best": 4800,
           "availableOnShelf": false
         },
         {
           "id": "med02",
           "name": "注射器",
           "n": 2,
-          "best": 5800,
+          "best": 4640,
           "availableOnShelf": true
         }
       ],
-      "cash": 2200000,
+      "cash": 700000,
       "rewards": [
         {
           "id": "heal03",
@@ -81,8 +81,8 @@
           "resale": 12000
         }
       ],
-      "materialValue": 23600,
-      "rewardValue": 2212000
+      "materialValue": 18880,
+      "rewardValue": 712000
     },
     {
       "id": "elena_clock_collection",
@@ -93,28 +93,28 @@
           "id": "antiq01",
           "name": "座钟",
           "n": 1,
-          "best": 56000,
+          "best": 25200,
           "availableOnShelf": false
         },
         {
           "id": "antiq02",
           "name": "黄铜怀表",
           "n": 1,
-          "best": 17000,
+          "best": 10200,
           "availableOnShelf": true
         }
       ],
-      "cash": 2500000,
+      "cash": 800000,
       "rewards": [
         {
           "id": "att_optic02",
           "name": "全息瞄具",
           "n": 1,
-          "resale": 6750
+          "resale": 9450
         }
       ],
-      "materialValue": 73000,
-      "rewardValue": 2506750
+      "materialValue": 35400,
+      "rewardValue": 809450
     },
     {
       "id": "elena_evacuation_voices",
@@ -125,28 +125,28 @@
           "id": "elec08",
           "name": "微型录像机",
           "n": 1,
-          "best": 24000,
+          "best": 14400,
           "availableOnShelf": false
         },
         {
           "id": "intel10",
           "name": "撤离电台录音带",
           "n": 1,
-          "best": 220000,
+          "best": 66000,
           "availableOnShelf": false
         }
       ],
-      "cash": 4000000,
+      "cash": 1200000,
       "rewards": [
         {
           "id": "att_mag_556_60",
           "name": "STANAG 60发弹鼓",
           "n": 1,
-          "resale": 18000
+          "resale": 25200
         }
       ],
-      "materialValue": 244000,
-      "rewardValue": 4018000
+      "materialValue": 80400,
+      "rewardValue": 1225200
     },
     {
       "id": "elena_mirror_records",
@@ -157,28 +157,28 @@
           "id": "occ09",
           "name": "黑曜石卜镜",
           "n": 1,
-          "best": 78000,
+          "best": 35100,
           "availableOnShelf": false
         },
         {
           "id": "intel11",
           "name": "异常区域勘测报告",
           "n": 1,
-          "best": 310000,
+          "best": 93000,
           "availableOnShelf": false
         }
       ],
-      "cash": 4500000,
+      "cash": 1400000,
       "rewards": [
         {
           "id": "body4",
           "name": "战术防弹衣",
           "n": 1,
-          "resale": 42500
+          "resale": 59499
         }
       ],
-      "materialValue": 388000,
-      "rewardValue": 4542500
+      "materialValue": 128100,
+      "rewardValue": 1459499
     }
   ]
 }
