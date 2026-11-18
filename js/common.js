@@ -53,16 +53,21 @@ function haulLevel() {
 function carryLimit() { return CFG.BAG.HAUL.CAP[haulLevel()]; }
 
 /* 档位表：[上限, 移速, 噪声, 名称]
-   轻装 / 中载 是上限的固定比例，重载就是上限本身。
-   重载那一行的移速与噪声跟着等级走 —— 这才是「搬运工具」的实际手感，
-   兜满 68kg 时 0 级要走 0.75 倍速、1.5 倍噪声，4 级则是 0.88 倍速、零噪声惩罚。 */
+   轻装 / 中载 门槛 = 上限 × BANDS[lv] 的两个比例，重载就是上限本身。
+   每级一套比例，越高级越宽松 —— 这才是「升级后更不容易进重载」的来源。
+   中载移速跟着满载移速走（取重载惩罚的 40%），否则满级玩家常态停在中载，
+   MOVE 那一列永远用不上。
+   重载那一行的移速与噪声才是「搬运工具」的实际手感：
+   兜满 45kg 时 0 级 ×0.75 / 噪声 ×1.50，满级兜满 78kg 则是 ×0.88 / ×1.00。 */
 function carryTiers() {
   const H = CFG.BAG.HAUL, lv = haulLevel();
-  const cap = H.CAP[lv];
+  const cap = H.CAP[lv], band = H.BANDS[lv] || H.BANDS[H.BANDS.length - 1];
+  const move = H.MOVE[lv];
+  const midMove = Math.round((1 - (1 - move) * 0.4) * 1000) / 1000;
   return [
-    [cap * H.BANDS[0], 1.00, 1.00, '轻装'],
-    [cap * H.BANDS[1], 0.94, 1.00, '中载'],
-    [cap, H.MOVE[lv], H.NOISE[lv], '重载'],
+    [cap * band[0], 1.00, 1.00, '轻装'],
+    [cap * band[1], midMove, 1.00, '中载'],
+    [cap, move, H.NOISE[lv], '重载'],
     [999, 0.55, 2.00, '超载']
   ];
 }

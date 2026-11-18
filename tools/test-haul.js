@@ -68,15 +68,31 @@ console.log('\n=== 2. 等级 → 上限 / 档位 ===');
   let t = carryTiers();
   ok('0 级重载门槛 = 45', t[2][0] === 45);
   ok('0 级满载移速 ×0.75 / 噪声 ×1.50', t[2][1] === 0.75 && t[2][2] === 1.50);
-  ok('轻装 / 中载 门槛按比例缩放', near(t[0][0], 45 * 0.34, 1e-6) && near(t[1][0], 45 * 0.67, 1e-6),
+  ok('0 级轻装 / 中载门槛 = 45 × 0.30 / 0.60', near(t[0][0], 13.5, 1e-6) && near(t[1][0], 27, 1e-6),
     t[0][0].toFixed(1) + ' / ' + t[1][0].toFixed(1));
+  ok('0 级中载移速 ×0.90（重载惩罚的 40%）', t[1][1] === 0.900, '×' + t[1][1]);
 
   Save.facilities = { haul: 4 };
   ok('4 级上限 78', carryLimit() === 78);
   t = carryTiers();
   ok('4 级重载门槛 = 78', t[2][0] === 78);
   ok('4 级满载移速 ×0.88 / 噪声 ×1.00', t[2][1] === 0.88 && t[2][2] === 1.00);
-  ok('4 级轻装门槛跟着放大', near(t[0][0], 78 * 0.34, 1e-6), t[0][0].toFixed(1));
+  ok('4 级轻装门槛 = 78 × 0.45', near(t[0][0], 35.1, 1e-6), t[0][0].toFixed(1));
+  ok('4 级中载门槛 = 78 × 0.85 = 66.3', near(t[1][0], 66.3, 1e-6), t[1][0].toFixed(1));
+  ok('4 级中载移速 ×0.952', t[1][1] === 0.952, '×' + t[1][1]);
+
+  /* 这一组是这次改动的核心：同样重量，等级越高越不容易进重载档 */
+  const tierAt = (lv, w) => { Save.facilities = { haul: lv }; return weightTier(w); };
+  ok('同样装 50kg：0 级超载', tierAt(0, 50).name === '超载', '×' + tierAt(0, 50).move);
+  ok('同样装 50kg：1 级重载', tierAt(1, 50).name === '重载', '×' + tierAt(1, 50).move);
+  ok('同样装 50kg：3 级中载', tierAt(3, 50).name === '中载', '×' + tierAt(3, 50).move);
+  ok('同样装 50kg：4 级中载，移速 ×0.952', tierAt(4, 50).name === '中载' && tierAt(4, 50).move === 0.952,
+    '×' + tierAt(4, 50).move);
+  ok('50kg 从 0 级到 4 级，移速 ×0.55 → ×0.952', tierAt(4, 50).move - tierAt(0, 50).move > 0.35,
+    '×' + tierAt(0, 50).move + ' → ×' + tierAt(4, 50).move);
+  ok('34 格装满 66kg：3 级重载、4 级中载',
+    tierAt(3, 66).name === '重载' && tierAt(4, 66).name === '中载',
+    tierAt(3, 66).name + ' / ' + tierAt(4, 66).name);
 
   /* weightTier 必须读动态表，而不是静态 CFG.BAG.TIERS */
   Save.facilities = { haul: 0 };

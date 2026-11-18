@@ -14,20 +14,26 @@ const Haul = {
   isMax() { return this.level() >= this.maxLevel(); },
   name(lv) { return CFG.BAG.HAUL.NAME[lv == null ? this.level() : lv]; },
 
-  /* 当前等级的实测数值 */
+  /* 当前等级的实测数值。mid 是「进入重载」的门槛 —— 这是升级最直观的收益，
+     同样装 50kg，0 级已经超载，4 级还是中载。 */
   stats(lv) {
     const H = CFG.BAG.HAUL, i = lv == null ? this.level() : lv;
-    return { cap: H.CAP[i], move: H.MOVE[i], noise: H.NOISE[i], name: H.NAME[i] };
+    const band = H.BANDS[i];
+    const r1 = n => Math.round(n * 10) / 10;
+    return {
+      cap: H.CAP[i], move: H.MOVE[i], noise: H.NOISE[i], name: H.NAME[i],
+      light: r1(H.CAP[i] * band[0]), mid: r1(H.CAP[i] * band[1])
+    };
   },
 
   /* 下一级的报价；满级返回 null */
   quote() {
     if (this.isMax()) return null;
-    const lv = this.level() + 1, H = CFG.BAG.HAUL;
+    const lv = this.level() + 1, H = CFG.BAG.HAUL, st = this.stats(lv);
     return {
       level: lv, name: H.NAME[lv], desc: H.DESC[lv] || '',
       cost: H.COST[lv], mats: H.MATS[lv] || {},
-      cap: H.CAP[lv], move: H.MOVE[lv], noise: H.NOISE[lv]
+      cap: st.cap, move: st.move, noise: st.noise, light: st.light, mid: st.mid
     };
   },
 
@@ -96,8 +102,9 @@ const Haul = {
     const cur = this.stats(), q = this.quote(), lv = this.level(), max = this.maxLevel();
     const rows = [
       ['负重上限', cur.cap + ' kg', q ? q.cap + ' kg' : '—'],
-      ['满载移速', '×' + cur.move.toFixed(2), q ? '×' + q.move.toFixed(2) : '—'],
-      ['满载噪声', '×' + cur.noise.toFixed(2), q ? '×' + q.noise.toFixed(2) : '—']
+      ['进入重载', cur.mid + ' kg', q ? q.mid + ' kg' : '—'],
+      ['重载移速', '×' + cur.move.toFixed(2), q ? '×' + q.move.toFixed(2) : '—'],
+      ['重载噪声', '×' + cur.noise.toFixed(2), q ? '×' + q.noise.toFixed(2) : '—']
     ];
     const stat = rows.map(([label, a, b]) => `
       <div style="flex:1;min-width:0;padding:10px 12px;background:var(--sh-panel,#151b1a);border:0.5px solid rgba(255,255,255,.08);border-radius:8px;">
@@ -133,8 +140,8 @@ const Haul = {
     return `
       <small class="sh-kicker">HAULAGE / 转运区</small>
       <h2>${cur.name} <span style="font-size:13px;font-weight:400;color:#8a9a90;">Lv${lv} / ${max}</span></h2>
-      <p>搬运工具决定你能扛多少、扛满时走多快、有多吵。重量上限只是明面数字，
-      真正的差别在满载手感：背满还能正常跑、正常潜行的，只有最后一级。</p>
+      <p>搬运工具决定三件事：能扛多少、同样重量下多晚才变慢、背满时有多吵。
+      「进入重载」那一行最直观 —— 装的重量不变，等级越高越晚吃到移速惩罚。</p>
       <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">${stat}</div>
       ${q && q.desc ? `<p style="font-size:13px;color:#8a9a90;margin-top:12px;">下一级 · ${q.name}：${q.desc}</p>` : ''}
       ${matsHTML}
